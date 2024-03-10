@@ -11,3 +11,6 @@ export type StatName =
   // | 'Elemental Mastery' | 'Energy Recharge' 
   | `CRIT ${'Rate' | 'DMG'}` 
   | 'Healing Bonus' | `${Element} DMG Bonus` | 'Physical DMG Bonus';
+  // | Elemental Skill Bonus
+
+export type AbilityType = 'Normal/Press' | 'Charged/Hold' | 'Plunging/Hold' | 'Skill/Ability' | 'Burst/Ult';
