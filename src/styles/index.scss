@@ -1,0 +1,15 @@
+@layer defaults, components;
+@layer defaults {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  @import './modules/colors.scss';
+  
+  body {
+    background-color: var(--background-primary);
+    color: var(--text-primary);
+  }
+}

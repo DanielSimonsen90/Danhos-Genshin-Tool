@@ -1,0 +1,9 @@
+@use '../colors' as colors;
+
+body {
+  --background-primary: #{colors.$background-primary};
+  --background-secondary: #{colors.$background-secondary};
+  --text-primary: #{colors.$text-primary};
+  --text-secondary: #{colors.$text-secondary};
+  --text-muted: #{colors.$text-muted};
+}
