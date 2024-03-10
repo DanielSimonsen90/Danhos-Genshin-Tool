@@ -1,5 +1,8 @@
 import { ArtifactPartName } from "../../types";
 
+/**
+ * Searchable artifact data.
+ */
 export class Artifact {
   constructor(
     public displayName: string,

@@ -1,10 +1,13 @@
 import { Nullable } from '../../types';
+import Character from './Character';
+import { CharacterArtifactSet } from './CharacterArtifactSet';
 
 export class ArtifactSet {
   constructor(
     public name: string,
     public twoPieceSetDescription: string,
-    public fourPieceSetDescription: string
+    public fourPieceSetDescription: string,
+    public checkIsGood: (character: Character, set: CharacterArtifactSet) => number
   ) {}
 
   public bonusDescription(pieces: number): Nullable<string> {
