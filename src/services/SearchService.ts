@@ -5,7 +5,7 @@ import type { ArtifactPartName, MainStatName, SubStatName } from '@/common/types
 
 type SearchResultItem = {
   character: Character;
-  set: ArtifactSet
+  set: ArtifactSet;
   score: number;
   shouldSave: boolean;
 };
@@ -35,9 +35,9 @@ export function SearchArtifactSets(
 
   return Characters.map(character => {
     const setScoreOnCharacter = character.sets.reduce((acc, cSet) => {
-      const compatibility = cSet.artifactSets.find(equippingSet => 
+      const compatibility = cSet.artifactSets.find(equippingSet =>
         equippingSet.set.name === artifactSetName
-      ).effectiveness
+      ).effectiveness;
       return acc + compatibility;
     }, 0);
     const pieceScore = getPieceScore(character, artifactPartName, mainStat, subStats);
@@ -48,8 +48,8 @@ export function SearchArtifactSets(
       set,
       score,
       shouldSave: score > SHOULD_SAVE_THRESHOLD // TODO: Play around with threshold
-    }
-  })
+    } as SearchResultItem;
+  });
 }
 
 export function SearchCharacterRecommendations(
@@ -59,19 +59,51 @@ export function SearchCharacterRecommendations(
   subStats: Stat[],
 ): SearchResultItem[] {
   if (!ArtifactSetNames.includes(artifactSetName)) throw new Error(`Artifact set "${artifactSetName}" not found in data.`);
+  const set = ArtifactSets.find(set => set.name === artifactSetName);
+
+  const getSetFromCharacter = (character: Character) => (
+    character.sets.find(cSet => cSet.artifactSets
+      .map(equppingSet => equppingSet.set.name)
+      .includes(artifactSetName))
+  );
+  const isEffectiveForCharacter = (max: number) => (character: Character) => {
+    const set = getSetFromCharacter(character);
+    return set.artifactSets.find(equippingSet => equippingSet.set.name === artifactSetName).effectiveness >= max;
+  };
 
   // Filter characters that use the artifact set
-  const charactersUsesSet = Characters.filter(character =>
-    character.sets.some(cSet => cSet.artifactSets
-      .map(equppingSet => equppingSet.set.name)
-      .includes(artifactSetName)));
+  const charactersUsesSet = Characters.filter(getSetFromCharacter);
   if (!charactersUsesSet.length) return [];
+
+  // Filter characters that want the artifact set (compatibility 5; first priority)
+  const charactersWantSet = charactersUsesSet.filter(isEffectiveForCharacter(5));
+
+  // Filter characters that could use the artifact set (compatibility 3; second/third priority)
+  const charactersCouldUseSet = charactersUsesSet
+    .filter(isEffectiveForCharacter(3))
+    .filter(character => !charactersWantSet.includes(character));
+  if (!charactersCouldUseSet.length) return [];
+
+  // Calculate scores
+  const getScores = (characters: Character[]) => characters.map(character => {
+    const cSet = getSetFromCharacter(character);
+    const score = cSet.artifactSets.reduce((acc, equippingSet) => acc + set.checkIsGood(character, equippingSet), 0);
+
+    return {
+      character,
+      set,
+      score,
+      shouldSave: score > SHOULD_SAVE_THRESHOLD
+    } as SearchResultItem;
+  });
+
+  return [charactersWantSet, charactersCouldUseSet].map(getScores).flat();
 }
 
 function getPieceScore(
-  character: Character, 
-  artifactPartName: ArtifactPartName, 
-  mainStat: MainStatName, 
+  character: Character,
+  artifactPartName: ArtifactPartName,
+  mainStat: MainStatName,
   subStats: SubStatName[]
 ): number {
   const artifact = new Artifact(undefined, artifactPartName, mainStat, subStats);
