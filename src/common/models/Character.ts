@@ -1,4 +1,4 @@
-import { Element, Weapon, BonusAbility } from '../../types';
+import { Element, Weapon, BonusAbility } from '../types';
 import CharacterSet from './CharacterSet';
 
 export class Character {
@@ -9,6 +9,12 @@ export class Character {
     public bonusAbility: BonusAbility,
     public sets: CharacterSet[],
   ) {}
+
+  public needsHP(): boolean { return this.sets.some(set => set.talentStats.includes('HP')); }
+  public needsATK(): boolean { return this.sets.some(set => set.talentStats.includes('ATK')); }
+  public needsDEF(): boolean { return this.sets.some(set => set.talentStats.includes('DEF')); }
+  public needsER(): boolean { return this.sets.some(set => set.talentStats.includes('Energy Recharge')); }
+  public needsEM(): boolean { return this.sets.some(set => set.talentStats.includes('Elemental Mastery')); }
 }
 
 export default Character;

@@ -1,4 +1,4 @@
-import { StatName, StatValue } from "../../types";
+import { StatName, StatValue } from "../types";
 
 export class Stat {
   constructor(

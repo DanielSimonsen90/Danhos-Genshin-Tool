@@ -1,4 +1,4 @@
-import { Nullable } from '../../types';
+import { Nullable } from '../types';
 import Character from './Character';
 import { CharacterArtifactSet } from './CharacterArtifactSet';
 
