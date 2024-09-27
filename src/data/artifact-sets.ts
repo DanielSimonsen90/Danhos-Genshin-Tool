@@ -1,4 +1,4 @@
-import { AbilityType, Reaction } from "../types";
+import { AbilityType, Reaction } from "../common/types";
 import { ArtifactSet, Character, CharacterArtifactSet } from "../common/models";
 
 const threeStar = 5;
@@ -770,53 +770,3 @@ export const WanderersTroupe = new ArtifactSet(
     return value;
   }).sort().shift()
 );
-
-export const ArtifactSets = [
-  Adventurer,
-  ArchaicPetra,
-  Berserker,
-  BlizzardStrayer,
-  BloodstainedChivalry,
-  BraveHeart,
-  CrimsonWitchOfFlames,
-  DeepwoodMemories,
-  DefendersWill,
-  DesertPavilionChronicle,
-  EchoesOfAnOffering,
-  EmblemOfSeveredFate,
-  FlowerOfParadiseLost,
-  Gambler,
-  GildedDreams,
-  GladiatorsFinale,
-  HeartOfDepth,
-  HuskOfOpulentDreams,
-  Instructor,
-  Lavawalker,
-  LuckyDog,
-  MaidenBeloved,
-  MartialArtist,
-  NoblesseOblige,
-  NymphsDream,
-  OceanHuedClam,
-  PaleFlame,
-  PrayersOfDestiny,
-  PrayersOfIllumination,
-  PrayersOfWisdom,
-  PrayersOfSpringtime,
-  ResolutionOfSojourner,
-  RetracingBolide,
-  Scholar,
-  ShimenawasReminiscence,
-  TenacityOfTheMillelith,
-  TheExile,
-  ThunderingFury,
-  Thundersoother,
-  TinyMiracle,
-  TravelingDoctor,
-  VermillionHereafter,
-  ViridescentVenerer,
-  VourukashasGlow,
-  WanderersTroupe
-];
-
-export default ArtifactSets;
