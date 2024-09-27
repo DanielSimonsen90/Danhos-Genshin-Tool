@@ -1,4 +1,4 @@
-import { TalentStatName, AbilityType, Element, Weapon, BonusAbility } from '../../types';
+import { Element, Weapon, BonusAbility } from '../../types';
 import CharacterSet from './CharacterSet';
 
 export class Character {
@@ -7,10 +7,7 @@ export class Character {
     public element: Element,
     public weapon: Weapon,
     public bonusAbility: BonusAbility,
-    public onField: boolean,
     public sets: CharacterSet[],
-    public talentStat: TalentStatName,
-    public favoredAbility: AbilityType
   ) {}
 }
 

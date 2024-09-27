@@ -14,10 +14,15 @@ export type StatName =
   // | Elemental Skill Bonus
 
 export type AbilityType = 'Normal/Press' | 'Charged/Hold' | 'Plunging/Hold' | 'Skill/Ability' | 'Burst/Ult';
-export type BonusAbility = 'Shield' | 'Heal' | 'Buff ATK';
+export type BonusAbility = 'Nothing' | 'Shield' | 'Heal' | 'Buff ATK' | 'Self-heal' | 'Bond of Life' | 'Nightsouls Blessing'
 export type Weapon = 'Sword' | 'Claymore' | 'Polearm' | 'Bow' | 'Catalyst';
 export type Reaction = 
   | 'Vaporize' | 'Overloaded' | 'Melt' | 'Burning'
   | 'Frozen' | 'Shatter' | 'Burgeon' | 'Hyperbloom' | 'Bloom'
   | 'Electro-Charged' | 'Superconduct' | 'Quicken' | 'Aggravate' | 'Spread'
-  | 'Swirl' | 'Crystallize'
+  | 'Swirl' | 'Crystallize';
+
+export type CharacterSetName = `${
+  'On-field' | 'Off-field' | Reaction | 'Burst' | 'Freeze'} ${
+  'DPS' | 'Support'
+}`;
