@@ -1,6 +1,6 @@
 import * as CharacterData from '@/data/characters';
 import * as ArtifactSetData from '@/data/artifact-sets';
-import { Artifact, ArtifactSet, Character, Stat } from '@/common/models';
+import { Artifact, ArtifactSet, Character } from '@/common/models';
 import type { ArtifactPartName, MainStatName, SubStatName } from '@/common/types';
 
 type SearchResultItem = {
@@ -8,6 +8,10 @@ type SearchResultItem = {
   set: ArtifactSet;
   score: number;
   shouldSave: boolean;
+};
+type SearchResult = { 
+  byArtifact: SearchResultItem[]; 
+  byCharacterRecommendation: SearchResultItem[]; 
 };
 
 const SHOULD_SAVE_THRESHOLD = 0;
@@ -55,8 +59,8 @@ export function SearchArtifactSets(
 export function SearchCharacterRecommendations(
   artifactSetName: keyof typeof ArtifactSetData,
   artifactPartName: ArtifactPartName,
-  mainStat: Stat,
-  subStats: Stat[],
+  mainStat: MainStatName,
+  subStats: SubStatName[],
 ): SearchResultItem[] {
   if (!ArtifactSetNames.includes(artifactSetName)) throw new Error(`Artifact set "${artifactSetName}" not found in data.`);
   const set = ArtifactSets.find(set => set.name === artifactSetName);
@@ -87,18 +91,34 @@ export function SearchCharacterRecommendations(
   // Calculate scores
   const getScores = (characters: Character[]) => characters.map(character => {
     const cSet = getSetFromCharacter(character);
-    const score = cSet.artifactSets.reduce((acc, equippingSet) => acc + set.checkIsGood(character, equippingSet), 0);
+    const setScore = cSet.artifactSets.reduce((acc, equippingSet) => acc + set.checkIsGood(character, equippingSet), 0);
+    const partScore = getPieceScore(character, artifactPartName, mainStat, subStats);
+    const score = setScore + partScore;
 
     return {
       character,
       set,
       score,
-      shouldSave: score > SHOULD_SAVE_THRESHOLD
+      shouldSave: score > SHOULD_SAVE_THRESHOLD // TODO: Play around with threshold
     } as SearchResultItem;
   });
 
   return [charactersWantSet, charactersCouldUseSet].map(getScores).flat();
 }
+
+export function Search(
+  artifactSetName: keyof typeof ArtifactSetData,
+  artifactPartName: ArtifactPartName,
+  mainStat: MainStatName,
+  subStats: SubStatName[],
+): SearchResult {
+  return {
+    byArtifact: SearchArtifactSets(artifactSetName, artifactPartName, mainStat, subStats),
+    byCharacterRecommendation: SearchCharacterRecommendations(artifactSetName, artifactPartName, mainStat, subStats)
+  };
+}
+
+export default Search;
 
 function getPieceScore(
   character: Character,
