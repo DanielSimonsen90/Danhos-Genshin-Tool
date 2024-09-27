@@ -1,7 +1,5 @@
+import Router from "../Router";
+
 export default function App() {
-  return (
-    <div>
-      Hello, Electron, from App!
-    </div>
-  );
+  return <Router />
 }

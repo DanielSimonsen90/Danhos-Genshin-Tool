@@ -7,4 +7,4 @@ export const plugins = [
   new ForkTsCheckerWebpackPlugin({
     logger: 'webpack-infrastructure',
   }),
-];
+] as any[];
