@@ -12,7 +12,7 @@ export type SearchResult = {
   byArtifact: SearchResultItem[];
   byCharacterRecommendation: SearchResultItem[];
   combined: SearchResultItem[];
-  _form: FormData;
+  id?: string;
 };
 type SearchResultItem = {
   character: Character;
@@ -160,8 +160,8 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     debugLog('groupEnd');
     return result;
   }
-  public search({ _form, artifactPartName, artifactSetName, mainStat, subStats, id }: ExpectedFormData): SearchResult {
-    const cachedResult = CacheStore.findObject('searchResults', '_form', data => JSON.stringify(data._form) === JSON.stringify(_form));
+  public search({ artifactPartName, artifactSetName, mainStat, subStats, id }: ExpectedFormData): SearchResult {
+    const cachedResult = CacheStore.findObject('searchResults', data => data.id === id);
     if (cachedResult) {
       debugLog('Cached result found', cachedResult);
       return this.lastResult.search = cachedResult;
@@ -184,7 +184,6 @@ export const SearchService = new class SearchService extends BaseService<LastRes
       byArtifact,
       byCharacterRecommendation,
       combined,
-      _form,
     };
     CacheStore.update('searchResults', { [id]: result }, '{}');
     debugLog('Result', result);

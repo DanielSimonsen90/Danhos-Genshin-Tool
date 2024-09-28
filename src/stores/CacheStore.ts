@@ -57,10 +57,10 @@ export const CacheStore = new class CacheStore {
   public findObject<
     TKey extends CacheKeys,
     TChildKey extends keyof Cache[TKey]
-  >(key: TKey, childKey: TChildKey, callback: (obj: Cache[TKey][TChildKey]) => boolean): Cache[TKey][TChildKey] | undefined {
+  >(key: TKey, callback: (obj: Cache[TKey][TChildKey]) => boolean): Cache[TKey][TChildKey] | undefined {
     const item = this.cache[key];
     if (typeof item !== 'object' && !Array.isArray(item)) return undefined;
-    if (Array.isArray(item)) return item.find(i => i[childKey] !== undefined)?.[childKey];
+    if (Array.isArray(item)) return item.find(callback);
 
     return Object.values(item).find(callback) as Cache[TKey][TChildKey];
   }

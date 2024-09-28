@@ -8,6 +8,5 @@ export type ExpectedFormData = {
   mainStat: MainStatName;
   subStats: SubStatName[];
 } & {
-  _form: FormData;
   id: string;
 }
