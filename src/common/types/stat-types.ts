@@ -20,7 +20,7 @@ export type TalentStatName = BasicStatName | ElementalMastery | EnergyRecharge;
 export type FlowerStatName = Percentage<HP>;
 export type FeatherStatName = Percentage<ATK>;
 export type SandsStatName = Percentage<BasicStatName> | EnergyRecharge | ElementalMastery;
-export type GobletStatName = Percentage<BasicStatName> | ElementalDMGBonus | PhysicalDMGBonus;
+export type GobletStatName = Percentage<BasicStatName> | ElementalDMGBonus | PhysicalDMGBonus | ElementalMastery;
 export type CircletStatName = Percentage<BasicStatName> | Crits | HealingBonus | ElementalMastery;
 
 export type StatName = 

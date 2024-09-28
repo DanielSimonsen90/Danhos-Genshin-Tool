@@ -428,10 +428,14 @@ export const Freminet = new Character("Freminet", "Cryo", "Claymore", "Nothing",
 
 export const Furina = new Character("Furina", "Hydro", "Sword", "Heal", [
   new CharacterSet("Off-field Support", ["HP"], "Skill/Ability", false, [
-    new CharacterArtifactSet(Sets.NymphsDream, 4, 5),
-    new CharacterArtifactSet(Sets.MaidenBeloved, 2, 4),
-    new CharacterArtifactSet(Sets.OceanHuedClam, 2, 4),
-    new CharacterArtifactSet(Sets.HeartOfDepth, 2, 4),
+    new CharacterArtifactSet(Sets.GoldenTroupe, 4, 5),
+    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 4),
+    new CharacterArtifactSet(Sets.GoldenTroupe, 2, 3),
+    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 2, 3),
+    new CharacterArtifactSet(Sets.GoldenTroupe, 2, 2),
+    new CharacterArtifactSet(Sets.HeartOfDepth, 2, 2),
+    new CharacterArtifactSet(Sets.HeartOfDepth, 2, 1),
+    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 2, 1),
   ]),
 ]);
 

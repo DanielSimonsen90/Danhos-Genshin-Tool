@@ -1,7 +1,7 @@
-import * as CharacterData from '@/data/characters';
-import * as ArtifactSetData from '@/data/artifact-sets';
 import { Artifact, ArtifactSet, Character } from '@/common/models';
 import type { ArtifactPartName, MainStatName, SubStatName } from '@/common/types';
+import type * as ArtifactSetData from '@/data/artifact-sets';
+import { DataStore } from '@/stores';
 
 type SearchResultItem = {
   character: Character;
@@ -23,9 +23,7 @@ const ARTIFACT_PIECES_SCORES: Record<ArtifactPartName, number> = {
   Sands: 2,
 };
 
-const ArtifactSets = Object.values(ArtifactSetData);
-const ArtifactSetNames = Object.keys(ArtifactSetData) as (keyof typeof ArtifactSetData)[];
-const Characters = Object.values(CharacterData);
+const { ArtifactSetNames, ArtifactSets, Characters } = DataStore;
 
 export function SearchArtifactSets(
   artifactSetName: keyof typeof ArtifactSetData,
@@ -41,7 +39,7 @@ export function SearchArtifactSets(
     const setScoreOnCharacter = character.sets.reduce((acc, cSet) => {
       const compatibility = cSet.artifactSets.find(equippingSet =>
         equippingSet.set.name === artifactSetName
-      ).effectiveness;
+      )?.effectiveness ?? 0;
       return acc + compatibility;
     }, 0);
     const pieceScore = getPieceScore(character, artifactPartName, mainStat, subStats);
@@ -53,7 +51,7 @@ export function SearchArtifactSets(
       score,
       shouldSave: score > SHOULD_SAVE_THRESHOLD // TODO: Play around with threshold
     } as SearchResultItem;
-  });
+  }).sort((a, b) => b.score - a.score);
 }
 
 export function SearchCharacterRecommendations(
@@ -72,12 +70,11 @@ export function SearchCharacterRecommendations(
   );
   const isEffectiveForCharacter = (max: number) => (character: Character) => {
     const set = getSetFromCharacter(character);
-    return set.artifactSets.find(equippingSet => equippingSet.set.name === artifactSetName).effectiveness >= max;
+    return set.artifactSets.find(equippingSet => equippingSet.set.name === artifactSetName)?.effectiveness ?? 0 >= max;
   };
 
   // Filter characters that use the artifact set
   const charactersUsesSet = Characters.filter(getSetFromCharacter);
-  if (!charactersUsesSet.length) return [];
 
   // Filter characters that want the artifact set (compatibility 5; first priority)
   const charactersWantSet = charactersUsesSet.filter(isEffectiveForCharacter(5));
@@ -86,7 +83,8 @@ export function SearchCharacterRecommendations(
   const charactersCouldUseSet = charactersUsesSet
     .filter(isEffectiveForCharacter(3))
     .filter(character => !charactersWantSet.includes(character));
-  if (!charactersCouldUseSet.length) return [];
+
+  if (!charactersWantSet.length && !charactersCouldUseSet.length) return [];
 
   // Calculate scores
   const getScores = (characters: Character[]) => characters.map(character => {
@@ -103,7 +101,7 @@ export function SearchCharacterRecommendations(
     } as SearchResultItem;
   });
 
-  return [charactersWantSet, charactersCouldUseSet].map(getScores).flat();
+  return [charactersWantSet, charactersCouldUseSet].map(getScores).flat().sort((a, b) => b.score - a.score);
 }
 
 export function Search(
