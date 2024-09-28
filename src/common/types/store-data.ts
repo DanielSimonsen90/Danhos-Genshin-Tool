@@ -7,4 +7,7 @@ export type ExpectedFormData = {
   artifactPartName: ArtifactPartName;
   mainStat: MainStatName;
   subStats: SubStatName[];
-};
+} & {
+  _form: FormData;
+  id: string;
+}

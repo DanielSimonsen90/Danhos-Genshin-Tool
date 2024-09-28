@@ -1,9 +1,11 @@
 import { ExpectedFormData } from "@/common/types/store-data";
+import { SearchResult } from '@/services/SearchService';
 
 type DefaultValue = {} | [];
 type DefaultValueString = '[]' | '{}';
 type Cache = {
   searchHistory: Record<string, ExpectedFormData>;
+  searchResults: Record<string, SearchResult>
 } & {
   [key: string]: DefaultValue;
 };
@@ -51,6 +53,16 @@ export const CacheStore = new class CacheStore {
 
   public has(key: CacheKeys): boolean {
     return key in this.cache;
+  }
+  public findObject<
+    TKey extends CacheKeys,
+    TChildKey extends keyof Cache[TKey]
+  >(key: TKey, childKey: TChildKey, callback: (obj: Cache[TKey][TChildKey]) => boolean): Cache[TKey][TChildKey] | undefined {
+    const item = this.cache[key];
+    if (typeof item !== 'object' && !Array.isArray(item)) return undefined;
+    if (Array.isArray(item)) return item.find(i => i[childKey] !== undefined)?.[childKey];
+
+    return Object.values(item).find(callback) as Cache[TKey][TChildKey];
   }
 
   public clear(): void {

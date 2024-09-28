@@ -20,37 +20,31 @@ export default function SearchQuery() {
       <br />
       <ArtifactImage set={artifactSetName} name={artifactPartName} />
       <h1>{mainStat} & {subStats.join(', ')}</h1>
-      <div>
-        <h2>By Artifact</h2>
-        {results.byArtifact.map(item => (
-          <li key={item.character.name}>
-            <label>{item.character.name} - {item.score}</label>
-            <input type="checkbox" checked={item.shouldSave} readOnly />
-          </li>
-        ))}
-      </div>
-      <div>
-        <h2>By Character Recommendation</h2>
-        {results.byCharacterRecommendation.map(item => (
-          <li key={item.character.name}>
-            <label>{item.character.name} - {item.score}</label>
-            <input type="checkbox" checked={item.shouldSave} readOnly />
-          </li>
-        ))}
-      </div>
+      {results ? (<>
+        <h2>Results</h2>
+        <ul>
+          {results.combined.map(result => (
+            <li key={result.character.name}>
+              <label>{result.character.name} - {result.score}</label>
+              <input type="checkbox" readOnly checked={result.shouldSave} />
+            </li>
+          ))}
+        </ul>
+      </>) : <p>No results</p>}
+
     </div>
   );
 }
 
 function getSearchResultsFromQuery(query: string) {
   const formData = CacheStore.getFromItem('searchHistory', query, '{}');
-  const { artifactSetName, artifactPartName, mainStat, subStats } = formData;
-  const results = SearchService.search(
-    pascalCaseFromSnakeCase(artifactSetName),
-    artifactPartName,
-    mainStat,
-    subStats
-  );
+  debugLog('getSearchResultsFromQuery cached', { query, formData });
+  const { artifactSetName } = formData;
+  const results = SearchService.search({
+    ...formData,
+    artifactSetName: pascalCaseFromSnakeCase(artifactSetName),
+  });
 
+  debugLog('getSearchResultsFromQuery result', { query, results });
   return { formData, results };
 }

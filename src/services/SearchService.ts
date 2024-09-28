@@ -1,21 +1,24 @@
 import { Artifact, ArtifactSet, Character } from '@/common/models';
 import type { ArtifactPartName, MainStatName, SubStatName } from '@/common/types';
-import type * as ArtifactSetData from '@/data/artifact-sets';
-import { DataStore } from '@/stores';
-import BaseService from './BaseService';
+import { ExpectedFormData } from '@/common/types/store-data';
 import { DebugLog } from '@/common/functions/dev';
+import type * as ArtifactSetData from '@/data/artifact-sets';
+import { CacheStore, DataStore } from '@/stores';
+import BaseService from './BaseService';
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchService);
 
+export type SearchResult = {
+  byArtifact: SearchResultItem[];
+  byCharacterRecommendation: SearchResultItem[];
+  combined: SearchResultItem[];
+  _form: FormData;
+};
 type SearchResultItem = {
   character: Character;
   set: ArtifactSet;
   score: number;
   shouldSave: boolean;
-};
-type SearchResult = {
-  byArtifact: SearchResultItem[];
-  byCharacterRecommendation: SearchResultItem[];
 };
 type LastResult = {
   search: SearchResult;
@@ -25,7 +28,7 @@ type LastResult = {
   mainStatRarity: number;
 };
 
-const SHOULD_SAVE_THRESHOLD = 40;
+const SHOULD_SAVE_THRESHOLD = 100;
 const ARTIFACT_PIECES_SCORES: Record<ArtifactPartName, number> = {
   Flower: 0,
   Feather: 0,
@@ -71,14 +74,14 @@ export const SearchService = new class SearchService extends BaseService<LastRes
       debugLog('groupEnd');
 
       const pieceScore = this._getPartScore(character, artifactPartName, mainStat, subStats);
-      const score = setScoreOnCharacter + pieceScore;
+      const score = Math.round(setScoreOnCharacter + pieceScore);
       debugLog('Score', score);
 
       const result = {
         character,
         set,
         score,
-        shouldSave: score > SHOULD_SAVE_THRESHOLD // TODO: Play around with threshold
+        shouldSave: score > SHOULD_SAVE_THRESHOLD 
       } as SearchResultItem;
       debugLog('Result', result);
       debugLog('groupEnd');
@@ -134,14 +137,14 @@ export const SearchService = new class SearchService extends BaseService<LastRes
         const cSet = getSetFromCharacter(character);
         const setScore = cSet.artifactSets.reduce((acc, equippingSet) => acc + set.checkIsGood(character, equippingSet), 0);
         const partScore = this._getPartScore(character, artifactPartName, mainStat, subStats);
-        const score = setScore + partScore;
+        const score = Math.round(setScore + partScore);
         debugLog(`Score data for ${character.name}`, { setScore, partScore, score, SHOULD_SAVE_THRESHOLD });
 
         return {
           character,
           set,
           score,
-          shouldSave: score > SHOULD_SAVE_THRESHOLD // TODO: Play around with threshold
+          shouldSave: score > SHOULD_SAVE_THRESHOLD 
         } as SearchResultItem;
       });
       debugLog('Result', result);
@@ -157,17 +160,35 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     debugLog('groupEnd');
     return result;
   }
-  public search(
-    artifactSetName: keyof typeof ArtifactSetData,
-    artifactPartName: ArtifactPartName,
-    mainStat: MainStatName,
-    subStats: SubStatName[],
-  ): SearchResult {
-    // TODO: Cache results
-    return this.lastResult.search = {
-      byArtifact: this.searchArtifactSets(artifactSetName, artifactPartName, mainStat, subStats),
-      byCharacterRecommendation: this.searchCharacterRecommendations(artifactSetName, artifactPartName, mainStat, subStats)
+  public search({ _form, artifactPartName, artifactSetName, mainStat, subStats, id }: ExpectedFormData): SearchResult {
+    const cachedResult = CacheStore.findObject('searchResults', '_form', data => JSON.stringify(data._form) === JSON.stringify(_form));
+    if (cachedResult) {
+      debugLog('Cached result found', cachedResult);
+      return this.lastResult.search = cachedResult;
+    }
+    
+    const args = [artifactSetName, artifactPartName, mainStat, subStats] as const;
+    const byArtifact = this.searchArtifactSets(...args);
+    const byCharacterRecommendation = this.searchCharacterRecommendations(...args);
+    const combined = [...byArtifact, ...byCharacterRecommendation].reduce((acc, item) => {
+      const existing = acc.find(e => e.character.name === item.character.name);
+      if (existing) {
+        existing.score = Math.round(existing.score + item.score);
+        existing.shouldSave = existing.score > SHOULD_SAVE_THRESHOLD;
+        return acc;
+      }
+      return [...acc, item];
+    }, [] as SearchResultItem[]).sort((a, b) => b.score - a.score);
+
+    const result = this.lastResult.search = {
+      byArtifact,
+      byCharacterRecommendation,
+      combined,
+      _form,
     };
+    CacheStore.update('searchResults', { [id]: result }, '{}');
+    debugLog('Result', result);
+    return result;
   }
 
   private _getPartScore(

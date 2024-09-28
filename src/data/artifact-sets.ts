@@ -113,7 +113,7 @@ export const BraveHeart = new ArtifactSet(
  * @four Overloaded & Burning DMG +40%. Vaporize & Melt DMG +15%. Using Skill (ability) increases 2-Piece Set effects by 50% (Pyro DMG Bonus +30%) for 10s. Max 3 stacks
  */
 export const CrimsonWitchOfFlames = new ArtifactSet(
-  "Crimson Witch of Flames",
+  "Crimson Witch Of Flames",
   "Pyro DMG Bonus +15%",
   "Overloaded & Burning DMG +40%. Vaporize & Melt DMG +15%. Using Skill (ability) increases 2-Piece Set effects by 50% (Pyro DMG Bonus +30%) for 10s. Max 3 stacks",
   (c, set) => c.sets.map(cSet => {
@@ -171,12 +171,12 @@ export const DesertPavilionChronicle = new ArtifactSet(
 
 /**
  * @two ATK +18%
- * @four When Normal Attack hit opponents, 36% chance to trigger "Valley Rite": Normal Attack DMG +70% of ATK. Effect is dispelled .05s after Normal Attack deals DMG. If "Valley Rite" was not triggered, odds of triggering +20%. Effect can trigger once every .2s.
+ * @four When Normal Attack hit opponents, 36% chance to trigger "Valley Rite": Normal Attack DMG +70% Of ATK. Effect is dispelled .05s after Normal Attack deals DMG. If "Valley Rite" was not triggered, odds Of triggering +20%. Effect can trigger once every .2s.
  */
 export const EchoesOfAnOffering = new ArtifactSet(
-  "Echoes of an Offering",
+  "Echoes Of An Offering",
   "ATK +18%",
-  `When Normal Attack hit opponents, 36% chance to trigger "Valley Rite": Normal Attack DMG +70% of ATK. Effect is dispelled .05s after Normal Attack deals DMG. If "Valley Rite" was not triggered, odds of triggering +20%. Effect can trigger once every .2s.`,
+  `When Normal Attack hit opponents, 36% chance to trigger "Valley Rite": Normal Attack DMG +70% Of ATK. Effect is dispelled .05s after Normal Attack deals DMG. If "Valley Rite" was not triggered, odds Of triggering +20%. Effect can trigger once every .2s.`,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.talentStats.includes('ATK')) value += correctElement;
@@ -187,12 +187,12 @@ export const EchoesOfAnOffering = new ArtifactSet(
 
 /**
  * @two Energy Recharge +20%
- * @four Burst (ult) DMG +25% of Energy Recharge. Max 75% bonus DMG can be obtained in this way.
+ * @four Burst (ult) DMG +25% Of Energy Recharge. Max 75% bonus DMG can be obtained in this way.
  */
 export const EmblemOfSeveredFate = new ArtifactSet(
-  "Emblem of Severed Fate",
+  "Emblem Of Severed Fate",
   "Energy Recharge +20%",
-  "Burst (ult) DMG +25% of Energy Recharge. Max 75% bonus DMG can be obtained in this way.",
+  "Burst (ult) DMG +25% Of Energy Recharge. Max 75% bonus DMG can be obtained in this way.",
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.talentStats.includes('Energy Recharge')) value += correctElement;
@@ -203,12 +203,12 @@ export const EmblemOfSeveredFate = new ArtifactSet(
 
 /**
  * @two Elemental Mastery +80
- * @four Wearer's Bloom, Hyperbloom & Burgeon reaction DMG +40%. After reaction, +25% DMG of effect. Max 4 stacks where each stack lasts 10s. Can only trigger once per second. Can trigger off-field.
+ * @four Wearer's Bloom, Hyperbloom & Burgeon reaction DMG +40%. After reaction, +25% DMG Of effect. Max 4 stacks where each stack lasts 10s. Can only trigger once per second. Can trigger off-field.
  */
 export const FlowerOfParadiseLost = new ArtifactSet(
-  "Flower of Paradise Lost",
+  "Flower Of Paradise Lost",
   "Elemental Mastery +80",
-  "Wearer's Bloom, Hyperbloom & Burgeon reaction DMG +40%. After reaction, +25% DMG of effect. Max 4 stacks where each stack lasts 10s. Can only trigger once per second. Can trigger off-field.",
+  "Wearer's Bloom, Hyperbloom & Burgeon reaction DMG +40%. After reaction, +25% DMG Of effect. Max 4 stacks where each stack lasts 10s. Can only trigger once per second. Can trigger off-field.",
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.talentStats.includes('Elemental Mastery')) value += correctElement;
@@ -222,9 +222,9 @@ export const FlowerOfParadiseLost = new ArtifactSet(
 );
 
 export const FragmentOfHarmonicWhimsy = new ArtifactSet(
-  "Fragment of Harmonic Whimsy",
+  "Fragment Of Harmonic Whimsy",
   "ATK +18%",
-  "When value of Bond of Life changes, character deals 18% increased DMG for 6s. Max 3 stacks.",
+  "When value Of Bond Of Life changes, character deals 18% increased DMG for 6s. Max 3 stacks.",
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.talentStats.includes('ATK')) value += correctElement;
@@ -252,12 +252,12 @@ export const Gambler = new ArtifactSet(
 
 /**
  * @two Elemental Mastery +80
- * @four Within 8s of triggering Elemental Reaction, wearer obtains buff based on Elemental Type of other party members. ATK +14% for each member with same Element as wearer. Elemental Mastery +50 for each member with different Element. Each buff can count up to 3 characters. Effect triggerable 1/8s. Can trigger off-field.
+ * @four Within 8s Of triggering Elemental Reaction, wearer obtains buff based on Elemental Type Of other party members. ATK +14% for each member with same Element as wearer. Elemental Mastery +50 for each member with different Element. Each buff can count up to 3 characters. Effect triggerable 1/8s. Can trigger off-field.
  */
 export const GildedDreams = new ArtifactSet(
   "Gilded Dreams",
   "Elemental Mastery +80",
-  "Within 8s of triggering Elemental Reaction, wearer obtains buff based on Elemental Type of other party members. ATK +14% for each member with same Element as wearer. Elemental Mastery +50 for each member with different Element. Each buff can count up to 3 characters. Effect triggerable 1/8s. Can trigger off-field.",
+  "Within 8s Of triggering Elemental Reaction, wearer obtains buff based on Elemental Type Of other party members. ATK +14% for each member with same Element as wearer. Elemental Mastery +50 for each member with different Element. Each buff can count up to 3 characters. Effect triggerable 1/8s. Can trigger off-field.",
   c => c.sets.map(cSet => 
     cSet.talentStats.includes('Elemental Mastery') ? correctElement : 0
   ).sort().shift()
@@ -304,7 +304,7 @@ export const GoldenTroupe = new ArtifactSet(
  * @four After using Skill (ability); Normal and Charged Attack DMG +30% for 15s
  */
 export const HeartOfDepth = new ArtifactSet(
-  "Heart of Depth",
+  "Heart Of Depth",
   "Hydro DMG Bonus +15%",
   "After using Skill (ability); Normal and Charged Attack DMG +30% for 15s",
   (c, set) => c.sets.map(cSet => {
@@ -320,7 +320,7 @@ export const HeartOfDepth = new ArtifactSet(
  * @four Wearer obtains "Curiosity" effect in condition: On field and hit opponent with Geo attack, gain 1 stack 1/.3s. Max 4 stacks, each providing 6% DEF & Geo DMG Bonus. After 6s without gaining stack, lose 1 stack.
  */
 export const HuskOfOpulentDreams = new ArtifactSet(
-  "Husk of Opulent Dreams",
+  "Husk Of Opulent Dreams",
   "DEF +30%",
   `Wearer obtains "Curiosity" effect in condition: On field and hit opponent with Geo attack, gain 1 stack 1/.3s. Max 4 stacks, each providing 6% DEF & Geo DMG Bonus. After 6s without gaining stack, lose 1 stack.`,
   (c, set) => c.sets.map(cSet => {
@@ -449,12 +449,12 @@ export const NoblesseOblige = new ArtifactSet(
 
 /**
  * @two Hydro DMG Bonus +15%
- * @four After Normal/Charged/Plunging Attacks or Skill/Burst hits opponents, trigger 1 stack of "Mirrored Nymph" for 8s. 1/2/3 stacks of "Mirrored Nymph" +ATK 7/16/25% and +Hydro DMG Bonus 4/9/15%. Stacks created by Normal/Charged/Plunging Attacks or Skill/Burst are independent.
+ * @four After Normal/Charged/Plunging Attacks or Skill/Burst hits opponents, trigger 1 stack Of "Mirrored Nymph" for 8s. 1/2/3 stacks Of "Mirrored Nymph" +ATK 7/16/25% and +Hydro DMG Bonus 4/9/15%. Stacks created by Normal/Charged/Plunging Attacks or Skill/Burst are independent.
  */
 export const NymphsDream = new ArtifactSet(
   "Nymph's Dream",
   "Hydro DMG Bonus +15%",
-  `After Normal/Charged/Plunging Attacks or Skill/Burst hits opponents, trigger 1 stack of "Mirrored Nymph" for 8s. 1/2/3 stacks of "Mirrored Nymph" +ATK 7/16/25% and +Hydro DMG Bonus 4/9/15%. Stacks created by Normal/Charged/Plunging Attacks or Skill/Burst are independent.`,
+  `After Normal/Charged/Plunging Attacks or Skill/Burst hits opponents, trigger 1 stack Of "Mirrored Nymph" for 8s. 1/2/3 stacks Of "Mirrored Nymph" +ATK 7/16/25% and +Hydro DMG Bonus 4/9/15%. Stacks created by Normal/Charged/Plunging Attacks or Skill/Burst are independent.`,
   (c, set) => {
     let value = 0;
     if (c.element === 'Hydro') value += correctElement;
@@ -476,12 +476,12 @@ export const ObsidianCodex = new ArtifactSet(
 
 /**
  * @two Healing Bonus +15%
- * @four Wearer heals party member, Sea-Dyed Foam appears for 3s, accumulating HP recovered (incl. overhealth). Sea-Dyed Foam explodes for 90% of accumulated healing after duration. Sea-Dyed Foam produced 1/3.5s. Max 30k hp accumulation (incl. overhealth). Only 1 Sea-Dyed Foam active at a time. Effect can trigger off-field.
+ * @four Wearer heals party member, Sea-Dyed Foam appears for 3s, accumulating HP recovered (incl. overhealth). Sea-Dyed Foam explodes for 90% Of accumulated healing after duration. Sea-Dyed Foam produced 1/3.5s. Max 30k hp accumulation (incl. overhealth). Only 1 Sea-Dyed Foam active at a time. Effect can trigger off-field.
  */
 export const OceanHuedClam = new ArtifactSet(
   "Ocean-Hued Clam",
   "Healing Bonus +15%",
-  "Wearer heals party member, Sea-Dyed Foam appears for 3s, accumulating HP recovered (incl. overhealth). Sea-Dyed Foam explodes for 90% of accumulated healing after duration. Sea-Dyed Foam produced 1/3.5s. Max 30k hp accumulation (incl. overhealth). Only 1 Sea-Dyed Foam active at a time. Effect can trigger off-field.",
+  "Wearer heals party member, Sea-Dyed Foam appears for 3s, accumulating HP recovered (incl. overhealth). Sea-Dyed Foam explodes for 90% Of accumulated healing after duration. Sea-Dyed Foam produced 1/3.5s. Max 30k hp accumulation (incl. overhealth). Only 1 Sea-Dyed Foam active at a time. Effect can trigger off-field.",
   c => c.bonusAbility === 'Heal' ? correctElement : 0
 );
 
@@ -502,20 +502,20 @@ export const PaleFlame = new ArtifactSet(
 );
 
 /** @two Affected by Hydro for 40% less time. */
-export const PrayersOfDestiny = new ArtifactSet("Prayers for Destiny", "Affected by Hydro for 40% less time.", "", () => 0);
+export const PrayersOfDestiny = new ArtifactSet("Prayers For Destiny", "Affected by Hydro for 40% less time.", "", () => 0);
 /** @two Affected by Pyro for 40% less time. */
-export const PrayersOfIllumination = new ArtifactSet("Prayers for Illumination", "Affected by Pyro for 40% less time.", "", () => 0);
+export const PrayersOfIllumination = new ArtifactSet("Prayers For Illumination", "Affected by Pyro for 40% less time.", "", () => 0);
 /** @two Affected by Electro for 40% less time. */
-export const PrayersOfWisdom = new ArtifactSet("Prayers for Wisdom", "Affected by Electro for 40% less time.", "", () => 0);
+export const PrayersOfWisdom = new ArtifactSet("Prayers For Wisdom", "Affected by Electro for 40% less time.", "", () => 0);
 /** @two Affected by Cryo for 40% less time. */
-export const PrayersOfSpringtime = new ArtifactSet("Prayers to Springtime", "Affected by Cryo for 40% less time.", "", () => 0);
+export const PrayersOfSpringtime = new ArtifactSet("Prayers To Springtime", "Affected by Cryo for 40% less time.", "", () => 0);
 
 /**
  * @two ATK +18%
  * @four Charged Attack CRIT Rate +30%
  */
 export const ResolutionOfSojourner = new ArtifactSet(
-  "Resolution of Sojourner",
+  "Resolution Of Sojourner",
   "ATK +18%",
   "Charged Attack CRIT Rate +30%",
   (c, set) => c.sets.map(cSet => {
@@ -564,7 +564,7 @@ export const Scholar = new ArtifactSet(
  * @four After equipping character triggers reaction related to their elemental type, all nearby party members gain 12% Elemental DMG Bonus for elemental types involved in said reaction for 15s. If equipping character is in Nightsoul's Blessing state when triggering effect, all nearby party members gain additional 28% Elemental DMG Bonus for elemental types involved in said reaction 20s. Can trigger off-field.
  */
 export const ScrollOfTheHeroOfCinderCity = new ArtifactSet(
-  "Scroll of the Hero of Cinder City",
+  "Scroll Of The Hero Of Cinder City",
   "When nearby party member triggers Nightsoul Burst, equipping chracater regenerates 6 elemental energy.",
   "After equipping character triggers reaction related to their elemental type, all nearby party members gain 12% Elemental DMG Bonus for elemental types involved in said reaction for 15s. If equipping character is in Nightsoul's Blessing state when triggering effect, all nearby party members gain additional 28% Elemental DMG Bonus for elemental types involved in said reaction 20s. Can trigger off-field.",
   (c, set) => c.sets.map(cSet => {
@@ -592,12 +592,12 @@ export const ShimenawasReminiscence = new ArtifactSet(
 
 /**
  * @two Healing Bonus +15%
- * @four When equipping character heals party member, Yearning effect created for 6s, which records total healing (and overflow) amount provided. When duration expires, Yearning turns into Waves of Days Past effect: When active party member hits opponent with normal-, charged-, plunging attack, elemental skill or burst, DMG dealt +8% of recorded amount. Effect removed after 5x usage or 10s.
+ * @four When equipping character heals party member, Yearning effect created for 6s, which records total healing (and overflow) amount provided. When duration expires, Yearning turns into Waves Of Days Past effect: When active party member hits opponent with normal-, charged-, plunging attack, elemental skill or burst, DMG dealt +8% Of recorded amount. Effect removed after 5x usage or 10s.
  */
 export const SongOfDaysPast = new ArtifactSet(
-  "Song of Days Past",
+  "Song Of Days Past",
   "Healing Bonus +15%",
-  "When equipping character heals party member, Yearning effect created for 6s, which records total healing (and overflow) amount provided. When duration expires, Yearning turns into Waves of Days Past effect: When active party member hits opponent with normal-, charged-, plunging attack, elemental skill or burst, DMG dealt +8% of recorded amount. Effect removed after 5x usage or 10s.",
+  "When equipping character heals party member, Yearning effect created for 6s, which records total healing (and overflow) amount provided. When duration expires, Yearning turns into Waves Of Days Past effect: When active party member hits opponent with normal-, charged-, plunging attack, elemental skill or burst, DMG dealt +8% Of recorded amount. Effect removed after 5x usage or 10s.",
   c => c.bonusAbility === 'Heal' ? correctElement : 0
 );
 
@@ -606,7 +606,7 @@ export const SongOfDaysPast = new ArtifactSet(
  * @four Skill (ability) hits opponent, +20% ATK & +30% Shield Strength for 3s for all party members. Can trigger off-field
  */
 export const TenacityOfTheMillelith = new ArtifactSet(
-  "Tenacity of the Millelith",
+  "Tenacity Of The Millelith",
   "HP +20%",
   "Skill (ability) hits opponent, +20% ATK & +30% Shield Strength for 3s for all party members. Can trigger off-field",
   (c, set) => c.sets.map(cSet => {

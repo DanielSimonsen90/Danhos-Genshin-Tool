@@ -21,6 +21,7 @@ export default function Search() {
     }
 
     const searchId = generateId();
+    data.id = searchId;
     CacheStore.update('searchHistory', { [searchId]: data }, '{}');
     navigate(`/search/${searchId}`);
   });
