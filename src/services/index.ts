@@ -1,2 +1,2 @@
-export * as ImageService from './ImageService';
-export * as SearchService from './SearchService';
+export * from './ImageService';
+export * from './SearchService';

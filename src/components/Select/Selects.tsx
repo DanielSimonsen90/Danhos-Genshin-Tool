@@ -49,9 +49,9 @@ export const SelectMainStat = ({
     : artifactPartName === 'Goblet' ? [
       'HP%', 'ATK%', 'DEF%', 
       'Elemental Mastery', 'Physical DMG Bonus',
-      'Anemo DMG Bonus', 'Dendro DMG Bonus', 'Geo DMG Bonus', 
-      'Electro DMG Bonus', 'Hydro DMG Bonus', 'Pyro DMG Bonus', 
-      'Cryo DMG Bonus',
+      'Anemo DMG Bonus', 'Cryo DMG Bonus', 'Dendro DMG Bonus', 
+      'Electro DMG Bonus', 'Geo DMG Bonus', 
+      'Hydro DMG Bonus', 'Pyro DMG Bonus', 
     ] as MainStatMap['Goblet'][]
     : artifactPartName === 'Circlet' ? [
       'HP%', 'ATK%', 'DEF%', 
@@ -69,7 +69,7 @@ export const SelectMainStat = ({
 
 export const SelectSubStat = (
   props: PublicMultipleProps<SubStatName>
-) => <SelectMultiple
+) => <SelectMultiple max={4}
   options={[
     'HP', 'ATK', 'DEF', 
     'HP%', 'ATK%', 'DEF%',

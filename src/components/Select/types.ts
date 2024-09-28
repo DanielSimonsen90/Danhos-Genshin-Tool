@@ -13,6 +13,7 @@ export type Props<TValue extends string> = {
 }
 
 export type MultipleProps<TValue extends string> = Props<TValue> & {
+  max?: number;
   onChange?: (value: TValue[]) => void;
 };
 

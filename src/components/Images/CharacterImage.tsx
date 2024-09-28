@@ -1,5 +1,5 @@
 import type * as Characters from '@/data/characters';
-import { getCharacterImage } from '@/services/ImageService';
+import ImageService from '@/services/ImageService';
 import Image from './Image';
 
 type Props = {
@@ -7,5 +7,5 @@ type Props = {
 };
 
 export default function CharacterImage({ character }: Props) {
-  return <Image src={getCharacterImage(character)} alt={character} />;
+  return <Image src={ImageService.getCharacterImage(character)} alt={character} />;
 }

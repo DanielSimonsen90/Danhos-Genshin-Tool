@@ -11,7 +11,7 @@ type Cache = {
 type CacheKeys = keyof Cache;
 type CacheItem = Cache[CacheKeys];
 
-export default new class CacheStore {
+export const CacheStore = new class CacheStore {
   public cache = new Proxy({} as Cache, {
     get: (target, key: string) => {
       return target[key] ?? this.get(key as CacheKeys, '{}');
@@ -64,3 +64,4 @@ export default new class CacheStore {
     this.cache[key] = JSON.parse(localStorage.getItem(key.toString()) || defaultValue);
   }
 };
+export default CacheStore;

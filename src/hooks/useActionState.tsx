@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { DebugLog } from "@/common/functions/dev";
+
+const debugLog = DebugLog(DebugLog.DEBUGS.useActionState);
 
 export function useActionState<TResult extends Record<string, any>>(
   expectedPropertyLength: number, 
@@ -31,6 +34,8 @@ export function useActionState<TResult extends Record<string, any>>(
     onSubmit(data as TResult);
     setLoading(false);
   }
+
+  debugLog('useActionState update', { loading, props: { expectedPropertyLength } });
 
   return [loading, handleSubmit] as const;
 }

@@ -1,1 +1,2 @@
-export { default as DataStore } from "./DataStore";
+export * from './CacheStore';
+export * from './DataStore';

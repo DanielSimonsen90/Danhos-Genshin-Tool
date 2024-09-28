@@ -3,10 +3,11 @@ import { MultipleProps } from "./types";
 
 export default function SelectMultiple<TValue extends string>({ 
   options, 
-  displayValue, internalValue, 
+  displayValue, internalValue, max, 
   ...props 
 }: MultipleProps<TValue>) {
   const [selectedValues, setSelectedValues] = useState<TValue[]>([]);
+  const [timeSelectedValues, setTimeSelectedValues] = useState<Record<number, TValue>>({});
   const [showOptions, setShowOptions] = useState(false);
   const internalRef = useRef<HTMLSelectElement>(null);
 
@@ -15,6 +16,18 @@ export default function SelectMultiple<TValue extends string>({
       ? values.filter(v => v !== value)
       : [...values, value]
     );
+    setTimeSelectedValues(values => ({ ...values, [Date.now()]: value }));
+  }, []);
+
+  useEffect(() => {
+    if (max && selectedValues.length > max) {
+      const [oldestTime] = Object.keys(timeSelectedValues).sort();
+      setSelectedValues(values => values.filter(v => v !== timeSelectedValues[Number(oldestTime)]));
+      setTimeSelectedValues(values => {
+        const { [Number(oldestTime)]: _, ...newValues } = values;
+        return newValues;
+      });
+    }
     props.onChange?.(selectedValues);
     if (internalRef.current) internalRef.current.value = selectedValues.join(',');
   }, [selectedValues]);
