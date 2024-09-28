@@ -5,6 +5,7 @@ export type Props<TValue extends string> = {
   className?: string;
   defaultValue?: TValue;
   placeholder?: string;
+  required?: boolean;
   
   onChange?: (value: TValue) => void;
   displayValue?: (value: TValue) => string;

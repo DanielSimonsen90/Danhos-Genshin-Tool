@@ -1,6 +1,9 @@
 import { useState } from "react";
 
-export function useActionState<TResult extends Record<string, string>>(onSubmit: (data: TResult) => void) {
+export function useActionState<TResult extends Record<string, any>>(
+  expectedPropertyLength: number, 
+  onSubmit: (data: TResult) => void
+) {
   const [loading, setLoading] = useState(false);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -19,6 +22,12 @@ export function useActionState<TResult extends Record<string, string>>(onSubmit:
       } else data[key] = value.toString();
     });
 
+    if (Object.keys(data).length !== expectedPropertyLength + 1) { // +1 for '_form'
+      console.error('Invalid data:', data);
+      setLoading(false);
+      return;
+    }
+    
     onSubmit(data as TResult);
     setLoading(false);
   }

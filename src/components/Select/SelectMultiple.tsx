@@ -20,7 +20,7 @@ export default function SelectMultiple<TValue extends string>({
   }, [selectedValues]);
 
   return (
-    <div className="select select--multiple">
+    <div className="select select--multiple" aria-required={props.required}>
       <button type="button" onClick={() => setShowOptions(show => !show)}>
         {'placeholder' in props ? props.placeholder : ''}
       </button>
