@@ -1,6 +1,6 @@
 import { Artifact, ArtifactSet, Character } from '@/common/models';
 import type { ArtifactPartName, MainStatName, SubStatName } from '@/common/types';
-import { ExpectedFormData } from '@/common/types/store-data';
+import { SearchFormData } from '@/common/types/store-data';
 import { DebugLog } from '@/common/functions/dev';
 import type * as ArtifactSetData from '@/data/artifact-sets';
 import { CacheStore, DataStore } from '@/stores';
@@ -160,7 +160,7 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     debugLog('groupEnd');
     return result;
   }
-  public search({ artifactPartName, artifactSetName, mainStat, subStats, id }: ExpectedFormData): SearchResult {
+  public search({ artifactPartName, artifactSetName, mainStat, subStats, id }: SearchFormData): SearchResult {
     const cachedResult = CacheStore.findObject('searchResults', data => data.id === id);
     if (cachedResult) {
       debugLog('Cached result found', cachedResult);

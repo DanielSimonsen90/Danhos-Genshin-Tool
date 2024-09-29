@@ -1,10 +1,10 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { MultipleProps } from "./types";
 
-export default function SelectMultiple<TValue extends string>({ 
-  options, 
-  displayValue, internalValue, max, 
-  ...props 
+export default function SelectMultiple<TValue extends string>({
+  options,
+  displayValue, internalValue, max,
+  ...props
 }: MultipleProps<TValue>) {
   const [selectedValues, setSelectedValues] = useState<TValue[]>([]);
   const [timeSelectedValues, setTimeSelectedValues] = useState<Record<number, TValue>>({});
@@ -34,25 +34,31 @@ export default function SelectMultiple<TValue extends string>({
 
   return (
     <div className="select select--multiple" aria-required={props.required}>
-      <button type="button" onClick={() => setShowOptions(show => !show)}>
-        {'placeholder' in props ? props.placeholder : ''}
-      </button>
+      <select className="select__header" onMouseDown={e => {
+        e.preventDefault();
+        e.stopPropagation();
+        setShowOptions(show => !show);
+      }}>
+        <option value="">{'placeholder' in props ? props.placeholder : ''}</option>
+      </select>
 
       {showOptions && (
-        <div className="select__options">
+        <ul className="select__options floatable">
           {options.map((option, i) => (
-            <label key={option}>
+            <li key={option} onClick={() => toggleOption(option)}>
               <input
                 name={`${props.name}[${i}]`}
                 type="checkbox"
                 value={internalValue?.(option) ?? option}
                 checked={selectedValues.includes(option)}
-                onChange={() => toggleOption(option)}
+                onChange={() => {}}
               />
-              {displayValue?.(option) ?? option}
-            </label>
+              <label>
+                {displayValue?.(option) ?? option}
+              </label>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
 
       {/* <select ref={internalRef} name={props.name} className="select__internal" multiple>

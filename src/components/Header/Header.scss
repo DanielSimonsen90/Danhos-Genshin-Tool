@@ -1,0 +1,41 @@
+.site-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding: 1em;
+  box-shadow: 0 0 5px 3px #22222266;
+
+  nav ul {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+
+    a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      padding: .5rem;
+      border-radius: .25rem;
+      background-color: var(--background-secondary);
+
+      &:hover {
+        color: var(--text-brand);
+        box-shadow: 0 0 5px 3px #22222266;
+      }
+    }
+  }
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.clear-cache {
+  position: sticky;
+  right: 1rem;
+}
+
+.search-form {
+  margin-inline: auto;
+}

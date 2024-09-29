@@ -1,3 +1,4 @@
+import { SearchFormData } from "../types/store-data";
 import { DebugLog } from "./dev";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.strings);
@@ -21,4 +22,15 @@ export function pascalCaseFromSnakeCase<T extends string>(value: T): T {
   const result = value.split('_').map(word => word[0].toUpperCase() + word.slice(1)).join(' ') as T;
   debugLog(`[pascalCaseFromSnakeCase] ${value} -> ${result}`);
   return result as T;
+}
+
+export function formatSearchData(value: SearchFormData, withSet = false) {
+  const { artifactSetName, artifactPartName, mainStat, subStats } = value;
+  const stats = `${mainStat} & ${subStats.join(', ')}`;
+  const result = withSet
+    ? `${artifactSetName} ${artifactPartName} - ${stats}`
+    : stats;
+
+  debugLog(`[formatSearchData] ${value} -> ${result}`, { value, withSet });
+  return result;
 }

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { ExpectedFormData } from "@/common/types/store-data";
+import { SearchFormData } from "@/common/types/store-data";
 import { DebugLog } from "@/common/functions/dev";
 import { generateId } from "@/common/functions/random";
 
@@ -14,7 +14,7 @@ const debugLog = DebugLog(DebugLog.DEBUGS.searchComponent)
 
 export default function Search() {
   const navigate = useNavigate();
-  const [loading, onSubmit] = useActionState<ExpectedFormData>(4, data => {
+  const [loading, onSubmit] = useActionState<SearchFormData>(4, data => {
     debugLog('onSubmit', data);
     if (data.subStats.length > 4) {
       throw new Error('Substats must be 4 or less');
@@ -33,7 +33,7 @@ export default function Search() {
   });
 
   return (
-    <form onSubmit={onSubmit}>
+    <form className="search-form" onSubmit={onSubmit}>
       <SelectArtifactSet name="artifactSetName" defaultValue="Golden Troupe" required />
       <SelectArtifactPartName name="artifactPartName" onChange={part => setSelectMainStat({
         artifactPartName: part,

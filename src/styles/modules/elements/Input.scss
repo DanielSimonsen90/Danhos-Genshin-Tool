@@ -1,0 +1,24 @@
+input, select, .select {
+  margin: .25rem;
+  padding: .5rem;
+  width: 100%;
+  border-radius: .25rem;
+  
+  background-color: var(--background-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--background-tertiary);
+
+  &:focus, &:active, &:hover {
+    color: var(--text-primary);
+  }
+
+  &:focus, &:active {
+    outline-color: var(--brand);
+    background-color: var(--background-tertiary);
+  }
+}
+
+option {
+  background-color: var(--background-secondary);
+  color: var(--text-secondary);
+}

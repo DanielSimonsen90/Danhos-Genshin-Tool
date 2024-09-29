@@ -1,10 +1,10 @@
-import { ExpectedFormData } from "@/common/types/store-data";
+import { SearchFormData } from "@/common/types/store-data";
 import { SearchResult } from '@/services/SearchService';
 
 type DefaultValue = {} | [];
 type DefaultValueString = '[]' | '{}';
 type Cache = {
-  searchHistory: Record<string, ExpectedFormData>;
+  searchHistory: Record<string, SearchFormData>;
   searchResults: Record<string, SearchResult>
 } & {
   [key: string]: DefaultValue;
@@ -67,6 +67,7 @@ export const CacheStore = new class CacheStore {
 
   public clear(): void {
     for (const key in this.cache) this.delete(key as CacheKeys);
+    localStorage.clear();
   }
 
   public save(key: CacheKeys): void {

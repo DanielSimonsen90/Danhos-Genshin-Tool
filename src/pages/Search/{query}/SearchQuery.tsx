@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 
-import { pascalCaseFromSnakeCase } from "@/common/functions/strings";
+import { formatSearchData, pascalCaseFromSnakeCase } from "@/common/functions/strings";
 import { SearchService } from "@/services";
 import CacheStore from "@/stores/CacheStore";
 import { DebugLog } from "@/common/functions/dev";
@@ -11,7 +11,7 @@ const debugLog = DebugLog(DebugLog.DEBUGS.searchQuery);
 export default function SearchQuery() {
   const { query } = useParams();
   const { formData, results } = getSearchResultsFromQuery(query);
-  const { artifactSetName, artifactPartName, mainStat, subStats } = formData;
+  const { artifactSetName, artifactPartName } = formData;
 
   debugLog('SearchQuery update', { query, results });
 
@@ -19,7 +19,7 @@ export default function SearchQuery() {
     <div>
       <br />
       <ArtifactImage set={artifactSetName} name={artifactPartName} />
-      <h1>{mainStat} & {subStats.join(', ')}</h1>
+      <h1>{formatSearchData(formData)}</h1>
       {results ? (<>
         <h2>Results</h2>
         <ul>

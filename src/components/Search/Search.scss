@@ -1,0 +1,9 @@
+.search-form {
+  display: flex;
+  align-items: stretch;
+
+  > * {
+    margin-top: .25rem;
+    margin-bottom: .25rem;
+  }
+}

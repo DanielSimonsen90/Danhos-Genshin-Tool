@@ -4,12 +4,14 @@
   *::before,
   *::after {
     box-sizing: border-box;
+    position: relative;
   }
 
-  @import './modules/colors.scss';
+  @import './modules/index.scss';
   
   body {
     background-color: var(--background-primary);
     color: var(--text-primary);
+    margin: 0;
   }
 }

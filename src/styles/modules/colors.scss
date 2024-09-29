@@ -3,7 +3,14 @@
 body {
   --background-primary: #{colors.$background-primary};
   --background-secondary: #{colors.$background-secondary};
+  --background-tertiary: #{colors.$background-tertiary};
+
   --text-primary: #{colors.$text-primary};
   --text-secondary: #{colors.$text-secondary};
   --text-muted: #{colors.$text-muted};
+  --text-link: #{colors.$text-link};
+  
+  --text-danger: #{colors.$text-danger};
+
+  --brand: #99d0de;
 }

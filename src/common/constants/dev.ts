@@ -3,7 +3,7 @@ export const DEBUGS = {
   strings: false,
 
   // pages
-  searchQuery: true,
+  searchQuery: false,
 
   // components
   searchComponent: false,
@@ -13,8 +13,8 @@ export const DEBUGS = {
   useComponent: false,
 
   // services
-  baseService: true,
-  searchService: true,
+  baseService: false,
+  searchService: false,
   imageService: false,
 
   // stores
