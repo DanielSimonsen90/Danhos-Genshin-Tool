@@ -23,14 +23,9 @@
       }
     }
   }
-}
 
-.header-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.search-form {
-  margin-inline: auto;
+  .tab-bar {
+    width: fit-content;
+    margin-inline: auto;
+  }
 }

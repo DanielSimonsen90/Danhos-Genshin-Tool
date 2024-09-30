@@ -7,25 +7,27 @@ import { formatSearchData, pascalCaseFromSnakeCase } from '@/common/functions/st
 
 import { useActionState } from "@/hooks/useActionState";
 import { useComponent } from "@/hooks/useComponent";
-import CacheStore from "@/stores/CacheStore";
+
+import { useCacheItemMapped, useCacheStore } from "@/providers/stores/CacheStore";
 
 import { SelectArtifactPartName, SelectArtifactSet, SelectMainStat as SelectMainStatComponent, SelectSubStat } from "../Select";
-import { useStoreProperty } from "@/hooks/useStore";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchComponent);
 
 export default function Search() {
   const navigate = useNavigate();
-  const defaultSearch = useStoreProperty(CacheStore, () => {
-    const currentSearch = CacheStore.get('currentSearch', '{}');
-    if (!Object.keys(currentSearch).length) return undefined;
+  const CacheStore = useCacheStore();
+  const defaultSearch = useCacheItemMapped('currentSearch', currentSearchId => {
+    if (!currentSearchId) return undefined;
+    const currentSearch = CacheStore.findObject('searchResults', result => result.id === currentSearchId);
+    if (!currentSearch) return undefined;
 
     return Array.from(currentSearch.form.entries()).reduce((acc, [key, value]) => {
       // @ts-ignore
       acc[key] = value;
       return acc;
     }, {} as SearchFormData);
-  });
+  })
   const [loading, onSubmit] = useActionState<SearchFormData>(4, data => {
     debugLog('onSubmit', data);
     if (data.subStats.length > 4) {
@@ -34,12 +36,13 @@ export default function Search() {
 
     const searchId = generateId();
     CacheStore.update('searchHistory', {
-      [searchId]: Object.assign<SearchFormData, Partial<SearchFormData>>(data, {
+      [searchId]: { 
+        ...data,
         id: searchId,
         title: pascalCaseFromSnakeCase(formatSearchData(data, true)),
         titleNoSet: formatSearchData(data),
-        form: data._form
-      })
+        timestamp: Date.now()
+      }
     }, '{}');
     navigate(`/search/${searchId}`);
   });

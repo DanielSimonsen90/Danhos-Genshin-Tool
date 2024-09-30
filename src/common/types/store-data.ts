@@ -1,8 +1,9 @@
 import type * as ArtifactsData from '@/data/artifact-sets';
 import { ArtifactPartName } from './genshin';
 import { MainStatName, SubStatName } from './stat-types';
+import { SubmitData } from '@/hooks/useActionState';
 
-export type SearchFormData = {
+export type SearchFormData = SubmitData<{
   artifactSetName: keyof typeof ArtifactsData;
   artifactPartName: ArtifactPartName;
   mainStat: MainStatName;
@@ -11,5 +12,5 @@ export type SearchFormData = {
   id: string;
   title: string;
   titleNoSet: string;
-  form: FormData;
-}
+  timestamp: number;
+}>

@@ -3,8 +3,9 @@ import type { ArtifactPartName, MainStatName, SubStatName } from '@/common/types
 import { SearchFormData } from '@/common/types/store-data';
 import { DebugLog } from '@/common/functions/dev';
 import type * as ArtifactSetData from '@/data/artifact-sets';
-import { CacheStore, DataStore } from '@/stores';
+import { DataStore } from '@/stores';
 import BaseService from './BaseService';
+import CacheStore from '@/providers/stores/CacheStore/CacheStore';
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchService);
 
@@ -13,7 +14,7 @@ export type SearchResult = {
   byCharacterRecommendation: SearchResultItem[];
   combined: SearchResultItem[];
   form: FormData;
-  id?: string;
+  id: string;
 };
 type SearchResultItem = {
   character: Character;
@@ -161,7 +162,10 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     debugLog('groupEnd');
     return result;
   }
-  public search({ artifactPartName, artifactSetName, mainStat, subStats, id, form }: SearchFormData): SearchResult {
+  public search(
+    { artifactPartName, artifactSetName, mainStat, subStats, id, _form }: SearchFormData, 
+    CacheStore: CacheStore
+  ): SearchResult {
     const cachedResult = CacheStore.findObject('searchResults', data => data.id === id);
     if (cachedResult) {
       debugLog('Cached result found', cachedResult);
@@ -182,14 +186,16 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     }, [] as SearchResultItem[]).sort((a, b) => b.score - a.score);
 
     const result = this.lastResult.search = {
-      byArtifact,
-      byCharacterRecommendation,
-      combined,
-      form
+      combined, byArtifact, byCharacterRecommendation,
+      form: _form, id,
     };
     CacheStore.update('searchResults', { [id]: result }, '{}');
     debugLog('Result', result);
     return result;
+  }
+
+  public sortResultsByTimestamp(results: Array<SearchFormData>) {
+    return results.sort((a, b) => b.timestamp - a.timestamp);
   }
 
   private _getPartScore(
@@ -216,6 +222,7 @@ export const SearchService = new class SearchService extends BaseService<LastRes
       if (mainStat === 'Energy Recharge') return character.needsER() ? 10 : 10; // I never get ER artifacts, please send some
       if (mainStat === 'Healing Bonus') return character.bonusAbility === 'Heal' || character.bonusAbility === 'Self-heal' ? 10 : 2; // Healing bonus is decent but rarely used
       if (mainStat === 'Physical DMG Bonus') return 0; // Garbage stat
+      if (mainStat.includes('DMG Bonus')) return 20; // Elemental DMG Bonuses are not to be messed with
       console.error(`Unknown main stat "${mainStat}"`);
       return 10;
     })();

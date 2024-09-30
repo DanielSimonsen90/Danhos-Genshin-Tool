@@ -3,7 +3,7 @@ import { DebugLog } from "@/common/functions/dev";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.useActionState);
 
-type SubmitData<TData> = TData & {
+export type SubmitData<TData> = TData & {
   _form: FormData
 }
 

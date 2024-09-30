@@ -3,7 +3,9 @@
 body {
   --background-primary: #{colors.$background-primary};
   --background-secondary: #{colors.$background-secondary};
+  --background-secondary--muted: #{colors.$background-secondary--muted};
   --background-tertiary: #{colors.$background-tertiary};
+  --background-quaternary: #{colors.$background-quaternary};
 
   --text-primary: #{colors.$text-primary};
   --text-secondary: #{colors.$text-secondary};

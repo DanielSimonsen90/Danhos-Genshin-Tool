@@ -1,30 +1,15 @@
-import { SearchFormData } from "@/common/types/store-data";
-import { SearchResult } from '@/services/SearchService';
-import { BaseStore } from "./BaseStore";
+import { DebugLog } from "@/common/functions/dev";
+import { BaseStore } from "../../../stores/BaseStore";
+import { CacheEventsMap, CacheKeys, DefaultValueString, Cache } from "./CacheStoreTypes";
 
-type DefaultValueString = '[]' | '{}';
-type Cache = {
-  searchHistory: Record<string, SearchFormData>;
-  searchResults: Record<string, SearchResult>;
-  currentSearch: SearchResult;
-};
+const debugLog = DebugLog(DebugLog.DEBUGS.cacheStore);
 
-type CacheKeys = keyof Cache;
-type CacheItem = Cache[CacheKeys];
-
-type CacheEventsMap = {
-  set: [key: CacheKeys, value: CacheItem];
-  update: [value: CacheItem, key: CacheKeys];
-  delete: [key: CacheKeys];
-  clear: [];
-};
-
-export const CacheStore = new class CacheStore extends BaseStore<CacheEventsMap> {
+export class CacheStore extends BaseStore<CacheEventsMap> {
   constructor() { super('CacheStore'); }
 
   public cache = new Proxy({} as Cache, {
     get: (target: Cache, key: CacheKeys) => {
-      return target[key] ?? this.get(key as CacheKeys, '{}');
+      return target[key] ?? this.load(key as CacheKeys, '{}');
     },
     set: <TKey extends CacheKeys>(target: Cache, key: TKey, value: Cache[TKey]) => {
       for (const key in value) if (key.startsWith('_')) delete value[key as keyof typeof value];
@@ -40,14 +25,26 @@ export const CacheStore = new class CacheStore extends BaseStore<CacheEventsMap>
     return this.cache[key];
   }
   public set<TKey extends CacheKeys>(key: TKey, value: Cache[TKey]): void {
+    debugLog(`Set cache item ${key}`, {
+      value, prev: this.cache[key]
+    })
     this.cache[key] = value;
     this.emit('set', key, value);
   }
   public update<TKey extends CacheKeys>(key: TKey, value: Cache[TKey], defaultValue: DefaultValueString): void {
-    this.cache[key] = { ...this.cache[key], ...value };
+    this.cache[key] ?? this.load(key, defaultValue);
+    if (typeof this.cache[key] === 'object' && typeof value === 'object') this.cache[key] = { 
+      ...this.cache[key] as Exclude<Cache[TKey], string>,
+      ...value as Exclude<Cache[TKey], string> 
+    };
+    else if (typeof this.cache[key] === 'string' && typeof value === 'string') this.cache[key] = value;
+    else debugLog(`Update for ${key} did not emit due to type mismatch.`, { key, value, prev: this.cache[key] })
     this.emit('update', value, key);
   }
   public delete(key: CacheKeys): void {
+    debugLog(`Cache key "${key}" deleted`, {
+      prev: this.cache[key]
+    });
     delete this.cache[key];
     this.emit('delete', key);
   }
@@ -69,7 +66,7 @@ export const CacheStore = new class CacheStore extends BaseStore<CacheEventsMap>
   >(key: TKey, callback: (obj: Cache[TKey][TChildKey]) => boolean): Cache[TKey][TChildKey] | undefined {
     const item = this.cache[key];
     if (typeof item !== 'object' && !Array.isArray(item)) return undefined;
-    if (Array.isArray(item)) return item.find(callback);
+    // if (Array.isArray(item)) return item.find(callback);
 
     return Object.values(item).find(callback) as Cache[TKey][TChildKey];
   }
@@ -84,7 +81,7 @@ export const CacheStore = new class CacheStore extends BaseStore<CacheEventsMap>
     localStorage.setItem(key.toString(), JSON.stringify(this.cache[key]));
   }
   public load(key: CacheKeys, defaultValue: DefaultValueString): void {
-    this.cache[key] = JSON.parse(localStorage.getItem(key.toString()) || defaultValue);
+    return this.cache[key] = JSON.parse(localStorage.getItem(key.toString()) || defaultValue);
   }
 };
 export default CacheStore;

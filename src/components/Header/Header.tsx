@@ -1,6 +1,7 @@
 import Search from "../Search";
 import Navigation from "./Navigation";
 import Cache from "../Cache";
+import TabBar from "../TabBar";
 
 export default function Header() {
   return (
@@ -8,8 +9,13 @@ export default function Header() {
       <Navigation />
 
       <section className="header-content">
-        <Search />
-        <Cache />
+        <TabBar tabs={[
+          ['search', 'Search'],
+          ['history', 'History']
+        ]}
+          search={<Search />}
+          history={<Cache />}
+        />
       </section>
     </header>
   );
