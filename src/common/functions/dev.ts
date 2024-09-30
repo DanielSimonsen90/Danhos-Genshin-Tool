@@ -11,6 +11,6 @@ export const DebugLog = (prefix: string) => (...data: any[]) =>
     data[0] === 'group' ? 
       console.groupCollapsed(prefix, ...data.slice(1))
       : data[0] === 'groupEnd' ? console.groupEnd()
-      : console.log(prefix, ...data)
+      : console.log(`[${prefix}]`, ...data)
     : null;
 DebugLog.DEBUGS = Object.keys(DEBUGS).reduce((acc, key) => ({ ...acc, [key]: key }), {}) as Record<keyof typeof DEBUGS, string>;

@@ -11,6 +11,8 @@ export const DEBUGS = {
   // hooks
   useActionState: false,
   useComponent: false,
+  useStoreEvent: false,
+  useStoreProperty: true,
 
   // services
   baseService: false,
@@ -18,6 +20,6 @@ export const DEBUGS = {
   imageService: false,
 
   // stores
-  cacheStore: false,
+  cacheStore: true,
   dataStore: false,
 };

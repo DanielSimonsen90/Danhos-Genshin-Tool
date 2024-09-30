@@ -12,5 +12,5 @@ body {
   
   --text-danger: #{colors.$text-danger};
 
-  --brand: #99d0de;
+  --brand: #{colors.$brand};
 }

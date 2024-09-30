@@ -1,26 +1,34 @@
 import { SearchFormData } from "@/common/types/store-data";
 import { SearchResult } from '@/services/SearchService';
+import { BaseStore } from "./BaseStore";
 
-type DefaultValue = {} | [];
 type DefaultValueString = '[]' | '{}';
 type Cache = {
   searchHistory: Record<string, SearchFormData>;
-  searchResults: Record<string, SearchResult>
-} & {
-  [key: string]: DefaultValue;
+  searchResults: Record<string, SearchResult>;
+  currentSearch: SearchResult;
 };
 
 type CacheKeys = keyof Cache;
 type CacheItem = Cache[CacheKeys];
 
-export const CacheStore = new class CacheStore {
+type CacheEventsMap = {
+  set: [key: CacheKeys, value: CacheItem];
+  update: [value: CacheItem, key: CacheKeys];
+  delete: [key: CacheKeys];
+  clear: [];
+};
+
+export const CacheStore = new class CacheStore extends BaseStore<CacheEventsMap> {
+  constructor() { super('CacheStore'); }
+
   public cache = new Proxy({} as Cache, {
-    get: (target, key: string) => {
+    get: (target: Cache, key: CacheKeys) => {
       return target[key] ?? this.get(key as CacheKeys, '{}');
     },
-    set: (target, key: string, value: CacheItem) => {
+    set: <TKey extends CacheKeys>(target: Cache, key: TKey, value: Cache[TKey]) => {
       for (const key in value) if (key.startsWith('_')) delete value[key as keyof typeof value];
-      
+
       target[key] = value;
       this.save(key);
       return true;
@@ -31,16 +39,17 @@ export const CacheStore = new class CacheStore {
     if (!this.has(key)) this.load(key, defaultValue);
     return this.cache[key];
   }
-  public set(key: CacheKeys, value: CacheItem): void {
+  public set<TKey extends CacheKeys>(key: TKey, value: Cache[TKey]): void {
     this.cache[key] = value;
+    this.emit('set', key, value);
   }
   public update<TKey extends CacheKeys>(key: TKey, value: Cache[TKey], defaultValue: DefaultValueString): void {
-    this.cache[key] = Array.isArray(this.get(key, defaultValue))
-      ? [...this.cache[key] as Array<CacheItem>, ...value as Array<CacheItem>]
-      : { ...this.cache[key], ...value };
+    this.cache[key] = { ...this.cache[key], ...value };
+    this.emit('update', value, key);
   }
   public delete(key: CacheKeys): void {
     delete this.cache[key];
+    this.emit('delete', key);
   }
 
   public getFromItem<TKey extends CacheKeys, TChildKey extends keyof Cache[TKey]>(
@@ -68,6 +77,7 @@ export const CacheStore = new class CacheStore {
   public clear(): void {
     for (const key in this.cache) this.delete(key as CacheKeys);
     localStorage.clear();
+    this.emit('clear');
   }
 
   public save(key: CacheKeys): void {

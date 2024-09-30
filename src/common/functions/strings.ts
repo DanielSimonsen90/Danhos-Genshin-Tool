@@ -34,3 +34,7 @@ export function formatSearchData(value: SearchFormData, withSet = false) {
   debugLog(`[formatSearchData] ${value} -> ${result}`, { value, withSet });
   return result;
 }
+
+export function classNames(...args: string[]) {
+  return args.filter(Boolean).join(' ');
+}

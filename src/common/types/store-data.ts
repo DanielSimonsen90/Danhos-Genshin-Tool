@@ -9,4 +9,7 @@ export type SearchFormData = {
   subStats: SubStatName[];
 } & {
   id: string;
+  title: string;
+  titleNoSet: string;
+  form: FormData;
 }

@@ -18,11 +18,11 @@
     border: none;
   }
 
-  &:has(.select__options) &__header {
+  &:has(.select__options.visible) &__header {
     background-color: var(--background-tertiary);
   }
 
-  &__options {
+  &__options.visible {
     border-top: 1px solid var(--background-tertiary);
     border-bottom-left-radius: .5rem;
     border-bottom-right-radius: .5rem;
@@ -37,7 +37,11 @@
     }
   }
 
-  &__options li {
+  &__options.hidden {
+    display: none;
+  }
+
+  &__options li, option {
     display: grid;
     grid-template-columns: auto 1fr;
     align-items: center;
@@ -46,7 +50,6 @@
     padding: 1ch 0;
     cursor: pointer;
     user-select: none;
-
 
     &:hover {
       background-color: var(--background-tertiary);

@@ -12,7 +12,8 @@ export type Props<TValue extends string> = {
   internalValue?: (value: string) => TValue;
 }
 
-export type MultipleProps<TValue extends string> = Props<TValue> & {
+export type MultipleProps<TValue extends string> = Omit<Props<TValue>, 'defaultValue'> & {
+  defaultValue?: Array<TValue>
   max?: number;
   onChange?: (value: TValue[]) => void;
 };

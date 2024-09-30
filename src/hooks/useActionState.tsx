@@ -3,9 +3,13 @@ import { DebugLog } from "@/common/functions/dev";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.useActionState);
 
+type SubmitData<TData> = TData & {
+  _form: FormData
+}
+
 export function useActionState<TResult extends Record<string, any>>(
-  expectedPropertyLength: number, 
-  onSubmit: (data: TResult) => void
+  expectedPropertyLength: number,
+  onSubmit: (data: SubmitData<TResult>) => void
 ) {
   const [loading, setLoading] = useState(false);
 
@@ -30,8 +34,8 @@ export function useActionState<TResult extends Record<string, any>>(
       setLoading(false);
       return;
     }
-    
-    onSubmit(data as TResult);
+
+    onSubmit(data as SubmitData<TResult>);
     setLoading(false);
   }
 

@@ -12,6 +12,7 @@ export default function SearchQuery() {
   const { query } = useParams();
   const { formData, results } = getSearchResultsFromQuery(query);
   const { artifactSetName, artifactPartName } = formData;
+  CacheStore.set('currentSearch', results);
 
   debugLog('SearchQuery update', { query, results });
 
@@ -19,7 +20,7 @@ export default function SearchQuery() {
     <div>
       <br />
       <ArtifactImage set={artifactSetName} name={artifactPartName} />
-      <h1>{formatSearchData(formData)}</h1>
+      <h1>{formData.titleNoSet}</h1>
       {results ? (<>
         <h2>Results</h2>
         <ul>

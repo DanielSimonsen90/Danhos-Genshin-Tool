@@ -1,6 +1,6 @@
-import { CacheStore } from "@/stores";
 import Search from "../Search";
 import Navigation from "./Navigation";
+import Cache from "../Cache";
 
 export default function Header() {
   return (
@@ -9,8 +9,7 @@ export default function Header() {
 
       <section className="header-content">
         <Search />
-
-        <button className='clear-cache danger secondary' onClick={() => confirm("You're about to clear the search cache.") && CacheStore.clear()}>Clear Cache</button>
+        <Cache />
       </section>
     </header>
   );
