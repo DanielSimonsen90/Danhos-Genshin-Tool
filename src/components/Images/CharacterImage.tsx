@@ -3,7 +3,7 @@ import ImageService from '@/services/ImageService';
 import Image from './Image';
 
 type Props = {
-  character: keyof typeof Characters;
+  character: keyof typeof Characters | string;
 };
 
 export default function CharacterImage({ character }: Props) {

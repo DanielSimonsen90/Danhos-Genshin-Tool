@@ -38,3 +38,15 @@ export function formatSearchData(value: SearchFormData, withSet = false) {
 export function classNames(...args: string[]) {
   return args.filter(Boolean).join(' ');
 }
+
+export function fromList(list: string[] = []) {
+  // Join list with commas and 'and' before the last item
+  return list.length > 1
+    ? list.slice(0, -1).join(', ') + ' & ' + list.slice(-1)
+    : list[0];
+}
+
+export function effectivenessString(effectiveness: number) {
+  const strings = ['Unknown', 'Least Effective', 'Less Effective', 'Effective', 'Very Effective', 'Most Effective'];
+  return strings[effectiveness];
+}

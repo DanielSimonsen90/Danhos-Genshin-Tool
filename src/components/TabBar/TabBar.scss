@@ -1,9 +1,10 @@
 .tab-bar__tabs {
+  display: flex;
   background-color: var(--background-secondary);
   border-radius: .25rem;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  border-bottom: 1px solid var(--background-quaternary);
+  border-bottom: .5ch solid var(--background-tertiary);
 }
 
 .tab-bar__tab {
@@ -38,6 +39,7 @@
 .tab-bar__content {
   display: grid;
   grid-template-areas: "content";
+  padding-inline: .75em;
 
   &-page {
     grid-area: content;

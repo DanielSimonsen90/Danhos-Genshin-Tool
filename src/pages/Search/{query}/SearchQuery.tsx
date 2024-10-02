@@ -9,6 +9,7 @@ import { useCacheStore } from "@/stores/CacheStore";
 
 import type { CacheStore } from "@/stores/CacheStore/CacheStore";
 import { useEffect } from "react";
+import SearchResult from "@/components/SearchResult";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchQuery);
 
@@ -17,6 +18,7 @@ export default function SearchQuery() {
   const CacheStore = useCacheStore()
   const { formData, results } = getSearchResultsFromQuery(query, CacheStore);
   const { artifactSetName, artifactPartName } = formData;
+  const Result = () => results ? <SearchResult result={results} /> : <p>No results</p>;
   
   useEffect(() => {
     CacheStore.update('currentSearch', query, '');
@@ -25,22 +27,11 @@ export default function SearchQuery() {
   debugLog('SearchQuery update', { query, results });
 
   return (
-    <div>
+    <>
       <ArtifactImage set={artifactSetName} name={artifactPartName} />
       <h1>{formData.titleNoSet}</h1>
-      {results ? (<>
-        <h2>Results</h2>
-        <ul>
-          {results.combined.map(result => (
-            <li key={result.character.name}>
-              <label>{result.character.name} - {result.score}</label>
-              <input type="checkbox" readOnly checked={result.shouldSave} />
-            </li>
-          ))}
-        </ul>
-      </>) : <p>No results</p>}
-
-    </div>
+      <Result />
+    </>
   );
 }
 

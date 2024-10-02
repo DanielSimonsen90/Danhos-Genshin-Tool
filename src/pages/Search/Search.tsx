@@ -1,10 +1,6 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 
 export default function Search() {
-  return (
-    <div>
-      Search
-      <Outlet />  
-    </div>
-  );
+  const { query } = useParams();
+  return query ? <Outlet /> : null;
 }

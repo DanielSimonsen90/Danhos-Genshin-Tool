@@ -1,4 +1,4 @@
-import { Artifact, ArtifactSet, Character } from '@/common/models';
+import { Artifact, ArtifactSet, Character, CharacterArtifactSet, CharacterSet } from '@/common/models';
 import type { ArtifactPartName, MainStatName, SubStatName } from '@/common/types';
 import { SearchFormData } from '@/common/types/store-data';
 import { DebugLog } from '@/common/functions/dev';
@@ -16,12 +16,14 @@ export type SearchResult = {
   byArtifact: SearchResultItem[];
   byCharacterRecommendation: SearchResultItem[];
   combined: SearchResultItem[];
+
+  set: ArtifactSet;
   form: FormData;
   id: string;
 };
-type SearchResultItem = {
+export type SearchResultItem = {
   character: Character;
-  set: ArtifactSet;
+  set: CharacterSet;
   score: number;
   shouldSave: boolean;
 };
@@ -49,26 +51,21 @@ export const SearchService = new class SearchService extends BaseService<LastRes
   public static readonly ARTIFACT_PIECES_SCORES = ARTIFACT_PIECES_SCORES;
   constructor() { super({} as LastResult); }
 
-  public searchArtifactSets(
-    artifactSetName: keyof typeof ArtifactSetData,
+  public searchByArtifacts(
+    set: ArtifactSet,
     artifactPartName: ArtifactPartName,
     mainStat: MainStatName,
     subStats: SubStatName[],
   ): SearchResultItem[] {
     debugLog('group', 'searchArtifactSets');
-    debugLog('params', { artifactSetName, artifactPartName, mainStat, subStats });
-
-    // Check artifact set exists in data
-    if (!ArtifactSetNames.includes(artifactSetName)) throw new Error(`Artifact set "${artifactSetName}" not found in data.`);
-    const set = ArtifactSets.find(set => set.name === artifactSetName);
-    debugLog('Set found', set);
+    debugLog('params', { set, artifactPartName, mainStat, subStats });
 
     const result = this.lastResult.searchArtifactSets = Characters.map(character => {
       debugLog('group', character.name);
       debugLog('group', 'setScoreOnCharacter');
       const setScoreOnCharacter = character.sets.reduce((acc, cSet) => {
         const compatibility = cSet.artifactSets.find(equippingSet =>
-          equippingSet.set.name === artifactSetName
+          equippingSet.set.name === set.name
         )?.effectiveness ?? 0;
         debugLog('Compatibility', compatibility);
         const result = acc + compatibility;
@@ -84,9 +81,14 @@ export const SearchService = new class SearchService extends BaseService<LastRes
 
       const result = {
         character,
-        set,
+        set: character.sets
+          .filter(cSet => cSet.artifactSets.some(equippingSet => equippingSet.set.name === set.name))
+          .sort((a, b) =>
+            b.artifactSets.find(equippingSet => equippingSet.set.name === set.name)?.effectiveness ?? 0
+            - a.artifactSets.find(equippingSet => equippingSet.set.name === set.name)?.effectiveness ?? 0
+          )[0],
         score,
-        shouldSave: score > SHOULD_SAVE_THRESHOLD 
+        shouldSave: score > SHOULD_SAVE_THRESHOLD
       } as SearchResultItem;
       debugLog('Result', result);
       debugLog('groupEnd');
@@ -96,25 +98,22 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     debugLog('groupEnd');
     return result;
   }
-  public searchCharacterRecommendations(
-    artifactSetName: keyof typeof ArtifactSetData,
+  public searchByCharacterRecommendation(
+    set: ArtifactSet,
     artifactPartName: ArtifactPartName,
     mainStat: MainStatName,
     subStats: SubStatName[],
   ): SearchResultItem[] {
     debugLog('group', 'searchCharacterRecommendations');
-    if (!ArtifactSetNames.includes(artifactSetName)) throw new Error(`Artifact set "${artifactSetName}" not found in data.`);
-    const set = ArtifactSets.find(set => set.name === artifactSetName);
-    debugLog('Set found', set);
 
     const getSetFromCharacter = (character: Character) => (
       character.sets.find(cSet => cSet.artifactSets
         .map(equppingSet => equppingSet.set.name)
-        .includes(artifactSetName))
+        .includes(set.name))
     );
     const isEffectiveForCharacter = (max: number) => (character: Character) => {
-      const set = getSetFromCharacter(character);
-      return set.artifactSets.find(equippingSet => equippingSet.set.name === artifactSetName)?.effectiveness ?? 0 >= max;
+      const cSet = getSetFromCharacter(character);
+      return cSet.artifactSets.find(equippingSet => equippingSet.set.name === set.name)?.effectiveness ?? 0 >= max;
     };
 
     // Filter characters that use the artifact set
@@ -128,9 +127,9 @@ export const SearchService = new class SearchService extends BaseService<LastRes
       .filter(isEffectiveForCharacter(3))
       .filter(character => !charactersWantSet.includes(character));
 
-    debugLog('Character data', { charactersUsesSet, charactersWantSet, charactersCouldUseSet });
+    debugLog('Character data', { set, charactersUsesSet, charactersWantSet, charactersCouldUseSet });
     if (!charactersWantSet.length && !charactersCouldUseSet.length) {
-      debugLog(`No characters found for ${artifactSetName}. Returning empty array.`);
+      debugLog(`No characters found for ${set.name}. Returning empty array.`);
       debugLog('groupEnd');
       return this.lastResult.searchCharacterRecommendations = [];
     }
@@ -147,9 +146,14 @@ export const SearchService = new class SearchService extends BaseService<LastRes
 
         return {
           character,
-          set,
+          set: character.sets
+            .filter(cSet => cSet.artifactSets.some(equippingSet => equippingSet.set.name === set.name))
+            .sort((a, b) =>
+              b.artifactSets.find(equippingSet => equippingSet.set.name === set.name)?.effectiveness ?? 0
+              - a.artifactSets.find(equippingSet => equippingSet.set.name === set.name)?.effectiveness ?? 0
+            )[0],
           score,
-          shouldSave: score > SHOULD_SAVE_THRESHOLD 
+          shouldSave: score > SHOULD_SAVE_THRESHOLD
         } as SearchResultItem;
       });
       debugLog('Result', result);
@@ -166,18 +170,23 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     return result;
   }
   public search(
-    { artifactPartName, artifactSetName, mainStat, subStats, id, _form }: SearchFormData, 
+    { artifactPartName, artifactSetName, mainStat, subStats, id, _form }: SearchFormData,
     CacheStore: CacheStore
   ): SearchResult {
-    const cachedResult = CacheStore.findObject('searchResults', data => data.id === id);
-    if (cachedResult) {
-      debugLog('Cached result found', cachedResult);
-      return this.lastResult.search = cachedResult;
-    }
-    
-    const args = [artifactSetName, artifactPartName, mainStat, subStats] as const;
-    const byArtifact = this.searchArtifactSets(...args);
-    const byCharacterRecommendation = this.searchCharacterRecommendations(...args);
+    // const cachedResult = CacheStore.findObject('searchResults', data => data.id === id);
+    // if (cachedResult) {
+    //   debugLog('Cached result found', cachedResult);
+    //   return this.lastResult.search = cachedResult;
+    // }
+
+    // Check artifact set exists in data
+    if (!ArtifactSetNames.includes(artifactSetName)) throw new Error(`Artifact set "${artifactSetName}" not found in data.`);
+    const set = ArtifactSets.find(set => set.name === artifactSetName);
+    debugLog('Set found', set);
+
+    const args = [set, artifactPartName, mainStat, subStats] as const;
+    const byCharacterRecommendation = this.searchByCharacterRecommendation(...args)
+    const byArtifact = this.searchByArtifacts(...args).sort(this._sortResults(set, byCharacterRecommendation));
     const combined = [...byArtifact, ...byCharacterRecommendation].reduce((acc, item) => {
       const existing = acc.find(e => e.character.name === item.character.name);
       if (existing) {
@@ -186,11 +195,11 @@ export const SearchService = new class SearchService extends BaseService<LastRes
         return acc;
       }
       return [...acc, item];
-    }, [] as SearchResultItem[]).sort((a, b) => b.score - a.score);
+    }, [] as SearchResultItem[]).sort(this._sortResults(set, byCharacterRecommendation));
 
     const result = this.lastResult.search = {
-      combined, byArtifact, byCharacterRecommendation,
-      form: _form, id,
+      combined, byArtifact, byCharacterRecommendation: byCharacterRecommendation.sort(this._sortResults(set, byCharacterRecommendation)),
+      form: _form, id, set,
     };
     CacheStore.update('searchResults', { [id]: result }, '{}');
     debugLog('Result', result);
@@ -209,10 +218,10 @@ export const SearchService = new class SearchService extends BaseService<LastRes
   ): number {
     debugLog('group', 'getPieceScore');
     debugLog('params', { character, artifactPartName, mainStat, subStats });
-    
+
     const artifact = new Artifact(undefined, artifactPartName, mainStat, subStats);
     debugLog('Artifact', artifact);
-    
+
     const partScore = ARTIFACT_PIECES_SCORES[artifactPartName];
     debugLog('Part score', partScore);
 
@@ -243,7 +252,7 @@ export const SearchService = new class SearchService extends BaseService<LastRes
         console.error(`Unknown substat "${stat}"`);
         return acc;
       })();
-      debugLog('Substat', stat, result, acc)
+      debugLog('Substat', stat, result, acc);
       return result;
     }, 0);
     debugLog('Result', subStatsScore);
@@ -261,6 +270,79 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     })();
     debugLog(`Main stat rarity for ${stat} ${partName}`, result);
     return result;
+  }
+  private _sortResults(set: ArtifactSet, byCharacterRecommendation: SearchResultItem[] = []) {
+    return (a: SearchResultItem, b: SearchResultItem) => {
+      debugLog('group', `Sorting ${a.character.name} & ${b.character.name}`);
+      // Check if either character has set with effectiveness 5
+      const aMostEffective = a.character.sets.some(cSet => {
+        debugLog('group', `${a.character.name}HasEffectiveness5 (${cSet.name})`);
+        debugLog('Character set', cSet);
+
+        const result = cSet.artifactSets.some(artifact => {
+          const isMostEffective = artifact.effectiveness === CharacterArtifactSet.MOST_EFFECTIVE;
+          const isSet = artifact.set.name === set.name;
+          const result = isMostEffective && isSet;
+          debugLog(`Result of ${artifact.set.name}`, result, { isMostEffective, isSet, artifact, cSet, set, a });
+          return result;
+        });
+        debugLog('Result', result);
+        debugLog('groupEnd');
+        return result;
+      });
+      const bMostEffective = b.character.sets.some(cSet => {
+        debugLog('group', `${b.character.name}HasEffectiveness5 (${cSet.name})`);
+        debugLog('Character set', cSet);
+
+        const result = cSet.artifactSets.some(artifact => {
+          const isMostEffective = artifact.effectiveness === CharacterArtifactSet.MOST_EFFECTIVE;
+          const isSet = artifact.set.name === set.name;
+          const result = isMostEffective && isSet;
+          debugLog(`Result of ${artifact.set.name}`, result, { isMostEffective, isSet, artifact, cSet, set, b });
+          return result;
+        });
+        debugLog('Result', result);
+        debugLog('groupEnd');
+        return result;
+      });
+      const aIsRecommended = byCharacterRecommendation.some(c => c.character.name === a.character.name);
+      const bIsRecommended = byCharacterRecommendation.some(c => c.character.name === b.character.name);
+
+      // Sort by effectiveness first (items with effectiveness 5 come first)
+      const aIsEffective = aMostEffective && !bMostEffective;
+      const bIsEffective = bMostEffective && !aMostEffective;
+      const aRecommended = aIsRecommended && !bIsRecommended;
+      const bRecommended = bIsRecommended && !aIsRecommended;
+      const byScore = b.score - a.score;
+      const result = (() => {
+        const props = { a, b, aIsEffective, bIsEffective, aRecommended, bRecommended, byScore };
+        if (aIsEffective && !bIsEffective) {
+          debugLog(`Result of ${a.character.name} & ${b.character.name} => -1: aIsEffective && !bIsEffective`, props);
+          return -1;
+        }
+        if (bIsEffective && !aIsEffective) {
+          debugLog(`Result of ${a.character.name} & ${b.character.name} => 1: bIsEffective && !aIsEffective`, props);
+          return 1;
+        }
+        if (aRecommended && !bRecommended) {
+          debugLog(`Result of ${a.character.name} & ${b.character.name} => -1: aRecommended && !bRecommended`, props);
+          return -1;
+        }
+        if (bRecommended && !aRecommended) {
+          debugLog(`Result of ${a.character.name} & ${b.character.name} => 1: bRecommended && !aRecommended`, props);
+          return 1;
+        }
+        if (byScore) {
+          debugLog(`Result of ${a.character.name} & ${b.character.name} => ${byScore}: byScore`, props);
+          return byScore;
+        }
+        debugLog(`Result of ${a.character.name} & ${b.character.name} => 0: default`, props);
+        return 0;
+      })();
+
+      debugLog('groupEnd');
+      return result;
+    };
   }
 };
 

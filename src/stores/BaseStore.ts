@@ -17,9 +17,13 @@ export class BaseStore<Events extends BaseEventsMap> {
   public readonly name: string;
 
   public on<EventName extends keyof Events, Args extends Events[EventName]>(event: EventName, callback: Callback<Args>) {
+    if (!this.__events.has(event)) this.__events.set(event, []);
+    if (this.__get(event).includes(callback)) return;
+    
     this.__events.set(event, [...this.__get(event), callback]);
   }
   public off<EventName extends keyof Events, Args extends Events[EventName]>(event: EventName, callback: Callback<Args>) {
+    if (!this.__events.has(event)) return;
     this.__events.set(event, this.__get(event).filter(cb => cb !== callback));
   }
 

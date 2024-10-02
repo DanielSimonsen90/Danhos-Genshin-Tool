@@ -1,9 +1,7 @@
+import { useParams } from "react-router-dom";
 import Search from "./Search";
 
 export default function SearchPage() {
-  return (
-    <div className="page search-page">
-      <Search />
-    </div>
-  );
+  const { query } = useParams();
+  return query ? <Search /> : null;
 }
