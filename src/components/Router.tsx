@@ -1,10 +1,9 @@
 import Home from "@/pages/Home";
 import Layout from "@/pages/Layout";
 
-import Search from "@/pages/Search";
-import SearchQuery from "@/pages/Search/{query}";
+import SearchQuery from "@/pages/Search";
 
-import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
+import { Routes, Route, HashRouter } from "react-router-dom";
 
 export default function Router() {
   return (
@@ -12,7 +11,7 @@ export default function Router() {
       <Routes>
         <Route path="*" Component={Layout}>
           <Route index element={<Home />} />
-          <Route path="search" Component={Search}>
+          <Route path="search">
             <Route path=":query" element={<SearchQuery />} />
           </Route>
 

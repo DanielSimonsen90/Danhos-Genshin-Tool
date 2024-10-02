@@ -1,7 +1,9 @@
-import { useParams } from "react-router-dom";
-import Search from "./Search";
+import SearchQuery from "./SearchQuery";
 
-export default function SearchPage() {
-  const { query } = useParams();
-  return query ? <Search /> : null;
+export default function SearchQueryPage() {
+  return (
+    <div className="page search-page">
+      <SearchQuery />
+    </div>
+  );
 }
