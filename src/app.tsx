@@ -1,9 +1,16 @@
 import { createRoot } from 'react-dom/client';
 import App from './components/App';
 import * as services from '@/services';
-import * as stores from '@/stores';
+
+import { CacheStore } from '@/stores/CacheStore/CacheStore';
+import { DataStore } from '@/stores/DataStore/DataStore';
 
 createRoot(document.getElementById('root')!).render(<App />);
+
+const stores = {
+  CacheStore: CacheStore.instance,
+  DataStore: DataStore.instance,
+}
 
 window.__services = services;
 window.__stores = stores;

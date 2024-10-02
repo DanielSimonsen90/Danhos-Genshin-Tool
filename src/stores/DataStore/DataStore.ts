@@ -1,12 +1,15 @@
 import * as CharactersData from '@/data/characters';
 import * as ArtifactSetsData from '@/data/artifact-sets';
-import { BaseStore } from './BaseStore';
 
-type DataStoreEventsMap = {
+import { BaseStore } from '../BaseStore';
+import { DataStoreEventsMap } from './DataStoreTypes';
 
-};
+export class DataStore extends BaseStore<DataStoreEventsMap> {
+  private static _instance: DataStore;
+  public static get instance() {
+    return this._instance ??= new DataStore();
+  }
 
-export const DataStore = new class DataStore extends BaseStore<DataStoreEventsMap> {
   constructor() { super('DataStore'); }
   public CharactersData = CharactersData;
   public ArtifactSetsData = ArtifactSetsData;

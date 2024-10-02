@@ -1,7 +1,10 @@
 import Select from "../Select";
 import { useNavigate } from "react-router-dom";
-import { useCacheItemMapped, useCacheStore } from "@/providers/stores";
+import { useCacheItemMapped, useCacheStore } from "@/stores";
+import { DebugLog } from "@/common/functions/dev";
 
+const debugLog = DebugLog('CacheComponent');
+let renders = 0;
 export default function Cache() {
   const navigate = useNavigate();
   const CacheStore = useCacheStore();
@@ -11,8 +14,18 @@ export default function Cache() {
     : undefined
   );
 
+  debugLog(`Render ${++renders}`, { 
+    options, 
+    currentSearch, 
+    currentSearchId: CacheStore.get('currentSearch', ''),
+    hash: window.location.hash
+  });
+
   return (
     <div className="cache">
+      {currentSearch === CacheStore.get('searchHistory', '{}')[CacheStore.get('currentSearch', '')] 
+        ? `Updated to be ${currentSearch?.title} using id ${CacheStore.get('currentSearch', '')}` 
+        : 'Not updated'}
       {options.length > 0 && <Select name="search-history"
         defaultValue={currentSearch?.title}
         options={options.map(item => item.title)}

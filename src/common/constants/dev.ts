@@ -11,8 +11,6 @@ export const DEBUGS = {
   // hooks
   useActionState: false,
   useComponent: false,
-  useStoreEvent: false,
-  useStoreProperty: true,
 
   // services
   baseService: false,

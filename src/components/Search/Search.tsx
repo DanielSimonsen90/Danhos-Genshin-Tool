@@ -8,7 +8,7 @@ import { formatSearchData, pascalCaseFromSnakeCase } from '@/common/functions/st
 import { useActionState } from "@/hooks/useActionState";
 import { useComponent } from "@/hooks/useComponent";
 
-import { useCacheItemMapped, useCacheStore } from "@/providers/stores/CacheStore";
+import { useCacheItemMapped, useCacheStore } from "@/stores/CacheStore";
 
 import { SelectArtifactPartName, SelectArtifactSet, SelectMainStat as SelectMainStatComponent, SelectSubStat } from "../Select";
 

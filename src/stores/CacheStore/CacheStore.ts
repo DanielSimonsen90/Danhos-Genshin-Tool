@@ -1,10 +1,14 @@
 import { DebugLog } from "@/common/functions/dev";
-import { BaseStore } from "../../../stores/BaseStore";
+import { BaseStore } from "../BaseStore";
 import { CacheEventsMap, CacheKeys, DefaultValueString, Cache } from "./CacheStoreTypes";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.cacheStore);
 
 export class CacheStore extends BaseStore<CacheEventsMap> {
+  private static _instance: CacheStore;
+  public static get instance() {
+    return this._instance ??= new CacheStore();
+  }
   constructor() { super('CacheStore'); }
 
   public cache = new Proxy({} as Cache, {

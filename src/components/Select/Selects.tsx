@@ -1,30 +1,40 @@
-import { DataStore } from "@/stores";
-
-import Select from "./Select";
-import { PublicProps, PublicMultipleProps } from "./types";
-import { ArtifactPartName, MainStatMap, MainStatName, SubStatName } from "@/common/types";
-import SelectMultiple from "./SelectMultiple";
 import { addSpacesToCamelCase, snakeCaseFromCamelCase } from "@/common/functions/strings";
+import type { ArtifactPartName, MainStatMap, MainStatName, SubStatName } from "@/common/types";
+
+import { useArtifactData, useCharacterData } from "@/stores/DataStore";
+import { DataStore } from "@/stores/DataStore/DataStore";
+
+import type { PublicProps, PublicMultipleProps } from "./types";
+import Select from "./Select";
+import SelectMultiple from "./SelectMultiple";
 
 export const SelectArtifactSet = (
-  props: PublicProps<typeof DataStore.ArtifactSetNames[0]>
-) => <Select 
-  options={DataStore.ArtifactSetNames} 
-  placeholder='Select an artifact set'
-  internalValue={snakeCaseFromCamelCase}
-  displayValue={addSpacesToCamelCase}
-  {...props}
-/>;
+  props: PublicProps<typeof DataStore.instance.ArtifactSetNames[0]>
+) => {
+  const { ArtifactSetNames } = useArtifactData();
+
+  return <Select
+    options={ArtifactSetNames}
+    placeholder='Select an artifact set'
+    internalValue={snakeCaseFromCamelCase}
+    displayValue={addSpacesToCamelCase}
+    {...props}
+  />;
+}
 
 export const SelectCharacter = (
-  props: PublicProps<typeof DataStore.CharacterNames[0]>
-) => <Select 
-  options={DataStore.CharacterNames} 
-  placeholder='Select a character' 
-  internalValue={snakeCaseFromCamelCase}
-  displayValue={addSpacesToCamelCase}
-  {...props}
-/>;
+  props: PublicProps<typeof DataStore.instance.CharacterNames[0]>
+) => {
+  const { CharacterNames } = useCharacterData();
+
+  return <Select
+    options={CharacterNames}
+    placeholder='Select a character'
+    internalValue={snakeCaseFromCamelCase}
+    displayValue={addSpacesToCamelCase}
+    {...props}
+  />;
+}
 
 export const SelectArtifactPartName = (
   props: PublicProps<ArtifactPartName>

@@ -2,10 +2,13 @@ import { Artifact, ArtifactSet, Character } from '@/common/models';
 import type { ArtifactPartName, MainStatName, SubStatName } from '@/common/types';
 import { SearchFormData } from '@/common/types/store-data';
 import { DebugLog } from '@/common/functions/dev';
+
 import type * as ArtifactSetData from '@/data/artifact-sets';
-import { DataStore } from '@/stores';
+
+import CacheStore from '@/stores/CacheStore/CacheStore';
+import DataStore from '@/stores/DataStore/DataStore';
+
 import BaseService from './BaseService';
-import CacheStore from '@/providers/stores/CacheStore/CacheStore';
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchService);
 
@@ -39,7 +42,7 @@ const ARTIFACT_PIECES_SCORES: Record<ArtifactPartName, number> = {
   Sands: 2,
 };
 
-const { ArtifactSetNames, ArtifactSets, Characters } = DataStore;
+const { ArtifactSetNames, ArtifactSets, Characters } = DataStore.instance;
 
 export const SearchService = new class SearchService extends BaseService<LastResult> {
   public static readonly SHOULD_SAVE_THRESHOLD = SHOULD_SAVE_THRESHOLD;

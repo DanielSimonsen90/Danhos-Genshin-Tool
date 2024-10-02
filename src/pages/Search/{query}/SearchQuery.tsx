@@ -5,9 +5,10 @@ import { DebugLog } from "@/common/functions/dev";
 import { ArtifactImage } from "@/components/Images";
 
 import { SearchService } from "@/services";
-import { useCacheStore } from "@/providers/stores/CacheStore";
+import { useCacheStore } from "@/stores/CacheStore";
 
-import type { CacheStore } from "@/providers/stores/CacheStore/CacheStore";
+import type { CacheStore } from "@/stores/CacheStore/CacheStore";
+import { useEffect } from "react";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchQuery);
 
@@ -15,14 +16,17 @@ export default function SearchQuery() {
   const { query } = useParams();
   const CacheStore = useCacheStore()
   const { formData, results } = getSearchResultsFromQuery(query, CacheStore);
-
   const { artifactSetName, artifactPartName } = formData;
-  CacheStore.set('currentSearch', results.id);
+  
+  useEffect(() => {
+    CacheStore.update('currentSearch', query, '');
+  }, [query]);
+
   debugLog('SearchQuery update', { query, results });
 
   return (
     <div>
-      <br />
+      <p>{query}</p>
       <ArtifactImage set={artifactSetName} name={artifactPartName} />
       <h1>{formData.titleNoSet}</h1>
       {results ? (<>

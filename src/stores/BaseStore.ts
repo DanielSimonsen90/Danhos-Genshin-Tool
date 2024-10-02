@@ -1,6 +1,6 @@
 type Callback<Args extends any[] = any[]> = (...args: Args) => void;
-
-type BaseEventsMap = {
+export type BaseEventsMap = {
+  any: [eventName: string, ...args: any[]];
   [key: string]: any[];
 }
 
@@ -24,6 +24,8 @@ export class BaseStore<Events extends BaseEventsMap> {
   }
 
   public emit<EventName extends keyof Events, Args extends Events[EventName]>(event: EventName, ...args: Args) {
+    // @ts-ignore
+    this.__get('any').forEach(cb => cb(event, ...args))
     this.__get(event).forEach(cb => cb(...args));
   }
 }
