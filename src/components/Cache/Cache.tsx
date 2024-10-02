@@ -13,9 +13,6 @@ export default function Cache() {
 
   return (
     <div className="cache">
-      {currentSearch === CacheStore.get('searchHistory', '{}')[CacheStore.get('currentSearch', '')] 
-        ? `Updated to be ${currentSearch?.title} using id ${CacheStore.get('currentSearch', '')}` 
-        : 'Not updated'}
       {options.length > 0 && <Select name="search-history"
         value={currentSearch?.title}
         options={options.map(item => item.title)}

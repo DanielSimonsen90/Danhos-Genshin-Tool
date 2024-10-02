@@ -6,7 +6,6 @@ import { DebugLog } from '@/common/functions/dev';
 const debugLog = DebugLog(DebugLog.DEBUGS.cacheStore);
 
 export default function CacheStoreProviderProvider({ children }: PropsWithChildren) {
-  
   const [updates, setUpdates] = useState(0);
   CacheStore.instance.on('any', () => setUpdates(v => v + 1));
   
@@ -14,7 +13,6 @@ export default function CacheStoreProviderProvider({ children }: PropsWithChildr
 
   return (
     <CacheStoreContext.Provider value={CacheStore.instance}>
-      <p>{CacheStore.instance.get('currentSearch', '')}</p>
       {children}
     </CacheStoreContext.Provider>
   );

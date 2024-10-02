@@ -26,7 +26,6 @@ export default function SearchQuery() {
 
   return (
     <div>
-      <p>{query}</p>
       <ArtifactImage set={artifactSetName} name={artifactPartName} />
       <h1>{formData.titleNoSet}</h1>
       {results ? (<>
