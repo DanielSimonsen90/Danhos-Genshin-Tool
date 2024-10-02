@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Props } from "./types";
 
 export default function Select<TValue extends string>({ 
@@ -6,8 +6,11 @@ export default function Select<TValue extends string>({
   defaultValue, displayValue, internalValue,
   ...props 
 }: Props<TValue>) {
-  const [value, setValue] = useState(defaultValue);
+  const [_value, _setValue] = useState(defaultValue);
   const className = `select ${props.className ?? ''}`;
+
+  const value = useMemo(() => props.value ?? _value, [props.value, _value]);
+  const setValue = useMemo(() => props.setValue ?? _setValue, [props.setValue, _setValue]);
 
   const handleChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
     setValue(event.target.value as TValue);
@@ -16,7 +19,7 @@ export default function Select<TValue extends string>({
 
   return (
     <select {...props} className={className} value={value} onChange={handleChange}>
-      {!defaultValue && <option className="muted" value=''>{props.placeholder}...</option>}
+      {!defaultValue && <option className="muted" value='' disabled>{props.placeholder}...</option>}
       {options.map((option) => (
         <option key={option} value={internalValue?.(option) ?? option}>
           {displayValue?.(option) ?? option}

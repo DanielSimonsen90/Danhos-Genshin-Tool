@@ -18,6 +18,6 @@ export const DEBUGS = {
   imageService: false,
 
   // stores
-  cacheStore: true,
+  cacheStore: false,
   dataStore: false,
 };

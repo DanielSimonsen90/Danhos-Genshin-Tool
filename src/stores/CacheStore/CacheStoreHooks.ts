@@ -23,6 +23,5 @@ export const useCacheItemMapped = <TKey extends CacheKeys, TResult>(
   const item = useCacheItem(key, defaultValue);
   const mapped = map(item);
   debugLog(`[useCacheItemMapped](${key})`, mapped);
-  console.trace(key, item, mapped);
   return mapped;
 }
