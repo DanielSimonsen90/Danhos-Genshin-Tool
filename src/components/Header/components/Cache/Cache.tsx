@@ -1,5 +1,5 @@
-import Select from "../Select";
 import { useNavigate } from "react-router-dom";
+import Select from "@/components/Select";
 import { useCacheItemMapped, useCacheStore } from "@/stores";
 
 export default function Cache() {

@@ -5,12 +5,16 @@ import { DebugLog } from "@/common/functions/dev";
 import { generateId } from "@/common/functions/random";
 import { formatSearchData, pascalCaseFromSnakeCase } from '@/common/functions/strings';
 
+import {
+  SelectArtifactPartName, SelectArtifactSet,
+  SelectMainStat as SelectMainStatComponent,
+  SelectSubStat
+} from "@/components/Select";
+
 import { useActionState } from "@/hooks/useActionState";
 import { useComponent } from "@/hooks/useComponent";
 
 import { useCacheItemMapped, useCacheStore } from "@/stores/CacheStore";
-
-import { SelectArtifactPartName, SelectArtifactSet, SelectMainStat as SelectMainStatComponent, SelectSubStat } from "../Select";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchComponent);
 

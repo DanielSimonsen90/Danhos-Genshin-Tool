@@ -1,7 +1,5 @@
-import Search from "../Search";
-import Navigation from "./Navigation";
-import Cache from "../Cache";
-import TabBar from "../TabBar";
+import { Navigation, Search, Cache } from "./components";
+import TabBar from "@/components/TabBar";
 
 export default function Header() {
   return (
