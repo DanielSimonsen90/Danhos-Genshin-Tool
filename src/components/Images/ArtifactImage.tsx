@@ -10,5 +10,5 @@ type Props = {
 }
 
 export default function ArtifactImage({ set, name }: Props) {
-  return <Image src={ImageService.getArtifactImage(set, name)} alt={`${pascalCaseFromSnakeCase(set)} ${name}`} />;
+  return <Image className="artifact-image" src={ImageService.getArtifactImage(set, name)} alt={`${pascalCaseFromSnakeCase(set)} ${name}`} />;
 }

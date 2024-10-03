@@ -10,16 +10,17 @@ import { useCacheStore } from "@/stores/CacheStore";
 import type { CacheStore } from "@/stores/CacheStore/CacheStore";
 import { useEffect } from "react";
 import SearchResult from "@/components/SearchResult";
+import ArtifactDetails from "@/components/ArtifactDetails";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchQuery);
 
 export default function SearchQuery() {
   const { query } = useParams();
-  const CacheStore = useCacheStore()
+  const CacheStore = useCacheStore();
   const { formData, results } = getSearchResultsFromQuery(query, CacheStore);
   const { artifactSetName, artifactPartName } = formData;
   const Result = () => results ? <SearchResult result={results} /> : <p>No results</p>;
-  
+
   useEffect(() => {
     CacheStore.update('currentSearch', query, '');
   }, [query]);
@@ -28,8 +29,16 @@ export default function SearchQuery() {
 
   return (
     <>
-      <ArtifactImage set={artifactSetName} name={artifactPartName} />
-      <h1>{formData.titleNoSet}</h1>
+      <div className="artifact-display">
+        <ArtifactImage set={artifactSetName} name={artifactPartName} />
+        <h1 className="artifact-display__mainstat">{formData.mainStat}</h1>
+        <p className="artifact-display__substats">
+          {formData.subStats.map((subStat, i) => (
+            <span className="artifact-display__substat" key={i}>{subStat}</span>
+          ))}
+        </p>
+        <ArtifactDetails artifact={results.set} />
+      </div>
       <Result />
     </>
   );

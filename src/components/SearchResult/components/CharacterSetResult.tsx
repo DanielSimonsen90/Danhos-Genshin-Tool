@@ -10,18 +10,20 @@ type Props = {
 
 export default function CharacterSetResult({ set, character, artifactSet }: Props) {
   if (!set) return (
-    <p>{character.name} has no set that uses {artifactSet.name}, but may benefit from its stats temporarily.</p>
+    <p className="character-result">
+      {character.name} has no set that uses {artifactSet.name}, but may benefit from its stats temporarily.
+    </p>
   )
 
   const { name: setName, artifactSets, favoredAbility, onField, talentStats } = set;
 
   return (
-    <div className='character-details__set'>
+    <div className='character-result'>
       <h3>{setName}</h3>
       <p>
-        <span className='character-details__set__onField'>{onField ? 'On field' : 'Off-field'}</span> focused
-        <span className='character-details__set__favoredAbility'>{favoredAbility}</span> ability priority, requiring
-        <span className='character-details__set__talentStats'>{fromList(talentStats)}</span>.
+        <span className='character-result__onField'>{onField ? 'On field' : 'Off-field'}</span> focused
+        <span className='character-result__favoredAbility'>{favoredAbility}</span> ability priority, requiring
+        <span className='character-result__talentStats'>{fromList(talentStats)}</span>.
       </p>
       <CharacterArtifactsSetsTabBar {...{
         character, artifactSets, set: artifactSet

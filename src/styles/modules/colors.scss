@@ -1,11 +1,21 @@
 @use '../colors' as colors;
 
 body {
+  --background-primary--muted: #{colors.$background-primary--muted};
   --background-primary: #{colors.$background-primary};
-  --background-secondary: #{colors.$background-secondary};
+  --background-primary--light: #{colors.$background-primary--light};
+
   --background-secondary--muted: #{colors.$background-secondary--muted};
+  --background-secondary: #{colors.$background-secondary};
+  --background-secondary--light: #{colors.$background-secondary--light};
+
+  --background-tertiary--muted: #{colors.$background-tertiary--muted};
   --background-tertiary: #{colors.$background-tertiary};
+  --background-tertiary--light: #{colors.$background-tertiary--light};
+
+  --background-quaternary--muted: #{colors.$background-quaternary--muted};
   --background-quaternary: #{colors.$background-quaternary};
+  --background-quaternary--light: #{colors.$background-quaternary--light};
 
   --text-primary: #{colors.$text-primary};
   --text-secondary: #{colors.$text-secondary};
@@ -15,4 +25,12 @@ body {
   --text-danger: #{colors.$text-danger};
 
   --brand: #{colors.$brand};
+
+  --element-anemo: #{colors.$element-anemo};
+  --element-cryo: #{colors.$element-cryo};
+  --element-dendro: #{colors.$element-dendro};
+  --element-electro: #{colors.$element-electro};
+  --element-geo: #{colors.$element-geo};
+  --element-hydro: #{colors.$element-hydro};
+  --element-pyro: #{colors.$element-pyro};
 }

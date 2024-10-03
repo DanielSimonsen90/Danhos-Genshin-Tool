@@ -39,7 +39,8 @@
 .tab-bar__content {
   display: grid;
   grid-template-areas: "content";
-  padding-inline: .75em;
+  padding: .5em .75em .5em;
+  border: 1px solid var(--background-tertiary);
 
   &-page {
     grid-area: content;

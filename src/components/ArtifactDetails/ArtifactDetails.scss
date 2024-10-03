@@ -1,0 +1,15 @@
+.artifact-details {
+  &__name {
+    margin: 0;
+  }
+
+  &__2-piece::before {
+    content: "2-piece: ";
+    font-weight: bold;
+  }
+
+  &__4-piece::before {
+    content: "4-piece: ";
+    font-weight: bold;
+  }
+}

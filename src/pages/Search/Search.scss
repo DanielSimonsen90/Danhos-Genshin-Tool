@@ -1,0 +1,48 @@
+.search-page {
+  --fz: 2rem;
+
+  .artifact-image {
+    --_fz: calc(var(--fz) * 2.5);
+    width: var(--_fz);
+    height: var(--_fz);
+    object-fit: cover;
+  }
+
+  .artifact-display {
+    display: grid;
+    grid-template-areas: 
+      "image mainstat details" 
+      "image substats details";
+    grid-template-columns: auto auto 1fr;
+    grid-template-rows: 2rem auto;
+    column-gap: 1rem;
+    padding: 1rem;
+
+    &__mainstat {
+      grid-area: mainstat;
+      font-size: clamp(1.5rem, var(--fz), 3rem);
+      margin: 0;
+    }
+
+    &__substats {
+      grid-area: substats;
+      display: grid;
+    }
+
+    &__substat {
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .artifact-details {
+      grid-area: details;
+      margin: .25ch 0 calc(.25ch + 1rem);
+      border-left: 1px solid var(--background-tertiary);
+      padding: 0 1em;
+    }
+  }
+
+  .search-result {
+    grid-area: result;
+  }
+}

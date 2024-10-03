@@ -195,10 +195,13 @@ export const Charlotte = new Character("Charlotte", "Cryo", "Catalyst", "Heal", 
 
 export const Chevreuse = new Character("Chevreuse", "Pyro", "Polearm", "Heal", [
   new CharacterSet("Off-field Support", ["HP"], "Skill/Ability", false, [
-    new CharacterArtifactSet(Sets.VourukashasGlow, 2, 4),
-    new CharacterArtifactSet(Sets.MaidenBeloved, 2, 4),
-    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 2, 4),
-    new CharacterArtifactSet(Sets.OceanHuedClam, 2, 4),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 5),
+    new CharacterArtifactSet(Sets.OceanHuedClam, 4, 4),
+    new CharacterArtifactSet(Sets.SongOfDaysPast, 4, 3),
+    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 2, 2),
+    new CharacterArtifactSet(Sets.VourukashasGlow, 2, 2),
+    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 2, 1),
+    new CharacterArtifactSet(Sets.OceanHuedClam, 2, 1),
   ]),
 ]);
 
@@ -384,6 +387,7 @@ export const Faruzan = new Character("Faruzan", "Anemo", "Bow", "Nothing", [
 
 export const Fischl = new Character("Fischl", "Electro", "Bow", "Nothing", [
   new CharacterSet("Off-field DPS", ["ATK"], "Skill/Ability", false, [
+    new CharacterArtifactSet(Sets.GoldenTroupe, 4, 5),
     new CharacterArtifactSet(Sets.ThunderingFury, 2, 5),
     new CharacterArtifactSet(Sets.GladiatorsFinale, 2, 5),
     new CharacterArtifactSet(Sets.ShimenawasReminiscence, 2, 5),

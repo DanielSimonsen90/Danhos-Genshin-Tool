@@ -1,4 +1,5 @@
-import SearchQuery from "./SearchQuery";
+import './Search.scss';
+import SearchQuery from "./Search";
 
 export default function SearchQueryPage() {
   return (

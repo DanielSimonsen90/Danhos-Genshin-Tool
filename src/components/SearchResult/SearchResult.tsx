@@ -1,7 +1,7 @@
 import { SearchResult } from '@/services/SearchService';
 import TabBar from '@/components/TabBar';
-import TabContent from './components/TabContent';
-import { useState } from 'react';
+import TabContent, { TabContentProps } from './components/TabContent';
+import { useEffect, useState } from 'react';
 import { classNames } from '@/common/functions/strings';
 
 type Props = {
@@ -14,16 +14,30 @@ export const SearchResultComponent = ({ result: {
 } }: Props) => {
   const [showNotSave, setShowNotSave] = useState(false);
   const [resultsCount, setResultsCount] = useState(0);
-  const tabBarProps = { set, showNotSave };
+  const [tab, setCurrentTab] = useState('combined');
+  const [wrap, setWrap] = useState(false);
 
+  const tabBarProps = { 
+    set, 
+    showNotSave, 
+    onShowMore: showNotSave ? undefined : () => setShowNotSave(true) 
+  } /*satisfies Partial<TabContentProps>;*/ // Webpack doesn't understand "satisfies"
+
+  // TODO: Replace with Checkbox component
   const ShowAll = () => (
-    <div className={classNames("search-result__show-all-container", resultsCount === -1 && 'hidden')}>
+    <div className="search-result__show-all-container">
+      <input type="checkbox" checked={showNotSave} onChange={() => setShowNotSave(!showNotSave)} disabled={resultsCount < 1} />
       <label>Show all ({resultsCount})</label>
-      <input type="checkbox" checked={showNotSave} onChange={() => setShowNotSave(!showNotSave)} />
     </div>
-  )
+  );
+  const Wrap = () => (
+    <div className="search-result__wrap-container">
+      <input type="checkbox" checked={wrap} onChange={() => setWrap(!wrap)} />
+      <label>Wrap</label>
+    </div>
+  );
 
-  function handleTabChanged(tab: string) {
+  useEffect(() => {
     const results = (
       tab === 'combined' ? props.combined
       : tab === 'characters' ? props.byCharacterRecommendation
@@ -32,11 +46,15 @@ export const SearchResultComponent = ({ result: {
     const showAll = results.length;
     const showShouldSave = results.filter(({ shouldSave }) => shouldSave).length;
     const showShouldNotSave = showAll - showShouldSave;
-    setResultsCount(showShouldNotSave === 0 ? -1 : showNotSave ? showAll : showShouldSave);
-  }
+    setResultsCount(showShouldNotSave === 0 ? 0 : showNotSave ? showAll : showShouldSave);
+  }, [tab, showNotSave]);
 
   return (
-    <div className="search-result">
+    <div className={classNames(
+      "search-result", 
+      showNotSave && "search-result--show-not-save", 
+      wrap && 'search-result--wrap'
+    )}>
       {/* @ts-ignore */}
       <TabBar tabs={[
         ['combined', 'Combined'],
@@ -46,9 +64,10 @@ export const SearchResultComponent = ({ result: {
         combined={<TabContent results={props.combined} {...tabBarProps} />}
         characters={<TabContent results={props.byCharacterRecommendation} {...tabBarProps} />}
         artifacts={<TabContent results={props.byArtifact} {...tabBarProps} />}
-        onTabChange={handleTabChanged}
+        onTabChange={setCurrentTab}
       >
         <ShowAll />
+        <Wrap />
       </TabBar>
     </div>
   );

@@ -1,14 +1,32 @@
+$background-primary--muted: #2d2d2d;
 $background-primary: #333;
-$background-secondary: #444;
+$background-primary--light: #3a3a3a;
+
 $background-secondary--muted: #404040;
+$background-secondary: #444;
+$background-secondary--light: #4a4a4a;
+
+$background-tertiary--muted: #4d4d4d;
 $background-tertiary: #555;
+$background-tertiary--light: #5a5a5a;
+
+$background-quaternary--muted: #5d5d5d;
 $background-quaternary: #666;
+$background-quaternary--light: #6b6b6b;
 
 $text-primary: #eee;
-$text-secondary: #ddd;
+$text-secondary: #d1d1d1;
 $text-muted: #999;
 $text-link: #7b85fd;
 
 $text-danger: #ed5e5e;
 
 $brand: #2793b1;
+
+$element-anemo: #73C2A8;
+$element-cryo: #9FD6E1;
+$element-dendro: #A2C838;
+$element-electro: #AF8EC1;
+$element-geo: #F8B431;
+$element-hydro: #4BC2EF;
+$element-pyro: #EF7939;

@@ -12,16 +12,19 @@ export function addSpacesToCamelCase<T extends string>(value: T): T {
 export function snakeCaseFromCamelCase<T extends string>(value: T): T {
   value = value.includes(' ') ? value.replace(/ /g, '') as T : value;
 
-  const result = value.replace(/([A-Z])/g, (match) => `_${match.toLowerCase()}`);
-  const returned = result.startsWith('_') ? result.slice(1) as T : result as T;
-  debugLog(`[snakeCaseFromCamelCase] ${value} -> ${returned}`);
-  return returned;
+  const transform = value.replace(/([A-Z])/g, (match) => `_${match.toLowerCase()}`);
+  const noStartUnderscore = transform.startsWith('_') ? transform.slice(1) as T : transform as T;
+  const noUnderscoreAfterDash = noStartUnderscore.replace(/-_/g, '-') as T;
+  const result = noUnderscoreAfterDash as T;
+  debugLog(`[snakeCaseFromCamelCase] ${value} -> ${result}`);
+  return result;
 }
 
 export function pascalCaseFromSnakeCase<T extends string>(value: T): T {
   const result = value.split('_').map(word => word[0].toUpperCase() + word.slice(1)).join(' ') as T;
-  debugLog(`[pascalCaseFromSnakeCase] ${value} -> ${result}`);
-  return result as T;
+  const returned = result.replace(/- /g, '-') as T;
+  debugLog(`[pascalCaseFromSnakeCase] ${value} -> ${returned}`);
+  return returned as T;
 }
 
 export function formatSearchData(value: SearchFormData, withSet = false) {

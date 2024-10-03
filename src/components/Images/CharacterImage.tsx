@@ -7,5 +7,5 @@ type Props = {
 };
 
 export default function CharacterImage({ character }: Props) {
-  return <Image src={ImageService.getCharacterImage(character)} alt={character} />;
+  return <Image className='character-image' src={ImageService.getCharacterImage(character)} alt={character} />;
 }

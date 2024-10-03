@@ -1,0 +1,62 @@
+.search-result-item {
+  display: grid;
+  grid-template-areas: "avatar details" "result result";
+  grid-template-columns: auto 1fr;
+  column-gap: 1em;
+  padding: .5em;
+
+  background-color: var(--background-primary--light);
+  border: 1px solid var(--element);
+  border-radius: .5em;
+  box-shadow: 0 0 1em rgba(0, 0, 0, .25);
+
+  &--end button {
+    margin-left: .5ch;
+  }
+
+  .character-image {
+    grid-area: avatar;
+  }
+
+  .character-details {
+    grid-area: details;
+
+    &__name {
+      margin: 0;
+
+      a {
+        font-size: 1.75rem;
+      }
+    }
+
+    p {
+      display: inline-block;
+
+      &:not(:last-of-type)::after {
+        content: "•";
+        margin-inline: .5ch;
+      }
+    }
+
+    &__score {
+      margin: 0;
+      color: var(--element);
+    }
+  }
+
+  .character-result {
+    grid-area: result;
+
+    h3 {
+      margin: .75em 0 .5em;
+    }
+
+    p {
+      color: var(--text-secondary);
+    }
+
+    span {
+      color: var(--text-primary);
+    }
+  }
+}

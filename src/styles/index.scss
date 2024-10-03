@@ -19,4 +19,16 @@
     opacity: 0;
     z-index: -1;
   }
+
+  .muted {
+    color: var(--text-muted);
+  }
+
+  *[data-element=Anemo] { --element: var(--element-anemo); }
+  *[data-element=Cryo] { --element: var(--element-cryo); }
+  *[data-element=Dendro] { --element: var(--element-dendro); }
+  *[data-element=Electro] { --element: var(--element-electro); }
+  *[data-element=Geo] { --element: var(--element-geo); }
+  *[data-element=Hydro] { --element: var(--element-hydro); }
+  *[data-element=Pyro] { --element: var(--element-pyro); }
 }

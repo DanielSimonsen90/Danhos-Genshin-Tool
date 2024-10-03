@@ -1,0 +1,31 @@
+.search-result {
+  &:not(&--show-not-save) .search-result-item--hide {
+    display: none;
+  }
+
+  &--wrap .search-result__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  >.tab-bar>.tab-bar__tabs {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+
+    *:not(.tab-bar__tab) {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      margin-left: 1ch;
+      gap: .5ch;
+    }
+  }
+}
