@@ -19,19 +19,12 @@
     .search-result-item .character-details__grouped {
       flex-direction: column;
       align-items: flex-start;
+      gap: 0;
+      padding-left: 2ch;
 
-      p {
+      li {
+        list-style: disc !important;
         margin: unset;
-
-        &::before {
-          content: '•';
-          margin-inline: .5ch;
-        }
-
-        &:not(:last-of-type)::after {
-          content: '';
-          margin-inline: 0;
-        }
       }
     }
   }

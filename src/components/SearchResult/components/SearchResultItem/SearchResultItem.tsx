@@ -27,15 +27,15 @@ export const SearchResultItemComponent = ({ result, set: artifactSet }: Props) =
             {character.name}
           </Link>
         </h2>
-        <div className="character-details__grouped">
-          <p className="element">{character.element}</p>
-          <p className="weapon">{character.weapon}</p>
+        <ul className="character-details__grouped">
+          <li className="element">{character.element}</li>
+          <li className="weapon">{character.weapon}</li>
           {character.bonusAbility !== 'Nothing' ? (
-            <p className="bonus-ability" title={`${character.name} is also able to ${character.bonusAbility.toLowerCase()}`}>
+            <li className="bonus-ability" title={`${character.name} is also able to ${character.bonusAbility.toLowerCase()}`}>
               {character.bonusAbility}
-            </p>
+            </li>
           ) : null}
-        </div>
+        </ul>
         <p className="character-details__score">
           Score: <b>{score}</b>
         </p>

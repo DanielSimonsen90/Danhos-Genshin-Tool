@@ -29,15 +29,12 @@
       flex-direction: row;
       align-items: center;
       flex-wrap: wrap;
+      list-style-type: disc;
+      gap: 3ch;
     }
 
-    p {
-      display: inline-block;
-
-      &:not(:last-of-type)::after {
-        content: "•";
-        margin-inline: .5ch;
-      }
+    li:first-of-type {
+      list-style: none;
     }
 
     &__score {
