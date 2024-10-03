@@ -10,7 +10,7 @@ type Props = {
   onShowMore?: () => void;
 };
 
-export {Props as TabContentProps};
+export { Props as TabContentProps };
 
 export const TabContent = ({ results, set, showNotSave, onShowMore }: Props) => (
   !results.length ? (
@@ -23,19 +23,17 @@ export const TabContent = ({ results, set, showNotSave, onShowMore }: Props) => 
     <div className="search-result__list-container">
       <ul className={classNames("search-result__list", showNotSave && 'search-result__list--show-all')}>
         {results.map(result => <SearchResultItemComponent key={result.character.name} result={result} set={set} />)}
-        <li className="seach-result-item search-result-item--end muted">
-          <p>
-            <span>
-            There are no more results to show.
-            </span>
-            {onShowMore && (
-              <button onClick={onShowMore} className="button link">
-                Show more
-              </button>
-            )}
-          </p>
-        </li>
       </ul>
+      <p className="seach-result-item search-result-item--end muted">
+        <span>
+          There are no more results to show.
+        </span>
+        {onShowMore && (
+          <button onClick={onShowMore} className="button link">
+            Show more
+          </button>
+        )}
+      </p>
     </div>
   )
 );

@@ -1,10 +1,11 @@
 .search-result-item {
-  display: grid;
-  grid-template-areas: "avatar details" "result result";
-  grid-template-columns: auto 1fr;
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+  flex-wrap: wrap;
   column-gap: 1em;
+  
   padding: .5em;
-
   background-color: var(--background-primary--light);
   border: 1px solid var(--element);
   border-radius: .5em;
@@ -14,19 +15,20 @@
     margin-left: .5ch;
   }
 
-  .character-image {
-    grid-area: avatar;
-  }
-
   .character-details {
-    grid-area: details;
-
     &__name {
       margin: 0;
 
       a {
         font-size: 1.75rem;
       }
+    }
+
+    &__grouped {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      flex-wrap: wrap;
     }
 
     p {
@@ -45,7 +47,8 @@
   }
 
   .character-result {
-    grid-area: result;
+    flex: 1 1 100%;
+    max-width: 100%;
 
     h3 {
       margin: .75em 0 .5em;

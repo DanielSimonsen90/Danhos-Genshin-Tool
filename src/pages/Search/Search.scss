@@ -35,14 +35,9 @@
     }
 
     .artifact-details {
-      grid-area: details;
       margin: .25ch 0 calc(.25ch + 1rem);
       border-left: 1px solid var(--background-tertiary);
       padding: 0 1em;
     }
-  }
-
-  .search-result {
-    grid-area: result;
   }
 }

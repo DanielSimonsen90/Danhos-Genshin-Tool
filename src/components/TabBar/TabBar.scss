@@ -5,6 +5,8 @@
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   border-bottom: .5ch solid var(--background-tertiary);
+
+  overflow: auto;
 }
 
 .tab-bar__tab {
@@ -12,6 +14,7 @@
   border-right: 1px solid var(--background-tertiary);
   background-color: var(--background-secondary--muted);
   color: var(--text-muted);
+  min-width: max-content;
 
   margin: 0;
   border-bottom-left-radius: 0;
