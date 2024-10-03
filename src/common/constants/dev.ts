@@ -20,4 +20,5 @@ export const DEBUGS = {
   // stores
   cacheStore: false,
   dataStore: false,
+  settingsStore: false,
 };

@@ -5,10 +5,7 @@ import { CacheEventsMap, CacheKeys, DefaultValueString, Cache } from "./CacheSto
 const debugLog = DebugLog(DebugLog.DEBUGS.cacheStore);
 
 export class CacheStore extends BaseStore<CacheEventsMap> {
-  private static _instance: CacheStore;
-  public static get instance() {
-    return this._instance ??= new CacheStore();
-  }
+  public static readonly instance = new CacheStore();
   constructor() { super('CacheStore'); }
 
   public cache = new Proxy({} as Cache, {

@@ -5,10 +5,7 @@ import { BaseStore } from '../BaseStore';
 import { DataStoreEventsMap } from './DataStoreTypes';
 
 export class DataStore extends BaseStore<DataStoreEventsMap> {
-  private static _instance: DataStore;
-  public static get instance() {
-    return this._instance ??= new DataStore();
-  }
+  public static readonly instance = new DataStore();
 
   constructor() { super('DataStore'); }
   public CharactersData = CharactersData;
