@@ -24,6 +24,7 @@ export default function SearchQuery() {
   const DataStore = useDataStore();
   const [formData, setFormData] = useState<SearchFormData>(null);
   const [results, setResults] = useState<SearchResult>(null);
+  const [retries, setRetries] = useState(0);
   const Result = useCallback(() => results ? <SearchResultComponent result={results} /> : <p>No results</p>, [results]);
 
   useEffect(() => {
@@ -32,13 +33,16 @@ export default function SearchQuery() {
     setFormData(formData);
     setResults(results);
 
-    if (!CacheStore.get('searchHistory', {})[query]) CacheStore.update('searchHistory', { [query]: formData });
-  }, [query]);
+    if (!CacheStore.get('searchHistory', {})[query] && formData) CacheStore.update('searchHistory', { [query]: formData });
+  }, [query, retries]);
 
-  if (!formData || !results) {
-    debugLog('Loading', query);
-    return <p>Loading...</p>; // TODO: Spinner
-  }
+  if (!formData || !results) return (
+    <div className="loading">
+      <p>Results failed.</p>
+      <button onClick={() => setRetries(retries + 1)}>Try again?</button>
+      <p>Attempts: {retries}</p>
+    </div>
+  );
 
   const { artifactSetName, artifactPartName } = formData;
   debugLog('SearchQuery update', { query, results });
@@ -63,7 +67,7 @@ export default function SearchQuery() {
 function getSearchResultsFromQuery(query: string, CacheStore: CacheStore, DataStore: DataStore) {
   const formData = CacheStore.getFromItem('searchHistory', query, '{}');
   debugLog('getSearchResultsFromQuery cached', { query, formData });
-  if (!formData) return { formData: null, results: null };
+  if (!formData) return { formData, results: null };
 
   const { artifactSetName } = formData;
   const results = SearchService.search({

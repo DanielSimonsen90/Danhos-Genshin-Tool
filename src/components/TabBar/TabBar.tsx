@@ -1,6 +1,6 @@
+import { Dispatch, ReactNode, SetStateAction, useCallback, useEffect, useMemo, useState } from "react";
 import { classNames } from "@/common/functions/strings";
 import { Functionable } from "@/common/types";
-import { Dispatch, ReactNode, SetStateAction, useCallback, useEffect, useMemo, useState } from "react";
 
 type Props<
   TTabKey extends string,

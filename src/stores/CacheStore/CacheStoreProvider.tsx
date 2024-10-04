@@ -9,13 +9,13 @@ const debugLog = DebugLog(DebugLog.DEBUGS.cacheStore);
 export default function CacheStoreProviderProvider({ children }: PropsWithChildren) {
   const [cache, setCache] = useState<Cache>({} as Cache);
   const store = useCacheFunctions(cache, setCache);
-  
-  useCacheSaveEffect(cache);
+
+  useCacheSaveEffect(cache, setCache);
   useCacheStoreToWindow(store);
   debugLog('[Provider] Updated', cache);
 
   return (
-    <CacheStoreContext.Provider value={store}>
+    <CacheStoreContext.Provider value={{ ...store, cache }}>
       {children}
     </CacheStoreContext.Provider>
   );

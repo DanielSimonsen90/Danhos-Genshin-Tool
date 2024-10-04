@@ -4,12 +4,15 @@ import { BaseEventsMap } from "../BaseStore";
 import { useCacheFunctions } from './CacheStoreFunctions'
 
 export type CacheStore = ReturnType<typeof useCacheFunctions>;
-export type CacheStoreProviderContextType = CacheStore;
+export type CacheStoreProviderContextType = CacheStore & {
+  cache: Cache;
+}
 
 export type DefaultValueString = '' | '{}';
 export type Cache = {
   searchHistory: Record<string, SearchFormData>;
   searchResults: Record<string, SearchResult>;
+  clearRequested: boolean;
 };
 
 export type CacheKeys = keyof Cache;

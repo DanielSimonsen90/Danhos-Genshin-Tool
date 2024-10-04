@@ -6,13 +6,13 @@ import SearchResultItemComponent from "./SearchResultItem";
 type Props = {
   results: Array<SearchResultItem>;
   set: ArtifactSet;
-  showNotSave: boolean;
+  showAll: boolean;
   onShowMore?: () => void;
 };
 
 export { Props as TabContentProps };
 
-export const TabContent = ({ results, set, showNotSave, onShowMore }: Props) => (
+export const TabContent = ({ results, set, showAll, onShowMore }: Props) => (
   !results.length ? (
     <div className="search-result__list-container">
       <ul className="search-result__list--empty">
@@ -21,7 +21,7 @@ export const TabContent = ({ results, set, showNotSave, onShowMore }: Props) => 
     </div>
   ) : (
     <div className="search-result__list-container">
-      <ul className={classNames("search-result__list", showNotSave && 'search-result__list--show-all')}>
+      <ul className={classNames("search-result__list", showAll && 'search-result__list--show-all')}>
         {results.map(result => <SearchResultItemComponent key={result.character.name} result={result} set={set} />)}
       </ul>
       <p className="seach-result-item search-result-item--end muted">

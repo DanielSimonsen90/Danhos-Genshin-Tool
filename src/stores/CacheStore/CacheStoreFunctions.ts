@@ -3,12 +3,11 @@ import { Cache, CacheKeys, CacheStore, DefaultValueString } from "./CacheStoreTy
 import { Dispatch, SetStateAction, useEffect } from "react";
 
 export function useCacheFunctions(cache: Cache, setCache: Dispatch<SetStateAction<Cache>>) {
-  useCacheSaveEffect(cache);
   const storage = useLocalStorage();
 
   return {
     has, findObject,
-    set, get, getFromItem, update, delete: deleteItem, 
+    set, get, getFromItem, update, delete: deleteItem,
     clear, load
   } as const;
 
@@ -16,10 +15,10 @@ export function useCacheFunctions(cache: Cache, setCache: Dispatch<SetStateActio
     return key in cache && cache[key] !== undefined;
   }
   function findObject<
-    TKey extends CacheKeys, 
+    TKey extends CacheKeys,
     TChildKey extends keyof Cache[TKey]
   >(
-    key: TKey, 
+    key: TKey,
     callback: (obj: Cache[TKey][TChildKey]) => boolean
   ): Cache[TKey][TChildKey] | undefined {
     const item = cache[key];
@@ -35,17 +34,23 @@ export function useCacheFunctions(cache: Cache, setCache: Dispatch<SetStateActio
     return cache[key] ?? defaultValue;
   }
   function getFromItem<
-    TKey extends CacheKeys, 
+    TKey extends CacheKeys,
     TChildKey extends keyof Cache[TKey]
   >(
-    key: TKey, 
-    childKey: TChildKey, 
+    key: TKey,
+    childKey: TChildKey,
     defaultValue: DefaultValueString
   ): Cache[TKey][TChildKey] | undefined {
     return get(key, defaultValue)?.[childKey];
   }
   function update<TKey extends CacheKeys>(key: TKey, value: Cache[TKey]): void {
-    setCache(v => ({ ...v, [key]: typeof value === 'object' ? { ...v[key], ...value } : value }));
+    setCache(v => ({ 
+      ...v, 
+      [key]: typeof v[key] === 'object' 
+        && typeof value === 'object' 
+        ? { ...v[key] as Object, ...value as Object } 
+        : value 
+    }));
   }
   function deleteItem<TKey extends CacheKeys>(key: TKey): void {
     setCache(v => {
@@ -55,21 +60,21 @@ export function useCacheFunctions(cache: Cache, setCache: Dispatch<SetStateActio
     });
   }
   function clear(): void {
-    setCache({} as Cache);
+    setCache(v => ({ ...v, clearRequested: true }));
   }
 
-  function load<TKey extends CacheKeys>(key: TKey, defaultValue: DefaultValueString): void {
-    if (!get(key, undefined)) setCache(v => ({ ...v, [key]: storage(key).load(defaultValue) }));
+  function load<TKey extends CacheKeys>(key: TKey, defaultValue?: any): void {
+    if (!get(key, undefined)) setCache(v => ({ ...v, [key]: storage(key).get(defaultValue) }));
   }
 }
 
-export function useCacheSaveEffect(cache: Cache) {
+export function useCacheSaveEffect(cache: Cache, setCache: Dispatch<SetStateAction<Cache>>) {
   const storage = useLocalStorage();
 
   useEffect(() => {
     for (const key in cache) {
       const value = cache[key as CacheKeys];
-      if (value === undefined) {
+      if (!value) {
         storage(key).remove();
         continue;
       }
@@ -77,6 +82,12 @@ export function useCacheSaveEffect(cache: Cache) {
 
       storage(key).set(value);
     }
+
+    const clearRequested = storage('clearRequested').get();
+    if (!clearRequested) return;
+
+    for (const key in cache) storage(key).remove();
+    setCache({} as Cache);
   }, [cache]);
 }
 

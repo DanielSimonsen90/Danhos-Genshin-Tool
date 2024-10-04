@@ -7,12 +7,12 @@ export default function Cache() {
   const navigate = useNavigate();
   const { query } = useParams();
   const CacheStore = useCacheStore();
-  const options = useMemo(() => Object.values(CacheStore.get('searchHistory', {})).filter(Boolean), [CacheStore]);
-  const currentSearch = useMemo(() => query ? CacheStore.get('searchHistory', {})?.[query] : undefined, [query, CacheStore]);
+  const options = Object.values(CacheStore.get('searchHistory', {})).filter(Boolean);
+  const currentSearch = query ? CacheStore.get('searchHistory', {})?.[query] : undefined;
 
   useEffect(() => {
-    CacheStore.load('searchHistory', '{}');
-  }, []);
+    if (!CacheStore.has('searchHistory')) CacheStore.load('searchHistory', '{}');
+  }, [CacheStore]);
 
   return (
     <div className="cache">
