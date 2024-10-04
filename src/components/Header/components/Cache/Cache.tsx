@@ -1,15 +1,18 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Select from "@/components/Select";
-import { useCacheItemMapped, useCacheStore } from "@/stores";
+import { useCacheStore } from "@/stores";
+import { useEffect, useMemo } from "react";
 
 export default function Cache() {
   const navigate = useNavigate();
+  const { query } = useParams();
   const CacheStore = useCacheStore();
-  const options = useCacheItemMapped('searchHistory', searchHistory => Object.values(searchHistory));
-  const currentSearch = useCacheItemMapped('currentSearch', searchId => searchId
-    ? CacheStore.get('searchHistory', '{}')[searchId]
-    : undefined
-  );
+  const options = Object.values(CacheStore.get('searchHistory', {})).filter(Boolean);
+  const currentSearch = query ? CacheStore.get('searchHistory', {})?.[query] : undefined;
+
+  useEffect(() => {
+    if (!CacheStore.has('searchHistory')) CacheStore.load('searchHistory', '{}');
+  }, [CacheStore]);
 
   return (
     <div className="cache">
@@ -19,7 +22,6 @@ export default function Cache() {
         placeholder="Previous searches"
         onChange={value => {
           const searchId = options.find(item => item.title === value)?.id;
-          CacheStore.set('currentSearch', searchId);
           navigate(`/search/${searchId}`);
         }}
       />}

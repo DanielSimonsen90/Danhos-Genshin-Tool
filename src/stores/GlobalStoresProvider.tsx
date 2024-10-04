@@ -1,16 +1,22 @@
 import { PropsWithChildren } from "react";
-import CacheStore from "../stores/CacheStore";
-import DataStore from "../stores/DataStore";
-import SettingsStore from "./SettingsStore";
+import { GlobalStoresContext } from "./GlobalStoresConstants";
+
+import useCacheStoreProvider from "./CacheStore/CacheStoreProvider";
+import useDataStoreProvider from "./DataStore/DataStoreProvider";
+import useSettingsStoreProvider from "./SettingsStore/SettingsStoreProvider";
 
 export default function GlobalStoresProvider({ children }: PropsWithChildren) {
+  const [CacheStore] = useCacheStoreProvider();
+  const [DataStore] = useDataStoreProvider();
+  const [SettingsStore, { 
+    didSettingsChange, hideNotice, 
+    SettingsNotice
+  }] = useSettingsStoreProvider();
+
   return (
-    <DataStore>
-      <SettingsStore>
-        <CacheStore>
-          {children}
-        </CacheStore>
-      </SettingsStore>
-    </DataStore>
+    <GlobalStoresContext.Provider value={{ CacheStore, DataStore, SettingsStore }}>
+      {didSettingsChange && !hideNotice && <SettingsNotice />}
+      {children}
+    </GlobalStoresContext.Provider>
   );
 }

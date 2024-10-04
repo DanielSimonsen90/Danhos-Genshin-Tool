@@ -1,19 +1,17 @@
-import { useState, PropsWithChildren } from 'react';
-import { CacheStoreContext } from './CacheStoreConstants';
-import CacheStore from './CacheStore';
+import { useState } from 'react';
 import { DebugLog } from '@/common/functions/dev';
+import { Cache } from './CacheStoreTypes';
+import { useCacheFunctions, useCacheSaveEffect, useCacheStoreToWindow } from './CacheStoreFunctions';
 
 const debugLog = DebugLog(DebugLog.DEBUGS.cacheStore);
 
-export default function CacheStoreProviderProvider({ children }: PropsWithChildren) {
-  const [updates, setUpdates] = useState(0);
-  CacheStore.instance.on('any', () => setUpdates(v => v + 1));
-  
-  debugLog('[Provider] Updated', { store: CacheStore.instance, updates });
+export default function useCacheStoreProvider() {
+  const [cache, setCache] = useState<Cache>({} as Cache);
+  const store = useCacheFunctions(cache, setCache);
 
-  return (
-    <CacheStoreContext.Provider value={CacheStore.instance}>
-      {children}
-    </CacheStoreContext.Provider>
-  );
+  useCacheSaveEffect(cache, setCache);
+  useCacheStoreToWindow(store);
+  debugLog('[Provider] Updated', cache);
+
+  return [{ ...store, cache }] as const;
 }

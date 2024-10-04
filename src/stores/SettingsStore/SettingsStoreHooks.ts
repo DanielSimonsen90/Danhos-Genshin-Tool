@@ -1,11 +1,11 @@
 import { DependencyList, SetStateAction, useContext, useEffect } from "react";
-import { SettingsStoreContext } from "./SettingsStoreConstants";
 import { Settings } from "./SettingsStoreTypes";
+import { GlobalStoresContext } from "../GlobalStoresConstants";
 
-export const useSettingsStore = () => useContext(SettingsStoreContext);
+export const useSettingsStore = () => useContext(GlobalStoresContext).SettingsStore;
 export function useSetting<TKey extends keyof Settings>(key: TKey) {
   const store = useSettingsStore();
-  return [store.getSetting(key), (value: Settings[TKey]) => store.setSetting(key, value)] as const;
+  return [store.get(key), (value: Settings[TKey]) => store.update({ [key]: value })] as const;
 }
 
 type UseSettingsReturn<TKeys extends Array<keyof Settings>> = { 
@@ -14,17 +14,7 @@ type UseSettingsReturn<TKeys extends Array<keyof Settings>> = {
 export function useSettings<TKeys extends Array<keyof Settings>>(...keys: TKeys): UseSettingsReturn<TKeys> {
   const store = useSettingsStore();
   return keys.reduce((acc, key) => {
-    acc[key] = store.getSetting(key);
+    acc[key] = store.get(key);
     return acc;
   }, {} as any) as UseSettingsReturn<TKeys>;
-}
-
-export function useSettingEffect<TKey extends keyof Settings>(key: TKey, value: Settings[TKey]): void;
-export function useSettingEffect<TKey extends keyof Settings>(key: TKey, value: SetStateAction<Settings[TKey]>, deps: DependencyList): void;
-export function useSettingEffect<TKey extends keyof Settings>(key: TKey, value: SetStateAction<Settings[TKey]>, deps?: DependencyList) {
-  const store = useSettingsStore();
-  useEffect(() => {
-    const newValue = typeof value === 'function' ? value(store.getSetting(key)) : value;
-    store.setSetting(key, newValue);
-  }, [key, value, store, ...(deps ?? [])]);
 }

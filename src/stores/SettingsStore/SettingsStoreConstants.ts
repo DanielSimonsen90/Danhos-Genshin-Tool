@@ -1,5 +1,4 @@
-import { createContext } from "react";
-import { Settings, SettingsStoreContextType } from "./SettingsStoreTypes";
+import { Settings } from "./SettingsStoreTypes";
 
 export const LOCAL_STORAGE_KEY = 'settings';
 export const DEFAULT_SETTINGS: Settings = {
@@ -8,7 +7,6 @@ export const DEFAULT_SETTINGS: Settings = {
   preferredTabs: {
     searchOrHistory: 'search',
     results: 'combined'
-  }
+  },
+  updated: undefined
 };
-
-export const SettingsStoreContext = createContext<SettingsStoreContextType>(null);

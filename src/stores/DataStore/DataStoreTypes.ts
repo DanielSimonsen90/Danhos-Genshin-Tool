@@ -1,8 +1,3 @@
-import { BaseEventsMap } from "../BaseStore";
-import DataStore from "./DataStore";
+import type { DataStore } from './DataStoreConstants';
 
-export type DataStoreContextType = DataStore;
-
-export type DataStoreEventsMap = BaseEventsMap & {
-
-};
+export type DataStore = typeof DataStore;

@@ -1,19 +1,48 @@
-import { useState, PropsWithChildren } from 'react';
-import { SettingsStoreContext } from './SettingsStoreConstants';
-import { SettingsStore } from './SettingsStore';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import { DebugLog } from '@/common/functions/dev';
+import { DEFAULT_SETTINGS } from './SettingsStoreConstants';
+import { Settings } from './SettingsStoreTypes';
+import { useSettingsFunctions } from './SettingsStoreFunctions';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { SaveSettingsNotice } from './components';
 
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsStore);
 
-export default function SettingsStoreProvider({ children }: PropsWithChildren) {
-  const [renders, setRenders] = useState(0)
-  SettingsStore.instance.on('any', () => setRenders(renders => renders + 1));
+export default function useSettingsStoreProvider() {
+  const localStorage = useLocalStorage<Settings>('settings');
+  const [initialSettings, setInitialSettings] = useState(() => {
+    const initial = localStorage.get() ?? DEFAULT_SETTINGS;
+    delete initial.updated;
+    return initial;
+  });
+  const [settings, setSettings] = useState(initialSettings);
+  const [hideNotice, setHideNotice] = useState(false);
 
-  debugLog('SettingsStore updated', { renders, store: SettingsStore.instance });
+  const didSettingsChange = useMemo(() => {
+    const settingsClone = { ...settings };
+    delete settingsClone.updated;
+    return JSON.stringify(settingsClone) !== JSON.stringify(initialSettings);
+  }, [settings, initialSettings]);
+  const SettingsNotice = useCallback(() =>
+    <SaveSettingsNotice
+      onSave={() => {
+        store.save();
+        setInitialSettings(settings);
+      }}
+      onDiscard={() => setSettings(initialSettings)}
+      onClose={() => setHideNotice(true)}
+    />, []);
+  const store = useSettingsFunctions(settings, setSettings);
 
-  return (
-    <SettingsStoreContext.Provider value={SettingsStore.instance}>
-      {children}
-    </SettingsStoreContext.Provider>
-  );
+  debugLog('SettingsStore updated', settings);
+
+  useEffect(() => {
+    if (didSettingsChange) localStorage.set(settings);
+  }, [didSettingsChange]);
+
+  return [store, {
+    didSettingsChange,
+    hideNotice,
+    SettingsNotice,
+  }] as const;
 }

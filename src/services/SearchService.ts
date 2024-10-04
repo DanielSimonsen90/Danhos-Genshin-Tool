@@ -5,8 +5,8 @@ import { DebugLog } from '@/common/functions/dev';
 
 import type * as ArtifactSetData from '@/data/artifact-sets';
 
-import CacheStore from '@/stores/CacheStore/CacheStore';
-import DataStore from '@/stores/DataStore/DataStore';
+import { CacheStore } from '@/stores/CacheStore/CacheStoreTypes';
+import { DataStore } from '@/stores/DataStore/DataStoreTypes';
 
 import BaseService from './BaseService';
 
@@ -44,8 +44,6 @@ const ARTIFACT_PIECES_SCORES: Record<ArtifactPartName, number> = {
   Sands: 2,
 };
 
-const { ArtifactSetNames, ArtifactSets, Characters } = DataStore.instance;
-
 export const SearchService = new class SearchService extends BaseService<LastResult> {
   public static readonly SHOULD_SAVE_THRESHOLD = SHOULD_SAVE_THRESHOLD;
   public static readonly ARTIFACT_PIECES_SCORES = ARTIFACT_PIECES_SCORES;
@@ -56,6 +54,7 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     artifactPartName: ArtifactPartName,
     mainStat: MainStatName,
     subStats: SubStatName[],
+    { Characters }: DataStore,
   ): SearchResultItem[] {
     debugLog('group', 'searchArtifactSets');
     debugLog('params', { set, artifactPartName, mainStat, subStats });
@@ -103,6 +102,7 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     artifactPartName: ArtifactPartName,
     mainStat: MainStatName,
     subStats: SubStatName[],
+    { Characters }: DataStore,
   ): SearchResultItem[] {
     debugLog('group', 'searchCharacterRecommendations');
 
@@ -171,20 +171,22 @@ export const SearchService = new class SearchService extends BaseService<LastRes
   }
   public search(
     { artifactPartName, artifactSetName, mainStat, subStats, id, _form }: SearchFormData,
-    CacheStore: CacheStore
+    CacheStore: CacheStore,
+    DataStore: DataStore,
   ): SearchResult {
-    // const cachedResult = CacheStore.findObject('searchResults', data => data.id === id);
-    // if (cachedResult) {
-    //   debugLog('Cached result found', cachedResult);
-    //   return this.lastResult.search = cachedResult;
-    // }
+    const cachedResult = CacheStore.findObject('searchResults', data => data.id === id);
+    if (cachedResult) {
+      debugLog('Cached result found', cachedResult);
+      return this.lastResult.search = cachedResult;
+    }
 
+    const { ArtifactSets, ArtifactSetNames } = DataStore;
     // Check artifact set exists in data
     if (!ArtifactSetNames.includes(artifactSetName)) throw new Error(`Artifact set "${artifactSetName}" not found in data.`);
     const set = ArtifactSets.find(set => set.name === artifactSetName);
     debugLog('Set found', set);
 
-    const args = [set, artifactPartName, mainStat, subStats] as const;
+    const args = [set, artifactPartName, mainStat, subStats, DataStore] as const;
     const byCharacterRecommendation = this.searchByCharacterRecommendation(...args)
     const byArtifact = this.searchByArtifacts(...args).sort(this._sortResults(set, byCharacterRecommendation));
     const combined = [...byArtifact, ...byCharacterRecommendation].reduce((acc, item) => {
@@ -201,7 +203,7 @@ export const SearchService = new class SearchService extends BaseService<LastRes
       combined, byArtifact, byCharacterRecommendation: byCharacterRecommendation.sort(this._sortResults(set, byCharacterRecommendation)),
       form: _form, id, set,
     };
-    CacheStore.update('searchResults', { [id]: result }, '{}');
+    CacheStore.update('searchResults', { [id]: result });
     debugLog('Result', result);
     return result;
   }

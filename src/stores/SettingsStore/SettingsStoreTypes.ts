@@ -1,5 +1,4 @@
-import { BaseEventsMap } from "../BaseStore";
-import type { SettingsStore } from "./SettingsStore";
+import { useSettingsFunctions } from "./SettingsStoreFunctions";
 
 export type Settings = {
   showAll: boolean;
@@ -7,12 +6,10 @@ export type Settings = {
   preferredTabs: {
     searchOrHistory: 'search' | 'history';
     results: 'combined' | 'artifacts' | 'characters';
-  }
+  },
+  updated: number;
 }
 
-export type SettingsEvents = BaseEventsMap & {
-  change: [keyof Settings, Settings[keyof Settings]];
-  reset: [];
+export type SettingsStoreContextType = ReturnType<typeof useSettingsFunctions> & {
+  settings: Settings;
 }
-
-export type SettingsStoreContextType = SettingsStore;

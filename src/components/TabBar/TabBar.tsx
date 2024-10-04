@@ -1,12 +1,15 @@
+import { Dispatch, ReactNode, SetStateAction, useCallback, useEffect, useMemo, useState } from "react";
 import { classNames } from "@/common/functions/strings";
 import { Functionable } from "@/common/types";
-import { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 
 type Props<
   TTabKey extends string,
 > = {
   defaultTab?: TTabKey,
   tabs: [TTabKey, ReactNode][],
+
+  tab?: TTabKey,
+  setTab?: Dispatch<SetStateAction<TTabKey>>,
 
   id?: string,
   children?: ReactNode,
@@ -34,31 +37,42 @@ export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props
       : () => props[tab as keyof typeof props] as JSX.Element] as const);
 
     return (<>{contentChildren.map(([tab, Content], key) => (
-      <div key={getKeyName(`content-${key}`)} className={classNames("tab-bar__content-page", tab === activeTab && 'tab-bar__content-page--active')}>
+      <div key={getKeyName(`content-${key}`)} className={classNames("tab-bar__content-page", tab === (props.tab ?? activeTab) && 'tab-bar__content-page--active')}>
         <Content />
       </div>
     ))}</>);
-  }, [tabs, activeTab]);
+  }, [tabs, activeTab, props.tab]);
   const setActiveTab = useCallback((tab: TTabKey) => {
+    if (!tab) return;
     if (props.beforeTabChange) props.beforeTabChange(tab);
-    _setActiveTab(tab);
-  }, [props.beforeTabChange, props.onTabChange, tabs]);
+    (props.setTab ?? _setActiveTab)(tab);
+  }, [props.beforeTabChange, props.setTab]);
 
-  useEffect(() => {
-    if (props.onTabChange) props.onTabChange(activeTab);
-  }, [activeTab, props.onTabChange]);
+  useEffect(function onTabChanged() {
+    if (props.onTabChange) props.onTabChange(props.tab ?? activeTab);
+  }, [activeTab, props.tab, props.onTabChange]);
 
-  useEffect(() => {
+  useEffect(function onTabsOptionsChanged() {
     // if active tab key is not in tabs or the value is falsy, set it to the first tab
-    if (!tabs.find(([key]) => key === activeTab)?.[1]) {
-      _setActiveTab(tabs[0][0] as TTabKey);
+    if (!tabs.find(([key]) => key === (props.tab ?? activeTab))?.[1]) {
+      setActiveTab(tabs[0][0] as TTabKey);
     }
   }, [tabs]);
+
+  useEffect(function onControlledTabChanged () {
+    if (props.tab) setActiveTab(props.tab);
+  }, [props.tab]);
 
   return (
     <div className="tab-bar">
       <header className={classNames('tab-bar__tabs')}>
-        {internalTabs.map(([tab, title]) => title && <button key={getKeyName(tab)} className={classNames("tab-bar__tab", activeTab === tab && 'tab-bar__tab--active')} onClick={() => setActiveTab(tab)}>{title}</button>)}
+        {internalTabs.map(([tab, title]) => title &&
+          <button key={getKeyName(tab)}
+            className={classNames("tab-bar__tab", activeTab === tab && 'tab-bar__tab--active')}
+            onClick={() => setActiveTab(tab)}
+          >
+            {title}
+          </button>)}
         {props.children}
       </header>
       <section className={classNames('tab-bar__content')}>

@@ -1,30 +1,50 @@
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { pascalCaseFromSnakeCase } from "@/common/functions/strings";
 import { DebugLog } from "@/common/functions/dev";
+import { SearchFormData } from "@/common/types";
+
 import { ArtifactImage } from "@/components/Images";
-
-import { SearchService } from "@/services";
-import { useCacheStore } from "@/stores/CacheStore";
-
-import type { CacheStore } from "@/stores/CacheStore/CacheStore";
-import { useEffect } from "react";
-import SearchResult from "@/components/SearchResult";
+import SearchResultComponent from "@/components/SearchResult";
 import ArtifactDetails from "@/components/ArtifactDetails";
+
+import { SearchResult, SearchService } from "@/services";
+
+import { useCacheStore, useDataStore } from "@/stores";
+import type { CacheStore } from "@/stores/CacheStore/CacheStoreTypes";
+import type { DataStore } from "@/stores/DataStore/DataStoreTypes";
+
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchQuery);
 
 export default function SearchQuery() {
   const { query } = useParams();
   const CacheStore = useCacheStore();
-  const { formData, results } = getSearchResultsFromQuery(query, CacheStore);
-  const { artifactSetName, artifactPartName } = formData;
-  const Result = () => results ? <SearchResult result={results} /> : <p>No results</p>;
+  const DataStore = useDataStore();
+  const [formData, setFormData] = useState<SearchFormData>(null);
+  const [results, setResults] = useState<SearchResult>(null);
+  const [retries, setRetries] = useState(0);
+  const Result = useCallback(() => results ? <SearchResultComponent result={results} /> : <p>No results</p>, [results]);
 
   useEffect(() => {
-    CacheStore.update('currentSearch', query, '');
-  }, [query]);
+    const { formData, results } = getSearchResultsFromQuery(query, CacheStore, DataStore);
 
+    setFormData(formData);
+    setResults(results);
+
+    if (!CacheStore.get('searchHistory', {})[query] && formData) CacheStore.update('searchHistory', { [query]: formData });
+  }, [query, retries]);
+
+  if (!formData || !results) return (
+    <div className="loading">
+      <p>Results failed.</p>
+      <button onClick={() => setRetries(retries + 1)}>Try again?</button>
+      <p>Attempts: {retries}</p>
+    </div>
+  );
+
+  const { artifactSetName, artifactPartName } = formData;
   debugLog('SearchQuery update', { query, results });
 
   return (
@@ -44,14 +64,16 @@ export default function SearchQuery() {
   );
 }
 
-function getSearchResultsFromQuery(query: string, CacheStore: CacheStore) {
+function getSearchResultsFromQuery(query: string, CacheStore: CacheStore, DataStore: DataStore) {
   const formData = CacheStore.getFromItem('searchHistory', query, '{}');
   debugLog('getSearchResultsFromQuery cached', { query, formData });
+  if (!formData) return { formData, results: null };
+
   const { artifactSetName } = formData;
   const results = SearchService.search({
     ...formData,
     artifactSetName: pascalCaseFromSnakeCase(artifactSetName),
-  }, CacheStore);
+  }, CacheStore, DataStore);
 
   debugLog('getSearchResultsFromQuery result', { query, results });
   return { formData, results };
