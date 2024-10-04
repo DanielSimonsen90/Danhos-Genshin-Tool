@@ -21,7 +21,7 @@ export default function Select<TValue extends string>({
   return (
     <select {...props} className={className} value={value} onChange={handleChange} defaultValue={defaultValue}>
       {!defaultValue && <option className="muted" value='<placeholder>'>{props.placeholder}...</option>}
-      {options.map((option) => (
+      {options.filter(Boolean).map((option) => (
         <option key={option} value={internalValue?.(option) ?? option}>
           {displayValue?.(option) ?? option}
         </option>

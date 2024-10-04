@@ -21,6 +21,8 @@ export const useCacheItemMapped = <TKey extends CacheKeys, TResult>(
   defaultValue: DefaultValueString = '{}'
 ) => {
   const item = useCacheItem(key, defaultValue);
+  if (!item) return undefined;
+  
   const mapped = map(item);
   debugLog(`[useCacheItemMapped](${key})`, mapped);
   return mapped;

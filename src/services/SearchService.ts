@@ -5,7 +5,7 @@ import { DebugLog } from '@/common/functions/dev';
 
 import type * as ArtifactSetData from '@/data/artifact-sets';
 
-import CacheStore from '@/stores/CacheStore/CacheStore';
+import { CacheStore } from '@/stores/CacheStore/CacheStoreTypes';
 import DataStore from '@/stores/DataStore/DataStore';
 
 import BaseService from './BaseService';
@@ -173,11 +173,11 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     { artifactPartName, artifactSetName, mainStat, subStats, id, _form }: SearchFormData,
     CacheStore: CacheStore
   ): SearchResult {
-    // const cachedResult = CacheStore.findObject('searchResults', data => data.id === id);
-    // if (cachedResult) {
-    //   debugLog('Cached result found', cachedResult);
-    //   return this.lastResult.search = cachedResult;
-    // }
+    const cachedResult = CacheStore.findObject('searchResults', data => data.id === id);
+    if (cachedResult) {
+      debugLog('Cached result found', cachedResult);
+      return this.lastResult.search = cachedResult;
+    }
 
     // Check artifact set exists in data
     if (!ArtifactSetNames.includes(artifactSetName)) throw new Error(`Artifact set "${artifactSetName}" not found in data.`);
@@ -201,7 +201,7 @@ export const SearchService = new class SearchService extends BaseService<LastRes
       combined, byArtifact, byCharacterRecommendation: byCharacterRecommendation.sort(this._sortResults(set, byCharacterRecommendation)),
       form: _form, id, set,
     };
-    CacheStore.update('searchResults', { [id]: result }, '{}');
+    CacheStore.update('searchResults', { [id]: result });
     debugLog('Result', result);
     return result;
   }

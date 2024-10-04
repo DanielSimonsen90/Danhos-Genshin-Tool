@@ -4,27 +4,37 @@ import { pascalCaseFromSnakeCase } from "@/common/functions/strings";
 import { DebugLog } from "@/common/functions/dev";
 import { ArtifactImage } from "@/components/Images";
 
-import { SearchService } from "@/services";
+import { SearchResult, SearchService } from "@/services";
 import { useCacheStore } from "@/stores/CacheStore";
 
-import type { CacheStore } from "@/stores/CacheStore/CacheStore";
-import { useEffect } from "react";
-import SearchResult from "@/components/SearchResult";
+import type { CacheStore } from "@/stores/CacheStore/CacheStoreTypes";
+import SearchResultComponent from "@/components/SearchResult";
 import ArtifactDetails from "@/components/ArtifactDetails";
+import { useCallback, useEffect, useState } from "react";
+import { SearchFormData } from "@/common/types";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchQuery);
 
 export default function SearchQuery() {
   const { query } = useParams();
   const CacheStore = useCacheStore();
-  const { formData, results } = getSearchResultsFromQuery(query, CacheStore);
-  const { artifactSetName, artifactPartName } = formData;
-  const Result = () => results ? <SearchResult result={results} /> : <p>No results</p>;
+  const [formData, setFormData] = useState<SearchFormData>(null);
+  const [results, setResults] = useState<SearchResult>(null);
+  const Result = useCallback(() => results ? <SearchResultComponent result={results} /> : <p>No results</p>, [results]);
 
   useEffect(() => {
-    CacheStore.update('currentSearch', query, '');
-  }, [query]);
+    const { formData, results } = getSearchResultsFromQuery(query, CacheStore);
 
+    setFormData(formData);
+    setResults(results);
+  }, [query, CacheStore]);
+
+  if (!formData || !results) {
+    debugLog('Loading', query);
+    return <p>Loading...</p>; // TODO: Spinner
+  }
+
+  const { artifactSetName, artifactPartName } = formData;
   debugLog('SearchQuery update', { query, results });
 
   return (

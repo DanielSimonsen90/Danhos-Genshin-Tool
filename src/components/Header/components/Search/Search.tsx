@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { SearchFormData } from "@/common/types/store-data";
 import { DebugLog } from "@/common/functions/dev";
@@ -14,16 +14,18 @@ import {
 import { useActionState } from "@/hooks/useActionState";
 import { useComponent } from "@/hooks/useComponent";
 
-import { useCacheItemMapped, useCacheStore } from "@/stores/CacheStore";
+import { useCacheStore } from "@/stores/CacheStore";
+import { useMemo } from "react";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchComponent);
 
 export default function Search() {
   const navigate = useNavigate();
+  const { query } = useParams();
   const CacheStore = useCacheStore();
-  const defaultSearch = useCacheItemMapped('currentSearch', currentSearchId => {
-    if (!currentSearchId) return undefined;
-    const currentSearch = CacheStore.findObject('searchResults', result => result.id === currentSearchId);
+  const defaultSearch = useMemo(() => {
+    if (!query) return undefined;
+    const currentSearch = CacheStore.findObject('searchResults', result => result.id === query);
     if (!currentSearch) return undefined;
 
     return Array.from(currentSearch.form.entries()).reduce((acc, [key, value]) => {
@@ -31,7 +33,7 @@ export default function Search() {
       acc[key] = value;
       return acc;
     }, {} as SearchFormData);
-  })
+  }, [query]);
   const [loading, onSubmit] = useActionState<SearchFormData>(4, data => {
     debugLog('onSubmit', data);
     if (data.subStats.length > 4) {
@@ -40,14 +42,14 @@ export default function Search() {
 
     const searchId = generateId();
     CacheStore.update('searchHistory', {
-      [searchId]: { 
+      [searchId]: {
         ...data,
         id: searchId,
         title: pascalCaseFromSnakeCase(formatSearchData(data, true)),
         titleNoSet: formatSearchData(data),
         timestamp: Date.now()
       }
-    }, '{}');
+    });
     navigate(`/search/${searchId}`);
   });
   const [SelectMainStat, setSelectMainStat] = useComponent(SelectMainStatComponent, {

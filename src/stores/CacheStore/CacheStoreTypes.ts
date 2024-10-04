@@ -1,15 +1,15 @@
 import { SearchFormData } from "@/common/types/store-data";
 import { SearchResult } from "@/services/SearchService";
-import type CacheStore from "./CacheStore";
 import { BaseEventsMap } from "../BaseStore";
+import { useCacheFunctions } from './CacheStoreFunctions'
 
+export type CacheStore = ReturnType<typeof useCacheFunctions>;
 export type CacheStoreProviderContextType = CacheStore;
 
 export type DefaultValueString = '' | '{}';
 export type Cache = {
   searchHistory: Record<string, SearchFormData>;
   searchResults: Record<string, SearchResult>;
-  currentSearch: string;
 };
 
 export type CacheKeys = keyof Cache;
