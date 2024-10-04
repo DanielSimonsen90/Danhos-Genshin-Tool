@@ -28,9 +28,9 @@ export function useCacheFunctions(cache: Cache, setCache: Dispatch<SetStateActio
   function set<TKey extends CacheKeys>(key: TKey, value: Cache[TKey]): void {
     setCache(v => ({ ...v, [key]: value }));
   }
-  function get<TKey extends CacheKeys>(key: TKey, defaultValue: DefaultValueString): Cache[TKey] | undefined {
+  function get<TKey extends CacheKeys>(key: TKey, defaultValue: any): Cache[TKey] | undefined {
     // if (!has(key)) setCache(v => ({ ...v, [key]: defaultValue }));
-    return cache[key];
+    return cache[key] ?? defaultValue;
   }
   function getFromItem<
     TKey extends CacheKeys, 

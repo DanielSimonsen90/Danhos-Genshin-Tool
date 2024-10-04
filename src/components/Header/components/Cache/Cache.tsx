@@ -1,14 +1,14 @@
 import { useNavigate, useParams } from "react-router-dom";
 import Select from "@/components/Select";
 import { useCacheItemMapped, useCacheStore } from "@/stores";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 export default function Cache() {
   const navigate = useNavigate();
   const { query } = useParams();
   const CacheStore = useCacheStore();
   const options = useCacheItemMapped('searchHistory', searchHistory => Object.values(searchHistory));
-  const currentSearch = useMemo(() => query ? CacheStore.get('searchHistory', '{}')[query] : undefined, [query]);
+  const currentSearch = useMemo(() => query ? CacheStore.get('searchHistory', {})?.[query] : undefined, [query, CacheStore]);
 
   return (
     <div className="cache">
