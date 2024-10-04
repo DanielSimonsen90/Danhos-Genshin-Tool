@@ -1,9 +1,11 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
+
 import { DebugLog } from '@/common/functions/dev';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+
 import { DEFAULT_SETTINGS } from './SettingsStoreConstants';
 import { Settings } from './SettingsStoreTypes';
 import { useSettingsFunctions } from './SettingsStoreFunctions';
-import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { SaveSettingsNotice } from './components';
 
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsStore);
@@ -24,14 +26,15 @@ export default function useSettingsStoreProvider() {
     return JSON.stringify(settingsClone) !== JSON.stringify(initialSettings);
   }, [settings, initialSettings]);
   const SettingsNotice = useCallback(() =>
-    <SaveSettingsNotice
+    <SaveSettingsNotice hideNotice={!didSettingsChange && !hideNotice}
       onSave={() => {
+        if (!didSettingsChange) return;
         store.save();
         setInitialSettings(settings);
       }}
       onDiscard={() => setSettings(initialSettings)}
       onClose={() => setHideNotice(true)}
-    />, []);
+    />, [didSettingsChange, hideNotice, initialSettings, settings]);
   const store = useSettingsFunctions(settings, setSettings);
 
   debugLog('SettingsStore updated', settings);
@@ -40,9 +43,5 @@ export default function useSettingsStoreProvider() {
     if (didSettingsChange) localStorage.set(settings);
   }, [didSettingsChange]);
 
-  return [store, {
-    didSettingsChange,
-    hideNotice,
-    SettingsNotice,
-  }] as const;
+  return [store, { SettingsNotice }] as const;
 }

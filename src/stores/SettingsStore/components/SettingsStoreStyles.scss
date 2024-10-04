@@ -1,4 +1,4 @@
-.settings-notice {
+.settings-notice:not(.hidden) {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,5 +17,13 @@
 
   button {
     color: var(--text-primary);
+  }
+}
+
+.settings-notice.hidden {
+  height: 0;
+
+  p {
+    margin: 0;
   }
 }

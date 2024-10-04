@@ -1,11 +1,14 @@
+import { classNames } from "@/common/functions/strings";
+
 type Props = {
+  hideNotice: boolean;
   onSave: () => void;
   onDiscard: () => void;
   onClose: () => void;
 };
 
-export const SaveSettingsNotice = ({ onSave, onDiscard, onClose }: Props) => (
-  <div className="settings-notice">
+export const SaveSettingsNotice = ({ hideNotice, onSave, onDiscard, onClose }: Props) => (
+  <div className={classNames("settings-notice", hideNotice && 'hidden')}>
     <button onClick={onClose} className="button close">&times;</button>
     <p>You have <span>unsaved changes</span> to your settings. Save them?</p>
     <div className="button-panel">

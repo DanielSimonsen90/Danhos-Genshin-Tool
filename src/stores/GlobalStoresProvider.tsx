@@ -8,14 +8,11 @@ import useSettingsStoreProvider from "./SettingsStore/SettingsStoreProvider";
 export default function GlobalStoresProvider({ children }: PropsWithChildren) {
   const [CacheStore] = useCacheStoreProvider();
   const [DataStore] = useDataStoreProvider();
-  const [SettingsStore, { 
-    didSettingsChange, hideNotice, 
-    SettingsNotice
-  }] = useSettingsStoreProvider();
+  const [SettingsStore, { SettingsNotice }] = useSettingsStoreProvider();
 
   return (
     <GlobalStoresContext.Provider value={{ CacheStore, DataStore, SettingsStore }}>
-      {didSettingsChange && !hideNotice && <SettingsNotice />}
+      <SettingsNotice />
       {children}
     </GlobalStoresContext.Provider>
   );
