@@ -3,13 +3,13 @@ import App from './components/App';
 import * as services from '@/services';
 
 import { CacheStore } from '@/stores/CacheStore/CacheStoreTypes';
-import { DataStore } from '@/stores/DataStore/DataStore';
+import { DataStore } from '@/stores/DataStore/DataStoreTypes';
 
 createRoot(document.getElementById('root')!).render(<App />);
 
 const stores = {
   CacheStore: undefined as CacheStore,
-  DataStore: DataStore.instance,
+  DataStore: undefined as DataStore,
 }
 
 window.__services = services;

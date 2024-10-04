@@ -1,10 +1,14 @@
-import { PropsWithChildren } from 'react';
-import { DataStoreContext } from './DataStoreConstants';
-import DataStore from './DataStore';
+import { PropsWithChildren, useState } from 'react';
+import { DataStoreContext, DataStore } from './DataStoreConstants';
+import { useDataStoreToWindow } from './DataStoreFunctions';
 
 export default function DataStoreProvider({ children }: PropsWithChildren) {
+  const [store, setStore] = useState(DataStore);
+  
+  useDataStoreToWindow(store);
+
   return (
-    <DataStoreContext.Provider value={DataStore.instance}>
+    <DataStoreContext.Provider value={store}>
       {children}
     </DataStoreContext.Provider>
   );

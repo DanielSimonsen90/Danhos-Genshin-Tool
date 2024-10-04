@@ -1,29 +1,33 @@
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { pascalCaseFromSnakeCase } from "@/common/functions/strings";
 import { DebugLog } from "@/common/functions/dev";
+import { SearchFormData } from "@/common/types";
+
 import { ArtifactImage } from "@/components/Images";
-
-import { SearchResult, SearchService } from "@/services";
-import { useCacheStore } from "@/stores/CacheStore";
-
-import type { CacheStore } from "@/stores/CacheStore/CacheStoreTypes";
 import SearchResultComponent from "@/components/SearchResult";
 import ArtifactDetails from "@/components/ArtifactDetails";
-import { useCallback, useEffect, useState } from "react";
-import { SearchFormData } from "@/common/types";
+
+import { SearchResult, SearchService } from "@/services";
+
+import { useCacheStore, useDataStore } from "@/stores";
+import type { CacheStore } from "@/stores/CacheStore/CacheStoreTypes";
+import type { DataStore } from "@/stores/DataStore/DataStoreTypes";
+
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchQuery);
 
 export default function SearchQuery() {
   const { query } = useParams();
   const CacheStore = useCacheStore();
+  const DataStore = useDataStore();
   const [formData, setFormData] = useState<SearchFormData>(null);
   const [results, setResults] = useState<SearchResult>(null);
   const Result = useCallback(() => results ? <SearchResultComponent result={results} /> : <p>No results</p>, [results]);
 
   useEffect(() => {
-    const { formData, results } = getSearchResultsFromQuery(query, CacheStore);
+    const { formData, results } = getSearchResultsFromQuery(query, CacheStore, DataStore);
 
     setFormData(formData);
     setResults(results);
@@ -56,14 +60,14 @@ export default function SearchQuery() {
   );
 }
 
-function getSearchResultsFromQuery(query: string, CacheStore: CacheStore) {
+function getSearchResultsFromQuery(query: string, CacheStore: CacheStore, DataStore: DataStore) {
   const formData = CacheStore.getFromItem('searchHistory', query, '{}');
   debugLog('getSearchResultsFromQuery cached', { query, formData });
   const { artifactSetName } = formData;
   const results = SearchService.search({
     ...formData,
     artifactSetName: pascalCaseFromSnakeCase(artifactSetName),
-  }, CacheStore);
+  }, CacheStore, DataStore);
 
   debugLog('getSearchResultsFromQuery result', { query, results });
   return { formData, results };
