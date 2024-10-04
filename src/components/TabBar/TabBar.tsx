@@ -43,9 +43,10 @@ export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props
     ))}</>);
   }, [tabs, activeTab]);
   const setActiveTab = useCallback((tab: TTabKey) => {
+    if (!tab) return;
     if (props.beforeTabChange) props.beforeTabChange(tab);
     (props.setTab ?? _setActiveTab)(tab);
-  }, [props.beforeTabChange, props.onTabChange, tabs]);
+  }, [props.beforeTabChange, props.onTabChange, props.setTab, tabs]);
 
   useEffect(() => {
     if (props.onTabChange) props.onTabChange(activeTab);
@@ -54,7 +55,7 @@ export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props
   useEffect(() => {
     // if active tab key is not in tabs or the value is falsy, set it to the first tab
     if (!tabs.find(([key]) => key === activeTab)?.[1]) {
-      _setActiveTab(tabs[0][0] as TTabKey);
+      (props.setTab ?? setActiveTab)(tabs[0][0] as TTabKey);
     }
   }, [tabs]);
 

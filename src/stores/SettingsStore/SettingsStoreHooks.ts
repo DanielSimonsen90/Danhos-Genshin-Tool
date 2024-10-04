@@ -5,7 +5,7 @@ import { Settings } from "./SettingsStoreTypes";
 export const useSettingsStore = () => useContext(SettingsStoreContext);
 export function useSetting<TKey extends keyof Settings>(key: TKey) {
   const store = useSettingsStore();
-  return [store.getSetting(key), (value: Settings[TKey]) => store.setSetting(key, value)] as const;
+  return [store.get(key), (value: Settings[TKey]) => store.update({ [key]: value })] as const;
 }
 
 type UseSettingsReturn<TKeys extends Array<keyof Settings>> = { 
@@ -14,7 +14,7 @@ type UseSettingsReturn<TKeys extends Array<keyof Settings>> = {
 export function useSettings<TKeys extends Array<keyof Settings>>(...keys: TKeys): UseSettingsReturn<TKeys> {
   const store = useSettingsStore();
   return keys.reduce((acc, key) => {
-    acc[key] = store.getSetting(key);
+    acc[key] = store.get(key);
     return acc;
   }, {} as any) as UseSettingsReturn<TKeys>;
 }
@@ -23,8 +23,12 @@ export function useSettingEffect<TKey extends keyof Settings>(key: TKey, value: 
 export function useSettingEffect<TKey extends keyof Settings>(key: TKey, value: SetStateAction<Settings[TKey]>, deps: DependencyList): void;
 export function useSettingEffect<TKey extends keyof Settings>(key: TKey, value: SetStateAction<Settings[TKey]>, deps?: DependencyList) {
   const store = useSettingsStore();
+
   useEffect(() => {
-    const newValue = typeof value === 'function' ? value(store.getSetting(key)) : value;
-    store.setSetting(key, newValue);
+    const currentValue = store.get(key);
+    const newValue = typeof value === 'function' ? value(currentValue) : value;
+    if (JSON.stringify(currentValue) !== JSON.stringify(newValue)) {
+      store.update({ [key]: newValue });
+    }
   }, [key, value, store, ...(deps ?? [])]);
 }

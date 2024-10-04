@@ -8,7 +8,8 @@ export const DEFAULT_SETTINGS: Settings = {
   preferredTabs: {
     searchOrHistory: 'search',
     results: 'combined'
-  }
+  },
+  updated: undefined
 };
 
 export const SettingsStoreContext = createContext<SettingsStoreContextType>(null);

@@ -33,7 +33,7 @@ export default function SearchQuery() {
     setResults(results);
 
     if (!CacheStore.get('searchHistory', {})[query]) CacheStore.update('searchHistory', { [query]: formData });
-  }, [query, CacheStore]);
+  }, [query]);
 
   if (!formData || !results) {
     debugLog('Loading', query);
@@ -63,6 +63,8 @@ export default function SearchQuery() {
 function getSearchResultsFromQuery(query: string, CacheStore: CacheStore, DataStore: DataStore) {
   const formData = CacheStore.getFromItem('searchHistory', query, '{}');
   debugLog('getSearchResultsFromQuery cached', { query, formData });
+  if (!formData) return { formData: null, results: null };
+
   const { artifactSetName } = formData;
   const results = SearchService.search({
     ...formData,

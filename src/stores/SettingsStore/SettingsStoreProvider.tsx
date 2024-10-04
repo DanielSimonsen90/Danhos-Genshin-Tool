@@ -1,18 +1,20 @@
 import { useState, PropsWithChildren } from 'react';
-import { SettingsStoreContext } from './SettingsStoreConstants';
-import { SettingsStore } from './SettingsStore';
 import { DebugLog } from '@/common/functions/dev';
+import { SettingsStoreContext } from './SettingsStoreConstants';
+import { Settings } from './SettingsStoreTypes';
+import { useLoadSettings, useSettingsFunctions } from './SettingsStoreFunctions';
 
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsStore);
 
 export default function SettingsStoreProvider({ children }: PropsWithChildren) {
-  const [renders, setRenders] = useState(0)
-  SettingsStore.instance.on('any', () => setRenders(renders => renders + 1));
+  const [settings, setSettings] = useState<Settings>({} as Settings);
+  const store = useSettingsFunctions(settings, setSettings);
 
-  debugLog('SettingsStore updated', { renders, store: SettingsStore.instance });
+  useLoadSettings(setSettings);
+  debugLog('SettingsStore updated', settings);
 
   return (
-    <SettingsStoreContext.Provider value={SettingsStore.instance}>
+    <SettingsStoreContext.Provider value={{ ...store, settings }}>
       {children}
     </SettingsStoreContext.Provider>
   );
