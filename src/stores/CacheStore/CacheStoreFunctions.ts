@@ -4,10 +4,12 @@ import { Dispatch, SetStateAction, useEffect } from "react";
 
 export function useCacheFunctions(cache: Cache, setCache: Dispatch<SetStateAction<Cache>>) {
   useCacheSaveEffect(cache);
+  const storage = useLocalStorage();
 
   return {
     has, findObject,
-    set, get, getFromItem, update, delete: deleteItem, clear,
+    set, get, getFromItem, update, delete: deleteItem, 
+    clear, load
   } as const;
 
   function has<TKey extends CacheKeys>(key: TKey): boolean {
@@ -29,7 +31,7 @@ export function useCacheFunctions(cache: Cache, setCache: Dispatch<SetStateActio
     setCache(v => ({ ...v, [key]: value }));
   }
   function get<TKey extends CacheKeys>(key: TKey, defaultValue: any): Cache[TKey] | undefined {
-    // if (!has(key)) setCache(v => ({ ...v, [key]: defaultValue }));
+    // if (!has(key)) setCache(v => ({ ...v, [key]: defaultValue })); -- Throws "bad useState" error
     return cache[key] ?? defaultValue;
   }
   function getFromItem<
@@ -43,7 +45,7 @@ export function useCacheFunctions(cache: Cache, setCache: Dispatch<SetStateActio
     return get(key, defaultValue)?.[childKey];
   }
   function update<TKey extends CacheKeys>(key: TKey, value: Cache[TKey]): void {
-    setCache(v => ({ ...v, [key]: value }));
+    setCache(v => ({ ...v, [key]: typeof value === 'object' ? { ...v[key], ...value } : value }));
   }
   function deleteItem<TKey extends CacheKeys>(key: TKey): void {
     setCache(v => {
@@ -55,13 +57,16 @@ export function useCacheFunctions(cache: Cache, setCache: Dispatch<SetStateActio
   function clear(): void {
     setCache({} as Cache);
   }
+
+  function load<TKey extends CacheKeys>(key: TKey, defaultValue: DefaultValueString): void {
+    if (!get(key, undefined)) setCache(v => ({ ...v, [key]: storage(key).load(defaultValue) }));
+  }
 }
 
 export function useCacheSaveEffect(cache: Cache) {
   const storage = useLocalStorage();
 
   useEffect(() => {
-    localStorage.clear();
     for (const key in cache) {
       const value = cache[key as CacheKeys];
       if (value === undefined) {

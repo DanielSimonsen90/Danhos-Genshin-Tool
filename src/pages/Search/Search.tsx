@@ -27,6 +27,8 @@ export default function SearchQuery() {
 
     setFormData(formData);
     setResults(results);
+
+    if (!CacheStore.get('searchHistory', {})[query]) CacheStore.update('searchHistory', { [query]: formData });
   }, [query, CacheStore]);
 
   if (!formData || !results) {

@@ -1,12 +1,15 @@
 import { classNames } from "@/common/functions/strings";
 import { Functionable } from "@/common/types";
-import { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, useCallback, useEffect, useMemo, useState } from "react";
 
 type Props<
   TTabKey extends string,
 > = {
   defaultTab?: TTabKey,
   tabs: [TTabKey, ReactNode][],
+  
+  tab?: TTabKey,
+  setTab?: Dispatch<SetStateAction<TTabKey>>,
 
   id?: string,
   children?: ReactNode,
@@ -16,7 +19,7 @@ type Props<
 } & Record<TTabKey, Functionable<ReactNode>>;
 
 export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props<TTabKey>) {
-  const [activeTab, _setActiveTab] = useState<TTabKey>(props.defaultTab ?? tabs.some(([key, value]) =>
+  const [activeTab, _setActiveTab] = useState<TTabKey>(props.tab ?? props.defaultTab ?? tabs.some(([key, value]) =>
     typeof value === 'string' ? value === props.defaultTab : key === props.defaultTab
   ) ? props.defaultTab as TTabKey : tabs[0][0] as TTabKey);
 
@@ -41,7 +44,7 @@ export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props
   }, [tabs, activeTab]);
   const setActiveTab = useCallback((tab: TTabKey) => {
     if (props.beforeTabChange) props.beforeTabChange(tab);
-    _setActiveTab(tab);
+    (props.setTab ?? _setActiveTab)(tab);
   }, [props.beforeTabChange, props.onTabChange, tabs]);
 
   useEffect(() => {
@@ -58,7 +61,13 @@ export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props
   return (
     <div className="tab-bar">
       <header className={classNames('tab-bar__tabs')}>
-        {internalTabs.map(([tab, title]) => title && <button key={getKeyName(tab)} className={classNames("tab-bar__tab", activeTab === tab && 'tab-bar__tab--active')} onClick={() => setActiveTab(tab)}>{title}</button>)}
+        {internalTabs.map(([tab, title]) => title && 
+          <button key={getKeyName(tab)} 
+            className={classNames("tab-bar__tab", activeTab === tab && 'tab-bar__tab--active')} 
+            onClick={() => setActiveTab(tab)}
+          >
+            {title}
+          </button>)}
         {props.children}
       </header>
       <section className={classNames('tab-bar__content')}>

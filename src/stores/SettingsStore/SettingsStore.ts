@@ -17,7 +17,7 @@ export class SettingsStore extends BaseStore<SettingsEvents> {
   public setSetting<TKey extends keyof Settings>(key: TKey, value: Settings[TKey]) {
     this.settings[key] = value;
     this.save();
-    this.emit('change', key, value);
+    // this.emit('change', key, value);
   }
 
   public reset() {

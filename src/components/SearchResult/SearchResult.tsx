@@ -66,11 +66,11 @@ export const SearchResultComponent = ({ result: {
         ['artifacts', 'By Artifacts'],
         ['characters', 'By Character Recommendation'],
       ]}
-        defaultTab={tab}
+        tab={tab}
+        setTab={setCurrentTab}
         combined={<TabContent results={props.combined} {...tabBarProps} />}
         characters={<TabContent results={props.byCharacterRecommendation} {...tabBarProps} />}
         artifacts={<TabContent results={props.byArtifact} {...tabBarProps} />}
-        onTabChange={tab => setCurrentTab(tab)}
       >
         <ShowAll />
         <Wrap />
