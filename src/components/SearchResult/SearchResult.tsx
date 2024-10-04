@@ -27,7 +27,11 @@ export const SearchResultComponent = ({ result: {
   const ShowAll = () => (
     <div className="search-result__show-all-container">
       <input type="checkbox" checked={showAll} onChange={() => settingsStore.update(cur => ({ showAll: !cur.showAll }))} disabled={resultsCount < 1} />
-      <label>Show all ({resultsCount})</label>
+      <label>Show all ({resultsCount}/{(
+        preferredTabs.results === 'combined' ? props.combined
+        : preferredTabs.results === 'characters' ? props.byCharacterRecommendation
+        : props.byArtifact
+      ).length})</label>
     </div>
   );
   const Wrap = () => (

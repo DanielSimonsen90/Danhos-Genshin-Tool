@@ -28,9 +28,11 @@ export default function useSettingsStoreProvider() {
   const SettingsNotice = useCallback(() =>
     <SaveSettingsNotice hideNotice={!didSettingsChange && !hideNotice}
       onSave={() => {
-        if (!didSettingsChange) return;
+        if (!didSettingsChange) return console.log('No changes to save');
         store.save();
-        setInitialSettings(settings);
+        const newInitialSettings = { ...settings };
+        delete newInitialSettings.updated;
+        setInitialSettings(newInitialSettings);
       }}
       onDiscard={() => setSettings(initialSettings)}
       onClose={() => setHideNotice(true)}
