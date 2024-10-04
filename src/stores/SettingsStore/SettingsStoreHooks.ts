@@ -1,8 +1,8 @@
 import { DependencyList, SetStateAction, useContext, useEffect } from "react";
-import { SettingsStoreContext } from "./SettingsStoreConstants";
 import { Settings } from "./SettingsStoreTypes";
+import { GlobalStoresContext } from "../GlobalStoresConstants";
 
-export const useSettingsStore = () => useContext(SettingsStoreContext);
+export const useSettingsStore = () => useContext(GlobalStoresContext).SettingsStore;
 export function useSetting<TKey extends keyof Settings>(key: TKey) {
   const store = useSettingsStore();
   return [store.get(key), (value: Settings[TKey]) => store.update({ [key]: value })] as const;

@@ -22,9 +22,11 @@ body {
   --text-muted: #{colors.$text-muted};
   --text-link: #{colors.$text-link};
   
+  --text-success: #{colors.$text-success};
   --text-danger: #{colors.$text-danger};
 
   --brand: #{colors.$brand};
+  --brand-muted: #{colors.$brand-muted};
 
   --element-anemo: #{colors.$element-anemo};
   --element-cryo: #{colors.$element-cryo};

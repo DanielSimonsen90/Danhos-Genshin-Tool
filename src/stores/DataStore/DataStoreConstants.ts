@@ -1,5 +1,3 @@
-import { createContext } from "react";
-
 import * as CharactersData from '@/data/characters';
 import * as ArtifactSetsData from '@/data/artifact-sets';
 
@@ -13,4 +11,3 @@ export const DataStore = {
   Characters: Object.values(CharactersData),
   CharacterNames: Object.values(CharactersData).map(character => character.name),
 }
-export const DataStoreContext = createContext(DataStore);

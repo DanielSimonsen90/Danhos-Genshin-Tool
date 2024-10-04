@@ -1,4 +1,4 @@
 import { useContext } from "react";
-import { CacheStoreContext } from "./CacheStoreConstants";
+import { GlobalStoresContext } from "../GlobalStoresConstants";
 
-export const useCacheStore = () => useContext(CacheStoreContext);
+export const useCacheStore = () => useContext(GlobalStoresContext).CacheStore;
