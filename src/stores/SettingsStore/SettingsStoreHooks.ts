@@ -18,17 +18,3 @@ export function useSettings<TKeys extends Array<keyof Settings>>(...keys: TKeys)
     return acc;
   }, {} as any) as UseSettingsReturn<TKeys>;
 }
-
-export function useSettingEffect<TKey extends keyof Settings>(key: TKey, value: Settings[TKey]): void;
-export function useSettingEffect<TKey extends keyof Settings>(key: TKey, value: SetStateAction<Settings[TKey]>, deps: DependencyList): void;
-export function useSettingEffect<TKey extends keyof Settings>(key: TKey, value: SetStateAction<Settings[TKey]>, deps?: DependencyList) {
-  const store = useSettingsStore();
-
-  useEffect(() => {
-    const currentValue = store.get(key);
-    const newValue = typeof value === 'function' ? value(currentValue) : value;
-    if (JSON.stringify(currentValue) !== JSON.stringify(newValue)) {
-      store.update({ [key]: newValue });
-    }
-  }, [key, value, store, ...(deps ?? [])]);
-}

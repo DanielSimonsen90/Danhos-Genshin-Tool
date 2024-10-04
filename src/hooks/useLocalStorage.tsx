@@ -11,7 +11,7 @@ export function useLocalStorage<TValue>(key?: string) {
   const callback = (key: string) => ({
     get: function(): TValue | undefined {
       const item = localStorage.getItem(key);
-      return item ? JSON.parse(item) : undefined;
+      return item ? item.startsWith('{') ? JSON.parse(item) : item : undefined;
     },
     set: function(value: TValue) {
       localStorage.setItem(key, JSON.stringify(value));

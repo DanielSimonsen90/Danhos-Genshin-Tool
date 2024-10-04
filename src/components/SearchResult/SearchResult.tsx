@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { classNames } from '@/common/functions/strings';
-import { useSettingEffect, useSettings } from '@/stores/SettingsStore';
+import { useSettings } from '@/stores/SettingsStore';
 import { SearchResult } from '@/services/SearchService';
 import TabBar from '@/components/TabBar';
 import TabContent from './components/TabContent';
@@ -50,10 +50,6 @@ export const SearchResultComponent = ({ result: {
     const showShouldNotSave = showAll - showShouldSave;
     setResultsCount(showShouldNotSave === 0 ? 0 : showNotSave ? showAll : showShouldSave);
   }, [tab, showNotSave]);
-
-  useSettingEffect('preferredTabs', preferredTabs => ({ ...preferredTabs, results: tab }), [tab]);
-  useSettingEffect('showAll', showNotSave, [showNotSave]);
-  useSettingEffect('wrap', wrap, [wrap]);
 
   return (
     <div className={classNames(

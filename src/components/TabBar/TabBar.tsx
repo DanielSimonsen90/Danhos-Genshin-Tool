@@ -7,7 +7,7 @@ type Props<
 > = {
   defaultTab?: TTabKey,
   tabs: [TTabKey, ReactNode][],
-  
+
   tab?: TTabKey,
   setTab?: Dispatch<SetStateAction<TTabKey>>,
 
@@ -19,7 +19,7 @@ type Props<
 } & Record<TTabKey, Functionable<ReactNode>>;
 
 export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props<TTabKey>) {
-  const [activeTab, _setActiveTab] = useState<TTabKey>(props.tab ?? props.defaultTab ?? tabs.some(([key, value]) =>
+  const [activeTab, _setActiveTab] = useState<TTabKey>(props.defaultTab ?? tabs.some(([key, value]) =>
     typeof value === 'string' ? value === props.defaultTab : key === props.defaultTab
   ) ? props.defaultTab as TTabKey : tabs[0][0] as TTabKey);
 
@@ -37,34 +37,38 @@ export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props
       : () => props[tab as keyof typeof props] as JSX.Element] as const);
 
     return (<>{contentChildren.map(([tab, Content], key) => (
-      <div key={getKeyName(`content-${key}`)} className={classNames("tab-bar__content-page", tab === activeTab && 'tab-bar__content-page--active')}>
+      <div key={getKeyName(`content-${key}`)} className={classNames("tab-bar__content-page", tab === (props.tab ?? activeTab) && 'tab-bar__content-page--active')}>
         <Content />
       </div>
     ))}</>);
-  }, [tabs, activeTab]);
+  }, [tabs, activeTab, props.tab]);
   const setActiveTab = useCallback((tab: TTabKey) => {
     if (!tab) return;
     if (props.beforeTabChange) props.beforeTabChange(tab);
     (props.setTab ?? _setActiveTab)(tab);
-  }, [props.beforeTabChange, props.onTabChange, props.setTab, tabs]);
+  }, [props.beforeTabChange, props.setTab]);
 
-  useEffect(() => {
-    if (props.onTabChange) props.onTabChange(activeTab);
-  }, [activeTab, props.onTabChange]);
+  useEffect(function onTabChanged() {
+    if (props.onTabChange) props.onTabChange(props.tab ?? activeTab);
+  }, [activeTab, props.tab, props.onTabChange]);
 
-  useEffect(() => {
+  useEffect(function onTabsOptionsChanged() {
     // if active tab key is not in tabs or the value is falsy, set it to the first tab
-    if (!tabs.find(([key]) => key === activeTab)?.[1]) {
-      (props.setTab ?? setActiveTab)(tabs[0][0] as TTabKey);
+    if (!tabs.find(([key]) => key === (props.tab ?? activeTab))?.[1]) {
+      setActiveTab(tabs[0][0] as TTabKey);
     }
   }, [tabs]);
+
+  useEffect(function onControlledTabChanged () {
+    if (props.tab) setActiveTab(props.tab);
+  }, [props.tab]);
 
   return (
     <div className="tab-bar">
       <header className={classNames('tab-bar__tabs')}>
-        {internalTabs.map(([tab, title]) => title && 
-          <button key={getKeyName(tab)} 
-            className={classNames("tab-bar__tab", activeTab === tab && 'tab-bar__tab--active')} 
+        {internalTabs.map(([tab, title]) => title &&
+          <button key={getKeyName(tab)}
+            className={classNames("tab-bar__tab", activeTab === tab && 'tab-bar__tab--active')}
             onClick={() => setActiveTab(tab)}
           >
             {title}
