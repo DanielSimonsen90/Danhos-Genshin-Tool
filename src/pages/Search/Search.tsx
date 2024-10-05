@@ -40,7 +40,7 @@ export default function SearchQuery() {
     <div className="loading">
       <p>Results failed.</p>
       <button onClick={() => setRetries(retries + 1)}>Try again?</button>
-      <p>Attempts: {retries}</p>
+      {retries > 2 &&  <p>Attempts: {retries}</p>}
     </div>
   );
 

@@ -23,7 +23,6 @@ export const SearchResultComponent = ({ result: {
     onShowMore: showAll ? undefined : () => settingsStore.update({ showAll: true }),
   }; /*satisfies Partial<TabContentProps>;*/ // Webpack doesn't understand "satisfies"
 
-  // TODO: Replace with Checkbox component
   const ShowAll = () => (
     <div className="search-result__show-all-container">
       <input type="checkbox" checked={showAll} onChange={() => settingsStore.update(cur => ({ showAll: !cur.showAll }))} disabled={resultsCount < 1} />
@@ -69,7 +68,7 @@ export const SearchResultComponent = ({ result: {
         ['artifacts', 'By Artifacts'],
         ['characters', 'By Character Recommendation'],
       ]}
-        tab={preferredTabs.results}
+        defaultTab={preferredTabs.results}
         onTabChange={tab => handleTabChanged(tab)}
         combined={<TabContent results={props.combined} {...tabBarProps} />}
         characters={<TabContent results={props.byCharacterRecommendation} {...tabBarProps} />}

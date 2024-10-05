@@ -15,6 +15,10 @@
     margin-left: .5ch;
   }
 
+    &--hide {
+      opacity: .5;
+    }
+
   .character-details {
     &__name {
       margin: 0;

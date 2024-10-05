@@ -229,14 +229,15 @@ export const SearchService = new class SearchService extends BaseService<LastRes
 
     const mainStatScore = this._getMainStatRarity(artifactPartName, mainStat) * -1 / 100 + (function checkMainStatScore() {
       if (artifact.isFlower() || artifact.isFeather()) return 0;
-      if (mainStat === 'HP%' && character.needsHP()) return 10;
-      if (mainStat === 'ATK%' && character.needsATK()) return 10;
-      if (mainStat === 'DEF%' && character.needsDEF()) return 10;
+      if (mainStat === 'Physical DMG Bonus') return 0; // Garbage stat
       if (mainStat === 'Elemental Mastery') return character.needsEM() ? 10 : 5;
       if (mainStat === 'Energy Recharge') return character.needsER() ? 10 : 10; // I never get ER artifacts, please send some
       if (mainStat === 'Healing Bonus') return character.bonusAbility === 'Heal' || character.bonusAbility === 'Self-heal' ? 10 : 2; // Healing bonus is decent but rarely used
-      if (mainStat === 'Physical DMG Bonus') return 0; // Garbage stat
       if (mainStat.includes('DMG Bonus')) return 20; // Elemental DMG Bonuses are not to be messed with
+      if (mainStat.includes('Crit')) return 20; // Crit stats are always good
+      if (mainStat === 'HP%' && character.needsHP()) return 10;
+      if (mainStat === 'ATK%' && character.needsATK()) return 10;
+      if (mainStat === 'DEF%' && character.needsDEF()) return 10;
       console.error(`Unknown main stat "${mainStat}"`);
       return 10;
     })();

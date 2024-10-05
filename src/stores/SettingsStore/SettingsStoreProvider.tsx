@@ -26,7 +26,7 @@ export default function useSettingsStoreProvider() {
     return JSON.stringify(settingsClone) !== JSON.stringify(initialSettings);
   }, [settings, initialSettings]);
   const SettingsNotice = useCallback(() =>
-    <SaveSettingsNotice hideNotice={!didSettingsChange && !hideNotice}
+    <SaveSettingsNotice showNotice={!hideNotice && didSettingsChange}
       onSave={() => {
         if (!didSettingsChange) return console.log('No changes to save');
         store.save();

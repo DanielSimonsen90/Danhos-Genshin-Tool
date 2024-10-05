@@ -1,10 +1,10 @@
-import { useSetting } from "@/stores/SettingsStore";
+import { useSetting, useSettingsStore } from "@/stores/SettingsStore";
 import TabBar from "@/components/TabBar";
 import { Navigation, Search, Cache } from "./components";
 
 export default function Header() {
+  // const { update } = useSettingsStore();
   const [preferredTabs] = useSetting('preferredTabs');
-  const defaultTab = preferredTabs?.searchOrHistory;
   
   return (
     <header className="site-header">
@@ -15,7 +15,8 @@ export default function Header() {
           ['search', 'Search'],
           ['history', 'History']
         ]}
-          defaultTab={defaultTab}
+          defaultTab={preferredTabs?.searchOrHistory}
+          // onTabChange={tab => preferredTabs?.searchOrHistory !== tab && update(cur => ({ preferredTabs: { ...cur.preferredTabs, searchOrHistory: tab } }))}
           search={<Search />}
           history={<Cache />}
         />
