@@ -1,7 +1,13 @@
 import { useContext } from "react";
-import { DataStore } from "./DataStoreTypes";
+import { DataStoreContext } from "./DataStoreTypes";
 import { GlobalStoresContext } from "../GlobalStoresConstants";
 
 export const useDataStore = () => useContext(GlobalStoresContext).DataStore;
-export const useArtifactData = () => useDataStore() as Pick<DataStore, 'ArtifactSetNames' | 'ArtifactSets' | 'ArtifactSetsData'>;
-export const useCharacterData = () => useDataStore() as Pick<DataStore, 'CharacterNames' | 'Characters' | 'CharactersData'>;
+export const useArtifactData = () => useDataStore() as Pick<DataStoreContext, 
+  | 'ArtifactSetNames' | 'ArtifactSets' | 'ArtifactSetsData'
+  | 'findArtifactByName'
+>;
+export const useCharacterData = () => useDataStore() as Pick<DataStoreContext, 
+  | 'CharacterNames' | 'Characters' | 'CharactersData'
+  | 'findCharacterByName'
+>;

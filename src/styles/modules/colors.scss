@@ -29,10 +29,17 @@ body {
   --brand-muted: #{colors.$brand-muted};
 
   --element-anemo: #{colors.$element-anemo};
+  --element-anemo--muted: #{colors.$element-anemo--muted};
   --element-cryo: #{colors.$element-cryo};
+  --element-cryo--muted: #{colors.$element-cryo--muted};
   --element-dendro: #{colors.$element-dendro};
+  --element-dendro--muted: #{colors.$element-dendro--muted};
   --element-electro: #{colors.$element-electro};
+  --element-electro--muted: #{colors.$element-electro--muted};
   --element-geo: #{colors.$element-geo};
+  --element-geo--muted: #{colors.$element-geo--muted};
   --element-hydro: #{colors.$element-hydro};
+  --element-hydro--muted: #{colors.$element-hydro--muted};
   --element-pyro: #{colors.$element-pyro};
+  --element-pyro--muted: #{colors.$element-pyro--muted};
 }

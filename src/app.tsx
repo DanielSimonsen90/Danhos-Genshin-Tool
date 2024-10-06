@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client';
-import App from './components/App';
-import * as services from '@/services';
 
+import App from '@/components/global/App';
+import * as services from '@/services';
 import { CacheStore } from '@/stores/CacheStore/CacheStoreTypes';
 import { DataStore } from '@/stores/DataStore/DataStoreTypes';
 

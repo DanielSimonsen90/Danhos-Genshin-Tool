@@ -1,0 +1,23 @@
+.searchable-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  &__search {
+    width: calc(100% - .25rem);
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 100%;
+  }
+
+  &__list-item--end {
+    margin-top: 1em;
+    width: 100%;
+    text-align: center;
+    color: var(--text-muted);
+  }
+}

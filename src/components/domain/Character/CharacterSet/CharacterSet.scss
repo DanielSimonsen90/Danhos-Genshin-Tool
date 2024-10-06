@@ -1,0 +1,22 @@
+.character-set {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 100%;
+  max-width: 100%;
+
+  h3 {
+    margin: .75em 0 .5em;
+  }
+
+  p {
+    color: var(--text-secondary);
+  }
+
+  span {
+    color: var(--text-primary);
+  }
+}
+
+li:has(> .character-set) {
+  padding: .5em;
+}
