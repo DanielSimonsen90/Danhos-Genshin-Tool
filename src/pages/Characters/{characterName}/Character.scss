@@ -1,0 +1,37 @@
+.character-page-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+
+  h1 {
+    text-align: center;
+  }
+
+  button {
+    justify-self: end;
+  }
+}
+
+.character-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "image details" "sets sets";
+
+  .character-image {
+    border-radius: 100%;
+    border: 1px solid var(--element);
+  }
+
+  .character-sets {
+    grid-area: sets;
+  }
+}
+
+.character-page {
+  .character-details {
+    &__name {
+      font-size: 2rem;
+      color: var(--element);
+    }
+  }
+}

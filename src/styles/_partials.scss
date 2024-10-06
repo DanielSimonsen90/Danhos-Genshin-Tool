@@ -1,0 +1,12 @@
+%character-details-dropdown {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  padding-left: 2ch;
+
+  li {
+    list-style: disc !important;
+    margin: unset;
+  }
+}

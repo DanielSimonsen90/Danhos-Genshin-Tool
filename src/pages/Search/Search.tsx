@@ -5,9 +5,8 @@ import { pascalCaseFromSnakeCase } from "@/common/functions/strings";
 import { DebugLog } from "@/common/functions/dev";
 import { SearchFormData } from "@/common/types";
 
-import { ArtifactImage } from "@/components/Images";
-import SearchResultComponent from "@/components/SearchResult";
-import ArtifactDetails from "@/components/ArtifactDetails";
+import { ArtifactImage } from "@/components/common/Images";
+import { ArtifactDetails } from "@/components/domain/Artifacts";
 
 import { SearchResult, SearchService } from "@/services";
 
@@ -15,6 +14,7 @@ import { useCacheStore, useDataStore } from "@/stores";
 import type { CacheStore } from "@/stores/CacheStore/CacheStoreTypes";
 import type { DataStore } from "@/stores/DataStore/DataStoreTypes";
 
+import { SearchResult as SearchResultComponent } from "./components";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchQuery);
 
@@ -40,7 +40,7 @@ export default function SearchQuery() {
     <div className="loading">
       <p>Results failed.</p>
       <button onClick={() => setRetries(retries + 1)}>Try again?</button>
-      {retries > 2 &&  <p>Attempts: {retries}</p>}
+      {retries > 2 && <p>Attempts: {retries}</p>}
     </div>
   );
 

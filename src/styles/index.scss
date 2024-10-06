@@ -1,5 +1,7 @@
 @layer defaults, components;
+
 @layer defaults {
+
   *,
   *::before,
   *::after {
@@ -8,7 +10,7 @@
   }
 
   @import './modules/index.scss';
-  
+
   body {
     background-color: var(--background-primary);
     color: var(--text-primary);
@@ -24,11 +26,38 @@
     color: var(--text-muted);
   }
 
-  *[data-element=Anemo] { --element: var(--element-anemo); }
-  *[data-element=Cryo] { --element: var(--element-cryo); }
-  *[data-element=Dendro] { --element: var(--element-dendro); }
-  *[data-element=Electro] { --element: var(--element-electro); }
-  *[data-element=Geo] { --element: var(--element-geo); }
-  *[data-element=Hydro] { --element: var(--element-hydro); }
-  *[data-element=Pyro] { --element: var(--element-pyro); }
+  *[data-element=Anemo] {
+    --element: var(--element-anemo);
+    --element--muted: var(--element-anemo--muted);
+  }
+
+  *[data-element=Cryo] {
+    --element: var(--element-cryo);
+    --element--muted: var(--element-cryo--muted);
+  }
+
+  *[data-element=Dendro] {
+    --element: var(--element-dendro);
+    --element--muted: var(--element-dendro--muted);
+  }
+
+  *[data-element=Electro] {
+    --element: var(--element-electro);
+    --element--muted: var(--element-electro--muted);
+  }
+
+  *[data-element=Geo] {
+    --element: var(--element-geo);
+    --element--muted: var(--element-geo--muted);
+  }
+
+  *[data-element=Hydro] {
+    --element: var(--element-hydro);
+    --element--muted: var(--element-hydro--muted);
+  }
+
+  *[data-element=Pyro] {
+    --element: var(--element-pyro);
+    --element--muted: var(--element-pyro--muted);
+  }
 }
