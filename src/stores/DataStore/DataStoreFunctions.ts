@@ -13,5 +13,13 @@ export function useDataStoreFunctions(store: typeof DataStore) {
   return {
     findCharacterByName: (name: string) => findByName(store.Characters, name),
     findArtifactByName: (name: string) => findByName(store.ArtifactSets, name),
+    // findDomainByName: (name: string) => findByName(store.Domains, name),
+
+    getDomainFromArtifact: (artifactName: string) => {
+      const artifact = findByName(store.ArtifactSets, artifactName);
+      if (!artifact) return undefined;
+      
+      throw new Error('Not implemented');
+    }
   };
 }

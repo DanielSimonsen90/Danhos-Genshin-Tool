@@ -1,4 +1,4 @@
-import { Nullable } from '../types';
+import { Nullable, Rarity } from '../types';
 import Character from './Character';
 import { CharacterArtifactSet } from './CharacterArtifactSet';
 
@@ -14,6 +14,8 @@ export class ArtifactSet {
     public name: string,
     public twoPieceSetDescription: string,
     public fourPieceSetDescription: string,
+    public rarity: Rarity,
+    public domainNames: string[],
     public checkIsGood: (character: Character, set: CharacterArtifactSet) => number
   ) { }
 }

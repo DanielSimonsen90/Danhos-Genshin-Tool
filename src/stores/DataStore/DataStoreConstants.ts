@@ -10,4 +10,8 @@ export const DataStore = {
 
   Characters: Object.values(CharactersData),
   CharacterNames: Object.values(CharactersData).map(character => character.name),
+
+  // TODO
+  // Domains: Object.values(DomainsData),
+  // DomainNames: Object.values(DomainsData).map(domain => domain.name),
 }
