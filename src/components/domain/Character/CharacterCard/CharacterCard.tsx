@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { snakeCaseFromCamelCase } from "@/common/functions/strings";
+import { classNames, snakeCaseFromCamelCase } from "@/common/functions/strings";
 import { Character } from "@/common/models";
 import { CharacterImage } from "@/components/common/Images";
 import CharacterSet from "../CharacterSet";
@@ -58,13 +58,13 @@ export default function CharacterCard({ character, score, ...props }: Props) {
 function GetContainer(wrapInLink: boolean, character: Character) {
   return function (props: any) {
     return wrapInLink
-      ? <Link to={`/characters/${character.name}`} {...props} />
+      ? <Link to={`/characters/${character.name}`} {...props} className={classNames("clickable", props.className)} />
       : <div {...props} />;
   };
 }
 
 function GetCharacterNameComponent(linkOnName: boolean, character: Character) {
   return () => linkOnName
-    ? <Link to={`/characters/${snakeCaseFromCamelCase(character.name)}`}>{character.name}</Link>
+    ? <Link className="clickable" to={`/characters/${snakeCaseFromCamelCase(character.name)}`}>{character.name}</Link>
     : <>{character.name}</>;
 }

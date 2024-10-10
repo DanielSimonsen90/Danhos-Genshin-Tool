@@ -3,8 +3,6 @@ import type { ArtifactPartName, MainStatName, SubStatName } from '@/common/types
 import { SearchFormData } from '@/common/types/store-data';
 import { DebugLog } from '@/common/functions/dev';
 
-import type * as ArtifactSetData from '@/data/artifact-sets';
-
 import { CacheStore } from '@/stores/CacheStore/CacheStoreTypes';
 import { DataStore } from '@/stores/DataStore/DataStoreTypes';
 
@@ -27,6 +25,12 @@ export type SearchResultItem = {
   score: number;
   shouldSave: boolean;
 };
+export type CharacterUsingArtifactResult = {
+  character: Character;
+  set: CharacterSet;
+  pieces: number;
+};
+
 type LastResult = {
   search: SearchResult;
   searchArtifactSets: SearchResultItem[];
@@ -187,7 +191,7 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     debugLog('Set found', set);
 
     const args = [set, artifactPartName, mainStat, subStats, DataStore] as const;
-    const byCharacterRecommendation = this.searchByCharacterRecommendation(...args)
+    const byCharacterRecommendation = this.searchByCharacterRecommendation(...args);
     const byArtifact = this.searchByArtifacts(...args).sort(this._sortResults(set, byCharacterRecommendation));
     const combined = [...byArtifact, ...byCharacterRecommendation].reduce((acc, item) => {
       const existing = acc.find(e => e.character.name === item.character.name);
@@ -210,6 +214,25 @@ export const SearchService = new class SearchService extends BaseService<LastRes
 
   public sortResultsByTimestamp(results: Array<SearchFormData>) {
     return results.sort((a, b) => b.timestamp - a.timestamp);
+  }
+
+  public getCharactersUsing(artifactName: string, DataStore: DataStore): CharacterUsingArtifactResult[] {
+    const relevantCharacters = DataStore.Characters.filter(character =>
+      character.sets.some(cSet =>
+        cSet.artifactSets.some(artifact => artifact.set.name === artifactName
+          && artifact.effectiveness === CharacterArtifactSet.MOST_EFFECTIVE
+        )));
+
+    const getCharacterSet = (character: Character) => character.sets.find(cSet => 
+      cSet.artifactSets.some(artifact => 
+        artifact.set.name === artifactName 
+        && artifact.effectiveness === CharacterArtifactSet.MOST_EFFECTIVE
+    ));
+    return relevantCharacters.map(character => ({
+      character,
+      set: getCharacterSet(character),
+      pieces: getCharacterSet(character).artifactSets.find(artifact => artifact.set.name === artifactName).pieces
+    }));
   }
 
   private _getPartScore(

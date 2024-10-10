@@ -1,4 +1,4 @@
-import { Artifact, ArtifactSet } from "@/common/models";
+import { ArtifactSet } from "@/common/models";
 
 type Props = {
   artifact: ArtifactSet;

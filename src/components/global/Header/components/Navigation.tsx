@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 const routes = [
   ['/', 'Home'],
   ['/characters', 'Characters'],
+  ['/artifacts', 'Artifacts'],
 ];
 
 export const Navigation = () => (

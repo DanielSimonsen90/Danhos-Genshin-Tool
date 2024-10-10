@@ -27,6 +27,12 @@ export function pascalCaseFromSnakeCase<T extends string>(value: T): T {
   return returned as T;
 }
 
+export function pascalCaseFromCamcelCase<T extends string>(value: T): T {
+  const result = value.replace(/([A-Z])/g, (match) => ` ${match}`);
+  debugLog(`[pascalCaseFromCamcelCase] ${value} -> ${result}`);
+  return result as T;
+}
+
 export function formatSearchData(value: SearchFormData, withSet = false) {
   const { artifactSetName, artifactPartName, mainStat, subStats } = value;
   const stats = `${mainStat} & ${subStats.join(', ')}`;
@@ -49,7 +55,7 @@ export function fromList(list: string[] = []) {
     : list[0];
 }
 
-export function effectivenessString(effectiveness: number) {
+export function effectivenessString(effectiveness: number, reverse = false) {
   const strings = ['Unknown', 'Least Effective', 'Less Effective', 'Effective', 'Very Effective', 'Most Effective'];
-  return strings[effectiveness];
+  return reverse ? strings.reverse()[effectiveness] : strings[effectiveness];
 }

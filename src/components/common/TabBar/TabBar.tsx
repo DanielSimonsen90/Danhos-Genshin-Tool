@@ -21,9 +21,10 @@ type Props<
 };
 
 export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props<TTabKey>) {
-  const [activeTab, _setActiveTab] = useState<TTabKey>(props.defaultTab ?? tabs.some(([key, value]) =>
-    typeof value === 'string' ? value === props.defaultTab : key === props.defaultTab
-  ) ? props.defaultTab as TTabKey : tabs[0][0] as TTabKey);
+  const [activeTab, _setActiveTab] = useState<TTabKey>(
+    props.defaultTab 
+    ?? tabs.filter(([_, value]) => value)[0][0]
+  );
 
   const internalTabs = useMemo(() => {
     const set = tabs

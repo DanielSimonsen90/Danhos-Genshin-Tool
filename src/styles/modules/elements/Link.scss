@@ -1,3 +1,8 @@
 a {
   color: var(--text-link);
+
+  &.clickable {
+    color: inherit;
+    text-decoration: unset;
+  }
 }
