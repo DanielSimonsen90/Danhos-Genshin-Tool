@@ -1,5 +1,9 @@
 import { Routes, Route, HashRouter } from "react-router-dom";
-import { Layout, Home, Search, Characters, Character } from '@/pages';
+import { 
+  Layout, Home, Search, 
+  Characters, Character, 
+  Artifacts, Artifact
+} from '@/pages';
 
 export const Router = () => (
   <HashRouter>
@@ -14,9 +18,10 @@ export const Router = () => (
           <Route index element={<Characters />} />
           <Route path=":characterName" element={<Character />} />
         </Route>
-        {/* <Route path="artifacts" element={<Artifacts />}>
-            <Route path=":artifactName" element={<Artifact />} />
-          </Route> */}
+        <Route path="artifacts">
+          <Route index element={<Artifacts />} />
+          <Route path=":artifactName" element={<Artifact />} />
+        </Route>
 
         <Route path="*" element={(() => {
           const path = window.location.pathname;

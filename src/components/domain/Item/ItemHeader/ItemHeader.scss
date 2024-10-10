@@ -1,0 +1,13 @@
+.item-page-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+
+  h1 {
+    text-align: center;
+  }
+
+  button {
+    justify-self: end;
+  }
+}

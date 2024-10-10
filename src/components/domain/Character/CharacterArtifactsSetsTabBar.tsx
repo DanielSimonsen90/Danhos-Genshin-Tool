@@ -6,6 +6,7 @@ import { generateId } from "@/common/functions/random";
 
 import TabBar from "@/components/common/TabBar";
 import { SearchResultItem } from "@/services";
+import { Link } from "react-router-dom";
 
 type Props = {
   character: Character;
@@ -15,7 +16,7 @@ type Props = {
 
 export default function CharacterArtifactsSetsTabBar({ character, set, artifactSets = [] }: Props) {
   const tabs = useMemo(() => artifactSets.map(({ effectiveness }) => [
-    effectiveness.toString(), 
+    effectiveness.toString(),
     effectivenessString(effectiveness)
   ] as [string, string]), [artifactSets]);
   const defaultTab = useMemo(() => {
@@ -26,13 +27,15 @@ export default function CharacterArtifactsSetsTabBar({ character, set, artifactS
   const contents = useMemo(() => {
     const contentMap = artifactSets.reduce((acc, { pieces, set, effectiveness }) => acc.set(effectiveness, [
       ...(acc.get(effectiveness) || []),
-      <p key={generateId()} title={classNames(
-        ArtifactSet.bonusDescription(set, pieces),
-        ArtifactSet.bonusDescription(set, pieces).endsWith('.') ? '' : '.'
-      )}>
-        <span className='character-details__set__pieces'>{pieces}</span> piece
-        <span className='character-details__set__set'>{set.name}</span>
-      </p>
+      <Link to={`/artifacts/${set.name}`} key={set.name}>
+        <p title={classNames(
+          ArtifactSet.bonusDescription(set, pieces),
+          ArtifactSet.bonusDescription(set, pieces).endsWith('.') ? '' : '.'
+        )}>
+          <span className='character-details__set__pieces'>{pieces}</span> piece
+          <span className='character-details__set__set'>{set.name}</span>
+        </p>
+      </Link>
     ]), new Map<number, Array<JSX.Element>>());
     return [...contentMap.entries()].reduce((acc, [key, content]) => ({
       ...acc,
@@ -40,10 +43,10 @@ export default function CharacterArtifactsSetsTabBar({ character, set, artifactS
     }), {} as Record<string, JSX.Element>);
   }, [artifactSets]);
 
-  return artifactSets.length 
-    ? <TabBar id={`${character.name}-artifacts-sets-${generateId()}`} 
-        defaultTab={defaultTab}
-        tabs={tabs} {...contents} 
-      /> 
+  return artifactSets.length
+    ? <TabBar id={`${character.name}-artifacts-sets-${generateId()}`}
+      defaultTab={defaultTab}
+      tabs={tabs} {...contents}
+    />
     : null;
 }

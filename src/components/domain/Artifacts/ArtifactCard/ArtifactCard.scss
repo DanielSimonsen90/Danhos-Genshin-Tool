@@ -1,0 +1,43 @@
+.artifact-card {
+  display: flex;
+  align-items: center;
+  gap: 1ch;
+
+  .artifact-image {
+    --size: 7.5rem;
+    width: var(--size);
+    height: var(--size);
+  }
+
+  &:has(.artifact-sets) {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "image details" "sets sets";
+    gap: 1em;
+
+    .artifact-sets {
+      grid-area: sets;
+    }
+  }
+}
+
+.artifacts-list-item {
+  background-color: var(--background-primary--muted);
+  padding: .5em;
+  border-radius: .5em;
+  height: auto;
+  transition: background-color 150ms ease-in-out;
+
+  &:hover {
+    background-color: var(--background-primary--light);
+  }
+}
+
+a.artifact-card {
+  display: flex;
+  flex-direction: column;
+
+  .artifact-card__name {
+    text-align: center;
+  }
+}

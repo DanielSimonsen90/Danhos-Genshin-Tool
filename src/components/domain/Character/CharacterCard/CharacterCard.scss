@@ -49,8 +49,6 @@ li:has(> .character-card) {
 }
 
 a.character-card {
-  text-decoration: none;
-  color: var(--text-primary);
   border: 1px solid var(--element);
   
   &:hover {
