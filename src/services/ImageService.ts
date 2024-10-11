@@ -1,4 +1,4 @@
-import { snakeCaseFromCamelCase } from '@/common/functions/strings';
+import { snakeCaseFromCamelCase, snakeCaseFromPascalCase } from '@/common/functions/strings';
 import { ArtifactPartName } from '@/common/types';
 import type * as ArtifactSetData from '@/data/artifact-sets';
 import type * as CharacterData from '@/data/characters';
@@ -22,7 +22,7 @@ export const ImageService = new class ImageService extends BaseService<string> {
   }
 
   public getDomainImage(name: keyof typeof DomainsData | string): string {
-    return this.lastResult = `/images/domains/${snakeCaseFromCamelCase(name)}.png`;
+    return this.lastResult = `/assets/images/domains/${snakeCaseFromPascalCase(name)}.png`;
   }
 }
 

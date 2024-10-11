@@ -1,3 +1,10 @@
 img {
+  --size: auto;
+  width: var(--size);
+  height: var(--size);
   object-fit: contain;
+}
+
+.domain-image {
+  --size: 10em;
 }

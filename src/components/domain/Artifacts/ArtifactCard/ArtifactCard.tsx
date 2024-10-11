@@ -1,11 +1,9 @@
-import { ArtifactSet } from "@/common/models";
-import ArtifactDetails from "../ArtifactDetails";
-import { ArtifactImage } from "@/components/common/Images";
 import { Link } from "react-router-dom";
-import ArtifactSets from "../ArtifactSets";
+import { ArtifactSet } from "@/common/models";
 import { classNames } from "@/common/functions/strings";
-import { ImageService } from "@/services";
-import LazyImage from "@/components/common/Images/LazyImage";
+import { ArtifactImage, DomainImage } from "@/components/common/Images";
+import ArtifactSets from "../ArtifactSets";
+import ArtifactDetails from "../ArtifactDetails";
 
 type Props = {
   artifact: ArtifactSet;
@@ -26,8 +24,7 @@ export default function ArtifactCard({ artifact, ...props }: Props) {
       {showSets && <ArtifactSets artifact={artifact} />}
       <ul className="domains">
         {artifact.domainNames.map(domainName => (
-          // <LazyImage key={domainName} alt={domainName} path={ImageService.getDomainImage(domainName)} />
-          <img key={domainName} alt={domainName} src={ImageService.getDomainImage(domainName)} />
+          <DomainImage key={domainName} domain={domainName} />
         ))}
       </ul>
     </Container>

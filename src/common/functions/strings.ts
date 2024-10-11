@@ -20,6 +20,11 @@ export function snakeCaseFromCamelCase<T extends string>(value: T): T {
   return result;
 }
 
+export function snakeCaseFromPascalCase<T extends string>(value: T): T {
+  const words = value.split(' ').map(word => word.substring(0, 1).toUpperCase() + word.substring(1)).join(' ') as T;
+  return snakeCaseFromCamelCase(words.replace(/-/g, ' ')) as T;
+}
+
 export function pascalCaseFromSnakeCase<T extends string>(value: T): T {
   const result = value.split('_').map(word => word[0].toUpperCase() + word.slice(1)).join(' ') as T;
   const returned = result.replace(/- /g, '-') as T;
