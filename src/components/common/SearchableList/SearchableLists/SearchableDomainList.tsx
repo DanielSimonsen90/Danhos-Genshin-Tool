@@ -19,15 +19,17 @@ export default function SearchableDomainList<TFilterKeys extends string>({
   ...props
 }: Props<TFilterKeys>) {
   return <SearchableList items={items} renderItem={domain => <DomainCard domain={domain} {...cardProps} />}
-    onSearch={noBaseSearch ? onSearch : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && onSearch?.(query, item)}
+    onSearch={noBaseSearch ? onSearch : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}
     filterChecks={noBaseFilterChecks ? filterChecks : {
-      monstadt: domain => domain.region === "Mondstadt",
-      liyue: domain => domain.region === "Liyue",
-      inazuma: domain => domain.region === "Inazuma",
-      sumeru: domain => domain.region === "Sumeru",
-      fontaine: domain => domain.region === "Fontaine",
-      natlan: domain => domain.region === "Natlan",
-      snezhnaya: domain => domain.region === "Snezhnaya",
+      region: {
+        monstadt: domain => domain.region === "Mondstadt",
+        liyue: domain => domain.region === "Liyue",
+        inazuma: domain => domain.region === "Inazuma",
+        sumeru: domain => domain.region === "Sumeru",
+        fontaine: domain => domain.region === "Fontaine",
+        natlan: domain => domain.region === "Natlan",
+        snezhnaya: domain => domain.region === "Snezhnaya",
+      },
       ...filterChecks
     }}
     {...props}
