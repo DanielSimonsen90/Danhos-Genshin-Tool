@@ -1,18 +1,22 @@
 .domain-card {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 1em;
 
-  .domain-details {
-    header {
-      display: flex;
-      gap: 1ch;
+  &:is(&--show-more) {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1em;
 
-      .resin-cost::before {
-        content: ' • ';
+    .domain-details {
+      >header {
+        display: flex;
+        gap: 1ch;
+
+        .resin-cost::before {
+          content: ' • ';
+        }
       }
     }
   }
+
 
   .domain-image {
     border-radius: .25em;
@@ -26,7 +30,7 @@
   .artifact-card {
     padding: .5em .25em .5em 0;
 
-    > header {
+    >header {
       display: grid;
       grid-template-columns: 7.5rem 1fr;
       align-items: center;

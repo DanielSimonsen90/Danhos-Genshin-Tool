@@ -1,3 +1,4 @@
+import { List } from "@/common/models/List";
 import { Dispatch, SetStateAction, ReactNode } from "react";
 
 export type OptionalProps<TItem> = {
@@ -23,7 +24,7 @@ type RenderItemOrChildren<TItem> = {
   children: (item: TItem) => ReactNode,
 };
 export type UncrontrolledProps<TItem> = {
-  items: TItem[],
+  items: Array<TItem> | List<TItem>,
   onSearch: (search: string, itemMatch: TItem) => boolean,
 } & RenderItemOrChildren<TItem>;
 

@@ -7,7 +7,7 @@ type Props<
 > = {
   defaultTab?: TTabKey,
   tabs: [TTabKey, ReactNode][],
-  noTabs?: ReactNode,
+  noTabs?: JSX.Element,
 
   tab?: TTabKey,
   setTab?: Dispatch<SetStateAction<TTabKey>>,

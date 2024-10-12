@@ -13,11 +13,13 @@ $margins: (1.25em, 1em, .75em, .5em);
 
 @for $i from 1 through length($headings) {
   #{nth($headings, $i)} {
+    --margins: nth($margins, $i);
+
     font-size: nth($sizes, $i);
     line-height: nth($line-heights, $i);
     font-weight: bold;
-    margin-block-start: nth($margins, $i);
-    margin-block-end: nth($margins, $i);
+    margin-block-start: var(--margins);
+    margin-block-end: var(--margins);
   }
 }
 
@@ -26,6 +28,7 @@ p span:not(:first-of-type) {
 }
 
 p {
-  margin-block-start: .5em;
-  margin-block-end: .5em;
+  --margins: .5em;
+  margin-block-start: var(--margins);
+  margin-block-end: var(--margins);
 }

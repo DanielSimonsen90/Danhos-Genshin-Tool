@@ -8,8 +8,10 @@
   }
 
   &__list {
+    --min: 150px;
+
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(var(--min), 1fr));
     gap: 1em;
     width: 100%;
   }

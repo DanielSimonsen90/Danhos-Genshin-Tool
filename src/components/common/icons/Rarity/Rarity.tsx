@@ -11,7 +11,7 @@ export default function RarityList({ rarity }: Props) {
     <ul className={classNames("rarity-list", `rarity-list--${rarityString(rarity)}`)}>
       {Array.from({ length: rarity }, (_, i) => (
         <li key={i} className="rarity-list__item">
-          <Star rarity={rarity} />
+          <Star />
         </li>
       ))}
     </ul>

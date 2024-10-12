@@ -4,6 +4,7 @@ const routes = [
   ['/', 'Home'],
   ['/characters', 'Characters'],
   ['/artifacts', 'Artifacts'],
+  ['/domains', 'Domains'],
 ];
 
 export const Navigation = () => (
