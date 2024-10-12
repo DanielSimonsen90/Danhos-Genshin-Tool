@@ -1,4 +1,4 @@
-import { Domain } from "@/common/models/Domain";
+import { Domain } from "@/common/models/domains/Domain";
 import { classNames } from "@/common/functions/strings";
 import { DomainImage } from "@/components/common/Images";
 import { ResinIcon } from "@/components/common/icons";

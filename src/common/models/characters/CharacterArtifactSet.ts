@@ -1,4 +1,4 @@
-import ArtifactSet from "./ArtifactSet";
+import ArtifactSet from "../artifacts/ArtifactSet";
 
 export class CharacterArtifactSet {
   public static MOST_EFFECTIVE = 5;

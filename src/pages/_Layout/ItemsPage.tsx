@@ -1,6 +1,6 @@
 import { classNames } from "@/common/functions/strings";
 import { ArtifactSet, Character } from "@/common/models";
-import { Domain } from "@/common/models/Domain";
+import { Domain } from "@/common/models/domains/Domain";
 import { List } from "@/common/models/List";
 import SearchableList from "@/components/common/SearchableList";
 import { useDataStore } from "@/stores";

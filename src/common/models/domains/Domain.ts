@@ -1,5 +1,5 @@
-import { ResinCost } from "../types";
-import ArtifactSet from "./ArtifactSet";
+import { ResinCost } from "@/common/types";
+import ArtifactSet from "../artifacts/ArtifactSet";
 
 export abstract class Domain<TDrop> {
   constructor(

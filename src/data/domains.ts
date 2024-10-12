@@ -1,4 +1,4 @@
-import { DomainOfBlessing } from "@/common/models/Domain";
+import { DomainOfBlessing } from "@/common/models/domains/Domain";
 
 export const MidsummerCourtyard = new DomainOfBlessing(
   "Midsummer Courtyard",

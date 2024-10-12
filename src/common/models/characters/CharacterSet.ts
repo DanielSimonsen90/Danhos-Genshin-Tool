@@ -1,4 +1,4 @@
-import { AbilityType, CharacterSetName, TalentStatName } from "../types";
+import { AbilityType, CharacterSetName, TalentStatName } from "@/common/types";
 import { CharacterArtifactSet } from "./CharacterArtifactSet";
 
 export class CharacterSet {

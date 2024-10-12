@@ -1,4 +1,4 @@
-import { ArtifactPartName, MainStatMap, SubStatName } from "../types";
+import { ArtifactPartName, MainStatMap, SubStatName } from "@/common/types";
 import type * as ArtifactSetData from "@/data/artifact-sets";
 
 /**
