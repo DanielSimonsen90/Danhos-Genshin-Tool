@@ -1,0 +1,28 @@
+  .filters {
+    --width: 21ch;
+    margin: .25rem;
+    min-width: var(--width);
+
+    &__header {
+      margin: 0;
+      z-index: 3;
+    }
+
+    >.select__options {
+      display: grid;
+      padding: .25rem;
+      background-color: var(--background-secondary--light);
+      gap: .25rem;
+
+      .select--multiple {
+        --margin: 0;
+        min-width: calc(var(--width) - 1ch);
+      }
+    }
+
+    >.floatable {
+      padding-top: 1ch;
+      top: calc(100% - .5ch);
+    }
+
+  }

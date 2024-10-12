@@ -1,6 +1,7 @@
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { classNames, pascalCaseFromCamelCase } from "@/common/functions/strings";
-import SelectMultiple from "../../Select/SelectMultiple";
+import SelectMultiple from "../Select/SelectMultiple";
+import FilterOption from "./FilterOption";
 
 export type FilterObject<FilterKeys extends string, TItem, TValue = FilterCallback<TItem>> = Record<FilterKeys, TValue | Record<string, TValue>>;
 export type FilterCallback<TItem> = (item: TItem) => boolean;
@@ -59,34 +60,5 @@ export default function Filter<FilterKeys extends string, TItem>(props: Props<Fi
         </button>
       </div>
     </div>
-  );
-}
-
-type FilterOptionProps = {
-  name: string,
-  i: number,
-  option: string,
-  value: boolean,
-
-  onSelect: (option: string) => void,
-};
-
-function FilterOption({
-  name, i, option, value,
-  onSelect,
-}: FilterOptionProps) {
-  return (
-    <li onClick={() => onSelect(option)} className="select__option">
-      <input
-        name={`${name}[${i}]`}
-        type="checkbox"
-        value={option}
-        checked={value}
-        onChange={() => { }}
-      />
-      <label>
-        {pascalCaseFromCamelCase(option)}
-      </label>
-    </li>
   );
 }

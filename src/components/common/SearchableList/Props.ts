@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, ReactNode } from "react";
 import { List } from "@/common/models/List";
-import { FilterObject } from "./components/Filter";
+import { FilterObject } from "../Filter/Filter";
 
 export type FilterProps<TItem, FilterKeys extends string> = {
   filterChecks?: FilterObject<FilterKeys, TItem>,

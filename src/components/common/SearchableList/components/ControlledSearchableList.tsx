@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { OptionalProps, UncrontrolledProps } from "../Props";
 import UncontrolledSearchableList from "./UncontrolledSearchableList";
-import { FilterObject } from "./Filter";
+import { FilterObject } from "../../Filter/Filter";
 
 export default function ControlledSearchableList<TItem, FilterKeys extends string>({ items, filterChecks, ...props }: UncrontrolledProps<TItem, FilterKeys> & OptionalProps<TItem, FilterKeys>) {
   const [search, setSearch] = useState('');

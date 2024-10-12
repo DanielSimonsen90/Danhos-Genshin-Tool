@@ -1,6 +1,6 @@
 import { classNames } from "@/common/functions/strings";
 import { ControlledProps, OptionalProps } from "../Props";
-import Filter from "./Filter";
+import Filter from "../../Filter";
 
 export default function UncontrolledSearchableList<TItem, FilterKeys extends string>(props: ControlledProps<TItem, FilterKeys> & OptionalProps<TItem, FilterKeys>) {
   const { search, setSearch, defaultSearch, placeholder } = props;
