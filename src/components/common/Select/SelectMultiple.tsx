@@ -4,7 +4,7 @@ import { classNames } from "@/common/functions/strings";
 
 export default function SelectMultiple<TValue extends string>({
   options,
-  displayValue, internalValue, max,
+  displayValue, internalValue, max, floatable,
   ...props
 }: MultipleProps<TValue>) {
   const [selectedValues, setSelectedValues] = useState<TValue[]>(props.defaultValue ?? []);
@@ -43,7 +43,7 @@ export default function SelectMultiple<TValue extends string>({
         <option value="">{'placeholder' in props ? props.placeholder : ''}</option>
       </select>
 
-      <ul className={classNames('select__options', 'floatable', showOptions ? 'visible' : 'hidden')}>
+      <ul className={classNames('select__options', floatable && 'floatable', showOptions && 'select__options--open')}>
         {options.map((option, i) => (
           <li key={option} onClick={() => toggleOption(option)}>
             <input
@@ -52,6 +52,10 @@ export default function SelectMultiple<TValue extends string>({
               value={internalValue?.(option) ?? option}
               checked={selectedValues.includes(option)}
               onChange={() => { }}
+              onKeyDown={e => {
+                e.preventDefault();
+                e.stopPropagation();
+              }}
             />
             <label>
               {displayValue?.(option) ?? option}

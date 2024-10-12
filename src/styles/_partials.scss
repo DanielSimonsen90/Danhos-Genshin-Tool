@@ -10,3 +10,10 @@
     margin: unset;
   }
 }
+
+%hidden {
+  opacity: 0;
+  height: 0;
+  z-index: -1;
+  pointer-events: none;
+}

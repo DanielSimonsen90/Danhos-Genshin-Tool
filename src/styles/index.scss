@@ -1,3 +1,5 @@
+@use './partials' as partials;
+
 @layer defaults, components;
 
 @layer defaults {
@@ -18,15 +20,16 @@
   }
 
   .hidden {
-    opacity: 0;
-    z-index: -1;
+    @extend %hidden;
   }
 
   .muted {
     color: var(--text-muted);
   }
 
-  .input-group {
+  .input-group, *:has(> input, > label) {
     display: flex;
+    align-items: center;
+    gap: .5ch;
   }
 }

@@ -7,6 +7,7 @@ export type Props<TValue extends string> = {
   className?: string;
   placeholder?: string;
   required?: boolean;
+  floatable?: boolean;
   
   defaultValue?: TValue;
   value?: TValue;
