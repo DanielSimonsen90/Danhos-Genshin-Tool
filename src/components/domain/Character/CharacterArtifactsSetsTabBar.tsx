@@ -7,7 +7,6 @@ import { generateId } from "@/common/functions/random";
 import TabBar from "@/components/common/TabBar";
 import { SearchResultItem } from "@/services";
 import { Link } from "react-router-dom";
-import { ArtifactImage } from "@/components/common/Images";
 
 type Props = {
   character: Character;
@@ -29,11 +28,10 @@ export default function CharacterArtifactsSetsTabBar({ character, set, artifactS
     const contentMap = artifactSets.reduce((acc, { pieces, set, effectiveness }) => acc.set(effectiveness, [
       ...(acc.get(effectiveness) || []),
       <Link to={`/artifacts/${set.name}`} key={`${character.name}-set-${set.name}-${generateId()}`}>
-        <p className="set-short-description" title={classNames(
+        <p title={classNames(
           ArtifactSet.bonusDescription(set, pieces),
           ArtifactSet.bonusDescription(set, pieces).endsWith('.') ? '' : '.'
         )}>
-          <ArtifactImage set={set.name} name="Flower" className="set-icon" />
           <span className='character-details__set__pieces'>{pieces}</span> piece
           <span className='character-details__set__set'>{set.name}</span>
         </p>

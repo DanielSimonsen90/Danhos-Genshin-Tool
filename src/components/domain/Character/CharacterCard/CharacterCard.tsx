@@ -65,6 +65,6 @@ export default function CharacterCard({ character, score, ...props }: Props) {
 
 function GetCharacterNameComponent(linkOnName: boolean, character: Character) {
   return () => linkOnName
-    ? <Link to={`/characters/${snakeCaseFromCamelCase(character.name)}`}>{character.name}</Link>
+    ? <Link className="clickable" to={`/characters/${snakeCaseFromCamelCase(character.name)}`}>{character.name}</Link>
     : <>{character.name}</>;
 }
