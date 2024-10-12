@@ -12,16 +12,18 @@ export default function UncontrolledSearchableList<TItem>({ children, search, se
           className="searchable-list__search"
         />
       </div>
-      <ul className={classNames("searchable-list__list", props.ulClassName)}>
-        {children.map(([child, item], key) => (
-          <li key={key} className={classNames(
-            "searchable-list__list-item", 
-            typeof props.liClassName === 'function' ? props.liClassName(item) : props.liClassName
-          )}>
-            {child}
-          </li>
-        ))}
-      </ul>
+      {children.length > 0 && (
+        <ul className={classNames("searchable-list__list", props.ulClassName)}>
+          {children.map(([child, item], key) => (
+            <li key={key} className={classNames(
+              "searchable-list__list-item",
+              typeof props.liClassName === 'function' ? props.liClassName(item) : props.liClassName
+            )}>
+              {child}
+            </li>
+          ))}
+        </ul>
+      )}
       <p className="searchable-list__list-item searchable-list__list-item--end">
         <span>
           There are no more results to show.

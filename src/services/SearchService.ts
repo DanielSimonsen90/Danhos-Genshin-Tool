@@ -30,6 +30,7 @@ export type CharacterUsingArtifactResult = {
   character: Character;
   set: CharacterSet;
   pieces: number;
+  effectiveness: number;
 };
 
 type LastResult = {
@@ -281,11 +282,16 @@ export const SearchService = new class SearchService extends BaseService<LastRes
         artifact.set.name === artifactName 
         && artifact.effectiveness === CharacterArtifactSet.MOST_EFFECTIVE
     ));
-    return relevantCharacters.map(character => ({
-      character,
-      set: getCharacterSet(character),
-      pieces: getCharacterSet(character).artifactSets.find(artifact => artifact.set.name === artifactName).pieces
-    }));
+    return relevantCharacters.map(character => {
+      const set = getCharacterSet(character);
+      const cSet = set.artifactSets.find(artifact => artifact.set.name === artifactName);
+
+      return {
+        character, set,
+        pieces: cSet.pieces,
+        effectiveness: cSet.effectiveness
+      }
+    });
   }
 
   private _getPartScore(

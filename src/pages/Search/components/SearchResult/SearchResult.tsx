@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const SearchResultComponent = ({ result: {
-  form, id, set,
+  id, set,
   ...props
 } }: Props) => {
   const settingsStore = useSettingsStore();

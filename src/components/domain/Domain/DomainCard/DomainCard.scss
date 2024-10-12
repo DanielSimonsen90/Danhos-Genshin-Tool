@@ -1,5 +1,4 @@
 .domain-card {
-
   &:is(&--show-more) {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -17,6 +16,11 @@
     }
   }
 
+  > aside {
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+  }
 
   .domain-image {
     border-radius: .25em;
@@ -31,8 +35,9 @@
     padding: .5em .25em .5em 0;
 
     >header {
+      --image-size: 7.5rem;
       display: grid;
-      grid-template-columns: 7.5rem 1fr;
+      grid-template-columns: var(--image-size) 1fr;
       align-items: center;
     }
   }

@@ -1,16 +1,21 @@
-import { DomainImage } from "@/components/common/Images";
 import { Domain } from "@/common/models/Domain";
-import { GetContainer } from "../../Item/functions";
+import { classNames } from "@/common/functions/strings";
+import { DomainImage } from "@/components/common/Images";
 import { ResinIcon } from "@/components/common/icons";
 import { useDomainData } from "@/stores";
-import { ArtifactCard } from "../../Artifacts";
-import { classNames } from "@/common/functions/strings";
+
+import { GetContainer } from "../../Item/functions";
+import { ArtifactCard, ArtifactTabBar } from "../../Artifacts";
+import { Link } from "react-router-dom";
 
 type Props = {
   domain: Domain<any>;
   wrapInLink?: boolean;
+
   showDetails?: boolean;
   showRewards?: boolean;
+  showCharactersBenefitFromRewards?: boolean;
+  showNavButton?: boolean;
 };
 
 export default function DomainCard({ domain, ...props }: Props) {
@@ -18,7 +23,7 @@ export default function DomainCard({ domain, ...props }: Props) {
   if (!domain) return null;
 
   const { name, description, resinCost } = domain;
-  const { wrapInLink, showDetails, showRewards } = props;
+  const { wrapInLink, showDetails, showRewards, showCharactersBenefitFromRewards, showNavButton } = props;
 
   const rewards = DomainData.getArtifactsFromDomain(name);
   const Container = GetContainer(wrapInLink, domain, 'domains');
@@ -44,7 +49,17 @@ export default function DomainCard({ domain, ...props }: Props) {
           </div>
         )}
       </section>
-      <DomainImage domain={name} />
+      <aside>
+        <DomainImage domain={name} />
+        {showNavButton && (
+          <Link to={`/domains/${name}`} className="domain-card__nav-button">
+            <button style={{ width: '100%' }}>
+              View Domain
+            </button>
+          </Link>
+        )}
+      </aside>
+      {showCharactersBenefitFromRewards && <ArtifactTabBar artifacts={rewards} />}
     </Container>
   );
 }

@@ -17,9 +17,12 @@
   }
 
   &__list-item--end {
-    margin-top: 1em;
     width: 100%;
     text-align: center;
     color: var(--text-muted);
+  }
+
+  &:not(:has(.searchable-list__list)) &__list-item--end {
+    margin-top: 0;
   }
 }

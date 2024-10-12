@@ -13,11 +13,14 @@ type Props = {
   wrapInLink?: boolean;
   linkOnName?: boolean;
   showDetails?: boolean;
+
+  children?: React.ReactNode;
 };
 
 export default function CharacterCard({ character, score, ...props }: Props) {
   const { name, element, bonusAbility, sets, weapon } = character;
   const { linkOnName, wrapInLink, showDetails } = props;
+  const { children } = props;
 
   const Container = GetContainer(wrapInLink, character, 'characters');
   const CharacterName = GetCharacterNameComponent(linkOnName, character);
@@ -52,6 +55,7 @@ export default function CharacterCard({ character, score, ...props }: Props) {
           />
         </div>
       )}
+      {children}
     </Container>
   );
 }

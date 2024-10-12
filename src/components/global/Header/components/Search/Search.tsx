@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { SearchFormData } from "@/common/types/store-data";
@@ -15,7 +16,6 @@ import { useActionState } from "@/hooks/useActionState";
 import { useComponent } from "@/hooks/useComponent";
 
 import { useCacheStore } from "@/stores/CacheStore";
-import { useMemo } from "react";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchComponent);
 

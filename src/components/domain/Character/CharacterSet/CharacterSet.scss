@@ -4,6 +4,10 @@
   flex: 1 1 100%;
   max-width: 100%;
 
+  &.character-result {
+    padding-inline: .5em;
+  }
+
   h3 {
     margin: .75em 0 .5em;
   }
