@@ -1,3 +1,4 @@
+import { Rarity } from "../types";
 import { SearchFormData } from "../types/store-data";
 import { DebugLog } from "./dev";
 
@@ -63,4 +64,9 @@ export function fromList(list: string[] = []) {
 export function effectivenessString(effectiveness: number, reverse = false) {
   const strings = ['Unknown', 'Least Effective', 'Less Effective', 'Effective', 'Very Effective', 'Most Effective'];
   return reverse ? strings.reverse()[effectiveness] : strings[effectiveness];
+}
+
+export function rarityString(rarity: Rarity) {
+  const strings = ['Unknown', 'Common', 'Uncommon', 'Rare', 'Epic', 'Legendary'];
+  return strings[rarity];
 }

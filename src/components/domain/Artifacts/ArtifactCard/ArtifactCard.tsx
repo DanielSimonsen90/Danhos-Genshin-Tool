@@ -1,40 +1,37 @@
-import { Link } from "react-router-dom";
 import { ArtifactSet } from "@/common/models";
-import { classNames } from "@/common/functions/strings";
-import { ArtifactImage, DomainImage } from "@/components/common/Images";
+import { ArtifactImage } from "@/components/common/Images";
 import ArtifactSets from "../ArtifactSets";
 import ArtifactDetails from "../ArtifactDetails";
+import DomainList from "../../Domain/DomainList";
+import { GetContainer } from "../../Item/functions";
+import { createElement } from "react";
 
 type Props = {
   artifact: ArtifactSet;
-
   wrapInLink?: boolean;
-  showSets?: boolean;
+  showDetails?: boolean;
+  showMoreDetails?: boolean;
+  tagName?: Extract<React.ElementType, 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'>;
 };
 
 export default function ArtifactCard({ artifact, ...props }: Props) {
   const { name } = artifact;
-  const { wrapInLink, showSets } = props;
-  const Container = GetContainer(wrapInLink, artifact);
+  const { wrapInLink, showDetails, showMoreDetails, tagName } = props;
+  const Container = GetContainer(wrapInLink, artifact, 'artifacts');
 
   return (
     <Container className="artifact-card">
-      <ArtifactImage set={name as any} name="Flower" />
-      {wrapInLink ? <h2 className="artifact-card__name">{name}</h2> : <ArtifactDetails artifact={artifact} />}
-      {showSets && <ArtifactSets artifact={artifact} />}
-      <ul className="domains">
-        {artifact.domainNames.map(domainName => (
-          <DomainImage key={domainName} domain={domainName} />
-        ))}
-      </ul>
-    </Container>
+      <header>
+        <ArtifactImage set={name} name="Flower" />
+        {showDetails 
+          ? <ArtifactDetails artifact={artifact} tagName={tagName} /> 
+          : createElement(tagName ?? 'h2', { className: 'artifact-card__name' }, name)}
+      </header>
+      {showMoreDetails && (<>
+        <ArtifactSets artifact={artifact} />
+        <DomainList domainNames={artifact.domainNames} title={'Found in domains:'} />
+      </>)
+      }
+    </Container >
   );
-}
-
-function GetContainer(wrapInLink: boolean, artifact: ArtifactSet) {
-  return function (props: any) {
-    return wrapInLink
-      ? <Link to={`/artifacts/${artifact.name}`} {...props} className={classNames("clickable", props.className)} />
-      : <div {...props} />;
-  };
 }

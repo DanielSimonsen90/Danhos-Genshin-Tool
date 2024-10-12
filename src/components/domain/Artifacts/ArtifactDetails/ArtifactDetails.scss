@@ -1,4 +1,10 @@
 .artifact-details {
+  > header {
+    display: flex;;
+    align-items: center;
+    gap: 1ch;
+  }
+
   &__name {
     margin: 0;
   }

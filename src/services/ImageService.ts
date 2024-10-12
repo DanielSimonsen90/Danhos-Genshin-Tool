@@ -6,7 +6,7 @@ import type * as DomainsData from '@/data/domains';
 import BaseService from './BaseService';
 
 const PAIMON_MOE_URL = 'https://paimon.moe/images';
-const LOCAL_URL = 'http://localhost:3000/images';
+const LOCAL_PATH = '/assets/images';
 
 export const ImageService = new class ImageService extends BaseService<string> {
   public static readonly PAIMON_MOE_URL = PAIMON_MOE_URL;
@@ -22,7 +22,10 @@ export const ImageService = new class ImageService extends BaseService<string> {
   }
 
   public getDomainImage(name: keyof typeof DomainsData | string): string {
-    return this.lastResult = `/assets/images/domains/${snakeCaseFromPascalCase(name)}.png`;
+    return this.lastResult = `${LOCAL_PATH}/domains/${snakeCaseFromPascalCase(name)}.png`;
+  }
+  public getResinImage(name: 'original'): string {
+    return this.lastResult = `${LOCAL_PATH}/resins/${name}_resin.png`;
   }
 }
 

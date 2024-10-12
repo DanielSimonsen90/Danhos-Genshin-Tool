@@ -25,7 +25,12 @@ export function useDataStoreFunctions(store: typeof DataStore) {
       const domain = findByName(store.Domains, domainName);
       if (!domain) return undefined;
       
-      return store.ArtifactSets.filter(artifact => artifact.domainNames.includes(domain.name));
+      return store.ArtifactSets
+        .filter(artifact => artifact.domainNames.includes(domain.name))
+        .orderBy(
+          (a, b) => b.rarity - a.rarity,
+          (a, b) => a.name.localeCompare(b.name)
+        );
     },
   };
 }

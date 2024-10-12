@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-import { classNames, snakeCaseFromCamelCase } from "@/common/functions/strings";
+import { snakeCaseFromCamelCase } from "@/common/functions/strings";
 import { Character } from "@/common/models";
 import { CharacterImage } from "@/components/common/Images";
 import CharacterSet from "../CharacterSet";
 import TabBar from "@/components/common/TabBar";
+import { GetContainer } from "../../Item/functions";
 
 type Props = {
   character: Character;
@@ -11,14 +12,14 @@ type Props = {
 
   wrapInLink?: boolean;
   linkOnName?: boolean;
-  showSets?: boolean;
+  showDetails?: boolean;
 };
 
 export default function CharacterCard({ character, score, ...props }: Props) {
   const { name, element, bonusAbility, sets, weapon } = character;
-  const { linkOnName, wrapInLink, showSets } = props;
+  const { linkOnName, wrapInLink, showDetails } = props;
 
-  const Container = GetContainer(wrapInLink, character);
+  const Container = GetContainer(wrapInLink, character, 'characters');
   const CharacterName = GetCharacterNameComponent(linkOnName, character);
 
   return (
@@ -43,7 +44,7 @@ export default function CharacterCard({ character, score, ...props }: Props) {
           </p>
         )}
       </div>
-      {showSets && (
+      {showDetails && (
         <div className="character-sets">
           <h3 className="character-sets__title">Character Sets</h3>
           <TabBar tabs={sets.map(set => [set.name, set.name])} 
@@ -53,14 +54,6 @@ export default function CharacterCard({ character, score, ...props }: Props) {
       )}
     </Container>
   );
-}
-
-function GetContainer(wrapInLink: boolean, character: Character) {
-  return function (props: any) {
-    return wrapInLink
-      ? <Link to={`/characters/${character.name}`} {...props} className={classNames("clickable", props.className)} />
-      : <div {...props} />;
-  };
 }
 
 function GetCharacterNameComponent(linkOnName: boolean, character: Character) {

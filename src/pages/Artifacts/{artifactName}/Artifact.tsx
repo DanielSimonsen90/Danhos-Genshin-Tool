@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { ArtifactCard } from '@/components/domain/Artifacts';
 import { useDataStore } from '@/stores';
 import { useMemo } from 'react';
@@ -6,7 +6,6 @@ import { ItemHeader } from '@/components/domain/Item';
 
 export default function ArtifactPage() {
   const { artifactName } = useParams();
-  const navigate = useNavigate();
   const DataStore = useDataStore();
   const artifact = useMemo(() => DataStore.findArtifactByName(artifactName), [DataStore, artifactName]);
 
@@ -23,7 +22,7 @@ export default function ArtifactPage() {
     <>
       <ItemHeader itemName="artifact" item={artifact} />
       <main>
-        <ArtifactCard artifact={artifact} showSets />
+        <ArtifactCard artifact={artifact} showDetails showMoreDetails />
       </main>
     </>
   );

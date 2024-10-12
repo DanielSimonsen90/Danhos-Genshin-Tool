@@ -1,0 +1,35 @@
+.domain-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1em;
+
+  .domain-details {
+    header {
+      display: flex;
+      gap: 1ch;
+
+      .resin-cost::before {
+        content: ' • ';
+      }
+    }
+  }
+
+  .domain-image {
+    border-radius: .25em;
+  }
+
+  .domain-rewards {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .artifact-card {
+    padding: .5em .25em .5em 0;
+
+    > header {
+      display: grid;
+      grid-template-columns: 7.5rem 1fr;
+      align-items: center;
+    }
+  }
+}

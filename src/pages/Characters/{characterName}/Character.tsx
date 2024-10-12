@@ -23,7 +23,7 @@ export default function Character() {
     <>
       <ItemHeader item={character} itemName="character" />
       <main>
-        <CharacterCard character={character} showSets />
+        <CharacterCard character={character} showDetails />
       </main>
     </>
   );
