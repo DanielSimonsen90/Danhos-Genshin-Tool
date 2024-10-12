@@ -7,7 +7,7 @@ import { CacheStore } from '@/stores/CacheStore/CacheStoreTypes';
 import { DataStore } from '@/stores/DataStore/DataStoreTypes';
 
 import BaseService from './BaseService';
-import { List } from '@/common/models/List';
+import { List, OrderByComparator } from '@/common/models/List';
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchService);
 
@@ -194,75 +194,19 @@ export const SearchService = new class SearchService extends BaseService<LastRes
 
     const args = [set, artifactPartName, mainStat, subStats, DataStore] as const;
     const byCharacterRecommendation = this.searchByCharacterRecommendation(...args);
-    const byArtifact = this.searchByArtifacts(...args).sort(this._sortResults(set, byCharacterRecommendation));
-    // const byArtifact = this.searchByArtifacts(...args).orderBy(
-    //   // effectiveness, characterRecommendation, score
-    //   (a, b) => {
-    //     const effectiveA = a.character.sets.reduce((acc, cSet) => {
-    //       const compatibility = cSet.artifactSets.find(equippingSet =>
-    //         equippingSet.set.name === set.name
-    //       )?.effectiveness ?? 0;
-    //       return acc + compatibility;
-    //     }, 0)
-    //     const effectiveB = b.character.sets.reduce((acc, cSet) => {
-    //       const compatibility = cSet.artifactSets.find(equippingSet =>
-    //         equippingSet.set.name === set.name
-    //       )?.effectiveness ?? 0;
-    //       return acc + compatibility;
-    //     }, 0);
-    //     return effectiveB - effectiveA;
-    //   },
-    //   (a, b) => {
-    //     const recommendedA = byCharacterRecommendation.some(c => c.character.name === a.character.name)
-    //     const recommendedB = byCharacterRecommendation.some(c => c.character.name === b.character.name)
-    //     return recommendedA && !recommendedB ? -1 : recommendedB && !recommendedA ? 1 : 0;
-    //   },
-    //   (a, b) => b.score - a.score
-    // )
-    const combined = [...byArtifact, ...byCharacterRecommendation].reduce((acc, item) => {
+    const byArtifact = this.searchByArtifacts(...args).orderBy(...this._getOrderByFunctions(set, byCharacterRecommendation));
+    const combined = new List(...byArtifact, ...byCharacterRecommendation).reduce((acc, item) => {
       const existing = acc.find(e => e.character.name === item.character.name);
       if (existing) {
         existing.score = Math.round(existing.score + item.score);
         existing.shouldSave = existing.score > SHOULD_SAVE_THRESHOLD;
         return acc;
       }
-      return [...acc, item];
-    }, [] as SearchResultItem[]).sort(this._sortResults(set, byCharacterRecommendation));
-    // const combined = new List(...byArtifact, ...byCharacterRecommendation).reduce((acc, item) => {
-    //   const existing = acc.find(e => e.character.name === item.character.name);
-    //   if (existing) {
-    //     existing.score = Math.round(existing.score + item.score);
-    //     existing.shouldSave = existing.score > SHOULD_SAVE_THRESHOLD;
-    //     return acc;
-    //   }
-    //   return acc.concat(item);
-    // }, new List<SearchResultItem>()).orderBy(
-    //   // effectiveness, characterRecommendation, score
-    //   (a, b) => {
-    //     const effectiveA = a.character.sets.reduce((acc, cSet) => {
-    //       const compatibility = cSet.artifactSets.find(equippingSet =>
-    //         equippingSet.set.name === set.name
-    //       )?.effectiveness ?? 0;
-    //       return acc + compatibility;
-    //     }, 0)
-    //     const effectiveB = b.character.sets.reduce((acc, cSet) => {
-    //       const compatibility = cSet.artifactSets.find(equippingSet =>
-    //         equippingSet.set.name === set.name
-    //       )?.effectiveness ?? 0;
-    //       return acc + compatibility;
-    //     }, 0);
-    //     return effectiveB - effectiveA;
-    //   },
-    //   (a, b) => {
-    //     const recommendedA = byCharacterRecommendation.some(c => c.character.name === a.character.name)
-    //     const recommendedB = byCharacterRecommendation.some(c => c.character.name === b.character.name)
-    //     return recommendedA && !recommendedB ? -1 : recommendedB && !recommendedA ? 1 : 0;
-    //   },
-    //   (a, b) => b.score - a.score
-    // );
+      return acc.concat(item);
+    }, new List<SearchResultItem>()).orderBy(...this._getOrderByFunctions(set, byCharacterRecommendation));
 
     const result = this.lastResult.search = {
-      combined, byArtifact, byCharacterRecommendation: byCharacterRecommendation.sort(this._sortResults(set, byCharacterRecommendation)),
+      combined, byArtifact, byCharacterRecommendation: byCharacterRecommendation.orderBy(...this._getOrderByFunctions(set, byCharacterRecommendation)),
       form: _form, id, set,
     };
     CacheStore.update('searchResults', { [id]: result });
@@ -356,79 +300,31 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     debugLog(`Main stat rarity for ${stat} ${partName}`, result);
     return result;
   }
-  private _sortResults(set: ArtifactSet, byCharacterRecommendation: SearchResultItem[] = []) {
-    // effectiveness, characterRecommendation, score
-    return (a: SearchResultItem, b: SearchResultItem) => {
-      debugLog('group', `Sorting ${a.character.name} & ${b.character.name}`);
-      // Check if either character has set with effectiveness 5
-      const aMostEffective = a.character.sets.some(cSet => {
-        debugLog('group', `${a.character.name}HasEffectiveness5 (${cSet.name})`);
-        debugLog('Character set', cSet);
-
-        const result = cSet.artifactSets.some(artifact => {
-          const isMostEffective = artifact.effectiveness === CharacterArtifactSet.MOST_EFFECTIVE;
-          const isSet = artifact.set.name === set.name;
-          const result = isMostEffective && isSet;
-          debugLog(`Result of ${artifact.set.name}`, result, { isMostEffective, isSet, artifact, cSet, set, a });
-          return result;
-        });
-        debugLog('Result', result);
-        debugLog('groupEnd');
-        return result;
-      });
-      const bMostEffective = b.character.sets.some(cSet => {
-        debugLog('group', `${b.character.name}HasEffectiveness5 (${cSet.name})`);
-        debugLog('Character set', cSet);
-
-        const result = cSet.artifactSets.some(artifact => {
-          const isMostEffective = artifact.effectiveness === CharacterArtifactSet.MOST_EFFECTIVE;
-          const isSet = artifact.set.name === set.name;
-          const result = isMostEffective && isSet;
-          debugLog(`Result of ${artifact.set.name}`, result, { isMostEffective, isSet, artifact, cSet, set, b });
-          return result;
-        });
-        debugLog('Result', result);
-        debugLog('groupEnd');
-        return result;
-      });
-      const aIsRecommended = byCharacterRecommendation.some(c => c.character.name === a.character.name);
-      const bIsRecommended = byCharacterRecommendation.some(c => c.character.name === b.character.name);
-
-      // Sort by effectiveness first (items with effectiveness 5 come first)
-      const aIsEffective = aMostEffective && !bMostEffective;
-      const bIsEffective = bMostEffective && !aMostEffective;
-      const aRecommended = aIsRecommended && !bIsRecommended;
-      const bRecommended = bIsRecommended && !aIsRecommended;
-      const byScore = b.score - a.score;
-      const result = (() => {
-        const props = { a, b, aIsEffective, bIsEffective, aRecommended, bRecommended, byScore };
-        if (aIsEffective && !bIsEffective) {
-          debugLog(`Result of ${a.character.name} & ${b.character.name} => -1: aIsEffective && !bIsEffective`, props);
-          return -1;
-        }
-        if (bIsEffective && !aIsEffective) {
-          debugLog(`Result of ${a.character.name} & ${b.character.name} => 1: bIsEffective && !aIsEffective`, props);
-          return 1;
-        }
-        if (aRecommended && !bRecommended) {
-          debugLog(`Result of ${a.character.name} & ${b.character.name} => -1: aRecommended && !bRecommended`, props);
-          return -1;
-        }
-        if (bRecommended && !aRecommended) {
-          debugLog(`Result of ${a.character.name} & ${b.character.name} => 1: bRecommended && !aRecommended`, props);
-          return 1;
-        }
-        if (byScore) {
-          debugLog(`Result of ${a.character.name} & ${b.character.name} => ${byScore}: byScore`, props);
-          return byScore;
-        }
-        debugLog(`Result of ${a.character.name} & ${b.character.name} => 0: default`, props);
-        return 0;
-      })();
-
-      debugLog('groupEnd');
-      return result;
-    };
+  private _getOrderByFunctions(set: ArtifactSet, byCharacterRecommendation: List<SearchResultItem>): Array<OrderByComparator<SearchResultItem>> {
+    return [
+      // effectiveness, characterRecommendation, score
+      (a, b) => {
+        const effectiveA = a.character.sets.reduce((acc, cSet) => {
+          const compatibility = cSet.artifactSets.find(equippingSet =>
+            equippingSet.set.name === set.name
+          )?.effectiveness ?? 0;
+          return acc + compatibility;
+        }, 0);
+        const effectiveB = b.character.sets.reduce((acc, cSet) => {
+          const compatibility = cSet.artifactSets.find(equippingSet =>
+            equippingSet.set.name === set.name
+          )?.effectiveness ?? 0;
+          return acc + compatibility;
+        }, 0);
+        return effectiveB - effectiveA;
+      },
+      (a, b) => {
+        const recommendedA = byCharacterRecommendation.some(c => c.character.name === a.character.name);
+        const recommendedB = byCharacterRecommendation.some(c => c.character.name === b.character.name);
+        return recommendedA && !recommendedB ? -1 : recommendedB && !recommendedA ? 1 : 0;
+      },
+      (a, b) => b.score - a.score
+    ]
   }
 };
 

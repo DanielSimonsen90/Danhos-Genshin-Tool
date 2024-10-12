@@ -1,4 +1,4 @@
-type Comparator<T> = (a: T, b: T) => number;
+export type OrderByComparator<T> = (a: T, b: T) => number;
 
 export class List<T> extends Array<T> {
   public static from<T>(iterable: Iterable<T>): List<T>;
@@ -7,7 +7,7 @@ export class List<T> extends Array<T> {
     return new List<T>(...Object.values(iterable));
   }
   
-  public orderBy(...comparators: Comparator<T>[]): T[] {
+  public orderBy(...comparators: OrderByComparator<T>[]): T[] {
     return this.sort((a, b) => {
       for (const comparator of comparators) {
         const result = comparator(a, b);
