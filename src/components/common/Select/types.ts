@@ -17,7 +17,7 @@ export type Props<TValue extends string> = {
   internalValue?: (value: string) => TValue;
 }
 
-export type MultipleProps<TValue extends string> = Omit<Props<TValue>, 'defaultValue' | 'value' | 'setValue'> & {
+export type MultipleProps<TValue extends string> = Omit<Props<TValue>, 'defaultValue' | 'value' | 'setValue' | 'onChange'> & {
   defaultValue?: Array<TValue>
   value?: Array<TValue>;
   setValue?: Dispatch<SetStateAction<Array<TValue>>>;

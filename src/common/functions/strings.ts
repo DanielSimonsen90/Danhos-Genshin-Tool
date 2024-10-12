@@ -33,10 +33,10 @@ export function pascalCaseFromSnakeCase<T extends string>(value: T): T {
   return returned as T;
 }
 
-export function pascalCaseFromCamcelCase<T extends string>(value: T): T {
+export function pascalCaseFromCamelCase<T extends string>(value: T): T {
   const result = value.replace(/([A-Z])/g, (match) => ` ${match}`);
-  debugLog(`[pascalCaseFromCamcelCase] ${value} -> ${result}`);
-  return result as T;
+  debugLog(`[pascalCaseFromCamelCase] ${value} -> ${result}`);
+  return (result[0].toUpperCase() + result.slice(1)) as T;
 }
 
 export function formatSearchData(value: SearchFormData, withSet = false) {

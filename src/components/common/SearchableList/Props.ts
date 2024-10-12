@@ -1,7 +1,12 @@
 import { List } from "@/common/models/List";
 import { Dispatch, SetStateAction, ReactNode } from "react";
 
-export type OptionalProps<TItem> = {
+export type FilterCallback<TItem> = (item: TItem) => boolean;
+export type FilterProps<TItem, FilterKeys extends string> = {
+  filterChecks?: Record<FilterKeys, FilterCallback<TItem>>,
+}
+
+export type OptionalProps<TItem, FilterKeys extends string> = FilterProps<TItem, FilterKeys> & {
   defaultSearch?: string,
   placeholder?: string,
 
@@ -12,9 +17,12 @@ export type OptionalProps<TItem> = {
   liClassName?: string | ((item: TItem) => string),
 }
 
-export type ControlledProps<TItem> = {
+export type ControlledProps<TItem, FilterKeys extends string> = {
   search: string,
   setSearch: Dispatch<SetStateAction<string>>,
+
+  filters: Record<FilterKeys, boolean>,
+  setFilters: Dispatch<SetStateAction<Record<FilterKeys, boolean>>>,
   children: [ReactNode, TItem][],
 };
 
@@ -23,9 +31,11 @@ type RenderItemOrChildren<TItem> = {
 } | {
   children: (item: TItem) => ReactNode,
 };
-export type UncrontrolledProps<TItem> = {
-  items: Array<TItem> | List<TItem>,
+export type UncrontrolledProps<TItem, FilterKeys extends string> = RenderItemOrChildren<TItem> & {
+  items: Array<TItem> | List<TItem>,  
   onSearch: (search: string, itemMatch: TItem) => boolean,
-} & RenderItemOrChildren<TItem>;
+};
 
-export type Props<TItem> = OptionalProps<TItem> & (ControlledProps<TItem> | UncrontrolledProps<TItem>);
+export type Props<TItem, FilterKeys extends string = string> = 
+  & OptionalProps<TItem, FilterKeys> 
+  & (ControlledProps<TItem, FilterKeys> | UncrontrolledProps<TItem, FilterKeys>);
