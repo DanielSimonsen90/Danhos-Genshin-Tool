@@ -8,7 +8,7 @@ import { GetContainer } from "../../Item/functions";
 import { ArtifactCard, ArtifactTabBar } from "../../Artifacts";
 import { Link } from "react-router-dom";
 
-type Props = {
+export type Props = {
   domain: Domain<any>;
   wrapInLink?: boolean;
 
@@ -52,9 +52,9 @@ export default function DomainCard({ domain, ...props }: Props) {
       <aside>
         <DomainImage domain={name} />
         <p className="domain-details__region" data-region={region}>
-          {wrapInLink ? region : (<>
-            <b>{name}</b> is located in <span>{region}</span>
-          </>)}
+          {wrapInLink 
+            ? <span>{region}</span> 
+            : (<><b>{name}</b> is located in <span>{region}</span></>)}
         </p>
         {showNavButton && (
           <Link to={`/domains/${name}`} className="domain-card__nav-button">

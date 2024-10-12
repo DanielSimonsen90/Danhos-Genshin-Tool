@@ -29,6 +29,11 @@ a.artifact-card {
   display: flex;
   flex-direction: column;
 
+  > header {
+    display: grid;
+    grid-template-rows: auto 1fr;
+  }
+
   &:hover {
     background-color: var(--background-primary--light);
   }

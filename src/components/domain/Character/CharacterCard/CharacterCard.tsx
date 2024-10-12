@@ -7,7 +7,7 @@ import TabBar from "@/components/common/TabBar";
 import { GetContainer } from "../../Item/functions";
 import RarityList from "@/components/common/icons/Rarity";
 
-type Props = {
+export type Props = {
   character: Character;
   score?: number;
 

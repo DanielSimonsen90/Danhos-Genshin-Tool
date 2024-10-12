@@ -16,9 +16,14 @@
     width: 100%;
   }
 
+  &__list-item {
+    display: flex;
+  }
+
   &__list-item--end {
     width: 100%;
     text-align: center;
+    justify-content: center;
     color: var(--text-muted);
   }
 

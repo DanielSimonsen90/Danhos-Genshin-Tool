@@ -6,7 +6,7 @@ import DomainList from "../../Domain/DomainList";
 import { GetContainer } from "../../Item/functions";
 import { createElement } from "react";
 
-type Props = {
+export type Props = {
   artifact: ArtifactSet;
   wrapInLink?: boolean;
   
