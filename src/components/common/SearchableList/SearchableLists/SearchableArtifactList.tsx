@@ -22,16 +22,18 @@ export default function SearchableArtifactList<TFilterKeys extends string>({
   return <SearchableList items={items} renderItem={artifact => <ArtifactCard artifact={artifact} {...cardProps} />}
     onSearch={noBaseSearch ? onSearch : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}
     filterChecks={noBaseFilterChecks ? filterChecks : {
-      domains: artifact => artifact.domainNames.length > 0 && artifact.domainNames[0] !== "BOSS_DROP",
-      boss: artifact => artifact.domainNames.length > 0 && artifact.domainNames.includes("BOSS_DROP"),
-      craftable: artifact => artifact.isCraftable,
-
-      // Rarity
-      common: artifact => artifact.rarity === Rarity.Common,
-      uncommon: artifact => artifact.rarity === Rarity.Uncommon,
-      rare: artifact => artifact.rarity === Rarity.Rare,
-      epic: artifact => artifact.rarity === Rarity.Epic,
-      legendary: artifact => artifact.rarity === Rarity.Legendary,
+      obtainableThrough: {
+        domains: artifact => artifact.domainNames.length > 0 && artifact.domainNames[0] !== "BOSS_DROP",
+        boss: artifact => artifact.domainNames.length > 0 && artifact.domainNames.includes("BOSS_DROP"),
+        crafting: artifact => artifact.isCraftable,
+      },
+      rarity: {
+        legendary: artifact => artifact.rarity === Rarity.Legendary,
+        epic: artifact => artifact.rarity === Rarity.Epic,
+        rare: artifact => artifact.rarity === Rarity.Rare,
+        uncommon: artifact => artifact.rarity === Rarity.Uncommon,
+        common: artifact => artifact.rarity === Rarity.Common,
+      },
 
       ...filterChecks
     }}

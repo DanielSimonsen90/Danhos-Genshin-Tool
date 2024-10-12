@@ -53,6 +53,8 @@ export default function Filter<FilterKeys extends string, TItem>(props: Props<Fi
               onSelect={() => setFilters({ ...filters, [filter]: !filters[filter] })}
             />
         ))}
+
+        {/* TODO: Filter reset button */}
       </div>
     </div>
   );
