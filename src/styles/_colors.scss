@@ -1,3 +1,5 @@
+$muted-alpha: 20%;
+
 $background-primary--muted: #2d2d2d;
 $background-primary: #333;
 $background-primary--light: #3a3a3a;
@@ -22,10 +24,10 @@ $text-link: #7b85fd;
 $text-success: hsl(146, 67%, 37%);
 $text-danger: hsl(0, 80%, 65%);
 
-$brand: #2793b1;
-$brand-muted: #18525ecc;
+$brand--muted: rgba(39, 147, 177, $muted-alpha);
+$brand: rgb(39, 147, 177);
+$brand--light: lighten($brand, 10%);
 
-$muted-alpha: 20%;
 $element-anemo: rgb(117, 194, 168);
 $element-anemo--muted: rgba(117, 194, 168, $muted-alpha);
 $element-cryo: rgb(158, 213, 224);

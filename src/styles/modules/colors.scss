@@ -25,8 +25,9 @@ body {
   --text-success: #{colors.$text-success};
   --text-danger: #{colors.$text-danger};
 
+  --brand--light: #{colors.$brand--light};
   --brand: #{colors.$brand};
-  --brand-muted: #{colors.$brand-muted};
+  --brand--muted: #{colors.$brand--muted};
 
   --element-anemo: #{colors.$element-anemo};
   --element-anemo--muted: #{colors.$element-anemo--muted};

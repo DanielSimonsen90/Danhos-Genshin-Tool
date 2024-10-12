@@ -45,6 +45,12 @@ button {
     font-size: 1.5rem;
   }
 
+  &.brand {
+    --color: var(--brand);
+  }
+  &.brand--light {
+    --color: var(--brand--light);
+  }
   &.success {
     --color: var(--text-success);
   }

@@ -54,7 +54,9 @@ export default function Filter<FilterKeys extends string, TItem>(props: Props<Fi
             />
         ))}
 
-        {/* TODO: Filter reset button */}
+        <button className="brand--light secondary" onClick={() => setFilters({} as FilterObject<FilterKeys, TItem, boolean>)}>
+          Clear Filters
+        </button>
       </div>
     </div>
   );
