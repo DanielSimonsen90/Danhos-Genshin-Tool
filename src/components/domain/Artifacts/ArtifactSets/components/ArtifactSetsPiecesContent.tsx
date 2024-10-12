@@ -2,6 +2,7 @@ import { CharacterImage } from "@/components/common/Images";
 import { CharacterUsingArtifactResult } from "@/services";
 import { Link } from "react-router-dom";
 import { effectivenessString } from '@/common/functions/strings';
+import RarityList from "@/components/common/icons/Rarity";
 
 type ArtifactSetsPiecesContentProps = {
   results: CharacterUsingArtifactResult[];
@@ -20,7 +21,10 @@ export default function ArtifactSetsPiecesContent({ results, displayPieces }: Ar
           <Link className="clickable" to={`/characters/${character.name}`}>
             <CharacterImage character={character.name} />
             <div className="artifact-sets-pieces-content__character-info">
-              <h3>{character.name}</h3>
+              <header>
+                <h3>{character.name}</h3>
+                <RarityList rarity={character.rarity} />
+              </header>
               <p>
                 <span className="artifact-sets-pieces-content__set-name">
                   {set.name}

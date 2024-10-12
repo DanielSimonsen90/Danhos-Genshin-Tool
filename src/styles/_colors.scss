@@ -41,8 +41,13 @@ $element-hydro--muted: rgba(77, 196, 239, $muted-alpha);
 $element-pyro: rgb(239, 121, 57);
 $element-pyro--muted: rgba(239, 121, 57, $muted-alpha);
 
-$rarity-common: #CFCFCF;
-$rarity-uncommon: #7FFC7F;
-$rarity-rare: #7EBFFF;
-$rarity-epic: #BF7FBF;
-$rarity-legendary: #FFDF7F;
+$rarity-common: rgb(207, 207, 207);
+$rarity-common--muted: rgba(207, 207, 207, $muted-alpha);
+$rarity-uncommon: rgb(127, 252, 127);
+$rarity-uncommon--muted: rgba(127, 252, 127, $muted-alpha);
+$rarity-rare: rgb(126, 191, 255);
+$rarity-rare--muted: rgba(126, 191, 255, $muted-alpha);
+$rarity-epic: rgb(191, 127, 191);
+$rarity-epic--muted: rgba(191, 127, 191, $muted-alpha);
+$rarity-legendary: rgb(255, 223, 127);
+$rarity-legendary--muted: rgba(255, 223, 127, $muted-alpha);

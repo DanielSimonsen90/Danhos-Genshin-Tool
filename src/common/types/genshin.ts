@@ -21,3 +21,5 @@ export enum ResinCost {
   Forty = 40, // World bosses
   Sixty = 60, // Weekly bosses (after 3 times)
 }
+
+export type Region = 'Mondstadt' | 'Liyue' | 'Inazuma' | 'Sumeru' | 'Fontaine' | 'Natlan' | 'Snezhnaya';

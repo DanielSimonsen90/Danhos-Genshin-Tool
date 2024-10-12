@@ -1,0 +1,91 @@
+@layer defaults {
+  // #region Elements
+  *[data-element=Anemo] {
+    --element: var(--element-anemo);
+    --element--muted: var(--element-anemo--muted);
+  }
+
+  *[data-element=Cryo] {
+    --element: var(--element-cryo);
+    --element--muted: var(--element-cryo--muted);
+  }
+
+  *[data-element=Dendro] {
+    --element: var(--element-dendro);
+    --element--muted: var(--element-dendro--muted);
+  }
+
+  *[data-element=Electro] {
+    --element: var(--element-electro);
+    --element--muted: var(--element-electro--muted);
+  }
+
+  *[data-element=Geo] {
+    --element: var(--element-geo);
+    --element--muted: var(--element-geo--muted);
+  }
+
+  *[data-element=Hydro] {
+    --element: var(--element-hydro);
+    --element--muted: var(--element-hydro--muted);
+  }
+
+  *[data-element=Pyro] {
+    --element: var(--element-pyro);
+    --element--muted: var(--element-pyro--muted);
+  }
+  // #endregion
+
+  // #region Rarities
+  *[data-rarity=Legendary] {
+    --rarity: var(--rarity-legendary);
+    --rarity--muted: var(--rarity-legendary--muted);
+  }
+  *[data-rarity=Epic] {
+    --rarity: var(--rarity-epic);
+    --rarity--muted: var(--rarity-epic--muted);
+  }
+  *[data-rarity=Rare] {
+    --rarity: var(--rarity-rare);
+    --rarity--muted: var(--rarity-rare--muted);
+  }
+  *[data-rarity=Uncommon] {
+    --rarity: var(--rarity-uncommon);
+    --rarity--muted: var(--rarity-uncommon--muted);
+  }
+  *[data-rarity=Common] {
+    --rarity: var(--rarity-common);
+    --rarity--muted: var(--rarity-common--muted);
+  }
+  // #endregion
+
+  // #region Regions
+  *[data-region=Mondstadt] {
+    --region: var(--element-anemo);
+    --region--muted: var(--element-anemo--muted);
+  }
+  *[data-region=Liyue] {
+    --region: var(--element-geo);
+    --region--muted: var(--element-geo--muted);
+  }
+  *[data-region=Inazuma] {
+    --region: var(--element-electro);
+    --region--muted: var(--element-electro--muted);
+  }
+  *[data-region=Sumeru] {
+    --region: var(--element-dendro);
+    --region--muted: var(--element-dendro--muted);
+  }
+  *[data-region=Fontaine] {
+    --region: var(--element-hydro);
+    --region--muted: var(--element-hydro--muted);
+  }
+  *[data-region=Natlan] {
+    --region: var(--element-pyro);
+    --region--muted: var(--element-pyro--muted);
+  }
+  *[data-region=Snezhnaya] {
+    --region: var(--element-cryo);
+    --region--muted: var(--element-cryo--muted);
+  }
+}
