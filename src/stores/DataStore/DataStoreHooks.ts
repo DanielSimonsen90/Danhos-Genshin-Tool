@@ -4,7 +4,7 @@ import { GlobalStoresContext } from "../GlobalStoresConstants";
 
 export const useDataStore = () => useContext(GlobalStoresContext).DataStore;
 export const useArtifactData = () => useDataStore() as Pick<DataStoreContext, 
-  | 'ArtifactSetNames' | 'ArtifactSets' | 'ArtifactSetsData'
+  | 'ArtifactNames' | 'Artifacts' | 'ArtifactsData'
   | 'findArtifactByName' | 'getArtifactsFromDomain' | 'getDomainsFromArtifact'
 >;
 export const useCharacterData = () => useDataStore() as Pick<DataStoreContext, 

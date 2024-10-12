@@ -29,7 +29,7 @@ export default function ArtifactCard({ artifact, ...props }: Props) {
       </header>
       {showMoreDetails && (<>
         <ArtifactSets artifact={artifact} />
-        <DomainList domainNames={artifact.domainNames} title={'Found in domains:'} />
+        <DomainList domainNames={artifact.domainNames} title={'Found in domains:'} showDetails showRewards />
       </>)
       }
     </Container >

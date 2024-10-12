@@ -7,24 +7,23 @@ import { useDataStore } from "@/stores";
 import { DataStore } from "@/stores/DataStore/DataStoreTypes";
 
 type Props<
-  DataKey extends keyof Pick<DataStore, 'Characters' | 'ArtifactSets' | 'Domains'>
+  DataKey extends keyof Pick<DataStore, 'Characters' | 'Artifacts' | 'Domains'>
 > = {
-  data: DataKey;
+  itemsKey: DataKey;
   Card: React.FC<{ item: DataStore[DataKey][number] }>;
-  itemKey: string;
 }
 
 export default function ItemsPage<
-  DataKey extends keyof Pick<DataStore, 'Characters' | 'ArtifactSets' | 'Domains'>
->({ data, Card, itemKey }: Props<DataKey>) {
-  const { [data]: items } = useDataStore();
+  DataKey extends keyof Pick<DataStore, 'Characters' | 'Artifacts' | 'Domains'>
+>({ Card, itemsKey }: Props<DataKey>) {
+  const { [itemsKey]: items } = useDataStore();
 
   return (
     <SearchableList
       items={items as List<Character & ArtifactSet & Domain<any>>} renderItem={item => <Card key={item.name} item={item} />}
       onSearch={(query, item) => item.name.toLowerCase().includes(query.toLowerCase())}
-      className={classNames('items-list', `${itemKey}-list`)} 
-      liClassName={classNames('items-list-item', `${itemKey}-list-item`)}
+      className={classNames('items-list', `${itemsKey.toLowerCase()}-list`)} 
+      liClassName={classNames('items-list-item', `${itemsKey.toLowerCase()}-list-item`)}
     />
   );
 }

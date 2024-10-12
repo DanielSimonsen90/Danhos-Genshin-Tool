@@ -185,7 +185,7 @@ export const SearchService = new class SearchService extends BaseService<LastRes
       return this.lastResult.search = cachedResult;
     }
 
-    const { ArtifactSets, ArtifactSetNames } = DataStore;
+    const { Artifacts: ArtifactSets, ArtifactNames: ArtifactSetNames } = DataStore;
     // Check artifact set exists in data
     if (!ArtifactSetNames.includes(artifactSetName)) throw new Error(`Artifact set "${artifactSetName}" not found in data.`);
     const set = ArtifactSets.find(set => set.name === artifactSetName);

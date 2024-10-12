@@ -1,13 +1,6 @@
-import { useCharacterData } from "@/stores";
 import { CharacterCard } from "@/components/domain/Character";
-import SearchableList from "@/components/common/SearchableList";
+import ItemsPage from "../_Layout/ItemsPage";
 
 export default function Characters() {
-  const { Characters } = useCharacterData();
-
-  return <SearchableList
-    items={Characters} renderItem={character => <CharacterCard character={character} wrapInLink />}
-    onSearch={(query, character) => character.name.toLowerCase().includes(query.toLowerCase())}
-    className="characters-list" liClassName="characters-list-item"
-  />;
+  return <ItemsPage itemsKey="Characters" Card={({ item }) => <CharacterCard character={item} wrapInLink />} />;
 }

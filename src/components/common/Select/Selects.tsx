@@ -9,9 +9,9 @@ import Select from "./Select";
 import SelectMultiple from "./SelectMultiple";
 
 export const SelectArtifactSet = (
-  props: PublicProps<DataStore['ArtifactSetNames'][0]>
+  props: PublicProps<DataStore['ArtifactNames'][0]>
 ) => {
-  const { ArtifactSetNames } = useArtifactData();
+  const { ArtifactNames: ArtifactSetNames } = useArtifactData();
 
   return <Select
     options={ArtifactSetNames}

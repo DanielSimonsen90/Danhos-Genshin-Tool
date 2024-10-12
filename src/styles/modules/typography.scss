@@ -13,7 +13,8 @@ $margins: (1.25em, 1em, .75em, .5em);
 
 @for $i from 1 through length($headings) {
   #{nth($headings, $i)} {
-    --margins: nth($margins, $i);
+    $margin: nth($margins, $i);
+    --margins: #{$margin};
 
     font-size: nth($sizes, $i);
     line-height: nth($line-heights, $i);

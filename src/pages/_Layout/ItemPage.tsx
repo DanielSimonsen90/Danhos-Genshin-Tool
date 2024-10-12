@@ -6,23 +6,19 @@ import { ItemHeader } from "@/components/domain/Item";
 import { DataStore } from "@/stores/DataStore/DataStoreTypes";
 
 type Props<
-  DataKey extends keyof Pick<DataStore, 'Characters' | 'ArtifactSets' | 'Domains'>
+  DataKey extends keyof Pick<DataStore, 'Characters' | 'Artifacts' | 'Domains'>
 > = {
   itemKeys: DataKey;
   Card: React.FC<{ item: DataStore[DataKey][number]; }>;
 };
 
 export default function ItemPage<
-  DataKey extends keyof Pick<DataStore, 'Characters' | 'ArtifactSets' | 'Domains'>
+  DataKey extends keyof Pick<DataStore, 'Characters' | 'Artifacts' | 'Domains'>
 >({ itemKeys, Card }: Props<DataKey>) {
-  const itemKey = itemKeys.slice(0, -1) as string;
+  const itemKey = itemKeys.slice(0, -1) as 'Character' | 'Artifact' | 'Domain';
   const { [`${itemKey.toLowerCase()}Name`]: name } = useParams();
   const DataStore = useDataStore();
-  const item = useMemo(() => (
-    itemKey === 'ArtifactSets'
-      ? DataStore.findArtifactByName
-      : DataStore[`find${itemKey}ByName` as 'findCharacterByName' | 'findDomainByName']
-  )(name), [DataStore, name]);
+  const item = useMemo(() => DataStore[`find${itemKey}ByName`](name), [DataStore, name]);
 
   if (!item) {
     return (
