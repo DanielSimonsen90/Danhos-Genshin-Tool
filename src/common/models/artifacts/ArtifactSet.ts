@@ -16,6 +16,7 @@ export class ArtifactSet {
     public fourPieceSetDescription: string,
     public rarity: Rarity,
     public domainNames: string[],
+    public isCraftable: boolean,
     public checkIsGood: (character: Character, set: CharacterArtifactSet) => number
   ) { }
 }

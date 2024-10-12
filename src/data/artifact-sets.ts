@@ -45,6 +45,7 @@ export const Adventurer = new ArtifactSet(
   "Opening a chest regenerates 30% Max HP for 5s.",
   Rarity.Rare,
   [Domains.MidsummerCourtyard.name],
+  false,
   c => c.sets.map(set => set.favoredAbility.includes('HP') ? threeStar : 0).sort().shift()
 );
 
@@ -58,6 +59,7 @@ export const ArchaicPetra = new ArtifactSet(
   "When Elemental Shard picked up from Crystalize reaction, all party members gain 35% DMG Bonus for that particular element for 10s. Only one element DMG Bonus can be gained within that time",
   Rarity.Legendary,
   [Domains.DomainOfGuyun.name],
+  true,
   c => c.element === 'Geo' ? correctElement : 0
 );
 
@@ -71,6 +73,7 @@ export const Berserker = new ArtifactSet(
   "When HP is below 70%, CRIT Rate +24%",
   Rarity.Epic,
   ["BOSS_DROP"],
+  false,
   () => fourStar
 );
 
@@ -84,6 +87,7 @@ export const BlizzardStrayer = new ArtifactSet(
   "When wearer attacks enemy affected by Cryo, CRIT Rate +20%. If enemy is Frozen, CRIT Rate +40%",
   Rarity.Legendary,
   [Domains.PeakOfVindagnyr.name],
+  true,
   c => c.element === 'Cryo' ? correctElement : 0
 );
 
@@ -97,6 +101,7 @@ export const BloodstainedChivalry = new ArtifactSet(
   "After defeating an opponent, Charged Attack DMG +50% + reduce its Stamina cost to 0 for 10s",
   Rarity.Legendary,
   [Domains.ClearPoolAndMountaincavern.name],
+  true,
   (c, set) => c.sets.map(cSet => {
     if (!cSet.artifactSets.includes(set)) return 0;
 
@@ -124,6 +129,7 @@ export const BraveHeart = new ArtifactSet(
     Domains.CityOfGold.name,
     Domains.FadedTheater.name,
   ],
+  false,
   c => c.sets.map(cSet => cSet.talentStats.includes('ATK') ? correctElement : 0).sort().shift()
 );
 
@@ -137,6 +143,7 @@ export const CrimsonWitchOfFlames = new ArtifactSet(
   "Overloaded & Burning DMG +40%. Vaporize & Melt DMG +15%. Using Skill (ability) increases 2-Piece Set effects by 50% (Pyro DMG Bonus +30%) for 10s. Max 3 stacks",
   Rarity.Legendary,
   [Domains.HiddenPalaceOfZhouFormula.name],
+  true,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (c.element === 'Pyro') value += correctElement;
@@ -155,6 +162,7 @@ export const DeepwoodMemories = new ArtifactSet(
   "Skill (ability) or Burst (ult) hit opponents, targets' Dendro RES -30% for 8s. Can be triggered off-field.",
   Rarity.Legendary,
   [Domains.SpireofSolitaryEnlightenment.name],
+  true,
   (c, set) => {
     let value = 0;
     if (c.element !== 'Dendro') return 0;
@@ -180,6 +188,7 @@ export const DefendersWill = new ArtifactSet(
     Domains.SlumberingCourt.name,
     Domains.DenouementOfSin.name,
   ],
+  false,
   (c, set) => c.sets.map(cSet => cSet.talentStats.includes('DEF') ? correctElement : 0).sort().shift()
 );
 
@@ -193,6 +202,7 @@ export const DesertPavilionChronicle = new ArtifactSet(
   "Charged Attacks on opponents adds following buffs: Wearer's Normal Attack SPD +10%. Normal, Charged, and Plunging Attack DMG +40% for 15s.",
   Rarity.Legendary,
   [Domains.CityOfGold.name],
+  true,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (c.element === 'Anemo') value += correctElement;
@@ -211,6 +221,7 @@ export const EchoesOfAnOffering = new ArtifactSet(
   `When Normal Attack hit opponents, 36% chance to trigger "Valley Rite": Normal Attack DMG +70% Of ATK. Effect is dispelled .05s after Normal Attack deals DMG. If "Valley Rite" was not triggered, odds Of triggering +20%. Effect can trigger once every .2s.`,
   Rarity.Legendary,
   [Domains.TheLostValley.name],
+  true,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.talentStats.includes('ATK')) value += correctElement;
@@ -229,6 +240,7 @@ export const EmblemOfSeveredFate = new ArtifactSet(
   "Burst (ult) DMG +25% Of Energy Recharge. Max 75% bonus DMG can be obtained in this way.",
   Rarity.Legendary,
   [Domains.MomijiDyedCourt.name],
+  true,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.talentStats.includes('Energy Recharge')) value += correctElement;
@@ -247,6 +259,7 @@ export const FlowerOfParadiseLost = new ArtifactSet(
   "Wearer's Bloom, Hyperbloom & Burgeon reaction DMG +40%. After reaction, +25% DMG Of effect. Max 4 stacks where each stack lasts 10s. Can only trigger once per second. Can trigger off-field.",
   Rarity.Legendary,
   [Domains.CityOfGold.name],
+  true,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.talentStats.includes('Elemental Mastery')) value += correctElement;
@@ -265,6 +278,7 @@ export const FragmentOfHarmonicWhimsy = new ArtifactSet(
   "When value Of Bond Of Life changes, character deals 18% increased DMG for 6s. Max 3 stacks.",
   Rarity.Legendary,
   [Domains.FadedTheater.name],
+  false,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.talentStats.includes('ATK')) value += correctElement;
@@ -289,6 +303,7 @@ export const Gambler = new ArtifactSet(
     Domains.TheLostValley.name,
     Domains.SanctumOfRainbowSpirits.name,
   ],
+  false,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.favoredAbility === 'Skill/Ability') value += correctElement;
@@ -308,6 +323,7 @@ export const GildedDreams = new ArtifactSet(
   "Within 8s Of triggering Elemental Reaction, wearer obtains buff based on Elemental Type Of other party members. ATK +14% for each member with same Element as wearer. Elemental Mastery +50 for each member with different Element. Each buff can count up to 3 characters. Effect triggerable 1/8s. Can trigger off-field.",
   Rarity.Legendary,
   [Domains.SpireofSolitaryEnlightenment.name],
+  true,
   c => c.sets.map(cSet =>
     cSet.talentStats.includes('Elemental Mastery') ? correctElement : 0
   ).sort().shift()
@@ -323,6 +339,7 @@ export const GladiatorsFinale = new ArtifactSet(
   "Sword/Claymore/Polearm wearer, Normal Attack DMG +35%",
   Rarity.Legendary,
   ["BOSS_DROP"],
+  true,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.talentStats.includes('ATK')) value += correctElement;
@@ -345,6 +362,7 @@ export const GoldenTroupe = new ArtifactSet(
   "Increase Elemental Skill DMG by 25%. Additionally, off-field, Elemental Skill DMG additional +25%. Effect cleared 2s after on-field.",
   Rarity.Legendary,
   [Domains.DenouementOfSin.name],
+  true,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.favoredAbility === 'Skill/Ability') value += correctElement;
@@ -363,6 +381,7 @@ export const HeartOfDepth = new ArtifactSet(
   "After using Skill (ability); Normal and Charged Attack DMG +30% for 15s",
   Rarity.Legendary,
   [Domains.PeakOfVindagnyr.name],
+  true,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (c.element === 'Hydro') value += correctElement;
@@ -381,6 +400,7 @@ export const HuskOfOpulentDreams = new ArtifactSet(
   `Wearer obtains "Curiosity" effect in condition: On field and hit opponent with Geo attack, gain 1 stack 1/.3s. Max 4 stacks, each providing 6% DEF & Geo DMG Bonus. After 6s without gaining stack, lose 1 stack.`,
   Rarity.Legendary,
   [Domains.SlumberingCourt.name],
+  true,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.talentStats.includes('DEF')) value += correctElement;
@@ -400,6 +420,7 @@ export const Instructor = new ArtifactSet(
   "Trigger elemental reaction, party members' Elemental Mastery +120 for 8s.",
   Rarity.Epic,
   ["BOSS_DROP"],
+  false,
   c => c.sets.map(cSet => cSet.talentStats.includes('Elemental Mastery') ? correctElement : 0).sort().shift()
 );
 
@@ -413,6 +434,7 @@ export const Lavawalker = new ArtifactSet(
   "DMG, against opponents affected by Pyro, +35%",
   Rarity.Legendary,
   [Domains.HiddenPalaceOfZhouFormula.name],
+  true,
   (c, set) => {
     let value = 0;
     if (c.element === 'Pyro') value += correctElement;
@@ -431,6 +453,7 @@ export const LuckyDog = new ArtifactSet(
   "Picking up Mora restores 300 HP",
   Rarity.Rare,
   [Domains.DomainOfGuyun.name],
+  false,
   c => c.sets.map(cSet => cSet.talentStats.includes('DEF') ? threeStar : 0).sort().shift()
 );
 
@@ -444,6 +467,7 @@ export const MaidenBeloved = new ArtifactSet(
   "Using Skill (ability) or Burst (ult) increases healing received by all party members by 20% for 10s.",
   Rarity.Legendary,
   [Domains.ValleyOfRemembrance.name],
+  true,
   c => c.bonusAbility === 'Heal' ? correctElement : 0
 );
 
@@ -457,6 +481,7 @@ export const MarechausseeHunter = new ArtifactSet(
   "When current HP changes, CRIT Rate +12% for 5s. Max 3 stacks.",
   Rarity.Legendary,
   [Domains.DenouementOfSin.name],
+  true,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (isPhysicalFavored(c, set)) value += correctElement;
@@ -482,6 +507,7 @@ export const MartialArtist = new ArtifactSet(
     Domains.MoltenIronFortress.name,
     Domains.WaterfallWen.name,
   ],
+  false,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.favoredAbility === 'Normal/Press' || cSet.favoredAbility === 'Charged/Hold') value += correctElement;
@@ -500,6 +526,7 @@ export const NighttimeWhispersInTheEchoingWoods = new ArtifactSet(
   "After using Elemental Skill, +20% Geo DMG Bonus for 10s. While shielded by Crystalize reaction, effect increased by 150%. Additional increase disappears 1s after shield is lost.",
   Rarity.Legendary,
   [Domains.WaterfallWen.name],
+  false,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.talentStats.includes('ATK')) value += correctElement;
@@ -519,6 +546,7 @@ export const NoblesseOblige = new ArtifactSet(
   "Using Burst (ult); all party members' ATK +20% for 12s. Non-stackable.",
   Rarity.Legendary,
   [Domains.ClearPoolAndMountaincavern.name],
+  true,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.favoredAbility === 'Burst/Ult') value += correctElement;
@@ -537,6 +565,7 @@ export const NymphsDream = new ArtifactSet(
   `After Normal/Charged/Plunging Attacks or Skill/Burst hits opponents, trigger 1 stack Of "Mirrored Nymph" for 8s. 1/2/3 stacks Of "Mirrored Nymph" +ATK 7/16/25% and +Hydro DMG Bonus 4/9/15%. Stacks created by Normal/Charged/Plunging Attacks or Skill/Burst are independent.`,
   Rarity.Legendary,
   [Domains.MoltenIronFortress.name],
+  true,
   (c, set) => {
     let value = 0;
     if (c.element === 'Hydro') value += correctElement;
@@ -551,6 +580,7 @@ export const ObsidianCodex = new ArtifactSet(
   "After equipping chracter consumes 1 Nightsoul point on field, CRIT Rate +40% for 6s. Can trigger 1/s.",
   Rarity.Legendary,
   [Domains.SanctumOfRainbowSpirits.name],
+  false,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (c.bonusAbility === 'Nightsouls Blessing' && cSet.onField) value += correctElement;
@@ -568,6 +598,7 @@ export const OceanHuedClam = new ArtifactSet(
   "Wearer heals party member, Sea-Dyed Foam appears for 3s, accumulating HP recovered (incl. overhealth). Sea-Dyed Foam explodes for 90% Of accumulated healing after duration. Sea-Dyed Foam produced 1/3.5s. Max 30k hp accumulation (incl. overhealth). Only 1 Sea-Dyed Foam active at a time. Effect can trigger off-field.",
   Rarity.Legendary,
   [Domains.SlumberingCourt.name],
+  true,
   c => c.bonusAbility === 'Heal' ? correctElement : 0
 );
 
@@ -581,6 +612,7 @@ export const PaleFlame = new ArtifactSet(
   "When Skill (ability) hits opponent, ATK +9% for 7s. Max 2 stacks, then 2-set effect effect +100%. Can occur once every .3s.",
   Rarity.Legendary,
   [Domains.RidgeWatch.name],
+  true,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (isPhysicalFavored(c, set)) value += correctElement;
@@ -590,13 +622,17 @@ export const PaleFlame = new ArtifactSet(
 );
 
 /** @one Affected by Hydro for 40% less time. */
-export const PrayersOfDestiny = new ArtifactSet("Prayers For Destiny", "Affected by Hydro for 40% less time.", "", Rarity.Epic, ["BOSS_DROP"], () => 0);
+export const PrayersOfDestiny = new ArtifactSet("Prayers For Destiny", "Affected by Hydro for 40% less time.", "", Rarity.Epic, ["BOSS_DROP"],
+  false, () => 0);
 /** @one Affected by Pyro for 40% less time. */
-export const PrayersOfIllumination = new ArtifactSet("Prayers For Illumination", "Affected by Pyro for 40% less time.", "", Rarity.Epic, ["BOSS_DROP"], () => 0);
+export const PrayersOfIllumination = new ArtifactSet("Prayers For Illumination", "Affected by Pyro for 40% less time.", "", Rarity.Epic, ["BOSS_DROP"],
+  false, () => 0);
 /** @one Affected by Electro for 40% less time. */
-export const PrayersOfWisdom = new ArtifactSet("Prayers For Wisdom", "Affected by Electro for 40% less time.", "", Rarity.Epic, ["BOSS_DROP"], () => 0);
+export const PrayersOfWisdom = new ArtifactSet("Prayers For Wisdom", "Affected by Electro for 40% less time.", "", Rarity.Epic, ["BOSS_DROP"],
+  false, () => 0);
 /** @one Affected by Cryo for 40% less time. */
-export const PrayersOfSpringtime = new ArtifactSet("Prayers To Springtime", "Affected by Cryo for 40% less time.", "", Rarity.Epic, ["BOSS_DROP"], () => 0);
+export const PrayersOfSpringtime = new ArtifactSet("Prayers To Springtime", "Affected by Cryo for 40% less time.", "", Rarity.Epic, ["BOSS_DROP"],
+  false, () => 0);
 
 /**
  * @two ATK +18%
@@ -614,6 +650,7 @@ export const ResolutionOfSojourner = new ArtifactSet(
     Domains.DenouementOfSin.name,
     Domains.SanctumOfRainbowSpirits.name,
   ],
+  false,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.talentStats.includes('ATK')) value += correctElement;
@@ -632,6 +669,7 @@ export const RetracingBolide = new ArtifactSet(
   "While protected by shield, +40% Normal and Charged Attack DMG",
   Rarity.Legendary,
   [Domains.DomainOfGuyun.name],
+  true,
   (c, set) => {
     let value = 0;
     if (c.bonusAbility === 'Shield') value += correctElement;
@@ -654,6 +692,7 @@ export const Scholar = new ArtifactSet(
     Domains.MoltenIronFortress.name,
     Domains.FadedTheater.name,
   ],
+  false,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.favoredAbility === 'Burst/Ult') value += correctElement;
@@ -673,6 +712,7 @@ export const ScrollOfTheHeroOfCinderCity = new ArtifactSet(
   "After equipping character triggers reaction related to their elemental type, all nearby party members gain 12% Elemental DMG Bonus for elemental types involved in said reaction for 15s. If equipping character is in Nightsoul's Blessing state when triggering effect, all nearby party members gain additional 28% Elemental DMG Bonus for elemental types involved in said reaction 20s. Can trigger off-field.",
   Rarity.Legendary,
   [Domains.SanctumOfRainbowSpirits.name],
+  false,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (c.bonusAbility === 'Nightsouls Blessing') value += correctElement;
@@ -690,6 +730,7 @@ export const ShimenawasReminiscence = new ArtifactSet(
   "When using skill (ability) and has 15+ energy, -15 energy but +50% Normal/Charged/Plunging Attack DMG for 10s. Can only occur once while active.",
   Rarity.Legendary,
   [Domains.MomijiDyedCourt.name],
+  true,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.talentStats.includes('ATK')) value += correctElement;
@@ -708,6 +749,7 @@ export const SongOfDaysPast = new ArtifactSet(
   "When equipping character heals party member, Yearning effect created for 6s, which records total healing (and overflow) amount provided. When duration expires, Yearning turns into Waves Of Days Past effect: When active party member hits opponent with normal-, charged-, plunging attack, elemental skill or burst, DMG dealt +8% Of recorded amount. Effect removed after 5x usage or 10s.",
   Rarity.Legendary,
   [Domains.WaterfallWen.name],
+  false,
   c => c.bonusAbility === 'Heal' ? correctElement : 0
 );
 
@@ -721,6 +763,7 @@ export const TenacityOfTheMillelith = new ArtifactSet(
   "Skill (ability) hits opponent, +20% ATK & +30% Shield Strength for 3s for all party members. Can trigger off-field",
   Rarity.Legendary,
   [Domains.RidgeWatch.name],
+  true,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.talentStats.includes('HP')) value += correctElement;
@@ -742,6 +785,7 @@ export const TheExile = new ArtifactSet(
   "Using Burst (ult); party members (excl. wearer) gain 2 energy every 2s for 6s. Max 10 energy. Non-stackable.",
   Rarity.Epic, 
   ["BOSS_DROP"],
+  false,
   c => c.sets.map(cSet => cSet.talentStats.includes('Energy Recharge') ? correctElement : 0).sort().shift()
 );
 
@@ -755,6 +799,7 @@ export const ThunderingFury = new ArtifactSet(
   "+40% DMG caused by Overloaded/Electro-Charged/Superconduct/Hyperbloom. +20% DMG Bonus conferred by Aggravate. Quicken or aforementioned Elemental Reactions triggered, Skill CD -1s. Can only occur 1/.8s.",
   Rarity.Legendary,
   [Domains.MidsummerCourtyard.name],
+  true,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (c.element === 'Electro') value += correctElement;
@@ -782,6 +827,7 @@ export const Thundersoother = new ArtifactSet(
   "DMG against opponents affected by Electro +35%",
   Rarity.Legendary,
   [Domains.MidsummerCourtyard.name],
+  true,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (c.element === 'Electro') value += correctElement;
@@ -805,6 +851,7 @@ export const TinyMiracle = new ArtifactSet(
     Domains.MomijiDyedCourt.name,
     Domains.WaterfallWen.name,
   ],
+  false,
   c => c.sets.map(cSet => !cSet.onField ? threeStar : 0).sort().shift()
 );
 
@@ -818,6 +865,7 @@ export const TravelingDoctor = new ArtifactSet(
   "Burst (ult) restores 20% HP.",
   Rarity.Uncommon,
   [Domains.ValleyOfRemembrance.name],
+  false,
   c => c.bonusAbility === 'Heal' ? correctElement : 0
 );
 
@@ -831,6 +879,7 @@ export const UnfinishedReverie = new ArtifactSet(
   "After combat left for 3s, DMG dealt +50%. In combat, if no Burning opponents nearby more than 6s, DMG bonus decrease by 10%/s until 0%. When Burning opponent exists, increase by 10% until 50%. Can trigger off-field.",
   Rarity.Legendary,
   [Domains.FadedTheater.name],
+  false,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.talentStats.includes('ATK')) value += correctElement;
@@ -850,6 +899,7 @@ export const VermillionHereafter = new ArtifactSet(
   `After Burst (ult); wearer gains "Nascent Light" effect; ATK +8% for 16s. When HP decreases, additional ATK +10%. Max 4 stacks. Effect can trigger once every .8s. Nascent Light is dispelled when wearer leaves field. If Burst is used again during Nascent Light, original Nascent Light is dispelled.`,
   Rarity.Legendary,
   [Domains.TheLostValley.name],
+  true,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.talentStats.includes('ATK')) value += correctElement;
@@ -869,6 +919,7 @@ export const ViridescentVenerer = new ArtifactSet(
   "Increases Swirl DMG by 60%. Decrease opponent's Elemental RES to Swirl element by 40% for 10s.",
   Rarity.Legendary,
   [Domains.ValleyOfRemembrance.name],
+  true,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (c.element === 'Anemo') value += correctElement;
@@ -887,6 +938,7 @@ export const VourukashasGlow = new ArtifactSet(
   "Skill (ability) and Burst (ult) DMG +10%. After wearer takes damage, additional +80% DMG Bonus for 5s. Max 5 stacks. Each stack duration counted independently. Can trigger off-field.",
   Rarity.Legendary,
   [Domains.MoltenIronFortress.name],
+  true,
   c => c.sets.map(cSet => cSet.talentStats.includes('HP') ? correctElement : 0).sort().shift()
 );
 
@@ -900,6 +952,7 @@ export const WanderersTroupe = new ArtifactSet(
   "Catalyst/Bow wearer, Charged Attack DMG +35%",
   Rarity.Legendary, 
   ["BOSS_DROP"],
+  true,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.talentStats.includes('Elemental Mastery')) value += correctElement;
