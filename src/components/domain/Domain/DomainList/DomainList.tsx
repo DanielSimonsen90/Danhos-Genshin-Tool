@@ -17,6 +17,7 @@ export default function DomainList({ title = "Domains", domainNames }: Props) {
       <TabBar tabs={domainNames.map(name => [name, checkIsBossDrop(name) ? 'World Bosses' : name])}
         {...domainNames.reduce((acc, name) => ({ 
           ...acc, 
+          // TODO: Render custom component that displays "Dropped from bosses" + resin count
           [name]: checkIsBossDrop(name) ? <p>Dropped from world bosses.</p> : <DomainCard domain={findDomainByName(name)} /> 
         }), {} as any)}
       />
