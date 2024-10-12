@@ -1,4 +1,5 @@
 @layer defaults {
+  // #region Elements
   *[data-element=Anemo] {
     --element: var(--element-anemo);
     --element--muted: var(--element-anemo--muted);
@@ -33,7 +34,9 @@
     --element: var(--element-pyro);
     --element--muted: var(--element-pyro--muted);
   }
+  // #endregion
 
+  // #region Rarities
   *[data-rarity=Legendary] {
     --rarity: var(--rarity-legendary);
     --rarity--muted: var(--rarity-legendary--muted);
@@ -53,5 +56,36 @@
   *[data-rarity=Common] {
     --rarity: var(--rarity-common);
     --rarity--muted: var(--rarity-common--muted);
+  }
+  // #endregion
+
+  // #region Regions
+  *[data-region=Mondstadt] {
+    --region: var(--element-anemo);
+    --region--muted: var(--element-anemo--muted);
+  }
+  *[data-region=Liyue] {
+    --region: var(--element-geo);
+    --region--muted: var(--element-geo--muted);
+  }
+  *[data-region=Inazuma] {
+    --region: var(--element-electro);
+    --region--muted: var(--element-electro--muted);
+  }
+  *[data-region=Sumeru] {
+    --region: var(--element-dendro);
+    --region--muted: var(--element-dendro--muted);
+  }
+  *[data-region=Fontaine] {
+    --region: var(--element-hydro);
+    --region--muted: var(--element-hydro--muted);
+  }
+  *[data-region=Natlan] {
+    --region: var(--element-pyro);
+    --region--muted: var(--element-pyro--muted);
+  }
+  *[data-region=Snezhnaya] {
+    --region: var(--element-cryo);
+    --region--muted: var(--element-cryo--muted);
   }
 }

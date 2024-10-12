@@ -22,7 +22,7 @@ export default function DomainCard({ domain, ...props }: Props) {
   const DomainData = useDomainData();
   if (!domain) return null;
 
-  const { name, description, resinCost } = domain;
+  const { name, description, resinCost, region } = domain;
   const { wrapInLink, showDetails, showRewards, showCharactersBenefitFromRewards, showNavButton } = props;
 
   const rewards = DomainData.getArtifactsFromDomain(name);
@@ -36,7 +36,7 @@ export default function DomainCard({ domain, ...props }: Props) {
             <h2 className="domain-card__name">{name}</h2>
             {showDetails && <ResinIcon cost={resinCost} />}
           </header>
-          {showDetails && <p>{description}</p>}
+          {showDetails && <p className="domain-details__description">{description}</p>}
         </div>
         {showRewards && (
           <div className="rewards-list-container">
@@ -51,6 +51,11 @@ export default function DomainCard({ domain, ...props }: Props) {
       </section>
       <aside>
         <DomainImage domain={name} />
+        <p className="domain-details__region" data-region={region}>
+          {wrapInLink ? region : (<>
+            <b>{name}</b> is located in <span>{region}</span>
+          </>)}
+        </p>
         {showNavButton && (
           <Link to={`/domains/${name}`} className="domain-card__nav-button">
             <button style={{ width: '100%' }}>

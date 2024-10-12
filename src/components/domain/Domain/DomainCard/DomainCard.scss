@@ -16,14 +16,22 @@
     }
   }
 
-  > aside {
+  >aside {
     display: flex;
     flex-direction: column;
-    gap: .5em;
   }
 
   .domain-image {
     border-radius: .25em;
+  }
+
+  .domain-details__region {
+    text-align: center;
+    color: var(--text-secondary);
+
+    span {
+      color: var(--region);
+    }
   }
 
   .domain-rewards {
