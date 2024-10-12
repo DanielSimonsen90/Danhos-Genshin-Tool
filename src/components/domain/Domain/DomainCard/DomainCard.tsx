@@ -12,11 +12,14 @@ type Props = {
 };
 
 export default function DomainCard({ domain, ...props }: Props) {
+  const DomainData = useDomainData();
+  if (!domain) return null;
+
   const { name, description, resinCost } = domain;
   const { wrapInLink } = props;
 
-  const rewards = useDomainData().getArtifactsFromDomain(name);
   const Container = GetContainer(wrapInLink, domain, 'domains');
+  const rewards = DomainData.getArtifactsFromDomain(name);
 
   return (
     <Container className="domain-card">
