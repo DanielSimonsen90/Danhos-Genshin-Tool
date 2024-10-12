@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
-import { snakeCaseFromCamelCase } from "@/common/functions/strings";
+import { rarityString, snakeCaseFromCamelCase } from "@/common/functions/strings";
 import { Character } from "@/common/models";
 import { CharacterImage } from "@/components/common/Images";
 import CharacterSet from "../CharacterSet";
 import TabBar from "@/components/common/TabBar";
 import { GetContainer } from "../../Item/functions";
+import RarityList from "@/components/common/icons/Rarity";
 
 type Props = {
   character: Character;
@@ -13,24 +14,26 @@ type Props = {
   wrapInLink?: boolean;
   linkOnName?: boolean;
   showDetails?: boolean;
+  showRarity?: boolean;
 
   children?: React.ReactNode;
 };
 
 export default function CharacterCard({ character, score, ...props }: Props) {
-  const { name, element, bonusAbility, sets, weapon } = character;
-  const { linkOnName, wrapInLink, showDetails } = props;
+  const { name, element, bonusAbility, sets, weapon, rarity } = character;
+  const { linkOnName, wrapInLink, showDetails, showRarity } = props;
   const { children } = props;
 
   const Container = GetContainer(wrapInLink, character, 'characters');
   const CharacterName = GetCharacterNameComponent(linkOnName, character);
 
   return (
-    <Container className='character-card' data-element={character.element}>
+    <Container className='character-card' data-element={character.element} data-rarity={rarityString(rarity)}>
       <CharacterImage character={name} />
       <div className='character-details'>
         <h2 className='character-details__name'>
           <CharacterName />
+          {showRarity && <RarityList rarity={rarity} />}
         </h2>
         <ul className="character-details__grouped">
           <li className="element">{element}</li>

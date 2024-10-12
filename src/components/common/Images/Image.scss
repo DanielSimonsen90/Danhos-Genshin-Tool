@@ -5,6 +5,10 @@ img {
   object-fit: contain;
 }
 
+.character-image {
+  background-color: var(--rarity--muted);
+}
+
 .domain-image {
   --size: 25rem;
 }

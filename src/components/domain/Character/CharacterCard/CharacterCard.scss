@@ -10,7 +10,11 @@
 
 .character-details {
   &__name {
+    display: flex;
+    align-items: center;
+    gap: .5ch;
     margin: 0;
+    color: var(--element);
 
     a {
       font-size: 1.75rem;

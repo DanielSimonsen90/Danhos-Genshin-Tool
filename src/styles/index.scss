@@ -29,39 +29,4 @@
   .input-group {
     display: flex;
   }
-
-  *[data-element=Anemo] {
-    --element: var(--element-anemo);
-    --element--muted: var(--element-anemo--muted);
-  }
-
-  *[data-element=Cryo] {
-    --element: var(--element-cryo);
-    --element--muted: var(--element-cryo--muted);
-  }
-
-  *[data-element=Dendro] {
-    --element: var(--element-dendro);
-    --element--muted: var(--element-dendro--muted);
-  }
-
-  *[data-element=Electro] {
-    --element: var(--element-electro);
-    --element--muted: var(--element-electro--muted);
-  }
-
-  *[data-element=Geo] {
-    --element: var(--element-geo);
-    --element--muted: var(--element-geo--muted);
-  }
-
-  *[data-element=Hydro] {
-    --element: var(--element-hydro);
-    --element--muted: var(--element-hydro--muted);
-  }
-
-  *[data-element=Pyro] {
-    --element: var(--element-pyro);
-    --element--muted: var(--element-pyro--muted);
-  }
 }

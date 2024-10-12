@@ -44,8 +44,13 @@ body {
   --element-pyro--muted: #{colors.$element-pyro--muted};
 
   --rarity-common: #{colors.$rarity-common};
+  --rarity-common--muted: #{colors.$rarity-common--muted};
   --rarity-uncommon: #{colors.$rarity-uncommon};
+  --rarity-uncommon--muted: #{colors.$rarity-uncommon--muted};
   --rarity-rare: #{colors.$rarity-rare};
+  --rarity-rare--muted: #{colors.$rarity-rare--muted};
   --rarity-epic: #{colors.$rarity-epic};
+  --rarity-epic--muted: #{colors.$rarity-epic--muted};
   --rarity-legendary: #{colors.$rarity-legendary};
+  --rarity-legendary--muted: #{colors.$rarity-legendary--muted};
 }
