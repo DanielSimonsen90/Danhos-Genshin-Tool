@@ -180,7 +180,9 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     CacheStore: CacheStore,
     DataStore: DataStore,
   ): SearchResult {
-    const cachedResult = CacheStore.findObject('searchResults', data => data.id === id);
+    const cachedResult = CacheStore.findObject('searchResults', 
+      data => data.id === id 
+      || ([...data.form.entries()].every(([key, value]) => _form.get(key) === value)));
     if (cachedResult) {
       debugLog('Cached result found', cachedResult);
       return this.lastResult.search = cachedResult;

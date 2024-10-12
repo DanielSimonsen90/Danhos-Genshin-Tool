@@ -27,7 +27,7 @@ export default function CharacterArtifactsSetsTabBar({ character, set, artifactS
   const contents = useMemo(() => {
     const contentMap = artifactSets.reduce((acc, { pieces, set, effectiveness }) => acc.set(effectiveness, [
       ...(acc.get(effectiveness) || []),
-      <Link to={`/artifacts/${set.name}`} key={set.name}>
+      <Link to={`/artifacts/${set.name}`} key={`${character.name}-set-${set.name}-${generateId()}`}>
         <p title={classNames(
           ArtifactSet.bonusDescription(set, pieces),
           ArtifactSet.bonusDescription(set, pieces).endsWith('.') ? '' : '.'
