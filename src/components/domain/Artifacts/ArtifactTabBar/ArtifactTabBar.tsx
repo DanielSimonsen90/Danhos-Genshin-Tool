@@ -23,11 +23,11 @@ export default function ArtifactTabBar({ artifacts }: Props) {
         <div className="character-result">
           <CharacterCard key={character.name} character={character} wrapInLink>
             <p>
-              <span className="character-details__name">{character.name}</span> is
-              <span className="character-details__effectiveness">{effectivenessString(effectiveness)}</span> on a
-              <span className="character-details__pieces">{pieces}-piece</span>
-              <span className="character-details__artifact-name">{artifact.name}</span> using the
-              <span className="character-details__set-name">{set.name}</span> set.
+              <span className="character-info__name">{character.name}</span> is
+              <span className="character-info__effectiveness">{effectivenessString(effectiveness)}</span> on a
+              <span className="character-info__pieces">{pieces}-piece</span>
+              <span className="character-info__artifact-name">{artifact.name}</span> using the
+              <span className="character-info__set-name">{set.name}</span> set.
             </p>
           </CharacterCard>
         </div>

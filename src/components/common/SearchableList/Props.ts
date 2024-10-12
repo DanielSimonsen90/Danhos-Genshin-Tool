@@ -1,14 +1,15 @@
-import { List } from "@/common/models/List";
 import { Dispatch, SetStateAction, ReactNode } from "react";
+import { List } from "@/common/models/List";
+import { FilterObject } from "../Filter/Filter";
 
-export type FilterCallback<TItem> = (item: TItem) => boolean;
 export type FilterProps<TItem, FilterKeys extends string> = {
-  filterChecks?: Record<FilterKeys, FilterCallback<TItem>>,
+  filterChecks?: FilterObject<FilterKeys, TItem>,
 }
 
 export type OptionalProps<TItem, FilterKeys extends string> = FilterProps<TItem, FilterKeys> & {
   defaultSearch?: string,
   placeholder?: string,
+  filterPlaceholder?: string,
 
   onShowMore?: () => void,
 
@@ -21,8 +22,9 @@ export type ControlledProps<TItem, FilterKeys extends string> = {
   search: string,
   setSearch: Dispatch<SetStateAction<string>>,
 
-  filters: Record<FilterKeys, boolean>,
-  setFilters: Dispatch<SetStateAction<Record<FilterKeys, boolean>>>,
+  filters: FilterObject<FilterKeys, TItem, boolean>,
+  setFilters: Dispatch<SetStateAction<FilterObject<FilterKeys, TItem, boolean>>>,
+  onFilterChange: (filters: FilterObject<FilterKeys, TItem, boolean>) => void,
   children: [ReactNode, TItem][],
 };
 

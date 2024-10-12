@@ -11,7 +11,7 @@ export abstract class Domain<TReward> {
   ) {}
 
   public getRewards(dataStore: DataStoreContext): TReward[] {
-    if (this.isBlessing()) return dataStore.getArtifactsFromDomain(this.name) as TReward[];
+    if (this.isBlessing()) return dataStore.getArtifactsFromDomain(this.name) as any as TReward[];
     console.error('Domain.getRewards() not implemented for', this);
     return [];
   }

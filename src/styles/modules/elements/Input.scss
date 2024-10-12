@@ -1,6 +1,9 @@
 input, select, .select {
-  margin: .25rem;
-  padding: .5rem;
+  --margin: .25rem;
+  --padding: .5rem;
+  margin: var(--margin);
+  padding: var(--padding);
+  // width: calc(100% - (var(--margin) * 2) - (var(--padding) * 2));
   width: 100%;
   border-radius: .25rem;
   

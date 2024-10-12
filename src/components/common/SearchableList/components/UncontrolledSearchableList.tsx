@@ -1,11 +1,13 @@
-import { classNames, pascalCaseFromCamelCase } from "@/common/functions/strings";
+import { classNames } from "@/common/functions/strings";
 import { ControlledProps, OptionalProps } from "../Props";
-import SelectMultiple from "../../Select/SelectMultiple";
+import Filter from "../../Filter";
 
 export default function UncontrolledSearchableList<TItem, FilterKeys extends string>(props: ControlledProps<TItem, FilterKeys> & OptionalProps<TItem, FilterKeys>) {
-  const { search, setSearch, defaultSearch, placeholder, filterChecks, setFilters } = props;
+  const { search, setSearch, defaultSearch, placeholder } = props;
   const { children, onShowMore } = props;
   const { className, ulClassName, liClassName } = props;
+  const { filterChecks, filters, setFilters, filterPlaceholder, onFilterChange } = props;
+  const filterProps = { filterChecks, filters, setFilters, filterPlaceholder, onChange: onFilterChange };
   
   return (
     <div className={classNames("searchable-list", className)}>
@@ -17,15 +19,7 @@ export default function UncontrolledSearchableList<TItem, FilterKeys extends str
           className="searchable-list__search"
           defaultValue={defaultSearch}
         />
-        {filterChecks && (
-          <SelectMultiple name="filters"
-            options={Object.keys(filterChecks)}
-            placeholder="Filter..."
-            onChange={keys => setFilters(Object.fromEntries(keys.map(key => [key, true])) as any)}
-            displayValue={key => pascalCaseFromCamelCase(key)}
-            internalValue={key => key}
-          />
-        )}
+        {filterChecks && <Filter {...filterProps} />}
       </div>
       {children.length > 0 && (
         <ul className={classNames("searchable-list__list", ulClassName)}>

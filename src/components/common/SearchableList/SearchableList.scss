@@ -1,7 +1,13 @@
+@use '../../../styles/partials' as *;
+
 .searchable-list {
   display: flex;
   flex-direction: column;
   gap: 1em;
+
+  .input-group {
+    gap: 0;
+  }
 
   &__search {
     width: calc(100% - .25rem);
@@ -19,6 +25,7 @@
   &__list-item--end {
     width: 100%;
     text-align: center;
+    justify-content: center;
     color: var(--text-muted);
   }
 

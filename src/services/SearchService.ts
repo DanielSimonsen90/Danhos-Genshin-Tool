@@ -180,7 +180,9 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     CacheStore: CacheStore,
     DataStore: DataStore,
   ): SearchResult {
-    const cachedResult = CacheStore.findObject('searchResults', data => data.id === id);
+    const cachedResult = CacheStore.findObject('searchResults', 
+      data => data.id === id 
+      || ([...data.form.entries()].every(([key, value]) => _form.get(key) === value)));
     if (cachedResult) {
       debugLog('Cached result found', cachedResult);
       return this.lastResult.search = cachedResult;
@@ -261,9 +263,9 @@ export const SearchService = new class SearchService extends BaseService<LastRes
       if (mainStat === 'Healing Bonus') return character.bonusAbility === 'Heal' || character.bonusAbility === 'Self-heal' ? 10 : 2; // Healing bonus is decent but rarely used
       if (mainStat.includes('DMG Bonus')) return 20; // Elemental DMG Bonuses are not to be messed with
       if (mainStat.includes('Crit')) return 20; // Crit stats are always good
-      if (mainStat === 'HP%' && character.needsHP()) return 10;
-      if (mainStat === 'ATK%' && character.needsATK()) return 10;
-      if (mainStat === 'DEF%' && character.needsDEF()) return 10;
+      if (mainStat === 'HP%') return character.needsHP() ? 10 : 5; // HP% is usually okay
+      if (mainStat === 'ATK%') return character.needsATK() ? 10 : 5; // ATK% is usually okay
+      if (mainStat === 'DEF%') return character.needsDEF() ? 10 : 1; // DEF% is usually bad
       console.error(`Unknown main stat "${mainStat}"`);
       return 10;
     })();

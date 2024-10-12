@@ -7,7 +7,7 @@ import TabBar from "@/components/common/TabBar";
 import { GetContainer } from "../../Item/functions";
 import RarityList from "@/components/common/icons/Rarity";
 
-type Props = {
+export type Props = {
   character: Character;
   score?: number;
 
@@ -53,7 +53,7 @@ export default function CharacterCard({ character, score, ...props }: Props) {
       {showDetails && (
         <div className="character-sets">
           <h3 className="character-sets__title">Character Sets</h3>
-          <TabBar tabs={sets.map(set => [set.name, set.name])} 
+          <TabBar id={`${name}-sets`} tabs={sets.map(set => [set.name, set.name])} 
             {...sets.reduce((acc, set) => ({ ...acc, [set.name]: <CharacterSet set={set} character={character} /> }), {} as any)}
           />
         </div>
