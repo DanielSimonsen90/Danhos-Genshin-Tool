@@ -1,4 +1,4 @@
-import { Element, Weapon, BonusAbility } from '@/common/types';
+import { Element, Weapon, BonusAbility, Rarity } from '@/common/types';
 import CharacterSet from './CharacterSet';
 
 export class Character {
@@ -7,6 +7,7 @@ export class Character {
     public element: Element,
     public weapon: Weapon,
     public bonusAbility: BonusAbility,
+    public rarity: Rarity,
     public sets: CharacterSet[],
   ) {}
 
