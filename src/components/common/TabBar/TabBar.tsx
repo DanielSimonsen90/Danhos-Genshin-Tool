@@ -7,6 +7,7 @@ type Props<
 > = {
   defaultTab?: TTabKey,
   tabs: [TTabKey, ReactNode][],
+  noTabs?: JSX.Element,
 
   tab?: TTabKey,
   setTab?: Dispatch<SetStateAction<TTabKey>>,
@@ -23,7 +24,7 @@ type Props<
 export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props<TTabKey>) {
   const [activeTab, _setActiveTab] = useState<TTabKey>(
     props.defaultTab 
-    ?? tabs.filter(([_, value]) => value)[0][0]
+    ?? tabs.filter(([_, value]) => value)[0]?.[0]
   );
 
   const internalTabs = useMemo(() => {
@@ -66,7 +67,7 @@ export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props
     if (props.tab) setActiveTab(props.tab);
   }, [props.tab]);
 
-  return (
+  return tabs.filter(([_, v]) => v)[0] ? (
     <div className={classNames("tab-bar", props.className)}>
       <header className={classNames('tab-bar__tabs')}>
         {internalTabs.map(([tab, title]) => title &&
@@ -82,5 +83,5 @@ export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props
         <TabContent />
       </section>
     </div>
-  );
+  ) : props.noTabs;
 }

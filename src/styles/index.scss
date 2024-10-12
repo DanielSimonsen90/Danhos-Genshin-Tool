@@ -26,6 +26,10 @@
     color: var(--text-muted);
   }
 
+  .input-group {
+    display: flex;
+  }
+
   *[data-element=Anemo] {
     --element: var(--element-anemo);
     --element--muted: var(--element-anemo--muted);

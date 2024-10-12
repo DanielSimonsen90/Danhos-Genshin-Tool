@@ -2,7 +2,8 @@ import { Routes, Route, HashRouter } from "react-router-dom";
 import { 
   Layout, Home, Search, 
   Characters, Character, 
-  Artifacts, Artifact
+  Artifacts, Artifact,
+  Domains, Domain,
 } from '@/pages';
 
 export const Router = () => (
@@ -21,6 +22,10 @@ export const Router = () => (
         <Route path="artifacts">
           <Route index element={<Artifacts />} />
           <Route path=":artifactName" element={<Artifact />} />
+        </Route>
+        <Route path="domains">
+          <Route index element={<Domains />} />
+          <Route path=":domainName" element={<Domain />} />
         </Route>
 
         <Route path="*" element={(() => {

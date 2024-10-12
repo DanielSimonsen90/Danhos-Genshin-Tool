@@ -9,12 +9,18 @@
 $headings: (h1, h2, h3, h4);
 $sizes: (1.5rem, 1.25rem, 1.125rem, 1rem);
 $line-heights: (1.2, 1.3, 1.4, 1.5);
+$margins: (1.25em, 1em, .75em, .5em);
 
 @for $i from 1 through length($headings) {
   #{nth($headings, $i)} {
+    $margin: nth($margins, $i);
+    --margins: #{$margin};
+
     font-size: nth($sizes, $i);
     line-height: nth($line-heights, $i);
     font-weight: bold;
+    margin-block-start: var(--margins);
+    margin-block-end: var(--margins);
   }
 }
 
@@ -23,6 +29,7 @@ p span:not(:first-of-type) {
 }
 
 p {
-  margin-block-start: .5em;
-  margin-block-end: .5em;
+  --margins: .5em;
+  margin-block-start: var(--margins);
+  margin-block-end: var(--margins);
 }

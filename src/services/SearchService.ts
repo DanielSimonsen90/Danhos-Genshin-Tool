@@ -7,6 +7,7 @@ import { CacheStore } from '@/stores/CacheStore/CacheStoreTypes';
 import { DataStore } from '@/stores/DataStore/DataStoreTypes';
 
 import BaseService from './BaseService';
+import { List } from '@/common/models/List';
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchService);
 
@@ -29,6 +30,7 @@ export type CharacterUsingArtifactResult = {
   character: Character;
   set: CharacterSet;
   pieces: number;
+  effectiveness: number;
 };
 
 type LastResult = {
@@ -59,7 +61,7 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     mainStat: MainStatName,
     subStats: SubStatName[],
     { Characters }: DataStore,
-  ): SearchResultItem[] {
+  ): List<SearchResultItem> {
     debugLog('group', 'searchArtifactSets');
     debugLog('params', { set, artifactPartName, mainStat, subStats });
 
@@ -107,7 +109,7 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     mainStat: MainStatName,
     subStats: SubStatName[],
     { Characters }: DataStore,
-  ): SearchResultItem[] {
+  ): List<SearchResultItem> {
     debugLog('group', 'searchCharacterRecommendations');
 
     const getSetFromCharacter = (character: Character) => (
@@ -135,7 +137,7 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     if (!charactersWantSet.length && !charactersCouldUseSet.length) {
       debugLog(`No characters found for ${set.name}. Returning empty array.`);
       debugLog('groupEnd');
-      return this.lastResult.searchCharacterRecommendations = [];
+      return this.lastResult.searchCharacterRecommendations = new List();
     }
 
     // Calculate scores
@@ -166,9 +168,9 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     };
     debugLog('groupEnd');
 
-    const result = this.lastResult.searchCharacterRecommendations = [
+    const result = this.lastResult.searchCharacterRecommendations = new List(
       charactersWantSet, charactersCouldUseSet
-    ].map(getScores).flat().sort((a, b) => b.score - a.score);
+    ).map(getScores).flatten().sort((a, b) => b.score - a.score);
     debugLog('Result', result);
     debugLog('groupEnd');
     return result;
@@ -184,7 +186,7 @@ export const SearchService = new class SearchService extends BaseService<LastRes
       return this.lastResult.search = cachedResult;
     }
 
-    const { ArtifactSets, ArtifactSetNames } = DataStore;
+    const { Artifacts: ArtifactSets, ArtifactNames: ArtifactSetNames } = DataStore;
     // Check artifact set exists in data
     if (!ArtifactSetNames.includes(artifactSetName)) throw new Error(`Artifact set "${artifactSetName}" not found in data.`);
     const set = ArtifactSets.find(set => set.name === artifactSetName);
@@ -193,6 +195,30 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     const args = [set, artifactPartName, mainStat, subStats, DataStore] as const;
     const byCharacterRecommendation = this.searchByCharacterRecommendation(...args);
     const byArtifact = this.searchByArtifacts(...args).sort(this._sortResults(set, byCharacterRecommendation));
+    // const byArtifact = this.searchByArtifacts(...args).orderBy(
+    //   // effectiveness, characterRecommendation, score
+    //   (a, b) => {
+    //     const effectiveA = a.character.sets.reduce((acc, cSet) => {
+    //       const compatibility = cSet.artifactSets.find(equippingSet =>
+    //         equippingSet.set.name === set.name
+    //       )?.effectiveness ?? 0;
+    //       return acc + compatibility;
+    //     }, 0)
+    //     const effectiveB = b.character.sets.reduce((acc, cSet) => {
+    //       const compatibility = cSet.artifactSets.find(equippingSet =>
+    //         equippingSet.set.name === set.name
+    //       )?.effectiveness ?? 0;
+    //       return acc + compatibility;
+    //     }, 0);
+    //     return effectiveB - effectiveA;
+    //   },
+    //   (a, b) => {
+    //     const recommendedA = byCharacterRecommendation.some(c => c.character.name === a.character.name)
+    //     const recommendedB = byCharacterRecommendation.some(c => c.character.name === b.character.name)
+    //     return recommendedA && !recommendedB ? -1 : recommendedB && !recommendedA ? 1 : 0;
+    //   },
+    //   (a, b) => b.score - a.score
+    // )
     const combined = [...byArtifact, ...byCharacterRecommendation].reduce((acc, item) => {
       const existing = acc.find(e => e.character.name === item.character.name);
       if (existing) {
@@ -202,6 +228,38 @@ export const SearchService = new class SearchService extends BaseService<LastRes
       }
       return [...acc, item];
     }, [] as SearchResultItem[]).sort(this._sortResults(set, byCharacterRecommendation));
+    // const combined = new List(...byArtifact, ...byCharacterRecommendation).reduce((acc, item) => {
+    //   const existing = acc.find(e => e.character.name === item.character.name);
+    //   if (existing) {
+    //     existing.score = Math.round(existing.score + item.score);
+    //     existing.shouldSave = existing.score > SHOULD_SAVE_THRESHOLD;
+    //     return acc;
+    //   }
+    //   return acc.concat(item);
+    // }, new List<SearchResultItem>()).orderBy(
+    //   // effectiveness, characterRecommendation, score
+    //   (a, b) => {
+    //     const effectiveA = a.character.sets.reduce((acc, cSet) => {
+    //       const compatibility = cSet.artifactSets.find(equippingSet =>
+    //         equippingSet.set.name === set.name
+    //       )?.effectiveness ?? 0;
+    //       return acc + compatibility;
+    //     }, 0)
+    //     const effectiveB = b.character.sets.reduce((acc, cSet) => {
+    //       const compatibility = cSet.artifactSets.find(equippingSet =>
+    //         equippingSet.set.name === set.name
+    //       )?.effectiveness ?? 0;
+    //       return acc + compatibility;
+    //     }, 0);
+    //     return effectiveB - effectiveA;
+    //   },
+    //   (a, b) => {
+    //     const recommendedA = byCharacterRecommendation.some(c => c.character.name === a.character.name)
+    //     const recommendedB = byCharacterRecommendation.some(c => c.character.name === b.character.name)
+    //     return recommendedA && !recommendedB ? -1 : recommendedB && !recommendedA ? 1 : 0;
+    //   },
+    //   (a, b) => b.score - a.score
+    // );
 
     const result = this.lastResult.search = {
       combined, byArtifact, byCharacterRecommendation: byCharacterRecommendation.sort(this._sortResults(set, byCharacterRecommendation)),
@@ -210,10 +268,6 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     CacheStore.update('searchResults', { [id]: result });
     debugLog('Result', result);
     return result;
-  }
-
-  public sortResultsByTimestamp(results: Array<SearchFormData>) {
-    return results.sort((a, b) => b.timestamp - a.timestamp);
   }
 
   public getCharactersUsing(artifactName: string, DataStore: DataStore): CharacterUsingArtifactResult[] {
@@ -228,11 +282,16 @@ export const SearchService = new class SearchService extends BaseService<LastRes
         artifact.set.name === artifactName 
         && artifact.effectiveness === CharacterArtifactSet.MOST_EFFECTIVE
     ));
-    return relevantCharacters.map(character => ({
-      character,
-      set: getCharacterSet(character),
-      pieces: getCharacterSet(character).artifactSets.find(artifact => artifact.set.name === artifactName).pieces
-    }));
+    return relevantCharacters.map(character => {
+      const set = getCharacterSet(character);
+      const cSet = set.artifactSets.find(artifact => artifact.set.name === artifactName);
+
+      return {
+        character, set,
+        pieces: cSet.pieces,
+        effectiveness: cSet.effectiveness
+      }
+    });
   }
 
   private _getPartScore(
@@ -298,6 +357,7 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     return result;
   }
   private _sortResults(set: ArtifactSet, byCharacterRecommendation: SearchResultItem[] = []) {
+    // effectiveness, characterRecommendation, score
     return (a: SearchResultItem, b: SearchResultItem) => {
       debugLog('group', `Sorting ${a.character.name} & ${b.character.name}`);
       // Check if either character has set with effectiveness 5

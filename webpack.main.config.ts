@@ -16,7 +16,11 @@ export const mainConfig: Configuration = {
   },
   plugins,
   resolve: {
-    extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json', '.scss'],
+    extensions: [
+      '.js', '.ts', '.jsx', '.tsx', 
+      '.css', '.json', '.scss',
+      '.png', 
+    ],
     alias: {
       '@': resolve(__dirname, 'src'),
     },

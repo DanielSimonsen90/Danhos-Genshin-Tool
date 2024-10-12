@@ -5,7 +5,7 @@ import Image from './Image';
 import { pascalCaseFromSnakeCase } from '@/common/functions/strings';
 
 type Props = {
-  set: keyof typeof ArtifactSets;
+  set: keyof typeof ArtifactSets | string;
   name: ArtifactPartName;
 }
 

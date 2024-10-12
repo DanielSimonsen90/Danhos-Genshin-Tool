@@ -1,0 +1,13 @@
+.resin-icon-wrapper {
+  display: flex;
+  align-items: center;
+
+  .resin-cost {
+    margin-top: .125em;
+    font-size: 1.2rem;
+  }
+
+  img {
+    --size: 2rem;
+  }
+}

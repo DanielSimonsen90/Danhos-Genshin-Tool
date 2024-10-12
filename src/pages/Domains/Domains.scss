@@ -1,0 +1,29 @@
+.domains-page {
+  --card-size: 20em;
+
+  .searchable-list__list {
+    --min: var(--card-size);
+
+    .domains-list-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--background-primary--muted);
+      border-radius: .5em;
+
+      &:hover {
+        background-color: var(--background-primary--light);
+        transition: background-color 150ms;
+      }
+    }
+
+    .domain-card__name {
+      text-align: center;
+      --margins: .5em;
+    }
+
+    .domain-image {
+      --size: var(--card-size);
+    }
+  }
+}

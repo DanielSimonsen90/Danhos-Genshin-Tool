@@ -42,4 +42,10 @@ body {
   --element-hydro--muted: #{colors.$element-hydro--muted};
   --element-pyro: #{colors.$element-pyro};
   --element-pyro--muted: #{colors.$element-pyro--muted};
+
+  --rarity-common: #{colors.$rarity-common};
+  --rarity-uncommon: #{colors.$rarity-uncommon};
+  --rarity-rare: #{colors.$rarity-rare};
+  --rarity-epic: #{colors.$rarity-epic};
+  --rarity-legendary: #{colors.$rarity-legendary};
 }

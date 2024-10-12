@@ -12,6 +12,25 @@ export function useDataStoreFunctions(store: typeof DataStore) {
   
   return {
     findCharacterByName: (name: string) => findByName(store.Characters, name),
-    findArtifactByName: (name: string) => findByName(store.ArtifactSets, name),
+    findArtifactByName: (name: string) => findByName(store.Artifacts, name),
+    findDomainByName: (name: string) => findByName(store.Domains, name),
+
+    getDomainsFromArtifact: (artifactName: string) => {
+      const artifact = findByName(store.Artifacts, artifactName);
+      if (!artifact) return undefined;
+      
+      return store.Domains.filter(domain => artifact.domainNames.includes(domain.name));
+    },
+    getArtifactsFromDomain: (domainName: string) => {
+      const domain = findByName(store.Domains, domainName);
+      if (!domain) return undefined;
+      
+      return store.Artifacts
+        .filter(artifact => artifact.domainNames.includes(domain.name))
+        .orderBy(
+          (a, b) => b.rarity - a.rarity,
+          (a, b) => a.name.localeCompare(b.name)
+        );
+    },
   };
 }

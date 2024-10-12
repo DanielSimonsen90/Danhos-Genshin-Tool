@@ -1,6 +1,6 @@
-import { Nullable } from '../types';
-import Character from './Character';
-import { CharacterArtifactSet } from './CharacterArtifactSet';
+import { Nullable, Rarity } from '@/common/types';
+import Character from '../characters/Character';
+import { CharacterArtifactSet } from '../characters/CharacterArtifactSet';
 
 export class ArtifactSet {
   public static bonusDescription(set: ArtifactSet, pieces: number): Nullable<string> {
@@ -14,6 +14,9 @@ export class ArtifactSet {
     public name: string,
     public twoPieceSetDescription: string,
     public fourPieceSetDescription: string,
+    public rarity: Rarity,
+    public domainNames: string[],
+    public isCraftable: boolean,
     public checkIsGood: (character: Character, set: CharacterArtifactSet) => number
   ) { }
 }

@@ -1,23 +1,15 @@
 .artifact-card {
-  display: flex;
-  align-items: center;
-  gap: 1ch;
-
   .artifact-image {
     --size: 7.5rem;
     width: var(--size);
     height: var(--size);
   }
 
-  &:has(.artifact-sets) {
+  &:has(.artifact-sets) > header {
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-template-areas: "image details" "sets sets";
     gap: 1em;
-
-    .artifact-sets {
-      grid-area: sets;
-    }
+    align-items: center;
   }
 }
 
@@ -36,6 +28,10 @@
 a.artifact-card {
   display: flex;
   flex-direction: column;
+
+  &:hover {
+    background-color: var(--background-primary--light);
+  }
 
   .artifact-card__name {
     text-align: center;

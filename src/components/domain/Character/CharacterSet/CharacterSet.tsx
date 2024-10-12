@@ -10,7 +10,7 @@ type Props = {
 
 export default function CharacterSetComponent({ set, character, artifactSet }: Props) {
   if (!set) return (
-    <p className="character-result">
+    <p className="character-set character-result">
       {character.name} has no set that uses {artifactSet?.name ?? 'this artifact'}, but may benefit from its stats temporarily.
     </p>
   );

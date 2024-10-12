@@ -1,0 +1,44 @@
+.domain-card {
+  &:is(&--show-more) {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1em;
+
+    .domain-details {
+      >header {
+        display: flex;
+        gap: 1ch;
+
+        .resin-cost::before {
+          content: ' • ';
+        }
+      }
+    }
+  }
+
+  > aside {
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+  }
+
+  .domain-image {
+    border-radius: .25em;
+  }
+
+  .domain-rewards {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .artifact-card {
+    padding: .5em .25em .5em 0;
+
+    >header {
+      --image-size: 7.5rem;
+      display: grid;
+      grid-template-columns: var(--image-size) 1fr;
+      align-items: center;
+    }
+  }
+}

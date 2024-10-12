@@ -1,3 +1,4 @@
+import { Rarity } from "../types";
 import { SearchFormData } from "../types/store-data";
 import { DebugLog } from "./dev";
 
@@ -20,6 +21,11 @@ export function snakeCaseFromCamelCase<T extends string>(value: T): T {
   return result;
 }
 
+export function snakeCaseFromPascalCase<T extends string>(value: T): T {
+  const words = value.split(' ').map(word => word.substring(0, 1).toUpperCase() + word.substring(1)).join(' ') as T;
+  return snakeCaseFromCamelCase(words.replace(/-/g, ' ')) as T;
+}
+
 export function pascalCaseFromSnakeCase<T extends string>(value: T): T {
   const result = value.split('_').map(word => word[0].toUpperCase() + word.slice(1)).join(' ') as T;
   const returned = result.replace(/- /g, '-') as T;
@@ -27,10 +33,10 @@ export function pascalCaseFromSnakeCase<T extends string>(value: T): T {
   return returned as T;
 }
 
-export function pascalCaseFromCamcelCase<T extends string>(value: T): T {
+export function pascalCaseFromCamelCase<T extends string>(value: T): T {
   const result = value.replace(/([A-Z])/g, (match) => ` ${match}`);
-  debugLog(`[pascalCaseFromCamcelCase] ${value} -> ${result}`);
-  return result as T;
+  debugLog(`[pascalCaseFromCamelCase] ${value} -> ${result}`);
+  return (result[0].toUpperCase() + result.slice(1)) as T;
 }
 
 export function formatSearchData(value: SearchFormData, withSet = false) {
@@ -58,4 +64,9 @@ export function fromList(list: string[] = []) {
 export function effectivenessString(effectiveness: number, reverse = false) {
   const strings = ['Unknown', 'Least Effective', 'Less Effective', 'Effective', 'Very Effective', 'Most Effective'];
   return reverse ? strings.reverse()[effectiveness] : strings[effectiveness];
+}
+
+export function rarityString(rarity: Rarity) {
+  const strings = ['Unknown', 'Common', 'Uncommon', 'Rare', 'Epic', 'Legendary'];
+  return strings[rarity];
 }

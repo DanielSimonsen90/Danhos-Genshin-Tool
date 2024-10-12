@@ -36,4 +36,17 @@ export const rules: Required<ModuleOptions>['rules'] = [
       "sass-loader",
     ],
   },
+  {
+    test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+    use: {
+      loader: "url-loader",
+      options: {
+        limit: 20 * 1024, // 20Kb
+        outputPath: "/",
+        publicPath: "/src/assets/images",
+        name: "[path][name].[ext]",
+        esModule: false,
+      },
+    },
+  },
 ];

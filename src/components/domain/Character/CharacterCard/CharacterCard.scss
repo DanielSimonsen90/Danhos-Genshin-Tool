@@ -41,7 +41,9 @@ li:has(> .character-card) {
   box-shadow: 0 0 1em rgba(0, 0, 0, .25);
   transition: all 150ms ease-in-out;
   border-radius: .5em;
+}
 
+li:has(.character-card) {
   .character-card {
     padding: .5em;
     border-radius: .5em;
@@ -50,7 +52,7 @@ li:has(> .character-card) {
 
 a.character-card {
   border: 1px solid var(--element);
-  
+
   &:hover {
     background-color: var(--element--muted);
   }
