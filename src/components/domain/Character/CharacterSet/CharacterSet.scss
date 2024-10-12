@@ -20,3 +20,12 @@
 li:has(> .character-set) {
   padding: .5em;
 }
+
+.set-icon {
+  --fz: 1ch;
+}
+
+.set-short-description {
+  display: flex;
+  align-items: center;
+}
