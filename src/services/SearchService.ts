@@ -1,5 +1,5 @@
 import { Artifact, ArtifactSet, Character, CharacterArtifactSet, CharacterSet } from '@/common/models';
-import type { ArtifactPartName, MainStatName, SubStatName } from '@/common/types';
+import type { ArtifactPartName, BonusAbility, MainStatName, SubStatName } from '@/common/types';
 import { SearchFormData } from '@/common/types/store-data';
 import { DebugLog } from '@/common/functions/dev';
 
@@ -29,8 +29,8 @@ export type SearchResultItem = {
 export type CharacterUsingArtifactResult = {
   character: Character;
   set: CharacterSet;
-  pieces: number;
-  effectiveness: number;
+  pieces: CharacterArtifactSet['pieces'];
+  effectiveness: CharacterArtifactSet['effectiveness'];
 };
 
 type LastResult = {
@@ -257,12 +257,12 @@ export const SearchService = new class SearchService extends BaseService<LastRes
 
     const mainStatScore = this._getMainStatRarity(artifactPartName, mainStat) * -1 / 100 + (function checkMainStatScore() {
       if (artifact.isFlower() || artifact.isFeather()) return 0;
-      if (mainStat === 'Physical DMG Bonus') return 0; // Garbage stat
+      if (mainStat === 'Physical DMG Bonus') return character.needsPhysicalDMG() ? 10 : 0; // Garbage stat
+      if (mainStat.includes('Crit')) return 20; // Crit stats are always good
+      if (mainStat.includes('DMG Bonus')) return 20; // Elemental DMG Bonuses are not to be messed with
       if (mainStat === 'Elemental Mastery') return character.needsEM() ? 10 : 5;
       if (mainStat === 'Energy Recharge') return character.needsER() ? 10 : 10; // I never get ER artifacts, please send some
-      if (mainStat === 'Healing Bonus') return character.bonusAbility === 'Heal' || character.bonusAbility === 'Self-heal' ? 10 : 2; // Healing bonus is decent but rarely used
-      if (mainStat.includes('DMG Bonus')) return 20; // Elemental DMG Bonuses are not to be messed with
-      if (mainStat.includes('Crit')) return 20; // Crit stats are always good
+      if (mainStat === 'Healing Bonus') return character.canHeal() ? 10 : 2; // Healing bonus is decent but rarely used
       if (mainStat === 'HP%') return character.needsHP() ? 10 : 5; // HP% is usually okay
       if (mainStat === 'ATK%') return character.needsATK() ? 10 : 5; // ATK% is usually okay
       if (mainStat === 'DEF%') return character.needsDEF() ? 10 : 1; // DEF% is usually bad

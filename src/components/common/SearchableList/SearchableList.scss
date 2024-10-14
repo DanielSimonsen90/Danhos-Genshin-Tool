@@ -32,4 +32,10 @@
   &:not(:has(.searchable-list__list)) &__list-item--end {
     margin-top: 0;
   }
+
+  &.characters-list {
+    .searchable-list__list-item {
+      display: flex;
+    }
+  }
 }

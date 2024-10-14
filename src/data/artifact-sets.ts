@@ -272,6 +272,10 @@ export const FlowerOfParadiseLost = new ArtifactSet(
   }).sort().shift()
 );
 
+/**
+ * @two ATK +18%
+ * @four When value Of Bond Of Life changes, character deals 18% increased DMG for 6s. Max 3 stacks.
+ */
 export const FragmentOfHarmonicWhimsy = new ArtifactSet(
   "Fragment Of Harmonic Whimsy",
   "ATK +18%",
@@ -282,7 +286,7 @@ export const FragmentOfHarmonicWhimsy = new ArtifactSet(
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.talentStats.includes('ATK')) value += correctElement;
-    if (set.pieces === 4 && c.bonusAbility === 'Bond of Life') value += correctElement;
+    if (set.pieces === 4 && c.bonusAbilities.includes('Bond of Life')) value += correctElement;
     return value;
   }).sort().shift()
 );
@@ -468,7 +472,7 @@ export const MaidenBeloved = new ArtifactSet(
   Rarity.Legendary,
   [Domains.ValleyOfRemembrance.name],
   true,
-  c => c.bonusAbility === 'Heal' ? correctElement : 0
+  c => c.bonusAbilities.includes('Heal') ? correctElement : 0
 );
 
 /**
@@ -485,8 +489,8 @@ export const MarechausseeHunter = new ArtifactSet(
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (isPhysicalFavored(c, set)) value += correctElement;
-    if (set.pieces === 4 && c.bonusAbility === 'Self-heal') value += correctElement;
-    if (set.pieces === 4 && c.bonusAbility === 'Bond of Life') value += correctElement;
+    if (set.pieces === 4 && c.bonusAbilities.includes('Self-heal')) value += correctElement;
+    if (set.pieces === 4 && c.bonusAbilities.includes('Bond of Life')) value += correctElement;
     return value;
   }).sort().shift()
 );
@@ -550,7 +554,7 @@ export const NoblesseOblige = new ArtifactSet(
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.favoredAbility === 'Burst/Ult') value += correctElement;
-    if (set.pieces === 4 || c.bonusAbility === 'Buff ATK') value += correctElement;
+    if (set.pieces === 4 || c.bonusAbilities.includes('Buff ATK')) value += correctElement;
     return value;
   }).sort().shift()
 );
@@ -569,11 +573,15 @@ export const NymphsDream = new ArtifactSet(
   (c, set) => {
     let value = 0;
     if (c.element === 'Hydro') value += correctElement;
-    if (set.pieces === 4 || c.bonusAbility === 'Buff ATK') value += correctElement;
+    if (set.pieces === 4 || c.bonusAbilities.includes('Buff ATK')) value += correctElement;
     return value;
   }
 );
 
+/**
+ * @two While equipping character is in Nightsoul's Blessing and on field, DMG dealt +15%
+ * @four After equipping chracter consumes 1 Nightsoul point on field, CRIT Rate +40% for 6s. Can trigger 1/s.
+ */
 export const ObsidianCodex = new ArtifactSet(
   "Obsidian Codex",
   "While equipping character is in Nightsoul's Blessing and on field, DMG dealt +15%",
@@ -583,7 +591,7 @@ export const ObsidianCodex = new ArtifactSet(
   false,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
-    if (c.bonusAbility === 'Nightsouls Blessing' && cSet.onField) value += correctElement;
+    if (c.bonusAbilities.includes('Nightsouls Blessing') && cSet.onField) value += correctElement;
     return value;
   }).sort().shift()
 );
@@ -599,7 +607,7 @@ export const OceanHuedClam = new ArtifactSet(
   Rarity.Legendary,
   [Domains.SlumberingCourt.name],
   true,
-  c => c.bonusAbility === 'Heal' ? correctElement : 0
+  c => c.bonusAbilities.includes('Heal' )? correctElement : 0
 );
 
 /**
@@ -672,7 +680,7 @@ export const RetracingBolide = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.bonusAbility === 'Shield') value += correctElement;
+    if (c.bonusAbilities.includes('Shield')) value += correctElement;
     if (set.pieces === 4) value += correctElement;
     return value;
   }
@@ -715,7 +723,7 @@ export const ScrollOfTheHeroOfCinderCity = new ArtifactSet(
   false,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
-    if (c.bonusAbility === 'Nightsouls Blessing') value += correctElement;
+    if (c.bonusAbilities.includes('Nightsouls Blessing')) value += correctElement;
     return value;
   }).sort().shift()
 );
@@ -750,7 +758,7 @@ export const SongOfDaysPast = new ArtifactSet(
   Rarity.Legendary,
   [Domains.WaterfallWen.name],
   false,
-  c => c.bonusAbility === 'Heal' ? correctElement : 0
+  c => c.bonusAbilities.includes('Heal' )? correctElement : 0
 );
 
 /**
@@ -866,7 +874,7 @@ export const TravelingDoctor = new ArtifactSet(
   Rarity.Uncommon,
   [Domains.ValleyOfRemembrance.name],
   false,
-  c => c.bonusAbility === 'Heal' ? correctElement : 0
+  c => c.bonusAbilities.includes('Heal' )? correctElement : 0
 );
 
 /**

@@ -46,13 +46,25 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
       },
       bonusAbility: {
         // Bonus Ability
-        bondOfLife: character => character.bonusAbility === 'Bond of Life',
-        buffAtk: character => character.bonusAbility === 'Buff ATK',
-        heal: character => character.bonusAbility === 'Heal',
-        nightsoulsBlessing: character => character.bonusAbility === 'Nightsouls Blessing',
-        none: character => character.bonusAbility === 'Nothing',
-        selfHeal: character => character.bonusAbility === 'Self-heal',
-        shield: character => character.bonusAbility === 'Shield',
+        none: character => character.bonusAbilities.length === 0,
+        
+        bondOfLife: character => character.bonusAbilities.includes('Bond of Life'),
+        buffAtk: character => character.bonusAbilities.includes('Buff ATK'),
+        heal: character => character.bonusAbilities.includes('Heal'),
+        nightsoulsBlessing: character => character.bonusAbilities.includes('Nightsouls Blessing'),
+        offFieldDamage: character => character.bonusAbilities.includes('Off-field Damage'),
+        selfHeal: character => character.bonusAbilities.includes('Self-heal'),
+        shield: character => character.bonusAbilities.includes('Shield'),
+      },
+      region: {
+        mondstadt: character => character.region === "Mondstadt",
+        liyue: character => character.region === "Liyue",
+        inazuma: character => character.region === "Inazuma",
+        sumeru: character => character.region === "Sumeru",
+        fontaine: character => character.region === "Fontaine",
+        natlan: character => character.region === "Natlan",
+        snezhnaya: character => character.region === "Snezhnaya",
+        unknown: character => character.region === "Unknown",
       },
       ...filterChecks
     }}

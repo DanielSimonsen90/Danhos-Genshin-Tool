@@ -5,8 +5,8 @@ export class CharacterArtifactSet {
   public static LEAST_EFFECTIVE = 1;
   constructor(
     public set: ArtifactSet,
-    public pieces: number,
+    public pieces: 2 | 4,
     /** How effective/likely should you use this artifact set. Scale 1 - 5 */
-    public effectiveness: number
+    public effectiveness: 1 | 2 | 3 | 4 | 5,
   ) {}
 }
