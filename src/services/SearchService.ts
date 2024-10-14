@@ -1,5 +1,5 @@
 import { Artifact, ArtifactSet, Character, CharacterArtifactSet, CharacterSet } from '@/common/models';
-import type { ArtifactPartName, MainStatName, SubStatName } from '@/common/types';
+import type { ArtifactPartName, BonusAbility, MainStatName, SubStatName } from '@/common/types';
 import { SearchFormData } from '@/common/types/store-data';
 import { DebugLog } from '@/common/functions/dev';
 
@@ -260,7 +260,7 @@ export const SearchService = new class SearchService extends BaseService<LastRes
       if (mainStat === 'Physical DMG Bonus') return 0; // Garbage stat
       if (mainStat === 'Elemental Mastery') return character.needsEM() ? 10 : 5;
       if (mainStat === 'Energy Recharge') return character.needsER() ? 10 : 10; // I never get ER artifacts, please send some
-      if (mainStat === 'Healing Bonus') return character.bonusAbility === 'Heal' || character.bonusAbility === 'Self-heal' ? 10 : 2; // Healing bonus is decent but rarely used
+      if (mainStat === 'Healing Bonus') return new Array<BonusAbility>('Heal', 'Self-heal').some(healing => character.bonusAbilities.some(ba => ba.includes(healing))) ? 10 : 2; // Healing bonus is decent but rarely used
       if (mainStat.includes('DMG Bonus')) return 20; // Elemental DMG Bonuses are not to be messed with
       if (mainStat.includes('Crit')) return 20; // Crit stats are always good
       if (mainStat === 'HP%') return character.needsHP() ? 10 : 5; // HP% is usually okay

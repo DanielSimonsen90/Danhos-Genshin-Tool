@@ -6,7 +6,7 @@ export class Character {
     public name: string,
     public element: Element,
     public weapon: Weapon,
-    public bonusAbility: BonusAbility,
+    public bonusAbilities: Array<BonusAbility>,
     public rarity: Rarity,
     public sets: CharacterSet[],
   ) {}

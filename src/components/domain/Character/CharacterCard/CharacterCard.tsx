@@ -20,7 +20,7 @@ export type Props = {
 };
 
 export default function CharacterCard({ character, score, ...props }: Props) {
-  const { name, element, bonusAbility, sets, weapon, rarity } = character;
+  const { name, element, bonusAbilities, sets, weapon, rarity } = character;
   const { linkOnName, wrapInLink, showDetails, showRarity } = props;
   const { children } = props;
 
@@ -38,10 +38,12 @@ export default function CharacterCard({ character, score, ...props }: Props) {
         <ul className="character-details__grouped">
           <li className="element">{element}</li>
           <li className="weapon">{weapon}</li>
-          {bonusAbility !== 'Nothing' ? (
-            <li className="bonus-ability" title={`${name} is also able to ${bonusAbility.toLowerCase()}`}>
-              {bonusAbility}
-            </li>
+          {bonusAbilities.length > 0 ? (
+            <ul className="bonus-abilities">
+              {bonusAbilities.map((ability, i) => (
+                <li key={i} className="bonus-ability" title={`${name} is also able to ${ability.toLowerCase()}`}>{ability}</li>
+              ))}
+            </ul>
           ) : null}
         </ul>
         {score && score > 0 && (

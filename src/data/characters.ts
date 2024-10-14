@@ -2,7 +2,7 @@ import { Rarity } from "@/common/types";
 import { Character, CharacterSet, CharacterArtifactSet, ArtifactSet } from "../common/models";
 import * as Sets from './artifact-sets';
 
-export const Albedo = new Character("Albedo", "Geo", "Sword", 'Nothing', Rarity.Legendary, [
+export const Albedo = new Character("Albedo", "Geo", "Sword", [], Rarity.Legendary, [
   new CharacterSet("Off-field DPS", ["DEF"], 'Skill/Ability', false, [
     new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 4, 5),
     new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 2, 4),
@@ -13,7 +13,7 @@ export const Albedo = new Character("Albedo", "Geo", "Sword", 'Nothing', Rarity.
   ])
 ]);
 
-export const Alhaitham = new Character("Alhaitham", "Dendro", "Sword", "Nothing", Rarity.Legendary, [
+export const Alhaitham = new Character("Alhaitham", "Dendro", "Sword", [], Rarity.Legendary, [
   new CharacterSet("Spread DPS", ["Elemental Mastery", "ATK"], "Skill/Ability", true, [
     new CharacterArtifactSet(Sets.GildedDreams, 4, 5),
     new CharacterArtifactSet(Sets.GildedDreams, 2, 4),
@@ -24,7 +24,7 @@ export const Alhaitham = new Character("Alhaitham", "Dendro", "Sword", "Nothing"
   ])
 ]);
 
-export const Aloy = new Character("Aloy", "Cryo", "Bow", "Nothing", Rarity.Legendary, [
+export const Aloy = new Character("Aloy", "Cryo", "Bow", [], Rarity.Legendary, [
   new CharacterSet("Burst Support", ["ATK"], "Burst/Ult", false, [
     new CharacterArtifactSet(Sets.BlizzardStrayer, 4, 5),
     new CharacterArtifactSet(Sets.BlizzardStrayer, 2, 4),
@@ -41,7 +41,7 @@ export const Aloy = new Character("Aloy", "Cryo", "Bow", "Nothing", Rarity.Legen
   ])
 ]);
 
-export const Amber = new Character("Amber", "Pyro", "Bow", "Nothing", Rarity.Epic, [
+export const Amber = new Character("Amber", "Pyro", "Bow", [], Rarity.Epic, [
   new CharacterSet('Off-field Support', ["Energy Recharge"], "Burst/Ult", false, [
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 5),
     new CharacterArtifactSet(Sets.Instructor, 4, 4),
@@ -64,7 +64,7 @@ export const Amber = new Character("Amber", "Pyro", "Bow", "Nothing", Rarity.Epi
   ])
 ]);
 
-export const AratakiItto = new Character("Arataki Itto", "Geo", "Claymore", "Nothing", Rarity.Legendary, [
+export const AratakiItto = new Character("Arataki Itto", "Geo", "Claymore", [], Rarity.Legendary, [
   new CharacterSet("On-field DPS", ["DEF", "HP"], "Normal/Press", true, [
     new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 4, 5),
     new CharacterArtifactSet(Sets.DesertPavilionChronicle, 4, 4),
@@ -75,7 +75,7 @@ export const AratakiItto = new Character("Arataki Itto", "Geo", "Claymore", "Not
   ])
 ]);
 
-export const Arlecchino = new Character("Arlecchino", "Pyro", "Polearm", "Bond of Life", Rarity.Legendary, [
+export const Arlecchino = new Character("Arlecchino", "Pyro", "Polearm", ["Bond of Life"], Rarity.Legendary, [
   new CharacterSet("On-field DPS", ["ATK", "HP"], "Normal/Press", true, [
     new CharacterArtifactSet(Sets.FragmentOfHarmonicWhimsy, 4, 5),
     new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 4),
@@ -90,7 +90,7 @@ export const Arlecchino = new Character("Arlecchino", "Pyro", "Polearm", "Bond o
   ])
 ]);
 
-export const Baizhu = new Character("Baizhu", "Dendro", "Catalyst", "Heal", Rarity.Legendary, [
+export const Baizhu = new Character("Baizhu", "Dendro", "Catalyst", ["Heal"], Rarity.Legendary, [
   new CharacterSet("Off-field Support", ["HP", "Energy Recharge"], "Burst/Ult", false, [
     new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 5),
     new CharacterArtifactSet(Sets.OceanHuedClam, 4, 4),
@@ -102,7 +102,7 @@ export const Baizhu = new Character("Baizhu", "Dendro", "Catalyst", "Heal", Rari
   ])
 ]);
 
-export const Barbara = new Character("Barbara", "Hydro", "Catalyst", "Heal", Rarity.Epic, [
+export const Barbara = new Character("Barbara", "Hydro", "Catalyst", ["Heal"], Rarity.Epic, [
   new CharacterSet("Off-field Support", ["HP"], "Skill/Ability", false, [
     new CharacterArtifactSet(Sets.MaidenBeloved, 4, 5),
     new CharacterArtifactSet(Sets.MaidenBeloved, 2, 4),
@@ -119,7 +119,7 @@ export const Barbara = new Character("Barbara", "Hydro", "Catalyst", "Heal", Rar
   ])
 ]);
 
-export const Beidou = new Character("Beidou", "Electro", "Claymore", "Shield", Rarity.Epic, [
+export const Beidou = new Character("Beidou", "Electro", "Claymore", ["Shield"], Rarity.Epic, [
   new CharacterSet("Off-field DPS", ["ATK"], "Burst/Ult", false, [
     new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 5),
     new CharacterArtifactSet(Sets.NoblesseOblige, 2, 4),
@@ -134,7 +134,7 @@ export const Beidou = new Character("Beidou", "Electro", "Claymore", "Shield", R
   ])
 ]);
 
-export const Bennett = new Character("Bennett", "Pyro", "Sword", "Buff ATK", Rarity.Epic, [
+export const Bennett = new Character("Bennett", "Pyro", "Sword", ["Heal", "Buff ATK"], Rarity.Epic, [
   new CharacterSet("Burst Support", ["HP", "ATK"], "Burst/Ult", false, [
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 5),
     new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 4),
@@ -173,14 +173,14 @@ export const Bennett = new Character("Bennett", "Pyro", "Sword", "Buff ATK", Rar
   ])
 ]);
 
-export const Candace = new Character("Candace", "Hydro", "Polearm", "Shield", Rarity.Epic, [
+export const Candace = new Character("Candace", "Hydro", "Polearm", ["Shield"], Rarity.Epic, [
   new CharacterSet("Off-field Support", ["HP", "Energy Recharge"], "Burst/Ult", false, [
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 5),
     new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 4),
   ])
 ]);
 
-export const Charlotte = new Character("Charlotte", "Cryo", "Catalyst", "Heal", Rarity.Epic, [
+export const Charlotte = new Character("Charlotte", "Cryo", "Catalyst", ["Heal"], Rarity.Epic, [
   new CharacterSet("Off-field Support", ["ATK", "Energy Recharge"], "Burst/Ult", false, [
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 5),
     new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 4),
@@ -194,7 +194,7 @@ export const Charlotte = new Character("Charlotte", "Cryo", "Catalyst", "Heal", 
   ])
 ]);
 
-export const Chevreuse = new Character("Chevreuse", "Pyro", "Polearm", "Heal", Rarity.Epic, [
+export const Chevreuse = new Character("Chevreuse", "Pyro", "Polearm", ["Heal"], Rarity.Epic, [
   new CharacterSet("Off-field Support", ["HP"], "Skill/Ability", false, [
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 5),
     new CharacterArtifactSet(Sets.OceanHuedClam, 4, 4),
@@ -206,7 +206,7 @@ export const Chevreuse = new Character("Chevreuse", "Pyro", "Polearm", "Heal", R
   ]),
 ]);
 
-export const Chiori = new Character("Chiori", "Geo", "Sword", "Nothing", Rarity.Legendary, [
+export const Chiori = new Character("Chiori", "Geo", "Sword", [], Rarity.Legendary, [
   new CharacterSet("Off-field DPS", ["DEF", "ATK"], "Skill/Ability", false, [
     new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 4, 5),
     new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 2, 4),
@@ -214,7 +214,7 @@ export const Chiori = new Character("Chiori", "Geo", "Sword", "Nothing", Rarity.
   ])
 ]);
 
-export const Chongyun = new Character("Chongyun", "Cryo", "Claymore", "Nothing", Rarity.Epic, [
+export const Chongyun = new Character("Chongyun", "Cryo", "Claymore", [], Rarity.Epic, [
   new CharacterSet("Burst Support", ["ATK"], "Skill/Ability", false, [
     new CharacterArtifactSet(Sets.NoblesseOblige, 2, 5),
     new CharacterArtifactSet(Sets.BlizzardStrayer, 2, 5),
@@ -232,7 +232,7 @@ export const Chongyun = new Character("Chongyun", "Cryo", "Claymore", "Nothing",
   ])
 ]);
 
-export const Chlorinde = new Character("Clorinde", "Electro", "Sword", "Bond of Life", Rarity.Legendary, [
+export const Chlorinde = new Character("Clorinde", "Electro", "Sword", ["Bond of Life"], Rarity.Legendary, [
   new CharacterSet("On-field DPS", ["ATK", "HP"], "Skill/Ability", true, [
     new CharacterArtifactSet(Sets.FragmentOfHarmonicWhimsy, 4, 5),
     new CharacterArtifactSet(Sets.ThunderingFury, 4, 4),
@@ -240,7 +240,7 @@ export const Chlorinde = new Character("Clorinde", "Electro", "Sword", "Bond of 
   ])
 ]);
 
-export const Collei = new Character("Collei", "Dendro", "Bow", "Nothing", Rarity.Epic, [
+export const Collei = new Character("Collei", "Dendro", "Bow", [], Rarity.Epic, [
   new CharacterSet("Off-field Support", ["Energy Recharge"], "Burst/Ult", false, [
     new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 5),
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 4),
@@ -251,7 +251,7 @@ export const Collei = new Character("Collei", "Dendro", "Bow", "Nothing", Rarity
   ])
 ]);
 
-export const Cyno = new Character("Cyno", "Electro", "Polearm", "Nothing", Rarity.Legendary, [
+export const Cyno = new Character("Cyno", "Electro", "Polearm", [], Rarity.Legendary, [
   new CharacterSet("Quicken DPS", ["Energy Recharge", "Elemental Mastery", "ATK"], "Burst/Ult", true, [
     new CharacterArtifactSet(Sets.ThunderingFury, 4, 5),
     new CharacterArtifactSet(Sets.GildedDreams, 4, 4),
@@ -277,7 +277,7 @@ export const Cyno = new Character("Cyno", "Electro", "Polearm", "Nothing", Rarit
   ])
 ]);
 
-export const Dehya = new Character("Dehya", "Pyro", "Claymore", "Self-heal", Rarity.Legendary, [
+export const Dehya = new Character("Dehya", "Pyro", "Claymore", ["Self-heal"], Rarity.Legendary, [
   new CharacterSet("On-field DPS", ["ATK", "HP"], "Burst/Ult", true, [
     new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 5),
     new CharacterArtifactSet(Sets.VourukashasGlow, 4, 4),
@@ -299,7 +299,7 @@ export const Dehya = new Character("Dehya", "Pyro", "Claymore", "Self-heal", Rar
   ])
 ]);
 
-export const Diluc = new Character("Diluc", "Pyro", "Claymore", "Nothing", Rarity.Legendary, [
+export const Diluc = new Character("Diluc", "Pyro", "Claymore", [], Rarity.Legendary, [
   new CharacterSet("On-field DPS", ["ATK"], "Normal/Press", true, [
     new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 5),
     new CharacterArtifactSet(Sets.GildedDreams, 4, 4),
@@ -314,7 +314,7 @@ export const Diluc = new Character("Diluc", "Pyro", "Claymore", "Nothing", Rarit
   ]),
 ]);
 
-export const Diona = new Character("Diona", "Cryo", "Bow", "Shield", Rarity.Legendary, [
+export const Diona = new Character("Diona", "Cryo", "Bow", ["Shield"], Rarity.Legendary, [
   new CharacterSet("Off-field Support", ["HP", "Energy Recharge"], "Burst/Ult", false, [
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 5),
     new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 2, 4),
@@ -331,7 +331,7 @@ export const Diona = new Character("Diona", "Cryo", "Bow", "Shield", Rarity.Lege
   ]),
 ]);
 
-export const Dori = new Character("Dori", "Electro", "Claymore", "Heal", Rarity.Epic, [
+export const Dori = new Character("Dori", "Electro", "Claymore", ["Heal"], Rarity.Epic, [
   new CharacterSet("Off-field Support", ["HP", "Energy Recharge"], "Burst/Ult", false, [
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 5),
     new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 4),
@@ -340,7 +340,7 @@ export const Dori = new Character("Dori", "Electro", "Claymore", "Heal", Rarity.
   ]),
 ]);
 
-export const Emilie = new Character("Emilie", "Dendro", "Catalyst", "Nothing", Rarity.Legendary, [
+export const Emilie = new Character("Emilie", "Dendro", "Catalyst", ["Buff ATK"], Rarity.Legendary, [
   new CharacterSet("Off-field Support", ["ATK", "Energy Recharge"], "Burst/Ult", false, [
     new CharacterArtifactSet(Sets.UnfinishedReverie, 4, 5),
     new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 4),
@@ -355,7 +355,7 @@ export const Emilie = new Character("Emilie", "Dendro", "Catalyst", "Nothing", R
   ]),
 ]);
 
-export const Eula = new Character("Eula", "Cryo", "Claymore", "Nothing", Rarity.Legendary, [
+export const Eula = new Character("Eula", "Cryo", "Claymore", [], Rarity.Legendary, [
   new CharacterSet("On-field DPS", ["ATK"], "Normal/Press", true, [
     new CharacterArtifactSet(Sets.PaleFlame, 4, 5),
     new CharacterArtifactSet(Sets.PaleFlame, 2, 4),
@@ -374,7 +374,7 @@ export const Eula = new Character("Eula", "Cryo", "Claymore", "Nothing", Rarity.
   ]),
 ]);
 
-export const Faruzan = new Character("Faruzan", "Anemo", "Bow", "Nothing", Rarity.Epic, [
+export const Faruzan = new Character("Faruzan", "Anemo", "Bow", ["Buff ATK"], Rarity.Epic, [
   new CharacterSet("Off-field Support", ["Energy Recharge"], "Burst/Ult", false, [
     new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 5),
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 4),
@@ -386,7 +386,7 @@ export const Faruzan = new Character("Faruzan", "Anemo", "Bow", "Nothing", Rarit
   ])
 ]);
 
-export const Fischl = new Character("Fischl", "Electro", "Bow", "Nothing", Rarity.Epic, [
+export const Fischl = new Character("Fischl", "Electro", "Bow", [], Rarity.Epic, [
   new CharacterSet("Off-field DPS", ["ATK"], "Skill/Ability", false, [
     new CharacterArtifactSet(Sets.GoldenTroupe, 4, 5),
     new CharacterArtifactSet(Sets.ThunderingFury, 2, 5),
@@ -416,7 +416,7 @@ export const Fischl = new Character("Fischl", "Electro", "Bow", "Nothing", Rarit
   ])
 ]);
 
-export const Freminet = new Character("Freminet", "Cryo", "Claymore", "Nothing", Rarity.Epic, [
+export const Freminet = new Character("Freminet", "Cryo", "Claymore", [], Rarity.Epic, [
   new CharacterSet("On-field DPS", ["ATK"], "Normal/Press", true, [
     new CharacterArtifactSet(Sets.BlizzardStrayer, 4, 5),
     new CharacterArtifactSet(Sets.BlizzardStrayer, 2, 4),
@@ -431,7 +431,7 @@ export const Freminet = new Character("Freminet", "Cryo", "Claymore", "Nothing",
   ])
 ]);
 
-export const Furina = new Character("Furina", "Hydro", "Sword", "Heal", Rarity.Legendary, [
+export const Furina = new Character("Furina", "Hydro", "Sword", ["Heal", "Buff ATK"], Rarity.Legendary, [
   new CharacterSet("Off-field Support", ["HP"], "Skill/Ability", false, [
     new CharacterArtifactSet(Sets.GoldenTroupe, 4, 5),
     new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 4),
@@ -444,7 +444,7 @@ export const Furina = new Character("Furina", "Hydro", "Sword", "Heal", Rarity.L
   ]),
 ]);
 
-export const Gaming = new Character("Gaming", "Pyro", "Claymore", "Self-heal", Rarity.Epic, [
+export const Gaming = new Character("Gaming", "Pyro", "Claymore", ["Self-heal"], Rarity.Epic, [
   new CharacterSet("On-field DPS", ["ATK", "HP"], "Normal/Press", true, [
     new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 5),
     new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 2, 4),
@@ -459,7 +459,7 @@ export const Gaming = new Character("Gaming", "Pyro", "Claymore", "Self-heal", R
   ]),
 ]);
 
-export const Ganyu = new Character("Ganyu", "Cryo", "Bow", "Nothing", Rarity.Legendary, [
+export const Ganyu = new Character("Ganyu", "Cryo", "Bow", [], Rarity.Legendary, [
   new CharacterSet("Melt DPS", ["HP"], "Normal/Press", true, [
     new CharacterArtifactSet(Sets.ShimenawasReminiscence, 4, 5),
     new CharacterArtifactSet(Sets.WanderersTroupe, 4, 4),
@@ -495,7 +495,7 @@ export const Ganyu = new Character("Ganyu", "Cryo", "Bow", "Nothing", Rarity.Leg
   ])
 ]);
 
-export const Gorou = new Character("Gorou", "Geo", "Bow", "Shield", Rarity.Epic, [
+export const Gorou = new Character("Gorou", "Geo", "Bow", ["Shield"], Rarity.Epic, [
   new CharacterSet("Off-field Support", ["DEF"], "Skill/Ability", false, [
     new CharacterArtifactSet(Sets.TheExile, 4, 5),
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 4),
