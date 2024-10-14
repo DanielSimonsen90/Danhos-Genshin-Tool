@@ -272,6 +272,10 @@ export const FlowerOfParadiseLost = new ArtifactSet(
   }).sort().shift()
 );
 
+/**
+ * @two ATK +18%
+ * @four When value Of Bond Of Life changes, character deals 18% increased DMG for 6s. Max 3 stacks.
+ */
 export const FragmentOfHarmonicWhimsy = new ArtifactSet(
   "Fragment Of Harmonic Whimsy",
   "ATK +18%",
@@ -574,6 +578,10 @@ export const NymphsDream = new ArtifactSet(
   }
 );
 
+/**
+ * @two While equipping character is in Nightsoul's Blessing and on field, DMG dealt +15%
+ * @four After equipping chracter consumes 1 Nightsoul point on field, CRIT Rate +40% for 6s. Can trigger 1/s.
+ */
 export const ObsidianCodex = new ArtifactSet(
   "Obsidian Codex",
   "While equipping character is in Nightsoul's Blessing and on field, DMG dealt +15%",

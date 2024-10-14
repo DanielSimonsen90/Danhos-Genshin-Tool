@@ -56,6 +56,16 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
         selfHeal: character => character.bonusAbilities.includes('Self-heal'),
         shield: character => character.bonusAbilities.includes('Shield'),
       },
+      region: {
+        mondstadt: character => character.region === "Mondstadt",
+        liyue: character => character.region === "Liyue",
+        inazuma: character => character.region === "Inazuma",
+        sumeru: character => character.region === "Sumeru",
+        fontaine: character => character.region === "Fontaine",
+        natlan: character => character.region === "Natlan",
+        snezhnaya: character => character.region === "Snezhnaya",
+        unknown: character => character.region === "Unknown",
+      },
       ...filterChecks
     }}
     {...props}
