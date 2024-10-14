@@ -7,5 +7,7 @@ type Props = {
 };
 
 export default function CharacterImage({ character }: Props) {
+  character = character.includes('(') ? character.split('(')[0].trim() : character;
+
   return <Image className='character-image' src={ImageService.getCharacterImage(character)} alt={character} />;
 }
