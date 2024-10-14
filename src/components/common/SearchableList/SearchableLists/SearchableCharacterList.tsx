@@ -46,11 +46,13 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
       },
       bonusAbility: {
         // Bonus Ability
+        none: character => character.bonusAbilities.length === 0,
+        
         bondOfLife: character => character.bonusAbilities.includes('Bond of Life'),
         buffAtk: character => character.bonusAbilities.includes('Buff ATK'),
         heal: character => character.bonusAbilities.includes('Heal'),
         nightsoulsBlessing: character => character.bonusAbilities.includes('Nightsouls Blessing'),
-        none: character => character.bonusAbilities.length === 0,
+        offFieldDamage: character => character.bonusAbilities.includes('Off-field Damage'),
         selfHeal: character => character.bonusAbilities.includes('Self-heal'),
         shield: character => character.bonusAbilities.includes('Shield'),
       },
