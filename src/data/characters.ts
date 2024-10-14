@@ -503,7 +503,7 @@ export const Jean = new Character("Jean", "Anemo", "Sword", ["Heal"], Rarity.Leg
   ])
 ]);
 
-export const Kachina = new Character("Kachina", "Geo", "Polearm", ["Off-field Damage"], Rarity.Epic, "Natlan", [
+export const Kachina = new Character("Kachina", "Geo", "Polearm", ["Off-field Damage", "Nightsouls Blessing"], Rarity.Epic, "Natlan", [
   new CharacterSet("Off-field DPS", ["DEF"], "Skill/Ability", false, [
     new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 5),
     new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 4, 4),

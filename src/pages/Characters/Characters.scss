@@ -2,9 +2,7 @@
 
 .characters-list {
   .searchable-list__list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
-    gap: 1ch;
+    --min: 16em;
   }
 
   .character-details__grouped {

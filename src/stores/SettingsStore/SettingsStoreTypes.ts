@@ -8,6 +8,7 @@ export type Settings = {
     results: 'combined' | 'artifacts' | 'characters';
   },
   updated: number;
+  traveler: 'lumine' | 'aether';
 }
 
 export type SettingsStoreContextType = ReturnType<typeof useSettingsFunctions> & {

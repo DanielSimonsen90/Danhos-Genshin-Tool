@@ -8,5 +8,6 @@ export const DEFAULT_SETTINGS: Settings = {
     searchOrHistory: 'search',
     results: 'combined'
   },
-  updated: undefined
+  updated: undefined,
+  traveler: 'lumine'
 };

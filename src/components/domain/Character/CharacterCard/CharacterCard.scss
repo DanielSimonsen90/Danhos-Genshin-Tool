@@ -9,13 +9,26 @@
 }
 
 .character-details {
+  overflow: hidden;
+
   &__name {
+    --max-lines: 2;
+
     display: flex;
     align-items: center;
     gap: .5ch;
     margin: 0;
     color: var(--element);
+    text-overflow: ellipsis;
 
+    display: -webkit-box;
+    -webkit-line-clamp: var(--max-lines);
+    line-clamp: var(--max-lines);
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-wrap: break-word;
+
+    
     a {
       font-size: 1.75rem;
       color: var(--element);

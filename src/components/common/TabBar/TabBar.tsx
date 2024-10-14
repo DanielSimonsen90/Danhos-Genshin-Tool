@@ -59,7 +59,7 @@ export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props
   useEffect(function onTabsOptionsChanged() {
     // if active tab key is not in tabs or the value is falsy, set it to the first tab
     if (!tabs.find(([key]) => key === (props.tab ?? activeTab))?.[1]) {
-      setActiveTab(tabs[0][0] as TTabKey);
+      setActiveTab(props.defaultTab ?? tabs[0]?.[0] as TTabKey);
     }
   }, [tabs]);
 
