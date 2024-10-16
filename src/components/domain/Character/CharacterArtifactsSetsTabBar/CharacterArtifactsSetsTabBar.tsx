@@ -34,8 +34,7 @@ export default function CharacterArtifactsSetsTabBar({ character, set, artifactS
           ArtifactSet.bonusDescription(set, pieces).endsWith('.') ? '' : '.'
         )}>
           <ArtifactImage set={set.name} name="Flower" className="set-icon" />
-          <span className='character-details__set__pieces'>{pieces}</span> piece
-          <span className='character-details__set__set'>{set.name}</span>
+          {pieces} piece {set.name}
         </p>
       </Link>
     ]), new Map<number, Array<JSX.Element>>());
@@ -46,7 +45,7 @@ export default function CharacterArtifactsSetsTabBar({ character, set, artifactS
   }, [artifactSets]);
 
   return artifactSets.length
-    ? <TabBar id={`${character.name}-artifacts-sets-${generateId()}`}
+    ? <TabBar className="character-artifacts-sets-tab-bar" id={`${character.name}-artifacts-sets-${generateId()}`}
       defaultTab={defaultTab}
       tabs={tabs} {...contents}
     />
