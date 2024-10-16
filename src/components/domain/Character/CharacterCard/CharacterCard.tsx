@@ -6,6 +6,8 @@ import CharacterSet from "../CharacterSet";
 import TabBar from "@/components/common/TabBar";
 import { GetContainer } from "../../Item/functions";
 import RarityList from "@/components/common/icons/Rarity";
+import ElementImage from "@/components/common/Images/ElementImage";
+import WeaponImage from "@/components/common/Images/WeaponImage";
 
 export type Props = {
   character: Character;
@@ -36,15 +38,13 @@ export default function CharacterCard({ character, score, ...props }: Props) {
           {showRarity && <RarityList rarity={rarity} />}
         </h2>
         <ul className="character-details__grouped">
-          <li className="element">{element}</li>
-          <li className="weapon">{weapon}</li>
           {bonusAbilities.length > 0 ? (
             <ul className="bonus-abilities">
               {bonusAbilities.map((ability, i) => (
                 <li key={i} className="bonus-ability" title={`${name} is also able to ${ability.toLowerCase()}`}>{ability}</li>
               ))}
             </ul>
-          ) : null}
+          ) : <span>No special traits.</span>}
         </ul>
         {score && score > 0 && (
           <p className="character-details__score">
@@ -66,7 +66,15 @@ export default function CharacterCard({ character, score, ...props }: Props) {
 }
 
 function GetCharacterNameComponent(linkOnName: boolean, character: Character) {
+  const CharacterName = () => (
+    <span className="character-name">
+      <span className="character-name__value">{character.name}</span>
+      <span className="character-name__element"><ElementImage element={character.element} /></span>
+      <span className="character-name__weapon"><WeaponImage weapon={character.weapon} /></span>
+    </span>
+  )
+
   return () => linkOnName
-    ? <Link to={`/characters/${snakeCaseFromCamelCase(character.name)}`}>{character.name}</Link>
-    : <>{character.name}</>;
+    ? <Link to={`/characters/${snakeCaseFromCamelCase(character.name)}`}><CharacterName /></Link>
+    : <CharacterName />;
 }
