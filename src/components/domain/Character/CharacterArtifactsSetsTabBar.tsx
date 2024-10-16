@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import { ArtifactSet, Character } from "@/common/models";
+import { ArtifactSet, Character, CharacterArtifactSet } from "@/common/models";
 import { classNames, effectivenessString } from "@/common/functions/strings";
 import { generateId } from "@/common/functions/random";
 
@@ -21,7 +21,7 @@ export default function CharacterArtifactsSetsTabBar({ character, set, artifactS
     effectivenessString(effectiveness)
   ] as [string, string]), [artifactSets]);
   const defaultTab = useMemo(() => {
-    const foundEffectiveness = artifactSets.find(cSet => cSet.set.name === set?.name)?.effectiveness ?? -1;
+    const foundEffectiveness = artifactSets.find(cSet => cSet.set.name === set?.name)?.effectiveness ?? CharacterArtifactSet.MOST_EFFECTIVE;
     return foundEffectiveness.toString();
   }, [artifactSets, set]);
 
