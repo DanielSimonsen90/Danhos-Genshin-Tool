@@ -8,12 +8,14 @@ import useSettingsStoreProvider from "./SettingsStore/SettingsStoreProvider";
 export default function GlobalStoresProvider({ children }: PropsWithChildren) {
   const [CacheStore] = useCacheStoreProvider();
   const [DataStore] = useDataStoreProvider();
-  const [SettingsStore, { SettingsNotice }] = useSettingsStoreProvider();
+  const [SettingsStore, { SettingsNotice, NewUser }] = useSettingsStoreProvider();
 
   return (
     <GlobalStoresContext.Provider value={{ CacheStore, DataStore, SettingsStore }}>
+      <NewUser />
       <SettingsNotice />
       {children}
+      <button onClick={() => SettingsStore.reset()}>Reset Settings</button>
     </GlobalStoresContext.Provider>
   );
 }

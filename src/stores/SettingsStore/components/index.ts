@@ -1,2 +1,2 @@
-import './SettingsStoreStyles.scss';
-export * from './SettingsStoreComponents';
+export * from './SaveSettingsNotice';
+export * from './NewUserModal';

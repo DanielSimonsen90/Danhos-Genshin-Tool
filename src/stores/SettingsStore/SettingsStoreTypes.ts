@@ -7,8 +7,8 @@ export type Settings = {
     searchOrHistory: 'search' | 'history';
     results: 'combined' | 'artifacts' | 'characters';
   },
+  traveler: 'lumine' | 'aether' | undefined;
   updated: number;
-  traveler: 'lumine' | 'aether';
 }
 
 export type SettingsStoreContextType = ReturnType<typeof useSettingsFunctions> & {

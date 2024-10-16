@@ -1,0 +1,35 @@
+.modal {
+  position: fixed;
+  z-index: 1000;
+  
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  border-color: var(--background-secondary--light);
+
+  --max-size: 90vw;
+  max-width: var(--max-size);
+  max-height: var(--max-size);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  padding: .5em 1em;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 0 0 1em rgba(0, 0, 0, .5);
+  border-radius: .5em;
+  overflow: auto;
+
+  &::backdrop {
+    background-color: rgba(0, 0, 0, .5);
+  }
+
+  .close {
+    font-size: 1.2rem;
+    top: -.25em;
+    right: -.5em;
+  }
+}

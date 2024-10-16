@@ -1,0 +1,26 @@
+.new-user-modal {
+  text-align: center;
+
+  h1 {
+    --margins: 1em;
+  }
+
+  p {
+    --margins: 1em;
+  }
+
+  .traveler-select {
+    display: flex;
+    justify-content: space-evenly;
+
+    .traveler-option {
+      display: grid;
+      justify-items: center;
+      gap: 1ch;
+
+      .character-image {
+        border-radius: 50%;
+      }
+    }
+  }
+}
