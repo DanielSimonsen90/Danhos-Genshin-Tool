@@ -4,6 +4,8 @@
 
 .artifact-sets-pieces-content {
   display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: unset;
   gap: 1em;
 
   &__list-item a {

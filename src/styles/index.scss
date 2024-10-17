@@ -3,6 +3,7 @@
 @layer defaults, components;
 
 @layer defaults {
+  @import './modules/index.scss';
 
   *,
   *::before,
@@ -10,8 +11,6 @@
     box-sizing: border-box;
     position: relative;
   }
-
-  @import './modules/index.scss';
 
   body {
     background-color: var(--background-primary);
@@ -27,9 +26,14 @@
     color: var(--text-muted);
   }
 
-  .input-group, *:has(> input, > label) {
+  .input-group,
+  *:has(> input, > label) {
     display: flex;
     align-items: center;
     gap: .5ch;
   }
+}
+
+@layer components {
+  @import './modules/common-components.scss';
 }
