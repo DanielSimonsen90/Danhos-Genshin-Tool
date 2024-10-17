@@ -1,0 +1,30 @@
+.character-artifacts-sets-tab-bar {
+  margin-top: 1em;
+
+  a p {
+    background-color: var(--background-secondary--light);
+    border-radius: .25em;
+
+    &:hover {
+      background-color: var(--background-tertiary);
+    }
+  }
+
+  a:nth-child(2n) p {
+    background-color: var(--background-secondary--muted);
+
+    &:hover {
+      background-color: var(--background-tertiary--light);
+    }
+  }
+
+  .set-icon {
+    --size: 7.5ch;
+    margin-right: .5ch;
+  }
+
+  .set-short-description {
+    display: flex;
+    align-items: center;
+  }
+}

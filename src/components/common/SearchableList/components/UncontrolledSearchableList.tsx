@@ -22,7 +22,7 @@ export default function UncontrolledSearchableList<TItem, FilterKeys extends str
         {filterChecks && <Filter {...filterProps} />}
       </div>
       {children.length > 0 && (
-        <ul className={classNames("searchable-list__list", ulClassName)}>
+        <ul className={classNames("searchable-list__list", "hoverable", ulClassName)}>
           {children.map(([child, item], key) => (
             <li key={key} className={classNames(
               "searchable-list__list-item",

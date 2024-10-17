@@ -28,10 +28,12 @@
 a.artifact-card {
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   > header {
     display: grid;
     grid-template-rows: auto 1fr;
+    justify-items: center;
   }
 
   &:hover {

@@ -33,3 +33,7 @@ p {
   margin-block-start: var(--margins);
   margin-block-end: var(--margins);
 }
+
+span {
+  font-size: inherit;
+}

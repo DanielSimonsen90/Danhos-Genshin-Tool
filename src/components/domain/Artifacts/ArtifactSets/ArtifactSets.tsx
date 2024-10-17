@@ -25,7 +25,7 @@ export default function ArtifactSets({ artifact }: Props) {
         ['any', anyWantsThisPiece && 'Any'],
         ['four', fourPieceCharacters.length > 0 && 'Four-Piece'],
         ['two', twoPieceCharacters.length > 0 && 'Two-Piece'],
-      ]} noTabs={<p>There are no characters that use this set.</p>}
+      ]} noTabs={<p>There are no characters that use this set.</p>} defaultTab="four"
         any={<ArtifactSetsPiecesContent results={characters} displayPieces />}
         four={<ArtifactSetsPiecesContent results={fourPieceCharacters} />}
         two={<ArtifactSetsPiecesContent results={twoPieceCharacters} />}

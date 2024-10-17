@@ -12,22 +12,26 @@
   overflow: hidden;
 
   &__name {
-    --max-lines: 2;
-
-    display: flex;
-    align-items: center;
-    gap: .5ch;
     margin: 0;
     color: var(--element);
-    text-overflow: ellipsis;
+    
+    --max-lines: 2;
+    display: -webkit-flex;
+    align-items: center;
+    gap: .5ch;
 
-    display: -webkit-box;
     -webkit-line-clamp: var(--max-lines);
     line-clamp: var(--max-lines);
     -webkit-box-orient: vertical;
     overflow: hidden;
     word-wrap: break-word;
+    text-overflow: ellipsis;
 
+    .character-name {
+      display: flex;
+      align-items: center;
+      gap: .5ch;
+    }
     
     a {
       font-size: 1.75rem;
@@ -42,10 +46,12 @@
     flex-wrap: wrap;
     list-style-type: disc;
     gap: 3ch;
-  }
 
-  li:first-of-type {
-    list-style: none;
+    li::before {
+      content: '•';
+      margin-right: .5ch;
+      margin-left: 1ch;
+    }
   }
 
   &__score {
