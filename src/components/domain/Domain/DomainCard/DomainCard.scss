@@ -27,7 +27,7 @@
 
   .domain-details__region {
     text-align: center;
-    color: var(--text-secondary);
+    color: var(--text-secondarwy);
 
     span {
       color: var(--region);
@@ -41,6 +41,7 @@
 
   .artifact-card {
     padding: .5em .25em .5em 0;
+    align-items: flex-start;
 
     >header {
       --image-size: 7.5rem;

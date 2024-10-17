@@ -3,7 +3,7 @@ ul {
   padding: 0;
   margin: 0;
 
-  &.hoverable li:hover {
+  &.hoverable > li:hover {
     background-color: var(--background-secondary--muted);
   }
 }
