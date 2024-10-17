@@ -1,6 +1,7 @@
 import { Dispatch, ReactNode, SetStateAction, useCallback, useEffect, useMemo, useState } from "react";
 import { classNames } from "@/common/functions/strings";
 import { Functionable } from "@/common/types";
+import { Chevron } from "../icons";
 
 type Props<
   TTabKey extends string,
@@ -22,6 +23,7 @@ type Props<
 };
 
 export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props<TTabKey>) {
+  const [collapsed, setCollapsed] = useState(false);
   const [activeTab, _setActiveTab] = useState<TTabKey>(
     props.defaultTab 
     ?? tabs.filter(([_, value]) => value)[0]?.[0]
@@ -78,8 +80,9 @@ export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props
             {title}
           </button>)}
         {props.children}
+        <Chevron point={collapsed ? 'down' : 'up'} onClick={() => setCollapsed(v => !v)} />
       </header>
-      <section className={classNames('tab-bar__content')}>
+      <section className={classNames('tab-bar__content', collapsed && 'tab-bar__content--collapsed')}>
         <TabContent />
       </section>
     </div>
