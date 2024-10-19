@@ -68,7 +68,7 @@ export default function Search() {
           defaultValue: part === 'Flower' ? 'HP%' : part === 'Feather' ? 'ATK%' : undefined
         })} />
       <SelectMainStat />
-      <SelectSubStat name="subStats" defaultValue={defaultSearch?.subStats} required />
+      <SelectSubStat name="subStats" defaultValue={defaultSearch?.subStats} required floatable />
 
       <button className="primary" type="submit" disabled={loading}>Search</button>
     </form>

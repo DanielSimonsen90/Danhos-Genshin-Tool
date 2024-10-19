@@ -15,7 +15,7 @@ export default function ArtifactDetails({ artifact, tagName, displayCraftable }:
   return (
     <section className="artifact-details">
       <header>
-        {createElement(tagName ?? 'h1', { className: 'artifact-details__name' }, name)}
+        {createElement(tagName ?? 'h1', { className: 'artifact-details__name', title: name }, name)}
         <RarityList rarity={rarity} />
       </header>
       <p className="artifact-details__2-piece">{twoPieceSetDescription}</p>

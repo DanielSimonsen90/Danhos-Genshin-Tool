@@ -33,10 +33,10 @@ export default function CharacterCard({ character, score, ...props }: Props) {
     <Container className='character-card' data-element={character.element} data-rarity={rarityString(rarity)}>
       <CharacterImage character={name} />
       <div className='character-details'>
-        <h2 className='character-details__name'>
+        <h1 className='character-details__name' title={name}>
           <CharacterName />
           {showRarity && <RarityList rarity={rarity} />}
-        </h2>
+        </h1>
         <ul className="character-details__grouped">
           {bonusAbilities.length > 0 ? (
             <ul className="bonus-abilities">

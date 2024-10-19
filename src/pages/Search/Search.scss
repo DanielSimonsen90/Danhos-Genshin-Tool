@@ -10,13 +10,25 @@
 
   .artifact-display {
     display: grid;
-    grid-template-areas: 
-      "image mainstat details" 
-      "image substats details";
-    grid-template-columns: auto auto 1fr;
-    grid-template-rows: 2rem auto;
-    column-gap: 1rem;
     padding: 1rem;
+
+    @media screen and (min-width: 550px) {
+      grid-template-areas:
+        "image mainstat details"
+        "image substats details";
+      grid-template-columns: auto auto 1fr;
+      grid-template-rows: 2rem auto;
+      column-gap: 1rem;
+    }
+
+    @media screen and (min-width: 0px) {
+      grid-template-areas: 
+        "image"
+        "mainstat"
+        "substats"
+        "details";
+      grid-row-gap: 1rem;
+    }
 
     &__mainstat {
       grid-area: mainstat;
@@ -35,9 +47,12 @@
     }
 
     .artifact-details {
+      grid-area: details;
       margin: .25ch 0 calc(.25ch + 1rem);
       border-left: 1px solid var(--background-tertiary);
       padding: 0 1em;
+      overflow: auto;
+      height: 100%;
     }
   }
 }

@@ -1,6 +1,8 @@
-import { useState, useCallback, useEffect, useRef, useImperativeHandle, forwardRef } from "react";
+import { useState, useCallback, useEffect, useImperativeHandle, forwardRef, useRef } from "react";
 import { MultipleProps, SelectRef } from "./types";
 import { classNames } from "@/common/functions/strings";
+import useOnChange from "@/hooks/useOnChange";
+import useClickOutside, { useClickOutsideRef } from "@/hooks/useClickOutside";
 
 export default forwardRef(function SelectMultiple<TValue extends string>({
   options,
@@ -10,6 +12,13 @@ export default forwardRef(function SelectMultiple<TValue extends string>({
   const [selectedValues, setSelectedValues] = useState<TValue[]>(props.defaultValue ?? []);
   const [timeSelectedValues, setTimeSelectedValues] = useState<Record<number, TValue>>({});
   const [showOptions, setShowOptions] = useState(false);
+  
+  const internalRef = useRef<HTMLDivElement | null>(null);
+  const combinedRef = (instance: HTMLDivElement) => {
+    if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = instance;
+    internalRef.current = instance;
+    return internalRef;
+  };
 
   const toggleOption = useCallback((value: TValue) => {
     setSelectedValues(values => values.includes(value)
@@ -19,9 +28,11 @@ export default forwardRef(function SelectMultiple<TValue extends string>({
     setTimeSelectedValues(values => ({ ...values, [Date.now()]: value }));
   }, []);
 
-  useEffect(() => {
+  useClickOutsideRef(internalRef, () => setShowOptions(false));
+
+  useOnChange(showOptions, () => {
     if (showOptions) props.onOpen?.();
-  }, [showOptions])
+  })
 
   useEffect(() => {
     if (max && selectedValues.length > max) {
@@ -33,17 +44,18 @@ export default forwardRef(function SelectMultiple<TValue extends string>({
       });
     }
     props.onChange?.(selectedValues);
-    // if (ref.current) ref.current.value = selectedValues.join(',');
   }, [selectedValues]);
 
+
+
   useImperativeHandle(ref, () => ({
-    ...ref.current,
+    ...internalRef.current,
     open: () => setShowOptions(true),
     close: () => setShowOptions(false),
   }), [selectedValues]);
 
   return (
-    <div ref={ref} className="select select--multiple" aria-required={props.required}>
+    <div ref={combinedRef} className="select select--multiple" aria-required={props.required}>
       <select className="select__header" onMouseDown={e => {
         e.preventDefault();
         e.stopPropagation();

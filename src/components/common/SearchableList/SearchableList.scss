@@ -22,11 +22,25 @@
     width: 100%;
   }
 
+  &__list-item {
+    display: grid;
+    padding: .5em;
+
+    > * {
+      height: 100%;
+      display: grid;
+    }
+  }
+
   &__list-item--end {
     width: 100%;
     text-align: center;
     justify-content: center;
     color: var(--text-muted);
+  }
+
+  &__search {
+    margin: 0;
   }
 
   &:not(:has(.searchable-list__list)) &__list-item--end {

@@ -39,7 +39,7 @@ export default function useSettingsStoreProvider() {
       onClose={() => setHideNotice(true)}
     />, [hasUnsavedChanges, hideNotice, initialSettings, settings]);
   const NewUser = useCallback(() => (
-    <NewUserModal newUser={newUser} onTravelerSelect={traveler => store.updateSettings({ traveler })} />
+    <NewUserModal newUser={newUser} onTravelerSelect={traveler => store.updateAndSaveSettings({ traveler })} />
   ), [newUser]);
 
   debugLog('SettingsStore updated', settings);

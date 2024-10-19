@@ -21,7 +21,7 @@ export const FeatureIdea = ({ title, features, version }: Props) => (
 
 const RenderArray = ({ listItem }: { listItem: Props['features'] extends Array<infer T> ? T : Props['features'] }) => {
   if (typeof listItem === 'string')  return <li>{listItem}</li>;
-  return Object.keys(listItem).map((key) => (
+  const children = Object.keys(listItem).map((key) => (
     <li key={key}>
       <span>{key}</span>
       <ul>
@@ -31,4 +31,6 @@ const RenderArray = ({ listItem }: { listItem: Props['features'] extends Array<i
       </ul>
     </li>
   ));
+
+  return <>{children}</>;
 }
