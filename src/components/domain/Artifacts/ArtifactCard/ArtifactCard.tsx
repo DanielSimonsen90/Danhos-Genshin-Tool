@@ -28,7 +28,7 @@ export default function ArtifactCard({ artifact, ...props }: Props) {
         <ArtifactImage set={name} name="Flower" />
         {showDetails 
           ? <ArtifactDetails artifact={artifact} tagName={tagName} displayCraftable={displayCraftable} /> 
-          : createElement(tagName ?? 'h2', { className: 'artifact-card__name' }, name)}
+          : createElement(tagName ?? 'h2', { className: 'artifact-card__name', title: name }, name)}
       </header>
       {showMoreDetails && (<>
         <ArtifactSets artifact={artifact} />

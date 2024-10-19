@@ -1,4 +1,4 @@
-import { RefObject, useRef, useEffect } from "react";
+import { RefObject, useRef, useEffect, MutableRefObject } from "react";
 
 export default function useClickOutside<
   TTag extends keyof HTMLElementTagNameMap, 
@@ -6,6 +6,12 @@ export default function useClickOutside<
 >(refTag: TTag, onOutsideClicked: () => void): RefObject<TElement> {
   const ref = useRef<TElement>(null);
 
+  useClickOutsideRef(ref, onOutsideClicked);
+
+  return ref;
+}
+
+export function useClickOutsideRef<TElement extends HTMLElement>(ref: { current: TElement }, onOutsideClicked: () => void) {
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
@@ -19,7 +25,5 @@ export default function useClickOutside<
       document.removeEventListener('mousedown', onClick);
       document.removeEventListener('touchstart', onClick);
     }
-  }, [onOutsideClicked]);
-
-  return ref;
+  }, [onOutsideClicked, ref]);
 }

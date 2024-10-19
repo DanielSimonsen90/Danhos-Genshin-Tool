@@ -43,7 +43,7 @@ export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props
       : () => props[tab as keyof typeof props] as JSX.Element] as const);
 
     return (<>{contentChildren.map(([tab, Content], key) => (
-      <div key={getKeyName(`content-${key}`)} className={classNames("tab-bar__content-page", tab === (props.tab ?? activeTab) && 'tab-bar__content-page--active')}>
+      <div data-tab={tab} key={getKeyName(`content-${key}`)} className={classNames("tab-bar__content-page", tab === (props.tab ?? activeTab) && 'tab-bar__content-page--active')}>
         <Content />
       </div>
     ))}</>);

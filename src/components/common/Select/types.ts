@@ -31,7 +31,7 @@ export type MultipleProps<TValue extends string> = Omit<Props<TValue>, 'defaultV
 
 export type PublicProps<TValue extends string> = Omit<Props<TValue>, 'options'>;
 export type PublicMultipleProps<TValue extends string> = Omit<MultipleProps<TValue>, 'options'>;
-export type SelectRef = React.RefObject<HTMLDivElement> & React.RefObject<{
+export type SelectRef = React.ForwardedRef<HTMLDivElement> & React.MutableRefObject<{
   open: () => void;
   close: () => void;
 }>;

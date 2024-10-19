@@ -7,9 +7,13 @@ const HIGHLIGHT_CLASS = "highlight";
 
 export default function Highlight({ children, selector }: Props) {
   const highlight = (selector: string) => {
-    document.querySelector(selector)?.classList.add(HIGHLIGHT_CLASS);
+    const element = document.querySelector(selector);
+    if (!element) return console.error(`Element not found: ${selector}`);
+
+    element.scrollIntoView({ behavior: "smooth", block: "center" });
+    element.classList.add(HIGHLIGHT_CLASS);
     setTimeout(() => {
-      document.querySelector(selector)?.classList.remove(HIGHLIGHT_CLASS);
+      element.classList.remove(HIGHLIGHT_CLASS);
     }, TIMEOUT);
   };
 

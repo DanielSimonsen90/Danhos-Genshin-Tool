@@ -5,38 +5,36 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  
+  @media screen and (min-width: 0px) {
+    padding-inline: 5em;
+  }
+  
+  @media screen and (min-width: 1000px) {
+    padding-inline: min(30vw, 60ch);
+    
+  }
 
   header {
     text-align: center;
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--background-secondary--light);
+    width: 80%;
   }
 
   h1 {
-    font-size: 2.5rem;
     margin: 1rem 0;
+    text-align: center;
+  }
+
+  h2, h3, h4 {
+    margin-top: 1rem;
+    margin-bottom: .5rem;
   }
 
   h2 {
-    font-size: 2rem;
     margin-top: 2rem;
     margin-bottom: .5rem;
-  }
-
-  h3 {
-    font-size: 1.3rem;
-    margin-top: 1rem;
-    margin-bottom: .5rem;
-  }
-
-  h4 {
-    font-size: 1.2rem;
-    margin-top: 1rem;
-    margin-bottom: .5rem;
-  }
-
-  main {
-    padding-inline: min(33vw, 10rem);
   }
 
   section {

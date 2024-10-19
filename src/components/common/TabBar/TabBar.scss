@@ -6,12 +6,12 @@
   border-radius: .25rem;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  border-bottom: .5ch solid var(--background-tertiary);
+  border-bottom: .75ch solid var(--background-tertiary);
 
   overflow: auto;
 
   .chevron {
-    margin-left: auto;
+    margin-left: auto !important;
     margin-right: 1ch;
   }
 }

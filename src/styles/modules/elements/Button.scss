@@ -7,6 +7,7 @@ button {
   color: var(--text-secondary);
   background-color: var(--background-secondary);
   box-shadow: 0 0 5px 3px #22222233;
+  outline: none;
 
   &:hover {
     color: var(--text-primary);

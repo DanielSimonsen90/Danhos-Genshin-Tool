@@ -33,7 +33,7 @@ export default function DomainCard({ domain, ...props }: Props) {
       <section className="main">
         <div className={classNames('domain-details', showDetails && 'domain-details--show-more')}>
           <header>
-            <h2 className="domain-card__name">{name}</h2>
+            <h2 className="domain-card__name" title={name}>{name}</h2>
             {showDetails && <ResinIcon cost={resinCost} />}
           </header>
           {showDetails && <p className="domain-details__description">{description}</p>}
