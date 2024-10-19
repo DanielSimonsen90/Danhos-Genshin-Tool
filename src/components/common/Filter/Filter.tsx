@@ -1,10 +1,12 @@
 import { useState, Dispatch, SetStateAction, useRef } from "react";
+
 import { classNames, pascalCaseFromCamelCase } from "@/common/functions/strings";
-import SelectMultiple from "../Select/SelectMultiple";
-import FilterOption from "./FilterOption";
-import { SelectRef } from "../Select/types";
 import useClickOutside from "@/hooks/useClickOutside";
 import useOnChange from "@/hooks/useOnChange";
+
+import SelectMultiple from "../Select/SelectMultiple";
+import FilterOption from "./FilterOption";
+import { getCloseAllMultipleSelects, getDefaultValueForRefs, getOnClickedOutside } from "./FilterFunctions";
 
 export type FilterObject<FilterKeys extends string, TItem, TValue = FilterCallback<TItem>> = Record<FilterKeys, TValue | Record<string, TValue>>;
 export type FilterCallback<TItem> = (item: TItem) => boolean;
@@ -24,17 +26,11 @@ export default function Filter<FilterKeys extends string, TItem>(props: Props<Fi
 
   const [showOptions, setShowOptions] = useState(false);
 
-  const refs = useRef<Array<SelectRef>>(Object.keys(filterChecks).map(() => ({ current: null }) ));
-  const ref = useClickOutside('div', () => {
-    closeAllMultipleSelects();
-    setShowOptions(false);
-  });
+  const refs = useRef(getDefaultValueForRefs(filterChecks));
+  const closeAllMultipleSelects = getCloseAllMultipleSelects(refs);
+  const ref = useClickOutside('div', getOnClickedOutside(closeAllMultipleSelects, setShowOptions));
 
   useOnChange(filters, onChange);
-
-  function closeAllMultipleSelects(except?: number) {
-    refs.current.forEach((ref, i) => i !== except && ref.current?.close());
-  }
 
   return (
     <div className="filters">
@@ -49,10 +45,10 @@ export default function Filter<FilterKeys extends string, TItem>(props: Props<Fi
       <div ref={ref} className={classNames("select__options", 'floatable', showOptions && 'select__options--open', 'filter-options')}>
         {Object.keys(filterChecks).map((filter: keyof typeof filterChecks, i) => (
           typeof filterChecks[filter] === 'object'
-            ? <SelectMultiple key={i} name={filter} floatable 
-              ref={refs.current[i]} 
+            ? <SelectMultiple key={i} name={filter} floatable
+              ref={refs.current[i]}
               onOpen={() => closeAllMultipleSelects(i)}
-              
+
               placeholder={pascalCaseFromCamelCase(filter)}
               options={Object.keys(filterChecks[filter])}
               displayValue={option => pascalCaseFromCamelCase(option)}
