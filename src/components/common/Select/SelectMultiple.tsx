@@ -1,16 +1,15 @@
-import { useState, useCallback, useEffect, useRef } from "react";
-import { MultipleProps } from "./types";
+import { useState, useCallback, useEffect, useRef, useImperativeHandle, forwardRef } from "react";
+import { MultipleProps, SelectRef } from "./types";
 import { classNames } from "@/common/functions/strings";
 
-export default function SelectMultiple<TValue extends string>({
+export default forwardRef(function SelectMultiple<TValue extends string>({
   options,
   displayValue, internalValue, max, floatable,
   ...props
-}: MultipleProps<TValue>) {
+}: MultipleProps<TValue>, ref: SelectRef) {
   const [selectedValues, setSelectedValues] = useState<TValue[]>(props.defaultValue ?? []);
   const [timeSelectedValues, setTimeSelectedValues] = useState<Record<number, TValue>>({});
   const [showOptions, setShowOptions] = useState(false);
-  const internalRef = useRef<HTMLSelectElement>(null);
 
   const toggleOption = useCallback((value: TValue) => {
     setSelectedValues(values => values.includes(value)
@@ -19,6 +18,10 @@ export default function SelectMultiple<TValue extends string>({
     );
     setTimeSelectedValues(values => ({ ...values, [Date.now()]: value }));
   }, []);
+
+  useEffect(() => {
+    if (showOptions) props.onOpen?.();
+  }, [showOptions])
 
   useEffect(() => {
     if (max && selectedValues.length > max) {
@@ -30,11 +33,17 @@ export default function SelectMultiple<TValue extends string>({
       });
     }
     props.onChange?.(selectedValues);
-    if (internalRef.current) internalRef.current.value = selectedValues.join(',');
+    // if (ref.current) ref.current.value = selectedValues.join(',');
   }, [selectedValues]);
 
+  useImperativeHandle(ref, () => ({
+    ...ref.current,
+    open: () => setShowOptions(true),
+    close: () => setShowOptions(false),
+  }), [selectedValues]);
+
   return (
-    <div className="select select--multiple" aria-required={props.required}>
+    <div ref={ref} className="select select--multiple" aria-required={props.required}>
       <select className="select__header" onMouseDown={e => {
         e.preventDefault();
         e.stopPropagation();
@@ -63,12 +72,6 @@ export default function SelectMultiple<TValue extends string>({
           </li>
         ))}
       </ul>
-
-      {/* <select ref={internalRef} name={props.name} className="select__internal" multiple>
-        {selectedValues.map((value, i) => (
-          <option name={`${props.name}[${i}]`} key={value} value={internalValue?.(value) ?? value} />
-        ))}
-      </select> */}
     </div>
   );
-}
+});

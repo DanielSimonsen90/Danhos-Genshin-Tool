@@ -25,7 +25,13 @@ export type MultipleProps<TValue extends string> = Omit<Props<TValue>, 'defaultV
 
   max?: number;
   onChange?: (value: TValue[]) => void;
+  ref?: SelectRef;
+  onOpen?: () => void;
 };
 
 export type PublicProps<TValue extends string> = Omit<Props<TValue>, 'options'>;
 export type PublicMultipleProps<TValue extends string> = Omit<MultipleProps<TValue>, 'options'>;
+export type SelectRef = React.RefObject<HTMLDivElement> & React.RefObject<{
+  open: () => void;
+  close: () => void;
+}>;
