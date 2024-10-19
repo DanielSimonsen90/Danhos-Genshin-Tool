@@ -26,6 +26,10 @@
     color: var(--text-muted);
   }
 
+  .clickable {
+    cursor: pointer;
+  }
+
   .input-group,
   *:has(> input, > label) {
     display: flex;

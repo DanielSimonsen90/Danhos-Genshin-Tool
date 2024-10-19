@@ -20,12 +20,12 @@ export const SearchResultComponent = ({ result: {
   const tabBarProps = {
     set,
     showAll,
-    onShowMore: showAll ? undefined : () => settingsStore.update({ showAll: true }),
+    onShowMore: showAll ? undefined : () => settingsStore.updateSettings({ showAll: true }),
   }; /*satisfies Partial<TabContentProps>;*/ // Webpack doesn't understand "satisfies"
 
   const ShowAll = () => (
     <div className="search-result__show-all-container">
-      <input type="checkbox" checked={showAll} onChange={() => settingsStore.update(cur => ({ showAll: !cur.showAll }))} disabled={resultsCount < 1} />
+      <input type="checkbox" checked={showAll} onChange={() => settingsStore.updateSettings(cur => ({ showAll: !cur.showAll }))} disabled={resultsCount < 1} />
       <label>Show all ({resultsCount}/{(
         preferredTabs.results === 'combined' ? props.combined
         : preferredTabs.results === 'characters' ? props.byCharacterRecommendation
@@ -35,7 +35,7 @@ export const SearchResultComponent = ({ result: {
   );
   const Wrap = () => (
     <div className="search-result__wrap-container">
-      <input type="checkbox" checked={wrap} onChange={() => settingsStore.update(cur => ({ wrap: !cur.wrap }))} />
+      <input type="checkbox" checked={wrap} onChange={() => settingsStore.updateSettings(cur => ({ wrap: !cur.wrap }))} />
       <label>Wrap</label>
     </div>
   );
@@ -54,7 +54,7 @@ export const SearchResultComponent = ({ result: {
 
   function handleTabChanged(tab: 'combined' | 'characters' | 'artifacts') {
     if (preferredTabs.results === tab) return;
-    settingsStore.update(cur => ({ preferredTabs: { ...cur.preferredTabs, results: tab } }))
+    settingsStore.updateSettings(cur => ({ preferredTabs: { ...cur.preferredTabs, results: tab } }))
   }
 
   return (

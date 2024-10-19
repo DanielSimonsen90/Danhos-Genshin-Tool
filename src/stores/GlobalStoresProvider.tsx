@@ -15,7 +15,6 @@ export default function GlobalStoresProvider({ children }: PropsWithChildren) {
       <NewUser />
       <SettingsNotice />
       {children}
-      <button onClick={() => SettingsStore.reset()}>Reset Settings</button>
     </GlobalStoresContext.Provider>
   );
 }

@@ -1,18 +1,20 @@
+import { useEffect, useRef } from "react";
 import { classNames } from "@/common/functions/strings";
-import { ReactNode, useEffect, useRef } from "react";
+import type { ModalProps } from "./ModalProps";
 
-type Props = {
-  children: ReactNode;
-  
-  open: boolean;
-  onClose: () => void;
-
-  className?: string;
-};
-
-export default function Modal({ children, onClose, open, ...props }: Props) {
+export default function Modal({ children, onClose, open, ...props }: ModalProps) {
   const { className } = props;
+  const hasButtons = props.confirmText || props.cancelText || props.onConfirm || props.onCancel;
   const ref = useRef<HTMLDialogElement>(null);
+
+  const onCancel = () => {
+    props.onCancel?.();
+    onClose();
+  };
+  const onConfirm = () => {
+    props.onConfirm?.();
+    onClose();
+  }
 
   useEffect(() => {
     if (open) (ref.current as any)?.showModal();
@@ -29,6 +31,12 @@ export default function Modal({ children, onClose, open, ...props }: Props) {
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="close" onClick={onClose}>&times;</button>
         {children}
+        {hasButtons && (
+          <div className="button-panel">
+            {<button className="secondary" onClick={onCancel}>{props.cancelText ?? 'Cancel'}</button>}
+            {<button className="brand primary" onClick={onConfirm}>{props.confirmText ?? 'Confirm'}</button>}
+          </div>
+        )}
       </div>
     </dialog>
   );

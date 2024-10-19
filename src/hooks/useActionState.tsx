@@ -8,8 +8,8 @@ export type SubmitData<TData> = TData & {
 }
 
 export function useActionState<TResult extends Record<string, any>>(
-  expectedPropertyLength: number,
-  onSubmit: (data: SubmitData<TResult>) => void
+  onSubmit: (data: SubmitData<TResult>) => void,
+  expectedPropertyLength: number = -1,
 ) {
   const [loading, setLoading] = useState(false);
 
@@ -18,19 +18,21 @@ export function useActionState<TResult extends Record<string, any>>(
     setLoading(true);
 
     const formData = new FormData(event.currentTarget);
-    const data: Record<string, any> = {
-      _form: [...formData.entries()]
-    };
+    const data: Record<string, any> = { _form: [...formData.entries()] };
     formData.forEach((value, key) => {
       if (key.includes('[')) {
         const arrKey = key.split('[')[0];
         if (!data[arrKey]) data[arrKey] = [];
         data[arrKey].push(value);
-      } else data[key] = value.toString();
+      } else if (key.includes('.')) {
+        const [objKey, objProp] = key.split('.');
+        if (!data[objKey]) data[objKey] = {};
+        data[objKey][objProp] = value;
+      } else data[key] = value === 'on' ? true : value === 'off' ? false : value;
     });
 
-    if (Object.keys(data).length !== expectedPropertyLength + 1) { // +1 for '_form'
-      console.error('Invalid data:', data);
+    if (expectedPropertyLength !== -1 && Object.keys(data).length !== expectedPropertyLength + 1) { // +1 for '_form'
+      console.error('Invalid data recieved - expectedPropertyLength exeeds returned data length', data);
       setLoading(false);
       return;
     }

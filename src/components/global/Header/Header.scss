@@ -29,3 +29,16 @@
     margin-inline: auto;
   }
 }
+
+.top-header {
+  display: flex;
+
+  nav {
+    margin-left: auto;
+  }
+
+  .settings-cog {
+    justify-self: end;
+    margin-left: auto;
+  }
+}
