@@ -75,6 +75,6 @@ function GetCharacterNameComponent(linkOnName: boolean, character: Character) {
   )
 
   return () => linkOnName
-    ? <Link to={`/characters/${snakeCaseFromCamelCase(character.name)}`}><CharacterName /></Link>
+    ? <Link to={`/characters/${character.name}`}><CharacterName /></Link>
     : <CharacterName />;
 }
