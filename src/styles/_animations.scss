@@ -1,0 +1,16 @@
+@keyframes highlight {
+  0%, 40%, 80% {
+    --shadow-color: var(--background-tertiary--light);
+    box-shadow: 0 0 10px 0 var(--shadow-color);
+  }
+
+  20%, 60% {
+    filter: brightness(1.1);
+    box-shadow: 0 0 20px 5px var(--shadow-color);
+  }
+
+  100% {
+    filter: brightness(1);
+    box-shadow: unset;
+  }
+}

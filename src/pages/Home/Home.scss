@@ -1,0 +1,83 @@
+@use '../../styles/animations' as *;
+
+.landing {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  header {
+    text-align: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--background-secondary--light);
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin: 1rem 0;
+  }
+
+  h2 {
+    font-size: 2rem;
+    margin-top: 2rem;
+    margin-bottom: .5rem;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+    margin-top: 1rem;
+    margin-bottom: .5rem;
+  }
+
+  h4 {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    margin-bottom: .5rem;
+  }
+
+  main {
+    padding-inline: min(33vw, 10rem);
+  }
+
+  section {
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--background-secondary--light);
+
+    section {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+  }
+
+  span.clickable {
+    text-decoration: underline;
+  }
+
+  p>span {
+    display: block;
+    margin-left: unset;
+  }
+}
+
+.feature-idea {
+  margin-bottom: 2rem;
+
+  ul {
+    list-style-type: disc;
+    padding-inline-start: 1rem;
+    margin-left: .5rem;
+
+    ul {
+      list-style-type: circle;
+    }
+  }
+}
+
+.domain-name {
+  font-weight: bold;
+}
+
+.highlight {
+  animation: highlight 1950ms forwards ease-in-out infinite;
+  transition: background-color 0.5s ease, box-shadow 0.5s ease;
+}
