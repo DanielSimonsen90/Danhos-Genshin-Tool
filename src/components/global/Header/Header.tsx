@@ -1,26 +1,36 @@
-import { useSetting, useSettingsStore } from "@/stores/SettingsStore";
+import { useState } from "react";
+
 import TabBar from "@/components/common/TabBar";
-import { Navigation, Search, Cache } from "./components";
+import SettingsCog from "@/components/common/icons/SettingsCog";
+import { useSetting } from "@/stores/SettingsStore";
+
+import { Navigation, Search, Cache, SettingsModal } from "./components";
 
 export default function Header() {
-  // const { update } = useSettingsStore();
   const [preferredTabs] = useSetting('preferredTabs');
-  
-  return (
-    <header className="site-header">
-      <Navigation />
+  const [openModal, setOpenModal] = useState(false);
 
-      <section className="header-content">
-        <TabBar tabs={[
-          ['search', 'Search'],
-          ['history', 'History']
-        ]}
-          defaultTab={preferredTabs?.searchOrHistory}
-          // onTabChange={tab => preferredTabs?.searchOrHistory !== tab && update(cur => ({ preferredTabs: { ...cur.preferredTabs, searchOrHistory: tab } }))}
-          search={<Search />}
-          history={<Cache />}
-        />
-      </section>
-    </header>
+  return (
+    <>
+      <header className="site-header">
+        <section className="top-header">
+          <Navigation />
+          <SettingsCog onClick={() => setOpenModal(true)} />
+        </section>
+
+        <section className="header-content">
+          <TabBar tabs={[
+            ['search', 'Search'],
+            ['history', 'History']
+          ]}
+            defaultTab={preferredTabs?.searchOrHistory}
+            // onTabChange={tab => preferredTabs?.searchOrHistory !== tab && update(cur => ({ preferredTabs: { ...cur.preferredTabs, searchOrHistory: tab } }))}
+            search={<Search />}
+            history={<Cache />}
+          />
+        </section>
+      </header>
+      <SettingsModal open={openModal} onClose={() => setOpenModal(false)} />
+    </>
   );
 }

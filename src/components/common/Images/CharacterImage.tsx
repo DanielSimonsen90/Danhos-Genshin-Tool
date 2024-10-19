@@ -9,9 +9,9 @@ type Props = {
 
 export default function CharacterImage({ character }: Props) {
   const settings = useSettings('traveler');
-  if (character.includes('Traveler') && settings.traveler !== 'lumine') character = character.replace('Traveler', 'traveler_dendro');
-  else if (character === 'Lumine') character = 'traveler';
-  else if (character === 'Aether') character = 'traveler_dendro';
+  if (character.toLowerCase().includes('traveler') && settings.traveler !== 'lumine') character = character.replace('Traveler', 'traveler_dendro');
+  else if (character.toLowerCase() === 'lumine') character = 'traveler';
+  else if (character.toLowerCase() === 'aether') character = 'traveler_dendro';
 
   return <Image className='character-image' src={ImageService.getCharacterImage(
     character.includes('(') ? character.split('(')[0].trim() : character

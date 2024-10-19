@@ -34,7 +34,7 @@ export default function Search() {
       return acc;
     }, {} as SearchFormData);
   }, [query]);
-  const [loading, onSubmit] = useActionState<SearchFormData>(4, data => {
+  const [loading, onSubmit] = useActionState<SearchFormData>(data => {
     debugLog('onSubmit', data);
     if (data.subStats.length > 4) {
       throw new Error('Substats must be 4 or less');
@@ -51,7 +51,7 @@ export default function Search() {
       }
     });
     navigate(`/search/${searchId}`);
-  });
+  }, 4);
   const [SelectMainStat, setSelectMainStat] = useComponent(SelectMainStatComponent, {
     name: 'mainStat',
     artifactPartName: 'Flower',

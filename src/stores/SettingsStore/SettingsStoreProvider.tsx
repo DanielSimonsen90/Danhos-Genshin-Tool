@@ -21,36 +21,34 @@ export default function useSettingsStoreProvider() {
   const [hideNotice, setHideNotice] = useState(false);
 
   const newUser = settings.traveler === undefined;
-  const didSettingsChange = useMemo(() => {
+  const hasCustomSettings = useMemo(() => JSON.stringify(settings) !== JSON.stringify(DEFAULT_SETTINGS), [settings]);
+  const hasUnsavedChanges = useMemo(() => {
     const settingsClone = { ...settings };
     delete settingsClone.updated;
     return JSON.stringify(settingsClone) !== JSON.stringify(initialSettings);
   }, [settings, initialSettings]);
-  const store = useSettingsFunctions(settings, setSettings);
+  const store = useSettingsFunctions(settings, setSettings, setInitialSettings);
 
   const SettingsNotice = useCallback(() =>
-    <SaveSettingsNotice showNotice={!hideNotice && didSettingsChange}
+    <SaveSettingsNotice showNotice={!hideNotice && hasUnsavedChanges}
       onSave={() => {
-        if (!didSettingsChange) return console.log('No changes to save');
-        store.save();
-        const newInitialSettings = { ...settings };
-        delete newInitialSettings.updated;
-        setInitialSettings(newInitialSettings);
+        if (!hasUnsavedChanges) return console.log('No changes to save');
+        store.saveSettings();
       }}
       onDiscard={() => setSettings(initialSettings)}
       onClose={() => setHideNotice(true)}
-    />, [didSettingsChange, hideNotice, initialSettings, settings]);
+    />, [hasUnsavedChanges, hideNotice, initialSettings, settings]);
   const NewUser = useCallback(() => (
-    <NewUserModal newUser={newUser} onTravelerSelect={traveler => store.update({ traveler })} />
+    <NewUserModal newUser={newUser} onTravelerSelect={traveler => store.updateSettings({ traveler })} />
   ), [newUser]);
 
   debugLog('SettingsStore updated', settings);
 
   useEffect(() => {
     if (initialSettings.traveler === undefined && settings.traveler !== undefined) {
-      store.save();
+      store.saveSettings();
     }
-  }, [didSettingsChange]);
+  }, [hasUnsavedChanges]);
 
-  return [store, { SettingsNotice, NewUser }] as const;
+  return [{ ...store, settings, hasCustomSettings, hasUnsavedChanges }, { SettingsNotice, NewUser }] as const;
 }

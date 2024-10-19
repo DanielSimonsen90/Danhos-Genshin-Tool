@@ -58,3 +58,9 @@ button {
     --color: var(--text-danger);
   }
 }
+
+.button-panel {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}

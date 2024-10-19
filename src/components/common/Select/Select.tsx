@@ -19,7 +19,7 @@ export default function Select<TValue extends string>({
 
   return (
     <select {...props} className={classNames('select', props.floatable && 'floatable', props.className)} value={value} onChange={handleChange} defaultValue={defaultValue}>
-      {!value && <option className="muted" value='<placeholder>'>{props.placeholder}...</option>}
+      {!value && !defaultValue && <option className="muted" value='<placeholder>'>{props.placeholder}...</option>}
       {options.filter(Boolean).map((option) => (
         <option key={option} value={internalValue?.(option) ?? option}>
           {displayValue?.(option) ?? option}
