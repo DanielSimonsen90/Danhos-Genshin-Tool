@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 
 import Header from "@/components/global/Header";
+import Footer from "@/components/global/Footer";
 import GlobalStoresProvider from "@/stores/GlobalStoresProvider";
 
 export default function Layout() {
@@ -8,7 +9,7 @@ export default function Layout() {
     <GlobalStoresProvider>
       <Header />
       <Outlet />
-      {/* <Footer /> */}
+      <Footer />
     </GlobalStoresProvider>
   );
 }

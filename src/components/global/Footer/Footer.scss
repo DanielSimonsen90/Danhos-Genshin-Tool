@@ -1,0 +1,10 @@
+.site-footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  // background-color: var(--background-primary--light);
+  box-shadow: 0 0 5px 3px rgba(34, 34, 34, .4);
+  color: var(--text-secondary);
+  padding: 1rem 0;
+}
