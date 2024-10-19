@@ -1,7 +1,10 @@
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
+import { useState, Dispatch, SetStateAction, useRef } from "react";
 import { classNames, pascalCaseFromCamelCase } from "@/common/functions/strings";
 import SelectMultiple from "../Select/SelectMultiple";
 import FilterOption from "./FilterOption";
+import { SelectRef } from "../Select/types";
+import useClickOutside from "@/hooks/useClickOutside";
+import useOnChange from "@/hooks/useOnChange";
 
 export type FilterObject<FilterKeys extends string, TItem, TValue = FilterCallback<TItem>> = Record<FilterKeys, TValue | Record<string, TValue>>;
 export type FilterCallback<TItem> = (item: TItem) => boolean;
@@ -21,9 +24,17 @@ export default function Filter<FilterKeys extends string, TItem>(props: Props<Fi
 
   const [showOptions, setShowOptions] = useState(false);
 
-  useEffect(() => {
-    onChange(filters);
-  }, [filters]);
+  const refs = useRef<Array<SelectRef>>(Object.keys(filterChecks).map(() => ({ current: null }) ));
+  const ref = useClickOutside('div', () => {
+    closeAllMultipleSelects();
+    setShowOptions(false);
+  });
+
+  useOnChange(filters, onChange);
+
+  function closeAllMultipleSelects(except?: number) {
+    refs.current.forEach((ref, i) => i !== except && ref.current?.close());
+  }
 
   return (
     <div className="filters">
@@ -35,14 +46,16 @@ export default function Filter<FilterKeys extends string, TItem>(props: Props<Fi
         <option>{placeholder ?? 'Filter...'}</option>
       </select>
 
-      <div className={classNames("select__options", 'floatable', showOptions && 'select__options--open')}>
+      <div ref={ref} className={classNames("select__options", 'floatable', showOptions && 'select__options--open', 'filter-options')}>
         {Object.keys(filterChecks).map((filter: keyof typeof filterChecks, i) => (
           typeof filterChecks[filter] === 'object'
-            ? <SelectMultiple name={filter} floatable key={i}
+            ? <SelectMultiple key={i} name={filter} floatable 
+              ref={refs.current[i]} 
+              onOpen={() => closeAllMultipleSelects(i)}
+              
               placeholder={pascalCaseFromCamelCase(filter)}
               options={Object.keys(filterChecks[filter])}
               displayValue={option => pascalCaseFromCamelCase(option)}
-              internalValue={option => option}
               onChange={selectedValues => setFilters({ ...filters, [filter]: Object.fromEntries(selectedValues.map(value => [value, true])) })}
             />
             : <FilterOption
@@ -55,7 +68,10 @@ export default function Filter<FilterKeys extends string, TItem>(props: Props<Fi
             />
         ))}
 
-        <button className="brand--light secondary" onClick={() => setFilters({} as FilterObject<FilterKeys, TItem, boolean>)}>
+        <button className="brand--light secondary" onClick={() => {
+          setFilters({} as FilterObject<FilterKeys, TItem, boolean>);
+          closeAllMultipleSelects();
+        }}>
           Clear Filters
         </button>
       </div>

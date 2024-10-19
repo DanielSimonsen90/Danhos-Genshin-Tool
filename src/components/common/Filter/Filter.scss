@@ -24,4 +24,9 @@
     padding-top: 2ch;
     top: calc(100% - 1ch) !important;
   }
+
+  .filter-options .select__options {
+    top: -1px !important;
+    left: calc(-100% - .5ch);
+  }
 }
