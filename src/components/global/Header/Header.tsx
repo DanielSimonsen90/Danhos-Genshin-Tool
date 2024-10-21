@@ -15,7 +15,9 @@ export default function Header() {
       <header className="site-header">
         <section className="top-header">
           <Navigation />
-          <SettingsCog onClick={() => setOpenModal(true)} />
+          <SettingsCog role="button" tabIndex={0} onClick={() => setOpenModal(true)} onKeyDown={e => {
+            if (e.key === 'Enter' || e.key === 'NumpadEnter' || e.key === ' ') setOpenModal(true);
+          }} />
         </section>
 
         <section className="header-content">
@@ -24,7 +26,6 @@ export default function Header() {
             ['history', 'History']
           ]}
             defaultTab={preferredTabs?.searchOrHistory}
-            // onTabChange={tab => preferredTabs?.searchOrHistory !== tab && update(cur => ({ preferredTabs: { ...cur.preferredTabs, searchOrHistory: tab } }))}
             search={<Search />}
             history={<Cache />}
           />

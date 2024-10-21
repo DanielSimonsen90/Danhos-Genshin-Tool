@@ -1,15 +1,18 @@
-import Modal, { ModalConsumerProps } from "@/components/common/Modal";
-import { useSettingsStore } from "@/stores/SettingsStore";
 import { DOMAIN_NAME } from '@/common/constants/domain';
-import SettingsOption from "./SettingsOption";
-import { useActionState } from "@/hooks/useActionState";
-import { Settings } from "@/stores/SettingsStore/SettingsStoreTypes";
 import { DebugLog } from "@/common/functions/dev";
+
+import Modal, { ModalConsumerProps } from "@/components/common/Modal";
+import { useActionState } from "@/hooks/useActionState";
+
+import { useSettingsStore } from "@/stores/SettingsStore";
+import { Settings } from "@/stores/SettingsStore/SettingsStoreTypes";
+
+import SettingsOption from "./SettingsOption";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsModal);
 
 export default function SettingsModal(props: ModalConsumerProps) {
-  const { settings, resetSettings, updateAndSaveSettings, hasCustomSettings, hasUnsavedChanges } = useSettingsStore();
+  const { settings, resetSettings, updateAndSaveSettings, hasCustomSettings } = useSettingsStore();
   const [submitting, onSubmit] = useActionState<Settings>(data => {
     delete data._form;
     debugLog('Settings update recieved', data);
@@ -36,7 +39,6 @@ export default function SettingsModal(props: ModalConsumerProps) {
 
         <div className="button-panel">
           {hasCustomSettings && <button type="reset" className="danger secondary" disabled={submitting} onClick={onReset}>Reset settings</button>}
-          {hasUnsavedChanges && <button type="button" className="secondary" disabled={submitting} onClick={props.onClose}>Cancel changes</button>}
           <button type="submit" className="brand primary" disabled={submitting}>Save settings</button>
         </div>
       </form>

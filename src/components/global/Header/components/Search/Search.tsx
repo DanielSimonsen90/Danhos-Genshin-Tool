@@ -36,9 +36,7 @@ export default function Search() {
   }, [query]);
   const [loading, onSubmit] = useActionState<SearchFormData>(data => {
     debugLog('onSubmit', data);
-    if (data.subStats.length > 4) {
-      throw new Error('Substats must be 4 or less');
-    }
+    if (data.subStats.filter(v => v).length > 4) return window.alert('Substats must be 4 or less'); // TODO: Consider adding visual form indicator?
 
     const searchId = generateId();
     CacheStore.update('searchHistory', {
@@ -70,7 +68,7 @@ export default function Search() {
       <SelectMainStat />
       <SelectSubStat name="subStats" defaultValue={defaultSearch?.subStats} required floatable />
 
-      <button className="primary" type="submit" disabled={loading}>Search</button>
+      <button className="brand primary" type="submit" disabled={loading}>Search</button>
     </form>
   );
 }

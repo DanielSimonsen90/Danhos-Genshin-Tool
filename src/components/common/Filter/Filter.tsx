@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction, useRef } from "react";
+import { useState, Dispatch, SetStateAction, useRef, EventHandler, useCallback } from "react";
 
 import { classNames, pascalCaseFromCamelCase } from "@/common/functions/strings";
 import useClickOutside from "@/hooks/useClickOutside";
@@ -7,6 +7,7 @@ import useOnChange from "@/hooks/useOnChange";
 import SelectMultiple from "../Select/SelectMultiple";
 import FilterOption from "./FilterOption";
 import { getCloseAllMultipleSelects, getDefaultValueForRefs, getOnClickedOutside } from "./FilterFunctions";
+import { addTabNavigation } from "@/common/functions/accessibility";
 
 export type FilterObject<FilterKeys extends string, TItem, TValue = FilterCallback<TItem>> = Record<FilterKeys, TValue | Record<string, TValue>>;
 export type FilterCallback<TItem> = (item: TItem) => boolean;
@@ -29,16 +30,17 @@ export default function Filter<FilterKeys extends string, TItem>(props: Props<Fi
   const refs = useRef(getDefaultValueForRefs(filterChecks));
   const closeAllMultipleSelects = getCloseAllMultipleSelects(refs);
   const ref = useClickOutside('div', getOnClickedOutside(closeAllMultipleSelects, setShowOptions));
+  const onToggleShowOptionsEvent = useCallback<EventHandler<any>>(e => {
+    e.preventDefault();
+    e.stopPropagation();
+    setShowOptions(v => !v);
+  }, []);
 
   useOnChange(filters, onChange);
 
   return (
     <div className="filters">
-      <select className="filters__header" onMouseDown={e => {
-        e.preventDefault();
-        e.stopPropagation();
-        setShowOptions(show => !show);
-      }}>
+      <select className="filters__header" {...addTabNavigation(onToggleShowOptionsEvent)}>
         <option>{placeholder ?? 'Filter...'}</option>
       </select>
 
