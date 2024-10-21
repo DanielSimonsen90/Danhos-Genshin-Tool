@@ -4,6 +4,7 @@ import { useSettings, useSettingsStore } from '@/stores/SettingsStore';
 import { SearchResult } from '@/services/SearchService';
 import TabBar from '@/components/common/TabBar';
 import TabContent from './components/TabContent';
+import Switch from '@/components/common/Switch';
 
 type Props = {
   result: SearchResult;
@@ -25,7 +26,7 @@ export const SearchResultComponent = ({ result: {
 
   const ShowAll = () => (
     <div className="search-result__show-all-container">
-      <input type="checkbox" checked={showAll} onChange={() => settingsStore.updateSettings(cur => ({ showAll: !cur.showAll }))} disabled={resultsCount < 1} />
+      <Switch enabled={showAll} onChange={showAll => settingsStore.updateSettings({ showAll })} disabled={resultsCount < 1} />
       <label>Show all ({resultsCount}/{(
         preferredTabs.results === 'combined' ? props.combined
         : preferredTabs.results === 'characters' ? props.byCharacterRecommendation
@@ -35,7 +36,7 @@ export const SearchResultComponent = ({ result: {
   );
   const Wrap = () => (
     <div className="search-result__wrap-container">
-      <input type="checkbox" checked={wrap} onChange={() => settingsStore.updateSettings(cur => ({ wrap: !cur.wrap }))} />
+      <Switch enabled={wrap} onChange={wrap => settingsStore.updateSettings({ wrap })} />
       <label>Wrap</label>
     </div>
   );

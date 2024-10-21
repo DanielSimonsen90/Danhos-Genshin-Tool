@@ -1,4 +1,17 @@
 .settings-modal {
+  p {
+    margin-bottom: 2rem;
+  }
+
+  form {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .switch--enabled .switch__thumb {
+    transform: translate(calc(50% + var(--size) / 2), -50%);
+  }
+
   .select[name="preferredTabs.results"] {
     min-width: 12ch;
   } 

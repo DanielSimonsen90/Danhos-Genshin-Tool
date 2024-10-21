@@ -17,18 +17,28 @@ export function useActionState<TResult extends Record<string, any>>(
     event.preventDefault();
     setLoading(true);
 
-    const formData = new FormData(event.currentTarget);
-    const data: Record<string, any> = { _form: [...formData.entries()] };
-    formData.forEach((value, key) => {
-      if (key.includes('[')) {
-        const arrKey = key.split('[')[0];
+    const form = [...event.currentTarget.querySelectorAll('[name]').values()].map(el => ({
+      name: el.getAttribute('name'),
+      value: (() => {
+        if (el instanceof HTMLInputElement) return el.checked ?? el.value ?? el.defaultValue ?? el.defaultChecked;
+        if (el instanceof HTMLSelectElement || el instanceof HTMLTextAreaElement) return el.value ?? ('defaultValue' in el ? el.defaultValue : null);
+        console.error('Unhandled element type', { el });
+        return null;
+      })()
+    }))
+    const data: Record<string, any> = { _form: form };
+    Object.values(form).forEach(({ name, value }) => {
+      if (name.includes('[')) {
+        const arrKey = name.split('[')[0];
         if (!data[arrKey]) data[arrKey] = [];
         data[arrKey].push(value);
-      } else if (key.includes('.')) {
-        const [objKey, objProp] = key.split('.');
+
+      } else if (name.includes('.')) {
+        const [objKey, objProp] = name.split('.');
         if (!data[objKey]) data[objKey] = {};
         data[objKey][objProp] = value;
-      } else data[key] = value === 'on' ? true : value === 'off' ? false : value;
+        
+      } else data[name] = value === 'on' ? true : value === 'off' ? false : value;
     });
 
     if (expectedPropertyLength !== -1 && Object.keys(data).length !== expectedPropertyLength + 1) { // +1 for '_form'
@@ -37,6 +47,7 @@ export function useActionState<TResult extends Record<string, any>>(
       return;
     }
 
+    debugLog('useActionState submit', data);
     onSubmit(data as SubmitData<TResult>);
     setLoading(false);
   }

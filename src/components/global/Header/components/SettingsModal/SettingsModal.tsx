@@ -4,12 +4,15 @@ import { DOMAIN_NAME } from '@/common/constants/domain';
 import SettingsOption from "./SettingsOption";
 import { useActionState } from "@/hooks/useActionState";
 import { Settings } from "@/stores/SettingsStore/SettingsStoreTypes";
+import { DebugLog } from "@/common/functions/dev";
+
+const debugLog = DebugLog(DebugLog.DEBUGS.settingsModal);
 
 export default function SettingsModal(props: ModalConsumerProps) {
   const { settings, resetSettings, updateAndSaveSettings, hasCustomSettings, hasUnsavedChanges } = useSettingsStore();
   const [submitting, onSubmit] = useActionState<Settings>(data => {
     delete data._form;
-    console.log('Settings updated', data);
+    debugLog('Settings update recieved', data);
     updateAndSaveSettings(data);
     props.onClose();
   })

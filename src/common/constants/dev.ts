@@ -7,6 +7,7 @@ export const DEBUGS = {
 
   // components
   searchComponent: false,
+  settingsModal: false,
 
   // hooks
   useActionState: false,
