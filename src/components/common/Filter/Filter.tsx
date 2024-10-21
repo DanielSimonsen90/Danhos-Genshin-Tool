@@ -40,7 +40,7 @@ export default function Filter<FilterKeys extends string, TItem>(props: Props<Fi
 
   return (
     <div className="filters">
-      <select className="filters__header" {...addTabNavigation(onToggleShowOptionsEvent)}>
+      <select className="filters__header" {...addTabNavigation(onToggleShowOptionsEvent, true)}>
         <option>{placeholder ?? 'Filter...'}</option>
       </select>
 

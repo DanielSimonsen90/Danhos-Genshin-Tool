@@ -60,7 +60,7 @@ export default forwardRef(function SelectMultiple<TValue extends string>({
 
   return (
     <div ref={combinedRef} className="select select--multiple" aria-required={props.required}>
-      <select className="select__header" {...addTabNavigation(onToggleShowOptionsEvent)}>
+      <select className="select__header" {...addTabNavigation(onToggleShowOptionsEvent, true)}>
         <option value="">{'placeholder' in props ? props.placeholder : ''}</option>
       </select>
 
