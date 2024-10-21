@@ -65,3 +65,13 @@ To build the app into an executable, you can use the following command:
 npm run make
 ```
 After the script has finished, your executable will be located in `out/make/squirrel.windows/x64/{your-project-name}-{your-version} Setup.exe`.
+
+### Publishing the app to Github
+*Make sure that the GITHUB_TOKEN in .env is up to date with a valid publish token (with "Contents" permission)*
+Note that Github username & repository name are both controlled through the variables in [@/common/constants/domain.ts](https://github.com/DanielSimonsen90/Genshin-Artifact-Helper/blob/main/src/common/constants/domain.ts)
+
+To publish the app to Github for others to download through releases, you can use the following command:
+```bash
+npm run publish
+```
+After the script has finished, the release should be published as a draft, which you can edit [here](https://github.com/DanielSimonsen90/Genshin-Artifact-Helper/releases) to finalize description for official release.
