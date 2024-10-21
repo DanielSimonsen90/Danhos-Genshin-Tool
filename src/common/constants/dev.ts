@@ -6,7 +6,7 @@ export const DEBUGS = {
   searchQuery: false,
 
   // components
-  searchComponent: true,
+  searchComponent: false,
   settingsModal: false,
 
   // hooks
