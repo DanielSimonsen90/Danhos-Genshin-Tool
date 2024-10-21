@@ -10,11 +10,26 @@ import { FuseV1Options, FuseVersion } from '@electron/fuses';
 
 import { mainConfig } from './webpack.main.config';
 import { rendererConfig } from './webpack.renderer.config';
+import { DOMAIN_NAME, DEVELOPER_GITHUB_URL } from './src/common/constants/domain';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
   },
+  publishers: [
+    {
+      name: '@electron-forge/publisher-github',
+      config: {
+        repository: {
+          owner: DEVELOPER_GITHUB_URL.split('/').pop(),
+          name: DOMAIN_NAME.toLowerCase().replace(/ /g, '-'),
+        },
+        authToken: process.env.GITHUB_TOKEN,
+      },
+    },
+  ],
   rebuildConfig: {},
   makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
   plugins: [

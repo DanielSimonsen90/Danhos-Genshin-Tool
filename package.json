@@ -20,6 +20,7 @@
     "@electron-forge/plugin-auto-unpack-natives": "^7.3.0",
     "@electron-forge/plugin-fuses": "^7.3.0",
     "@electron-forge/plugin-webpack": "^7.3.0",
+    "@electron-forge/publisher-github": "^7.5.0",
     "@electron/fuses": "^1.7.0",
     "@types/react": "^18.2.64",
     "@types/react-dom": "^18.2.21",
@@ -47,6 +48,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "electron-squirrel-startup": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
