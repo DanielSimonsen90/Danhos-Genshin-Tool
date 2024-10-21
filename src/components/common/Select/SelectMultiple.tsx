@@ -1,8 +1,9 @@
-import { useState, useCallback, useEffect, useImperativeHandle, forwardRef, useRef } from "react";
+import { useState, useCallback, useEffect, useImperativeHandle, forwardRef, useRef, EventHandler } from "react";
 import { MultipleProps, SelectRef } from "./types";
 import { classNames } from "@/common/functions/strings";
 import useOnChange from "@/hooks/useOnChange";
-import useClickOutside, { useClickOutsideRef } from "@/hooks/useClickOutside";
+import { useClickOutsideRef } from "@/hooks/useClickOutside";
+import { addTabNavigation } from "@/common/functions/accessibility";
 
 export default forwardRef(function SelectMultiple<TValue extends string>({
   options,
@@ -20,6 +21,11 @@ export default forwardRef(function SelectMultiple<TValue extends string>({
     return internalRef;
   };
 
+  const onToggleShowOptionsEvent = useCallback<EventHandler<any>>(e => {
+    e.preventDefault();
+    e.stopPropagation();
+    setShowOptions(v => !v);
+  }, []);
   const toggleOption = useCallback((value: TValue) => {
     setSelectedValues(values => values.includes(value)
       ? values.filter(v => v !== value)
@@ -46,8 +52,6 @@ export default forwardRef(function SelectMultiple<TValue extends string>({
     props.onChange?.(selectedValues);
   }, [selectedValues]);
 
-
-
   useImperativeHandle(ref, () => ({
     ...internalRef.current,
     open: () => setShowOptions(true),
@@ -56,11 +60,7 @@ export default forwardRef(function SelectMultiple<TValue extends string>({
 
   return (
     <div ref={combinedRef} className="select select--multiple" aria-required={props.required}>
-      <select className="select__header" onMouseDown={e => {
-        e.preventDefault();
-        e.stopPropagation();
-        setShowOptions(show => !show);
-      }}>
+      <select className="select__header" {...addTabNavigation(onToggleShowOptionsEvent)}>
         <option value="">{'placeholder' in props ? props.placeholder : ''}</option>
       </select>
 
@@ -74,8 +74,11 @@ export default forwardRef(function SelectMultiple<TValue extends string>({
               checked={selectedValues.includes(option)}
               onChange={() => { }}
               onKeyDown={e => {
-                e.preventDefault();
-                e.stopPropagation();
+                if (e.key === 'Enter' || e.key === 'NumpadEnter' || e.key === ' ') {
+                  toggleOption(option);  
+                  e.preventDefault();
+                  e.stopPropagation();
+                }
               }}
             />
             <label>

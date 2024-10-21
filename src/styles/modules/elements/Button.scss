@@ -14,6 +14,12 @@ button {
     box-shadow: 0 0 5px 3px #222222aa;
   }
 
+  &:active,
+  &:focus {
+    color: var(--text-primary) !important;
+    border: 1px solid var(--brand) !important;
+  }
+
   &.primary {
     --color: var(--brand);
     background-color: var(--color);
@@ -26,7 +32,8 @@ button {
     color: var(--color);
   }
 
-  &.link, &.close {
+  &.link,
+  &.close {
     background-color: transparent;
     background-color: unset;
     box-shadow: unset;
@@ -48,13 +55,21 @@ button {
 
   &.brand {
     --color: var(--brand);
+
+    &:active, &:focus {
+      color: var(--text-primary) !important;
+      border: 1px solid var(--brand-alt) !important;
+    }
   }
+
   &.brand--light {
     --color: var(--brand--light);
   }
+
   &.success {
     --color: var(--text-success);
   }
+
   &.danger {
     --color: var(--text-danger);
   }

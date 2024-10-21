@@ -25,7 +25,7 @@ type Props<
 export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props<TTabKey>) {
   const [collapsed, setCollapsed] = useState(false);
   const [activeTab, _setActiveTab] = useState<TTabKey>(
-    props.defaultTab 
+    props.defaultTab
     ?? tabs.filter(([_, value]) => value)[0]?.[0]
   );
 
@@ -37,7 +37,7 @@ export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props
   }, [tabs, props.id]);
 
   const getKeyName = useCallback((key: any) => props.id ? `#${props.id}-${key}` : key, [props.id]);
-  const TabContent = useCallback(function TabContent () {
+  const TabContent = useCallback(function TabContent() {
     const contentChildren = internalTabs.map(([tab]) => [tab, typeof props[tab as keyof typeof props] === 'function'
       ? props[tab as keyof typeof props] as () => JSX.Element
       : () => props[tab as keyof typeof props] as JSX.Element] as const);
@@ -65,7 +65,7 @@ export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props
     }
   }, [tabs]);
 
-  useEffect(function onControlledTabChanged () {
+  useEffect(function onControlledTabChanged() {
     if (props.tab) setActiveTab(props.tab);
   }, [props.tab]);
 
@@ -80,7 +80,9 @@ export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props
             {title}
           </button>)}
         {props.children}
-        <Chevron point={collapsed ? 'down' : 'up'} onClick={() => setCollapsed(v => !v)} />
+        <Chevron role="button" tabIndex={0} point={collapsed ? 'down' : 'up'} onClick={() => setCollapsed(v => !v)} onKeyDown={e => {
+          if (e.key === 'Enter' || e.key === 'NumpadEnter' || e.key === ' ') setCollapsed(v => !v);
+        }} />
       </header>
       <section className={classNames('tab-bar__content', collapsed && 'tab-bar__content--collapsed')}>
         <TabContent />

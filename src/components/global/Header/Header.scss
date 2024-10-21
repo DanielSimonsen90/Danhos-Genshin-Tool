@@ -1,3 +1,5 @@
+@use '../../../styles/partials' as *;
+
 .site-header {
   display: flex;
   flex-direction: column;
@@ -22,6 +24,12 @@
         box-shadow: 0 0 5px 3px #22222266;
       }
     }
+  }
+
+  nav li:has(a[href*=skip-nav]:not(:focus)) {
+    @extend %hidden;
+
+    visibility: visible;
   }
 
   .tab-bar {
