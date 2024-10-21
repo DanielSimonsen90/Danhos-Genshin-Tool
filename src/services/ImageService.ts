@@ -6,7 +6,7 @@ import type * as DomainsData from '@/data/domains';
 import BaseService from './BaseService';
 
 const PAIMON_MOE_URL = 'https://paimon.moe/images';
-const LOCAL_PATH = '/assets/images';
+const LOCAL_PATH = '../assets/images';
 
 export const ImageService = new class ImageService extends BaseService<string> {
   public static readonly PAIMON_MOE_URL = PAIMON_MOE_URL;

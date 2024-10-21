@@ -1,4 +1,5 @@
 import type { ModuleOptions } from 'webpack';
+import path from 'path';
 
 export const rules: Required<ModuleOptions>['rules'] = [
   // Add support for native node modules
@@ -42,8 +43,8 @@ export const rules: Required<ModuleOptions>['rules'] = [
       loader: "url-loader",
       options: {
         limit: 20 * 1024, // 20Kb
-        outputPath: "/",
-        publicPath: "/src/assets/images",
+        outputPath: path.resolve(__dirname, "assets", "images"),
+        publicPath: "assets/images/",
         name: "[path][name].[ext]",
         esModule: false,
       },
