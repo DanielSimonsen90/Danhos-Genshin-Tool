@@ -7,7 +7,6 @@ export default function ControlledSearchableList<TItem, FilterKeys extends strin
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState<FilterObject<FilterKeys, TItem, boolean>>({} as any);
   const results = useMemo(() => {
-
     return items.filter(item => {
       if (search && !props.onSearch(search, item)) return false;
 
