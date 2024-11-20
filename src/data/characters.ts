@@ -214,6 +214,14 @@ export const Charlotte = new Character("Charlotte", "Cryo", "Catalyst", ["Heal"]
   ])
 ]);
 
+export const Chasca = new Character("Chasca", "Anemo", "Bow", ["Nightsouls Blessing"], Rarity.Legendary, 'Natlan', [
+  new CharacterSet("On-field DPS", ["Elemental Mastery", "Energy Recharge"], "Skill/Ability", true, [
+    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 5),
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 4),
+    ...ElementalMasterySets(3),
+  ])
+]);
+
 export const Chevreuse = new Character("Chevreuse", "Pyro", "Polearm", ["Heal"], Rarity.Epic, 'Fontaine', [
   new CharacterSet("Off-field Support", ["HP"], "Skill/Ability", false, [
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 5),
@@ -862,6 +870,13 @@ export const Noelle = new Character("Noelle", "Geo", "Claymore", ["Heal"], Rarit
   ])
 ]);
 
+export const Ororon = new Character("Ororon", "Electro", "Bow", ['Off-field Damage'], Rarity.Epic, "Natlan", [
+  new CharacterSet("Off-field DPS", ["ATK"], "Skill/Ability", false, [
+    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 5),
+    new CharacterArtifactSet(Sets.ThunderingFury, 4, 4),
+  ])
+]);
+
 export const Qiqi = new Character("Qiqi", "Cryo", "Sword", ["Heal"], Rarity.Legendary, 'Liyue', [
   new CharacterSet("Off-field Support", ["ATK"], "Burst/Ult", false, [
     new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 5),
@@ -1126,7 +1141,7 @@ export const Wriothesley = new Character("Wriothesley", "Cryo", "Catalyst", [], 
     new CharacterArtifactSet(Sets.MarechausseeHunter, 2, 1),
     new CharacterArtifactSet(Sets.ShimenawasReminiscence, 2, 1),
   ])
-])
+]);
 
 export const Xiangling = new Character("Xiangling", "Pyro", "Polearm", ["Off-field Damage"], Rarity.Epic, 'Liyue', [
   new CharacterSet("Off-field DPS", ["Energy Recharge", "ATK", "Elemental Mastery"], "Burst/Ult", false, [
@@ -1168,7 +1183,7 @@ export const Xilonen = new Character("Xilonen", "Geo", "Sword", ["Buff ATK", "He
     new CharacterArtifactSet(Sets.ArchaicPetra, 4, 4),
     new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 4, 3),
   ])
-])
+]);
 
 export const Xingqiu = new Character("Xingqiu", "Hydro", "Sword", ["Off-field Damage", "Heal"], Rarity.Epic, 'Liyue', [
   new CharacterSet("Off-field DPS", ["Energy Recharge", "ATK"], "Burst/Ult", false, [
@@ -1247,7 +1262,7 @@ export const Yelan = new Character("Yelan", "Hydro", "Bow", ["Off-field Damage"]
     new CharacterArtifactSet(Sets.HeartOfDepth, 2, 4),
     new CharacterArtifactSet(Sets.NoblesseOblige, 2, 4),
   ])
-])
+]);
 
 export const Yoimiya = new Character("Yoimiya", "Pyro", "Bow", [], Rarity.Legendary, 'Inazuma', [
   new CharacterSet("On-field DPS", ["ATK", "Elemental Mastery"], "Normal/Press", true, [
