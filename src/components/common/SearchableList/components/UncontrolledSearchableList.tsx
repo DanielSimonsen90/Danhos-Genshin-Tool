@@ -1,6 +1,8 @@
 import { classNames } from "@/common/functions/strings";
 import { ControlledProps, OptionalProps } from "../Props";
 import Filter from "../../Filter";
+import { useRef } from "react";
+import useKeybind from "@/hooks/useKeybind";
 
 export default function UncontrolledSearchableList<TItem, FilterKeys extends string>(props: ControlledProps<TItem, FilterKeys> & OptionalProps<TItem, FilterKeys>) {
   const { search, setSearch, defaultSearch, placeholder } = props;
@@ -8,11 +10,17 @@ export default function UncontrolledSearchableList<TItem, FilterKeys extends str
   const { className, ulClassName, liClassName } = props;
   const { filterChecks, filters, setFilters, filterPlaceholder, onFilterChange } = props;
   const filterProps = { filterChecks, filters, setFilters, filterPlaceholder, onChange: onFilterChange };
+
+  const inputRef = useRef<HTMLInputElement>(null);
   
+  useKeybind('f', { ctrlKey: true }, () => {
+    if (inputRef.current) inputRef.current.focus();
+  });
+
   return (
     <div className={classNames("searchable-list", className)}>
       <div className="input-group">
-        <input type="search"
+        <input type="search" ref={inputRef}
           placeholder={placeholder ?? "Search..."}
           value={search}
           onChange={e => setSearch(e.target.value)}
