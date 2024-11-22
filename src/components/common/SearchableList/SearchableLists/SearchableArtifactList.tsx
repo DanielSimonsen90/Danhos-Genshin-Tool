@@ -11,6 +11,7 @@ import { useContextMenu } from "@/providers/ContextMenuProvider";
 
 import { OptionalProps, UncrontrolledProps } from "../Props";
 import SearchableList from "../SearchableList";
+import { useFavoriteStore } from "@/stores/FavoriteStore/FavoriteStoreHooks";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<ArtifactSet, TFilterKeys>>
@@ -28,12 +29,15 @@ export default function SearchableArtifactList<TFilterKeys extends string>({
 }: Props<TFilterKeys>) {
   const navigate = useNavigate();
   const [hidden, setHidden] = useState(new Array<ArtifactSet>());
+  const { add, remove, isFavorite } = useFavoriteStore('artifacts');
 
-  return <SearchableList items={items} onSearchOrFilterChange={() => setHidden([])}
+  return <SearchableList items={items} 
+    sort={(a, b) => isFavorite(a) === isFavorite(b) ? 0 : isFavorite(a) ? -1 : 1}
+    onSearchOrFilterChange={() => setHidden([])}
     renderItem={artifact => {
       const open = useContextMenu(item => [
         item('View', () => navigate(`/artifacts/${artifact.name}`)),
-        item('Favorite', () => console.log('Favorite')),
+        item(isFavorite(artifact) ? 'Unfavorite' : 'Favorite', () => isFavorite(artifact) ? remove(artifact) : add(artifact)),
         item('Hide', () => setHidden([...hidden, artifact])),
       ]);
 
