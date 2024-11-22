@@ -32,12 +32,12 @@ export default function UncontrolledSearchableList<TItem, FilterKeys extends str
       {children.length > 0 && (
         <ul className={classNames("searchable-list__list", "hoverable", ulClassName)}>
           {children.map(([child, item], key) => (
-            <li key={key} className={classNames(
+            child ? <li key={key} className={classNames(
               "searchable-list__list-item",
               typeof liClassName === 'function' ? liClassName(item) : liClassName
             )}>
               {child}
-            </li>
+            </li> : null
           ))}
         </ul>
       )}

@@ -37,7 +37,7 @@ export default function SearchableArtifactList<TFilterKeys extends string>({
         item('Hide', () => setHidden([...hidden, artifact])),
       ]);
 
-      return (
+      return hidden.includes(artifact) ? null : (
         <div className="context-menu-item-container" onContextMenu={open}>
           <ArtifactCard artifact={artifact} {...cardProps} />
         </div>

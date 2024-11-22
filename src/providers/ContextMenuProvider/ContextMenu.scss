@@ -5,10 +5,15 @@
     position: absolute;
     z-index: 100;
     background-color: var(--background-primary);
-    padding: 0.5rem;
+    box-shadow: 0 0 .5em rgba(0, 0, 0, .25);
 
     &-item {
-      
+      padding: 1ch;
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--background-secondary);
+      }
     }
   }
 }

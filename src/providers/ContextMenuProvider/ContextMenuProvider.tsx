@@ -41,8 +41,7 @@ export default function ContextMenuProvider({ children }: PropsWithChildren) {
       setMenuItems(menuItems);
       if (position) setPosition(position);
 
-      ref.current?.addEventListener('click', hideMenu);
-      // ref.current?.addEventListener('contextmenu', hideMenu);
+      if (ref.current && !ref.current.contains(target)) ref.current?.addEventListener('click', hideMenu);
 
       return { ref, close: hideMenu };
     };
@@ -59,7 +58,7 @@ export default function ContextMenuProvider({ children }: PropsWithChildren) {
 
   return (
     <ContextMenuContext.Provider value={value}>
-      <div className="context-menu-container" onContextMenu={showMenu} ref={ref}>
+      <div className="context-menu-container" onContextMenu={showMenu} ref={ref} onClick={hideMenu}>
         {children}
         {visible && (
           <div className="context-menu" style={{
