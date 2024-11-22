@@ -13,22 +13,22 @@ export default function ContextMenuProvider({ children }: PropsWithChildren) {
   const ref = useRef<HTMLDivElement>(null);
   const targetRef = useRef<HTMLElement | null>(null);
 
-  const showMenu = (e: React.MouseEvent) => {
+  const handleContextMenu = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
     if (!targetRef.current) return;
-    if (!targetRef.current.contains(e.target as HTMLElement)) return hideMenu();
+    if (!targetRef.current.contains(e.target as HTMLElement)) return closeMenu();
 
     setVisible(true);
     setLeft(e.clientX - ref.current?.getBoundingClientRect().left);
     setTop(e.clientY - ref.current?.getBoundingClientRect().top);
   };
 
-  const hideMenu = () => {
+  const closeMenu = () => {
     setVisible(false);
-    document.removeEventListener('click', hideMenu);
-    document.removeEventListener('contextmenu', hideMenu);
+    document.removeEventListener('click', closeMenu);
+    document.removeEventListener('contextmenu', closeMenu);
   };
 
   const value: ContextMenuContextType = (e) => {
@@ -41,24 +41,23 @@ export default function ContextMenuProvider({ children }: PropsWithChildren) {
       setMenuItems(menuItems);
       if (position) setPosition(position);
 
-      if (ref.current && !ref.current.contains(target)) ref.current?.addEventListener('click', hideMenu);
+      if (ref.current && !ref.current.contains(target)) ref.current?.addEventListener('click', closeMenu);
 
-      return { ref, close: hideMenu };
+      return { ref, close: closeMenu };
     };
   };
 
   useEffect(() => {
-    document.addEventListener('click', hideMenu);
-    document.addEventListener('contextmenu', hideMenu);
+    const hideEvents = ['click', 'contextmenu', 'keydown'];
+    hideEvents.forEach(event => document.addEventListener(event, closeMenu));
     return () => {
-      document.removeEventListener('click', hideMenu);
-      document.removeEventListener('contextmenu', hideMenu);
+      hideEvents.forEach(event => document.removeEventListener(event, closeMenu));
     };
   }, []);
 
   return (
     <ContextMenuContext.Provider value={value}>
-      <div className="context-menu-container" onContextMenu={showMenu} ref={ref} onClick={hideMenu}>
+      <div className="context-menu-container" onContextMenu={handleContextMenu} ref={ref} onClick={closeMenu}>
         {children}
         {visible && (
           <div className="context-menu" style={{

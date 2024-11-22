@@ -12,6 +12,7 @@ import { useContextMenu } from "@/providers/ContextMenuProvider";
 import { OptionalProps, UncrontrolledProps } from "../Props";
 import SearchableList from "../SearchableList";
 import { useFavoriteStore } from "@/stores/FavoriteStore/FavoriteStoreHooks";
+import Star from "../../icons/Star";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<ArtifactSet, TFilterKeys>>
@@ -43,6 +44,7 @@ export default function SearchableArtifactList<TFilterKeys extends string>({
 
       return hidden.includes(artifact) ? null : (
         <div className="context-menu-item-container" onContextMenu={open}>
+          {isFavorite(artifact) && <Star color={'var(--rarity-legendary)'} />}
           <ArtifactCard artifact={artifact} {...cardProps} />
         </div>
       );
