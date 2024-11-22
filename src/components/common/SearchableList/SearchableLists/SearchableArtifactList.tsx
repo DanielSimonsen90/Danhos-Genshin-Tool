@@ -1,9 +1,16 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { ArtifactSet } from "@/common/models";
-import SearchableList from "../SearchableList";
 import { ArtifactCard } from "@/components/domain/Artifacts";
-import { OptionalProps, UncrontrolledProps } from "../Props";
-import { Props as ArtifactCardProps } from "@/components/domain/Artifacts/ArtifactCard/ArtifactCard";
 import { Rarity } from "@/common/types";
+
+import { Props as ArtifactCardProps } from "@/components/domain/Artifacts/ArtifactCard/ArtifactCard";
+
+import { useContextMenu } from "@/providers/ContextMenuProvider";
+
+import { OptionalProps, UncrontrolledProps } from "../Props";
+import SearchableList from "../SearchableList";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<ArtifactSet, TFilterKeys>>
@@ -11,15 +18,31 @@ type Props<TFilterKeys extends string> = (
   & {
     noBaseSearch?: boolean;
     noBaseFilterChecks?: boolean;
-    cardProps?: Partial<Omit<ArtifactCardProps, 'artifact'>>
+    cardProps?: Partial<Omit<ArtifactCardProps, 'artifact'>>;
   }
 );
-export default function SearchableArtifactList<TFilterKeys extends string>({ 
+export default function SearchableArtifactList<TFilterKeys extends string>({
   items, filterChecks = {} as any, onSearch,
   noBaseFilterChecks, noBaseSearch, cardProps,
   ...props
 }: Props<TFilterKeys>) {
-  return <SearchableList items={items} renderItem={artifact => <ArtifactCard artifact={artifact} {...cardProps} />}
+  const navigate = useNavigate();
+  const [hidden, setHidden] = useState(new Array<ArtifactSet>());
+
+  return <SearchableList items={items} onSearchOrFilterChange={() => setHidden([])}
+    renderItem={artifact => {
+      const open = useContextMenu(item => [
+        item('View', () => navigate(`/artifacts/${artifact.name}`)),
+        item('Favorite', () => console.log('Favorite')),
+        item('Hide', () => setHidden([...hidden, artifact])),
+      ]);
+
+      return (
+        <div className="context-menu-item-container" onContextMenu={open}>
+          <ArtifactCard artifact={artifact} {...cardProps} />
+        </div>
+      );
+    }}
     onSearch={noBaseSearch ? onSearch : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}
     filterChecks={noBaseFilterChecks ? filterChecks : {
       obtainableThrough: {

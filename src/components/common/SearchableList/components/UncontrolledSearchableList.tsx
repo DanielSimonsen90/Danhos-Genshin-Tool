@@ -1,8 +1,8 @@
+import { useRef } from "react";
 import { classNames } from "@/common/functions/strings";
+import useKeybind from "@/hooks/useKeybind";
 import { ControlledProps, OptionalProps } from "../Props";
 import Filter from "../../Filter";
-import { useRef } from "react";
-import useKeybind from "@/hooks/useKeybind";
 
 export default function UncontrolledSearchableList<TItem, FilterKeys extends string>(props: ControlledProps<TItem, FilterKeys> & OptionalProps<TItem, FilterKeys>) {
   const { search, setSearch, defaultSearch, placeholder } = props;
@@ -12,7 +12,7 @@ export default function UncontrolledSearchableList<TItem, FilterKeys extends str
   const filterProps = { filterChecks, filters, setFilters, filterPlaceholder, onChange: onFilterChange };
 
   const inputRef = useRef<HTMLInputElement>(null);
-  
+
   useKeybind('f', { ctrlKey: true }, () => {
     if (inputRef.current) inputRef.current.focus();
   });

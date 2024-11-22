@@ -1,0 +1,14 @@
+.context-menu-container {
+  position: relative;
+
+  .context-menu {
+    position: absolute;
+    z-index: 100;
+    background-color: var(--background-primary);
+    padding: 0.5rem;
+
+    &-item {
+      
+    }
+  }
+}

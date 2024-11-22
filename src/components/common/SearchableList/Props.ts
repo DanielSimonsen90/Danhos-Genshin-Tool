@@ -36,6 +36,7 @@ type RenderItemOrChildren<TItem> = {
 export type UncrontrolledProps<TItem, FilterKeys extends string> = RenderItemOrChildren<TItem> & {
   items: Array<TItem> | List<TItem>,  
   onSearch: (search: string, itemMatch: TItem) => boolean,
+  onSearchOrFilterChange?: (search: string, filters: FilterObject<FilterKeys, TItem, boolean>) => void,
 };
 
 export type Props<TItem, FilterKeys extends string = string> = 
