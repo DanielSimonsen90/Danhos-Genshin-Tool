@@ -8,17 +8,21 @@ import { useSettingsStore } from "@/stores/SettingsStore";
 import { Settings } from "@/stores/SettingsStore/SettingsStoreTypes";
 
 import SettingsOption from "./SettingsOption";
+import { useFavoriteStore } from '@/stores';
+import useFavoriteStoreProvider from '@/stores/FavoriteStore';
+import ExternalSettingsOption from './ExternalSettingsOption';
 
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsModal);
 
 export default function SettingsModal(props: ModalConsumerProps) {
   const { settings, resetSettings, updateAndSaveSettings, hasCustomSettings } = useSettingsStore();
+  const [favoriteStore] = useFavoriteStoreProvider();
   const [submitting, onSubmit] = useActionState<Settings>(data => {
     delete data._form;
     debugLog('Settings update recieved', data);
     updateAndSaveSettings(data);
     props.onClose();
-  })
+  });
 
   const onReset = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

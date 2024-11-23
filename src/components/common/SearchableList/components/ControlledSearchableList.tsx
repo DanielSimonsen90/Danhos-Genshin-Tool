@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { OptionalProps, UncrontrolledProps } from "../Props";
 import UncontrolledSearchableList from "./UncontrolledSearchableList";
 import { FilterObject } from "../../Filter/Filter";
@@ -25,6 +25,10 @@ export default function ControlledSearchableList<TItem, FilterKeys extends strin
     });
   }, [items, search, filters, props]);
   const render = 'children' in props ? props.children : props.renderItem;
+
+  useEffect(() => {
+    props.onSearchOrFilterChange?.(search, filters);
+  }, [search, filters])
 
   return <UncontrolledSearchableList onFilterChange={() => { }}
     search={search} setSearch={setSearch} filters={filters} setFilters={setFilters} filterChecks={filterChecks}

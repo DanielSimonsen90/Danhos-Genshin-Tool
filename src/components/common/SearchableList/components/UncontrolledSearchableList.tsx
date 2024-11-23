@@ -1,8 +1,9 @@
+import { useRef } from "react";
 import { classNames } from "@/common/functions/strings";
+import useKeybind from "@/hooks/useKeybind";
 import { ControlledProps, OptionalProps } from "../Props";
 import Filter from "../../Filter";
-import { useRef } from "react";
-import useKeybind from "@/hooks/useKeybind";
+import { useFavoriteStore } from "@/stores/FavoriteStore/FavoriteStoreHooks";
 
 export default function UncontrolledSearchableList<TItem, FilterKeys extends string>(props: ControlledProps<TItem, FilterKeys> & OptionalProps<TItem, FilterKeys>) {
   const { search, setSearch, defaultSearch, placeholder } = props;
@@ -12,7 +13,8 @@ export default function UncontrolledSearchableList<TItem, FilterKeys extends str
   const filterProps = { filterChecks, filters, setFilters, filterPlaceholder, onChange: onFilterChange };
 
   const inputRef = useRef<HTMLInputElement>(null);
-  
+  const sortedChildren = props.sort ? children.sort(([_, a], [__, b]) => props.sort(a, b)) : children;
+
   useKeybind('f', { ctrlKey: true }, () => {
     if (inputRef.current) inputRef.current.focus();
   });
@@ -31,13 +33,13 @@ export default function UncontrolledSearchableList<TItem, FilterKeys extends str
       </div>
       {children.length > 0 && (
         <ul className={classNames("searchable-list__list", "hoverable", ulClassName)}>
-          {children.map(([child, item], key) => (
-            <li key={key} className={classNames(
+          {sortedChildren.map(([child, item], key) => (
+            child ? <li key={key} className={classNames(
               "searchable-list__list-item",
               typeof liClassName === 'function' ? liClassName(item) : liClassName
             )}>
               {child}
-            </li>
+            </li> : null
           ))}
         </ul>
       )}

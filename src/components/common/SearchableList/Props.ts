@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, ReactNode } from "react";
 import { List } from "@/common/models/List";
 import { FilterObject } from "../Filter/Filter";
+import { FavoriteModels } from "@/stores/FavoriteStore/FavoriteStoreTypes";
 
 export type FilterProps<TItem, FilterKeys extends string> = {
   filterChecks?: FilterObject<FilterKeys, TItem>,
@@ -25,6 +26,7 @@ export type ControlledProps<TItem, FilterKeys extends string> = {
   filters: FilterObject<FilterKeys, TItem, boolean>,
   setFilters: Dispatch<SetStateAction<FilterObject<FilterKeys, TItem, boolean>>>,
   onFilterChange: (filters: FilterObject<FilterKeys, TItem, boolean>) => void,
+  sort?: (a: TItem, b: TItem) => number,
   children: [ReactNode, TItem][],
 };
 
@@ -36,6 +38,7 @@ type RenderItemOrChildren<TItem> = {
 export type UncrontrolledProps<TItem, FilterKeys extends string> = RenderItemOrChildren<TItem> & {
   items: Array<TItem> | List<TItem>,  
   onSearch: (search: string, itemMatch: TItem) => boolean,
+  onSearchOrFilterChange?: (search: string, filters: FilterObject<FilterKeys, TItem, boolean>) => void,
 };
 
 export type Props<TItem, FilterKeys extends string = string> = 
