@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import useFavoriteStoreProvider from "./FavoriteStoreProvider";
 import { FavoriteModels, ModelsCollection } from "./FavoriteStoreTypes";
 

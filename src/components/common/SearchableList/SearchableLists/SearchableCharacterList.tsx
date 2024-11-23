@@ -1,8 +1,16 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { Character } from "@/common/models";
-import SearchableList from "../SearchableList";
 import { CharacterCard } from "@/components/domain/Character";
-import { OptionalProps, UncrontrolledProps } from "../Props";
 import { Props as CharacterCardProps } from "@/components/domain/Character/CharacterCard/CharacterCard";
+
+import { useFavoriteStore } from "@/stores";
+import { useContextMenu } from "@/providers/ContextMenuProvider";
+
+import { OptionalProps, UncrontrolledProps } from "../Props";
+import SearchableList from "../SearchableList";
+import Star from "../../icons/Star";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<Character, TFilterKeys>>
@@ -18,7 +26,27 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
   noBaseFilterChecks, noBaseSearch, cardProps,
   ...props
 }: Props<TFilterKeys>) {
-  return <SearchableList items={items} renderItem={character => <CharacterCard character={character} {...cardProps} />}
+  const navigate = useNavigate();
+  const [hidden, setHidden] = useState(new Array<Character>());
+  const { add, remove, isFavorite } = useFavoriteStore('characters');
+
+  return <SearchableList items={items}
+    sort={(a, b) => isFavorite(a) === isFavorite(b) ? 0 : isFavorite(a) ? -1 : 1}
+    onSearchOrFilterChange={() => setHidden([])}
+    renderItem={character => {
+      const open = useContextMenu(item => [
+        item('View', () => navigate(`/characters/${character.name}`), '👁️'),
+        item(isFavorite(character) ? 'Unfavorite' : 'Favorite', () => isFavorite(character) ? remove(character) : add(character), '⭐'),
+        item('Hide', () => setHidden([...hidden, character]), '🙈'),
+      ]);
+
+      return hidden.includes(character) ? null : (
+        <div className="context-menu-item-container" onContextMenu={open}>
+          {isFavorite(character) && <Star className="favorite-star" onClick={() => remove(character)} />}
+          <CharacterCard character={character} {...cardProps} />
+        </div>
+      );
+    }}
     onSearch={noBaseSearch ? onSearch : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}
     filterChecks={noBaseFilterChecks ? filterChecks : {
       element: {
@@ -47,7 +75,7 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
       bonusAbility: {
         // Bonus Ability
         none: character => character.bonusAbilities.length === 0,
-        
+
         bondOfLife: character => character.bonusAbilities.includes('Bond of Life'),
         buffAtk: character => character.bonusAbilities.includes('Buff ATK'),
         heal: character => character.bonusAbilities.includes('Heal'),

@@ -62,7 +62,7 @@
   }
 }
 
-li:has(> .character-card) {
+li:has(> .character-card, > * > .character-card) {
   background-color: var(--background-primary--light);
   box-shadow: 0 0 1em rgba(0, 0, 0, .25);
   transition: all 150ms ease-in-out;

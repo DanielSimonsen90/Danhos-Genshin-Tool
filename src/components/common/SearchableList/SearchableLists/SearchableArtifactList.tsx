@@ -37,14 +37,14 @@ export default function SearchableArtifactList<TFilterKeys extends string>({
     onSearchOrFilterChange={() => setHidden([])}
     renderItem={artifact => {
       const open = useContextMenu(item => [
-        item('View', () => navigate(`/artifacts/${artifact.name}`)),
-        item(isFavorite(artifact) ? 'Unfavorite' : 'Favorite', () => isFavorite(artifact) ? remove(artifact) : add(artifact)),
-        item('Hide', () => setHidden([...hidden, artifact])),
+        item('View', () => navigate(`/artifacts/${artifact.name}`), '👁️'),
+        item(isFavorite(artifact) ? 'Unfavorite' : 'Favorite', () => isFavorite(artifact) ? remove(artifact) : add(artifact), '⭐'),
+        item('Hide', () => setHidden([...hidden, artifact]), '🙈'),
       ]);
 
       return hidden.includes(artifact) ? null : (
         <div className="context-menu-item-container" onContextMenu={open}>
-          {isFavorite(artifact) && <Star color={'var(--rarity-legendary)'} />}
+          {isFavorite(artifact) && <Star className="favorite-star" onClick={() => remove(artifact)} />}
           <ArtifactCard artifact={artifact} {...cardProps} />
         </div>
       );

@@ -1,4 +1,4 @@
-type LocalStorageReturn<TValue> = {
+export type LocalStorageReturn<TValue> = {
   get(fallback?: TValue): TValue | undefined;
   set(value: TValue): void;
   remove(): void;

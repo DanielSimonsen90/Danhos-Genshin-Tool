@@ -19,6 +19,7 @@ export default function SettingsOption<Setting extends keyof Settings>(props: Pr
   );
 }
 
+
 const titles: Record<keyof Settings, string> = {
   showAll: 'Show all search results',
   wrap: 'Wrap search results',
