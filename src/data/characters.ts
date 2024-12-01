@@ -215,9 +215,10 @@ export const Charlotte = new Character("Charlotte", "Cryo", "Catalyst", ["Heal"]
 ]);
 
 export const Chasca = new Character("Chasca", "Anemo", "Bow", ["Nightsouls Blessing"], Rarity.Legendary, 'Natlan', [
-  new CharacterSet("On-field DPS", ["Elemental Mastery", "Energy Recharge"], "Skill/Ability", true, [
+  new CharacterSet("On-field DPS", ["ATK", "Elemental Mastery"], "Skill/Ability", true, [
     new CharacterArtifactSet(Sets.ObsidianCodex, 4, 5),
-    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 4),
+    new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 4),
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 3),
     ...ElementalMasterySets(3),
   ])
 ]);
