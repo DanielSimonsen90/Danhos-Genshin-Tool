@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction, useRef, EventHandler, useCallback } from "react";
+import { useState, Dispatch, SetStateAction, useRef, EventHandler, useCallback, useEffect } from "react";
 
 import { classNames, pascalCaseFromCamelCase } from "@/common/functions/strings";
 import useClickOutside from "@/hooks/useClickOutside";
@@ -54,19 +54,28 @@ export default function Filter<FilterKeys extends string, TItem>(props: Props<Fi
               placeholder={pascalCaseFromCamelCase(filter)}
               options={Object.keys(filterChecks[filter])}
               displayValue={option => pascalCaseFromCamelCase(option)}
-              onChange={selectedValues => setFilters({ ...filters, [filter]: Object.fromEntries(selectedValues.map(value => [value, true])) })}
+
+              value={Object.keys(filters[filter] ?? {})}
+              setValue={selectedValues => setFilters(filters => ({ 
+                ...filters, 
+                [filter]: Object.fromEntries((
+                  typeof selectedValues === 'function' ?
+                    selectedValues(Object.keys(filters[filter] ?? {}).filter(Boolean)) :
+                    selectedValues
+                ).map(value => [value, true])) 
+              }))}
+
             />
-            : <FilterOption
-              key={i}
-              name={filter}
-              i={i}
-              option={filter}
+            : <FilterOption key={i} i={i} 
+              name={filter} option={filter}
               value={filters[filter] as boolean}
               onSelect={() => setFilters({ ...filters, [filter]: !filters[filter] })}
             />
         ))}
 
-        <button className="brand--light secondary" onClick={() => {
+        <button className="brand--light secondary" onClick={e => {
+          e.preventDefault();
+          e.stopPropagation();
           setFilters({} as FilterObject<FilterKeys, TItem, boolean>);
           closeAllMultipleSelects();
         }}>
