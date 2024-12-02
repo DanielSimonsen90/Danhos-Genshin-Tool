@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Character } from "@/common/models";
 import { CharacterCard } from "@/components/domain/Character";
@@ -26,13 +26,15 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
   noBaseFilterChecks, noBaseSearch, cardProps,
   ...props
 }: Props<TFilterKeys>) {
+  const { query, filters } = useParams();
   const navigate = useNavigate();
   const [hidden, setHidden] = useState(new Array<Character>());
   const { add, remove, isFavorite } = useFavoriteStore('characters');
 
+  console.log(location.href)
+
   return <SearchableList items={items}
     sort={(a, b) => isFavorite(a) === isFavorite(b) ? 0 : isFavorite(a) ? -1 : 1}
-    onSearchOrFilterChange={() => setHidden([])}
     renderItem={character => {
       const open = useContextMenu(item => [
         item('View', () => navigate(`/characters/${character.name}`), '👁️'),
@@ -47,6 +49,10 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
         </div>
       );
     }}
+
+    search={query}
+    filters={filters ? JSON.parse(filters) : {}}
+    onSearchOrFilterChange={(search, filters) => navigate(`?query=${search}&filters=${JSON.stringify(filters)}`)}
     onSearch={noBaseSearch ? onSearch : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}
     filterChecks={noBaseFilterChecks ? filterChecks : {
       element: {
@@ -73,7 +79,6 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
         elementalMastery: character => character.needsEM(),
       },
       bonusAbility: {
-        // Bonus Ability
         none: character => character.bonusAbilities.length === 0,
 
         bondOfLife: character => character.bonusAbilities.includes('Bond of Life'),
