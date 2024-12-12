@@ -1,4 +1,5 @@
 import { pascalCaseFromCamelCase } from "@/common/functions/strings";
+import { RefObject } from "react";
 
 type FilterOptionProps = {
   name: string,
@@ -19,8 +20,8 @@ export default function FilterOption({
         name={`${name}[${i}]`}
         type="checkbox"
         value={option}
-        checked={value}
-        onChange={() => { }}
+        checked={value ?? false}
+        // onChange={() => { }}
       />
       <label>
         {pascalCaseFromCamelCase(option)}

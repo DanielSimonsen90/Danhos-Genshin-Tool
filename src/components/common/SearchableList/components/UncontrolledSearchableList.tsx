@@ -1,9 +1,9 @@
 import { useRef } from "react";
-import { classNames } from "@/common/functions/strings";
+import { classNames, pascalCaseFromCamelCase } from "@/common/functions/strings";
 import useKeybind from "@/hooks/useKeybind";
 import { ControlledProps, OptionalProps } from "../Props";
 import Filter from "../../Filter";
-import { useFavoriteStore } from "@/stores/FavoriteStore/FavoriteStoreHooks";
+import { FilterObject } from "../../Filter/Filter";
 
 export default function UncontrolledSearchableList<TItem, FilterKeys extends string>(props: ControlledProps<TItem, FilterKeys> & OptionalProps<TItem, FilterKeys>) {
   const { search, setSearch, defaultSearch, placeholder } = props;
@@ -31,6 +31,27 @@ export default function UncontrolledSearchableList<TItem, FilterKeys extends str
         />
         {filterChecks && <Filter {...filterProps} />}
       </div>
+      <ul className="filter-tags">
+        {Object.entries(filters).map(([filterOrGroup, value], index) => (
+          typeof value === 'object'
+            ? Object.entries(value).filter(([key, value]) => value !== undefined).map(([filter]) => (
+              <li key={filter} className="filter-tag" onClick={() => {
+                const { 
+                  [filter as keyof FilterObject<FilterKeys, TItem>[FilterKeys]]: _, 
+                  ...newValue 
+                } = filters[filterOrGroup as FilterKeys] as Record<FilterKeys, boolean>;
+                return setFilters(filters => ({ ...filters, [filterOrGroup]: newValue }));
+              }}>
+                {pascalCaseFromCamelCase(filter)}
+              </li>
+            ))
+            : value && (
+              <li key={`${filterOrGroup}-${index}`} className="filter-tag" onClick={() => setFilters({ ...filters, [filterOrGroup]: false })}>
+                {pascalCaseFromCamelCase(filterOrGroup)}
+              </li>
+            )
+        ))}
+      </ul>
       {children.length > 0 && (
         <ul className={classNames("searchable-list__list", "hoverable", ulClassName)}>
           {sortedChildren.map(([child, item], key) => (

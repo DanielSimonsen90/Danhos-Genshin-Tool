@@ -33,6 +33,11 @@
       display: flex;
       align-items: center;
       gap: .5ch;
+
+      > span {
+        display: flex;
+        align-items: center;
+      }
     }
     
     a {
@@ -48,6 +53,7 @@
     flex-wrap: wrap;
     list-style-type: disc;
     gap: 3ch;
+    margin-top: .25ch;
 
     li::before {
       content: '•';

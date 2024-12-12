@@ -30,3 +30,29 @@
     left: calc(-100% - .5ch);
   }
 }
+
+.filter-tags {
+  margin-inline: .5em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: .25rem;
+
+  .filter-tag {
+    --shadow-color: var(--background-primary--light);
+    background-color: var(--background-primary--muted);
+    color: var(--text-secondary);
+    border-radius: 1rem;
+    padding: .5rem;
+    box-shadow: 0 0 1rem var(--shadow-color);
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    min-width: 5ch;
+
+    &:hover {
+      background-color: var(--background-primary);
+    }
+  }
+}
