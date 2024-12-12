@@ -1247,7 +1247,7 @@ export const Yanfei = new Character("Yanfei", "Pyro", "Catalyst", [], Rarity.Epi
   ])
 ]);
 
-export const Yaoyao = new Character("Yaoyao", "Dendro", "Polearm", ["Heal"], Rarity.Legendary, 'Sumeru', [
+export const Yaoyao = new Character("Yaoyao", "Dendro", "Polearm", ["Heal", "Off-field Damage"], Rarity.Legendary, 'Sumeru', [
   new CharacterSet("Off-field Support", ["HP", "Energy Recharge"], "Burst/Ult", false, [
     new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 5),
     new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 4),
