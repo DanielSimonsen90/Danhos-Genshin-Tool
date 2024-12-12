@@ -40,9 +40,14 @@ export default function CharacterCard({ character, score, ...props }: Props) {
         <ul className="character-details__grouped">
           {bonusAbilities.length > 0 ? (
             <ul className="bonus-abilities">
-              {bonusAbilities.map((ability, i) => (
-                <li key={i} className="bonus-ability" title={`${name} is also able to ${ability.toLowerCase()}`}>{ability}</li>
-              ))}
+              {bonusAbilities.map((ability, i) => {
+                if (ability.includes(':')) {
+                  const [name, desc] = ability.split(':').map(s => s.trim());
+                  return <li key={i} className="bonus-ability" title={desc}>{name}</li>;
+                }
+
+                return <li key={i} className="bonus-ability" title={ability}>{ability}</li>
+              })}
             </ul>
           ) : <span>No special traits.</span>}
         </ul>

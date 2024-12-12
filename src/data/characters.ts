@@ -163,7 +163,7 @@ export const Beidou = new Character("Beidou", "Electro", "Claymore", ["Shield"],
   ])
 ]);
 
-export const Bennett = new Character("Bennett", "Pyro", "Sword", ["Heal", "Buff ATK"], Rarity.Epic, 'Mondstadt', [
+export const Bennett = new Character("Bennett", "Pyro", "Sword", ["Heal", "Buff ATK: While inside Bennett's ult"], Rarity.Epic, 'Mondstadt', [
   new CharacterSet("Burst Support", ["HP", "ATK"], "Burst/Ult", false, [
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 5),
     new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 4),
@@ -355,7 +355,7 @@ export const Dori = new Character("Dori", "Electro", "Claymore", ["Heal"], Rarit
   ]),
 ]);
 
-export const Emilie = new Character("Emilie", "Dendro", "Catalyst", ["Buff ATK", "Off-field Damage"], Rarity.Legendary, 'Fontaine', [
+export const Emilie = new Character("Emilie", "Dendro", "Catalyst", ["Off-field Damage"], Rarity.Legendary, 'Fontaine', [
   new CharacterSet("Off-field Support", ["ATK", "Energy Recharge"], "Burst/Ult", false, [
     new CharacterArtifactSet(Sets.UnfinishedReverie, 4, 5),
     new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 4),
@@ -383,7 +383,7 @@ export const Eula = new Character("Eula", "Cryo", "Claymore", [], Rarity.Legenda
   ]),
 ]);
 
-export const Faruzan = new Character("Faruzan", "Anemo", "Bow", ["Buff ATK", "Off-field Damage"], Rarity.Epic, 'Sumeru', [
+export const Faruzan = new Character("Faruzan", "Anemo", "Bow", ["CRIT Increase: If C6 and ult is active", "Off-field Damage"], Rarity.Epic, 'Sumeru', [
   new CharacterSet("Off-field Support", ["Energy Recharge"], "Burst/Ult", false, [
     new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 5),
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 4),
@@ -426,7 +426,7 @@ export const Freminet = new Character("Freminet", "Cryo", "Claymore", [], Rarity
   ])
 ]);
 
-export const Furina = new Character("Furina", "Hydro", "Sword", ["Heal", "Buff ATK", "Off-field Damage"], Rarity.Legendary, 'Fontaine', [
+export const Furina = new Character("Furina", "Hydro", "Sword", ["Heal", "Off-field Damage"], Rarity.Legendary, 'Fontaine', [
   new CharacterSet("Off-field Support", ["HP"], "Skill/Ability", false, [
     new CharacterArtifactSet(Sets.GoldenTroupe, 4, 5),
     new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 4),
@@ -522,7 +522,7 @@ export const Kachina = new Character("Kachina", "Geo", "Polearm", ["Off-field Da
   ])
 ]);
 
-export const KaedeharaKazuha = new Character("Kaedehara Kazuha", "Anemo", "Sword", ["Off-field Damage", "Grouping", "Buff ATK"], Rarity.Legendary, 'Inazuma', [
+export const KaedeharaKazuha = new Character("Kaedehara Kazuha", "Anemo", "Sword", ["Off-field Damage", "Grouping", "Elemental based: Ult can be infused with other party member elements excl. Anemo & Dendro"], Rarity.Legendary, 'Inazuma', [
   new CharacterSet("Off-field DPS", ["Elemental Mastery", "Energy Recharge"], "Burst/Ult", false, [
     new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 5),
     new CharacterArtifactSet(Sets.Instructor, 4, 4),
@@ -802,7 +802,7 @@ export const Mualani = new Character("Mualani", "Hydro", "Catalyst", ["Nightsoul
   ])
 ]);
 
-export const Nahida = new Character("Nahida", "Dendro", "Catalyst", ["Buff ATK"], Rarity.Legendary, "Sumeru", [
+export const Nahida = new Character("Nahida", "Dendro", "Catalyst", ["Elemental based: While inside ult, different parameters change based on elements within party"], Rarity.Legendary, "Sumeru", [
   new CharacterSet("Off-field Support", ["Elemental Mastery"], "Skill/Ability", false, [
     new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 5),
     new CharacterArtifactSet(Sets.GildedDreams, 4, 4),
@@ -1178,7 +1178,7 @@ export const Xiao = new Character("Xiao", "Anemo", "Polearm", [], Rarity.Legenda
   ]),
 ]);
 
-export const Xilonen = new Character("Xilonen", "Geo", "Sword", ["Buff ATK", "Heal", "Nightsouls Blessing"], Rarity.Legendary, 'Natlan', [
+export const Xilonen = new Character("Xilonen", "Geo", "Sword", ["Elemental based: Decrease elemental RES based on party members' elements (excl. Anemo & Dendro)", "Heal", "Nightsouls Blessing"], Rarity.Legendary, 'Natlan', [
   new CharacterSet("Off-field Support", ["DEF"], "Skill/Ability", false, [
     new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 5),
     new CharacterArtifactSet(Sets.ArchaicPetra, 4, 4),

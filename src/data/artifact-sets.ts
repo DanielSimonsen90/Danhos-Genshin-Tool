@@ -554,7 +554,7 @@ export const NoblesseOblige = new ArtifactSet(
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.favoredAbility === 'Burst/Ult') value += correctElement;
-    if (set.pieces === 4 || c.bonusAbilities.includes('Buff ATK')) value += correctElement;
+    if (set.pieces === 4 || c.bonusAbilities.toString().includes('Buff ATK')) value += correctElement;
     return value;
   }).sort().shift()
 );
@@ -573,7 +573,7 @@ export const NymphsDream = new ArtifactSet(
   (c, set) => {
     let value = 0;
     if (c.element === 'Hydro') value += correctElement;
-    if (set.pieces === 4 || c.bonusAbilities.includes('Buff ATK')) value += correctElement;
+    if (set.pieces === 4 || c.bonusAbilities.toString().includes('Buff ATK')) value += correctElement;
     return value;
   }
 );
