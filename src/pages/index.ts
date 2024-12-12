@@ -11,3 +11,5 @@ export { default as Artifact } from './Artifacts/{artifactName}';
 
 export { default as Domains } from './Domains';
 export { default as Domain } from './Domains/{domainName}';
+
+export { default as Development } from './Development';

@@ -1,27 +1,37 @@
 import { classNames } from "@/common/functions/strings";
-import useOnChange from "@/hooks/useOnChange";
-import { useState } from "react";
+import { forwardRef, useRef, useState } from "react";
 
 type Props = {
   enabled?: boolean;
   onChange?: (enabled: boolean) => void;
 } & Omit<React.HTMLProps<HTMLInputElement>, 'onChange'>;
 
-export default function Switch({ enabled, onChange, disabled, ...props }: Props) {
-  const [checked, setChecked] = useState(enabled ?? props.defaultChecked);
+export default forwardRef<HTMLInputElement, Props>(function Switch({ enabled, checked, disabled, ...props }, ref) {
+  const [internalChecked, setInternalChecked] = useState(enabled ?? props.defaultChecked ?? false);
+  const internalRef = useRef<HTMLInputElement>(null);
 
-  useOnChange(checked, onChange);
+  const onChange = (checked: boolean) => {
+    setInternalChecked(checked);
+    props.onChange?.(checked);
+    if (internalRef.current) internalRef.current.checked = checked;
+  };
 
   return (
-    <div className={classNames("switch", disabled && "switch--disabled", checked && "switch--enabled")} role="checkbox" tabIndex={0} onKeyDown={e => {
-      if (e.key === 'Enter' || e.key === 'NumpadEnter' || e.key === ' ') setChecked(v => !v);
+    <div className={classNames("switch", disabled && "switch--disabled", internalChecked && "switch--enabled")} role="checkbox" tabIndex={0} onKeyDown={e => {
+      if (e.key === 'Enter' || e.key === 'NumpadEnter' || e.key === ' ') onChange?.(!checked);
     }}>
       <div className="switch__thumb"></div>
-      <input {...props} disabled={disabled} type="checkbox" onChange={e => setChecked(e.target.checked)} 
-        value={checked ? 'on' : 'off'} 
-        checked={checked}
+      <input {...props} ref={
+        ref ? (element: HTMLInputElement) => {
+          if (typeof ref === 'function') ref(element);
+          else if (ref) ref.current = element;
+          internalRef.current = element;
+        } : undefined
+      } disabled={disabled} type="checkbox" onChange={e => onChange?.(e.target.checked)} 
+        value={checked !== undefined ? checked ? 'on' : 'off' : undefined} 
+        checked={checked !== undefined ? checked : undefined}
         tabIndex={-1}   
       />
     </div>
   );
-}
+});

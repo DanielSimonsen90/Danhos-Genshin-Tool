@@ -51,7 +51,7 @@ export function formatSearchData(value: SearchFormData, withSet = false) {
 }
 
 export function classNames(...args: string[]) {
-  return args.filter(Boolean).join(' ');
+  return args.filter(Boolean).join(' ') || undefined
 }
 
 export function fromList(list: string[] = []) {

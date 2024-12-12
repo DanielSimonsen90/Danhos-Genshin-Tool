@@ -4,6 +4,7 @@ import {
   Characters, Character, 
   Artifacts, Artifact,
   Domains, Domain,
+  Development,
 } from '@/pages';
 
 export const Router = () => (
@@ -26,6 +27,10 @@ export const Router = () => (
         <Route path="domains">
           <Route index element={<Domains />} />
           <Route path=":domainName" element={<Domain />} />
+        </Route>
+
+        <Route path="development">
+          <Route index element={<Development />} />
         </Route>
 
         <Route path="*" element={(() => {

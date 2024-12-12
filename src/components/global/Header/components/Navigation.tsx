@@ -6,6 +6,7 @@ const routes = [
   ['/characters', 'Characters'],
   ['/artifacts', 'Artifacts'],
   ['/domains', 'Domains'],
+  ['/development', 'Development'],
 ];
 
 export const Navigation = () => (

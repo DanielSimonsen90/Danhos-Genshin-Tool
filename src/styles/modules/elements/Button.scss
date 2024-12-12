@@ -20,6 +20,12 @@ button {
     border: 1px solid var(--brand) !important;
   }
 
+  &:disabled:hover {
+    color: var(--text-muted);
+    cursor: not-allowed;
+    box-shadow: unset;
+  }
+
   &.primary {
     --color: var(--brand);
     background-color: var(--color);

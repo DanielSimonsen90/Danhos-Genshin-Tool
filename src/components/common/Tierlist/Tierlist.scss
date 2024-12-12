@@ -1,0 +1,77 @@
+.tier-list-creator {
+  display: flex;
+  flex-direction: column;
+  gap: 1ch;
+
+  .controls {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1ch;
+
+    >* {
+      margin: 0;
+    }
+  }
+}
+
+.tier {
+  display: flex;
+  padding: 1ch;
+
+  input {
+    margin: 0;
+  }
+
+  &__header {
+    display: grid;
+    grid-template-columns: 20ch 1fr;
+    padding-right: 1ch;
+    margin-right: 1ch;
+    border-right: 1px solid var(--text-muted);
+  }
+
+  &__title {
+    text-align: center;
+
+    &.inverted {
+      filter: invert(1);
+    }
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: row;
+    gap: 1ch;
+  }
+}
+
+*[id*=modify-tier] {
+  display: flex;
+  flex-direction: row;
+  gap: 1ch;
+  margin: 2ch 0;
+
+  .tier__header {
+    width: fit-content;
+  }
+
+  .tier__title {
+    --margins: .5em;
+    background-color: unset;
+    border: none;
+    font-size: min(var(--font-size)*2.5, 2em);
+    color: var(--text-primary);
+  }
+
+  .input-group {
+    display: grid;
+    gap: 1ch;
+  }
+}
+
+input[type=color] {
+  --size: 2.5em;
+  width: var(--size);
+  height: var(--size);
+  padding: 0;
+}

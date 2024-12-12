@@ -20,7 +20,7 @@ export function useActionState<TResult extends Record<string, any>>(
     const form = [...event.currentTarget.querySelectorAll('[name]').values()].map(el => ({
       name: el.getAttribute('name'),
       value: (() => {
-        if (el instanceof HTMLInputElement) return el.checked ?? el.value ?? el.defaultValue ?? el.defaultChecked;
+        if (el instanceof HTMLInputElement) return el.value || el.defaultValue || el.checked;
         if (el instanceof HTMLSelectElement || el instanceof HTMLTextAreaElement) return el.value ?? ('defaultValue' in el ? el.defaultValue : null);
         console.error('Unhandled element type', { el });
         return null;
