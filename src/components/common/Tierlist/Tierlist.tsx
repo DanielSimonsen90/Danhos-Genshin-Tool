@@ -46,6 +46,7 @@ export default function Tierlist<T>({ items, ...props }: TierlistProps<T>) {
   const [newTier, setNewTier] = useState<FormTier<T>>(generateBlankTier);
 
   const render = useMemo(() => 'renderItem' in props ? props.renderItem : 'children' in props ? props.children : () => 'No render method provided.', [props]);
+  const unsorted = tiers.find(tier => tier.id === 'unsorted')!;
 
   useOnChange(tiers, localStorage.set);
 
@@ -76,23 +77,25 @@ export default function Tierlist<T>({ items, ...props }: TierlistProps<T>) {
   const updateTier = (id: string, newTier: Partial<Tier<T>>) => {
     setTiers(tiers => {
       const index = tiers.findIndex(tier => tier.id === id);
-      if (index === -1) return [...tiers, { id, ...newTier } as Tier<T>];
+      if (index === -1) return [
+        ...tiers.filter(tier => tier.id !== 'unsorted'), 
+        { ...newTier, id: generateId(), items: [] } as Tier<T>,
+        unsorted
+      ];
 
       const updatedTier = { ...tiers[index], ...newTier };
       return [...tiers.slice(0, index), updatedTier, ...tiers.slice(index + 1)];
     });
   };
-  const onSendToUnsorted = (entry: Entry<T>) => {
+  const onSendToTier = (entry: Entry<T>, tier: Tier<T>) => {
     setTiers(tiers => {
       const tierContainingItem = tiers.find(tier => tier.items.some(item => item.id === entry.id));
       const updatedTierContainedItem = { ...tierContainingItem!, items: tierContainingItem!.items.filter(item => item.id !== entry.id) };
-
-      const unsorted = tiers.find(t => t.id === 'unsorted')!;
-      const updatedUnsorted = { ...unsorted, items: [...unsorted.items, entry] };
+      const updatedTargetTier = { ...tier, items: [...tier.items, entry] };
 
       return tiers.map(tier => (
         tier.id === updatedTierContainedItem.id ? updatedTierContainedItem
-        : tier.id === updatedUnsorted.id ? updatedUnsorted
+        : tier.id === updatedTargetTier.id ? updatedTargetTier
         : tier
       ));
     });
@@ -106,7 +109,7 @@ export default function Tierlist<T>({ items, ...props }: TierlistProps<T>) {
       }} submitText='Add tier' />
 
       <DragDropContext onDragEnd={onDragEnd}>
-        {tiers.map(tier => <TierComponent key={tier.id} {...{ tier, setTiers, updateTier, render, onSendToUnsorted }} />)}
+        {tiers.map(tier => <TierComponent key={tier.id} {...{ tier, setTiers, updateTier, render, onSendToTier, tiers, unsorted }} />)}
       </DragDropContext>
     </div>
   );
