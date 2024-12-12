@@ -1,20 +1,22 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 
 import { useContextMenu } from "@/providers/ContextMenuProvider";
 import { classNames } from "@/common/functions/strings";
 
 import Modal from "../../Modal";
-import { Tier } from "../TierlistTypes";
+import { Tier, Entry } from "../TierlistTypes";
 import TierModifyForm from "./TierModifyForm";
 
-type Props = {
-  tier: Tier;
-  updateTier: (id: string, newTier: Partial<Tier>) => void;
-  setTiers: React.Dispatch<React.SetStateAction<Tier[]>>;
+type Props<T> = {
+  tier: Tier<T>;
+  render: (item: T) => ReactNode;
+  updateTier: (id: string, newTier: Partial<Tier<T>>) => void;
+  setTiers: React.Dispatch<React.SetStateAction<Tier<T>[]>>;
+  onSendToUnsorted: (tier: Entry<T>) => void;
 }
 
-export default function Tier({ tier, updateTier, setTiers }: Props) {
+export default function Tier<T>({ tier, updateTier, setTiers, render, onSendToUnsorted }: Props<T>) {
   const [showEditModal, setShowEditModal] = useState(false);
   const onContext = useContextMenu([
     {
@@ -42,16 +44,11 @@ export default function Tier({ tier, updateTier, setTiers }: Props) {
       <Droppable key={tier.id} droppableId={tier.id} direction='horizontal'>
         {provided => (
           <div {...provided.droppableProps} ref={provided.innerRef} className='tier__items'>
-            {tier.items.map((item, index) => (
-              <Draggable key={item.id} draggableId={item.id} index={index}>
+            {tier.items.map((entry, index) => (
+              <Draggable key={entry.id} draggableId={entry.id} index={index}>
                 {provided => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    className="item"
-                  >
-                    {item.content}
+                  <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className="item" onDoubleClick={() => onSendToUnsorted(entry)}>
+                    {render(entry.item)}
                   </div>
                 )}
               </Draggable>
@@ -61,8 +58,8 @@ export default function Tier({ tier, updateTier, setTiers }: Props) {
         )}
       </Droppable>
       <Modal open={showEditModal} onClose={() => setShowEditModal(false)}>
-        <TierModifyForm tier={tier} onTierUpdate={(...tierArgs) => {
-          updateTier(...tierArgs);
+        <TierModifyForm tier={tier} onTierUpdate={(id, tier) => {
+          updateTier(id, tier as Tier<T>);
           setShowEditModal(false);
         }} submitText='Apply edits' />
       </Modal>

@@ -15,7 +15,9 @@
 }
 
 .tier {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 20ch 1fr;
   padding: 1ch;
 
   input {
@@ -23,8 +25,6 @@
   }
 
   &__header {
-    display: grid;
-    grid-template-columns: 20ch 1fr;
     padding-right: 1ch;
     margin-right: 1ch;
     border-right: 1px solid var(--text-muted);
@@ -41,6 +41,7 @@
   &__items {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     gap: 1ch;
   }
 }

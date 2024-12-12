@@ -1,23 +1,21 @@
 import { ReactNode } from "react";
 
-interface Item {
+export interface Entry<T> {
   id: string;
-  content: ReactNode;
+  item: T;
 }
 
-export interface Tier {
+export interface Tier<T> {
   id: string;
   title: string;
   invert: boolean;
 
   color: string;
-  items: Item[];
+  items: Entry<T>[];
 }
 
 type BaseTierlistProps<T> = {
-  rows: number;
   items: Array<T>;
-  data: Array<Tier>;
 }
 
 type TierlistRenderProps<T> = {

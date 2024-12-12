@@ -5,26 +5,26 @@ import { useActionState } from "@/hooks/useActionState";
 import { classNames } from "@/common/functions/strings";
 import { useRef, useState } from "react";
 
-export type FormTier = Omit<Partial<Tier> & Pick<Tier, 'id'>, 'items'>;
+export type FormTier<T> = Omit<Partial<Tier<T>> & Pick<Tier<T>, 'id'>, 'items'>;
 
-type Props = {
-  tier: FormTier;
-  onTierUpdate: (id: string, newTier: Partial<Tier>) => void;
+type Props<T> = {
+  tier: FormTier<T>;
+  onTierUpdate: (id: string, newTier: Partial<Tier<T>>) => void;
 
   submitText?: string;
   add?: boolean;
-  
+
 };
-export default function TierModifyForm({ tier, submitText, onTierUpdate, add }: Props) {
+export default function TierModifyForm<T>({ tier, submitText, onTierUpdate, add }: Props<T>) {
   const titleRef = useRef<HTMLInputElement>(null);
   const colorRef = useRef<HTMLInputElement>(null);
   const invertRef = useRef<HTMLInputElement>(null);
 
-  const [title, setTitle] = useState(tier.title ?? '');
-  const [color, setColor] = useState(tier.color ?? generateRandomColor());
-  const [inverted, setInverted] = useState(tier.invert ?? false);
+  const [title, setTitle] = useState(tier.title);
+  const [color, setColor] = useState(tier.color);
+  const [inverted, setInverted] = useState(tier.invert);
 
-  const [submitting, onSubmit] = useActionState<Tier>(data => {
+  const [submitting, onSubmit] = useActionState<Tier<T>>(data => {
     delete data._form;
     data.items = [];
     onTierUpdate(data.id, data);
@@ -36,7 +36,7 @@ export default function TierModifyForm({ tier, submitText, onTierUpdate, add }: 
     if (colorRef.current) colorRef.current.value = '';
 
     setInverted(false);
-    if (invertRef.current) invertRef.current.checked = false
+    if (invertRef.current) invertRef.current.checked = false;
   });
 
   return (
@@ -52,7 +52,7 @@ export default function TierModifyForm({ tier, submitText, onTierUpdate, add }: 
       </div>
 
       <header className="tier__header">
-        <input ref={titleRef} className={classNames('tier__title', inverted && 'inverted')} 
+        <input ref={titleRef} className={classNames('tier__title', inverted && 'inverted')}
           type="text" name="title" defaultValue={tier.title} placeholder="Tier title"
           onChange={e => setTitle(e.target.value)}
         />
