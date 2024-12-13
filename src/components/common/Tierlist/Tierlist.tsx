@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 
 import { generateId } from '@/common/functions/random';
@@ -8,12 +8,15 @@ import useOnChange from '@/hooks/useOnChange';
 import { Entry, Tier, TierlistProps } from './TierlistTypes';
 import { FormTier, Tier as TierComponent, TierModifyForm } from './components';
 
+const getHslColor = (index: number) => `hsl(${index * 15}, 50%, 50%)`;
+
 function generateBlankTier<T>(items: Array<T>) {
   return (title?: string) => ({
     id: generateId(),
     invert: false,
     title,
-  });
+    color: getHslColor(items.length - 1),
+  } as Tier<T>);
 }
 
 function getDefaultTiers<T>(items: Array<T>) {
@@ -21,7 +24,7 @@ function getDefaultTiers<T>(items: Array<T>) {
     const tiers = (
       ['S', 'A', 'B', 'C', 'D', 'F']
         .map(generateBlankTier(items))
-        .map((data, i) => ({ ...data, items: [], color: `hsl(${15 * i}, 50%, 50%)`, position: i }) as Tier<T>)
+        .map((data, i) => ({ ...data, items: [], color: getHslColor(i), position: i }) as Tier<T>)
     );
 
     tiers.push({
@@ -40,7 +43,7 @@ function getDefaultTiers<T>(items: Array<T>) {
 export default function Tierlist<T>({ items, ...props }: TierlistProps<T>) {
   const [tiers, setTiers] = useState(getDefaultTiers(items));
   const localStorage = useLocalStorage<Array<Tier<T>>>('tierlist', setTiers, tiers);
-  const [newTier, setNewTier] = useState<FormTier<T>>(generateBlankTier(items));
+  const [newTier, setNewTier] = useState<FormTier<T>>(generateBlankTier(tiers));
 
   const orderedTiers = tiers.sort((a, b) => a.position - b.position);
   const render = useMemo(() => 'renderItem' in props ? props.renderItem : 'children' in props ? props.children : () => 'No render method provided.', [props]);
