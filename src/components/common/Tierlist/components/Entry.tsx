@@ -14,11 +14,11 @@ type Props<T> = {
 }
 
 export default function Entry<T>({ entry, index, unsorted, tiers, onSendToTier, render }: Props<T>) {
-  const onContextMenu = useContextMenu(tiers.map(tier => ({
+  const onContextMenu = useContextMenu(tiers.map(tier => tier.items.includes(entry) ? undefined : ({
     icon: '➡️',
     label: `Send to ${tier.title}`,
     action: () => onSendToTier(entry, tier)
-  })))
+  })).filter(Boolean))
   
   return (
     <Draggable key={entry.id} draggableId={entry.id} index={index}>

@@ -1,9 +1,9 @@
-import { generateRandomColor } from "@/common/functions/random";
+import { generateRandomColor, colorConvert } from "@/common/functions/colors";
 import Switch from "../../Switch";
 import { Tier } from "../TierlistTypes";
 import { useActionState } from "@/hooks/useActionState";
 import { classNames } from "@/common/functions/strings";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export type FormTier<T> = Omit<Partial<Tier<T>> & Pick<Tier<T>, 'id'>, 'items'>;
 
@@ -26,7 +26,6 @@ export default function TierModifyForm<T>({ tier, submitText, onTierUpdate, add 
 
   const [submitting, onSubmit] = useActionState<Tier<T>>(data => {
     delete data._form;
-    data.items = [];
     onTierUpdate(data.id, data);
 
     setTitle('');
@@ -39,12 +38,25 @@ export default function TierModifyForm<T>({ tier, submitText, onTierUpdate, add 
     if (invertRef.current) invertRef.current.checked = false;
   });
 
+  useEffect(() => {
+    if (titleRef.current && tier.title) titleRef.current.value = tier.title;
+    if (colorRef.current && tier.color) colorRef.current.value = tier.color?.includes('#') ? tier.color : colorConvert(tier.color, 'hsl', 'hex');
+    if (invertRef.current && tier.invert !== undefined) invertRef.current.checked = tier.invert;
+
+    setTitle(tier.title);
+    setColor(tier.color);
+    setInverted(tier.invert);
+  }, [tier])
+
   return (
     <form id={`modify-tier--${tier.id}`} className={classNames('tier', add && 'add')} onSubmit={onSubmit} style={{ backgroundColor: color }}>
       <input type="hidden" name="id" defaultValue={tier.id} />
       <div className="input-group">
         <label htmlFor="color">Color</label>
-        <input ref={colorRef} type="color" name="color" defaultValue={color} onChange={e => setColor(e.target.value)} />
+        <input ref={colorRef} type="color" name="color" 
+          defaultValue={color && color.includes('#') ? color : colorConvert(color, 'hsl', 'hex')}
+          onChange={e => setColor(e.target.value)} 
+        />
       </div>
       <div className="input-group">
         <label htmlFor="invert">Invert</label>

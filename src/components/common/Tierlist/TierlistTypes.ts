@@ -9,7 +9,7 @@ export interface Tier<T> {
   id: string;
   title: string;
   invert: boolean;
-
+  position: number;
   color: string;
   items: Entry<T>[];
 }

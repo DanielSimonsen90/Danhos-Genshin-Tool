@@ -1,35 +1,27 @@
 import { useMemo, useState } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 
-import { generateId, generateRandomColor } from '@/common/functions/random';
+import { generateId } from '@/common/functions/random';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import useOnChange from '@/hooks/useOnChange';
 
 import { Entry, Tier, TierlistProps } from './TierlistTypes';
 import { FormTier, Tier as TierComponent, TierModifyForm } from './components';
 
-function generateBlankTier<T>(title?: string): FormTier<T> {
-  return ({
+function generateBlankTier<T>(items: Array<T>) {
+  return (title?: string) => ({
     id: generateId(),
-    color: generateRandomColor(),
     invert: false,
-    title
+    title,
   });
 }
 
-const defaultColors = [
-  'FF7F80', 'FFBF7F', 'FFDF7F', 
-  'FFFC7F', 'BFFC7F', '7FFC7F', 
-  '80FFFF', '7EBFFF', '7F7FFF', 
-  'FF7FFF', 'BF7FBF',
-]
-
-export default function Tierlist<T>({ items, ...props }: TierlistProps<T>) {
-  const [tiers, setTiers] = useState(() => {
+function getDefaultTiers<T>(items: Array<T>) {
+  return () => {
     const tiers = (
       ['S', 'A', 'B', 'C', 'D', 'F']
-        .map(generateBlankTier)
-        .map((data, i) => ({ ...data, items: [], color: `#${defaultColors[i]}` }) as Tier<T>)
+        .map(generateBlankTier(items))
+        .map((data, i) => ({ ...data, items: [], color: `hsl(${15 * i}, 50%, 50%)`, position: i }) as Tier<T>)
     );
 
     tiers.push({
@@ -38,13 +30,19 @@ export default function Tierlist<T>({ items, ...props }: TierlistProps<T>) {
       color: 'var(--background-secondary)',
       items: items.map(item => ({ item, id: generateId() })),
       invert: false,
+      position: tiers.length
     });
 
     return tiers;
-  });
-  const localStorage = useLocalStorage<Array<Tier<T>>>('tierlist', setTiers, tiers);
-  const [newTier, setNewTier] = useState<FormTier<T>>(generateBlankTier);
+  };
+}
 
+export default function Tierlist<T>({ items, ...props }: TierlistProps<T>) {
+  const [tiers, setTiers] = useState(getDefaultTiers(items));
+  const localStorage = useLocalStorage<Array<Tier<T>>>('tierlist', setTiers, tiers);
+  const [newTier, setNewTier] = useState<FormTier<T>>(generateBlankTier(items));
+
+  const orderedTiers = tiers.sort((a, b) => a.position - b.position);
   const render = useMemo(() => 'renderItem' in props ? props.renderItem : 'children' in props ? props.children : () => 'No render method provided.', [props]);
   const unsorted = tiers.find(tier => tier.id === 'unsorted')!;
 
@@ -74,32 +72,38 @@ export default function Tierlist<T>({ items, ...props }: TierlistProps<T>) {
       ));
     }
   };
-  const updateTier = (id: string, newTier: Partial<Tier<T>>) => {
-    setTiers(tiers => {
-      const index = tiers.findIndex(tier => tier.id === id);
-      if (index === -1) return [
-        ...tiers.filter(tier => tier.id !== 'unsorted'), 
-        { ...newTier, id: generateId(), items: [] } as Tier<T>,
-        unsorted
-      ];
+  const updateTier = (id: string, newTier: Partial<Tier<T>>) => setTiers(tiers => {
+    const index = tiers.findIndex(tier => tier.id === id);
+    if (index === -1) return [
+      ...tiers.filter(tier => tier.id !== 'unsorted'),
+      { ...newTier, id: generateId(), items: [] } as Tier<T>,
+      unsorted
+    ];
 
+    if (newTier.position !== undefined && tiers.some(tier => tier.position === newTier.position)) {
+      const currentPositionedTier = tiers.find(tier => tier.position === newTier.position)!;
+      const updatedCurrentPositionedTier = { ...currentPositionedTier, position: tiers[index].position };
       const updatedTier = { ...tiers[index], ...newTier };
-      return [...tiers.slice(0, index), updatedTier, ...tiers.slice(index + 1)];
-    });
-  };
-  const onSendToTier = (entry: Entry<T>, tier: Tier<T>) => {
-    setTiers(tiers => {
-      const tierContainingItem = tiers.find(tier => tier.items.some(item => item.id === entry.id));
-      const updatedTierContainedItem = { ...tierContainingItem!, items: tierContainingItem!.items.filter(item => item.id !== entry.id) };
-      const updatedTargetTier = { ...tier, items: [...tier.items, entry] };
-
       return tiers.map(tier => (
-        tier.id === updatedTierContainedItem.id ? updatedTierContainedItem
-        : tier.id === updatedTargetTier.id ? updatedTargetTier
+        tier.id === updatedCurrentPositionedTier.id ? updatedCurrentPositionedTier
+        : tier.id === updatedTier.id ? updatedTier
         : tier
       ));
-    });
-  }
+    }
+    const updatedTier = { ...tiers[index], ...newTier };
+    return [...tiers.slice(0, index), updatedTier, ...tiers.slice(index + 1)];
+  });
+  const onSendToTier = (entry: Entry<T>, tier: Tier<T>) => setTiers(tiers => {
+    const tierContainingItem = tiers.find(tier => tier.items.some(item => item.id === entry.id));
+    const updatedTierContainedItem = { ...tierContainingItem!, items: tierContainingItem!.items.filter(item => item.id !== entry.id) };
+    const updatedTargetTier = { ...tier, items: [...tier.items, entry] };
+
+    return tiers.map(tier => (
+      tier.id === updatedTierContainedItem.id ? updatedTierContainedItem
+        : tier.id === updatedTargetTier.id ? updatedTargetTier
+          : tier
+    ));
+  });
 
   return (
     <div className="tier-list-creator">
@@ -109,8 +113,10 @@ export default function Tierlist<T>({ items, ...props }: TierlistProps<T>) {
       }} submitText='Add tier' />
 
       <DragDropContext onDragEnd={onDragEnd}>
-        {tiers.map(tier => <TierComponent key={tier.id} {...{ tier, setTiers, updateTier, render, onSendToTier, tiers, unsorted }} />)}
+        {orderedTiers.map(tier => <TierComponent key={tier.id} {...{ tier, setTiers, updateTier, render, onSendToTier, tiers, unsorted }} />)}
       </DragDropContext>
+
+      <button type="reset" className='danger secondary' onClick={() => setTiers(getDefaultTiers(items))}>Reset</button>
     </div>
   );
 };
