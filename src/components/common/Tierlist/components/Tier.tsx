@@ -1,14 +1,14 @@
 import { ReactNode, useState } from "react";
-import { Draggable, Droppable } from "react-beautiful-dnd";
+import { Droppable } from "react-beautiful-dnd";
 
 import { useContextMenu } from "@/providers/ContextMenuProvider";
 import { classNames } from "@/common/functions/strings";
 
 import Modal from "../../Modal";
 import { Tier, Entry } from "../TierlistTypes";
+import { generateBlankTier } from "../TierlistFunctions";
 import TierModifyForm from "./TierModifyForm";
 import EntryComponent from "./Entry";
-import { generateBlankTier } from "../TierlistFunctions";
 
 type Props<T> = {
   tier: Tier<T>;

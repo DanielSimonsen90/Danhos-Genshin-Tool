@@ -1,7 +1,9 @@
 import { ReactNode } from "react";
 import { Draggable } from "react-beautiful-dnd";
-import { Entry, Tier } from "../TierlistTypes";
+
 import { useContextMenu } from "@/providers/ContextMenuProvider";
+
+import { Entry, Tier } from "../TierlistTypes";
 
 type Props<T> = {
   entry: Entry<T>;

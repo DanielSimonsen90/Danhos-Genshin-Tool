@@ -1,9 +1,11 @@
+import { useEffect, useRef, useState } from "react";
+
 import { generateRandomColor, colorConvert } from "@/common/functions/colors";
+import { classNames } from "@/common/functions/strings";
+import { useActionState } from "@/hooks/useActionState";
+
 import Switch from "../../Switch";
 import { Tier } from "../TierlistTypes";
-import { useActionState } from "@/hooks/useActionState";
-import { classNames } from "@/common/functions/strings";
-import { useEffect, useRef, useState } from "react";
 
 export type FormTier<T> = Omit<Partial<Tier<T>> & Pick<Tier<T>, 'id'>, 'items'>;
 

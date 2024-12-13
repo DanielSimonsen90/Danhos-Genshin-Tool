@@ -9,7 +9,6 @@ import { Entry, Tier, TierlistProps } from './TierlistTypes';
 import { FormTier, Tier as TierComponent, TierModifyForm } from './components';
 import { getDefaultTiers, generateBlankTier } from './TierlistFunctions';
 
-
 export default function Tierlist<T>({ items, ...props }: TierlistProps<T>) {
   const [tiers, setTiers] = useState(getDefaultTiers(items));
   const localStorage = useLocalStorage<Array<Tier<T>>>('tierlist', setTiers, tiers);
