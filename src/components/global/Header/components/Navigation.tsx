@@ -3,11 +3,11 @@ import { addTabNavigation } from "@/common/functions/accessibility";
 
 const routes = [
   ['/', 'Home'],
-  ['/characters', 'Characters'],
-  ['/artifacts', 'Artifacts'],
-  ['/domains', 'Domains'],
-  ['/development', 'Development'],
-];
+  // ['/building', 'Building'],
+  ['/data', 'Data'], // TODO: Refactor rendering to support nested routes through SelectMenu
+  // ['/generator', 'Generator'],
+  process.env.NODE_ENV === 'development' && ['/development', 'Development'],
+].filter(Boolean) as [string, string][];
 
 export const Navigation = () => (
   <nav>
