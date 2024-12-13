@@ -53,6 +53,12 @@ export default function TierModifyForm<T>({ tier, submitText, onTierUpdate, add 
   return (
     <form id={`modify-tier--${tier.id}`} className={classNames('tier', add && 'add')} onSubmit={onSubmit} style={{ backgroundColor: color }}>
       <input type="hidden" name="id" defaultValue={tier.id} />
+      <header className="tier__header">
+        <input ref={titleRef} className={classNames('tier__title', inverted && 'inverted')}
+          type="text" name="title" defaultValue={tier.title} placeholder="Tier title"
+          onChange={e => setTitle(e.target.value)}
+        />
+      </header>
       <div className="input-group">
         <label htmlFor="color">Color</label>
         <input ref={colorRef} type="color" name="color" 
@@ -64,13 +70,6 @@ export default function TierModifyForm<T>({ tier, submitText, onTierUpdate, add 
         <label htmlFor="invert">Invert</label>
         <Switch ref={invertRef} defaultChecked={tier.invert} onChange={setInverted} name="invert" />
       </div>
-
-      <header className="tier__header">
-        <input ref={titleRef} className={classNames('tier__title', inverted && 'inverted')}
-          type="text" name="title" defaultValue={tier.title} placeholder="Tier title"
-          onChange={e => setTitle(e.target.value)}
-        />
-      </header>
       {submitText && <button className={classNames(add && 'primary success')} type="submit" disabled={submitting || !title}>{submitText}</button>}
     </form>
   );
