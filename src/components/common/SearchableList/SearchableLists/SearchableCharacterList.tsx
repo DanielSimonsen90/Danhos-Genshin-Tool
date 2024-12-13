@@ -37,9 +37,9 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
     sort={(a, b) => isFavorite(a) === isFavorite(b) ? 0 : isFavorite(a) ? -1 : 1}
     renderItem={character => {
       const open = useContextMenu(item => [
-        item('View', () => navigate(`/characters/${character.name}`), '👁️'),
-        item(isFavorite(character) ? 'Unfavorite' : 'Favorite', () => isFavorite(character) ? remove(character) : add(character), '⭐'),
-        item('Hide', () => setHidden([...hidden, character]), '🙈'),
+        item('option', 'View', () => navigate(`/characters/${character.name}`), '👁️'),
+        item('option', isFavorite(character) ? 'Unfavorite' : 'Favorite', () => isFavorite(character) ? remove(character) : add(character), '⭐'),
+        item('option', 'Hide', () => setHidden([...hidden, character]), '🙈'),
       ]);
 
       return hidden.includes(character) ? null : (

@@ -8,6 +8,7 @@ import Modal from "../../Modal";
 import { Tier, Entry } from "../TierlistTypes";
 import TierModifyForm from "./TierModifyForm";
 import EntryComponent from "./Entry";
+import { generateBlankTier } from "../TierlistFunctions";
 
 type Props<T> = {
   tier: Tier<T>;
@@ -22,32 +23,51 @@ type Props<T> = {
 
 export default function Tier<T>({ tier, updateTier, setTiers, render, onSendToTier, tiers, unsorted }: Props<T>) {
   const [showEditModal, setShowEditModal] = useState(false);
-  const onContext = useContextMenu([
-    {
-      icon: '⬆️',
-      label: 'Move up',
-      action: () => updateTier(tier.id, { position: tier.position - 1 }),
-    },
-    {
-      icon: '✏️',
-      label: 'Edit',
-      action: () => setShowEditModal(true),
-    },
-    {
-      icon: '⬇️',
-      label: 'Move down',
-      action: () => updateTier(tier.id, { position: tier.position + 1 }),
-    },
-    {
-      icon: '🧹',
-      label: 'Clear',
-      action: () => setTiers(tiers => tiers.map(t => t.id === tier.id ? { ...t, items: [] } : t)),
-    },
-    {
-      icon: '🗑️',
-      label: 'Delete tier',
-      action: () => setTiers(tiers => tiers.filter(t => t.id !== tier.id)),
-    }
+  const onContext = useContextMenu(item => [
+    item('divider', 'Move'),
+    item('option', 
+      'Move up', 
+      () => updateTier(tier.id, { position: tier.position - 1 }), 
+      '⬆️'
+    ),
+    item('option', 
+      'Move down', 
+      () => updateTier(tier.id, { position: tier.position + 1 }), 
+      '⬇️'
+    ),
+
+    item('divider', 'Add rows'),
+    item('option', 
+      'Add new above', 
+      () => setTiers(tiers => {
+        const newTiers = [...tiers];
+        const newTier = generateBlankTier<T>(tiers)(`New ${tier.title}`);
+        newTier.position = tier.position - 1;
+        newTiers.splice(tier.position, 0, newTier);
+        return newTiers.map((t, i) => ({ ...t, position: i }));
+      }), 
+      '⬆️',
+    ),
+    item('option', 
+      'Add new below', 
+      () => setTiers(tiers => {
+        const newTiers = [...tiers];
+        const newTier = generateBlankTier<T>(tiers)(`New ${tier.title}`);
+        newTier.position = tier.position + 1;
+        newTiers.splice(tier.position + 1, 0, newTier);
+        return newTiers.map((t, i) => ({ ...t, position: i }));
+      }), 
+      '⬇️',
+    ),
+
+    item('divider', 'Modify'),
+    item('option',
+      'Edit',
+      () => setShowEditModal(true),
+      '✏️'
+    ),
+    item('option', 'Clear', () => setTiers(tiers => tiers.map(t => t.id === tier.id ? { ...t, items: [] } : t)), '🧹'),
+    item('option', 'Delete tier', () => setTiers(tiers => tiers.filter(t => t.id !== tier.id)), '🗑️'),
   ]);
   const onContextMenu = tier.id === 'unsorted' ? undefined : onContext;
 

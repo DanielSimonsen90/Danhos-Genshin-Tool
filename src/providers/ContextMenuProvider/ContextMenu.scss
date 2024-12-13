@@ -22,10 +22,36 @@
         border-top-left-radius: .5em;
         border-top-right-radius: .5em;
       }
+
       &:last-of-type {
         border-bottom-left-radius: .5em;
         border-bottom-right-radius: .5em;
       }
+    }
+
+    &-divider {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      color: var(--background-quaternary);
+      user-select: none;
+
+      &[data-label] {
+        gap: 1ch;
+      }
+
+      &::before,
+      &::after {
+        content: '';
+        display: block;
+        height: 1px;
+        background-color: var(--background-secondary);
+        flex: 1;
+      }
+    }
+
+    >*:first-child.context-menu-divider {
+      padding-top: .5ch;
     }
   }
 }

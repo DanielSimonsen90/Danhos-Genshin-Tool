@@ -65,10 +65,18 @@ export default function ContextMenuProvider({ children }: PropsWithChildren) {
             transform: `translate(${x === 'left' ? '-100%' : 0}, ${y === 'top' ? '-100%' : 0})`,
           }}>
             {menuItems.map((item, index) => (
-              <div key={index} className="context-menu-item" onClick={item.action}>
-                {item.icon && <div className="context-menu-icon">{item.icon}</div>}
-                <span>{item.label}</span>
-              </div>
+              item.type === 'divider' ? (
+                <div key={index} className="context-menu-divider" data-label={item.label}>
+                  {item.label}
+                </div>
+              )
+              : item.type === 'option' ? (
+                <div key={index} className="context-menu-item" onClick={item.action}>
+                  {item.icon && <div className="context-menu-icon">{item.icon}</div>}
+                  <span>{item.label}</span>
+                </div>
+              )
+              : undefined
             ))}
           </div>
         )}

@@ -7,38 +7,8 @@ import useOnChange from '@/hooks/useOnChange';
 
 import { Entry, Tier, TierlistProps } from './TierlistTypes';
 import { FormTier, Tier as TierComponent, TierModifyForm } from './components';
+import { getDefaultTiers, generateBlankTier } from './TierlistFunctions';
 
-const getHslColor = (index: number) => `hsl(${index * 15}, 50%, 50%)`;
-
-function generateBlankTier<T>(items: Array<T>) {
-  return (title?: string) => ({
-    id: generateId(),
-    invert: false,
-    title,
-    color: getHslColor(items.length - 1),
-  } as Tier<T>);
-}
-
-function getDefaultTiers<T>(items: Array<T>) {
-  return () => {
-    const tiers = (
-      ['S', 'A', 'B', 'C', 'D', 'F']
-        .map(generateBlankTier(items))
-        .map((data, i) => ({ ...data, items: [], color: getHslColor(i), position: i }) as Tier<T>)
-    );
-
-    tiers.push({
-      id: 'unsorted',
-      title: 'Unsorted',
-      color: 'var(--background-secondary)',
-      items: items.map(item => ({ item, id: generateId() })),
-      invert: false,
-      position: tiers.length
-    });
-
-    return tiers;
-  };
-}
 
 export default function Tierlist<T>({ items, ...props }: TierlistProps<T>) {
   const [tiers, setTiers] = useState(getDefaultTiers(items));
