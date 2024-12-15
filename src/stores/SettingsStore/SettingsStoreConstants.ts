@@ -9,5 +9,5 @@ export const DEFAULT_SETTINGS: Settings = {
     results: 'combined'
   },
   updated: undefined,
-  traveler: undefined
+  newUser: true
 };

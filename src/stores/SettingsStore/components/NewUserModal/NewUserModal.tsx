@@ -1,13 +1,15 @@
 import Modal from "@/components/common/Modal";
-import { Settings } from "../../SettingsStoreTypes";
 import { CharacterImage } from "@/components/common/Images";
+import { Traveler } from "@/stores/RegionStore/RegionStoreTypes";
 
 type Props = {
   newUser: boolean;
-  onTravelerSelect: (traveler: Settings['traveler']) => void;
+  onTravelerSelect: (traveler: Traveler) => void;
 };
 
 export const NewUserModal = ({ newUser, onTravelerSelect }: Props) => {
+  // TODO: Add region
+
   return newUser ? (
     <Modal className="new-user-modal" open={newUser} onClose={() => onTravelerSelect('lumine')}>
       <h1>You wake up from a deep sleep on a beach in Monstadt...</h1>

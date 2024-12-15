@@ -1,4 +1,4 @@
-import { DependencyList, SetStateAction, useContext, useEffect } from "react";
+import { SetStateAction, useContext } from "react";
 import { Settings } from "./SettingsStoreTypes";
 import { GlobalStoresContext } from "../GlobalStoresConstants";
 
