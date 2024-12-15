@@ -7,6 +7,9 @@ import {
   Artifacts, Artifact,
   Domains, Domain,
   
+  BuildingIndex,
+  PriorityList,
+
   Development,
 } from '@/pages';
 
@@ -38,9 +41,10 @@ export const Router = () => (
         </Route>
 
         <Route path="building">
+          <Route index element={<BuildingIndex />} />
+          <Route path="priority-list" element={<PriorityList />} />
           {/* 
-          
-          /priority-list
+
           /focus-day
           /plan
 
