@@ -5,11 +5,11 @@ import Image from './Image';
 import { classNames, pascalCaseFromSnakeCase } from '@/common/functions/strings';
 
 type Props = {
-  set: keyof typeof ArtifactSets | string;
-  name: ArtifactPartName;
+  set: keyof typeof ArtifactSets | string & {};
+  piece: ArtifactPartName;
   className?: string;
 }
 
-export default function ArtifactImage({ set, name, className }: Props) {
+export default function ArtifactImage({ set, piece: name, className }: Props) {
   return <Image className={classNames("artifact-image", className)} src={ImageService.getArtifactImage(set, name)} alt={`${pascalCaseFromSnakeCase(set)} ${name}`} />;
 }
