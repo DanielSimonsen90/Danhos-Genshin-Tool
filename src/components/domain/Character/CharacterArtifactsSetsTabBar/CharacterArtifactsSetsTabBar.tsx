@@ -33,7 +33,7 @@ export default function CharacterArtifactsSetsTabBar({ character, set, artifactS
           ArtifactSet.bonusDescription(set, pieces),
           ArtifactSet.bonusDescription(set, pieces).endsWith('.') ? '' : '.'
         )}>
-          <ArtifactImage set={set.name} name="Flower" className="set-icon" />
+          <ArtifactImage set={set.name} piece="Flower" className="set-icon" />
           {pieces} piece {set.name}
         </p>
       </Link>
