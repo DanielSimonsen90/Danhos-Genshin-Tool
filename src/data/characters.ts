@@ -257,7 +257,15 @@ export const Chongyun = new Character("Chongyun", "Cryo", "Claymore", [], Rarity
   ])
 ]);
 
-export const Chlorinde = new Character("Clorinde", "Electro", "Sword", ["Bond of Life"], Rarity.Legendary, 'Fontaine', [
+export const Citlali = new Character("Citlali", "Cryo", "Catalyst", ["Shield", "Nightsouls Blessing"], Rarity.Legendary, 'Natlan', [
+  new CharacterSet("Off-field Support", ["Elemental Mastery", "Energy Recharge"], "Burst/Ult", false, [
+    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 5),
+    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 4),
+    new CharacterArtifactSet(Sets.Instructor, 4, 3),
+  ])
+])
+
+export const Clorinde = new Character("Clorinde", "Electro", "Sword", ["Bond of Life"], Rarity.Legendary, 'Fontaine', [
   new CharacterSet("On-field DPS", ["ATK", "HP"], "Skill/Ability", true, [
     new CharacterArtifactSet(Sets.FragmentOfHarmonicWhimsy, 4, 5),
     new CharacterArtifactSet(Sets.ThunderingFury, 4, 4),
@@ -684,6 +692,18 @@ export const KukiShinobu = new Character("Kuki Shinobu", "Electro", "Sword", ["H
   ])
 ]);
 
+export const LanYan = new Character("Lan Yan", "Anemo", "Catalyst", ["Shield", "Grouping"], Rarity.Epic, 'Liyue', [
+  new CharacterSet("Off-field Support", ["Elemental Mastery"], "Skill/Ability", false, [
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 5),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 4),
+    new CharacterArtifactSet(Sets.GildedDreams, 4, 3),
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 2, 2),
+    new CharacterArtifactSet(Sets.GildedDreams, 2, 2),
+    new CharacterArtifactSet(Sets.GildedDreams, 2, 1),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 2, 1),
+  ])
+]);
+
 export const Layla = new Character("Layla", "Cryo", "Sword", ["Shield"], Rarity.Epic, 'Sumeru', [
   new CharacterSet("Off-field Support", ["HP", "Energy Recharge"], "Burst/Ult", false, [
     new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 5),
@@ -748,6 +768,15 @@ export const Lyney = new Character("Lyney", "Pyro", "Bow", ['Self-heal'], Rarity
     new CharacterArtifactSet(Sets.MarechausseeHunter, 2, 1),
   ])
 ]);
+
+export const Mavuika = new Character("Mavuika", "Pyro", "Claymore", ['Nightsouls Blessing', 'Off-field Damage'], Rarity.Legendary, 'Natlan', [
+  new CharacterSet("On-field DPS", ["ATK", 'Elemental Mastery'], "Skill/Ability", true, [
+    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 5),
+    new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 4),
+    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 3),
+    new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 2),
+  ]),
+])
 
 export const Mika = new Character("Mika", "Cryo", "Polearm", ["Heal"], Rarity.Epic, 'Mondstadt', [
   new CharacterSet("Off-field Support", ["HP", "Energy Recharge"], "Burst/Ult", false, [
@@ -1110,7 +1139,9 @@ export const TravelerHydro = new Character("Traveler (Hydro)", "Hydro", "Sword",
     new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 4),
   ])
 ]);
-export const TravelerPyro = new Character("Traveler (Pyro)", "Pyro", "Sword", [], Rarity.Legendary, 'Unknown', []);
+export const TravelerPyro = new Character("Traveler (Pyro)", "Pyro", "Sword", ['Nightsouls Blessing'], Rarity.Legendary, 'Unknown', [
+  // TODO: Update when Genshin.gg has data - https://genshin.gg/characters/traveler(pyro)/
+]);
 export const TravelerCryo = new Character("Traveler (Cryo)", "Cryo", "Sword", [], Rarity.Legendary, 'Unknown', []);
 
 export const Venti = new Character("Venti", "Anemo", "Bow", ["Grouping"], Rarity.Legendary, 'Mondstadt', [
