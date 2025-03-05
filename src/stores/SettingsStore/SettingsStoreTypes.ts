@@ -1,4 +1,4 @@
-export type Settings = {
+export type AppSettings = {
   showAll: boolean;
   wrap: boolean;
   preferredTabs: {

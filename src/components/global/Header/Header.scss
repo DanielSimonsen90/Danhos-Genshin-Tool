@@ -30,6 +30,7 @@
     @extend %hidden;
 
     visibility: visible;
+    position: absolute;
   }
 
   .tab-bar {
@@ -39,14 +40,27 @@
 }
 
 .top-header {
-  display: flex;
+  display: grid;
+  grid-template-areas: "blank nav settings";
+  grid-template-columns: 1fr auto 1fr;
 
   nav {
-    margin-left: auto;
+    grid-area: nav;
   }
-
-  .settings-cog {
+  .settings-container {
+    grid-area: settings;
+    align-items: center;
+    gap: .5em;
     justify-self: end;
-    margin-left: auto;
+
+    display: flex;
+
+    .input-group {
+      flex-direction: column;
+    }
+
+    .character-image {
+      --size: 2rem;
+    }
   }
 }

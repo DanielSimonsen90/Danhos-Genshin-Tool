@@ -1,20 +1,27 @@
 import { useState } from "react";
+import { Settings } from "@/common/types/app-types";
 import { CharacterImage } from "@/components/common/Images";
 import Select from "@/components/common/Select";
 import Switch from "@/components/common/Switch";
-import { Settings } from "@/stores/SettingsStore/SettingsStoreTypes";
-import { Traveler } from "@/stores/RegionStore/RegionStoreTypes";
+import { Region, Traveler } from "@/stores/RegionStore/RegionStoreTypes";
+import { DEFAULT_REGION_DATA, REGIONS } from "@/stores/RegionStore/RegionStoreConstants";
 
 type Props<Setting extends keyof Settings> = {
   setting: Setting;
+  hideLabel?: boolean;
   value: Settings[Setting];
+  setValue?: (value: Settings[Setting]) => void;
 };
 export default function SettingsOption<Setting extends keyof Settings>(props: Props<Setting>) {
-  const [value, setValue] = useState(props.value);
-  
+  const [value, _setValue] = useState(props.value);
+  const setValue = (value: Settings[Setting]) => {
+    _setValue(value);
+    props.setValue?.(value);
+  };
+
   return props.setting === 'updated' || props.setting === 'newUser' ? null : (
     <div className="input-group">
-      <label>{titles[props.setting]}</label>
+      {!props.hideLabel && <label>{titles[props.setting]}</label>}
       <InputType {...props} value={value} onChange={setValue} />
     </div>
   );
@@ -22,11 +29,16 @@ export default function SettingsOption<Setting extends keyof Settings>(props: Pr
 
 
 const titles: Record<keyof Settings, string> = {
+  // App settings
   showAll: 'Show all search results',
   wrap: 'Wrap search results',
-  // traveler: 'Preferred Traveler image',
   preferredTabs: 'Preferred tabs',
+  
+  // Region settings
+  traveler: 'Preferred Traveler image',
+  region: 'Preferred region',
 
+  // Internal App settings
   updated: 'Last updated',
   newUser: 'Internal "new user" flag',
 };
@@ -39,21 +51,22 @@ function InputType<Setting extends keyof Settings>({ setting, value, onChange }:
   switch (setting) {
     case 'showAll': return <Switch name={setting} enabled={value as Settings['showAll']} onChange={value => onChange(value as Settings[Setting])} />;
     case 'wrap': return <Switch name={setting} enabled={value as Settings['wrap']} onChange={value => onChange(value as Settings[Setting])} />;
-    // case 'traveler': return (() => {
-    //   const [traveler, setTraveler] = useState(value as Traveler);  
+    case 'region': return <Select name={setting} options={Object.values(REGIONS)} value={value as Region} onChange={value => onChange(value as Settings[Setting])} />;
+    case 'traveler': return (() => {
+      const [traveler, setTraveler] = useState(value as Traveler);  
 
-    //   return (<>
-    //     <CharacterImage character={traveler} />
-    //     <Select name={setting}
-    //       options={Array.of<Traveler>('lumine', 'aether')}
-    //       value={value as Traveler}
-    //       onChange={value => {
-    //         setTraveler(value as Traveler);
-    //         onChange(value as Settings[Setting]);
-    //       }}
-    //     />
-    //   </>)
-    // })();
+      return (<>
+        <CharacterImage character={traveler ?? DEFAULT_REGION_DATA['traveler']} />
+        <Select name={setting}
+          options={Array.of<Traveler>('lumine', 'aether')}
+          value={value as Traveler}
+          onChange={value => {
+            setTraveler(value as Traveler);
+            onChange(value as Settings[Setting]);
+          }}
+        />
+      </>)
+    })();
     case 'preferredTabs': return (<>
       <Select
         name={`${setting}.${'results' as keyof Settings['preferredTabs']}`}

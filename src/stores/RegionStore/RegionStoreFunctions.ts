@@ -1,20 +1,19 @@
-import { Dispatch, SetStateAction } from "react";
-import { DebugLog } from "@/common/functions/dev";
-import { RegionData, Traveler } from "./RegionStoreTypes";
-
-const debugLog = DebugLog(DebugLog.DEBUGS.regionStore);
+import { SetStateAction } from "react";
+import { Region, RegionData, Traveler } from "./RegionStoreTypes";
 
 export function useRegionFunctions(
-  region: RegionData, 
-  setRegion: Dispatch<SetStateAction<RegionData>>
+  regionData: RegionData, 
+  setRegionData: (update: SetStateAction<Partial<RegionData>>) => void
 ) {
-  const setTraveler = (traveler: Traveler) => setRegion(region => ({
-    ...region,
+  const setRegion = (region: Region) => setRegionData(({ region }));
+  const setTraveler = (traveler: Traveler) => setRegionData(data => ({
+    ...data,
     traveler
-  }));
+  }))
 
   return {
-    traveler: region.traveler,
+    ...regionData,
+    setRegion,
     setTraveler
   };
 }

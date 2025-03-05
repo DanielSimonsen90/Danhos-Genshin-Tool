@@ -14,7 +14,10 @@
 
   .select[name="preferredTabs.results"] {
     min-width: 12ch;
-  } 
+  }
+  .select[name=region] {
+    min-width: 15ch;
+  }
 
   .character-image {
     --size: 5ch;

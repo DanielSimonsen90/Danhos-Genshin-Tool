@@ -1,29 +1,35 @@
 import Modal from "@/components/common/Modal";
-import { CharacterImage } from "@/components/common/Images";
-import { Traveler } from "@/stores/RegionStore/RegionStoreTypes";
+import { RegionSettings } from "@/stores/RegionStore/RegionStoreTypes";
+import SettingsOption from "@/components/global/Header/components/SettingsModal/SettingsOption";
+import { DEFAULT_REGION_DATA } from "@/stores/RegionStore/RegionStoreConstants";
+import { useActionState } from "@/hooks/useActionState";
 
+type NewUserData = (
+  & Pick<RegionSettings, 'traveler' | 'region'>
+)
 type Props = {
   newUser: boolean;
-  onTravelerSelect: (traveler: Traveler) => void;
+  onSubmit: (newUserData: NewUserData) => void;
 };
 
-export const NewUserModal = ({ newUser, onTravelerSelect }: Props) => {
-  // TODO: Add region
-
+export const NewUserModal = ({ newUser, onSubmit }: Props) => {
+  const [submitting, _onSubmit] = useActionState<NewUserData>(data => {
+    delete data._form;
+    onSubmit(data);
+  })
+  
   return newUser ? (
-    <Modal className="new-user-modal" open={newUser} onClose={() => onTravelerSelect('lumine')}>
-      <h1>You wake up from a deep sleep on a beach in Monstadt...</h1>
-      <p>You wake up as:</p>
-      <ul className="traveler-select">
-        <li className="traveler-option" title="Lumine">
-          <CharacterImage character='Lumine' />
-          <button className="brand primary" onClick={() => onTravelerSelect('lumine')}>Lumine</button>
-        </li>
-        <li className="traveler-option" title="Aether">
-          <CharacterImage character='Aether' />
-          <button className="brand primary" onClick={() => onTravelerSelect('aether')}>Aether</button>
-        </li>
-      </ul>
+    <Modal className="new-user-modal" open={newUser} onClose={() => onSubmit(!submitting && DEFAULT_REGION_DATA)}>
+      <form onSubmit={_onSubmit}>
+        <h1>You wake up from a deep sleep on a beach in Monstadt...</h1>
+        <div className="intro-sentence">
+          <span>You wake up as </span>
+          <SettingsOption setting="traveler" value="lumine" />
+          <span> in </span>
+          <SettingsOption setting="region" value="Europe" />
+        </div>
+        <input type="submit" value="Finish" disabled={submitting} />
+      </form>
     </Modal>
   ) : null;
 }
