@@ -14,11 +14,28 @@ export default function GlobalStoresProvider({ children }: PropsWithChildren) {
   const [FavoriteStore] = useFavoriteStoreProvider();
   const [RegionStore] = useRegionStoreProvider();
 
+  const GlobalMall = {
+    CacheStore,
+    DataStore,
+    SettingsStore,
+    FavoriteStore,
+    RegionStore,
+  }
+  window.GlobalMall = GlobalMall;
+
+  console.log('GlobalStores update', GlobalMall);
+
   return (
-    <GlobalStoresContext.Provider value={{ CacheStore, DataStore, SettingsStore, FavoriteStore, RegionStore }}>
+    <GlobalStoresContext.Provider value={GlobalMall}>
       <NewUser />
       <SettingsNotice />
       {children}
     </GlobalStoresContext.Provider>
   );
+}
+
+declare global {
+  interface Window {
+    GlobalMall: any;
+  }
 }

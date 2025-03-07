@@ -8,6 +8,7 @@ export const DEBUGS = {
   // components
   searchComponent: false,
   settingsModal: false,
+  settingsContainer: true,
 
   // hooks
   useActionState: false,

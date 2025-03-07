@@ -55,15 +55,15 @@ export default function useSettingsStoreProvider() {
   const NewUser = useCallback(() => (
     <NewUserModal newUser={settings.newUser} onSubmit={data => {
       debugLog('NewUserModal submitted', data)
-      regionStore.setRegionData({
-        ...data,
-        selected: true,
-      });
       store.updateAndSaveSettings(state => {
         const update = { ...state };
         delete update.newUser;
         return update;
       })
+      regionStore.setRegionData({
+        ...data,
+        selected: true,
+      });
     }} />
   ), [settings.newUser]);
 

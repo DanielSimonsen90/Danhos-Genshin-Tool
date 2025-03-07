@@ -5,7 +5,7 @@ export const DEFAULT_REGION: Region = 'Europe';
 export const DEFAULT_REGION_DATA: RegionData = {
   region: DEFAULT_REGION,
   selected: true,
-  traveler: undefined,
+  traveler: 'aether',
   priorityList: undefined,
 };
 

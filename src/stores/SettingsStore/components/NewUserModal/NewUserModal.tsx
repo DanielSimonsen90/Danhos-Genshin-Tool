@@ -19,14 +19,14 @@ export const NewUserModal = ({ newUser, onSubmit }: Props) => {
   })
   
   return newUser ? (
-    <Modal className="new-user-modal" open={newUser} onClose={() => onSubmit(!submitting && DEFAULT_REGION_DATA)}>
+    <Modal className="new-user-modal" open={newUser} onClose={() => !submitting && onSubmit(DEFAULT_REGION_DATA)}>
       <form onSubmit={_onSubmit}>
         <h1>You wake up from a deep sleep on a beach in Monstadt...</h1>
         <div className="intro-sentence">
           <span>You wake up as </span>
-          <SettingsOption setting="traveler" value="lumine" />
+          <SettingsOption setting="traveler" value={DEFAULT_REGION_DATA['traveler']} />
           <span> in </span>
-          <SettingsOption setting="region" value="Europe" />
+          <SettingsOption setting="region" value={DEFAULT_REGION_DATA['region']} />
         </div>
         <input type="submit" value="Finish" disabled={submitting} />
       </form>
