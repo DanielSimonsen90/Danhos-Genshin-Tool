@@ -1,26 +1,49 @@
-import Modal from "@/components/common/Modal";
-import { RegionSettings } from "@/stores/RegionStore/RegionStoreTypes";
+import { DebugLog } from "@/common/functions/dev";
+
+import { useRegionStore, RegionSettings, DEFAULT_REGION_DATA } from "@/stores/RegionStore";
+
+// TODO: Move SettingsOption somewhere else...
 import SettingsOption from "@/components/global/Header/components/SettingsModal/SettingsOption";
-import { DEFAULT_REGION_DATA } from "@/stores/RegionStore/RegionStoreConstants";
+import Modal from "@/components/common/Modal";
+
 import { useActionState } from "@/hooks/useActionState";
+
+import { useSettingsStore } from "../../SettingsStore";
+
+const debugLog = DebugLog(DebugLog.DEBUGS.settingsStore);
 
 type NewUserData = (
   & Pick<RegionSettings, 'traveler' | 'region'>
-)
-type Props = {
-  newUser: boolean;
-  onSubmit: (newUserData: NewUserData) => void;
-};
+);
 
-export const NewUserModal = ({ newUser, onSubmit }: Props) => {
-  const [submitting, _onSubmit] = useActionState<NewUserData>(data => {
+export const NewUserModal = () => {
+  const SettingsStore = useSettingsStore();
+  const RegionStore = useRegionStore();
+  const newUser = SettingsStore.getSetting('newUser');
+  const [submitting, onSubmit] = useActionState<NewUserData>(data => {
     delete data._form;
-    onSubmit(data);
-  })
-  
+    _onSubmit(data);
+  });
+
+  debugLog('NewUserModal render', {
+    setting: newUser,
+    store: SettingsStore,
+  });
+
+  function _onSubmit(data: NewUserData) {
+    debugLog('NewUserModal submitted', data);
+
+    RegionStore.setRegionData({ ...data, selected: true });
+    SettingsStore.updateAndSaveSettings(state => {
+      const update = { ...state };
+      delete update.newUser;
+      return update;
+    }, true);
+  }
+
   return newUser ? (
-    <Modal className="new-user-modal" open={newUser} onClose={() => !submitting && onSubmit(DEFAULT_REGION_DATA)}>
-      <form onSubmit={_onSubmit}>
+    <Modal className="new-user-modal" open={newUser} onClose={() => !submitting && _onSubmit(DEFAULT_REGION_DATA)}>
+      <form onSubmit={onSubmit}>
         <h1>You wake up from a deep sleep on a beach in Monstadt...</h1>
         <div className="intro-sentence">
           <span>You wake up as </span>
@@ -32,4 +55,4 @@ export const NewUserModal = ({ newUser, onSubmit }: Props) => {
       </form>
     </Modal>
   ) : null;
-}
+};

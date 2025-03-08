@@ -2,8 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 
 import { generateId } from '@/common/functions/random';
-import { useLocalStorage } from '@/hooks/useLocalStorage';
 import useOnChange from '@/hooks/useOnChange';
+import StorageService from '@/services/StorageService';
 
 import { Entry, Tier, TierlistProps } from './TierlistTypes';
 import { FormTier, Tier as TierComponent, TierModifyForm } from './components';
@@ -11,14 +11,14 @@ import { getDefaultTiers, generateBlankTier } from './TierlistFunctions';
 
 export default function Tierlist<T>({ items, ...props }: TierlistProps<T>) {
   const [tiers, setTiers] = useState(getDefaultTiers(items));
-  const localStorage = useLocalStorage<Array<Tier<T>>>('tierlist', setTiers, tiers);
+  const storageService = StorageService<Array<Tier<T>>>('tierlist', setTiers, tiers);
   const [newTier, setNewTier] = useState<FormTier<T>>(generateBlankTier(tiers));
 
   const orderedTiers = tiers.sort((a, b) => a.position - b.position);
   const render = useMemo(() => 'renderItem' in props ? props.renderItem : 'children' in props ? props.children : () => 'No render method provided.', [props]);
   const unsorted = tiers.find(tier => tier.id === 'unsorted')!;
 
-  useOnChange(tiers, localStorage.set);
+  useOnChange(tiers, storageService.set);
 
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;

@@ -11,3 +11,16 @@ export type RegionData = {
 };
 
 export type RegionSettings = Pick<RegionData, 'traveler' | 'region'>;
+export type RegionContextType = Record<Region, RegionData | undefined>;
+
+export type RegionStore = {
+  regions: RegionContextType;
+  currentRegion: Region;
+  regionData: RegionData;
+
+  get regionSettings(): RegionSettings;
+
+  setRegionData: (update: Partial<RegionData>) => void;
+  setRegion: (region: Region) => void;
+  setTraveler: (traveler: Traveler) => void;
+};

@@ -1,2 +1,3 @@
 export * from './DataStoreHooks';
-export { default } from './DataStoreProvider'
+export * from './DataStoreTypes';
+export * from './DataStore';

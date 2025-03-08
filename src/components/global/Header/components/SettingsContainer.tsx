@@ -1,8 +1,10 @@
+import { DebugLog } from "@/common/functions/dev";
+
 import SettingsCog from "@/components/common/icons/SettingsCog";
 import { CharacterImage } from "@/components/common/Images";
 import { useRegionStore } from "@/stores/RegionStore";
+
 import SettingsOption from "./SettingsModal/SettingsOption";
-import { DebugLog } from "@/common/functions/dev";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsContainer);
 
@@ -11,7 +13,7 @@ type Props = {
 }
 
 export default function SettingsContainer({ setOpenModal }: Props) {
-  const { region, setRegion, traveler } = useRegionStore();
+  const { regionData: { region, traveler }, setRegion } = useRegionStore();
   
   debugLog(
     region

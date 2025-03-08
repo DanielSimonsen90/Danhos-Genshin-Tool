@@ -1,3 +1,5 @@
+@use '../../styles/partials' as partials;
+
 .data-page {
   display: grid;
   grid-template-columns: 10em auto;
@@ -20,9 +22,8 @@
     grid-template-columns: repeat(3, 1fr);
     gap: .25rem;
 
-    img {
-      --size: 4em;
-      border-radius: 100%;
+    header {
+      display: grid;
     }
 
     li a:hover {
@@ -31,7 +32,33 @@
     }
   }
 
+  .model-name {
+    display: flex;
+    align-items: center;
+    gap: .5ch;
+
+    font-weight: bold;
+    font-size: 1.1em;
+
+    margin: 0;
+
+    span {
+      @extend %text-ellipsis;
+    }
+
+    .element-image {
+      --size: 1.25rem;
+    }
+  }
+
+  img:not(.element-image) {
+    --size: 4em;
+    border-radius: 100%;
+  }
+
   a {
+    @extend %text-ellipsis;
+
     color: var(--text-muted);
     text-decoration: none;
     padding: 0.5ch;
@@ -54,10 +81,20 @@
   nav>ul>li {
     padding-left: unset;
     margin-bottom: 1ch;
+
+    li {
+      display: flex;
+      align-items: center;
+
+      .element-image {
+        --size: 1em;
+      }
+    }
   }
 }
 
 .data-route {
+
   summary,
   summary a {
     font-size: 1.1em;

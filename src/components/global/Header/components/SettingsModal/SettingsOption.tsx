@@ -81,9 +81,6 @@ function InputType<Setting extends keyof Settings>({ setting, value, onChange }:
         onChange={value => onChange(value as any)}
       />
     </>);
-    case 'updated': 
-    case 'newUser':
-      return null;
     default: {
       console.error(`Unknown setting: ${setting}`);
       return null;

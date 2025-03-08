@@ -2,6 +2,10 @@ import { Element, Weapon, BonusAbility, Rarity, Region } from '@/common/types';
 import CharacterSet from './CharacterSet';
 
 export class Character {
+  public static isCharacter(obj: any): obj is Character {
+    return obj instanceof Character;
+  }
+
   constructor(
     public name: string,
     public element: Element,

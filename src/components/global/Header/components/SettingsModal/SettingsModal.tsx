@@ -6,7 +6,7 @@ import Modal, { ModalConsumerProps } from "@/components/common/Modal";
 import { useActionState } from "@/hooks/useActionState";
 
 import { useSettingsStore } from "@/stores/SettingsStore";
-import useFavoriteStoreProvider from '@/stores/FavoriteStore';
+import { useFavoriteStoreProvider } from '@/stores/FavoriteStore';
 import { useRegionStore } from '@/stores/RegionStore';
 
 import SettingsOption from "./SettingsOption";
@@ -14,12 +14,12 @@ import SettingsOption from "./SettingsOption";
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsModal);
 
 export default function SettingsModal(props: ModalConsumerProps) {
-  const { settings, resetSettings, updateAndSaveSettings, hasCustomSettings } = useSettingsStore();
-  const [favoriteStore] = useFavoriteStoreProvider();
-  const { regionData, setRegionData } = useRegionStore();
+  const { changeableSettings, resetSettings, updateAndSaveSettings, hasCustomSettings } = useSettingsStore();
+  const favoriteStore = useFavoriteStoreProvider(); // TODO
+  const { regionSettings, setRegionData } = useRegionStore();
   const [submitting, onSubmit] = useActionState<Settings>(data => {
     delete data._form;
-    debugLog('Settings update recieved', data);
+    debugLog('Settings update received', data);
     updateAndSaveSettings(data);
     setRegionData({
       ...data,
@@ -41,8 +41,8 @@ export default function SettingsModal(props: ModalConsumerProps) {
       <h1>{DOMAIN_NAME} Settings</h1>
       <p>Here are list of settings, you can change to better your experience.</p>
       <form onSubmit={onSubmit}>
-        {Object.entries(Object.assign({}, settings, regionData)).map(([key, value]) => (
-          <SettingsOption key={key} setting={key as keyof typeof settings} value={value as typeof settings[keyof typeof settings]} />
+        {Object.entries(Object.assign({}, changeableSettings, regionSettings)).map(([key, value]) => (
+          <SettingsOption key={key} setting={key as keyof Settings} value={value as Settings[keyof Settings]} />
         ))}
 
         <div className="button-panel">

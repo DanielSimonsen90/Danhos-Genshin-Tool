@@ -1,2 +1,2 @@
-export * from './CacheStoreHooks';
-export { default } from './CacheStoreProvider';
+export * from './CacheStoreTypes';
+export * from './CacheStore';

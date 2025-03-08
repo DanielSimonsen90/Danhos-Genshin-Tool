@@ -38,6 +38,10 @@
         display: flex;
         align-items: center;
       }
+
+      &__element img {
+        --max-size: 2rem;
+      }
     }
     
     a {

@@ -20,8 +20,15 @@ export function useActionState<TResult extends Record<string, any>>(
     const form = [...event.currentTarget.querySelectorAll('[name]').values()].map(el => ({
       name: el.getAttribute('name'),
       value: (() => {
-        if (el instanceof HTMLInputElement) return el.value || el.defaultValue || el.checked;
-        if (el instanceof HTMLSelectElement || el instanceof HTMLTextAreaElement) return el.value ?? ('defaultValue' in el ? el.defaultValue : null);
+        const type = el.getAttribute('type');
+        const input = el.tagName === 'INPUT' ? (el as HTMLInputElement) : null;
+        const select = el.tagName === 'SELECT' ? (el as HTMLSelectElement) : null;
+        const textarea = el.tagName === 'TEXTAREA' ? (el as HTMLTextAreaElement) : null;
+
+        if (type === 'checkbox') return input?.checked ? input.value ?? true : null;
+        if (type === 'radio') return input?.checked ? input.value : null;
+        if (input || select || textarea) return input.value || input.defaultValue || input.checked;
+
         console.error('Unhandled element type', { el });
         return null;
       })()
@@ -30,7 +37,7 @@ export function useActionState<TResult extends Record<string, any>>(
     Object.values(form).forEach(({ name, value }) => {
       if (name.includes('[')) {
         const arrKey = name.split('[')[0];
-        if (!data[arrKey]) data[arrKey] = [];
+        if (!data[arrKey]) data[arrKey] = []; 
         data[arrKey].push(value);
 
       } else if (name.includes('.')) {

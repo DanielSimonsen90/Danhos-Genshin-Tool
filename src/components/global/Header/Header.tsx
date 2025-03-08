@@ -6,7 +6,7 @@ import { useSetting } from "@/stores/SettingsStore";
 import { Navigation, Search, Cache, SettingsContainer, SettingsModal } from "./components";
 
 export default function Header() {
-  const [preferredTabs] = useSetting('preferredTabs');
+  const preferredTabs = useSetting('preferredTabs');
   const [openModal, setOpenModal] = useState(false);
 
   return (
@@ -23,7 +23,7 @@ export default function Header() {
             ['search', 'Search'],
             ['history', 'History']
           ]}
-            defaultTab={preferredTabs?.searchOrHistory}
+            defaultTab={preferredTabs.get()?.searchOrHistory}
             search={<Search />}
             history={<Cache />}
           />

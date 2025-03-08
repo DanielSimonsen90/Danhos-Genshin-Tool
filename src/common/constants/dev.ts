@@ -6,12 +6,12 @@ export const DEBUGS = {
   searchQuery: false,
 
   // components
-  searchComponent: false,
+  searchComponent: true,
   settingsModal: false,
-  settingsContainer: true,
+  settingsContainer: false,
 
   // hooks
-  useActionState: false,
+  useActionState: true,
   useComponent: false,
 
   // services
@@ -22,6 +22,7 @@ export const DEBUGS = {
   // stores
   cacheStore: false,
   dataStore: false,
-  settingsStore: true,
-  regionStore: true,
+  favoriteStore: false,
+  regionStore: false,
+  settingsStore: false,
 };

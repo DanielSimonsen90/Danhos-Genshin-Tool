@@ -9,6 +9,7 @@
   flex-direction: column;
   width: fit-content;
   min-width: 10ch;
+  user-select: none;
 
   &--multiple {
     padding: unset;

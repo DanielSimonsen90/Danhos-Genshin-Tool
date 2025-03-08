@@ -1,8 +1,12 @@
 import { Region, ResinCost } from "@/common/types";
 import ArtifactSet from "../artifacts/ArtifactSet";
-import { DataStoreContext } from "@/stores/DataStore/DataStoreTypes";
+import { DataStore } from "@/stores/DataStore/DataStoreTypes";
 
 export abstract class Domain<TReward> {
+  public static isDomain(obj: any): obj is Domain<any> {
+    return obj instanceof Domain;
+  }
+
   constructor(
     public name: string,
     public description: string,
@@ -10,7 +14,7 @@ export abstract class Domain<TReward> {
     public region: Region,
   ) {}
 
-  public getRewards(dataStore: DataStoreContext): TReward[] {
+  public getRewards(dataStore: DataStore): TReward[] {
     if (this.isBlessing()) return dataStore.getArtifactsFromDomain(this.name) as any as TReward[];
     console.error('Domain.getRewards() not implemented for', this);
     return [];
@@ -22,6 +26,9 @@ export abstract class Domain<TReward> {
 }
 
 export class DomainOfBlessing extends Domain<ArtifactSet> {
+  public static isDomainOfBlessing(obj: any): obj is DomainOfBlessing {
+    return obj instanceof DomainOfBlessing;
+  }
   constructor(
     public name: string,
     public description: string,
