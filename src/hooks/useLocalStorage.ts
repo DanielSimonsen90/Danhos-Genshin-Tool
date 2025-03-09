@@ -13,13 +13,17 @@ export function useLocalStorage<TValue>(key: string, load: Dispatch<SetStateActi
 export function useLocalStorage<TValue>(key?: string, load?: Dispatch<SetStateAction<TValue>>, defaultValue?: TValue) {
   const callback = (key: string) => ({
     get: function (fallback?: any): TValue | undefined {
+      if (!key) return undefined;
+
       const item = localStorage.getItem(key) ?? fallback;
       return item ? typeof item === 'string' && (item.startsWith('{') || item.startsWith('[')) ? JSON.parse(item) : item : undefined;
     },
     set: function (value: TValue) {
+      if (!key) return;
       localStorage.setItem(key, JSON.stringify(value));
     },
     remove: function () {
+      if (!key) return;
       localStorage.removeItem(key);
     },
     get key() {
@@ -32,5 +36,5 @@ export function useLocalStorage<TValue>(key?: string, load?: Dispatch<SetStateAc
     if (load) load(callback(key).get(defaultValue));
   }, [key]);
 
-  return key ? callback(key) : callback;
+  return key !== undefined ? callback(key) : callback;
 }

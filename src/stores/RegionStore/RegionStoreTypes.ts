@@ -17,9 +17,9 @@ export type RegionContextType = Record<Region, RegionData | undefined>;
 
 export type RegionStore = {
   regions: RegionContextType;
+  currentRegion: Region;
+  regionData: RegionData;
 
-  get currentRegion(): Region;
-  get regionData(): RegionData;
   get regionSettings(): RegionSettings;
 
   setRegionData: (update: Partial<RegionData> | ((state: RegionData) => RegionData)) => void;

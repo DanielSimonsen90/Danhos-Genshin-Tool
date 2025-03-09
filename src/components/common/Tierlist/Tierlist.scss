@@ -50,8 +50,15 @@
     gap: 1ch;
   }
 
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .searchable-list__list {
-    --min: 6rem;
+    --min: 5rem;
+    gap: 0;
   }
 }
 

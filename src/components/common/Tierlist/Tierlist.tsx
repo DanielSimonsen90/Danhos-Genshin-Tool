@@ -10,7 +10,7 @@ import { FormTier, Tier as TierComponent, TierModifyForm } from './components';
 import { getDefaultTiers, generateBlankTier, generateEntry } from './TierlistFunctions';
 
 export default function Tierlist<T, TStorageData extends object>({ items, onUnsortedSearch, ...props }: TierlistProps<T, TStorageData>) {
-  const storageKey = 'storageKey' in props ? props.storageKey : 'storage' in props ? props.storage.key : 'tierlist';
+  const storageKey = 'storageKey' in props ? props.storageKey : 'storage' in props ? props.storage.key : '';
   const onStorageLoaded = 'onStorageLoaded' in props ? props.onStorageLoaded : undefined;
   const onStorageSave = 'onStorageSave' in props ? props.onStorageSave : undefined;
 

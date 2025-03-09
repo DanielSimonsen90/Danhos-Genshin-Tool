@@ -52,6 +52,7 @@ export function usePriorityListTabs() {
   return {
     tabs: tabs.map(([key]) => [key, (
       <>
+        {/* TODO: Make modifiable */}
         <span>{key}</span>
         <button className="close" onClick={() => deleteTab(key)}>&times;</button>
       </>

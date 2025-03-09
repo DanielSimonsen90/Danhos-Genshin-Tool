@@ -1,7 +1,9 @@
-.searchable-list .filters {
-  --width: 22ch;
-}
-
-.searchable-list__list {
-  --min: 13rem;
+.artifacts-page {
+  .searchable-list .filters {
+    --width: 22ch;
+  }
+  
+  .searchable-list__list {
+    --min: 13rem;
+  }
 }

@@ -8,6 +8,13 @@ import { DEFAULT_REGION, DEFAULT_REGION_DATA, LOCAL_STORAGE_KEY, REGIONS } from 
 export const useRegionStore = create<RegionStore>((setState, getState) => {
   const storageService = StorageService<RegionContextType>(LOCAL_STORAGE_KEY);
 
+  const regions = storageService.get() ?? { [DEFAULT_REGION]: DEFAULT_REGION_DATA } as RegionContextType;
+  const getCurrentRegion = (regions: RegionContextType) => Object.keys(regions).find(region => regions[region as keyof typeof regions].selected) as keyof RegionContextType;
+  const getRegionData = (regions: RegionContextType) => {
+    const currentRegion = getCurrentRegion(regions);
+    return currentRegion ? regions[currentRegion as keyof typeof regions] : undefined;
+  };
+  
   const setRegionData = (update: Partial<RegionData> | ((state: RegionData) => RegionData)) => {
     const { regions } = getState();
     const resolvedRegionDataUpdate = typeof update === 'function'
@@ -43,21 +50,20 @@ export const useRegionStore = create<RegionStore>((setState, getState) => {
     };
 
     storageService.set(next);
-    setState({ regions: next });
+
+    setState({
+      regions: next,
+      currentRegion: getCurrentRegion(next),
+      regionData: getRegionData(next),
+    });
   }
   const setRegion = (region: Region) => setRegionData({ region });
   const setTraveler = (traveler: Traveler) => setRegionData({ traveler });
 
   return {
-    regions: storageService.get() ?? { [DEFAULT_REGION]: DEFAULT_REGION_DATA } as RegionContextType,
-    get currentRegion(): Region {
-      const { regions } = getState();
-      return Object.keys(regions).find(region => regions[region as keyof typeof regions].selected) as keyof RegionContextType;
-    },
-    get regionData(): RegionData {
-      const { regions, currentRegion } = getState();
-      return currentRegion ? regions[currentRegion as keyof typeof regions] : undefined;
-    },
+    regions,
+    currentRegion: getCurrentRegion(regions),
+    regionData: getRegionData(regions),
     get regionSettings(): RegionSettings {
       return ObjectUtils.pick(getState().regionData, 'region', 'traveler');
     },
