@@ -25,6 +25,10 @@
   }
 
   &__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     padding-right: 1ch;
     margin-right: 1ch;
     border-right: 1px solid var(--text-muted);
@@ -32,6 +36,7 @@
 
   &__title {
     text-align: center;
+    margin: 0;
 
     &.inverted {
       filter: invert(1);
