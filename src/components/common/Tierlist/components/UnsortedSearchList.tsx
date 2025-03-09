@@ -18,6 +18,6 @@ export const UnsortedSearchList = <TItem, TFilterKeys extends string>({ tier, un
   ), [searchableListProps]);
 
   return tier !== unsorted
-    ? <>{tier.items.map((entry, index, items) => render(entry, index, items))}</>
-    : <SearchableList items={tier.items} {...searchableListProps} />;
+    ? <>{tier.entries.map((entry, index, items) => render(entry, index, items))}</>
+    : <SearchableList items={tier.entries} {...searchableListProps} />;
 };

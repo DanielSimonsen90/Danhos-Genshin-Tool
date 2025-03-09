@@ -2,16 +2,14 @@ import { create } from 'zustand';
 
 import * as ObjectUtils from '@/common/functions/object';
 import StorageService from '@/services/StorageService';
-import { RegionData, Region, Traveler, RegionContextType, RegionStore } from './RegionStoreTypes';
+import { RegionData, Region, Traveler, RegionContextType, RegionStore, RegionSettings } from './RegionStoreTypes';
 import { DEFAULT_REGION, DEFAULT_REGION_DATA, LOCAL_STORAGE_KEY, REGIONS } from './RegionStoreConstants';
 
 export const useRegionStore = create<RegionStore>((setState, getState) => {
   const storageService = StorageService<RegionContextType>(LOCAL_STORAGE_KEY);
-  const regions = storageService.get() ?? { [DEFAULT_REGION]: DEFAULT_REGION_DATA } as RegionContextType;
-  const region = Object.keys(regions).find(region => regions[region as keyof RegionContextType].selected) as keyof RegionContextType;
-  const regionData = regions[region];
 
   const setRegionData = (update: Partial<RegionData> | ((state: RegionData) => RegionData)) => {
+    const { regions } = getState();
     const resolvedRegionDataUpdate = typeof update === 'function'
       ? update(getState().regionData)
       : update;
@@ -21,9 +19,9 @@ export const useRegionStore = create<RegionStore>((setState, getState) => {
       const region = _region as keyof RegionContextType;
       const storedData: RegionData = regions[region] ?? Object.assign(
         {},
-        DEFAULT_REGION_DATA,
+        ObjectUtils.exclude(DEFAULT_REGION_DATA, 'selected'),
         resolvedRegionDataUpdate,
-        { region, selected: false } as RegionData
+        { region } as RegionData
       );
 
       if (region === resolvedRegionDataUpdate.region) acc[region] = {
@@ -31,7 +29,7 @@ export const useRegionStore = create<RegionStore>((setState, getState) => {
         ...resolvedRegionDataUpdate,
         selected: true,
       };
-      else if (storedData.selected) acc[region] = { ...storedData, selected: false };
+      else if (storedData.selected && resolvedRegionDataUpdate.region) acc[region] = { ...storedData, selected: false };
       else if (regions[region]) acc[region] = storedData;
 
       return acc;
@@ -45,26 +43,30 @@ export const useRegionStore = create<RegionStore>((setState, getState) => {
     };
 
     storageService.set(next);
-    setState({
-      regions: next,
-      currentRegion: resolvedRegionDataUpdate.region,
-      regionData: next[resolvedRegionDataUpdate.region],
-    });
+    setState({ regions: next });
   }
   const setRegion = (region: Region) => setRegionData({ region });
   const setTraveler = (traveler: Traveler) => setRegionData({ traveler });
 
   return {
-    regions,
-    currentRegion: region,
-    regionData,
-    get regionSettings() {
+    regions: storageService.get() ?? { [DEFAULT_REGION]: DEFAULT_REGION_DATA } as RegionContextType,
+    get currentRegion(): Region {
+      const { regions } = getState();
+      return Object.keys(regions).find(region => regions[region as keyof typeof regions].selected) as keyof RegionContextType;
+    },
+    get regionData(): RegionData {
+      const { regions, currentRegion } = getState();
+      return currentRegion ? regions[currentRegion as keyof typeof regions] : undefined;
+    },
+    get regionSettings(): RegionSettings {
       return ObjectUtils.pick(getState().regionData, 'region', 'traveler');
     },
     
     setRegionData,
     setRegion,
     setTraveler,
+
+    storageService,
   };
 });
 

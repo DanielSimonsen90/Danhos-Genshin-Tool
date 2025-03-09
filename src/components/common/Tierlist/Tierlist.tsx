@@ -14,17 +14,19 @@ export default function Tierlist<T, TStorageData extends object>({ items, onUnso
   const onStorageLoaded = 'onStorageLoaded' in props ? props.onStorageLoaded : undefined;
   const onStorageSave = 'onStorageSave' in props ? props.onStorageSave : undefined;
 
-  const [tiers, setTiers] = useState(getDefaultTiers(items));
+  const [tiers, setTiers] = useState(props.defaultTiers ?? getDefaultTiers(items));
   const storageService = useLocalStorage<TStorageData | Array<Tier<T>>>(storageKey, storedData => setTiers(tiers => {
     const resolvedStoredData = typeof storedData === 'function' ? storedData(tiers) : storedData;
     const resolvedStoredTiers = onStorageLoaded?.(resolvedStoredData as TStorageData) ?? resolvedStoredData as Array<Tier<T>>;
-    const storedItems = resolvedStoredTiers.flatMap(tier => tier.items);
+    const storedItems = resolvedStoredTiers.flatMap(tier => tier.entries);
+    
     if (storedItems.length === items.length) return resolvedStoredTiers;
+    else if (storedItems.length === 0) return getDefaultTiers(items)();
 
     const newItems = items.filter(item => !storedItems.some(storedItem => JSON.stringify(storedItem.item) === JSON.stringify(item)));
     return resolvedStoredTiers.map(tier => (
       tier.id === 'unsorted'
-        ? { ...tier, items: [...tier.items, ...newItems.map(generateEntry)] }
+        ? { ...tier, entries: [...tier.entries, ...newItems.map(generateEntry)] }
         : tier
     ));
   }), onStorageLoaded ? null : tiers);
@@ -33,8 +35,8 @@ export default function Tierlist<T, TStorageData extends object>({ items, onUnso
   const orderedTiers = tiers.sort((a, b) => a.position - b.position);
   const render = useMemo(() => (
     'renderItem' in props ? props.renderItem
-      : 'children' in props ? props.children
-        : () => 'No render method provided.'
+    : 'children' in props ? props.children
+    : () => 'No render method provided.'
   ), [props]);
   const unsorted = tiers.find(tier => tier.id === 'unsorted')!;
 
@@ -49,20 +51,20 @@ export default function Tierlist<T, TStorageData extends object>({ items, onUnso
 
     const sourceTier = tiers.find(tier => tier.id === source.droppableId)!;
     const destinationTier = tiers.find(tier => tier.id === destination.droppableId)!;
-    const sourceItems = [...sourceTier.items];
-    const destinationItems = [...destinationTier.items];
+    const sourceItems = [...sourceTier.entries];
+    const destinationItems = [...destinationTier.entries];
     const [movedItem] = sourceItems.splice(source.index, 1);
 
     if (sourceTier.id === destinationTier.id) {
       sourceItems.splice(destination.index, 0, movedItem);
       setTiers(tiers => tiers.map(tier =>
-        tier.id === sourceTier.id ? { ...tier, items: sourceItems } : tier
+        tier.id === sourceTier.id ? { ...tier, entries: sourceItems } : tier
       ));
     } else {
       destinationItems.splice(destination.index, 0, movedItem);
       setTiers(tiers => tiers.map(tier =>
-        tier.id === sourceTier.id ? { ...tier, items: sourceItems }
-          : tier.id === destinationTier.id ? { ...tier, items: destinationItems }
+        tier.id === sourceTier.id ? { ...tier, entries: sourceItems }
+          : tier.id === destinationTier.id ? { ...tier, entries: destinationItems }
             : tier
       ));
     }
@@ -71,7 +73,7 @@ export default function Tierlist<T, TStorageData extends object>({ items, onUnso
     const index = tiers.findIndex(tier => tier.id === id);
     if (index === -1) return [
       ...tiers.filter(tier => tier.id !== 'unsorted'),
-      { ...newTier, id: generateId(), items: [] } as Tier<T>,
+      { ...newTier, id: generateId(), entries: [] } as Tier<T>,
       unsorted
     ];
 
@@ -89,13 +91,13 @@ export default function Tierlist<T, TStorageData extends object>({ items, onUnso
     return [...tiers.slice(0, index), updatedTier, ...tiers.slice(index + 1)];
   });
   const onSendToTier = (entry: Entry<T>, tier: Tier<T>) => setTiers(tiers => {
-    const tierContainingItem = tiers.find(tier => tier.items.some(item => item.id === entry.id));
+    const tierContainingItem = tiers.find(tier => tier.entries.some(item => item.id === entry.id));
 
     // Sent to same tier
     if (tierContainingItem.id === tier.id) return tiers;
 
-    const updatedTierContainedItem = { ...tierContainingItem!, items: tierContainingItem!.items.filter(item => item.id !== entry.id) };
-    const updatedTargetTier = { ...tier, items: [...tier.items, entry] };
+    const updatedTierContainedItem = { ...tierContainingItem!, items: tierContainingItem!.entries.filter(item => item.id !== entry.id) };
+    const updatedTargetTier = { ...tier, items: [...tier.entries, entry] };
 
     return tiers.map(tier => (
       tier.id === updatedTierContainedItem.id ? updatedTierContainedItem

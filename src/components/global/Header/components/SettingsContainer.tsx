@@ -5,6 +5,7 @@ import { CharacterImage } from "@/components/common/Images";
 import { useRegionStore } from "@/stores/RegionStore";
 
 import SettingsOption from "./SettingsModal/SettingsOption";
+import { addTabNavigation } from "@/common/functions/accessibility";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsContainer);
 
@@ -13,8 +14,9 @@ type Props = {
 }
 
 export default function SettingsContainer({ setOpenModal }: Props) {
-  const { regionData: { region, traveler }, setRegion } = useRegionStore();
-  
+  const RegionStore = useRegionStore();
+  const { regionData: { region, traveler }, setRegion } = RegionStore;
+
   debugLog(
     region
       ? 'SettingsContainer rendered'
@@ -26,9 +28,7 @@ export default function SettingsContainer({ setOpenModal }: Props) {
     <div className="settings-container">
       <SettingsOption setting="region" value={region} setValue={setRegion} hideLabel />
       {traveler ? <CharacterImage character={traveler} /> : null}
-      <SettingsCog role="button" tabIndex={0} onClick={() => setOpenModal(true)} onKeyDown={e => {
-        if (e.key === 'Enter' || e.key === 'NumpadEnter' || e.key === ' ') setOpenModal(true);
-      }} />
+      <SettingsCog role="button" tabIndex={0} {...addTabNavigation(() => setOpenModal(true), true)} />
     </div>
   ) : null;
 }

@@ -11,7 +11,7 @@
   overflow: auto;
 
   .chevron {
-    margin-left: auto !important;
+    margin-left: auto;
     margin-right: 1ch;
   }
 }
@@ -21,8 +21,9 @@
   border-right: 1px solid var(--background-tertiary);
   background-color: var(--background-secondary--muted);
   color: var(--text-muted);
+  
   min-width: max-content;
-
+  padding: .5em 1em;
   margin: 0;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
@@ -34,6 +35,7 @@
 
   &:hover {
     color: var(--text-primary);
+    cursor: pointer;
   }
 
   &--active {

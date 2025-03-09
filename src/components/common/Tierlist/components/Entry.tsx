@@ -15,7 +15,7 @@ type Props<T> = {
 };
 
 export default function Entry<T>({ entry, index, unsorted, tiers, onSendToTier, render }: Props<T>) {
-  const onContextMenu = useContextMenu(item => tiers.map(tier => tier.items.includes(entry)
+  const onContextMenu = useContextMenu(item => tiers.map(tier => tier.entries.includes(entry)
     ? undefined
     : item('option', `Send to ${tier.title}`, () => onSendToTier(entry, tier), '➡️')
   ).filter(Boolean), 'top-right');

@@ -7,7 +7,7 @@ import { useActionState } from "@/hooks/useActionState";
 import Switch from "../../Switch";
 import { Tier } from "../TierlistTypes";
 
-export type FormTier<T> = Omit<Partial<Tier<T>> & Pick<Tier<T>, 'id'>, 'items'>;
+export type FormTier<T> = Omit<Partial<Tier<T>> & Pick<Tier<T>, 'id'>, 'entries'>;
 
 type Props<T> = {
   tier: FormTier<T>;

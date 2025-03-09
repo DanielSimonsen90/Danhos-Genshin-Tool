@@ -7,30 +7,35 @@
   padding: 1em;
   box-shadow: 0 0 5px 3px #22222266;
 
-  nav ul {
+  nav {
     display: flex;
-    justify-content: center;
-    gap: 1rem;
+    align-items: center;
 
-    a {
-      text-decoration: none;
-      color: var(--text-secondary);
-      padding: .5rem;
-      border-radius: .25rem;
-      background-color: var(--background-secondary);
+    ul {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
 
-      &:hover {
-        color: var(--text-brand);
-        box-shadow: 0 0 5px 3px #22222266;
+      a {
+        text-decoration: none;
+        color: var(--text-secondary);
+        padding: .5rem;
+        border-radius: .25rem;
+        background-color: var(--background-secondary);
+
+        &:hover {
+          color: var(--text-brand);
+          box-shadow: 0 0 5px 3px #22222266;
+        }
       }
     }
-  }
 
-  nav li:has(a[href*=skip-nav]:not(:focus)) {
-    @extend %hidden;
+    li:has(a[href*=skip-nav]:not(:focus)) {
+      @extend %hidden;
 
-    visibility: visible;
-    position: absolute;
+      visibility: visible;
+      position: absolute;
+    }
   }
 
   .tab-bar {
@@ -47,6 +52,7 @@
   nav {
     grid-area: nav;
   }
+
   .settings-container {
     grid-area: settings;
     align-items: center;

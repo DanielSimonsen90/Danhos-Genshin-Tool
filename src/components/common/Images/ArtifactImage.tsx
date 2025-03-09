@@ -6,10 +6,10 @@ import { classNames, pascalCaseFromSnakeCase } from '@/common/functions/strings'
 
 type Props = {
   set: keyof typeof ArtifactSets | string & {};
-  piece: ArtifactPartName;
+  piece?: ArtifactPartName;
   className?: string;
 }
 
 export default function ArtifactImage({ set, piece: name, className }: Props) {
-  return <Image className={classNames("artifact-image", className)} src={ImageService.getArtifactImage(set, name)} alt={`${pascalCaseFromSnakeCase(set)} ${name}`} />;
+  return <Image className={classNames("artifact-image", className)} src={ImageService.getArtifactImage(set, name ?? 'Flower')} alt={`${pascalCaseFromSnakeCase(set)} ${name}`} />;
 }

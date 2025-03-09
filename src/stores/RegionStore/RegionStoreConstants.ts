@@ -6,7 +6,7 @@ export const DEFAULT_REGION_DATA: RegionData = {
   region: DEFAULT_REGION,
   selected: true,
   traveler: 'aether',
-  priorityList: undefined,
+  priorityLists: undefined,
 };
 
 export const REGIONS: Array<Region> = ['Europe', 'North America', 'Asia', 'TW, HK, MO'];

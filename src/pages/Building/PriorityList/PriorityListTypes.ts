@@ -1,5 +1,8 @@
 import { Tier } from "@/components/common/Tierlist/TierlistTypes";
-import { AREAS } from "./PriorityListConstants";
+import { ModelKeys } from "@/common/models";
 
-export type Area = typeof AREAS[number];
-export type PriorityListData = Record<string, Array<Tier<string>>>;
+export type PriorityList = {
+  model: ModelKeys;
+  tiers: Array<Tier<string>>;
+}
+export type PriorityLists = Record<string, PriorityList>;

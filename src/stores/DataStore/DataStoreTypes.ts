@@ -1,5 +1,6 @@
-import { ArtifactSet, Character, Domain } from '@/common/models';
+import { ArtifactSet, Character, Domain, Model } from '@/common/models';
 import type { DataStoreContent } from './DataStoreConstants';
+import ModelType from './ModelType';
 
 export type DataStore = typeof DataStoreContent & {
   findCharacterByName: (name: string) => Character | undefined;
@@ -8,4 +9,6 @@ export type DataStore = typeof DataStoreContent & {
 
   getDomainsFromArtifact: (artifactName: string) => Domain<any>[] | undefined;
   getArtifactsFromDomain: (domainName: string) => ArtifactSet[] | undefined;
+
+  getModelType: <TModel extends Model>(model: TModel) => ModelType<TModel>;
 }

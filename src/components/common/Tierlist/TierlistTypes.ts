@@ -12,12 +12,13 @@ export interface Tier<TItem> {
   invert: boolean;
   position: number;
   color: string;
-  items: Entry<TItem>[];
+  entries: Entry<TItem>[];
 }
 
 type BaseTierlistProps<TItem, TStorageData> = {
   items: Array<TItem>;
   onUnsortedSearch: (search: string, item: TItem) => boolean;
+  defaultTiers?: Array<Tier<TItem>>;
 } & ({
   storageKey?: string;
 } | {

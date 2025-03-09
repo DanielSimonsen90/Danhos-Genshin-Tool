@@ -68,7 +68,7 @@ export default function Tier<T>({ tier, updateTier, setTiers, render, onSendToTi
       () => setShowEditModal(true),
       '✏️'
     ),
-    item('option', 'Clear', () => setTiers(tiers => tiers.map(t => t.id === tier.id ? { ...t, items: [] } : t)), '🧹'),
+    item('option', 'Clear', () => setTiers(tiers => tiers.map(t => t.id === tier.id ? { ...t, entries: [] } : t)), '🧹'),
     item('option', 'Delete tier', () => setTiers(tiers => tiers.filter(t => t.id !== tier.id)), '🗑️'),
   ]);
   const onContextMenu = tier.id === 'unsorted' ? undefined : onContext;

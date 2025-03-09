@@ -1,0 +1,14 @@
+.priority-list-button {
+  margin: 0;
+  margin-left: auto;
+  font-size: 14px;
+  padding: .5em .75em;
+
+  b {
+    font-size: inherit;
+  }
+}
+
+.tab-bar__tabs:has(.priority-list-button) .chevron {
+  margin-left: 1ch;
+}

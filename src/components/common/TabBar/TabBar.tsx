@@ -7,7 +7,7 @@ type Props<
   TTabKey extends string,
 > = {
   defaultTab?: TTabKey,
-  tabs: [TTabKey, ReactNode][],
+  tabs: Array<(readonly [TTabKey, ReactNode | JSX.Element])>,
   noTabs?: JSX.Element,
 
   tab?: TTabKey,
@@ -73,12 +73,12 @@ export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props
     <div className={classNames("tab-bar", props.className)}>
       <header className={classNames('tab-bar__tabs')}>
         {internalTabs.map(([tab, title]) => title &&
-          <button key={getKeyName(tab)}
+          <div role="button" key={getKeyName(tab)}
             className={classNames("tab-bar__tab", activeTab === tab && 'tab-bar__tab--active')}
             onClick={() => setActiveTab(tab)}
           >
             {title}
-          </button>)}
+          </div>)}
         {props.children}
         <Chevron role="button" tabIndex={0} point={collapsed ? 'down' : 'up'} onClick={() => setCollapsed(v => !v)} onKeyDown={e => {
           if (e.key === 'Enter' || e.key === 'NumpadEnter' || e.key === ' ') setCollapsed(v => !v);
