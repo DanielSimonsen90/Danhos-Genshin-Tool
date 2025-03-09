@@ -9,10 +9,15 @@ import { Entry, Tier, TierlistProps } from './TierlistTypes';
 import { FormTier, Tier as TierComponent, TierModifyForm } from './components';
 import { getDefaultTiers, generateBlankTier, generateEntry } from './TierlistFunctions';
 
-export default function Tierlist<T>({ items, onUnsortedSearch, ...props }: TierlistProps<T>) {
+export default function Tierlist<T, TStorageData extends object>({ items, onUnsortedSearch, ...props }: TierlistProps<T, TStorageData>) {
+  const storageKey = 'storageKey' in props ? props.storageKey : 'storage' in props ? props.storage.key : 'tierlist';
+  const onStorageLoaded = 'onStorageLoaded' in props ? props.onStorageLoaded : undefined;
+  const onStorageSave = 'onStorageSave' in props ? props.onStorageSave : undefined;
+
   const [tiers, setTiers] = useState(getDefaultTiers(items));
-  const storageService = useLocalStorage<Array<Tier<T>>>('tierlist', storedTiers => setTiers(tiers => {
-    const resolvedStoredTiers = typeof storedTiers === 'function' ? storedTiers(tiers) : storedTiers;
+  const storageService = useLocalStorage<TStorageData | Array<Tier<T>>>(storageKey, storedData => setTiers(tiers => {
+    const resolvedStoredData = typeof storedData === 'function' ? storedData(tiers) : storedData;
+    const resolvedStoredTiers = onStorageLoaded?.(resolvedStoredData as TStorageData) ?? resolvedStoredData as Array<Tier<T>>;
     const storedItems = resolvedStoredTiers.flatMap(tier => tier.items);
     if (storedItems.length === items.length) return resolvedStoredTiers;
 
@@ -22,7 +27,7 @@ export default function Tierlist<T>({ items, onUnsortedSearch, ...props }: Tierl
         ? { ...tier, items: [...tier.items, ...newItems.map(generateEntry)] }
         : tier
     ));
-  }), tiers);
+  }), onStorageLoaded ? null : tiers);
   const [newTier, setNewTier] = useState<FormTier<T>>(generateBlankTier(tiers));
 
   const orderedTiers = tiers.sort((a, b) => a.position - b.position);
@@ -33,7 +38,10 @@ export default function Tierlist<T>({ items, onUnsortedSearch, ...props }: Tierl
   ), [props]);
   const unsorted = tiers.find(tier => tier.id === 'unsorted')!;
 
-  useOnChange(tiers, storageService.set);
+  useOnChange(tiers, tiers => {
+    const storageData = onStorageSave?.(tiers) ?? tiers;
+    storageService.set(storageData);
+  }, [onStorageSave]);
 
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;

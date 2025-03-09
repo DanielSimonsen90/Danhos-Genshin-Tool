@@ -1,29 +1,37 @@
+import { LocalStorageReturn } from "@/hooks/useLocalStorage";
 import { ReactNode } from "react";
 
-export interface Entry<T> {
+export interface Entry<TItem> {
   id: string;
-  item: T;
+  item: TItem;
 }
 
-export interface Tier<T> {
+export interface Tier<TItem> {
   id: string;
   title: string;
   invert: boolean;
   position: number;
   color: string;
-  items: Entry<T>[];
+  items: Entry<TItem>[];
 }
 
-type BaseTierlistProps<T> = {
-  items: Array<T>;
-  onUnsortedSearch: (search: string, item: T) => boolean;
-}
-
-export type RenderItem<T> = (item: T, index: number) => ReactNode;
-type TierlistRenderProps<T> = {
-  renderItem: RenderItem<T>
+type BaseTierlistProps<TItem, TStorageData> = {
+  items: Array<TItem>;
+  onUnsortedSearch: (search: string, item: TItem) => boolean;
+} & ({
+  storageKey?: string;
 } | {
-  children: RenderItem<T>
-}
+  storage?: LocalStorageReturn<TStorageData>
+}) & ({
+  onStorageLoaded: (data: TStorageData) => Array<Tier<TItem>>;
+  onStorageSave: (data: Array<Tier<TItem>>) => TStorageData;
+} | {})
 
-export type TierlistProps<T> = BaseTierlistProps<T> & TierlistRenderProps<T>;
+export type RenderItem<TItem> = (item: TItem, index: number) => ReactNode;
+type TierlistRenderProps<T> = {
+  renderItem: RenderItem<T>;
+} | {
+  children: RenderItem<T>;
+};
+
+export type TierlistProps<TItem, TStorageData> = BaseTierlistProps<TItem, TStorageData> & TierlistRenderProps<TItem>;

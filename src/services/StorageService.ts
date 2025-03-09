@@ -4,6 +4,7 @@ export type StorageReturn<TValue> = {
   get(fallback?: TValue): TValue | undefined;
   set(value: TValue): void;
   remove(): void;
+  readonly key: string;
 }
 
 function StorageService<TValue>(): ((key: string) => StorageReturn<TValue>);
@@ -20,7 +21,10 @@ function StorageService<TValue>(key?: string, load?: Dispatch<SetStateAction<TVa
     },
     remove: function() {
       localStorage.removeItem(key);
-    }
+    },
+    get key() {
+      return key;
+    },
   } as StorageReturn<TValue>);
 
   if (load) {

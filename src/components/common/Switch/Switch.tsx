@@ -1,3 +1,4 @@
+import { addTabNavigation } from "@/common/functions/accessibility";
 import { classNames } from "@/common/functions/strings";
 import { forwardRef, useRef, useState } from "react";
 
@@ -9,6 +10,11 @@ type Props = {
 export default forwardRef<HTMLInputElement, Props>(function Switch({ enabled, checked, disabled, ...props }, ref) {
   const [internalChecked, setInternalChecked] = useState(enabled ?? props.defaultChecked ?? false);
   const internalRef = useRef<HTMLInputElement>(null);
+  const className = classNames(
+    "switch", 
+    disabled && "switch--disabled", 
+    internalChecked && "switch--enabled"
+  );
 
   const onChange = (checked: boolean) => {
     setInternalChecked(checked);
@@ -17,9 +23,9 @@ export default forwardRef<HTMLInputElement, Props>(function Switch({ enabled, ch
   };
 
   return (
-    <div className={classNames("switch", disabled && "switch--disabled", internalChecked && "switch--enabled")} role="checkbox" tabIndex={0} onKeyDown={e => {
-      if (e.key === 'Enter' || e.key === 'NumpadEnter' || e.key === ' ') onChange?.(!checked);
-    }}>
+    <div className={className} role="checkbox" tabIndex={0} 
+      {...addTabNavigation(() => onChange?.(!checked))}
+    >
       <div className="switch__thumb"></div>
       <input {...props} ref={
         ref ? (element: HTMLInputElement) => {
