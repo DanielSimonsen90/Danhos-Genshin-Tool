@@ -16,12 +16,14 @@ export interface Tier<T> {
 
 type BaseTierlistProps<T> = {
   items: Array<T>;
+  onUnsortedSearch: (search: string, item: T) => boolean;
 }
 
+export type RenderItem<T> = (item: T, index: number) => ReactNode;
 type TierlistRenderProps<T> = {
-  renderItem: (item: T) => ReactNode;
+  renderItem: RenderItem<T>
 } | {
-  children: (item: T) => ReactNode;
+  children: RenderItem<T>
 }
 
 export type TierlistProps<T> = BaseTierlistProps<T> & TierlistRenderProps<T>;

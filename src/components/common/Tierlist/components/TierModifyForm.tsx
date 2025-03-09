@@ -28,6 +28,7 @@ export default function TierModifyForm<T>({ tier, submitText, onTierUpdate, add 
 
   const [submitting, onSubmit] = useActionState<Tier<T>>(data => {
     delete data._form;
+    console.log('TierModifyForm', data);
     onTierUpdate(data.id, data);
 
     setTitle('');

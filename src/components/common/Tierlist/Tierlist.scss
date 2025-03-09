@@ -38,11 +38,15 @@
     }
   }
 
-  &__items {
+  &__items:not(:has(.searchable-list)) {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 1ch;
+  }
+
+  .searchable-list__list {
+    --min: 6rem;
   }
 }
 

@@ -3,19 +3,23 @@ import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 
 import { generateId } from '@/common/functions/random';
 import useOnChange from '@/hooks/useOnChange';
-import StorageService from '@/services/StorageService';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 
 import { Entry, Tier, TierlistProps } from './TierlistTypes';
 import { FormTier, Tier as TierComponent, TierModifyForm } from './components';
 import { getDefaultTiers, generateBlankTier } from './TierlistFunctions';
 
-export default function Tierlist<T>({ items, ...props }: TierlistProps<T>) {
+export default function Tierlist<T>({ items, onUnsortedSearch, ...props }: TierlistProps<T>) {
   const [tiers, setTiers] = useState(getDefaultTiers(items));
-  const storageService = StorageService<Array<Tier<T>>>('tierlist', setTiers, tiers);
+  const storageService = useLocalStorage<Array<Tier<T>>>('tierlist', setTiers, tiers);
   const [newTier, setNewTier] = useState<FormTier<T>>(generateBlankTier(tiers));
 
   const orderedTiers = tiers.sort((a, b) => a.position - b.position);
-  const render = useMemo(() => 'renderItem' in props ? props.renderItem : 'children' in props ? props.children : () => 'No render method provided.', [props]);
+  const render = useMemo(() => (
+    'renderItem' in props ? props.renderItem 
+    : 'children' in props ? props.children 
+    : () => 'No render method provided.'
+  ), [props]);
   const unsorted = tiers.find(tier => tier.id === 'unsorted')!;
 
   useOnChange(tiers, storageService.set);
@@ -58,8 +62,8 @@ export default function Tierlist<T>({ items, ...props }: TierlistProps<T>) {
       const updatedTier = { ...tiers[index], ...newTier };
       return tiers.map(tier => (
         tier.id === updatedCurrentPositionedTier.id ? updatedCurrentPositionedTier
-        : tier.id === updatedTier.id ? updatedTier
-        : tier
+          : tier.id === updatedTier.id ? updatedTier
+            : tier
       ));
     }
     const updatedTier = { ...tiers[index], ...newTier };
@@ -67,13 +71,17 @@ export default function Tierlist<T>({ items, ...props }: TierlistProps<T>) {
   });
   const onSendToTier = (entry: Entry<T>, tier: Tier<T>) => setTiers(tiers => {
     const tierContainingItem = tiers.find(tier => tier.items.some(item => item.id === entry.id));
+
+    // Sent to same tier
+    if (tierContainingItem.id === tier.id) return tiers;
+
     const updatedTierContainedItem = { ...tierContainingItem!, items: tierContainingItem!.items.filter(item => item.id !== entry.id) };
     const updatedTargetTier = { ...tier, items: [...tier.items, entry] };
 
     return tiers.map(tier => (
       tier.id === updatedTierContainedItem.id ? updatedTierContainedItem
-        : tier.id === updatedTargetTier.id ? updatedTargetTier
-          : tier
+      : tier.id === updatedTargetTier.id ? updatedTargetTier
+      : tier
     ));
   });
 
@@ -81,11 +89,18 @@ export default function Tierlist<T>({ items, ...props }: TierlistProps<T>) {
     <div className="tier-list-creator">
       <TierModifyForm add tier={newTier} onTierUpdate={(id, tier) => {
         updateTier(id, tier);
-        setNewTier({ id: generateId() });
+        setNewTier(generateBlankTier(tiers)());
       }} submitText='Add tier' />
 
       <DragDropContext onDragEnd={onDragEnd}>
-        {orderedTiers.map(tier => <TierComponent key={tier.id} {...{ tier, setTiers, updateTier, render, onSendToTier, tiers, unsorted }} />)}
+        {orderedTiers.map(tier => (
+          <TierComponent key={tier.id} {...{
+            render,
+            tier, updateTier, onSendToTier,
+            tiers, setTiers,
+            unsorted, onUnsortedSearch
+          }} />
+        ))}
       </DragDropContext>
 
       <button type="reset" className='danger secondary' onClick={() => setTiers(getDefaultTiers(items))}>Reset</button>

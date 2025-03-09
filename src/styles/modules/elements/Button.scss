@@ -15,7 +15,7 @@ button {
   }
 
   &:active,
-  &:focus {
+  &:focus-visible {
     color: var(--text-primary) !important;
     border: 1px solid var(--brand) !important;
   }

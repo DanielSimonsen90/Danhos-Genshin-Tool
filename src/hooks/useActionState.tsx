@@ -25,7 +25,7 @@ export function useActionState<TResult extends Record<string, any>>(
         const select = el.tagName === 'SELECT' ? (el as HTMLSelectElement) : null;
         const textarea = el.tagName === 'TEXTAREA' ? (el as HTMLTextAreaElement) : null;
 
-        if (type === 'checkbox') return input?.checked ? input.value ?? true : null;
+        if (type === 'checkbox') return input?.checked ? input.value || true : null;
         if (type === 'radio') return input?.checked ? input.value : null;
         if (input || select || textarea) return input.value || input.defaultValue || input.checked;
 
