@@ -1,5 +1,5 @@
 import { generateId } from "@/common/functions/random";
-import { Tier } from "./TierlistTypes";
+import { Entry, Tier } from "./TierlistTypes";
 
 export const getHslColor = (index: number) => `hsl(${index * 15}, 50%, 50%)`;
 
@@ -26,11 +26,18 @@ export function getDefaultTiers<T>(items: Array<T>) {
       id: 'unsorted', 
       title: 'Unsorted',
       color: 'var(--background-secondary)',
-      items: items.map(item => ({ item, id: generateId() })),
+      items: items.map(generateEntry),
       invert: false,
       position: tiers.length
     });
 
     return tiers;
   };
+}
+
+export function generateEntry<T>(item: T) {
+  return {
+    item,
+    id: generateId()
+  } as Entry<T>;
 }

@@ -7,18 +7,29 @@ import { useLocalStorage } from '@/hooks/useLocalStorage';
 
 import { Entry, Tier, TierlistProps } from './TierlistTypes';
 import { FormTier, Tier as TierComponent, TierModifyForm } from './components';
-import { getDefaultTiers, generateBlankTier } from './TierlistFunctions';
+import { getDefaultTiers, generateBlankTier, generateEntry } from './TierlistFunctions';
 
 export default function Tierlist<T>({ items, onUnsortedSearch, ...props }: TierlistProps<T>) {
   const [tiers, setTiers] = useState(getDefaultTiers(items));
-  const storageService = useLocalStorage<Array<Tier<T>>>('tierlist', setTiers, tiers);
+  const storageService = useLocalStorage<Array<Tier<T>>>('tierlist', storedTiers => setTiers(tiers => {
+    const resolvedStoredTiers = typeof storedTiers === 'function' ? storedTiers(tiers) : storedTiers;
+    const storedItems = resolvedStoredTiers.flatMap(tier => tier.items);
+    if (storedItems.length === items.length) return resolvedStoredTiers;
+
+    const newItems = items.filter(item => !storedItems.some(storedItem => JSON.stringify(storedItem.item) === JSON.stringify(item)));
+    return resolvedStoredTiers.map(tier => (
+      tier.id === 'unsorted'
+        ? { ...tier, items: [...tier.items, ...newItems.map(generateEntry)] }
+        : tier
+    ));
+  }), tiers);
   const [newTier, setNewTier] = useState<FormTier<T>>(generateBlankTier(tiers));
 
   const orderedTiers = tiers.sort((a, b) => a.position - b.position);
   const render = useMemo(() => (
-    'renderItem' in props ? props.renderItem 
-    : 'children' in props ? props.children 
-    : () => 'No render method provided.'
+    'renderItem' in props ? props.renderItem
+      : 'children' in props ? props.children
+        : () => 'No render method provided.'
   ), [props]);
   const unsorted = tiers.find(tier => tier.id === 'unsorted')!;
 
@@ -80,8 +91,8 @@ export default function Tierlist<T>({ items, onUnsortedSearch, ...props }: Tierl
 
     return tiers.map(tier => (
       tier.id === updatedTierContainedItem.id ? updatedTierContainedItem
-      : tier.id === updatedTargetTier.id ? updatedTargetTier
-      : tier
+        : tier.id === updatedTargetTier.id ? updatedTargetTier
+          : tier
     ));
   });
 
