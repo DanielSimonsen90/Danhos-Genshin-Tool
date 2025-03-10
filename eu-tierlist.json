@@ -1,0 +1,470 @@
+[
+  {
+    "id": "sb479wq6nte",
+    "invert": null,
+    "title": "Artifacts",
+    "color": "#bf4040",
+    "entries": [
+      {
+        "item": "Xilonen",
+        "id": "ps6vz5ycnw"
+      },
+      {
+        "item": "Yae Miko",
+        "id": "q5hkhqhso5"
+      },
+      {
+        "item": "Mualani",
+        "id": "lsztqlbszd"
+      },
+      {
+        "item": "Kaedehara Kazuha",
+        "id": "19qvcm21d7b"
+      }
+    ],
+    "position": 1
+  },
+  {
+    "id": "nobt9fj18vr",
+    "invert": null,
+    "title": "Artifacts level",
+    "color": "#bf6040",
+    "entries": [
+      {
+        "item": "Arlecchino",
+        "id": "hr6mtrh3ml"
+      },
+      {
+        "item": "Fischl",
+        "id": "4tiynbn6s7c"
+      },
+      {
+        "item": "Zhongli",
+        "id": "omlmda1xovn"
+      },
+      {
+        "item": "Layla",
+        "id": "zbq46jj7snm"
+      }
+    ],
+    "position": 2
+  },
+  {
+    "id": "xqwus808k6i",
+    "invert": null,
+    "title": "Weapon",
+    "color": "#bf8040",
+    "entries": [
+      {
+        "item": "Raiden Shogun",
+        "id": "rhfd154zvd"
+      },
+      {
+        "item": "Jean",
+        "id": "47bjq6jf91a"
+      }
+    ],
+    "position": 3
+  },
+  {
+    "id": "w6xodjwe7u",
+    "invert": null,
+    "title": "Talents",
+    "color": "#bf9f40",
+    "entries": [
+      {
+        "item": "Clorinde",
+        "id": "es851bj3y5"
+      },
+      {
+        "item": "Kinich",
+        "id": "rw4xgncbl1h"
+      },
+      {
+        "item": "Traveler (Dendro)",
+        "id": "d03xa4p23pq"
+      },
+      {
+        "item": "Xingqiu",
+        "id": "t8tpfmmqlbn"
+      },
+      {
+        "item": "Freminet",
+        "id": "jl1u8sin45"
+      },
+      {
+        "item": "Barbara",
+        "id": "ml3gabu67v"
+      },
+      {
+        "item": "Xiangling",
+        "id": "c5152322zsm"
+      }
+    ],
+    "position": 4
+  },
+  {
+    "id": "6xb9o8o2e05",
+    "invert": null,
+    "title": "Character",
+    "color": "#bfbf40",
+    "entries": [
+      {
+        "item": "Ganyu",
+        "id": "hu5djcizz8b"
+      },
+      {
+        "item": "Mona",
+        "id": "sus8gs37y1"
+      },
+      {
+        "item": "Venti",
+        "id": "gvtaqvc99mh"
+      },
+      {
+        "item": "Nahida",
+        "id": "dtbds590qxe"
+      },
+      {
+        "item": "Shikanoin Heizou",
+        "id": "mgp34ol14i"
+      },
+      {
+        "item": "Kaeya",
+        "id": "kgpsnoj9efk"
+      },
+      {
+        "item": "Gaming",
+        "id": "9o2ghiuii8c"
+      },
+      {
+        "item": "Tighnari",
+        "id": "bva7ztv1kq9"
+      },
+      {
+        "item": "Rosaria",
+        "id": "0dzf8ifmn7we"
+      },
+      {
+        "item": "Kachina",
+        "id": "hjb007u5k3p"
+      },
+      {
+        "item": "Sucrose",
+        "id": "lt4omr3m2"
+      },
+      {
+        "item": "Faruzan",
+        "id": "wnwnqul94d"
+      },
+      {
+        "item": "Kuki Shinobu",
+        "id": "inosg5j5ag"
+      },
+      {
+        "item": "Yanfei",
+        "id": "at4263bsymg"
+      },
+      {
+        "item": "Keqing",
+        "id": "jmrpenm0nh"
+      },
+      {
+        "item": "Ororon",
+        "id": "ttpxokdodqq"
+      },
+      {
+        "item": "Dehya",
+        "id": "pyln8lnh7wd"
+      },
+      {
+        "item": "Sayu",
+        "id": "kue2y2nua"
+      },
+      {
+        "item": "Yaoyao",
+        "id": "17p02fjgutl"
+      },
+      {
+        "item": "Kaveh",
+        "id": "4v7akx4jlbs"
+      },
+      {
+        "item": "Candace",
+        "id": "d05whvb5zd9"
+      },
+      {
+        "item": "Kirara",
+        "id": "jcxe2lkfjo"
+      },
+      {
+        "item": "Lynette",
+        "id": "2x3blw9c2ce"
+      },
+      {
+        "item": "Charlotte",
+        "id": "0uxalmysfwnh"
+      }
+    ],
+    "position": 5
+  },
+  {
+    "id": "yli4m687jb",
+    "invert": null,
+    "title": "Built",
+    "color": "#9fbf40",
+    "entries": [
+      {
+        "item": "Diluc",
+        "id": "8wj0c7s713g"
+      },
+      {
+        "item": "Baizhu",
+        "id": "29hv2oaek5a"
+      },
+      {
+        "item": "Furina",
+        "id": "a72bboj5gup"
+      },
+      {
+        "item": "Neuvillette",
+        "id": "ew3lxyt8zs9"
+      },
+      {
+        "item": "Hu Tao",
+        "id": "eyt3jup9wyc"
+      },
+      {
+        "item": "Yelan",
+        "id": "vft64cv4a5l"
+      },
+      {
+        "item": "Bennett",
+        "id": "nh8ijetgw3a"
+      }
+    ],
+    "position": 6
+  },
+  {
+    "id": "qjpjo57806b",
+    "title": "Don't have",
+    "color": "#60bf40",
+    "invert": null,
+    "entries": [
+      {
+        "item": "Navia",
+        "id": "iw54hdvfahd"
+      },
+      {
+        "item": "Albedo",
+        "id": "d8rl0sx94qb"
+      },
+      {
+        "item": "Nilou",
+        "id": "1nzt9vtjxst"
+      },
+      {
+        "item": "Wanderer (Scaramouche)",
+        "id": "xltv7neucmi"
+      },
+      {
+        "item": "Alhaitham",
+        "id": "eaghcwemhyq"
+      },
+      {
+        "item": "Emilie",
+        "id": "odsg4ul9i5i"
+      },
+      {
+        "item": "Chasca",
+        "id": "zy9wlwbma3b"
+      },
+      {
+        "item": "Xiao",
+        "id": "1gpo1h5gz5l"
+      },
+      {
+        "item": "Kamisato Ayaka",
+        "id": "dkij9qm8wnh"
+      },
+      {
+        "item": "Shenhe",
+        "id": "u96p4hrewa"
+      },
+      {
+        "item": "Sangonomiya Kokomi",
+        "id": "y45me170kpa"
+      },
+      {
+        "item": "Xianyun",
+        "id": "ogjilk5z99g"
+      },
+      {
+        "item": "Cyno",
+        "id": "l1jplh959u"
+      },
+      {
+        "item": "Tartaglia (Childe)",
+        "id": "ajhtkah2xs"
+      },
+      {
+        "item": "Eula",
+        "id": "7ec8546aoti"
+      },
+      {
+        "item": "Yoimiya",
+        "id": "x05ae9dxlyj"
+      },
+      {
+        "item": "Chiori",
+        "id": "11hejq6j8qlf"
+      },
+      {
+        "item": "Lyney",
+        "id": "tboxic36jzg"
+      },
+      {
+        "item": "Sigewinne",
+        "id": "wopvywf2xim"
+      },
+      {
+        "item": "Klee",
+        "id": "pgmhup3yav"
+      },
+      {
+        "item": "Wriothesley",
+        "id": "l7si20s69v"
+      },
+      {
+        "item": "Kamisato Ayato",
+        "id": "63xauafzzme"
+      },
+      {
+        "item": "Aloy",
+        "id": "bvahvdkr5s6"
+      },
+      {
+        "item": "Arataki Itto",
+        "id": "tdquvsraql"
+      }
+    ],
+    "position": 7
+  },
+  {
+    "id": "kx2pd5y9tll",
+    "title": "Don't care",
+    "color": "#80bf40",
+    "invert": null,
+    "entries": [
+      {
+        "item": "Diona",
+        "id": "6fgguzzkz78"
+      },
+      {
+        "item": "Lisa",
+        "id": "3q06k3xyci1"
+      },
+      {
+        "item": "Ningguang",
+        "id": "og98231byo"
+      },
+      {
+        "item": "Gorou",
+        "id": "uf444wuhzih"
+      },
+      {
+        "item": "Beidou",
+        "id": "68n334u543e"
+      },
+      {
+        "item": "Chongyun",
+        "id": "8b4c3de0po"
+      },
+      {
+        "item": "Qiqi",
+        "id": "uzovcdmkggq"
+      },
+      {
+        "item": "Yun Jin",
+        "id": "qab05jvoco"
+      },
+      {
+        "item": "Collei",
+        "id": "nyrpq9236lc"
+      },
+      {
+        "item": "Mika",
+        "id": "5lzaf1xsoyg"
+      },
+      {
+        "item": "Dori",
+        "id": "pzh7y4uny2"
+      },
+      {
+        "item": "Chevreuse",
+        "id": "iq7zfcpsm"
+      },
+      {
+        "item": "Kujou Sara",
+        "id": "6bx7z3myaz"
+      },
+      {
+        "item": "Noelle",
+        "id": "i3i7r6clkn9"
+      },
+      {
+        "item": "Razor",
+        "id": "8eltcu2kbo"
+      },
+      {
+        "item": "Thoma",
+        "id": "0ez4nli4itw"
+      },
+      {
+        "item": "Amber",
+        "id": "8r2skiz0tvv"
+      },
+      {
+        "item": "Sethos",
+        "id": "e333tofh2te"
+      },
+      {
+        "item": "Xinyan",
+        "id": "04ppzgwd597g"
+      },
+      {
+        "item": "Traveler (Anemo)",
+        "id": "bi5jl3zx9kh"
+      },
+      {
+        "item": "Traveler (Geo)",
+        "id": "axpmyg1kd4o"
+      },
+      {
+        "item": "Traveler (Electro)",
+        "id": "8ei6t7ugzbx"
+      },
+      {
+        "item": "Traveler (Hydro)",
+        "id": "lb5mcx98rb"
+      },
+      {
+        "item": "Traveler (Pyro)",
+        "id": "9zlaf0ped8c"
+      },
+      {
+        "item": "Traveler (Cryo)",
+        "id": "b4pt9ie2bw9"
+      }
+    ],
+    "position": 8
+  },
+  {
+    "id": "unsorted",
+    "title": "Unsorted",
+    "color": "var(--background-secondary)",
+    "entries": [],
+    "invert": false,
+    "position": 10
+  }
+]

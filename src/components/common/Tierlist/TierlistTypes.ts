@@ -18,7 +18,10 @@ export interface Tier<TItem> {
 type BaseTierlistProps<TItem, TStorageData> = {
   items: Array<TItem>;
   onUnsortedSearch: (search: string, item: TItem) => boolean;
+  
   defaultTiers?: Array<Tier<TItem>>;
+  onTierChange?: (tiers: Array<Tier<TItem>>) => void;
+  onEntryChange?: (tier: Tier<TItem>, entries: Array<Entry<TItem>>) => void;
 } & ({
   storageKey?: string;
 } | {

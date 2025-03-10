@@ -1,3 +1,4 @@
+import { SetStateAction } from "react";
 import { PriorityLists } from "@/pages/Building/PriorityList/PriorityListTypes";
 import { StorageReturn } from "@/services/StorageService";
 
@@ -25,6 +26,7 @@ export type RegionStore = {
   setRegionData: (update: Partial<RegionData> | ((state: RegionData) => RegionData)) => void;
   setRegion: (region: Region) => void;
   setTraveler: (traveler: Traveler) => void;
+  setState: (state: SetStateAction<RegionStore>) => void;
 
   storageService: StorageReturn<RegionContextType>;
 };

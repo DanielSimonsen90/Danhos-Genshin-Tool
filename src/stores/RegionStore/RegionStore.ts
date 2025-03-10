@@ -71,6 +71,7 @@ export const useRegionStore = create<RegionStore>((setState, getState) => {
     setRegionData,
     setRegion,
     setTraveler,
+    setState,
 
     storageService,
   };

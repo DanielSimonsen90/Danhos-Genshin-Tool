@@ -28,8 +28,8 @@ export default function Tier<T>({ tier, updateTier, setTiers, render, onMoveToIn
   const [showEditModal, setShowEditModal] = useState(false);
   const onContext = useContextMenu(item => [
     item('divider', 'Move'),
-    item('option', 'Move up', () => updateTier(tier.id, { position: tier.position - 1 }), '⬆️'),
-    item('option', 'Move down', () => updateTier(tier.id, { position: tier.position + 1 }), '⬇️'),
+    tier.position !== 0 ? item('option', 'Move up', () => updateTier(tier.id, { position: tier.position - 1 }), '⬆️') : undefined,
+    tier.position + 1 !== unsorted.position ? item('option', 'Move down', () => updateTier(tier.id, { position: tier.position + 1 }), '⬇️') : undefined,
     item('divider', 'Add rows'),
     item('option', 'Add new above', () => setTiers(tiers => {
         const newTiers = [...tiers];
@@ -49,7 +49,7 @@ export default function Tier<T>({ tier, updateTier, setTiers, render, onMoveToIn
     item('option', 'Edit', () => setShowEditModal(true), '✏️'),
     item('option', 'Clear', () => setTiers(tiers => tiers.map(t => t.id === tier.id ? { ...t, entries: [] } : t)), '🧹'),
     item('option', 'Delete tier', () => setTiers(tiers => tiers.filter(t => t.id !== tier.id)), '🗑️'),
-  ]);
+  ].filter(Boolean));
   const onContextMenu = tier.id === 'unsorted' ? undefined : onContext;
 
   return (

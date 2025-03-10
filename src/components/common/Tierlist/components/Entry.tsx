@@ -45,7 +45,7 @@ export default function Entry<T>({ entry, index, unsorted, tiers, onMoveToIndex,
       ...sendToTiers,
       ...moveItem
     ]
-  })
+  }, 'top-right');
 
 return (
   <Draggable key={entry.id} draggableId={entry.id} index={index}>
