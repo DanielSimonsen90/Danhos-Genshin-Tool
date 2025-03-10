@@ -5,8 +5,8 @@ import { generateId } from '@/common/functions/random';
 import useOnChange from '@/hooks/useOnChange';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 
-import { Entry, Tier, TierlistProps } from './TierlistTypes';
 import { FormTier, Tier as TierComponent, TierModifyForm } from './components';
+import { Entry, Tier, TierlistProps } from './TierlistTypes';
 import { getDefaultTiers, generateBlankTier, generateEntry } from './TierlistFunctions';
 
 export default function Tierlist<T, TStorageData extends object>({ items, onUnsortedSearch, ...props }: TierlistProps<T, TStorageData>) {
@@ -19,7 +19,7 @@ export default function Tierlist<T, TStorageData extends object>({ items, onUnso
     const resolvedStoredData = typeof storedData === 'function' ? storedData(tiers) : storedData;
     const resolvedStoredTiers = onStorageLoaded?.(resolvedStoredData as TStorageData) ?? resolvedStoredData as Array<Tier<T>>;
     const storedItems = resolvedStoredTiers.flatMap(tier => tier.entries);
-    
+
     if (storedItems.length === items.length) return resolvedStoredTiers;
     else if (storedItems.length === 0) return getDefaultTiers(items)();
 
@@ -35,8 +35,8 @@ export default function Tierlist<T, TStorageData extends object>({ items, onUnso
   const orderedTiers = tiers.sort((a, b) => a.position - b.position);
   const render = useMemo(() => (
     'renderItem' in props ? props.renderItem
-    : 'children' in props ? props.children
-    : () => 'No render method provided.'
+      : 'children' in props ? props.children
+        : () => 'No render method provided.'
   ), [props]);
   const unsorted = tiers.find(tier => tier.id === 'unsorted')!;
 
@@ -70,7 +70,7 @@ export default function Tierlist<T, TStorageData extends object>({ items, onUnso
     }
   };
   const updateTier = (id: string, newTier: Partial<Tier<T>>) => setTiers(tiers => {
-    const index = tiers.findIndex(tier => tier.id === id);
+    const index: number = tiers.findIndex(tier => tier.id === id);
     if (index === -1) return [
       ...tiers.filter(tier => tier.id !== 'unsorted'),
       { ...newTier, id: generateId(), entries: [] } as Tier<T>,
@@ -87,23 +87,42 @@ export default function Tierlist<T, TStorageData extends object>({ items, onUnso
             : tier
       ));
     }
-    const updatedTier = { ...tiers[index], ...newTier };
+    const updatedTier: Tier<T> = { ...tiers[index], ...newTier };
     return [...tiers.slice(0, index), updatedTier, ...tiers.slice(index + 1)];
   });
   const onSendToTier = (entry: Entry<T>, tier: Tier<T>) => setTiers(tiers => {
-    const tierContainingItem = tiers.find(tier => tier.entries.some(item => item.id === entry.id));
+    const tierContainingItem: Tier<T> = tiers.find(tier => tier.entries.some(item => item.id === entry.id));
 
     // Sent to same tier
     if (tierContainingItem.id === tier.id) return tiers;
 
-    const updatedTierContainedItem = { ...tierContainingItem!, items: tierContainingItem!.entries.filter(item => item.id !== entry.id) };
-    const updatedTargetTier = { ...tier, items: [...tier.entries, entry] };
+    const updatedTierContainedItem: Tier<T> = { ...tierContainingItem!, entries: tierContainingItem!.entries.filter(item => item.id !== entry.id) };
+    const updatedTargetTier: Tier<T> = { ...tier, entries: [...tier.entries, entry] };
 
     return tiers.map(tier => (
       tier.id === updatedTierContainedItem.id ? updatedTierContainedItem
-        : tier.id === updatedTargetTier.id ? updatedTargetTier
-          : tier
+      : tier.id === updatedTargetTier.id ? updatedTargetTier
+      : tier
     ));
+  });
+  const onMoveToIndex = (entry: Entry<T>, index: number) => setTiers(tiers => {
+    const tierContainingItem: Tier<T> = tiers.find(tier => tier.entries.some(item => item.id === entry.id));
+    if (!tierContainingItem) {
+      console.error('Item not found in any tier', { entry, index, tiers });
+      return tiers;
+    }
+
+    const updatedTierContainedItem: Tier<T> = { 
+      ...tierContainingItem, 
+      entries: tierContainingItem.entries
+        .flatMap((e, i, arr) => (
+          e.id === entry.id ? undefined
+          : i === index ? index === arr.length -1 ? [e, entry] : [entry, e]
+          : e
+        )).filter(Boolean)
+    };
+
+    return tiers.map(tier => tier.id === updatedTierContainedItem.id ? updatedTierContainedItem : tier);
   });
 
   return (
@@ -117,7 +136,7 @@ export default function Tierlist<T, TStorageData extends object>({ items, onUnso
         {orderedTiers.map(tier => (
           <TierComponent key={tier.id} {...{
             render,
-            tier, updateTier, onSendToTier,
+            tier, updateTier, onMoveToIndex, onSendToTier,
             tiers, setTiers,
             unsorted, onUnsortedSearch
           }} />

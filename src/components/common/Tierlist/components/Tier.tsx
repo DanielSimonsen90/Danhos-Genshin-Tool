@@ -20,54 +20,33 @@ export type Props<T> = {
   setTiers: React.Dispatch<React.SetStateAction<Tier<T>[]>>;
   unsorted: Tier<T>;
   onUnsortedSearch: (search: string, item: T) => boolean;
+  onMoveToIndex: (entry: Entry<T>, index: number) => void;
   onSendToTier: (entry: Entry<T>, tier: Tier<T>) => void;
 };
 
-export default function Tier<T>({ tier, updateTier, setTiers, render, onSendToTier, onUnsortedSearch, tiers, unsorted }: Props<T>) {
+export default function Tier<T>({ tier, updateTier, setTiers, render, onMoveToIndex, onSendToTier, onUnsortedSearch, tiers, unsorted }: Props<T>) {
   const [showEditModal, setShowEditModal] = useState(false);
   const onContext = useContextMenu(item => [
     item('divider', 'Move'),
-    item('option',
-      'Move up',
-      () => updateTier(tier.id, { position: tier.position - 1 }),
-      '⬆️'
-    ),
-    item('option',
-      'Move down',
-      () => updateTier(tier.id, { position: tier.position + 1 }),
-      '⬇️'
-    ),
-
+    item('option', 'Move up', () => updateTier(tier.id, { position: tier.position - 1 }), '⬆️'),
+    item('option', 'Move down', () => updateTier(tier.id, { position: tier.position + 1 }), '⬇️'),
     item('divider', 'Add rows'),
-    item('option',
-      'Add new above',
-      () => setTiers(tiers => {
+    item('option', 'Add new above', () => setTiers(tiers => {
         const newTiers = [...tiers];
         const newTier = generateBlankTier<T>(tiers)(`New ${tier.title}`);
         newTier.position = tier.position - 1;
         newTiers.splice(tier.position, 0, newTier);
         return newTiers.map((t, i) => ({ ...t, position: i }));
-      }),
-      '⬆️',
-    ),
-    item('option',
-      'Add new below',
-      () => setTiers(tiers => {
+      }), '⬆️',),
+    item('option', 'Add new below', () => setTiers(tiers => {
         const newTiers = [...tiers];
         const newTier = generateBlankTier<T>(tiers)(`New ${tier.title}`);
         newTier.position = tier.position + 1;
         newTiers.splice(tier.position + 1, 0, newTier);
         return newTiers.map((t, i) => ({ ...t, position: i }));
-      }),
-      '⬇️',
-    ),
-
+      }), '⬇️'),
     item('divider', 'Modify'),
-    item('option',
-      'Edit',
-      () => setShowEditModal(true),
-      '✏️'
-    ),
+    item('option', 'Edit', () => setShowEditModal(true), '✏️'),
     item('option', 'Clear', () => setTiers(tiers => tiers.map(t => t.id === tier.id ? { ...t, entries: [] } : t)), '🧹'),
     item('option', 'Delete tier', () => setTiers(tiers => tiers.filter(t => t.id !== tier.id)), '🗑️'),
   ]);
@@ -82,7 +61,7 @@ export default function Tier<T>({ tier, updateTier, setTiers, render, onSendToTi
         {provided => (
           <div {...provided.droppableProps} ref={provided.innerRef} className='tier__items'>
             <UnsortedSearchList tier={tier} unsorted={unsorted} onSearch={(search, entry) => onUnsortedSearch(search, entry.item)}>
-              {(entry, index) => <EntryComponent key={entry.id} {...{ entry, index, onSendToTier, render, tiers, unsorted }} />}
+              {(entry, index) => <EntryComponent key={entry.id} {...{ entry, index, onMoveToIndex, onSendToTier, render, tiers, unsorted }} />}
             </UnsortedSearchList>
             {provided.placeholder}
           </div>
