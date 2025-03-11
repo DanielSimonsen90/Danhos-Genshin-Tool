@@ -4,6 +4,7 @@ import Modal, { ModalConsumerProps } from "@/components/common/Modal";
 import { ModifyPriorityListPayload } from "../../PriorityListTypes";
 import { useActionState } from "@/hooks/useActionState";
 import ModifyPriorityListInputGroup from './ModifyPriorityListInputGroup';
+import { NO_PRESET } from '../../PriorityListConstants';
 
 type Props = ModalConsumerProps & {
   onSubmit: (value: ModifyPriorityListPayload) => void;
@@ -21,6 +22,8 @@ export const ModifyPriorityListModal = ({
 }: Props) => {
   const [submitting, onSubmit] = useActionState<ModifyPriorityListPayload>(value => {
     // value.tiers = Array.from({ length: Number(value.tiers) })
+    value.tiers = [];
+    value.title = value['preset-title'] === NO_PRESET ? value.title : value['preset-title'];
     _onSubmit(value);
   });
 

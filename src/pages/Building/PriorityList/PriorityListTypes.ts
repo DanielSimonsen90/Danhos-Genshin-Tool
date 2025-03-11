@@ -10,4 +10,5 @@ export type PriorityLists = Record<string, PriorityList>;
 export type ModifyPriorityListPayload = PriorityList & {
   title: string;
   id: string;
+  'preset-title'?: string;
 }

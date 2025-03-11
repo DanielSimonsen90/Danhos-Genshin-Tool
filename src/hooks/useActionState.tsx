@@ -40,7 +40,13 @@ export function useActionState<TResult extends Record<string, any>>(
       })()
     }))
     const data: Record<string, any> = { _form: form };
+    let hasPlaceholder = false;
     Object.values(form).forEach(({ name, value }) => {
+      if (value === '<placeholder>') {
+        hasPlaceholder = true;
+        return;
+      }
+
       if (name.includes('[')) {
         const arrKey = name.split('[')[0];
         if (!data[arrKey]) data[arrKey] = []; 
@@ -54,7 +60,11 @@ export function useActionState<TResult extends Record<string, any>>(
       } else data[name] = value === 'on' ? true : value === 'off' ? false : value;
     });
 
-    if (expectedPropertyLength !== -1 && Object.keys(data).length !== expectedPropertyLength + 1) { // +1 for '_form'
+    if (hasPlaceholder) {
+      console.error('Invalid data recieved - placeholder value', data);
+      setLoading(false);
+      return;
+    } else if (expectedPropertyLength !== -1 && Object.keys(data).length !== expectedPropertyLength + 1) { // +1 for '_form'
       console.error('Invalid data recieved - expectedPropertyLength exeeds returned data length', data);
       setLoading(false);
       return;
