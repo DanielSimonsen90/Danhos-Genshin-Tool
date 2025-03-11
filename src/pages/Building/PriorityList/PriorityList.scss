@@ -1,9 +1,12 @@
 .priority-list {
   .tab-bar__tab {
+    padding: .25em .75em;
+  }
+
+  .priority-list-tab {
     display: flex;
     align-items: center;
-    gap: 1ch;
-    padding: .25em .5em;
+    gap: .5ch;
 
     .close {
       position: relative;

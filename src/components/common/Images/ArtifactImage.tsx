@@ -10,6 +10,13 @@ type Props = {
   className?: string;
 }
 
-export default function ArtifactImage({ set, piece: name, className }: Props) {
-  return <Image className={classNames("artifact-image", className)} src={ImageService.getArtifactImage(set, name ?? 'Flower')} alt={`${pascalCaseFromSnakeCase(set)} ${name}`} />;
+export default function ArtifactImage({ set, piece, className }: Props) {
+  const isPrayersPiece = set.includes('Prayers');
+  const name = isPrayersPiece ? 'Circlet' : piece ?? 'Flower';
+  
+  return <Image 
+    className={classNames("artifact-image", className)} 
+    src={ImageService.getArtifactImage(set, name)} 
+    alt={`${pascalCaseFromSnakeCase(set)} ${name}`} 
+  />;
 }

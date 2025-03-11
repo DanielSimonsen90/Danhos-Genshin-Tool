@@ -19,7 +19,7 @@ export type RegionContextType = Record<Region, RegionData | undefined>;
 export type RegionStore = {
   regions: RegionContextType;
   currentRegion: Region;
-  regionData: RegionData;
+  regionData: RegionData & Record<'setRegionData', RegionStore['setRegionData']>;
 
   get regionSettings(): RegionSettings;
 

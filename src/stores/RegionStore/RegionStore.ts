@@ -12,23 +12,22 @@ export const useRegionStore = create<RegionStore>((setState, getState) => {
   const getCurrentRegion = (regions: RegionContextType) => Object.keys(regions).find(region => regions[region as keyof typeof regions].selected) as keyof RegionContextType;
   const getRegionData = (regions: RegionContextType) => {
     const currentRegion = getCurrentRegion(regions);
-    return currentRegion ? regions[currentRegion as keyof typeof regions] : undefined;
+    return currentRegion ? Object.assign({}, regions[currentRegion as keyof typeof regions], { setRegionData }) : undefined;
   };
   
   const setRegionData = (update: Partial<RegionData> | ((state: RegionData) => RegionData)) => {
-    const { regions } = getState();
+    const { regions, currentRegion } = getState();
     const resolvedRegionDataUpdate = typeof update === 'function'
       ? update(getState().regionData)
       : update;
+    resolvedRegionDataUpdate.region ??= currentRegion
 
     // Define the next selected regionData
     const next = REGIONS.reduce((acc, _region) => {
       const region = _region as keyof RegionContextType;
       const storedData: RegionData = regions[region] ?? Object.assign(
-        {},
         ObjectUtils.exclude(DEFAULT_REGION_DATA, 'selected'),
-        resolvedRegionDataUpdate,
-        { region } as RegionData
+        { region, selected: false } as RegionData,
       );
 
       if (region === resolvedRegionDataUpdate.region) acc[region] = {

@@ -27,7 +27,13 @@ export function useActionState<TResult extends Record<string, any>>(
 
         if (type === 'checkbox') return input?.checked ? input.value || true : null;
         if (type === 'radio') return input?.checked ? input.value : null;
-        if (input || select || textarea) return input.value || input.defaultValue || input.checked;
+
+        const formElement = input || select || textarea;
+        if (formElement) return (
+          formElement.value 
+          || ('defaultValue' in formElement ? formElement.defaultValue : null) 
+          || ('checked' in formElement ? formElement.checked : null)
+        );
 
         console.error('Unhandled element type', { el });
         return null;

@@ -1,6 +1,12 @@
 import useRegionStore from "./RegionStore";
 
-export const useRegionData = () => useRegionStore().regionData;
+export const useRegionData = () => {
+  const { regionData, setRegionData } = useRegionStore();
+  return {
+    ...regionData,
+    setRegionData
+  }
+}
 
 export const useRegion = () => useRegionStore().currentRegion;
 export const useTraveler = () => useRegionData().traveler;

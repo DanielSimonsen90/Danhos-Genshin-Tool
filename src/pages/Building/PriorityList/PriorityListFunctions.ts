@@ -1,7 +1,7 @@
 import { Tier } from "@/components/common/Tierlist/TierlistTypes";
 import { DataStore } from "@/stores";
 import { Region, RegionContextType, RegionData, RegionStore } from "@/stores/RegionStore";
-import { PriorityLists } from "./PriorityListTypes";
+import { PriorityList, PriorityLists } from "./PriorityListTypes";
 import { getDefaultTiers } from "@/components/common/Tierlist/TierlistFunctions";
 import { ModelKeys } from "@/common/models";
 
@@ -28,8 +28,10 @@ export const onStorageSave = (tierlistTitle: string, model: ModelKeys, RegionSto
 } as RegionContextType);
 
 export const getDefaultPriorityLists = (DataStore: DataStore): PriorityLists => ({
-  "General Priority": {
-    model: 'Character',
-    tiers: getDefaultTiers(DataStore.CharacterNames)()
-  },
+  "General Priority": getDefaultPriorityList(DataStore),
+})
+
+export const getDefaultPriorityList = (DataStore: DataStore): PriorityList => ({
+  model: 'Character',
+  tiers: getDefaultTiers(DataStore.CharacterNames)()
 })

@@ -4,3 +4,4 @@ import { Domain } from './domains/Domain';
 
 export type Model = Character | ArtifactSet | Domain<any>;
 export type ModelKeys = 'Character' | 'Artifact' | 'Domain';
+export const ModelKeys: Array<ModelKeys> = ['Character', 'Artifact', 'Domain'];

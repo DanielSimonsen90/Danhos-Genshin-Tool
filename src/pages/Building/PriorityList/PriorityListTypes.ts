@@ -6,3 +6,8 @@ export type PriorityList = {
   tiers: Array<Tier<string>>;
 }
 export type PriorityLists = Record<string, PriorityList>;
+
+export type ModifyPriorityListPayload = PriorityList & {
+  title: string;
+  id: string;
+}

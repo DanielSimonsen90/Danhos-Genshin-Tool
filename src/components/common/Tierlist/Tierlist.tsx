@@ -18,7 +18,7 @@ export default function Tierlist<T, TStorageData extends object>({
   const onStorageLoaded = 'onStorageLoaded' in props ? props.onStorageLoaded : undefined;
   const onStorageSave = 'onStorageSave' in props ? props.onStorageSave : undefined;
 
-  const [tiers, setTiers] = useState(props.defaultTiers ?? getDefaultTiers(items));
+  const [tiers, setTiers] = useState(props.defaultTiers && props.defaultTiers.length ? props.defaultTiers : getDefaultTiers(items));
   const storageService = useLocalStorage<TStorageData | Array<Tier<T>>>(storageKey, storedData => setTiers(tiers => {
     const resolvedStoredData = typeof storedData === 'function' ? storedData(tiers) : storedData;
     const resolvedStoredTiers = onStorageLoaded?.(resolvedStoredData as TStorageData) ?? resolvedStoredData as Array<Tier<T>>;

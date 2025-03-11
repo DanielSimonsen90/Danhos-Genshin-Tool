@@ -72,11 +72,16 @@ button {
     --color: var(--brand--light);
   }
 
-  &.success {
+  &.success, &.create {
     --color: var(--text-success);
   }
 
-  &.danger {
+  &.warning, &.update {
+    --color: var(--brand);
+    --color: var(--text-warning);
+  }
+
+  &.danger, &.delete {
     --color: var(--text-danger);
   }
 }
