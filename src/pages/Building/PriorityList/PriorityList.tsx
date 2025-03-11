@@ -51,7 +51,9 @@ export default function PriorityList() {
   useOnChange(priorityLists, () => RegionStore.setRegionData({ priorityLists }));
 
   return (<>
-    <TabBar {...tabData} className="priority-list" noTabs={<NoTabs />}>
+    <TabBar direction="vertical" className="priority-list" placeChildrenBeforeTabs hideCollapseChevron
+      {...tabData} noTabs={<NoTabs />} 
+    >
       <CreatePriorityListButton onClick={() => openCreateModal()} />
     </TabBar>
 

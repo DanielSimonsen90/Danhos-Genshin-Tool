@@ -7,7 +7,9 @@ type Props = {
 }
 
 export const CreatePriorityListButton = ({ onClick, children }: Props) => (
-  <button className="priority-list-button success secondary" onClick={onClick}>
-    {children ?? <>Create a <b>Priority list</b></>}
-  </button>
+  <div className="priority-list-button-container">
+    <button className="priority-list-button success secondary" onClick={onClick}>
+      {children ?? <>Create a <b>Priority list</b></>}
+    </button>
+  </div>
 )

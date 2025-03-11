@@ -1,5 +1,31 @@
 @use '../../../styles/partials' as *;
 
+.tab-bar--vertical {
+  display: grid;
+  grid-template-areas: "tabs content";
+  grid-template-columns: max-content 1fr;
+  grid-template-rows: 1fr;
+  height: 100%;
+
+  .tab-bar__tabs {
+    grid-area: tabs;
+    flex-direction: column;
+    border-right: 1px solid var(--background-tertiary);
+  }
+
+  .tab-bar__tab {
+    border-right: none;
+    border-bottom: 1px solid var(--background-tertiary);
+  }
+
+  .tab-bar__content {
+    grid-area: content;
+    border-top: 1px solid var(--background-tertiary);
+    border-left: 1px solid var(--background-tertiary);
+    border-bottom: 1px solid var(--background-tertiary);
+  }
+}
+
 .tab-bar__tabs {
   display: flex;
   background-color: var(--background-secondary);

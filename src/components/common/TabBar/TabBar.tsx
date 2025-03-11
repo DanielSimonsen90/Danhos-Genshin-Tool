@@ -1,4 +1,5 @@
 import { Dispatch, ReactNode, SetStateAction, useCallback, useEffect, useMemo, useState } from "react";
+import { addTabNavigation } from "@/common/functions/accessibility";
 import { classNames } from "@/common/functions/strings";
 import { Functionable } from "@/common/types";
 import { Chevron } from "../icons";
@@ -15,6 +16,9 @@ type Props<
 
   id?: string,
   children?: ReactNode,
+  placeChildrenBeforeTabs?: boolean,
+  hideCollapseChevron?: boolean,
+  direction?: 'horizontal' | 'vertical',
 
   beforeTabChange?: (tab: TTabKey) => void,
   onTabChange?: (tab: TTabKey) => void,
@@ -22,7 +26,9 @@ type Props<
   className?: string,
 };
 
-export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props<TTabKey>) {
+export default function TabBar<TTabKey extends string>({ tabs, direction, ...props }: Props<TTabKey>) {
+  const { placeChildrenBeforeTabs, hideCollapseChevron } = props;
+  
   const [collapsed, setCollapsed] = useState(false);
   const [activeTab, _setActiveTab] = useState<TTabKey>(
     props.defaultTab
@@ -70,8 +76,9 @@ export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props
   }, [props.tab]);
 
   return tabs.filter(([_, v]) => v)[0] ? (
-    <div className={classNames("tab-bar", props.className)}>
+    <div className={classNames("tab-bar", `tab-bar--${direction}`, props.className)}>
       <header className={classNames('tab-bar__tabs')}>
+        {placeChildrenBeforeTabs && props.children}
         {internalTabs.map(([tab, title]) => title &&
           <div role="button" key={getKeyName(tab)}
             className={classNames("tab-bar__tab", activeTab === tab && 'tab-bar__tab--active')}
@@ -79,10 +86,12 @@ export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props
           >
             {title}
           </div>)}
-        {props.children}
-        <Chevron role="button" tabIndex={0} point={collapsed ? 'down' : 'up'} onClick={() => setCollapsed(v => !v)} onKeyDown={e => {
-          if (e.key === 'Enter' || e.key === 'NumpadEnter' || e.key === ' ') setCollapsed(v => !v);
-        }} />
+        {!placeChildrenBeforeTabs && props.children}
+        {!hideCollapseChevron && <Chevron role="button" tabIndex={0} point={
+          direction === 'horizontal' 
+          ? collapsed ? 'down' : 'up' 
+          : collapsed ? 'left' : 'right'
+        } {...addTabNavigation(() => setCollapsed(v => !v), true)} />}
       </header>
       <section className={classNames('tab-bar__content', collapsed && 'tab-bar__content--collapsed')}>
         <TabContent />
