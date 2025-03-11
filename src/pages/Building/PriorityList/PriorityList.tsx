@@ -17,13 +17,13 @@ export default function PriorityList() {
     regionData.priorityLists ?? getDefaultPriorityLists(DataStore)
   );
   const [CreateModal, openCreateModal] = useModifyPriorityList({
-    crud: 'create', 
-    priorityLists, 
+    crud: 'create',
+    priorityLists,
     setPriorityLists
   });
   const [UpdateModal, openUpdateModal] = useModifyPriorityList({
-    crud: 'update', 
-    priorityLists, 
+    crud: 'update',
+    priorityLists,
     setPriorityLists
   });
   const tabData = usePriorityListTabs({ priorityLists, setPriorityLists, openUpdateModal });
@@ -51,10 +51,10 @@ export default function PriorityList() {
   useOnChange(priorityLists, () => RegionStore.setRegionData({ priorityLists }));
 
   return (<>
-    <TabBar direction="vertical" className="priority-list" placeChildrenBeforeTabs hideCollapseChevron
-      {...tabData} noTabs={<NoTabs />} 
+    <TabBar direction="vertical" collapseArea="tabs" className="priority-list" placeChildrenBeforeTabs
+      {...tabData} noTabs={<NoTabs />}
     >
-      <CreatePriorityListButton onClick={() => openCreateModal()} />
+      {collapsed => <CreatePriorityListButton tabBarCollapsed={collapsed} onClick={() => openCreateModal()} />}
     </TabBar>
 
     <CreateModal />

@@ -15,8 +15,8 @@ type Props = {
 export default function ArtifactTabBar({ artifacts }: Props) {
   const DataStore = useDataStore();
   const tabs = artifacts.map(artifact => [artifact.name, <ArtifactCard key={artifact.name} artifact={artifact} />] as [string, ReactNode]);
-  const content = artifacts.reduce((acc, artifact) => {
-    acc[artifact.name] = <SearchableList key={artifact.name}
+  const content = artifacts.map(artifact => [artifact.name, (
+    <SearchableList key={artifact.name}
       items={SearchService.getCharactersUsing(artifact.name, DataStore)}
       onSearch={(query, item) => item.character.name.toLowerCase().includes(query.toLowerCase())}
       renderItem={({ character, set, pieces, effectiveness }) => (
@@ -32,9 +32,8 @@ export default function ArtifactTabBar({ artifacts }: Props) {
           </CharacterCard>
         </div>
       )}
-    />;
-    return acc;
-  }, {} as Record<string, ReactNode>);
+    />
+  )] as const);
 
-  return <TabBar className="artifact-tab-bar" tabs={tabs} {...content} />;
+  return <TabBar className="artifact-tab-bar" {...{ tabs, content }} />;
 }

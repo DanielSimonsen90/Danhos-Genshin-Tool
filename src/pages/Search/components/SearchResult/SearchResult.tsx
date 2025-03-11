@@ -36,12 +36,13 @@ export const SearchResultComponent = ({ result: {
         ['combined', 'Combined'],
         ['artifacts', 'By Artifacts'],
         ['characters', 'By Character Recommendation'],
+      ]} content={[
+        ['combined', <TabContent results={props.combined} {...tabBarProps} />],
+        ['artifacts', <TabContent results={props.byArtifact} {...tabBarProps} />],
+        ['characters', <TabContent results={props.byCharacterRecommendation} {...tabBarProps} />],
       ]}
         defaultTab={preferredTabs.get().results}
         onTabChange={handleTabChanged}
-        combined={<TabContent results={props.combined} {...tabBarProps} />}
-        characters={<TabContent results={props.byCharacterRecommendation} {...tabBarProps} />}
-        artifacts={<TabContent results={props.byArtifact} {...tabBarProps} />}
       >
         <ShowAll { ...{ ...props }} />
         <Wrap />

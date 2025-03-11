@@ -1,11 +1,20 @@
+.priority-list .tab-bar__tabs--collapsed {
+  .priority-list-button-container {
+    padding-inline: 0;
+  }
+}
+
 .priority-list-button-container {
   padding: .5em;
   border-bottom: 1px solid var(--background-primary--light);
 }
 
 .priority-list-button {
+  display: flex;
+  place-items: center;
   font-size: 14px;
   padding: .5em .75em;
+  min-width: 3ch;
 
   b {
     font-size: inherit;

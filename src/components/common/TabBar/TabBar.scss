@@ -3,19 +3,36 @@
 .tab-bar--vertical {
   display: grid;
   grid-template-areas: "tabs content";
-  grid-template-columns: max-content 1fr;
+  grid-template-columns: 18ch 1fr;
   grid-template-rows: 1fr;
   height: 100%;
+
+  &:has(.tab-bar__tabs--collapsed) {
+    grid-template-columns: 2em 1fr;
+  }
 
   .tab-bar__tabs {
     grid-area: tabs;
     flex-direction: column;
     border-right: 1px solid var(--background-tertiary);
+    overflow: hidden auto;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: .25rem;
+
+    &--collapsed * {
+      overflow: hidden;
+    }
   }
 
   .tab-bar__tab {
+    @extend %text-ellipsis;
     border-right: none;
     border-bottom: 1px solid var(--background-tertiary);
+    max-width: 100%;
+
+    * {
+      @extend %text-ellipsis;
+    }
   }
 
   .tab-bar__content {
@@ -23,6 +40,24 @@
     border-top: 1px solid var(--background-tertiary);
     border-left: 1px solid var(--background-tertiary);
     border-bottom: 1px solid var(--background-tertiary);
+    overflow: auto;
+  }
+
+  .collapse-chevron {
+    margin: auto 1ch 1ch auto;
+  }
+
+  &:has(.tab-bar__content--collapsed) {
+    .chevron {
+      margin-top: 1ch;
+    }
+  }
+}
+
+.tab-bar--horizontal {
+  .collapse-chevron {
+    margin-left: auto;
+    margin-right: 1ch;
   }
 }
 
@@ -36,9 +71,8 @@
 
   overflow: auto;
 
-  .chevron {
-    margin-left: auto;
-    margin-right: 1ch;
+  .collapse-chevron:hover {
+    cursor: pointer;
   }
 }
 
@@ -47,7 +81,7 @@
   border-right: 1px solid var(--background-tertiary);
   background-color: var(--background-secondary--muted);
   color: var(--text-muted);
-  
+
   min-width: max-content;
   padding: .5em 1em;
   margin: 0;

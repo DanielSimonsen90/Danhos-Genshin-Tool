@@ -1,4 +1,6 @@
 .priority-list {
+  height: calc(100vh - 30em);
+
   .tab-bar__tab {
     padding: .25em .75em;
   }
@@ -15,5 +17,9 @@
 
   .tier__title {
     font-size: 1.25rem;
+  }
+
+  .chevron {
+    margin-top: auto;
   }
 }

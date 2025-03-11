@@ -41,7 +41,7 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
     setPriorityLists(newPriorityList);
   };
 
-  const tabs = Array.from(Object.entries(priorityLists)).map(([tierlistTitle, priorityList]) => {
+  const content = Array.from(Object.entries(priorityLists)).map(([tierlistTitle, priorityList]) => {
     const modelType = priorityList.model;
     const items = DataStore[`${modelType}Names`];
 
@@ -65,8 +65,8 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
   });
 
   return {
-    tabs: tabs.map(([key]) => [key, <PriorityListTab title={key} onEdit={() => onEdit(key)} onDelete={() => deleteTab(key)} />] as const),
-    ...tabs.reduce((props, [key, content]) => ({ ...props, [key]: content }), {})
+    tabs: content.map(([key]) => [key, <PriorityListTab title={key} onEdit={() => onEdit(key)} onDelete={() => deleteTab(key)} />] as const),
+    content
   };
 }
 

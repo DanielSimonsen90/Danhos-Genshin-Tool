@@ -22,10 +22,11 @@ export default function Header() {
           <TabBar tabs={[
             ['search', 'Search'],
             ['history', 'History']
-          ]}
+          ]} content={[
+            ['search', <Search />],
+            ['history', <Cache />]
+          ]} 
             defaultTab={preferredTabs.get()?.searchOrHistory}
-            search={<Search />}
-            history={<Cache />}
           />
         </section>
       </header>

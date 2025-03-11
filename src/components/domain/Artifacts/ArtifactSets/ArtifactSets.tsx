@@ -9,7 +9,7 @@ import ArtifactSetsPiecesContent from "./components/ArtifactSetsPiecesContent";
 
 type Props = {
   artifact: ArtifactSet;
-}
+};
 
 export default function ArtifactSets({ artifact }: Props) {
   const DataStore = useDataStore();
@@ -25,10 +25,12 @@ export default function ArtifactSets({ artifact }: Props) {
         ['any', anyWantsThisPiece && 'Any'],
         ['four', fourPieceCharacters.length > 0 && 'Four-Piece'],
         ['two', twoPieceCharacters.length > 0 && 'Two-Piece'],
-      ]} noTabs={<p className="muted">There are no characters that use this set.</p>} defaultTab="four"
-        any={<ArtifactSetsPiecesContent results={characters} displayPieces />}
-        four={<ArtifactSetsPiecesContent results={fourPieceCharacters} />}
-        two={<ArtifactSetsPiecesContent results={twoPieceCharacters} />}
+      ]} content={[
+        ['any', anyWantsThisPiece && <ArtifactSetsPiecesContent results={characters} displayPieces />],
+        ['four', fourPieceCharacters.length > 0 && <ArtifactSetsPiecesContent results={fourPieceCharacters} />],
+        ['two', twoPieceCharacters.length > 0 && <ArtifactSetsPiecesContent results={twoPieceCharacters} />],
+      ]}
+        noTabs={<p className="muted">There are no characters that use this set.</p>} defaultTab="four"
       />
     </div>
   );

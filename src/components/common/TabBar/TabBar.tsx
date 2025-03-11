@@ -1,34 +1,49 @@
 import { Dispatch, ReactNode, SetStateAction, useCallback, useEffect, useMemo, useState } from "react";
 import { addTabNavigation } from "@/common/functions/accessibility";
 import { classNames } from "@/common/functions/strings";
-import { Functionable } from "@/common/types";
+import { Arrayable, Functionable } from "@/common/types";
 import { Chevron } from "../icons";
+
+type Direction = 'horizontal' | 'vertical';
+type CollapseArea = 'tabs' | 'content';
 
 type Props<
   TTabKey extends string,
 > = {
   defaultTab?: TTabKey,
   tabs: Array<(readonly [TTabKey, ReactNode | JSX.Element])>,
+  content: Array<(readonly [TTabKey, ReactNode | JSX.Element])>,
+  // tabs: Array<(readonly [TTabKey, {
+  //   title: ReactNode | JSX.Element,
+  //   content: Functionable<JSX.Element>,
+  // }])>
   noTabs?: JSX.Element,
 
   tab?: TTabKey,
   setTab?: Dispatch<SetStateAction<TTabKey>>,
 
   id?: string,
-  children?: ReactNode,
+  className?: string,
+
+  /** @default false */
   placeChildrenBeforeTabs?: boolean,
+  /** @default false */
   hideCollapseChevron?: boolean,
-  direction?: 'horizontal' | 'vertical',
+  /** @default horizontal */
+  direction?: Direction;
+  /** @default content */
+  collapseArea?: CollapseArea,
 
   beforeTabChange?: (tab: TTabKey) => void,
   onTabChange?: (tab: TTabKey) => void,
-} & Record<TTabKey, Functionable<ReactNode>> & {
-  className?: string,
+} & {
+  children?: Arrayable<JSX.Element | ((collapsed: boolean) => JSX.Element)>,
 };
 
-export default function TabBar<TTabKey extends string>({ tabs, direction, ...props }: Props<TTabKey>) {
+export default function TabBar<TTabKey extends string>({ tabs, ...props }: Props<TTabKey>) {
+  const { collapseArea = 'content', direction = 'horizontal' } = props;
   const { placeChildrenBeforeTabs, hideCollapseChevron } = props;
-  
+
   const [collapsed, setCollapsed] = useState(false);
   const [activeTab, _setActiveTab] = useState<TTabKey>(
     props.defaultTab
@@ -41,16 +56,22 @@ export default function TabBar<TTabKey extends string>({ tabs, direction, ...pro
       .reduce((acc, [key, value]) => acc.set(key, value), new Map<TTabKey, ReactNode>());
     return [...set.entries()];
   }, [tabs, props.id]);
+  const children = useMemo(() => {
+    const resovleChild = (child: JSX.Element | ((collapsed: boolean) => JSX.Element)) => (
+      typeof child === 'function' ? child(collapsed) : child
+    );
+    return Array.isArray(props.children) ? props.children.map(resovleChild) : resovleChild(props.children);
+  }, [props.children, collapsed]);
 
   const getKeyName = useCallback((key: any) => props.id ? `#${props.id}-${key}` : key, [props.id]);
   const TabContent = useCallback(function TabContent() {
-    const contentChildren = internalTabs.map(([tab]) => [tab, typeof props[tab as keyof typeof props] === 'function'
-      ? props[tab as keyof typeof props] as () => JSX.Element
-      : () => props[tab as keyof typeof props] as JSX.Element] as const);
-
-    return (<>{contentChildren.map(([tab, Content], key) => (
-      <div data-tab={tab} key={getKeyName(`content-${key}`)} className={classNames("tab-bar__content-page", tab === (props.tab ?? activeTab) && 'tab-bar__content-page--active')}>
-        <Content />
+    return (<>{props.content.map(([tab, Content], key) => (
+      <div data-tab={tab} key={getKeyName(`content-${key}`)}
+        className={classNames(
+          "tab-bar__content-page",
+          tab === (props.tab ?? activeTab) && 'tab-bar__content-page--active'
+        )}>
+        {Content}
       </div>
     ))}</>);
   }, [tabs, activeTab, props.tab]);
@@ -77,23 +98,27 @@ export default function TabBar<TTabKey extends string>({ tabs, direction, ...pro
 
   return tabs.filter(([_, v]) => v)[0] ? (
     <div className={classNames("tab-bar", `tab-bar--${direction}`, props.className)}>
-      <header className={classNames('tab-bar__tabs')}>
-        {placeChildrenBeforeTabs && props.children}
+      <header className={classNames('tab-bar__tabs', collapsed && collapseArea === 'tabs' && 'tab-bar__tabs--collapsed')}>
+        {placeChildrenBeforeTabs && children}
         {internalTabs.map(([tab, title]) => title &&
-          <div role="button" key={getKeyName(tab)}
+          <div role="button" key={getKeyName(tab)} title={tab}
             className={classNames("tab-bar__tab", activeTab === tab && 'tab-bar__tab--active')}
             onClick={() => setActiveTab(tab)}
           >
             {title}
           </div>)}
-        {!placeChildrenBeforeTabs && props.children}
-        {!hideCollapseChevron && <Chevron role="button" tabIndex={0} point={
-          direction === 'horizontal' 
-          ? collapsed ? 'down' : 'up' 
-          : collapsed ? 'left' : 'right'
-        } {...addTabNavigation(() => setCollapsed(v => !v), true)} />}
+        {!placeChildrenBeforeTabs && children}
+        {!hideCollapseChevron && (
+          <div className="collapse-chevron" title={collapsed ? 'Expand' : 'Collapse'}>
+            <Chevron role="button" tabIndex={0} point={
+              direction === 'horizontal'
+                ? collapsed ? 'down' : 'up'
+                : collapsed ? 'left' : 'right'
+            } {...addTabNavigation(() => setCollapsed(v => !v), true)} />
+          </div>
+        )}
       </header>
-      <section className={classNames('tab-bar__content', collapsed && 'tab-bar__content--collapsed')}>
+      <section className={classNames('tab-bar__content', collapsed && collapseArea === 'content' && 'tab-bar__content--collapsed')}>
         <TabContent />
       </section>
     </div>

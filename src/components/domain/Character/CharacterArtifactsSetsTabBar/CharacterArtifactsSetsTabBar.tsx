@@ -25,7 +25,7 @@ export default function CharacterArtifactsSetsTabBar({ character, set, artifactS
     return foundEffectiveness.toString();
   }, [artifactSets, set]);
 
-  const contents = useMemo(() => {
+  const content = useMemo(() => {
     const contentMap = artifactSets.reduce((acc, { pieces, set, effectiveness }) => acc.set(effectiveness, [
       ...(acc.get(effectiveness) || []),
       <Link to={`/artifacts/${set.name}`} key={`${character.name}-set-${set.name}-${generateId()}`}>
@@ -38,16 +38,13 @@ export default function CharacterArtifactsSetsTabBar({ character, set, artifactS
         </p>
       </Link>
     ]), new Map<number, Array<JSX.Element>>());
-    return [...contentMap.entries()].reduce((acc, [key, content]) => ({
-      ...acc,
-      [key.toString()]: () => <>{content}</>
-    }), {} as Record<string, JSX.Element>);
+    return [...contentMap.entries()].map(([key, content]) => [key.toString(), content] as const);
   }, [artifactSets]);
 
   return artifactSets.length
-    ? <TabBar className="character-artifacts-sets-tab-bar" id={`${character.name}-artifacts-sets-${generateId()}`}
-      defaultTab={defaultTab}
-      tabs={tabs} {...contents}
+    ? <TabBar className="character-artifacts-sets-tab-bar"
+      id={`${character.name}-artifacts-sets-${generateId()}`}
+      {...{ defaultTab, tabs, content }}
     />
     : null;
 }
