@@ -15,6 +15,7 @@ export type MenuItemOption = {
   label: React.ReactNode;
   action(): void;
   icon?: React.ReactNode;
+  respondsToKey?: string;
 };
 export type MenuItemDivider = {
   type: 'divider';

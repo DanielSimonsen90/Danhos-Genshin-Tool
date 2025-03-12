@@ -23,21 +23,26 @@ export default function Entry<T>({ entry, index, unsorted, tiers, onMoveToIndex,
       item('divider', 'Send to tiers'),
       ...tiers
         .filter(tier => !tier.entries.includes(entry))
-        .map(tier => item('option', `Send to ${tier.title}`, () => onSendToTier(entry, tier), tiers.findIndex(t => t.id === tier.id) > index ? '⬇️' : '⬆️')),
+        .map(_tier => item(
+          'option', 
+          `Send to ${_tier.title}`, 
+          () => onSendToTier(entry, _tier), 
+          tiers.indexOf(tier) < tiers.indexOf(_tier) ? '⬇️' : '⬆️')
+      ),
     ];
 
     const moveItem = [];
     const moveItemDivider = item('divider', 'Move Item');
     if (index !== 0) moveItem.push(
       moveItemDivider,
-      item('option', 'Move to start', () => onMoveToIndex(entry, 0), '⏮️'),
-      item('option', 'Move left', () => onMoveToIndex(entry, index - 1), '⬅️')
+      item('option', 'Move to start', () => onMoveToIndex(entry, 0), '⏮️', 'ArrowUp'),
+      item('option', 'Move left', () => onMoveToIndex(entry, index - 1), '⬅️', 'ArrowLeft')
     )
     if (index !== tier.entries.length - 1) {
       if (!moveItem.length) moveItem.push(moveItemDivider);
       moveItem.push(
-        item('option', 'Move right', () => onMoveToIndex(entry, index + 1), '➡️'),
-        item('option', 'Move to end', () => onMoveToIndex(entry, tier.entries.length - 1), '⏭️')
+        item('option', 'Move right', () => onMoveToIndex(entry, index + 1), '➡️', 'ArrowRight'),
+        item('option', 'Move to end', () => onMoveToIndex(entry, tier.entries.length - 1), '⏭️', 'ArrowDown')
       );
     }
 

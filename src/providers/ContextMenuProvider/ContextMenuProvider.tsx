@@ -1,6 +1,6 @@
-import { useState, PropsWithChildren, useRef, useEffect } from 'react';
+import { useState, PropsWithChildren, useRef, useEffect, useMemo } from 'react';
 import { ContextMenuContext, CreateMenuItem } from './ContextMenuConstants';
-import { ContextMenuContextType, MenuItem, Position } from './ContextMenuTypes';
+import { ContextMenuContextType, MenuItem, MenuItemOption, Position } from './ContextMenuTypes';
 
 export default function ContextMenuProvider({ children }: PropsWithChildren) {
   const [position, setPosition] = useState<Position>('top-left');
@@ -13,6 +13,10 @@ export default function ContextMenuProvider({ children }: PropsWithChildren) {
   const ref = useRef<HTMLDivElement>(null);
   const targetRef = useRef<HTMLElement | null>(null);
 
+  const respondsToKeys = useMemo<Array<MenuItemOption>>(() => (
+    menuItems.filter(item => item.type === 'option' && item.respondsToKey) as Array<MenuItemOption>
+  ), [menuItems]);
+
   const handleContextMenu = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -21,16 +25,12 @@ export default function ContextMenuProvider({ children }: PropsWithChildren) {
     if (!targetRef.current.contains(e.target as HTMLElement)) return closeMenu();
 
     setVisible(true);
+    // TODO: Make sure the menu doesn't go off screen
     setLeft(e.clientX - ref.current?.getBoundingClientRect().left);
     setTop(e.clientY - ref.current?.getBoundingClientRect().top);
   };
 
-  const closeMenu = () => {
-    setVisible(false);
-    document.removeEventListener('click', closeMenu);
-    document.removeEventListener('contextmenu', closeMenu);
-  };
-
+  const closeMenu = () => setVisible(false);
   const value: ContextMenuContextType = (e) => {
     e.preventDefault();
     const target = e.target as HTMLElement;
@@ -49,11 +49,21 @@ export default function ContextMenuProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     const hideEvents = ['click', 'contextmenu', 'keydown'];
-    hideEvents.forEach(event => document.addEventListener(event, closeMenu));
-    return () => {
-      hideEvents.forEach(event => document.removeEventListener(event, closeMenu));
+    const onHideEvent = (e: Event) => {
+      if (e.type === 'keydown') {
+        respondsToKeys
+          .find(item => item.respondsToKey.toLowerCase() === (e as KeyboardEvent).key.toLowerCase())
+          ?.action();
+      };
+
+      closeMenu();
     };
-  }, []);
+    hideEvents.forEach(event => document.addEventListener(event, onHideEvent));
+
+    return () => {
+      hideEvents.forEach(event => document.removeEventListener(event, onHideEvent));
+    };
+  }, [respondsToKeys]);
 
   return (
     <ContextMenuContext.Provider value={value}>
