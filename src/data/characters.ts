@@ -263,7 +263,7 @@ export const Citlali = new Character("Citlali", "Cryo", "Catalyst", ["Shield", "
     new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 4),
     new CharacterArtifactSet(Sets.Instructor, 4, 3),
   ])
-])
+]);
 
 export const Clorinde = new Character("Clorinde", "Electro", "Sword", ["Bond of Life"], Rarity.Legendary, 'Fontaine', [
   new CharacterSet("On-field DPS", ["ATK", "HP"], "Skill/Ability", true, [
@@ -776,7 +776,7 @@ export const Mavuika = new Character("Mavuika", "Pyro", "Claymore", ['Nightsouls
     new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 3),
     new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 2),
   ]),
-])
+]);
 
 export const Mika = new Character("Mika", "Cryo", "Polearm", ["Heal"], Rarity.Epic, 'Mondstadt', [
   new CharacterSet("Off-field Support", ["HP", "Energy Recharge"], "Burst/Ult", false, [
@@ -1304,6 +1304,14 @@ export const Yoimiya = new Character("Yoimiya", "Pyro", "Bow", [], Rarity.Legend
     new CharacterArtifactSet(Sets.RetracingBolide, 4, 2),
     new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 1),
     ...AttackSets(1)
+  ])
+]);
+
+export const YumemizukiMizuki = new Character("Yumemizuki Mizuki", "Anemo", "Catalyst", ["Heal"], Rarity.Legendary, 'Inazuma', [
+  new CharacterSet('On-field DPS', ['Elemental Mastery'], 'Skill/Ability', true, [
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 5),
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 2, 4),
+    ...ElementalMasterySets(4)
   ])
 ]);
 
