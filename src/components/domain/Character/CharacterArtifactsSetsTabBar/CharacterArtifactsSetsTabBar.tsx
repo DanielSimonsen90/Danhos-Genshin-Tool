@@ -16,10 +16,6 @@ type Props = {
 };
 
 export default function CharacterArtifactsSetsTabBar({ character, set, artifactSets = [] }: Props) {
-  const tabs = useMemo(() => artifactSets.map(({ effectiveness }) => [
-    effectiveness.toString(),
-    effectivenessString(effectiveness)
-  ] as [string, string]), [artifactSets]);
   const defaultTab = useMemo(() => {
     const foundEffectiveness = artifactSets.find(cSet => cSet.set.name === set?.name)?.effectiveness ?? CharacterArtifactSet.MOST_EFFECTIVE;
     return foundEffectiveness.toString();
@@ -44,7 +40,12 @@ export default function CharacterArtifactsSetsTabBar({ character, set, artifactS
   return artifactSets.length
     ? <TabBar className="character-artifacts-sets-tab-bar"
       id={`${character.name}-artifacts-sets-${generateId()}`}
-      {...{ defaultTab, tabs, content }}
+      defaultTab={defaultTab}
+      tabs={create => artifactSets.map(({ effectiveness }) => create(
+        effectiveness.toString(), 
+        effectivenessString(effectiveness), 
+        <>{content.find(([key]) => key === effectiveness.toString())?.[1]}</>
+      ))}
     />
     : null;
 }

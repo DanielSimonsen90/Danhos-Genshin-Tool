@@ -26,7 +26,7 @@ export default function PriorityList() {
     priorityLists,
     setPriorityLists
   });
-  const tabData = usePriorityListTabs({ priorityLists, setPriorityLists, openUpdateModal });
+  const tabs = usePriorityListTabs({ priorityLists, setPriorityLists, openUpdateModal });
 
   useOnChange(region, (current, previous) => {
     const update = (
@@ -52,7 +52,7 @@ export default function PriorityList() {
 
   return (<>
     <TabBar direction="vertical" collapseArea="tabs" className="priority-list" placeChildrenBeforeTabs
-      {...tabData} noTabs={<NoTabs />}
+      tabs={tabs} noTabs={<NoTabs />}
     >
       {collapsed => <CreatePriorityListButton tabBarCollapsed={collapsed} onClick={() => openCreateModal()} />}
     </TabBar>

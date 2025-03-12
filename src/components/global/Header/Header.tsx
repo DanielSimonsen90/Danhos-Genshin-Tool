@@ -19,13 +19,10 @@ export default function Header() {
         </section>
 
         <section className="header-content">
-          <TabBar tabs={[
-            ['search', 'Search'],
-            ['history', 'History']
-          ]} content={[
-            ['search', <Search />],
-            ['history', <Cache />]
-          ]} 
+          <TabBar tabs={tabItem => [
+            tabItem('search', 'Search', <Search />),
+            tabItem('history', 'History', <Cache />),
+          ]}
             defaultTab={preferredTabs.get()?.searchOrHistory}
           />
         </section>

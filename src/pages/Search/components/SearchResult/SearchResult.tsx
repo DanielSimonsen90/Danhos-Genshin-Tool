@@ -33,18 +33,23 @@ export const SearchResultComponent = ({ result: {
       wrap.get() && 'search-result--wrap'
     )}>
       <TabBar tabs={[
-        ['combined', 'Combined'],
-        ['artifacts', 'By Artifacts'],
-        ['characters', 'By Character Recommendation'],
-      ]} content={[
-        ['combined', <TabContent results={props.combined} {...tabBarProps} />],
-        ['artifacts', <TabContent results={props.byArtifact} {...tabBarProps} />],
-        ['characters', <TabContent results={props.byCharacterRecommendation} {...tabBarProps} />],
+        ['combined', {
+          title: 'Combined',
+          content: <TabContent results={props.combined} {...tabBarProps} />
+        }],
+        ['artifacts', {
+          title: 'By Artifacts',
+          content: <TabContent results={props.byArtifact} {...tabBarProps} />
+        }],
+        ['characters', {
+          title: 'By Character Recommendation',
+          content: <TabContent results={props.byCharacterRecommendation} {...tabBarProps} />
+        }],
       ]}
         defaultTab={preferredTabs.get().results}
         onTabChange={handleTabChanged}
       >
-        <ShowAll { ...{ ...props }} />
+        <ShowAll {...{ ...props }} />
         <Wrap />
       </TabBar>
     </div>

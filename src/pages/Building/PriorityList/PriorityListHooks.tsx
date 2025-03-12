@@ -16,7 +16,7 @@ type UsePriorityListTabsProps = {
   priorityLists: PriorityLists;
   setPriorityLists: Dispatch<SetStateAction<PriorityLists>>;
   openUpdateModal: (priorityList?: PriorityList, title?: string) => void;
-}
+};
 
 export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdateModal }: UsePriorityListTabsProps) {
   const DataStore = useDataStore();
@@ -32,7 +32,7 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
   const onEdit = (tierlistKey: string) => {
     const priorityList = priorityLists?.[tierlistKey];
     openUpdateModal(priorityList, tierlistKey);
-  }
+  };
   const deleteTab = (tab: string) => {
     if (!confirm(`Are you sure you want to delete the tab "${tab}"?`)) return;
 
@@ -41,40 +41,40 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
     setPriorityLists(newPriorityList);
   };
 
-  const content = Array.from(Object.entries(priorityLists)).map(([tierlistTitle, priorityList]) => {
+  return Array.from(Object.entries(priorityLists)).map(([tierlistTitle, priorityList]) => {
     const modelType = priorityList.model;
     const items = DataStore[`${modelType}Names`];
 
     return [
       tierlistTitle,
-      <Tierlist key={tierlistTitle} {...{
-        items, onUnsortedSearch,
-        defaultTiers: priorityList.tiers,
-        onTierChange: onTierChange(tierlistTitle)
-      }}>
-        {modelName => {
-          switch (modelType) {
-            case 'Character': return <CharacterImage character={modelName} />;
-            case 'Artifact': return <ArtifactImage set={modelName} />;
-            case 'Domain': return <DomainImage domain={modelName} />;
-            default: return `Unknown model for ${modelName}`;
-          }
-        }}
-      </Tierlist>
+      {
+        title: <PriorityListTab title={tierlistTitle} onEdit={() => onEdit(tierlistTitle)} onDelete={() => deleteTab(tierlistTitle)} />,
+        content: (
+          <Tierlist key={tierlistTitle} {...{
+            items, onUnsortedSearch,
+            defaultTiers: priorityList.tiers,
+            onTierChange: onTierChange(tierlistTitle)
+          }}>
+            {modelName => {
+              switch (modelType) {
+                case 'Character': return <CharacterImage character={modelName} />;
+                case 'Artifact': return <ArtifactImage set={modelName} />;
+                case 'Domain': return <DomainImage domain={modelName} />;
+                default: return `Unknown model for ${modelName}`;
+              }
+            }}
+          </Tierlist>
+        )
+      }
     ] as const;
   });
-
-  return {
-    tabs: content.map(([key]) => [key, <PriorityListTab title={key} onEdit={() => onEdit(key)} onDelete={() => deleteTab(key)} />] as const),
-    content
-  };
 }
 
 type UseModifyPriorityListProps = {
   crud: ModifyModalProps['crud'];
   priorityLists?: PriorityLists;
   setPriorityLists?: Dispatch<SetStateAction<PriorityLists>>;
-}
+};
 export function useModifyPriorityList({ crud, priorityLists, setPriorityLists }: UseModifyPriorityListProps) {
   const DataStore = useDataStore();
   const { setRegionData, ...regionData } = useRegionData();
@@ -88,10 +88,10 @@ export function useModifyPriorityList({ crud, priorityLists, setPriorityLists }:
       tiers: priorityLists[id]?.model === model
         ? tiers
         : getDefaultTiers(DataStore[`${model}Names`])()
-    }
+    };
 
     const shouldDeleteId = id !== title;
-    const isReplacingExisting = priorityLists[title] !== undefined
+    const isReplacingExisting = priorityLists[title] !== undefined;
     const shouldReplaceExisting = isReplacingExisting && confirm(ABOUT_TO_REPLACE_EXISTING);
     if (isReplacingExisting && !shouldReplaceExisting) return;
 
@@ -115,14 +115,14 @@ export function useModifyPriorityList({ crud, priorityLists, setPriorityLists }:
       return update;
     });
     setOpen(false);
-  }
+  };
   const triggerModal = (priorityList?: PriorityList, title?: string) => {
     setModifyList(Object.assign({ title, id: title, model: undefined }, priorityList));
     setOpen(true);
   };
 
   const ModifyPriorityListModalWrapper = () => <ModifyPriorityListModal
-    open={open} onClose={() => setOpen(false)} 
+    open={open} onClose={() => setOpen(false)}
     {...{ modifyList, crud, onSubmit }}
   />;
 
