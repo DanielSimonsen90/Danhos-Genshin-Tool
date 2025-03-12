@@ -24,7 +24,7 @@ const config: ForgeConfig = {
       config: {
         repository: {
           owner: DEVELOPER_GITHUB_URL.split('/').pop(),
-          name: DOMAIN_NAME.toLowerCase().replace(/ /g, '-'),
+          name: DOMAIN_NAME.toLowerCase().replace(/ /g, '-').replace("'", ''),
         },
         authToken: process.env.GITHUB_TOKEN,
       },
