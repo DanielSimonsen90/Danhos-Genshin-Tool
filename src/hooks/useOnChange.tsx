@@ -1,7 +1,23 @@
-import { useEffect, DependencyList } from "react";
+import { useEffect, DependencyList, useRef } from "react";
+// @ts-ignore
+import isEqual from 'lodash/fp/isEqual';
 
-export default function useOnChange<TValue>(value: TValue, onChange: (value: TValue) => void, deps?: DependencyList) {
+export default function useOnChange<TValue>(
+  value: TValue, 
+  onChange: (update: TValue, previous: TValue) => void, 
+  deps: DependencyList = []
+) {
+  const dependenciesRef = useRef([value, onChange, ...deps]);
+  const previousValue = useRef(value);
+
+  if (!isEqual(dependenciesRef.current, [value, onChange, ...deps])) {
+    dependenciesRef.current = [value, onChange, ...deps];
+  }
+
   useEffect(() => {
-    onChange?.(value);
-  }, [value, onChange, ...(deps ?? [])]);
+    if (previousValue.current === value) return;
+    
+    onChange?.(value, previousValue.current);
+    previousValue.current = value;
+}, [dependenciesRef.current]);
 }

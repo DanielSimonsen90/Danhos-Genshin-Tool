@@ -8,6 +8,7 @@ import TabBar from "@/components/common/TabBar";
 import { SearchResultItem } from "@/services";
 import { Link } from "react-router-dom";
 import { ArtifactImage } from "@/components/common/Images";
+import { ROUTES } from "@/common/constants/routes";
 
 type Props = {
   character: Character;
@@ -16,38 +17,36 @@ type Props = {
 };
 
 export default function CharacterArtifactsSetsTabBar({ character, set, artifactSets = [] }: Props) {
-  const tabs = useMemo(() => artifactSets.map(({ effectiveness }) => [
-    effectiveness.toString(),
-    effectivenessString(effectiveness)
-  ] as [string, string]), [artifactSets]);
   const defaultTab = useMemo(() => {
     const foundEffectiveness = artifactSets.find(cSet => cSet.set.name === set?.name)?.effectiveness ?? CharacterArtifactSet.MOST_EFFECTIVE;
     return foundEffectiveness.toString();
   }, [artifactSets, set]);
 
-  const contents = useMemo(() => {
+  const content = useMemo(() => {
     const contentMap = artifactSets.reduce((acc, { pieces, set, effectiveness }) => acc.set(effectiveness, [
       ...(acc.get(effectiveness) || []),
-      <Link to={`/artifacts/${set.name}`} key={`${character.name}-set-${set.name}-${generateId()}`}>
+      <Link to={`/${ROUTES.data_artifacts}/${set.name}`} key={`${character.name}-set-${set.name}-${generateId()}`}>
         <p className="set-short-description" title={classNames(
           ArtifactSet.bonusDescription(set, pieces),
           ArtifactSet.bonusDescription(set, pieces).endsWith('.') ? '' : '.'
         )}>
-          <ArtifactImage set={set.name} name="Flower" className="set-icon" />
+          <ArtifactImage set={set.name} piece="Flower" className="set-icon" />
           {pieces} piece {set.name}
         </p>
       </Link>
     ]), new Map<number, Array<JSX.Element>>());
-    return [...contentMap.entries()].reduce((acc, [key, content]) => ({
-      ...acc,
-      [key.toString()]: () => <>{content}</>
-    }), {} as Record<string, JSX.Element>);
+    return [...contentMap.entries()].map(([key, content]) => [key.toString(), content] as const);
   }, [artifactSets]);
 
   return artifactSets.length
-    ? <TabBar className="character-artifacts-sets-tab-bar" id={`${character.name}-artifacts-sets-${generateId()}`}
+    ? <TabBar className="character-artifacts-sets-tab-bar"
+      id={`${character.name}-artifacts-sets-${generateId()}`}
       defaultTab={defaultTab}
-      tabs={tabs} {...contents}
+      tabs={create => artifactSets.map(({ effectiveness }) => create(
+        effectiveness.toString(), 
+        effectivenessString(effectiveness), 
+        <>{content.find(([key]) => key === effectiveness.toString())?.[1]}</>
+      ))}
     />
     : null;
 }

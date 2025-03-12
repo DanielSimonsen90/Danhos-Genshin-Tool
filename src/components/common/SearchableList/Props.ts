@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction, ReactNode } from "react";
 import { List } from "@/common/models/List";
 import { FilterObject } from "../Filter/Filter";
-import { FavoriteModels } from "@/stores/FavoriteStore/FavoriteStoreTypes";
 
 export type FilterProps<TItem, FilterKeys extends string> = {
   filterChecks?: FilterObject<FilterKeys, TItem>,
@@ -30,10 +29,10 @@ export type ControlledProps<TItem, FilterKeys extends string> = {
   children: [ReactNode, TItem][],
 };
 
-type RenderItemOrChildren<TItem> = {
-  renderItem: (item: TItem) => ReactNode,
+export type RenderItemOrChildren<TItem> = {
+  renderItem: (item: TItem, index: number, items: Array<TItem>) => ReactNode,
 } | {
-  children: (item: TItem) => ReactNode,
+  children: (item: TItem, index: number, items: Array<TItem>) => ReactNode,
 };
 export type UncrontrolledProps<TItem, FilterKeys extends string> = RenderItemOrChildren<TItem> & {
   items: Array<TItem> | List<TItem>,  

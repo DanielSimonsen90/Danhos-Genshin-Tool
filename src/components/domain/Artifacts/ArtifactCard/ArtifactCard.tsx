@@ -20,12 +20,12 @@ export type Props = {
 export default function ArtifactCard({ artifact, ...props }: Props) {
   const { name } = artifact;
   const { wrapInLink, showDetails, showMoreDetails, displayCraftable, tagName } = props;
-  const Container = GetContainer(wrapInLink, artifact, 'artifacts');
+  const Container = GetContainer(wrapInLink, artifact, 'data/artifacts');
 
   return (
     <Container className="artifact-card">
       <header>
-        <ArtifactImage set={name} name="Flower" />
+        <ArtifactImage set={name} piece="Flower" />
         {showDetails 
           ? <ArtifactDetails artifact={artifact} tagName={tagName} displayCraftable={displayCraftable} /> 
           : createElement(tagName ?? 'h2', { className: 'artifact-card__name', title: name }, name)}

@@ -6,5 +6,5 @@ type Props = {
 }
 
 export default function Image({ src, alt, ...props }: Props) {
-  return <img src={src} alt={alt} {...props} />;
+  return <img src={src} alt={alt} title={alt} {...props} />;
 }

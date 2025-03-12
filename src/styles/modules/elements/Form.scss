@@ -9,4 +9,9 @@
     flex: 1 1 auto;
     width: auto;
   }
+
+  &:has([required]) label::after {
+    content: ' *';
+    color: var(--text-danger);
+  }
 }

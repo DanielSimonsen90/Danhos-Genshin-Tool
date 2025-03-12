@@ -1,11 +1,11 @@
-import useFavoriteStoreProvider from "./FavoriteStoreProvider";
 import { FavoriteModels, ModelsCollection } from "./FavoriteStoreTypes";
+import { useFavoriteStoreProvider } from "./FavoriteStore";
 
 export function useFavoriteStore<
   TModelType extends keyof ModelsCollection, 
   TModel extends FavoriteModels[TModelType]
 >(type?: TModelType) {
-  const [store] = useFavoriteStoreProvider();
+  const store = useFavoriteStoreProvider();
 
   return type ? {
     favorites: store[type],

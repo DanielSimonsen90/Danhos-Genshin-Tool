@@ -1,20 +1,28 @@
-import { DependencyList, SetStateAction, useContext, useEffect } from "react";
-import { Settings } from "./SettingsStoreTypes";
-import { GlobalStoresContext } from "../GlobalStoresConstants";
+import { AppSettings } from "./SettingsStoreTypes";
+import { useSettingsStore } from "./SettingsStore";
 
-export const useSettingsStore = () => useContext(GlobalStoresContext).SettingsStore;
-export function useSetting<TKey extends keyof Settings>(key: TKey) {
+export function useSetting<TKey extends keyof AppSettings>(key: TKey) {
   const store = useSettingsStore();
-  return [store.getSetting(key), (value: Settings[TKey]) => store.updateSettings({ [key]: value })] as const;
+
+  return {
+    get: () => store.getSetting(key),
+    set: (value: AppSettings[TKey]) => store.updateSettings({ [key]: value }),
+  };
 }
 
-type UseSettingsReturn<TKeys extends Array<keyof Settings>> = { 
-  [K in TKeys[number]]: Settings[K];
+type UseSettingsReturn<TKeys extends Array<keyof AppSettings>> = { 
+  [K in TKeys[number]]: {
+    get(): AppSettings[K];
+    set(value: AppSettings[K]): void;
+  }
 };
-export function useSettings<TKeys extends Array<keyof Settings>>(...keys: TKeys): UseSettingsReturn<TKeys> {
+export function useSettings<TKeys extends Array<keyof AppSettings>>(...keys: TKeys): UseSettingsReturn<TKeys> {
   const store = useSettingsStore();
   return keys.reduce((acc, key) => {
-    acc[key] = store.getSetting(key);
+    acc[key] = {
+      get: () => store.getSetting(key),
+      set: (value: AppSettings[typeof key]) => store.updateSettings({ [key]: value }),
+    }
     return acc;
   }, {} as any) as UseSettingsReturn<TKeys>;
 }

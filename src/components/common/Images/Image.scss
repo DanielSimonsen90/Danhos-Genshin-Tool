@@ -1,7 +1,17 @@
 img {
+  --min-size: 1rem;
   --size: auto;
+  --max-size: auto;
+
+  max-width: var(--max-size);
+  max-height: var(--max-size);
+
   width: var(--size);
   height: var(--size);
+
+  min-width: var(--min-size);
+  min-height: var(--min-size);
+
   object-fit: contain;
 }
 
@@ -14,7 +24,7 @@ img {
 }
 
 .element-image {
-  --size: 1.5rem;
+  --min-size: 1.2rem;
 }
 
 .weapon-image {

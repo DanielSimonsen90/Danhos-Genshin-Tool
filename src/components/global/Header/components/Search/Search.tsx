@@ -36,7 +36,7 @@ export default function Search() {
   }, [query]);
   const [loading, onSubmit] = useActionState<SearchFormData>(data => {
     debugLog('onSubmit', data);
-    if (data.subStats.filter(v => v).length > 4) return window.alert('Substats must be 4 or less'); // TODO: Consider adding visual form indicator?
+    if (data.subStats.filter(Boolean).length > 4) return window.alert('Substats must be 4 or less'); // TODO: Consider adding visual form indicator?
 
     const searchId = generateId();
     CacheStore.update('searchHistory', {
@@ -56,6 +56,8 @@ export default function Search() {
     defaultValue: defaultSearch?.mainStat,
     required: true
   });
+
+  debugLog('Default search', defaultSearch);
 
   return (
     <form className="search-form" onSubmit={onSubmit}>

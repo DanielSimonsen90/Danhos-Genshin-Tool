@@ -83,8 +83,8 @@ export const SelectSubStat = (
   options={[
     'HP', 'ATK', 'DEF', 
     'HP%', 'ATK%', 'DEF%',
-    'Elemental Mastery', 'Energy Recharge', 
-    'Crit Rate', 'Crit DMG',
+    'Energy Recharge', 'Elemental Mastery', 
+    'Crit DMG', 'Crit Rate', 
   ] /*satisfies SubStatName[]*/} // Bundler errors on "satisfies" keyword
   placeholder='Select a sub stat' 
   {...props}

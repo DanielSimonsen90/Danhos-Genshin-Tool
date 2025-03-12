@@ -7,6 +7,7 @@ import { useDomainData } from "@/stores";
 import { GetContainer } from "../../Item/functions";
 import { ArtifactCard, ArtifactTabBar } from "../../Artifacts";
 import { Link } from "react-router-dom";
+import { ROUTES } from "@/common/constants/routes";
 
 export type Props = {
   domain: Domain<any>;
@@ -26,7 +27,7 @@ export default function DomainCard({ domain, ...props }: Props) {
   const { wrapInLink, showDetails, showRewards, showCharactersBenefitFromRewards, showNavButton } = props;
 
   const rewards = DomainData.getArtifactsFromDomain(name);
-  const Container = GetContainer(wrapInLink, domain, 'domains');
+  const Container = GetContainer(wrapInLink, domain, 'data/domains');
 
   return (
     <Container className={classNames('domain-card', showDetails && 'domain-card--show-more')}>
@@ -57,7 +58,7 @@ export default function DomainCard({ domain, ...props }: Props) {
             : (<><b>{name}</b> is located in <span>{region}</span></>)}
         </p>
         {showNavButton && (
-          <Link to={`/domains/${name}`} className="domain-card__nav-button">
+          <Link to={`/${ROUTES.data_domains}/${name}`} className="domain-card__nav-button">
             <button style={{ width: '100%' }}>
               View Domain
             </button>

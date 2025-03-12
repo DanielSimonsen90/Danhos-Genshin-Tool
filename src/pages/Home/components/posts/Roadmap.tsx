@@ -13,9 +13,9 @@ export const Roadmap = () => (
     <section>
       <h3>These are the features I'm considering</h3>
       <ul>
-        <FeatureIdea title="Character Priority List" version={2.0} features={[
-          'Tierlist-like setup with character icons',
-          '2 states: Recommended (Best Genshin characters tierlist) & Blank (Start from scratch)'
+        <FeatureIdea completed title="Character Priority List" version={2.0} features={[
+          'Tierlist-like setup with character, artifact or domain icons',
+          'You are able to have multiple priority lists per earth region. Changing region will load priority lists saved for that region',
         ]} />
         <FeatureIdea title="Character Focus Day" version={2.1} features={[
           'What characters/items are farmable today (ascension materials for characters and weapons'

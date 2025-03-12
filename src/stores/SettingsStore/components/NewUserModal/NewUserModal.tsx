@@ -1,27 +1,54 @@
+import { DebugLog } from "@/common/functions/dev";
 import Modal from "@/components/common/Modal";
-import { Settings } from "../../SettingsStoreTypes";
-import { CharacterImage } from "@/components/common/Images";
+import { useActionState } from "@/hooks/useActionState";
+import { useRegionStore, RegionSettings, DEFAULT_REGION_DATA } from "@/stores/RegionStore";
 
-type Props = {
-  newUser: boolean;
-  onTravelerSelect: (traveler: Settings['traveler']) => void;
-};
+import { useSettingsStore } from "../../SettingsStore";
+import SettingsOption from "../SettingsModal/SettingsOption";
 
-export const NewUserModal = ({ newUser, onTravelerSelect }: Props) => {
+const debugLog = DebugLog(DebugLog.DEBUGS.settingsStore);
+
+type NewUserData = (
+  & Pick<RegionSettings, 'traveler' | 'region'>
+);
+
+export const NewUserModal = () => {
+  const SettingsStore = useSettingsStore();
+  const RegionStore = useRegionStore();
+  const newUser = SettingsStore.getSetting('newUser');
+  const [submitting, onSubmit] = useActionState<NewUserData>(data => {
+    delete data._form;
+    _onSubmit(data);
+  });
+
+  debugLog('NewUserModal render', {
+    setting: newUser,
+    store: SettingsStore,
+  });
+
+  function _onSubmit(data: NewUserData) {
+    debugLog('NewUserModal submitted', data);
+
+    RegionStore.setRegionData({ ...data, selected: true });
+    SettingsStore.updateAndSaveSettings(state => {
+      const update = { ...state };
+      delete update.newUser;
+      return update;
+    }, true);
+  }
+
   return newUser ? (
-    <Modal className="new-user-modal" open={newUser} onClose={() => onTravelerSelect('lumine')}>
-      <h1>You wake up from a deep sleep on a beach in Monstadt...</h1>
-      <p>You wake up as:</p>
-      <ul className="traveler-select">
-        <li className="traveler-option" title="Lumine">
-          <CharacterImage character='Lumine' />
-          <button className="brand primary" onClick={() => onTravelerSelect('lumine')}>Lumine</button>
-        </li>
-        <li className="traveler-option" title="Aether">
-          <CharacterImage character='Aether' />
-          <button className="brand primary" onClick={() => onTravelerSelect('aether')}>Aether</button>
-        </li>
-      </ul>
+    <Modal className="new-user-modal" open={newUser} onClose={() => !submitting && _onSubmit(DEFAULT_REGION_DATA)}>
+      <form onSubmit={onSubmit}>
+        <h1>You wake up from a deep sleep on a beach in Monstadt...</h1>
+        <div className="intro-sentence">
+          <span>You wake up as </span>
+          <SettingsOption setting="traveler" value={DEFAULT_REGION_DATA['traveler']} />
+          <span> in </span>
+          <SettingsOption setting="region" value={DEFAULT_REGION_DATA['region']} />
+        </div>
+        <input type="submit" value="Finish" disabled={submitting} />
+      </form>
     </Modal>
   ) : null;
-}
+};

@@ -1,4 +1,6 @@
-export type ContextMenuContextType = (e: React.MouseEvent) => (items: MenuItems, position?: Position) => { 
+import { CreateMenuItem } from "./ContextMenuConstants";
+
+export type ContextMenuContextType = (e: React.MouseEvent) => (items: MenuItems, position?: Position) => {
   ref: React.RefObject<HTMLDivElement>;
   close(): void;
 };
@@ -6,17 +8,23 @@ export type ContextMenuContextType = (e: React.MouseEvent) => (items: MenuItems,
 type PositionX = 'left' | 'right';
 type PositionY = 'top' | 'bottom';
 export type Position = `${PositionY}-${PositionX}`;
-export type MenuItem = {
-  label: string;
+
+export type MenuItemTypes = 'option' | 'divider';
+export type MenuItemOption = {
+  type: 'option';
+  label: React.ReactNode;
   action(): void;
   icon?: React.ReactNode;
+  respondsToKey?: string;
 };
+export type MenuItemDivider = {
+  type: 'divider';
+  label?: string;
+};
+
+export type MenuItem = MenuItemOption | MenuItemDivider;
 
 export type MenuItems = (
   MenuItem[]
-  | ((creator: (
-    label: MenuItem['label'],
-    action: MenuItem['action'],
-    icon?: MenuItem['icon']
-  ) => MenuItem) => MenuItem[])
+  | ((creator: typeof CreateMenuItem) => MenuItem[])
 );

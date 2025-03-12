@@ -1,13 +1,14 @@
-import { Arrayable } from "@/common/types";
+import { classNames } from "@/common/functions/strings";
 
 type Props = {
   title: string;
   features: Array<string | Record<string, Array<string | Record<string, Array<string | Record<string, Array<string>>>>>>>;
   version: number;
+  completed?: boolean;
 };
 
-export const FeatureIdea = ({ title, features, version }: Props) => (
-  <section className="feature-idea">
+export const FeatureIdea = ({ title, features, version, completed }: Props) => (
+  <section className={classNames('feature-idea', completed && 'feature-idea--completed')} title={completed ? `This feature is already completed` : undefined}>
     <h4>{title} - v{version}</h4>
     <section>
       <ul>

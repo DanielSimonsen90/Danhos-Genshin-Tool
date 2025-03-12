@@ -1,12 +1,13 @@
 {
-  "name": "genshin-artifact-helper",
-  "productName": "genshin artifact helper",
-  "version": "1.0.1",
-  "description": "Genshin Artifact Helper to help you manage your artifacts",
+  "name": "danhos-genshin-tool",
+  "productName": "Danho's Genshin Tool",
+  "version": "2.0.0",
+  "description": "Danho's Genshin Tool to help you manage your artifacts and plan your characters",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
     "dev": "electron-forge start",
+    "check": "tsc --noEmit",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
@@ -23,7 +24,7 @@
     "@electron-forge/plugin-webpack": "^7.3.0",
     "@electron-forge/publisher-github": "^7.5.0",
     "@electron/fuses": "^1.7.0",
-    "@types/react": "^18.2.64",
+    "@types/react-beautiful-dnd": "^13.1.8",
     "@types/react-dom": "^18.2.21",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
@@ -52,9 +53,11 @@
     "dotenv": "^16.4.5",
     "electron-squirrel-startup": "^1.0.0",
     "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.26.2",
     "sass": "^1.71.1",
-    "sass-loader": "^14.1.1"
+    "sass-loader": "^14.1.1",
+    "zustand": "^5.0.3"
   }
 }

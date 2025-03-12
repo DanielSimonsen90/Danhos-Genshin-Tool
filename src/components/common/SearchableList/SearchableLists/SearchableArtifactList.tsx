@@ -37,9 +37,9 @@ export default function SearchableArtifactList<TFilterKeys extends string>({
     onSearchOrFilterChange={() => setHidden([])}
     renderItem={artifact => {
       const open = useContextMenu(item => [
-        item('View', () => navigate(`/artifacts/${artifact.name}`), '👁️'),
-        item(isFavorite(artifact) ? 'Unfavorite' : 'Favorite', () => isFavorite(artifact) ? remove(artifact) : add(artifact), '⭐'),
-        item('Hide', () => setHidden([...hidden, artifact]), '🙈'),
+        item('option', 'View', () => navigate(`/artifacts/${artifact.name}`), '👁️'),
+        item('option', isFavorite(artifact) ? 'Unfavorite' : 'Favorite', () => isFavorite(artifact) ? remove(artifact) : add(artifact), '⭐'),
+        item('option', 'Hide', () => setHidden([...hidden, artifact]), '🙈'),
       ]);
 
       return hidden.includes(artifact) ? null : (

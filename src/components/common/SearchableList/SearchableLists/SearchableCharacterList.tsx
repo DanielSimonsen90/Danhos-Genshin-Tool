@@ -29,22 +29,20 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
   const { query, filters } = useParams();
   const navigate = useNavigate();
   const [hidden, setHidden] = useState(new Array<Character>());
-  const { add, remove, isFavorite } = useFavoriteStore('characters');
-
-  console.log(location.href)
+  const { add: addToFavorite, remove: removeFromFavorite, isFavorite } = useFavoriteStore('characters');
 
   return <SearchableList items={items}
     sort={(a, b) => isFavorite(a) === isFavorite(b) ? 0 : isFavorite(a) ? -1 : 1}
     renderItem={character => {
       const open = useContextMenu(item => [
-        item('View', () => navigate(`/characters/${character.name}`), '👁️'),
-        item(isFavorite(character) ? 'Unfavorite' : 'Favorite', () => isFavorite(character) ? remove(character) : add(character), '⭐'),
-        item('Hide', () => setHidden([...hidden, character]), '🙈'),
+        item('option', 'View', () => navigate(`/characters/${character.name}`), '👁️'),
+        item('option', isFavorite(character) ? 'Unfavorite' : 'Favorite', () => isFavorite(character) ? removeFromFavorite(character) : addToFavorite(character), '⭐'),
+        item('option', 'Hide', () => setHidden([...hidden, character]), '🙈'),
       ]);
 
       return hidden.includes(character) ? null : (
         <div className="context-menu-item-container" onContextMenu={open}>
-          {isFavorite(character) && <Star className="favorite-star" onClick={() => remove(character)} />}
+          {isFavorite(character) && <Star className="favorite-star" onClick={() => removeFromFavorite(character)} />}
           <CharacterCard character={character} {...cardProps} />
         </div>
       );

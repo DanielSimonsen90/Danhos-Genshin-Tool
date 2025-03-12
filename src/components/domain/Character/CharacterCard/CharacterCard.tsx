@@ -8,6 +8,7 @@ import { GetContainer } from "../../Item/functions";
 import RarityList from "@/components/common/icons/Rarity";
 import ElementImage from "@/components/common/Images/ElementImage";
 import WeaponImage from "@/components/common/Images/WeaponImage";
+import { ROUTES } from "@/common/constants/routes";
 
 export type Props = {
   character: Character;
@@ -26,7 +27,7 @@ export default function CharacterCard({ character, score, ...props }: Props) {
   const { linkOnName, wrapInLink, showDetails, showRarity } = props;
   const { children } = props;
 
-  const Container = GetContainer(wrapInLink, character, 'characters');
+  const Container = GetContainer(wrapInLink, character, 'data/characters');
   const CharacterName = GetCharacterNameComponent(linkOnName, character);
 
   return (
@@ -60,8 +61,12 @@ export default function CharacterCard({ character, score, ...props }: Props) {
       {showDetails && (
         <div className="character-sets">
           <h3 className="character-sets__title">Character Sets</h3>
-          <TabBar id={`${name}-sets`} tabs={sets.map(set => [set.name, set.name])} 
-            {...sets.reduce((acc, set) => ({ ...acc, [set.name]: <CharacterSet set={set} character={character} /> }), {} as any)}
+          <TabBar id={`${name}-sets`} 
+            tabs={create => sets.map(set => create(
+              set.name,
+              set.name,
+              <CharacterSet set={set} character={character} />
+            ))}
           />
         </div>
       )}
@@ -80,6 +85,6 @@ function GetCharacterNameComponent(linkOnName: boolean, character: Character) {
   )
 
   return () => linkOnName
-    ? <Link to={`/characters/${character.name}`}><CharacterName /></Link>
+    ? <Link to={`/${ROUTES.data_characters}/${character.name}`}><CharacterName /></Link>
     : <CharacterName />;
 }

@@ -319,12 +319,12 @@ export const Gambler = new ArtifactSet(
 
 /**
  * @two Elemental Mastery +80
- * @four Within 8s Of triggering Elemental Reaction, wearer obtains buff based on Elemental Type Of other party members. ATK +14% for each member with same Element as wearer. Elemental Mastery +50 for each member with different Element. Each buff can count up to 3 characters. Effect triggerable 1/8s. Can trigger off-field.
+ * @four Within 8s Of triggering Elemental Reaction, wearer obtains buff based on Elemental Type of other party members. ATK +14% for each member with same Element as wearer. Elemental Mastery +50 for each member with different Element. Each buff can count up to 3 characters. Effect triggerable 1/8s. Can trigger off-field.
  */
 export const GildedDreams = new ArtifactSet(
   "Gilded Dreams",
   "Elemental Mastery +80",
-  "Within 8s Of triggering Elemental Reaction, wearer obtains buff based on Elemental Type Of other party members. ATK +14% for each member with same Element as wearer. Elemental Mastery +50 for each member with different Element. Each buff can count up to 3 characters. Effect triggerable 1/8s. Can trigger off-field.",
+  "Within 8s Of triggering Elemental Reaction, wearer obtains buff based on Elemental Type of other party members. ATK +14% for each member with same Element as wearer. Elemental Mastery +50 for each member with different Element. Each buff can count up to 3 characters. Effect triggerable 1/8s. Can trigger off-field.",
   Rarity.Legendary,
   [Domains.SpireofSolitaryEnlightenment.name],
   true,

@@ -35,9 +35,9 @@ export default function SearchableDomainList<TFilterKeys extends string>({
     onSearchOrFilterChange={() => setHidden([])}
   renderItem={domain => {
     const open = useContextMenu(item => [
-      item('View', () => navigate(`/domains/${domain.name}`), '👁️'),
-      item(isFavorite(domain) ? 'Unfavorite' : 'Favorite', () => isFavorite(domain) ? remove(domain) : add(domain), '⭐'),
-      item('Hide', () => setHidden([...hidden, domain]), '🙈'),
+      item('option', 'View', () => navigate(`/domains/${domain.name}`), '👁️'),
+      item('option', isFavorite(domain) ? 'Unfavorite' : 'Favorite', () => isFavorite(domain) ? remove(domain) : add(domain), '⭐'),
+      item('option', 'Hide', () => setHidden([...hidden, domain]), '🙈'),
     ]);
 
     return hidden.includes(domain) ? null : (

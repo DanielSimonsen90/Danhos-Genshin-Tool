@@ -7,29 +7,35 @@
   padding: 1em;
   box-shadow: 0 0 5px 3px #22222266;
 
-  nav ul {
+  nav {
     display: flex;
-    justify-content: center;
-    gap: 1rem;
+    align-items: center;
 
-    a {
-      text-decoration: none;
-      color: var(--text-secondary);
-      padding: .5rem;
-      border-radius: .25rem;
-      background-color: var(--background-secondary);
+    ul {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
 
-      &:hover {
-        color: var(--text-brand);
-        box-shadow: 0 0 5px 3px #22222266;
+      a {
+        text-decoration: none;
+        color: var(--text-secondary);
+        padding: .5rem;
+        border-radius: .25rem;
+        background-color: var(--background-secondary);
+
+        &:hover {
+          color: var(--text-brand);
+          box-shadow: 0 0 5px 3px #22222266;
+        }
       }
     }
-  }
 
-  nav li:has(a[href*=skip-nav]:not(:focus)) {
-    @extend %hidden;
+    li:has(a[href*=skip-nav]:not(:focus)) {
+      @extend %hidden;
 
-    visibility: visible;
+      visibility: visible;
+      position: absolute;
+    }
   }
 
   .tab-bar {
@@ -39,14 +45,43 @@
 }
 
 .top-header {
-  display: flex;
+  display: grid;
+  grid-template-areas: "blank nav settings";
+  grid-template-columns: 1fr auto 1fr;
 
-  nav {
-    margin-left: auto;
+  @media (max-width: 920px) {
+    grid-template-areas: "nav settings";
+    grid-template-columns: auto auto;
   }
 
-  .settings-cog {
+  @media (max-width: 700px) {
+    grid-template-areas: "settings" "nav";
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 1em;
+  }
+
+  nav {
+    grid-area: nav;
+  }
+
+  .settings-container {
+    grid-area: settings;
+    display: flex;
+    align-items: center;
+    gap: .5em;
     justify-self: end;
-    margin-left: auto;
+
+    @media (max-width: 700px) {
+      justify-self: auto;
+    }
+
+    .input-group {
+      flex-direction: column;
+    }
+
+    .character-image {
+      --size: 2rem;
+    }
   }
 }
