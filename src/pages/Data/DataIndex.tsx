@@ -12,14 +12,15 @@ import Select from '@/components/common/Select';
 import { CharacterImage, ArtifactImage, DomainImage, ElementImage } from '@/components/common/Images';
 
 import { DataStore, useDataStore } from '@/stores';
+import { ROUTES } from '@/common/constants/routes';
 
-const DATA_PREFIX = 'data';
+const DATA_PREFIX = ROUTES.data;
 const routes = [
-  ['characters', 'Characters'],
-  ['artifacts', 'Artifacts'],
-  ['domains', 'Domains'],
-  //  ['weapons', 'Weapons'],
-  //  ['materials', 'Materials'],
+  [ROUTES.endRoute('data_characters'), 'Characters'],
+  [ROUTES.endRoute('data_artifacts'), 'Artifacts'],
+  [ROUTES.endRoute('data_domains'), 'Domains'],
+  //  [ROUTES.endRoute('data_weapons'), 'Weapons'],
+  //  [ROUTES.endRoute('data_materials'), 'Materials'],
 ];
 
 type Order = `${'name' | 'rarity' | 'element'}-${'ascend' | 'descend'}`;

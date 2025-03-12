@@ -3,6 +3,7 @@ import { ArtifactCard } from '@/components/domain/Artifacts';
 import { useDataStore } from '@/stores';
 import { useMemo } from 'react';
 import { ItemHeader } from '@/components/domain/Item';
+import { ROUTES } from '@/common/constants/routes';
 
 export default function ArtifactPage() {
   const { artifactName } = useParams();
@@ -13,7 +14,7 @@ export default function ArtifactPage() {
     return (
       <main>
         <h1>Unable to find {artifactName}.</h1>
-        <Link to="/artifacts">Back to Artifacts</Link>
+        <Link to={ROUTES.data_artifacts}>Back to Artifacts</Link>
       </main>
     );
   }

@@ -8,6 +8,7 @@ import TabBar from "@/components/common/TabBar";
 import { SearchResultItem } from "@/services";
 import { Link } from "react-router-dom";
 import { ArtifactImage } from "@/components/common/Images";
+import { ROUTES } from "@/common/constants/routes";
 
 type Props = {
   character: Character;
@@ -24,7 +25,7 @@ export default function CharacterArtifactsSetsTabBar({ character, set, artifactS
   const content = useMemo(() => {
     const contentMap = artifactSets.reduce((acc, { pieces, set, effectiveness }) => acc.set(effectiveness, [
       ...(acc.get(effectiveness) || []),
-      <Link to={`/data/artifacts/${set.name}`} key={`${character.name}-set-${set.name}-${generateId()}`}>
+      <Link to={`/${ROUTES.data_artifacts}/${set.name}`} key={`${character.name}-set-${set.name}-${generateId()}`}>
         <p className="set-short-description" title={classNames(
           ArtifactSet.bonusDescription(set, pieces),
           ArtifactSet.bonusDescription(set, pieces).endsWith('.') ? '' : '.'

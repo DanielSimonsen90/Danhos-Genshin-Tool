@@ -1,10 +1,10 @@
+import { ROUTES } from "@/common/constants/routes";
 import { Link } from "react-router-dom";
 
-const BUILDING_PREFIX = 'building';
 const routes = [
-  ['priority-list', 'Priority list', `Make your own tierlist-based priority lists on all models like characters, artifacts and domains.`],
-  // ['focus-day', 'Focus day', `List of items in the game, how to obtain them, when they're available and any other relevant information.`],
-  // ['plan', 'Plan', `Create your own plan to build your characters, including what to farm and when.`],
+  [ROUTES.endRoute('building_priority_list'), 'Priority list', `Make your own tierlist-based priority lists on all models like characters, artifacts and domains.`],
+  // [ROUTES.endRoute('focus_day'), 'Focus day', `List of items in the game, how to obtain them, when they're available and any other relevant information.`],
+  // [ROUTES.endRoute('plan'), 'Plan', `Create your own plan to build your characters, including what to farm and when.`],
 ];
 
 export default function BuildingIndex() {
@@ -18,7 +18,7 @@ export default function BuildingIndex() {
       <ul className="hub-card-list">
         {routes.map(([route, name, description]) => (
           <li key={route} className="hub-card">
-            <Link to={`/${BUILDING_PREFIX}/${route}`}>
+            <Link to={`/${ROUTES.building}/${route}`}>
               <h2 className="hub-card__title">{name}</h2>
               <p className="hub-card__description">{description}</p>
             </Link>

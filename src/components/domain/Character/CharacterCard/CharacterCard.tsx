@@ -8,6 +8,7 @@ import { GetContainer } from "../../Item/functions";
 import RarityList from "@/components/common/icons/Rarity";
 import ElementImage from "@/components/common/Images/ElementImage";
 import WeaponImage from "@/components/common/Images/WeaponImage";
+import { ROUTES } from "@/common/constants/routes";
 
 export type Props = {
   character: Character;
@@ -84,6 +85,6 @@ function GetCharacterNameComponent(linkOnName: boolean, character: Character) {
   )
 
   return () => linkOnName
-    ? <Link to={`/data/characters/${character.name}`}><CharacterName /></Link>
+    ? <Link to={`/${ROUTES.data_characters}/${character.name}`}><CharacterName /></Link>
     : <CharacterName />;
 }
