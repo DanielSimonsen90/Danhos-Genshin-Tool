@@ -1,9 +1,9 @@
+import { useMemo } from "react";
 import { Draggable } from "react-beautiful-dnd";
 
 import { useContextMenu } from "@/providers/ContextMenuProvider";
 
 import { Entry, RenderItem, Tier } from "../TierlistTypes";
-import { useMemo } from "react";
 
 type Props<T> = {
   entry: Entry<T>;

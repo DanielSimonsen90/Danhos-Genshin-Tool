@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 
 import { getElement } from '@/data/elements';
 
-import { Element } from '@/common/types';
+import type { Element } from '@/common/types';
+import { ROUTES } from '@/common/constants/routes';
 import { ArtifactSet, Character, Model, List, Domain, DomainOfBlessing } from '@/common/models';
 import { classNames, pascalCaseFromKebabCase, pascalCaseFromSnakeCase } from '@/common/functions/strings';
 
@@ -12,7 +13,6 @@ import Select from '@/components/common/Select';
 import { CharacterImage, ArtifactImage, DomainImage, ElementImage } from '@/components/common/Images';
 
 import { DataStore, useDataStore } from '@/stores';
-import { ROUTES } from '@/common/constants/routes';
 
 const DATA_PREFIX = ROUTES.data;
 const routes = [

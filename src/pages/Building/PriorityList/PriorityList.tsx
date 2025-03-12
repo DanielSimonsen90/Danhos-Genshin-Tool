@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
 import TabBar from "@/components/common/TabBar";
+import useOnChange from "@/hooks/useOnChange";
 import { RegionData, useDataStore, useRegionData, useRegionStore } from "@/stores";
 
 import { CreatePriorityListButton } from "./components";
-import { useModifyPriorityList, usePriorityListTabs } from "./PriorityListHooks";
+import { useModifyPriorityList, usePriorityListTabs } from "./hooks";
 import { PriorityList } from "./PriorityListTypes";
 import { getDefaultPriorityLists } from "./PriorityListFunctions";
-import useOnChange from "@/hooks/useOnChange";
 
 export default function PriorityList() {
   const DataStore = useDataStore();

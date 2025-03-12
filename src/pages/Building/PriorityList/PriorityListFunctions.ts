@@ -1,9 +1,11 @@
-import { Tier } from "@/components/common/Tierlist/TierlistTypes";
-import { DataStore } from "@/stores";
-import { Region, RegionContextType, RegionData, RegionStore } from "@/stores/RegionStore";
-import { PriorityList, PriorityLists } from "./PriorityListTypes";
-import { getDefaultTiers } from "@/components/common/Tierlist/TierlistFunctions";
 import { ModelKeys } from "@/common/models";
+
+import { Tier } from "@/components/common/Tierlist/TierlistTypes";
+import { getDefaultTiers } from "@/components/common/Tierlist/TierlistFunctions";
+
+import { DataStore, RegionStore, Region, RegionContextType, RegionData, } from "@/stores";
+
+import { PriorityList, PriorityLists } from "./PriorityListTypes";
 
 export const onUnsortedSearch = (search: string, name: string) => name.toLowerCase().includes(search.toLowerCase());
 export const onStorageLoaded = (tierlistTitle: string, DataStore: DataStore, region: Region) => (data: RegionContextType) => {

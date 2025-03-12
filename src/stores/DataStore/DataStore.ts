@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { DataStore } from "./DataStoreTypes";
 import { DataStoreContent } from './DataStoreConstants';
-import { ArtifactSet, Character, Domain, Model } from '@/common/models';
+import { Model } from '@/common/models';
 import ModelType from './ModelType';
 
 export const useDataStore = create<DataStore>((setState, getState) => {

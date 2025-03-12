@@ -1,14 +1,10 @@
 import { DebugLog } from "@/common/functions/dev";
-
+import Modal from "@/components/common/Modal";
+import { useActionState } from "@/hooks/useActionState";
 import { useRegionStore, RegionSettings, DEFAULT_REGION_DATA } from "@/stores/RegionStore";
 
-// TODO: Move SettingsOption somewhere else...
-import SettingsOption from "@/components/global/Header/components/SettingsModal/SettingsOption";
-import Modal from "@/components/common/Modal";
-
-import { useActionState } from "@/hooks/useActionState";
-
 import { useSettingsStore } from "../../SettingsStore";
+import SettingsOption from "../SettingsModal/SettingsOption";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsStore);
 

@@ -24,7 +24,6 @@
     "@electron-forge/plugin-webpack": "^7.3.0",
     "@electron-forge/publisher-github": "^7.5.0",
     "@electron/fuses": "^1.7.0",
-    "@types/lodash": "^4.17.16",
     "@types/react-beautiful-dnd": "^13.1.8",
     "@types/react-dom": "^18.2.21",
     "@typescript-eslint/eslint-plugin": "^5.62.0",

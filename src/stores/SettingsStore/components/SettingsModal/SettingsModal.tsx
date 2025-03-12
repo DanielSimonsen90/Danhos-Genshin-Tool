@@ -1,7 +1,7 @@
 import { DOMAIN_NAME } from '@/common/constants/domain';
 import { DebugLog } from "@/common/functions/dev";
-
 import { Settings } from '@/common/types/app-types';
+
 import Modal, { ModalConsumerProps } from "@/components/common/Modal";
 import { useActionState } from "@/hooks/useActionState";
 

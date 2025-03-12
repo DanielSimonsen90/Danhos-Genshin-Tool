@@ -1,8 +1,11 @@
 import { useState } from "react";
+
 import { Settings } from "@/common/types/app-types";
+
 import { CharacterImage } from "@/components/common/Images";
 import Select from "@/components/common/Select";
 import Switch from "@/components/common/Switch";
+
 import { Region, Traveler } from "@/stores/RegionStore/RegionStoreTypes";
 import { DEFAULT_REGION_DATA, REGIONS } from "@/stores/RegionStore/RegionStoreConstants";
 

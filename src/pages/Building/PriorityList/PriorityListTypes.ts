@@ -1,5 +1,5 @@
-import { Tier } from "@/components/common/Tierlist/TierlistTypes";
 import { ModelKeys } from "@/common/models";
+import { Tier } from "@/components/common/Tierlist/TierlistTypes";
 
 export type PriorityList = {
   model: ModelKeys;

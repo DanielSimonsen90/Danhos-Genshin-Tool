@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
+import { DebugLog } from "@/common/functions/dev";
 import { AppSettings } from "./SettingsStoreTypes";
 import { DEFAULT_SETTINGS, LOCAL_STORAGE_KEY } from "./SettingsStoreConstants";
-import { DebugLog } from "@/common/functions/dev";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsStore);
 

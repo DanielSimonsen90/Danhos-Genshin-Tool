@@ -1,5 +1,5 @@
-import { ROUTES } from "@/common/constants/routes";
 import { Link } from "react-router-dom";
+import { ROUTES } from "@/common/constants/routes";
 
 const routes = [
   [ROUTES.endRoute('building_priority_list'), 'Priority list', `Make your own tierlist-based priority lists on all models like characters, artifacts and domains.`],

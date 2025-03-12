@@ -7,6 +7,7 @@ import { classNames } from "@/common/functions/strings";
 import Modal from "../../Modal";
 import { Tier, Entry, RenderItem } from "../TierlistTypes";
 import { generateBlankTier } from "../TierlistFunctions";
+
 import TierModifyForm from "./TierModifyForm";
 import EntryComponent from "./Entry";
 import { UnsortedSearchList } from "./UnsortedSearchList";
