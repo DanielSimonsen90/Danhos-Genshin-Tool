@@ -1,12 +1,15 @@
 .priority-list {
-  height: calc(100vh - 30em);
+  height: 100%;
+  max-height: calc(100vh - 33vh);
 
   .tab-bar__tab {
     padding: .25em .75em;
   }
 
   .priority-list-tab {
-    display: flex;
+    // display: flex;
+    display: grid;
+    grid-template-columns: 13ch auto;
     align-items: center;
     gap: .5ch;
 
