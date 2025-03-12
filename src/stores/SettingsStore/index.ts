@@ -1,2 +1,3 @@
 export * from './SettingsStoreHooks';
-export { default } from './SettingsStoreProvider';
+export * from './SettingsStoreTypes';
+export * from './SettingsStore';

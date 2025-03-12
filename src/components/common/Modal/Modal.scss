@@ -20,6 +20,11 @@
   border-radius: .5em;
   overflow: auto;
 
+  &:not([open]) {
+    display: none;
+    z-index: -1;
+  }
+
   &::backdrop {
     background-color: rgba(0, 0, 0, .5);
   }
@@ -28,6 +33,9 @@
     font-size: 1.2rem;
     top: -.25em;
     right: -.5em;
+    height: 1.25ch;
+    display: flex;
+    align-items: center;
   }
 
   h1 {

@@ -1,0 +1,122 @@
+@use '../../styles/partials' as partials;
+
+.data-page {
+  display: grid;
+  grid-template-columns: 10em auto;
+  gap: 8px;
+
+  >aside {
+    border-right: 1px solid var(--background-secondary);
+
+    summary a {
+      padding: 0;
+    }
+
+    img {
+      --size: 3em;
+    }
+  }
+
+  >main {
+    header {
+      display: grid;
+
+      .input-group {
+        margin-bottom: 1em;
+
+        select[name=order] {
+          min-width: 13ch;
+        }
+      }
+    }
+
+    section {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .25rem;
+
+      li a:hover {
+        background-color: var(--background-secondary);
+        box-shadow: 0 0 2px var(--background-secondary);
+      }
+    }
+  }
+
+  .model-name {
+    display: flex;
+    align-items: center;
+    gap: .5ch;
+
+    font-weight: bold;
+    font-size: 1.1em;
+
+    margin: 0;
+
+    span {
+      @extend %text-ellipsis;
+    }
+
+    .element-image {
+      --size: 1.25rem;
+    }
+  }
+
+  img:not(.element-image) {
+    --size: 4em;
+    border-radius: 100%;
+  }
+
+  a {
+    @extend %text-ellipsis;
+
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 0.5ch;
+    border-radius: 0.5ch;
+
+    &:hover {
+      color: var(--text-primary);
+      text-decoration: underline;
+    }
+  }
+
+  li {
+    padding-left: 1ch;
+  }
+
+  main li {
+    padding: 0;
+  }
+
+  nav>ul>li {
+    padding-left: unset;
+    margin-bottom: 1ch;
+
+    li {
+      display: flex;
+      align-items: center;
+
+      .element-image {
+        --size: 1em;
+      }
+    }
+  }
+}
+
+.data-route {
+
+  summary,
+  summary a {
+    font-size: 1.1em;
+    font-weight: bold;
+    user-select: none;
+  }
+}
+
+.data-details-list a {
+  margin-top: 1ch;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 1ch;
+}

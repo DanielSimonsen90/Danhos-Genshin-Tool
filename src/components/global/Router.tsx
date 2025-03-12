@@ -1,32 +1,73 @@
 import { Routes, Route, HashRouter } from "react-router-dom";
-import { 
-  Layout, Home, Search, 
-  Characters, Character, 
+import {
+  Layout, Home, Search,
+
+  DataIndex,
+  Characters, Character,
   Artifacts, Artifact,
   Domains, Domain,
+  
+  BuildingIndex,
+  PriorityList,
+
+  Development,
 } from '@/pages';
+import { ROUTES } from "@/common/constants/routes";
 
 export const Router = () => (
   <HashRouter>
     <Routes>
       <Route path="*" Component={Layout}>
         <Route index element={<Home />} />
-        <Route path="search">
-          <Route path=":query" element={<Search />} />
+        <Route path={ROUTES.search}>
+          <Route path={ROUTES.endRoute('search_query')} element={<Search />} />
         </Route>
 
-        <Route path="characters">
-          <Route index element={<Characters />} />
-          <Route path=":characterName" element={<Character />} />
+        <Route path={ROUTES.data}>
+          <Route index element={<DataIndex />} />
+
+          <Route path={ROUTES.endRoute('data_characters')}>
+            <Route index element={<Characters />} />
+            <Route path={ROUTES.endRoute('data_character')} element={<Character />} />
+          </Route>
+          <Route path={ROUTES.endRoute('data_artifacts')}>
+            <Route index element={<Artifacts />} />
+            <Route path={ROUTES.endRoute('data_artifact')} element={<Artifact />} />
+          </Route>
+          <Route path={ROUTES.endRoute('data_domains')}>
+            <Route index element={<Domains />} />
+            <Route path={ROUTES.endRoute('data_domain')} element={<Domain />} />
+          </Route>
+          {/* TODO: Add weapons & materials */}
         </Route>
-        <Route path="artifacts">
-          <Route index element={<Artifacts />} />
-          <Route path=":artifactName" element={<Artifact />} />
+
+        <Route path={ROUTES.building}>
+          <Route index element={<BuildingIndex />} />
+          <Route path={ROUTES.endRoute('building_priority_list')} element={<PriorityList />} />
+          {/* 
+
+          /focus-day
+          /plan
+
+          */}
         </Route>
-        <Route path="domains">
-          <Route index element={<Domains />} />
-          <Route path=":domainName" element={<Domain />} />
+
+        <Route path={ROUTES.generator}>
+          {/* 
+          
+          /teams
+          /team-builder
+          /character
+          /artifact
+
+          */}
         </Route>
+
+        {process.env.NODE_ENV === 'development' && (
+          <Route path={ROUTES.development}>
+            <Route index element={<Development />} />
+          </Route>
+        )}
 
         <Route path="*" element={(() => {
           const path = window.location.pathname;

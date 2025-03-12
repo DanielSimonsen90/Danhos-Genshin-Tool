@@ -39,6 +39,12 @@ export function pascalCaseFromCamelCase<T extends string>(value: T): T {
   return (result[0].toUpperCase() + result.slice(1)) as T;
 }
 
+export function pascalCaseFromKebabCase<T extends string>(value: T): T {
+  const result = value.split('-').map(word => word[0].toUpperCase() + word.slice(1)).join(' ') as T;
+  debugLog(`[pascalCaseFromKebabCase] ${value} -> ${result}`);
+  return result;
+}
+
 export function formatSearchData(value: SearchFormData, withSet = false) {
   const { artifactSetName, artifactPartName, mainStat, subStats } = value;
   const stats = `${mainStat} & ${subStats.join(', ')}`;
@@ -51,7 +57,7 @@ export function formatSearchData(value: SearchFormData, withSet = false) {
 }
 
 export function classNames(...args: string[]) {
-  return args.filter(Boolean).join(' ');
+  return args.filter(Boolean).join(' ') || undefined
 }
 
 export function fromList(list: string[] = []) {

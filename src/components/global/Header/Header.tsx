@@ -1,33 +1,29 @@
 import { useState } from "react";
 
 import TabBar from "@/components/common/TabBar";
-import SettingsCog from "@/components/common/icons/SettingsCog";
 import { useSetting } from "@/stores/SettingsStore";
 
-import { Navigation, Search, Cache, SettingsModal } from "./components";
+import { Navigation, Search, Cache, SettingsContainer, SettingsModal } from "./components";
 
 export default function Header() {
-  const [preferredTabs] = useSetting('preferredTabs');
+  const preferredTabs = useSetting('preferredTabs');
   const [openModal, setOpenModal] = useState(false);
 
   return (
     <>
       <header className="site-header">
         <section className="top-header">
+          <div></div>
           <Navigation />
-          <SettingsCog role="button" tabIndex={0} onClick={() => setOpenModal(true)} onKeyDown={e => {
-            if (e.key === 'Enter' || e.key === 'NumpadEnter' || e.key === ' ') setOpenModal(true);
-          }} />
+          <SettingsContainer setOpenModal={setOpenModal} />
         </section>
 
         <section className="header-content">
-          <TabBar tabs={[
-            ['search', 'Search'],
-            ['history', 'History']
+          <TabBar tabs={tabItem => [
+            tabItem('search', 'Search', <Search />),
+            tabItem('history', 'History', <Cache />),
           ]}
-            defaultTab={preferredTabs?.searchOrHistory}
-            search={<Search />}
-            history={<Cache />}
+            defaultTab={preferredTabs.get()?.searchOrHistory}
           />
         </section>
       </header>

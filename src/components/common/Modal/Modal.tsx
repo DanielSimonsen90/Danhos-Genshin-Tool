@@ -33,8 +33,8 @@ export default function Modal({ children, onClose, open, ...props }: ModalProps)
         {children}
         {hasButtons && (
           <div className="button-panel">
-            {<button className="secondary" onClick={onCancel}>{props.cancelText ?? 'Cancel'}</button>}
-            {<button className="brand primary" onClick={onConfirm}>{props.confirmText ?? 'Confirm'}</button>}
+            <button className="tertiary" onClick={onCancel}>{props.cancelText ?? 'Cancel'}</button>
+            <button className="brand primary" onClick={onConfirm}>{props.confirmText ?? 'Confirm'}</button>
           </div>
         )}
       </div>

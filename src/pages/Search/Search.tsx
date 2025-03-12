@@ -50,7 +50,7 @@ export default function SearchQuery() {
   return (
     <>
       <div className="artifact-display">
-        <ArtifactImage set={artifactSetName} name={artifactPartName} />
+        <ArtifactImage set={artifactSetName} piece={artifactPartName} />
         <h1 className="artifact-display__mainstat">{formData.mainStat}</h1>
         <p className="artifact-display__substats">
           {formData.subStats.map((subStat, i) => (

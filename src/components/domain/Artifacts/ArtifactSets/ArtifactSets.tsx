@@ -9,7 +9,7 @@ import ArtifactSetsPiecesContent from "./components/ArtifactSetsPiecesContent";
 
 type Props = {
   artifact: ArtifactSet;
-}
+};
 
 export default function ArtifactSets({ artifact }: Props) {
   const DataStore = useDataStore();
@@ -21,14 +21,13 @@ export default function ArtifactSets({ artifact }: Props) {
   return (
     <div className="artifact-sets">
       <h2>Artifact Set Pieces</h2>
-      <TabBar tabs={[
-        ['any', anyWantsThisPiece && 'Any'],
-        ['four', fourPieceCharacters.length > 0 && 'Four-Piece'],
-        ['two', twoPieceCharacters.length > 0 && 'Two-Piece'],
-      ]} noTabs={<p className="muted">There are no characters that use this set.</p>} defaultTab="four"
-        any={<ArtifactSetsPiecesContent results={characters} displayPieces />}
-        four={<ArtifactSetsPiecesContent results={fourPieceCharacters} />}
-        two={<ArtifactSetsPiecesContent results={twoPieceCharacters} />}
+      <TabBar defaultTab="four"
+        noTabs={<p className="muted">There are no characters that use this set.</p>}
+        tabs={create => [
+          create('any', anyWantsThisPiece && 'Any', anyWantsThisPiece && <ArtifactSetsPiecesContent results={characters} displayPieces />),
+          create('four', fourPieceCharacters.length > 0 && 'Four-Piece', fourPieceCharacters.length > 0 && <ArtifactSetsPiecesContent results={fourPieceCharacters} />),
+          create('two', twoPieceCharacters.length > 0 && 'Two-Piece', twoPieceCharacters.length > 0 && <ArtifactSetsPiecesContent results={twoPieceCharacters} />),
+        ]}
       />
     </div>
   );

@@ -9,18 +9,22 @@
     --margins: 1em;
   }
 
-  .traveler-select {
+  form {
+    flex-direction: column;
+  }
+
+  .intro-sentence {
     display: flex;
-    justify-content: space-evenly;
+    align-items: center;
+    gap: 1ch;
 
-    .traveler-option {
-      display: grid;
-      justify-items: center;
-      gap: 1ch;
-
-      .character-image {
-        border-radius: 50%;
-      }
+    label {
+      display: none;
     }
+  }
+
+  .character-image {
+    --size: 7.5ch;
+    border-radius: 50%;
   }
 }

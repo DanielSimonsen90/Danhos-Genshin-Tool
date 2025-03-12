@@ -3,7 +3,7 @@ import * as ArtifactsData from '@/data/artifact-sets';
 import * as DomainsData from '@/data/domains';
 import { List } from '@/common/models/List';
 
-export const DataStore = {
+export const DataStoreContent = {
   ArtifactsData,
   Artifacts: List.from(ArtifactsData),
   ArtifactNames: List.from(ArtifactsData).map(set => set.name),

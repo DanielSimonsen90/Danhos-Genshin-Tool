@@ -1,7 +1,7 @@
-import { Settings } from "./SettingsStoreTypes";
+import { AppSettings } from "./SettingsStoreTypes";
 
 export const LOCAL_STORAGE_KEY = 'settings';
-export const DEFAULT_SETTINGS: Settings = {
+export const DEFAULT_SETTINGS: AppSettings = {
   showAll: false,
   wrap: true,
   preferredTabs: {
@@ -9,5 +9,5 @@ export const DEFAULT_SETTINGS: Settings = {
     results: 'combined'
   },
   updated: undefined,
-  traveler: undefined
+  newUser: true
 };

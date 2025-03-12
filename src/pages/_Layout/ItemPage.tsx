@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { useDataStore } from "@/stores";
 import { ItemHeader } from "@/components/domain/Item";
 import { DataStore } from "@/stores/DataStore/DataStoreTypes";
+import { ROUTES } from "@/common/constants/routes";
 
 type Props<
   DataKey extends keyof Pick<DataStore, 'Characters' | 'Artifacts' | 'Domains'>
@@ -24,7 +25,7 @@ export default function ItemPage<
     return (
       <main>
         <h1>Unable to find {name}.</h1>
-        <Link to={`/${itemKey.toLowerCase()}s`}>Back to {itemKey}s</Link>
+        <Link to={`/${ROUTES.data}/${itemKey.toLowerCase()}s`}>Back to {itemKey}s</Link>
       </main>
     );
   }

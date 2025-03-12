@@ -4,7 +4,7 @@ import { ContextMenuContextType, MenuItem, Position } from './ContextMenuTypes';
 
 export default function ContextMenuProvider({ children }: PropsWithChildren) {
   const [position, setPosition] = useState<Position>('top-left');
-  const [x, y] = position.split('-');
+  const [y, x] = position.split('-');
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [visible, setVisible] = useState(false);
   const [top, setTop] = useState(0);
@@ -62,13 +62,21 @@ export default function ContextMenuProvider({ children }: PropsWithChildren) {
         {visible && (
           <div className="context-menu" style={{
             top, left,
-            transform: `translate(${x === 'left' ? '-100%' : 0}, ${y === 'top' ? '-100%' : 0})`,
+            transform: `translate(${x === 'right' ? '-100%' : 0}, ${y === 'bottom' ? '-100%' : 0})`,
           }}>
             {menuItems.map((item, index) => (
-              <div key={index} className="context-menu-item" onClick={item.action}>
-                {item.icon && <div className="context-menu-icon">{item.icon}</div>}
-                <span>{item.label}</span>
-              </div>
+              item.type === 'divider' ? (
+                <div key={index} className="context-menu-divider" data-label={item.label}>
+                  {item.label}
+                </div>
+              )
+              : item.type === 'option' ? (
+                <div key={index} className="context-menu-item" onClick={item.action}>
+                  {item.icon && <div className="context-menu-icon">{item.icon}</div>}
+                  <span>{item.label}</span>
+                </div>
+              )
+              : undefined
             ))}
           </div>
         )}
