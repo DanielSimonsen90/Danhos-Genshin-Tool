@@ -18,17 +18,27 @@
   }
 
   >main {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: .25rem;
-
     header {
       display: grid;
+
+      .input-group {
+        margin-bottom: 1em;
+
+        select[name=order] {
+          min-width: 13ch;
+        }
+      }
     }
 
-    li a:hover {
-      background-color: var(--background-secondary);
-      box-shadow: 0 0 2px var(--background-secondary);
+    section {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .25rem;
+
+      li a:hover {
+        background-color: var(--background-secondary);
+        box-shadow: 0 0 2px var(--background-secondary);
+      }
     }
   }
 

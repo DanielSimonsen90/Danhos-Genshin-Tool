@@ -29,17 +29,18 @@ const getModelElement = (model: ArtifactSet): Element | undefined => [
   model.fourPieceSetDescription,
 ].map(getElement).find(Boolean);
 const getDomainElement = (domain: DomainOfBlessing, dataStore: DataStore, order: Order): Element | undefined => domain.getRewards(dataStore)
-  .map(artifactSet => getModelElement(artifactSet))
+  .map(getModelElement)
   .filter(Boolean)
   .sort((a, b) => order === 'element-ascend' ? a.localeCompare(b) : b.localeCompare(a))
 [0];
 
 export default function DataIndex() {
-  const dataStore = useDataStore();
+  const DataStore = useDataStore();
   const {
     CharacterNames, ArtifactNames, DomainNames,
     Characters, Artifacts, Domains,
-  } = dataStore;
+  } = DataStore;
+
   const groups = [
     ['characters', CharacterNames],
     ['artifacts', ArtifactNames],
@@ -52,50 +53,39 @@ export default function DataIndex() {
   ]);
 
   const [order, setOrder] = useState<Order>('name-ascend');
+  const [search, setSearch] = useState('');
+
   const sortedGroups = groups.map(([group, names]) => {
     const models = groupModels.get(group);
-    return [group, names.sort((a, b) => {
-      const aModel = models.find(m => m.name === a);
-      const bModel = models.find(m => m.name === b);
+    return [group, names
+      .filter(name => name.toLowerCase().includes(search.toLowerCase()))
+      .sort((a, b) => {
+        const aModel = models.find(m => m.name === a);
+        const bModel = models.find(m => m.name === b);
 
-      switch (order) {
-        case 'name-ascend': return a.localeCompare(b);
-        case 'name-descend': return b.localeCompare(a);
-        case 'rarity-ascend':
-        case 'rarity-descend': {
-          if (!('rarity' in aModel) || !('rarity' in bModel)) return 0;
+        switch (order) {
+          case 'name-ascend': return a.localeCompare(b);
+          case 'name-descend': return b.localeCompare(a);
+          case 'rarity-ascend':
+          case 'rarity-descend': {
+            if (!('rarity' in aModel) || !('rarity' in bModel)) return 0;
 
-          return (order === 'rarity-ascend'
-            ? bModel.rarity - aModel.rarity
-            : aModel.rarity - bModel.rarity
-          );
-        }
-        case 'element-ascend':
-        case 'element-descend': {
-          if ('element' in aModel && 'element' in bModel) {
-            return (order === 'element-ascend'
-              ? aModel.element.localeCompare(bModel.element)
-              : bModel.element.localeCompare(aModel.element)
+            return (order === 'rarity-ascend'
+              ? bModel.rarity - aModel.rarity
+              : aModel.rarity - bModel.rarity
             );
           }
-          if (ArtifactSet.isArtifactSet(aModel) && ArtifactSet.isArtifactSet(bModel)) {
-            const aElement: Element | undefined = getModelElement(aModel);
-            const bElement: Element | undefined = getModelElement(bModel);
-
-            return aElement && bElement
-              ? order === 'element-ascend'
-                ? aElement.localeCompare(bElement)
-                : bElement.localeCompare(aElement)
-              : aElement
-                ? -1
-                : bElement
-                  ? 1
-                  : 0;
-          }
-          if (Domain.isDomain(aModel) && Domain.isDomain(bModel)) {
-            if (aModel.isBlessing() && bModel.isBlessing()) {
-              const aElement = getDomainElement(aModel, dataStore, order);
-              const bElement = getDomainElement(bModel, dataStore, order);
+          case 'element-ascend':
+          case 'element-descend': {
+            if ('element' in aModel && 'element' in bModel) {
+              return (order === 'element-ascend'
+                ? aModel.element.localeCompare(bModel.element)
+                : bModel.element.localeCompare(aModel.element)
+              );
+            }
+            if (ArtifactSet.isArtifactSet(aModel) && ArtifactSet.isArtifactSet(bModel)) {
+              const aElement: Element | undefined = getModelElement(aModel);
+              const bElement: Element | undefined = getModelElement(bModel);
 
               return aElement && bElement
                 ? order === 'element-ascend'
@@ -107,12 +97,27 @@ export default function DataIndex() {
                     ? 1
                     : 0;
             }
-            // TODO: Implement remaining domains
+            if (Domain.isDomain(aModel) && Domain.isDomain(bModel)) {
+              if (aModel.isBlessing() && bModel.isBlessing()) {
+                const aElement = getDomainElement(aModel, DataStore, order);
+                const bElement = getDomainElement(bModel, DataStore, order);
+
+                return aElement && bElement
+                  ? order === 'element-ascend'
+                    ? aElement.localeCompare(bElement)
+                    : bElement.localeCompare(aElement)
+                  : aElement
+                    ? -1
+                    : bElement
+                      ? 1
+                      : 0;
+              }
+              // TODO: Implement remaining domains
+            }
           }
+          default: return 0;
         }
-        default: return 0;
-      }
-    })] as const;
+      })] as const;
   });
 
   return (<>
@@ -130,7 +135,7 @@ export default function DataIndex() {
                     const model = groupModels.get(route)?.find(m => m.name === name);
                     const element = route === 'characters' ? (model as Character).element
                       : route === 'artifacts' ? getModelElement(model as ArtifactSet)
-                      : route === 'domains' && getDomainElement(model as DomainOfBlessing, dataStore, order);
+                        : route === 'domains' && getDomainElement(model as DomainOfBlessing, DataStore, order);
 
                     return (
                       <li key={name}>
@@ -147,44 +152,51 @@ export default function DataIndex() {
       </nav>
     </aside>
     <main>
-      {sortedGroups.map(([group, names]) => (
-        <details key={group} open>
-          <summary>
-            <Link to={`/${DATA_PREFIX}/${group}`}>{pascalCaseFromSnakeCase(group)}</Link>
-            <Select name="order" value={order} onChange={order => setOrder(order as Order)}
-              options={['name', 'rarity', 'element'].flatMap(orderBy => [`${orderBy}-ascend`, `${orderBy}-descend`])}
-              displayValue={value => pascalCaseFromKebabCase(value).replace('Ascend', '⬆️').replace('Descend', '⬇️')}
-            />
-          </summary>
-          <ul className='data-details-list'>
-            {names.map(name => {
-              const model = group === 'characters' ? Characters.find(c => c.name === name)
-                : group === 'artifacts' ? Artifacts.find(a => a.name === name)
-                  : Domains.find(d => d.name === name);
-              const element = group === 'characters' ? (model as Character).element
-                : group === 'artifacts' ? getModelElement(model as ArtifactSet)
-                  : group === 'domains' && getDomainElement(model as DomainOfBlessing, dataStore, order);
+      <header>
+        <div className="input-group">
+          <input type='search' value={search} onChange={e => setSearch(e.target.value)} placeholder='Search for a model...' />
+          <Select name="order" value={order} onChange={order => setOrder(order as Order)}
+            options={['name', 'rarity', 'element'].flatMap(orderBy => [`${orderBy}-ascend`, `${orderBy}-descend`])}
+            displayValue={value => pascalCaseFromKebabCase(value).replace('Ascend', '⬆️').replace('Descend', '⬇️')}
+          />
+        </div>
+      </header>
+      <section>
+        {sortedGroups.map(([group, names]) => (
+          <details key={group} open>
+            <summary>
+              <Link to={`/${DATA_PREFIX}/${group}`}>{pascalCaseFromSnakeCase(group)}</Link>
+            </summary>
+            <ul className='data-details-list'>
+              {names.map(name => {
+                const model = group === 'characters' ? Characters.find(c => c.name === name)
+                  : group === 'artifacts' ? Artifacts.find(a => a.name === name)
+                    : Domains.find(d => d.name === name);
+                const element = group === 'characters' ? (model as Character).element
+                  : group === 'artifacts' ? getModelElement(model as ArtifactSet)
+                    : group === 'domains' && getDomainElement(model as DomainOfBlessing, DataStore, order);
 
-              return (
-                <li key={name}>
-                  <Link to={`/${DATA_PREFIX}/${group}/${name}`}>
-                    {group === 'characters' && <CharacterImage character={name} />}
-                    {group === 'artifacts' && <ArtifactImage set={name} piece='Flower' />}
-                    {group === 'domains' && <DomainImage domain={name} />}
-                    <header>
-                      <p className='model-name'>
-                        <span>{name}</span>
-                        {element ? <ElementImage element={element} /> : null}
-                      </p>
-                      {'rarity' in model ? <RarityList rarity={model?.rarity} /> : <span>{model.region}</span>}
-                    </header>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </details>
-      ))}
+                return (
+                  <li key={name}>
+                    <Link to={`/${DATA_PREFIX}/${group}/${name}`}>
+                      {group === 'characters' && <CharacterImage character={name} />}
+                      {group === 'artifacts' && <ArtifactImage set={name} piece='Flower' />}
+                      {group === 'domains' && <DomainImage domain={name} />}
+                      <header>
+                        <p className='model-name'>
+                          <span>{name}</span>
+                          {element ? <ElementImage element={element} /> : null}
+                        </p>
+                        {'rarity' in model ? <RarityList rarity={model?.rarity} /> : <span>{model.region}</span>}
+                      </header>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </details>
+        ))}
+      </section>
     </main>
   </>);
 }
