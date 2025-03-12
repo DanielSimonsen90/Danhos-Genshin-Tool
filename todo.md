@@ -1,1 +1,0 @@
-* Remove eu-tierlist.json
