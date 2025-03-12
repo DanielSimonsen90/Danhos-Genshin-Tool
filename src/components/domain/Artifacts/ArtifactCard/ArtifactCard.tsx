@@ -20,7 +20,7 @@ export type Props = {
 export default function ArtifactCard({ artifact, ...props }: Props) {
   const { name } = artifact;
   const { wrapInLink, showDetails, showMoreDetails, displayCraftable, tagName } = props;
-  const Container = GetContainer(wrapInLink, artifact, 'artifacts');
+  const Container = GetContainer(wrapInLink, artifact, 'data/artifacts');
 
   return (
     <Container className="artifact-card">

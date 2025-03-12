@@ -19,7 +19,7 @@ export default function ArtifactSetsPiecesContent({ results, displayPieces }: Ar
         return setA - setB;
       })} onSearch={(search, item) => item.character.name.toLowerCase().includes(search.toLowerCase())}
       renderItem={({ character, set, pieces }) => (
-        <Link className="clickable" to={`/characters/${character.name}`}>
+        <Link className="clickable" to={`/data/characters/${character.name}`}>
           <CharacterImage character={character.name} />
           <div className="artifact-sets-pieces-content__character-info">
             <header>

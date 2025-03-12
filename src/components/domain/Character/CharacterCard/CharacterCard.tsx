@@ -26,7 +26,7 @@ export default function CharacterCard({ character, score, ...props }: Props) {
   const { linkOnName, wrapInLink, showDetails, showRarity } = props;
   const { children } = props;
 
-  const Container = GetContainer(wrapInLink, character, 'characters');
+  const Container = GetContainer(wrapInLink, character, 'data/characters');
   const CharacterName = GetCharacterNameComponent(linkOnName, character);
 
   return (
@@ -60,8 +60,12 @@ export default function CharacterCard({ character, score, ...props }: Props) {
       {showDetails && (
         <div className="character-sets">
           <h3 className="character-sets__title">Character Sets</h3>
-          <TabBar id={`${name}-sets`} tabs={sets.map(set => [set.name, set.name])} 
-            {...sets.reduce((acc, set) => ({ ...acc, [set.name]: <CharacterSet set={set} character={character} /> }), {} as any)}
+          <TabBar id={`${name}-sets`} 
+            tabs={create => sets.map(set => create(
+              set.name,
+              set.name,
+              <CharacterSet set={set} character={character} />
+            ))}
           />
         </div>
       )}
@@ -80,6 +84,6 @@ function GetCharacterNameComponent(linkOnName: boolean, character: Character) {
   )
 
   return () => linkOnName
-    ? <Link to={`/characters/${character.name}`}><CharacterName /></Link>
+    ? <Link to={`/data/characters/${character.name}`}><CharacterName /></Link>
     : <CharacterName />;
 }

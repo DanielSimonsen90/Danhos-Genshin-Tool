@@ -8,7 +8,7 @@ type Props = {
 } & {
   showDetails?: boolean;
   showRewards?: boolean;
-}
+};
 
 export default function DomainList({ title = "Domains", domainNames, ...props }: Props) {
   const { findDomainByName } = useDomainData();
@@ -17,12 +17,12 @@ export default function DomainList({ title = "Domains", domainNames, ...props }:
   return (
     <section className="domain-list-section">
       <h2>{title}</h2>
-      <TabBar tabs={domainNames.map(name => [name, checkIsBossDrop(name) ? 'World Bosses' : name])}
-        {...domainNames.reduce((acc, name) => ({ 
-          ...acc, 
-          // TODO: Render custom component that displays "Dropped from bosses" + resin count
-          [name]: checkIsBossDrop(name) ? <p>Dropped from world bosses.</p> : <DomainCard domain={findDomainByName(name)} {...props} showNavButton /> 
-        }), {} as any)}
+      <TabBar tabs={create => domainNames.map(name => create(
+        name,
+        checkIsBossDrop(name) ? 'World Bosses' : name,
+        // TODO: Render custom component that displays "Dropped from bosses" + resin count
+        checkIsBossDrop(name) ? <p>Dropped from world bosses.</p> : <DomainCard domain={findDomainByName(name)} {...props} showNavButton />
+      ))}
       />
     </section>
   );
