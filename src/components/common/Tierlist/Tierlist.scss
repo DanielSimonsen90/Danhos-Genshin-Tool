@@ -17,7 +17,7 @@
 .tier {
   display: grid;
   grid-auto-flow: column;
-  grid-template-columns: 20ch 1fr;
+  grid-template-columns: 12ch 1fr;
   padding: 1ch;
 
   input {
@@ -69,8 +69,7 @@
   margin: 2ch 0;
 
   .tier__header {
-    width: fit-content;
-    max-width: 19ch;
+    max-width: 11ch;
     padding: 0;
   }
 

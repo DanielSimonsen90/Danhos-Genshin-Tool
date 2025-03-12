@@ -1,8 +1,8 @@
 {
-  "name": "genshin-artifact-helper",
-  "productName": "genshin artifact helper",
-  "version": "1.0.1",
-  "description": "Genshin Artifact Helper to help you manage your artifacts",
+  "name": "danhos-genshin-tool",
+  "productName": "Danho's Genshin Tool",
+  "version": "2.0.0",
+  "description": "Danho's Genshin Tool to help you manage your artifacts and plan your characters",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",

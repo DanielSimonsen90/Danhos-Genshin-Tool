@@ -60,6 +60,15 @@
 .feature-idea {
   margin-bottom: 2rem;
 
+  &--completed {
+    text-decoration: line-through;
+    color: var(--text-muted);
+    
+    &:hover {
+      text-decoration: unset;
+    }
+  }
+
   ul {
     list-style-type: disc;
     padding-inline-start: 1rem;
