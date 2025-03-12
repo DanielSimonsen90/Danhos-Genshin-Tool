@@ -13,7 +13,6 @@ export default function Header() {
     <>
       <header className="site-header">
         <section className="top-header">
-          <div></div>
           <Navigation />
           <SettingsContainer setOpenModal={setOpenModal} />
         </section>
