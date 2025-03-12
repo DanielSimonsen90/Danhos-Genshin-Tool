@@ -24,7 +24,7 @@ export function useModifyPriorityList({ crud, priorityLists, setPriorityLists }:
       model,
       tiers: priorityLists[id]?.model === model
         ? tiers
-        : getDefaultTiers(DataStore[`${model}Names`])()
+        : getDefaultTiers(DataStore[`${model}Names`])
     };
 
     const shouldDeleteId = id !== title;

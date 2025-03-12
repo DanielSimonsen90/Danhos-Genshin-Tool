@@ -35,5 +35,5 @@ export const getDefaultPriorityLists = (DataStore: DataStore): PriorityLists => 
 
 export const getDefaultPriorityList = (DataStore: DataStore): PriorityList => ({
   model: 'Character',
-  tiers: getDefaultTiers(DataStore.CharacterNames)()
+  tiers: getDefaultTiers(DataStore.CharacterNames)
 })

@@ -42,8 +42,8 @@ export default function Entry<T>({ entry, index, unsorted, tiers, onMoveToIndex,
     }
 
     return [
+      ...moveItem,
       ...sendToTiers,
-      ...moveItem
     ]
   }, 'top-right');
 

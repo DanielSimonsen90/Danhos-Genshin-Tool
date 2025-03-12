@@ -9,23 +9,37 @@ import { FormTier, Tier as TierComponent, TierModifyForm } from './components';
 import { Entry, Tier, TierlistProps } from './TierlistTypes';
 import { getDefaultTiers, generateBlankTier, generateEntry } from './TierlistFunctions';
 
-export default function Tierlist<T, TStorageData extends object>({ 
-  items, 
+export default function Tierlist<T, TStorageData extends object>({
+  items,
   onUnsortedSearch, onTierChange, onEntryChange,
-  ...props 
+  ...props
 }: TierlistProps<T, TStorageData>) {
   const storageKey = 'storageKey' in props ? props.storageKey : 'storage' in props ? props.storage.key : '';
   const onStorageLoaded = 'onStorageLoaded' in props ? props.onStorageLoaded : undefined;
   const onStorageSave = 'onStorageSave' in props ? props.onStorageSave : undefined;
 
-  const [tiers, setTiers] = useState(props.defaultTiers && props.defaultTiers.length ? props.defaultTiers : getDefaultTiers(items));
+  const [tiers, setTiers] = useState(() => {
+    if (!props.defaultTiers) return getDefaultTiers(items);
+    const itemsNotIncluded = items.filter(item => !props.defaultTiers?.some(tier => tier.entries.some(entry => {
+      if (typeof entry === 'object') return JSON.stringify(entry.item) === JSON.stringify(item);
+      return entry === item;
+    })));
+    if (!itemsNotIncluded.length) return props.defaultTiers;
+
+    const unsortedTier = props.defaultTiers.find(tier => tier.id === 'unsorted');
+    const unsortedTierIndex = props.defaultTiers.indexOf(unsortedTier!);
+    const result = [...props.defaultTiers];
+    result[unsortedTierIndex] = { ...unsortedTier!, entries: [...unsortedTier!.entries, ...itemsNotIncluded.map(generateEntry)] };
+
+    return result;
+  });
   const storageService = useLocalStorage<TStorageData | Array<Tier<T>>>(storageKey, storedData => setTiers(tiers => {
     const resolvedStoredData = typeof storedData === 'function' ? storedData(tiers) : storedData;
     const resolvedStoredTiers = onStorageLoaded?.(resolvedStoredData as TStorageData) ?? resolvedStoredData as Array<Tier<T>>;
     const storedItems = resolvedStoredTiers.flatMap(tier => tier.entries);
 
     if (storedItems.length === items.length) return resolvedStoredTiers;
-    else if (storedItems.length === 0) return getDefaultTiers(items)();
+    else if (storedItems.length === 0) return getDefaultTiers(items);
 
     const newItems = items.filter(item => !storedItems.some(storedItem => JSON.stringify(storedItem.item) === JSON.stringify(item)));
     return resolvedStoredTiers.map(tier => (
@@ -39,8 +53,8 @@ export default function Tierlist<T, TStorageData extends object>({
   const orderedTiers = tiers.sort((a, b) => a.position - b.position);
   const render = useMemo(() => (
     'renderItem' in props ? props.renderItem
-    : 'children' in props ? props.children
-    : () => 'No render method provided.'
+      : 'children' in props ? props.children
+        : () => 'No render method provided.'
   ), [props]);
   const unsorted = tiers.find(tier => tier.id === 'unsorted')!;
 
@@ -89,8 +103,8 @@ export default function Tierlist<T, TStorageData extends object>({
 
       const result = tiers.map(tier => (
         tier.id === updatedCurrentPositionedTier.id ? updatedCurrentPositionedTier
-        : tier.id === updatedTier.id ? updatedTier
-        : tier
+          : tier.id === updatedTier.id ? updatedTier
+            : tier
       ));
       const unsorted = result.find(tier => tier.id === 'unsorted')!;
       return result.filter(tier => tier.id !== 'unsorted').concat(unsorted);
@@ -110,8 +124,8 @@ export default function Tierlist<T, TStorageData extends object>({
     onEntryChange?.(updatedTierContainedItem, updatedTierContainedItem.entries);
     return tiers.map(tier => (
       tier.id === updatedTierContainedItem.id ? updatedTierContainedItem
-      : tier.id === updatedTargetTier.id ? updatedTargetTier
-      : tier
+        : tier.id === updatedTargetTier.id ? updatedTargetTier
+          : tier
     ));
   });
   const onMoveToIndex = (entry: Entry<T>, index: number) => setTiers(tiers => {
@@ -121,18 +135,17 @@ export default function Tierlist<T, TStorageData extends object>({
       return tiers;
     }
 
-    const updatedTierContainedItem: Tier<T> = { 
-      ...tierContainingItem, 
-      entries: tierContainingItem.entries
-        .flatMap((e, i, arr) => (
-          e.id === entry.id ? undefined
-          : i === index ? index === arr.length -1 ? [e, entry] : [entry, e]
-          : e
-        )).filter(Boolean)
-    };
+    const updatedTierContainedItem: Tier<T> = { ...tierContainingItem!, entries: tierContainingItem!.entries.filter(item => item.id !== entry.id) };
+    const updatedTierContainedItemEntries = [...updatedTierContainedItem.entries];
+    updatedTierContainedItemEntries.splice(index, 0, entry);
 
-    onEntryChange?.(updatedTierContainedItem, updatedTierContainedItem.entries);
-    return tiers.map(tier => tier.id === updatedTierContainedItem.id ? updatedTierContainedItem : tier);
+    onEntryChange?.(updatedTierContainedItem, updatedTierContainedItemEntries);
+
+    return tiers.map(tier => (
+      tier.id === updatedTierContainedItem.id
+        ? { ...updatedTierContainedItem, entries: updatedTierContainedItemEntries }
+        : tier
+    ));
   });
 
   return (
