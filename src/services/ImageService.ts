@@ -2,7 +2,7 @@ import { snakeCaseFromCamelCase, snakeCaseFromPascalCase } from '@/common/functi
 import { ArtifactPartName, Element, Weapon } from '@/common/types';
 import type * as ArtifactSetData from '@/data/artifact-sets';
 import type * as CharacterData from '@/data/characters';
-import type * as DomainsData from '@/data/domains';
+import type * as DomainsData from '@/data/domains/domain-of-blessing';
 import BaseService from './BaseService';
 
 const PAIMON_MOE_URL = 'https://paimon.moe/images';

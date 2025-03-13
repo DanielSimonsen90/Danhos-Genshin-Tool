@@ -1,6 +1,6 @@
 import { AbilityType, Rarity, Reaction } from "../common/types";
 import { ArtifactSet, Character, CharacterArtifactSet } from "../common/models";
-import * as Domains from './domains';
+import * as Domains from './domains/domain-of-blessing';
 
 const threeStar = 5;
 const fourStar = 10;

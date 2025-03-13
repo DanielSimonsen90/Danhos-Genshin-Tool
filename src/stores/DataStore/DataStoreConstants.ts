@@ -1,6 +1,6 @@
 import * as CharactersData from '@/data/characters';
 import * as ArtifactsData from '@/data/artifact-sets';
-import * as DomainsData from '@/data/domains';
+import * as DomainsData from '@/data/domains/domain-of-blessing';
 import { List } from '@/common/models/List';
 
 export const DataStoreContent = {

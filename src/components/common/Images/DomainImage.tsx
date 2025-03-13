@@ -1,4 +1,4 @@
-import type * as Domains from '@/data/domains';
+import type * as Domains from '@/data/domains/domain-of-blessing';
 import ImageService from '@/services/ImageService';
 import Image from './Image';
 

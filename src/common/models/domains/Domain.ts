@@ -1,6 +1,9 @@
 import { Region, ResinCost } from "@/common/types";
-import ArtifactSet from "../artifacts/ArtifactSet";
 import { DataStore } from "@/stores/DataStore/DataStoreTypes";
+
+import DomainOfBlessing from "./DomainOfBlessing";
+import DomainOfForgery from "./DomainOfForgery";
+import DomainOfMastery from "./DomainOfMastery";
 
 export abstract class Domain<TReward> {
   public static isDomain(obj: any): obj is Domain<any> {
@@ -20,20 +23,7 @@ export abstract class Domain<TReward> {
     return [];
   }
 
-  public isBlessing(): this is DomainOfBlessing {
-    return this instanceof DomainOfBlessing;
-  }
-}
-
-export class DomainOfBlessing extends Domain<ArtifactSet> {
-  public static isDomainOfBlessing(obj: any): obj is DomainOfBlessing {
-    return obj instanceof DomainOfBlessing;
-  }
-  constructor(
-    public name: string,
-    public description: string,
-    public region: Region,
-  ) {
-    super(name, description, ResinCost.Twenty, region);
-  }
+  public isBlessing(): this is DomainOfBlessing { return this instanceof DomainOfBlessing; }
+  public isMastery(): this is DomainOfMastery { return this instanceof DomainOfMastery; }
+  public isForgery(): this is DomainOfForgery { return this instanceof DomainOfForgery; }
 }
