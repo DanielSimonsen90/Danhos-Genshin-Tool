@@ -507,6 +507,13 @@ export const HuTao = new Character("Hu Tao", "Pyro", "Polearm", ["Self-heal"], R
   ]),
 ]);
 
+export const Iansan = new Character("Iansan", "Electro", "Polearm", ["Nightsouls Blessing"], Rarity.Epic, 'Natlan', [
+  new CharacterSet("Off-field DPS", ["ATK", "Energy Recharge"], "Skill/Ability", false, [
+    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 5),
+    ...AttackSets(2),
+  ])
+]);
+
 export const Jean = new Character("Jean", "Anemo", "Sword", ["Heal"], Rarity.Legendary, 'Mondstadt', [
   new CharacterSet("Off-field Support", ["ATK"], "Burst/Ult", false, [
     new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 5),
@@ -1143,6 +1150,14 @@ export const TravelerPyro = new Character("Traveler (Pyro)", "Pyro", "Sword", ['
   // TODO: Update when Genshin.gg has data - https://genshin.gg/characters/traveler(pyro)/
 ]);
 export const TravelerCryo = new Character("Traveler (Cryo)", "Cryo", "Sword", [], Rarity.Legendary, 'Unknown', []);
+
+export const Varesa = new Character("Varesa", "Electro", "Catalyst", ["Nightsouls Blessing"], Rarity.Legendary, 'Natlan', [
+  new CharacterSet("On-field DPS", ["ATK"], "Skill/Ability", true, [
+    new CharacterArtifactSet(Sets.LongNightsOath, 4, 5),
+    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 4),
+    ...AttackSets(3),
+  ])
+])
 
 export const Venti = new Character("Venti", "Anemo", "Bow", ["Grouping"], Rarity.Legendary, 'Mondstadt', [
   new CharacterSet("Swirl Support", ["Elemental Mastery", "Energy Recharge"], "Burst/Ult", false, [

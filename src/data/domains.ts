@@ -85,3 +85,9 @@ export const SanctumOfRainbowSpirits = new DomainOfBlessing(
   "It is said that the first sage to learn how to use phlogiston created a place of great purity, and that within htis place, warriors were taught to wield the power of prismatic flames and flowing light. Later, even before they were used to rtesist common enemies, these powers were employed as weapons in conflicts between the tribes. Disheartened by this state of affairs, the Sage of the sStolen Flame withdrew from the world, vanishing from the pages of many tales. Devoid of their original purpose, these empty trail grounds were left behind, along with all those stories that came to be forgotten...",
   'Natlan',
 );
+
+export const DerelictMasonryDock = new DomainOfBlessing(
+  "Derelict Masonry Dock",
+  "An enviornment incomprehensible to the inhabitants of today's lands, one where ash-gray mechanisms driven by golden runes replaced the toil of flesh, effortlessly bringing brilliance and imagination to life above pools of flame. After this era was ended by tyrannical outsiders, the once-powerful race stagnated in their submission. Now, the only visitors left to this place are mourners of a bygone era.",
+  'Natlan',
+);
