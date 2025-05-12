@@ -7,11 +7,10 @@ import BaseService from './BaseService';
 
 const PAIMON_MOE_URL = 'https://paimon.moe/images';
 const REROLL_CDN_URL = 'https://rerollcdn.com/GENSHIN';
+const LUSTON_PULL_CDN_URL = 'https://lustonpull.com/GENSHIN'
 const LOCAL_PATH = '../assets/images';
 
 export const ImageService = new class ImageService extends BaseService<string> {
-  public static readonly PAIMON_MOE_URL = REROLL_CDN_URL;
-
   public getArtifactImage(set: keyof typeof ArtifactSetData | string, part: ArtifactPartName): string {
     return this.lastResult = set.includes('Prayers')
       ? `${PAIMON_MOE_URL}/artifacts/${snakeCaseFromCamelCase(set).replace("'", '')}_${part === 'Feather' ? 'plume' : snakeCaseFromCamelCase(part)}.png`
@@ -36,7 +35,7 @@ export const ImageService = new class ImageService extends BaseService<string> {
 
     return this.lastResult = name.toLowerCase().includes('traveler') 
       ? `${PAIMON_MOE_URL}/characters/${snakeCaseFromCamelCase(name)}.png`
-      : `${REROLL_CDN_URL}/Characters/1/${name}.png`;
+      : `${LUSTON_PULL_CDN_URL}/Characters/1/${name}.png`;
   }
 
   public getElementImage(name: Element): string {
