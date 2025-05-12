@@ -6,7 +6,7 @@ import type * as DomainsData from '@/data/domains';
 import BaseService from './BaseService';
 
 const PAIMON_MOE_URL = 'https://paimon.moe/images';
-const REROLL_CDN_URL = 'https://rerollcdn.com/GENSHIN';
+// const REROLL_CDN_URL = 'https://rerollcdn.com/GENSHIN'; -- Archived replaced by LustonPull
 const LUSTON_PULL_CDN_URL = 'https://lustonpull.com/GENSHIN'
 const LOCAL_PATH = '../assets/images';
 
@@ -14,7 +14,7 @@ export const ImageService = new class ImageService extends BaseService<string> {
   public getArtifactImage(set: keyof typeof ArtifactSetData | string, part: ArtifactPartName): string {
     return this.lastResult = set.includes('Prayers')
       ? `${PAIMON_MOE_URL}/artifacts/${snakeCaseFromCamelCase(set).replace("'", '')}_${part === 'Feather' ? 'plume' : snakeCaseFromCamelCase(part)}.png`
-      : `${REROLL_CDN_URL}/Gear/${snakeCaseFromCamelCase(set)}.png`;
+      : `${LUSTON_PULL_CDN_URL}/Gear/${snakeCaseFromCamelCase(set)}.png`;
   }
   
   public getCharacterImage(name: keyof typeof CharacterData | string): string {
@@ -39,14 +39,14 @@ export const ImageService = new class ImageService extends BaseService<string> {
   }
 
   public getElementImage(name: Element): string {
-    return this.lastResult = `${REROLL_CDN_URL}/Elements/Element_${this.formatRerollCdnName(name)}.png`;
+    return this.lastResult = `${LUSTON_PULL_CDN_URL}/Elements/Element_${this.formatRerollCdnName(name)}.png`;
   }
   
   public getWeaponTypeImage(name: Weapon): string {
-    return this.lastResult = `${REROLL_CDN_URL}/UI/weapon_${snakeCaseFromCamelCase(name)}.png`;
+    return this.lastResult = `${LUSTON_PULL_CDN_URL}/UI/weapon_${snakeCaseFromCamelCase(name)}.png`;
   }
   public getWeaponImage(name: string): string {
-    return this.lastResult = `${REROLL_CDN_URL}/Weapons/${this.formatRerollCdnName(name)}.png`;
+    return this.lastResult = `${LUSTON_PULL_CDN_URL}/Weapons/${this.formatRerollCdnName(name)}.png`;
   }
 
   public getDomainImage(name: keyof typeof DomainsData | string): string {
