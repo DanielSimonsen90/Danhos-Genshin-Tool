@@ -1,4 +1,4 @@
-import { DEVELOPER, DEVELOPER_GITHUB_URL, PROJECT_GITHUB_URL, DOMAIN_NAME } from '@/common/constants/domain';
+import { DEVELOPER, DEVELOPER_GITHUB_URL, PROJECT_GITHUB_URL } from '@/common/constants/domain';
 
 export default function Footer() {
   const sources = [
