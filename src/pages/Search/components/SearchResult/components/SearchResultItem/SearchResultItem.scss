@@ -6,4 +6,8 @@
   &--hide {
     opacity: .5;
   }
+
+  .character-card {
+    grid-template-areas: "image details";
+  }
 }

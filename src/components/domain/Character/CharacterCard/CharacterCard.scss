@@ -78,6 +78,7 @@ li:has(> .character-card, > * > .character-card) {
   transition: all 150ms ease-in-out;
   border-radius: .5em;
   display: grid;
+  grid-auto-rows: auto 1fr;
 }
 
 li:has(.character-card) {

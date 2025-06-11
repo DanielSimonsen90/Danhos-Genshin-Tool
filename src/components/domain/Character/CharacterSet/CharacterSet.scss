@@ -1,7 +1,6 @@
 .character-set {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 100%;
+  display: grid;
+  grid-template-rows: min-content max-content auto;
   max-width: 100%;
 
   &.character-result {
