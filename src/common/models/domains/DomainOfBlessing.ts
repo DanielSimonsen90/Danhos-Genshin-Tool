@@ -16,6 +16,8 @@ export class DomainOfBlessing extends Domain<ArtifactSet> {
   ) {
     super(name, description, ResinCost.Twenty, region);
   }
+
+  public isBlessing(): this is DomainOfBlessing { return true; }
 }
 
 export default DomainOfBlessing;

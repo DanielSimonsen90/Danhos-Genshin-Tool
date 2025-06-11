@@ -1,12 +1,11 @@
 import { Region, ResinCost } from "@/common/types/genshin";
-import ArtifactSet from "../artifacts/ArtifactSet";
 import { Domain } from "./Domain";
-import { AscensionMaterial } from "../materials/AscensionMaterial";
+import { WeaponAscensionMaterial } from "../materials/AscensionMaterial";
 
 /**
  * Domain for weapon ascension materials.
  */
-export class DomainOfForgery extends Domain<AscensionMaterial<'Weapon'>> {
+export class DomainOfForgery extends Domain<WeaponAscensionMaterial> {
   public static isDomainForgery(obj: any): obj is DomainOfForgery {
     return obj instanceof DomainOfForgery;
   }
@@ -17,6 +16,8 @@ export class DomainOfForgery extends Domain<AscensionMaterial<'Weapon'>> {
   ) {
     super(name, description, ResinCost.Twenty, region);
   }
+
+  public isForgery(): this is DomainOfForgery { return true; }
 }
 
 export default DomainOfForgery;

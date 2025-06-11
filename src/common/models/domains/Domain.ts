@@ -1,9 +1,9 @@
-import { Region, ResinCost } from "@/common/types";
-import { DataStore } from "@/stores/DataStore/DataStoreTypes";
+import type { Region, ResinCost } from "@/common/types";
+import type { DataStore } from "@/stores/DataStore/DataStoreTypes";
 
-import DomainOfBlessing from "./DomainOfBlessing";
-import DomainOfForgery from "./DomainOfForgery";
-import DomainOfMastery from "./DomainOfMastery";
+import type DomainOfBlessing from "./DomainOfBlessing";
+import type DomainOfForgery from "./DomainOfForgery";
+import type DomainOfMastery from "./DomainOfMastery";
 
 export abstract class Domain<TReward> {
   public static isDomain(obj: any): obj is Domain<any> {
@@ -23,7 +23,7 @@ export abstract class Domain<TReward> {
     return [];
   }
 
-  public isBlessing(): this is DomainOfBlessing { return this instanceof DomainOfBlessing; }
-  public isMastery(): this is DomainOfMastery { return this instanceof DomainOfMastery; }
-  public isForgery(): this is DomainOfForgery { return this instanceof DomainOfForgery; }
+  public isBlessing(): this is DomainOfBlessing { return false; }
+  public isMastery(): this is DomainOfMastery { return false; }
+  public isForgery(): this is DomainOfForgery { return false; }
 }
