@@ -32,7 +32,7 @@ export default function TabBar<TTabKey extends string>(props: Props<TTabKey>) {
   }, [props.children, collapsed]);
 
   const getKeyName = useCallback((key: any) => props.id ? `#${props.id}-${key}` : key, [props.id]);
-  const TabContent = useCallback(function TabContent() {
+  const TabContent = useMemo(function TabContent() {
     return (<>{tabs.map(([tab, { content }], key) => (
       <div data-tab={tab} key={getKeyName(`content-${key}`)}
         className={classNames(
@@ -87,7 +87,7 @@ export default function TabBar<TTabKey extends string>(props: Props<TTabKey>) {
         )}
       </header>
       <section className={classNames('tab-bar__content', collapsed && collapseArea === 'content' && 'tab-bar__content--collapsed')}>
-        <TabContent />
+        {TabContent}
       </section>
     </div>
   ) : props.noTabs;

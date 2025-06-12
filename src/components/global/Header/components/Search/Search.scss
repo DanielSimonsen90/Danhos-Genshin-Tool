@@ -3,6 +3,20 @@
   align-items: stretch;
   gap: .75rem;
 
+  .artifact-set-select {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+
+    select {
+      width: 100%;
+    }
+
+    .artifact-image {
+      --size: 3rem;
+    }
+  }
+
   @media screen and (max-width: 75rem) {
     display: grid;
 
