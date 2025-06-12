@@ -12,8 +12,13 @@ export const Elements: Array<Element> = [
 
 export default Elements;
 
-const Regexex = Elements.map(element => new RegExp(element, 'i'));
+const Regexex = Elements.map(element => new RegExp(element));
 export function getElement(str: string) {
   const index = Regexex.findIndex(regex => regex.test(str));
+  console.log({
+    str,
+    index,
+    element: Elements[index],
+  })
   return Elements[index];
 }
