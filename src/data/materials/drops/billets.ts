@@ -2,13 +2,17 @@ import { Billet } from "@/common/models/materials/Billet";
 import MobDrop from "@/common/models/materials/MobDrop";
 import { Region, Weapon } from "@/common/types";
 
-function generateBillet(lander: string, regions: Array<Region>) {
+function generateBillet(
+  lander: string,
+  philosopherBelieve: string,
+  regions: Array<Region>
+) {
   const generateBilletWeapon = (weapon: Weapon) => new Billet(
     `${lander}lander ${weapon} Billet`,
-    `Weapon forging material. Can be used to forge 4-star ${weapon.toLowerCase()}s.\nPhilosophers believe marble has the potential to be sculpted into a beautiful statue. Likewise, these billets have the potential to become something greater.`,
+    `Weapon forging material. Can be used to forge 4-star ${weapon.toLowerCase()}s.\n${philosopherBelieve}`,
     regions
-  )
-  
+  );
+
   return {
     sword: generateBilletWeapon('Sword'),
     bow: generateBilletWeapon('Bow'),
@@ -28,15 +32,27 @@ function generateBillet(lander: string, regions: Array<Region>) {
         }
       };
     }
-  }
+  };
 }
 
-export const Northlander = generateBillet('North', [
-  'Mondstadt',
-  'Liyue',
-  'Inazuma'
-]);
+export const Northlander = generateBillet('North',
+  `Philosophers believe marble has the potential to be sculpted into a beautiful statue. Likewise, these billets have the potential to become something greater.`,
+  [
+    'Mondstadt',
+    'Liyue',
+    'Inazuma'
+  ]
+);
+
+export const Midlander = generateBillet('Mid',
+  `Philosophers believe that there are four purposes behind earthly things. The purpose of these billets is to become a weapon worthy of accompanying a hero.`,
+  [
+    'Sumeru',
+    'Fontaine',
+  ]
+);
 
 export default {
-  Northlander
-}
+  Northlander,
+  Midlander,
+};
