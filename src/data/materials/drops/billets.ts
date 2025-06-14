@@ -1,5 +1,4 @@
 import { Billet } from "@/common/models/materials/Billet";
-import MobDrop from "@/common/models/materials/MobDrop";
 import { Region, Weapon } from "@/common/types";
 
 function generateBillet(
@@ -52,7 +51,15 @@ export const Midlander = generateBillet('Mid',
   ]
 );
 
+export const Borderlander = generateBillet('Border',
+  `In t erms of the "state" of the many weapons that can be crafted from billets, while their potential has long been contained within the original materials, the exact forms these weapons will ultimately take remain unknown to this day...`,
+  [
+    'Natlan'
+  ]
+);
+
 export default {
   Northlander,
   Midlander,
+  Borderlander
 };
