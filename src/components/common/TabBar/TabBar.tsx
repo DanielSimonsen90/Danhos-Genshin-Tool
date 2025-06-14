@@ -5,12 +5,17 @@ import { Chevron } from "../icons";
 
 import { Props } from "./TabBarTypes";
 import { createTabItem } from "./TabBarFunctions";
+import useOnChange from "@/hooks/useOnChange";
 
 export default function TabBar<TTabKey extends string>(props: Props<TTabKey>) {
   const { collapseArea = 'content', direction = 'horizontal' } = props;
   const { placeChildrenBeforeTabs, hideCollapseChevron } = props;
 
-  const tabs = useMemo(() => typeof props.tabs === 'function' ? props.tabs(createTabItem) : props.tabs, [props.tabs]);
+  const tabs = useMemo(() => (
+    typeof props.tabs === 'function'
+      ? props.tabs(createTabItem)
+      : props.tabs
+  ), [props.tabs]);
   const internalTabs = useMemo(() => {
     const set = tabs
       .filter(([_, value]) => value !== undefined)
@@ -21,7 +26,7 @@ export default function TabBar<TTabKey extends string>(props: Props<TTabKey>) {
   const [collapsed, setCollapsed] = useState(false);
   const [activeTab, _setActiveTab] = useState<TTabKey>(
     props.defaultTab
-    ?? tabs.filter(([_, value]) => value)[0]?.[0]
+    ?? tabs.find(([_, value]) => value)?.[0]
   );
 
   const children = useMemo(() => {
@@ -32,17 +37,17 @@ export default function TabBar<TTabKey extends string>(props: Props<TTabKey>) {
   }, [props.children, collapsed]);
 
   const getKeyName = useCallback((key: any) => props.id ? `#${props.id}-${key}` : key, [props.id]);
-  const TabContent = useMemo(function TabContent() {
-    return (<>{tabs.map(([tab, { content }], key) => (
-      <div data-tab={tab} key={getKeyName(`content-${key}`)}
+  const TabContent = useMemo(() => (<>
+    {tabs.map(([tab, { content }], key) => (
+      <div data-tab={tab} key={getKeyName(`content-${tab}-${key}`)} data-key={getKeyName(`content-${tab}-${key}`)}
         className={classNames(
           "tab-bar__content-page",
           tab === (props.tab ?? activeTab) && 'tab-bar__content-page--active'
         )}>
         {typeof content === 'function' ? content() : content}
       </div>
-    ))}</>);
-  }, [tabs, activeTab, props.tab]);
+    ))}
+  </>), [tabs, activeTab, props.tab]);
   const setActiveTab = useCallback((tab: TTabKey) => {
     if (!tab) return;
     if (props.beforeTabChange) props.beforeTabChange(tab);
@@ -60,6 +65,7 @@ export default function TabBar<TTabKey extends string>(props: Props<TTabKey>) {
     }
   }, [tabs]);
 
+  // useOnChange(props.tab, tab => tab && setActiveTab(tab));
   useEffect(function onControlledTabChanged() {
     if (props.tab) setActiveTab(props.tab);
   }, [props.tab]);

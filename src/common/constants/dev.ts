@@ -6,6 +6,7 @@ export const DEBUGS = {
   searchQuery: true,
 
   // components
+  priorityList: true,
   searchComponent: false,
   settingsModal: false,
   settingsContainer: false,

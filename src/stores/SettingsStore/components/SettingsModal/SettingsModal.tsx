@@ -14,14 +14,14 @@ import SettingsOption from "./SettingsOption";
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsModal);
 
 export default function SettingsModal(props: ModalConsumerProps) {
-  const { changeableSettings, resetSettings, updateAndSaveSettings, hasCustomSettings } = useSettingsStore();
+  const SettingsStore = useSettingsStore();
   const favoriteStore = useFavoriteStoreProvider(); // TODO
-  const { regionSettings, setRegionData } = useRegionStore();
+  const RegionStore = useRegionStore();
   const [submitting, onSubmit] = useActionState<Settings>(data => {
     delete data._form;
     debugLog('Settings update received', data);
-    updateAndSaveSettings(data);
-    setRegionData({
+    SettingsStore.updateAndSaveSettings(data);
+    RegionStore.setRegionData({
       ...data,
       selected: true,
     });
@@ -31,7 +31,7 @@ export default function SettingsModal(props: ModalConsumerProps) {
   const onReset = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (confirm('Are you sure you want to reset settings?')) {
-      resetSettings();
+      SettingsStore.resetSettings();
       props.onClose();
     }
   };
@@ -41,12 +41,12 @@ export default function SettingsModal(props: ModalConsumerProps) {
       <h1>{DOMAIN_NAME} Settings</h1>
       <p>Here are list of settings, you can change to better your experience.</p>
       <form onSubmit={onSubmit}>
-        {Object.entries(Object.assign({}, changeableSettings, regionSettings)).map(([key, value]) => (
+        {Object.entries(Object.assign({}, SettingsStore.changeableSettings, RegionStore.regionSettings)).map(([key, value]) => (
           <SettingsOption key={key} setting={key as keyof Settings} value={value as Settings[keyof Settings]} />
         ))}
 
         <div className="button-panel">
-          {hasCustomSettings && <button type="reset" className="danger secondary" disabled={submitting} onClick={onReset}>Reset settings</button>}
+          {SettingsStore.hasCustomSettings && <button type="reset" className="danger secondary" disabled={submitting} onClick={onReset}>Reset settings</button>}
           <button type="submit" className="brand primary" disabled={submitting}>Save settings</button>
         </div>
       </form>

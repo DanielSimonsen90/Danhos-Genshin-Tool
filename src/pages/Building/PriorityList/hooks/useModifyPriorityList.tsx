@@ -14,7 +14,7 @@ type UseModifyPriorityListProps = {
 };
 export function useModifyPriorityList({ crud, priorityLists, setPriorityLists }: UseModifyPriorityListProps) {
   const DataStore = useDataStore();
-  const { setRegionData, ...regionData } = useRegionData();
+  const { setRegionData } = useRegionData();
   const [modifyList, setModifyList] = useState<ModifyPriorityListPayload | null>(null);
   const [open, setOpen] = useState(false);
 
