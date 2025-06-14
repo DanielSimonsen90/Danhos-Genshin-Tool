@@ -46,6 +46,8 @@
     border-left: 1px solid var(--background-tertiary);
     border-bottom: 1px solid var(--background-tertiary);
     overflow: auto;
+    border-top-right-radius: .25rem;
+    border-bottom-right-radius: .25rem;
   }
 
   .collapse-chevron {
