@@ -305,6 +305,10 @@ export const Cyno = new Character("Cyno", "Electro", "Polearm", [], Rarity.Legen
   ])
 ]);
 
+// export const Dahlia = new Character("Dahlia", "Hydro", "Sword", ["Heal"], Rarity.Epic, 'Mondstadt', [
+
+// ])
+
 export const Dehya = new Character("Dehya", "Pyro", "Claymore", ["Self-heal", "Off-field Damage"], Rarity.Legendary, 'Sumeru', [
   new CharacterSet("On-field DPS", ["ATK", "HP"], "Burst/Ult", true, [
     new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 5),
@@ -1064,6 +1068,12 @@ export const Sigewinne = new Character("Sigewinne", "Hydro", "Bow", ["Heal", "Bo
     ...HealingBonusSets(3)
   ])
 ]);
+
+// export const Skirk = new Character("Skirk", "Cryo", "Sword", [""], Rarity.Legendary, 'Unknown', [
+//   new CharacterSet("On-field DPS", [""], "Skill/Ability", true, [
+//     new CharacterArtifactSet(Sets.FinaleOfTheDeepGalleries, 4, 5),
+//   ])
+// ])
 
 export const Sucrose = new Character("Sucrose", "Anemo", "Catalyst", ["Grouping"], Rarity.Epic, 'Mondstadt', [
   new CharacterSet("Swirl Support", ["Elemental Mastery", "Energy Recharge"], "Skill/Ability", false, [
