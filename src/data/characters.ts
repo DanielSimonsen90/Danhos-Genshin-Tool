@@ -305,6 +305,15 @@ export const Cyno = new Character("Cyno", "Electro", "Polearm", [], Rarity.Legen
   ])
 ]);
 
+export const Dahlia = new Character("Dahlia", "Hydro", "Sword", ["Shield", "Buff ATK Speed: Use normal attacks or Frozen reaction"], Rarity.Epic, 'Mondstadt', [
+  new CharacterSet("Off-field Support", ["HP", "Energy Recharge"], "Burst/Ult", false, [
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 5),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 4),
+    ...HPSets(3),
+    ...EnergyRechargeSets(3),
+  ])
+])
+
 export const Dehya = new Character("Dehya", "Pyro", "Claymore", ["Self-heal", "Off-field Damage"], Rarity.Legendary, 'Sumeru', [
   new CharacterSet("On-field DPS", ["ATK", "HP"], "Burst/Ult", true, [
     new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 5),
@@ -1065,6 +1074,12 @@ export const Sigewinne = new Character("Sigewinne", "Hydro", "Bow", ["Heal", "Bo
   ])
 ]);
 
+export const Skirk = new Character("Skirk", "Cryo", "Sword", ["Serpent's Subtlety"], Rarity.Legendary, 'Unknown', [
+  new CharacterSet("On-field DPS", ["ATK"], "Skill/Ability", true, [
+    new CharacterArtifactSet(Sets.FinaleOfTheDeepGalleries, 4, 5),
+  ])
+])
+
 export const Sucrose = new Character("Sucrose", "Anemo", "Catalyst", ["Grouping"], Rarity.Epic, 'Mondstadt', [
   new CharacterSet("Swirl Support", ["Elemental Mastery", "Energy Recharge"], "Skill/Ability", false, [
     new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 5),
@@ -1167,7 +1182,13 @@ export const TravelerHydro = new Character("Traveler (Hydro)", "Hydro", "Sword",
   ])
 ]);
 export const TravelerPyro = new Character("Traveler (Pyro)", "Pyro", "Sword", ['Nightsouls Blessing'], Rarity.Legendary, 'Unknown', [
-  // TODO: Update when Genshin.gg has data - https://genshin.gg/characters/traveler(pyro)/
+  new CharacterSet("Off-field Support", ["ATK", "Energy Recharge"], "Burst/Ult", false, [
+    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 5),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 4),
+    ...AttackSets(3),
+    ...EnergyRechargeSets(3),
+    new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 2, 3),
+  ])
 ]);
 export const TravelerCryo = new Character("Traveler (Cryo)", "Cryo", "Sword", [], Rarity.Legendary, 'Unknown', []);
 
