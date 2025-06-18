@@ -1,51 +1,45 @@
 import { Rarity, Region } from "@/common/types";
-import { BaseMaterial } from "./BaseMaterial";
-import { DomainOfMastery, DomainOfForgery } from "../domains/";
+import { DomainOfMastery } from "../domains/";
 import CraftableMaterial from "./CraftableMaterial";
 
 type ObtainableDays = 'Monday/Thursday' | 'Tuesday/Friday' | 'Wednesday/Saturday';
-type AscensionMaterialTypes = 'Talent' | 'Weapon';
-type ObtainableFrom = {
-  Talent: DomainOfMastery,
-  Weapon: DomainOfForgery,
-};
 
-class AscensionMaterial<T extends AscensionMaterialTypes> extends CraftableMaterial<ObtainableFrom[T]> {
-  public static isAscensionMaterial(obj: any): obj is AscensionMaterial<AscensionMaterialTypes> {
+class AscensionMaterial extends CraftableMaterial {
+  public static isAscensionMaterial(obj: any): obj is AscensionMaterial {
     return obj instanceof AscensionMaterial;
   }
 }
 export default AscensionMaterial;
 
-export class TalentAscensionMaterial extends AscensionMaterial<'Talent'> {
+export class TalentAscensionMaterial extends AscensionMaterial {
   public static create(name: string, description: string, region: Region, domain: DomainOfMastery, obtainableDays: ObtainableDays) {
-    const prefixes = ['Teachings', 'Guide', 'Philosophies'];
-    const rarities = [Rarity.Uncommon, Rarity.Rare, Rarity.Epic];
-
-    const [teachings, guide, philosophies] = prefixes.map((prefix, index) => new TalentAscensionMaterial(
-      `${prefix} of ${name}`,
+    return super.createCraftableMaterial(
+      name,
+      {
+        [Rarity.Uncommon]: 'Teachings of',
+        [Rarity.Rare]: 'Guide of',
+        [Rarity.Epic]: 'Philosophies of'
+      },
       description,
-      region,
-      rarities[index],
-      domain,
-      obtainableDays
-    ));
-
-    teachings.setCraftable(3, guide);
-    guide.setCraftable(3, philosophies);
-
-    return { teachings, guide, philosophies };
+      (name, description, rarity) => new TalentAscensionMaterial(
+        name,
+        description,
+        region,
+        rarity,
+        domain,
+        obtainableDays
+      ));
   }
 
   private constructor(
-    name: string, 
-    description: string, 
-    region: Region, 
+    name: string,
+    description: string,
+    region: Region,
     rarity: Rarity,
-    public domain: DomainOfMastery, 
+    public domain: DomainOfMastery,
     public obtainableDays: ObtainableDays
   ) {
-    super(name, description, region, rarity, [domain]);
+    super(name, description, region, rarity);
   }
 }
-export class WeaponAscensionMaterial extends AscensionMaterial<'Weapon'> {}
+export class WeaponAscensionMaterial extends AscensionMaterial { }

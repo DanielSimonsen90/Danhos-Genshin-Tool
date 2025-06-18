@@ -1,15 +1,16 @@
 import { Region, ResinCost } from "@/common/types";
-import MobDrop from "../materials/MobDrop";
 import BaseMaterial from "../materials/BaseMaterial";
+import Mob from "./Mob";
 
-export abstract class Boss {
+export abstract class Boss extends Mob {
   constructor(
-    public name: string,
-    public description: string,
+    name: string,
+    description: string,
     public region: Region,
-    public drops: Array<BaseMaterial>,
+    drops: Array<BaseMaterial>,
     resinCost?: ResinCost,
   ) {
+    super(name, description, drops);
     if (resinCost) this.resinCosts.push(resinCost);
   }
 

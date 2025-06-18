@@ -68,3 +68,23 @@ export const DvalinsSigh = new MobDrop(
   'Mondstadt',
   Rarity.Legendary,
 );
+
+// Chess Game
+export const ChessGameKnight = new MobDrop(
+  "Ascended Sample: Knight",
+  `A rare sample resulting from the alchemical activation of a substance.\nIn the esoteric codices, the bronze knight knows not whether its mission is to conquer or to protect. Since its alchemical elevation, it has merely been seeking to discover its purpose.\nThe age of bronze was an age of heroes.`,
+  'Mondstadt',
+  Rarity.Legendary
+);
+export const ChessGameRock = new MobDrop(
+  `Ascended Sample: Rock`,
+  `A rare sample resulting from the alchemical activation of a substance.\nThe name of this piece derives from the word for the "Chariot" in the ancient language of Sumeru. In divination, the Chariot card is depicted with two heavenly steeds - one black and one white - symbolizing the alchemical principle of balancing opposing properties.`,
+  'Mondstadt',
+  Rarity.Legendary
+);
+export const ChessGameQueen = new MobDrop(
+  "Ascended Sample: Queen",
+  `A rare sample resulting from the alchemical activation of a substance.\nThe "Queen" was once known as the "Minister," but as the reules of the game evolved, it grew to become the most powerful piece and a representation of the authority of the family behind the throne - a true symbol of gilded royalty.\nPerhaps the promotion of an ordinary foot soldier shares some similarities with the transmutation of matter, yet even should they manage to turn to gold, the most a pawn might hopes for is to be represented by an upturned rook.`,
+  'Mondstadt',
+  Rarity.Legendary
+);

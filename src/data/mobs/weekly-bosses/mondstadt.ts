@@ -1,11 +1,14 @@
 import { WeeklyBoss } from "@/common/models/mobs/Boss";
-import { Berserker, GladiatorsFinale, TheExile, WanderersTroupe } from "@/data/artifact-sets";
+import { Berserker, GladiatorsFinale, Instructor, TheExile, WanderersTroupe } from "@/data/artifact-sets";
 import { Northlander } from "@/data/materials/drops/billets";
 import { ElementalCrystals } from "@/data/materials/drops/crystals";
 import { DreamSolvent } from "@/data/materials/drops/general";
 import { 
   TailOfBoreas, RingOfBoreas, SpiritLocketOfBoreas,
-  DvalinsPlume, DvalinsClaw, DvalinsSigh
+  DvalinsPlume, DvalinsClaw, DvalinsSigh,
+  ChessGameKnight,
+  ChessGameRock,
+  ChessGameQueen
 } from "@/data/materials/drops/mondstadt";
 
 export const Boreas = new WeeklyBoss(
@@ -44,8 +47,28 @@ export const StormTerror = new WeeklyBoss(
   ]
 );
 
+export const ChessGame = new WeeklyBoss(
+  "Unresolved Chess Game",
+  `If you wish to earn the mages' approval, you must face up to the riddle at hand.`,
+  'Mondstadt',
+  [
+    ChessGameKnight, ChessGameRock, ChessGameQueen,
+    ...ElementalCrystals.Pyro,
+    ...ElementalCrystals.Hydro,
+    ...ElementalCrystals.Electro,
+    DreamSolvent,
+    GladiatorsFinale,
+    WanderersTroupe,
+    Berserker,
+    Instructor,
+    TheExile,
+    ...Northlander
+  ]
+)
+
 export const Mondstadt = {
   Boreas,
   StormTerror,
+  ChessGame,
 };
 export default Mondstadt;
