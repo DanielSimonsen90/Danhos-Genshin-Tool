@@ -5,9 +5,9 @@ import { Model } from '@/common/models';
 import ModelType from './ModelType';
 
 export const useDataStore = create<DataStore>((setState, getState) => {
-  const cache = new Map<[model: string, name: string], any>();
+  const cache = new Map<string, any>();
   const memo = <T>(model: string, name: string, fn: () => T): T => {
-    const key: [string, string] = [model, name];
+    const key = `${model}:${name}`;
     if (cache.has(key)) return cache.get(key);
     const result = fn();
     cache.set(key, result);
