@@ -203,7 +203,7 @@ export const Candace = new Character("Candace", "Hydro", "Polearm", ["Shield", "
   ])
 ]);
 
-export const Charlotte = new Character("Charlotte", "Cryo", "Catalyst", ["Heal"], Rarity.Epic, 'Fontaine', [
+export const Charlotte = new Character("Charlotte", "Cryo", "Catalyst", ["Heal", "Bond of Life"], Rarity.Epic, 'Fontaine', [
   new CharacterSet("Off-field Support", ["ATK", "Energy Recharge"], "Burst/Ult", false, [
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 5),
     new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 4),
@@ -305,6 +305,15 @@ export const Cyno = new Character("Cyno", "Electro", "Polearm", [], Rarity.Legen
   ])
 ]);
 
+export const Dahlia = new Character("Dahlia", "Hydro", "Sword", ["Shield", "Buff ATK Speed: Use normal attacks or Frozen reaction"], Rarity.Epic, 'Mondstadt', [
+  new CharacterSet("Off-field Support", ["HP", "Energy Recharge"], "Burst/Ult", false, [
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 5),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 4),
+    ...HPSets(3),
+    ...EnergyRechargeSets(3),
+  ])
+])
+
 export const Dehya = new Character("Dehya", "Pyro", "Claymore", ["Self-heal", "Off-field Damage"], Rarity.Legendary, 'Sumeru', [
   new CharacterSet("On-field DPS", ["ATK", "HP"], "Burst/Ult", true, [
     new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 5),
@@ -373,6 +382,14 @@ export const Emilie = new Character("Emilie", "Dendro", "Catalyst", ["Off-field 
     new CharacterArtifactSet(Sets.DeepwoodMemories, 2, 1),
     ...AttackSets(1),
   ]),
+]);
+
+export const Escoffier = new Character('Escoffier', 'Cryo', 'Polearm', ['Off-field Damage', 'Heal'], Rarity.Legendary, 'Fontaine', [
+  new CharacterSet("Off-field Support", ["ATK"], "Skill/Ability", false, [
+    new CharacterArtifactSet(Sets.FinaleOfTheDeepGalleries, 4, 5),
+    new CharacterArtifactSet(Sets.GoldenTroupe, 4, 4),
+    ...AttackSets(3),
+  ])
 ]);
 
 export const Eula = new Character("Eula", "Cryo", "Claymore", [], Rarity.Legendary, 'Mondstadt', [
@@ -505,6 +522,25 @@ export const HuTao = new Character("Hu Tao", "Pyro", "Polearm", ["Self-heal"], R
     new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 2, 2),
     new CharacterArtifactSet(Sets.RetracingBolide, 4, 1),
   ]),
+]);
+
+export const Iansan = new Character("Iansan", "Electro", "Polearm", ["Nightsouls Blessing"], Rarity.Epic, 'Natlan', [
+  new CharacterSet("Off-field DPS", ["ATK", "Energy Recharge"], "Skill/Ability", false, [
+    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 5),
+    ...AttackSets(2),
+  ])
+]);
+
+export const Ifa = new Character('Ifa', "Anemo", "Catalyst", ["Heal", "Nightsouls Blessing"], Rarity.Epic, 'Natlan', [
+  new CharacterSet('On-field DPS', ['Elemental Mastery'], 'Skill/Ability', true, [
+    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 5),
+    new CharacterArtifactSet(Sets.GildedDreams, 4, 4),
+    new CharacterArtifactSet(Sets.GildedDreams, 2, 3),
+    new CharacterArtifactSet(Sets.WanderersTroupe, 2, 3),
+    ...ElementalMasterySets(3),
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 2),
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 2, 1),
+  ])
 ]);
 
 export const Jean = new Character("Jean", "Anemo", "Sword", ["Heal"], Rarity.Legendary, 'Mondstadt', [
@@ -1029,7 +1065,7 @@ export const ShikanoinHeizou = new Character("Shikanoin Heizou", "Anemo", "Catal
   ])
 ]);
 
-export const Sigewinne = new Character("Sigewinne", "Hydro", "Bow", ["Heal"], Rarity.Legendary, 'Fontaine', [
+export const Sigewinne = new Character("Sigewinne", "Hydro", "Bow", ["Heal", "Bond of Life"], Rarity.Legendary, 'Fontaine', [
   new CharacterSet("Off-field Support", ["HP"], "Skill/Ability", false, [
     new CharacterArtifactSet(Sets.OceanHuedClam, 4, 5),
     new CharacterArtifactSet(Sets.SongOfDaysPast, 4, 4),
@@ -1037,6 +1073,12 @@ export const Sigewinne = new Character("Sigewinne", "Hydro", "Bow", ["Heal"], Ra
     ...HealingBonusSets(3)
   ])
 ]);
+
+export const Skirk = new Character("Skirk", "Cryo", "Sword", ["Serpent's Subtlety"], Rarity.Legendary, 'Unknown', [
+  new CharacterSet("On-field DPS", ["ATK"], "Skill/Ability", true, [
+    new CharacterArtifactSet(Sets.FinaleOfTheDeepGalleries, 4, 5),
+  ])
+])
 
 export const Sucrose = new Character("Sucrose", "Anemo", "Catalyst", ["Grouping"], Rarity.Epic, 'Mondstadt', [
   new CharacterSet("Swirl Support", ["Elemental Mastery", "Energy Recharge"], "Skill/Ability", false, [
@@ -1140,9 +1182,23 @@ export const TravelerHydro = new Character("Traveler (Hydro)", "Hydro", "Sword",
   ])
 ]);
 export const TravelerPyro = new Character("Traveler (Pyro)", "Pyro", "Sword", ['Nightsouls Blessing'], Rarity.Legendary, 'Unknown', [
-  // TODO: Update when Genshin.gg has data - https://genshin.gg/characters/traveler(pyro)/
+  new CharacterSet("Off-field Support", ["ATK", "Energy Recharge"], "Burst/Ult", false, [
+    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 5),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 4),
+    ...AttackSets(3),
+    ...EnergyRechargeSets(3),
+    new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 2, 3),
+  ])
 ]);
 export const TravelerCryo = new Character("Traveler (Cryo)", "Cryo", "Sword", [], Rarity.Legendary, 'Unknown', []);
+
+export const Varesa = new Character("Varesa", "Electro", "Catalyst", ["Nightsouls Blessing"], Rarity.Legendary, 'Natlan', [
+  new CharacterSet("On-field DPS", ["ATK"], "Skill/Ability", true, [
+    new CharacterArtifactSet(Sets.LongNightsOath, 4, 5),
+    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 4),
+    ...AttackSets(3),
+  ])
+]);
 
 export const Venti = new Character("Venti", "Anemo", "Bow", ["Grouping"], Rarity.Legendary, 'Mondstadt', [
   new CharacterSet("Swirl Support", ["Elemental Mastery", "Energy Recharge"], "Burst/Ult", false, [

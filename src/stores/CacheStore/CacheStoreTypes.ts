@@ -2,8 +2,6 @@ import { SearchFormData } from "@/common/types/store-data";
 import { SearchResult } from "@/services/SearchService";
 
 export type CacheStore = Cache & {
-  setCache: <TKey extends CacheKeys>(key: TKey, value: Cache[TKey]) => void;
-  getCache: <TKey extends CacheKeys>(key: TKey) => Cache[TKey] | undefined;
   clearCache: () => void;
 
   has: <TKey extends CacheKeys>(key: TKey) => boolean;

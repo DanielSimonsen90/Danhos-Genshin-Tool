@@ -8,6 +8,7 @@ import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { FormTier, Tier as TierComponent, TierModifyForm } from './components';
 import { Entry, Tier, TierlistProps } from './TierlistTypes';
 import { getDefaultTiers, generateBlankTier, generateEntry } from './TierlistFunctions';
+import { useStateReset } from '@/hooks/useStateReset';
 
 export default function Tierlist<T, TStorageData extends object>({
   items,
@@ -18,7 +19,7 @@ export default function Tierlist<T, TStorageData extends object>({
   const onStorageLoaded = 'onStorageLoaded' in props ? props.onStorageLoaded : undefined;
   const onStorageSave = 'onStorageSave' in props ? props.onStorageSave : undefined;
 
-  const [tiers, setTiers] = useState(() => {
+  const [tiers, setTiers, resetTiers] = useStateReset(() => {
     if (!props.defaultTiers) return getDefaultTiers(items);
     const itemsNotIncluded = items.filter(item => !props.defaultTiers?.some(tier => tier.entries.some(entry => {
       if (typeof entry === 'object') return JSON.stringify(entry.item) === JSON.stringify(item);
@@ -42,11 +43,11 @@ export default function Tierlist<T, TStorageData extends object>({
     else if (storedItems.length === 0) return getDefaultTiers(items);
 
     const newItems = items.filter(item => !storedItems.some(storedItem => JSON.stringify(storedItem.item) === JSON.stringify(item)));
-    return resolvedStoredTiers.map(tier => (
+    return resolvedStoredTiers.map(tier => tier ? (
       tier.id === 'unsorted'
-        ? { ...tier, entries: [...tier.entries, ...newItems.map(generateEntry)] }
+        ? { ...tier, entries: [...(tier.entries ?? []), ...newItems.map(generateEntry)] }
         : tier
-    ));
+    ) : undefined).filter(Boolean);
   }), onStorageLoaded ? null : tiers);
   const [newTier, setNewTier] = useState<FormTier<T>>(generateBlankTier(tiers));
 
@@ -58,6 +59,10 @@ export default function Tierlist<T, TStorageData extends object>({
   ), [props]);
   const unsorted = tiers.find(tier => tier.id === 'unsorted')!;
 
+  useOnChange(props.defaultTiers, defaultTiers => {
+    console.log('Default tiers changed:', defaultTiers);
+    resetTiers();
+  });
   useOnChange(tiers, tiers => {
     const storageData = onStorageSave?.(tiers) ?? tiers;
     storageService.set(storageData);

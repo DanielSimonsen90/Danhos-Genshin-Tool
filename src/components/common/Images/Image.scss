@@ -16,7 +16,9 @@ img {
 }
 
 .character-image {
+  --size: 6rem;
   background-color: var(--rarity--muted);
+  aspect-ratio: 1 / 1;
 }
 
 .domain-image {

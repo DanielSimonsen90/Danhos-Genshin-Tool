@@ -50,7 +50,7 @@ export function useActionState<TResult extends Record<string, any>>(
       if (name.includes('[')) {
         const arrKey = name.split('[')[0];
         if (!data[arrKey]) data[arrKey] = []; 
-        data[arrKey].push(value);
+        if (value !== null && value !== undefined) data[arrKey].push(value);
 
       } else if (name.includes('.')) {
         const [objKey, objProp] = name.split('.');

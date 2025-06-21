@@ -1,7 +1,8 @@
 .switch {
   position: relative;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: start;
 
   width: 2em;
   height: 1em;
@@ -16,22 +17,16 @@
     width: var(--size);
     height: var(--size);
 
-    border-radius: 50%;
+    border-radius: 100%;
     position: absolute;
-    top: 50%;
-    left: 0;
     transition: left 0.2s ease;
     background-color: var(--text-primary);
-    transform: translateY(-50%);
     margin-inline: .125em;
   }
 
   &--enabled {
     background-color: var(--text-success);
-
-    .switch__thumb {
-      transform: translate(calc(50% + var(--size) / 1.25), -50%);
-    }
+    justify-content: end;
   }
 
   &--disabled {
