@@ -18,12 +18,14 @@ export const CrystalChunks = [
   'Gemstone',
 ] as const;
 
-type ElementalCrystals = Record<
+export type ElementalCrystals = Record<
   Element,
   Record<typeof CrystalChunks[number], MobDrop> & {
     [Symbol.iterator]: () => IterableIterator<MobDrop>;
   }
 >
+
+export type ElementalCrystal<TElement extends Element> = ElementalCrystals[TElement];
 
 export const ElementalCrystals = (function defineElementalCrystals() {
   const crystals = Object.keys(ElementalCrystalMap).reduce((acc, element) => {
