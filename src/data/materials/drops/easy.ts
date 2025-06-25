@@ -17,8 +17,8 @@ export const Mask = MobDrop.create('Mask', {
   [Rarity.Common]: 'Damaged',
 }, {
   [Rarity.Rare]: `A glossy bone mask with oil markings painted on it, meant to intimidate enemies.\nNo one really knows why hilichurls are so fascinated with masks. Some say that it's because they don't want to see their own reflections in the water.`,
-  [Rarity.Uncommon]: `A bone mask, covered in unidentifiable stains, that emanates a mysterious odor.\nYet such is the devotion of ihlichurls to masks that they will wear it nonetheless.`,
-  [Rarity.Common]: `A broken bone mask that once belonged to some hilichurl.\nNow more broken thatn complete, it can no longer perform its primary function.`,
+  [Rarity.Uncommon]: `A bone mask, covered in unidentifiable stains, that emanates a mysterious odor.\nYet such is the devotion of hilichurls to masks that they will wear it nonetheless.`,
+  [Rarity.Common]: `A broken bone mask that once belonged to some hilichurl.\nNow more broken than complete, it can no longer perform its primary function.`,
 });
 
 export const Scroll = MobDrop.create('Scroll', {

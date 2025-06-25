@@ -1,4 +1,4 @@
-import { EasyMob } from "@/common/models/mobs/EasyMob";
+import { EasyMob } from "@/common/models/mobs/Mob";
 import * as EasyMobDrops from "../materials/drops/easy";
 
 export const HilichurlShooter = new EasyMob(
