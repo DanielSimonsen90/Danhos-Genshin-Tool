@@ -1,9 +1,9 @@
-import { Weapon } from "@/common/types";
+import { WeaponType } from "@/common/types";
 import Image from "./Image";
 import { ImageService } from "@/services";
 
 type Props = {
-  weapon: Weapon;
+  weapon: WeaponType;
 };
 
 export default function WeaponImage({ weapon }: Props) {

@@ -1,12 +1,12 @@
 import { Billet } from "@/common/models/materials/Billet";
-import { Region, Weapon } from "@/common/types";
+import { Region, WeaponType } from "@/common/types";
 
 function generateBillet(
   lander: string,
   philosopherBelieve: string,
   regions: Array<Region>
 ) {
-  const generateBilletWeapon = (weapon: Weapon) => new Billet(
+  const generateBilletWeapon = (weapon: WeaponType) => new Billet(
     `${lander}lander ${weapon} Billet`,
     `Weapon forging material. Can be used to forge 4-star ${weapon.toLowerCase()}s.\n${philosopherBelieve}`,
     regions
