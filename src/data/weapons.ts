@@ -429,3 +429,11 @@ export const BloodtaintedGreatsword = new Weapon(
   187,
   'Wish',
 );
+
+/**
+ 
+https://paimon.moe/weapons
+https://genshin.gg/weapons/
+https://docs.google.com/document/d/1PZOlgDlOeczabhEdyqYJiQ4qSBwBjM3fx8YY_sL8u9U/edit?tab=t.0
+
+ */
