@@ -58,6 +58,10 @@ export const ImageService = new class ImageService extends BaseService<string> {
   }
 
   public getMaterialImage(name: string): string {
+    if (name.includes('Billet')) {
+      return this.lastResult = `${LOCAL_PATH}/materials/billets/${snakeCaseFromCamelCase(name)}.webp`;
+    }
+
     return this.lastResult = `${PAIMON_MOE_URL}/items/${snakeCaseFromCamelCase(name)
       .replace(/[':"]/g, '')
       .replace(/-/g, '_')}.png`;

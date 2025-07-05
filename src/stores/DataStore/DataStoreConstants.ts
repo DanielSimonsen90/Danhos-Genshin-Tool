@@ -14,6 +14,7 @@ const DomainsData = Object.assign({},
 
 import * as MaterialDropsData from '@/data/materials/drops';
 import { ElementalCrystals } from '@/data/materials/drops/crystals';
+import Billets from '@/data/materials/drops/billets';
 import * as MaterialLocalSpecialtiesData from '@/data/materials/local-specialties';
 import * as MaterialTalentData from '@/data/materials/talents';
 
@@ -23,7 +24,10 @@ const MaterialsData = Object.assign({},
     MaterialLocalSpecialtiesData,
     MaterialTalentData,
   ),
-  ElementalCrystals
+  Object.assign({}, 
+    ElementalCrystals,
+    Billets
+  )
 );
 
 import * as WeeklyBossesData from '@/data/mobs/weekly-bosses';

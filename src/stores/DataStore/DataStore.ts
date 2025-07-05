@@ -51,7 +51,7 @@ export const useDataStore = create<DataStore>((setState, getState) => {
     getModelKeysUsingMaterial(materialName: string) {
       const material = this.findMaterialByName(materialName);
       if (!material) {
-        console.warn(`Material "${materialName}" not found.`);
+        console.warn(`Material "${materialName}" not found.`, getState().Materials);
         return [];
       }
 
@@ -63,7 +63,7 @@ export const useDataStore = create<DataStore>((setState, getState) => {
     getCharactersUsingMaterial(materialName: string) {
       const material = this.findMaterialByName(materialName);
       if (!material) {
-        console.warn(`Material "${materialName}" not found.`);
+        console.warn(`Material "${materialName}" not found.`, getState().Materials);
         return [];
       }
 
@@ -83,7 +83,7 @@ export const useDataStore = create<DataStore>((setState, getState) => {
     getMobsDroppingMaterial(materialName: string) {
       const material = this.findMaterialByName(materialName);
       if (!material) {
-        console.warn(`Material "${materialName}" not found.`);
+        console.warn(`Material "${materialName}" not found.`, getState().Materials);
         return [];
       }
 

@@ -1,6 +1,6 @@
 export const DEBUGS = {
   // common
-  strings: false,
+  strings: true,
 
   // pages
   searchQuery: false,

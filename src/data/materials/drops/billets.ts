@@ -18,18 +18,11 @@ function generateBillet(
     claymore: generateBilletWeapon('Claymore'),
     catalyst: generateBilletWeapon('Catalyst'),
     polearm: generateBilletWeapon('Polearm'),
-    [Symbol.iterator]() {
+    [Symbol.iterator]: function* (): IterableIterator<Billet> {
       const weapons = ['sword', 'bow', 'claymore', 'catalyst', 'polearm'];
-      let index = 0;
-      return {
-        next: () => {
-          if (index < weapons.length) {
-            return { value: this[weapons[index++]], done: false };
-          } else {
-            return { done: true };
-          }
-        }
-      };
+      for (const weapon of weapons) {
+        yield this[weapon];
+      }
     }
   };
 }
@@ -59,7 +52,16 @@ export const Borderlander = generateBillet('Border',
 );
 
 export default {
-  Northlander,
-  Midlander,
-  Borderlander
-};
+  ...[...Northlander].reduce((acc, billet) => {
+    acc[`Northlander ${billet.name}`] = billet;
+    return acc;
+  }, {} as Record<string, Billet>),
+  ...[...Midlander].reduce((acc, billet) => {
+    acc[`Midlander ${billet.name}`] = billet;
+    return acc;
+  }, {} as Record<string, Billet>),
+  ...[...Borderlander].reduce((acc, billet) => {
+    acc[`Borderlander ${billet.name}`] = billet;
+    return acc;
+  }, {} as Record<string, Billet>),
+}
