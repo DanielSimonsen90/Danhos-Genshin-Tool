@@ -21,7 +21,7 @@ export default function FilterOption({
         type="checkbox"
         value={option}
         checked={value ?? false}
-        // onChange={() => { }}
+        onChange={() => { }}
       />
       <label>
         {pascalCaseFromCamelCase(option)}

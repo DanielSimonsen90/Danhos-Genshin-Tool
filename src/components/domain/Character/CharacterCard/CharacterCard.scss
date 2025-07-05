@@ -8,6 +8,10 @@
   column-gap: 1em;
 
   width: 100%;
+
+  .character-image {
+    border-radius: 50%;
+  }
 }
 
 .character-details {
@@ -92,6 +96,8 @@ li:has(.character-card) {
 }
 
 a.character-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
   border: 1px solid var(--element);
 
   &:hover {
