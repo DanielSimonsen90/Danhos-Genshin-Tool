@@ -58,9 +58,9 @@ export const ImageService = new class ImageService extends BaseService<string> {
   }
 
   public getMaterialImage(name: string): string {
-    if (name.includes('Billet')) {
-      return this.lastResult = `${LOCAL_PATH}/materials/billets/${snakeCaseFromCamelCase(name)}.webp`;
-    }
+    if (name.includes('Billet')) return this.lastResult = `${LOCAL_PATH}/materials/billets/${snakeCaseFromCamelCase(name)}.webp`;
+    else if (name.includes('Artificed Spare Clockwork Component - ')) return this.lastResult = `${LOCAL_PATH}/materials/drops/${snakeCaseFromCamelCase(name)}.webp`;
+    else if (name === 'Dream Solvent') return this.lastResult = `${LOCAL_PATH}/materials/drops/dream_solvent.webp`;
 
     return this.lastResult = `${PAIMON_MOE_URL}/items/${snakeCaseFromCamelCase(name)
       .replace(/[':"]/g, '')

@@ -191,7 +191,7 @@ export default function DataIndex() {
 
                 return (
                   <li key={name}>
-                    <Link to={`/${DATA_PREFIX}/${group}/${name}`}>
+                    <Link to={`/${DATA_PREFIX}/${group}/${name}`} title={name}>
                       {group === 'characters' && <CharacterImage character={name} />}
                       {group === 'artifacts' && <ArtifactImage set={name} piece='Flower' />}
                       {group === 'domains' && <DomainImage domain={name} />}
