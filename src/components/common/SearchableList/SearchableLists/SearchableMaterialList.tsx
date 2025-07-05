@@ -18,6 +18,8 @@ import { TalentAscensionMaterial, WeaponAscensionMaterial } from "@/common/model
 import LocalSpecialty from "@/common/models/materials/LocalSpecialty";
 import MobDrop, { ElementalCrystal } from "@/common/models/materials/MobDrop";
 import { CrystalChunks } from "@/data/materials/drops/crystals";
+import { useDataStore } from "@/stores";
+import { WeeklyBoss, WorldBoss } from "@/common/models";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<Material, TFilterKeys>>
@@ -36,6 +38,7 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
   const navigate = useNavigate();
   const [hidden, setHidden] = useState(new Array<Material>());
   const { add, remove, isFavorite } = useFavoriteStore('materials');
+  const DataStore = useDataStore();
 
   return <SearchableList
     items={items}
@@ -65,8 +68,9 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
         weaponAscension: WeaponAscensionMaterial.isWeaponAscensionMaterial,
       },
       obtainableThrough: {
-        // domains: material => material.length > 0 && material.domainNames[0] !== "BOSS_DROP",
-        // boss: material => material.domainNames.length > 0 && material.domainNames.includes("BOSS_DROP"),
+        domains: material => DataStore.getDomainsFromMaterial(material).length > 0,
+        worldBoss: material => material instanceof MobDrop && DataStore.getBossesFromMaterial(material).filter(WorldBoss.isWorldBoss).length > 0,
+        weeklyBoss: material => material instanceof MobDrop && DataStore.getBossesFromMaterial(material).filter(WeeklyBoss.isWeeklyBoss).length > 0,
         crafting: CraftableMaterial.isCraftableMaterial,
       },
       rarity: {

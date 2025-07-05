@@ -6,7 +6,7 @@ import { Domain } from "./Domain";
  * Domain for artifacts
  */
 export class DomainOfBlessing extends Domain<ArtifactSet> {
-  public static isDomainOfBlessing(obj: any): obj is DomainOfBlessing {
+  public static isDomainBlessing(obj: any): obj is DomainOfBlessing {
     return obj instanceof DomainOfBlessing;
   }
   constructor(

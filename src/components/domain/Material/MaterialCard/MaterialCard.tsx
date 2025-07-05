@@ -45,7 +45,6 @@ export default function MaterialCard({ material, ...props }: Props) {
   const modelKeys = useMemo(() => {
     return DataStore.getModelKeysUsingMaterial(material.name);
   }, [DataStore, material.name]);
-  console.log(modelKeys);
 
   const handleRadioChange = useCallback((index: number) => setCurrentIndex(index), []);  
   const usedByTabs = useCallback<TabsFunction>((tab) => [

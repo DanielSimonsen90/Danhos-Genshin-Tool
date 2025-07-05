@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { DataStore } from "./DataStoreTypes";
 import { DataStoreContent } from './DataStoreConstants';
-import { Character, Mob, Model, ModelKeys, TalentAscensionMaterial, WeaponAscensionMaterial } from '@/common/models';
+import { ArtifactSet, Boss, Character, DomainOfBlessing, DomainOfForgery, DomainOfMastery, Material, Mob, Model, ModelKeys, TalentAscensionMaterial, WeaponAscensionMaterial } from '@/common/models';
 import ModelType from './ModelType';
 
 export const useDataStore = create<DataStore>((setState, getState) => {
@@ -88,6 +88,17 @@ export const useDataStore = create<DataStore>((setState, getState) => {
       }
 
       return getState().Mobs.filter(mob => mob.drops.some(drop => drop.name === materialName)) as Mob[];
+    },
+    getDomainsFromMaterial(material: Material) {
+      const domains = getState().Domains.filter(domain => (
+        (TalentAscensionMaterial.isTalentAscensionMaterial(material) && DomainOfMastery.isDomainMastery(domain)) 
+        || (WeaponAscensionMaterial.isWeaponAscensionMaterial(material) && DomainOfForgery.isDomainForgery(domain)) 
+        || (ArtifactSet.isArtifactSet(material) && DomainOfBlessing.isDomainBlessing(domain))
+      ));
+      return domains.filter(domain => domain.getRewards(this).some(mat => mat.name === material.name));
+    },
+    getBossesFromMaterial(material: Material) {
+      return getState().Mobs.filter(mob => Boss.isBoss(mob) && mob.drops.some(drop => drop.name === material.name)) as Boss[];
     },
 
     getModelType: <TModel extends Model>(model: TModel) => new ModelType<TModel>(model),
