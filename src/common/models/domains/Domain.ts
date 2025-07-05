@@ -19,6 +19,8 @@ export abstract class Domain<TReward> {
 
   public getRewards(DataStore: DataStore): TReward[] {
     if (this.isBlessing()) return DataStore.getArtifactsFromDomain(this.name) as any as TReward[];
+    if (this.isMastery()) return DataStore.getTalentAscensionMaterialsFromDomain(this.name) as any as TReward[];
+    if (this.isForgery()) return DataStore.getWeaponAscensionMaterialsFromDomain(this.name) as any as TReward[];
     console.error('Domain.getRewards() not implemented for', this);
     return [];
   }

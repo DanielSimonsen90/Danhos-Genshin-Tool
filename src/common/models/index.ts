@@ -7,6 +7,12 @@ export * from './characters/CharacterSet';
 
 export * from './domains';
 
+export * from './materials/AscensionMaterial';
+export * from './materials/Material';
+
+export * from './mobs/Mob';
+export * from './mobs/Boss';
+
 export * from './List';
 export * from './Model';
 export * from './Stat';

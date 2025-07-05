@@ -41,7 +41,7 @@ export const SteepleOfIgnorance = new DomainOfMastery(
  */
 export const PaleForgottenGlory = new DomainOfMastery(
   "Pale of Forgotten Glory",
-  `In the past, the great white armada that traversed the seas was Fontaine's supreme pride and glory, for the Mistress of Rivers and Oceans blessed her people with the authority and wish to conquer all the waters of the world. However, this lofty abition was insufficient to overcome the laws of fate. To this day, on the brass masts are inscribed the words: "I have conquered the waves of the four seas."`,
+  `In the past, the great white armada that traversed the seas was Fontaine's supreme pride and glory, for the Mistress of Rivers and Oceans blessed her people with the authority and wish to conquer all the waters of the world. However, this lofty ambition was insufficient to overcome the laws of fate. To this day, on the brass masts are inscribed the words: "I have conquered the waves of the four seas."`,
   "Fontaine"
 );
 
@@ -50,6 +50,6 @@ export const PaleForgottenGlory = new DomainOfMastery(
  */
 export const BlazingRuins = new DomainOfMastery(
   "Blazing Ruins",
-  `In that era, when people had yet to attain true mastery of the flames, there were sages in all corners of the world who pondered the fire and sought to fathom its mysteries. It is said that these ruins are all that is left of what was once a ring-shaped ceremonial site. Here, these sages attempted to perfect the rituals required to trasnform phlogiston. Among the heroes who later followed the mighty one into the belly of the volcano, there were several woh once trained in this place.`,
+  `In that era, when people had yet to attain true mastery of the flames, there were sages in all corners of the world who pondered the fire and sought to fathom its mysteries. It is said that these ruins are all that is left of what was once a ring-shaped ceremonial site. Here, these sages attempted to perfect the rituals required to transform phlogiston. Among the heroes who later followed the mighty one into the belly of the volcano, there were several who once trained in this place.`,
   "Natlan"
 );

@@ -1,15 +1,18 @@
-import { CharacterImage } from "@/components/common/Images";
-import Tierlist from "@/components/common/Tierlist";
-import { useCharacterData } from "@/stores";
+import SearchableMaterialList from "@/components/common/SearchableList/SearchableLists/SearchableMaterialList";
+import TabBar from "@/components/common/TabBar";
+import { useMobData, useMaterialsData } from "@/stores";
 
 export default function Development() {
-  const { Characters } = useCharacterData();
+  const { Materials } = useMaterialsData();
+  const { Mobs } = useMobData();
 
   return (
-    <Tierlist items={Characters} 
-      onUnsortedSearch={(search, character) => character.name.toLowerCase().includes(search.toLowerCase())}
-    >
-      {character => character ? <CharacterImage character={character.name} /> : null}
-    </Tierlist>
+    <TabBar tabs={tabs => [
+      tabs('Mobs', 'Mobs', (
+        <code>
+          {JSON.stringify(Mobs, null, 2)}
+        </code>
+      )),
+    ]} />
   );
 }

@@ -52,7 +52,7 @@ export const Midlander = generateBillet('Mid',
 );
 
 export const Borderlander = generateBillet('Border',
-  `In t erms of the "state" of the many weapons that can be crafted from billets, while their potential has long been contained within the original materials, the exact forms these weapons will ultimately take remain unknown to this day...`,
+  `In terms of the "state" of the many weapons that can be crafted from billets, while their potential has long been contained within the original materials, the exact forms these weapons will ultimately take remain unknown to this day...`,
   [
     'Natlan'
   ]

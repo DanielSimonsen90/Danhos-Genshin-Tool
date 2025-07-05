@@ -53,16 +53,3 @@ export const Trishiraite = new LocalSpecialty(
   `A splendorous stone that can be found in the depths of desolate mountains, seemingly formed from congealed elemental energy.`,
   'Sumeru',
 );
-
-export const Sumeru = {
-  HennaBerry,
-  KalpalataLotus,
-  MourningFlower,
-  NilotpalaLotus,
-  Padisarah,
-  RukkhashavaMushrooms,
-  SandGreasePupa,
-  Scarab,
-  Trishiraite,
-};
-export default Sumeru;

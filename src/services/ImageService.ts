@@ -57,6 +57,12 @@ export const ImageService = new class ImageService extends BaseService<string> {
     return this.lastResult = `${LOCAL_PATH}/resins/${name}_resin.png`;
   }
 
+  public getMaterialImage(name: string): string {
+    return this.lastResult = `${PAIMON_MOE_URL}/items/${snakeCaseFromCamelCase(name)
+      .replace(/[':"]/g, '')
+      .replace(/-/g, '_')}.png`;
+  }
+
   private formatRerollCdnName(name: string): string {
     return name.slice(0, 1).toUpperCase() + snakeCaseFromCamelCase(name).slice(1);
   }

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { rarityString, snakeCaseFromCamelCase } from "@/common/functions/strings";
+import { rarityString } from "@/common/functions/strings";
 import { Character } from "@/common/models";
 import { CharacterImage } from "@/components/common/Images";
 import CharacterSet from "../CharacterSet";
@@ -47,7 +47,7 @@ export default function CharacterCard({ character, score, ...props }: Props) {
                   return <li key={i} className="bonus-ability" title={desc}>{name}</li>;
                 }
 
-                return <li key={i} className="bonus-ability" title={ability}>{ability}</li>
+                return <li key={i} className="bonus-ability" title={ability}>{ability}</li>;
               })}
             </ul>
           ) : <span>No special traits.</span>}
@@ -61,7 +61,7 @@ export default function CharacterCard({ character, score, ...props }: Props) {
       {showDetails && (
         <div className="character-sets">
           <h3 className="character-sets__title">Character Sets</h3>
-          <TabBar id={`${name}-sets`} 
+          <TabBar id={`${name}-sets`}
             tabs={create => sets.map(set => create(
               set.name,
               set.name,
@@ -79,10 +79,10 @@ function GetCharacterNameComponent(linkOnName: boolean, character: Character) {
   const CharacterName = () => (
     <span className="character-name">
       <span className="character-name__value">{character.name}</span>
-      <span className="character-name__element"><ElementImage element={character.element} /></span>
+      <ElementImage element={character.element} />
       <span className="character-name__weapon"><WeaponImage weapon={character.weapon} /></span>
     </span>
-  )
+  );
 
   return () => linkOnName
     ? <Link to={`/${ROUTES.data_characters}/${character.name}`}><CharacterName /></Link>

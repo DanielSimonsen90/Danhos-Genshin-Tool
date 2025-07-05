@@ -24,10 +24,3 @@ export const Gold = TalentAscensionMaterial.create(
   MasteryDomains.TaishanMansion,
   'Wednesday/Saturday',
 );
-
-export const Liyue = {
-  Prosperity,
-  Diligence,
-  Gold,
-}
-export default Liyue;

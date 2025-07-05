@@ -1,5 +1,7 @@
-export * as EasyMobDrops from './easy';
-export * as EliteMobDrops from './elite';
+// export * from './billets';
+
+export * from './easy';
+export * from './elite';
 
 export * from './mondstadt';
 export * from './liyue';

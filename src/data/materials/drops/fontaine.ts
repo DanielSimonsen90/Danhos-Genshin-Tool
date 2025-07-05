@@ -57,8 +57,8 @@ export const LightlessSilkString = new MobDrop(
   "Fontaine",
   Rarity.Legendary,
 );
-export const LightlessEyeOfTheMaelstorm = new MobDrop(
-  "Lightless Eye of the Maelstorm",
+export const LightlessEyeOfTheMaelstrom = new MobDrop(
+  "Lightless Eye of the Maelstrom",
   `A strange "substance" obtained from fighting against the All-Devouring Narwhal. Its actual weight far exceeds what would be expected given its size.\nEverything gathers around heavy objects, just as gold attracts more than iron, or the ground more than in the breeze blowing above. Just as light cannot escape from the vortex of darkness, cause and effect is attached to fate, perhaps irreversibly so.`,
   "Fontaine",
   Rarity.Legendary,
@@ -83,8 +83,8 @@ export const SilkenFeather = new MobDrop(
   "Fontaine",
   Rarity.Legendary,
 );
-export const DenialAndJudgement = new MobDrop(
-  "Denial and Judgement",
+export const DenialAndJudgment = new MobDrop(
+  "Denial and Judgment",
   `An earring that you picked up in the ruins after completing the duel against The Knave.\nThe red symbol upon it resembles the image in her eyes, a declaration and a rejection alike.\nThe orphaned live lives filled with suffering from childhood - this she sees and keeps in her heart.\nAs fate casts an examining eye on humanity, so too will humans cast judgment upon fate.`,
   "Fontaine",
   Rarity.Legendary,

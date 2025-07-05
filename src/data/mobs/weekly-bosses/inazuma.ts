@@ -13,8 +13,8 @@ export const Signora = new WeeklyBoss(
     MoltenMoment,
     HellfireButterfly,
     AshenHeart,
-    ...ElementalCrystals.Cryo,
-    ...ElementalCrystals.Pyro,
+    ...ElementalCrystals.Cryo.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Pyro.getCraftingTreeAsMaterials(),
     DreamSolvent,
     GladiatorsFinale,
     WanderersTroupe,
@@ -33,7 +33,7 @@ export const RaidenShogun = new WeeklyBoss(
     MudraOfTheMaleficGeneral,
     TearsOfTheCalamitousGod,
     TheMeaningOfAeons,
-    ...ElementalCrystals.Electro,
+    ...ElementalCrystals.Electro.getCraftingTreeAsMaterials(),
     DreamSolvent,
     GladiatorsFinale,
     WanderersTroupe,
@@ -43,9 +43,3 @@ export const RaidenShogun = new WeeklyBoss(
     ...Northlander
   ]
 );
-
-export const Inazuma = {
-  Signora,
-  RaidenShogun,
-};
-export default Inazuma;

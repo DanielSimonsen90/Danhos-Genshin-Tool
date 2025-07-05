@@ -1,8 +1,8 @@
 import { Rarity, Region } from "@/common/types";
 
-export abstract class BaseMaterial {
-  public static isMaterial(obj: any): obj is BaseMaterial {
-    return obj instanceof BaseMaterial;
+export abstract class Material {
+  public static isMaterial(obj: any): obj is Material {
+    return obj instanceof Material;
   }
   constructor(
     public name: string,
@@ -12,4 +12,4 @@ export abstract class BaseMaterial {
   ) {}
 }
 
-export default BaseMaterial;
+export default Material;

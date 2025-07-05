@@ -9,7 +9,7 @@ export const GluttonousYumkasaurMountainKing = new WorldBoss(
   'Natlan',
   [
     OverripeFlamegranate,
-    ...ElementalCrystals.Dendro,
+    ...ElementalCrystals.Dendro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -24,7 +24,7 @@ export const GoldflameQucusaurTyrant = new WorldBoss(
   'Natlan',
   [
     MarkOfTheBindingBlessing,
-    ...ElementalCrystals.Pyro,
+    ...ElementalCrystals.Pyro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -40,9 +40,9 @@ export const TenebrousPapilla = new WorldBoss(
   'Natlan',
   [
     EnsnaringGaze,
-    ...ElementalCrystals.Pyro,
-    ...ElementalCrystals.Electro,
-    ...ElementalCrystals.Anemo,
+    ...ElementalCrystals.Pyro.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Electro.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Anemo.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -58,7 +58,7 @@ export const WaywardHermeticSpiritspeaker = new WorldBoss(
   'Natlan',
   [
     TalismanOftheEnigmaticLand,
-    ...ElementalCrystals.Cryo,
+    ...ElementalCrystals.Cryo.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -74,7 +74,7 @@ export const LavaDragonStatue = new WorldBoss(
   'Natlan',
   [
     SparklessStatueCore,
-    ...ElementalCrystals.Pyro,
+    ...ElementalCrystals.Pyro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -90,7 +90,7 @@ export const SecretSourceAutomationsOverseerDevice = new WorldBoss(
   'Natlan',
   [
     SecretSourceAirflowAccumulator,
-    ...ElementalCrystals.Hydro,
+    ...ElementalCrystals.Hydro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,

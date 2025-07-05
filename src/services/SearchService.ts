@@ -141,7 +141,7 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     }
 
     // Calculate scores
-    const getScores = (characters: Character[]) => {
+    const getScores = (characters: List<Character>) => {
       debugLog('group', 'getScores');
       const result = characters.map(character => {
         const cSet = getSetFromCharacter(character);
@@ -216,7 +216,7 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     return result;
   }
 
-  public getCharactersUsing(artifactName: string, DataStore: DataStore): CharacterUsingArtifactResult[] {
+  public getCharactersUsing(artifactName: string, DataStore: DataStore): List<CharacterUsingArtifactResult> {
     const relevantCharacters = DataStore.Characters.filter(character =>
       character.sets.some(cSet =>
         cSet.artifactSets.some(artifact => artifact.set.name === artifactName

@@ -9,7 +9,7 @@ export const Oceanid = new WorldBoss(
   'Liyue',
   [
     CleansingHeart,
-    ...ElementalCrystals.Hydro,
+    ...ElementalCrystals.Hydro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -25,8 +25,8 @@ export const SolitarySuanni = new WorldBoss(
   'Liyue',
   [
     CloudseamScale,
-    ...ElementalCrystals.Anemo,
-    ...ElementalCrystals.Hydro,
+    ...ElementalCrystals.Anemo.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Hydro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -41,7 +41,7 @@ export const PyroRegisvine = new WorldBoss(
   'Liyue',
   [
     EverflameSeed,
-    ...ElementalCrystals.Pyro,
+    ...ElementalCrystals.Pyro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -52,15 +52,15 @@ export const PyroRegisvine = new WorldBoss(
 
 export const PrimoGeovishap = new WorldBoss(
   'Primo Geovishap',
-  `After many yers, the awesomely powerful Primo Geovishaps have grown accustomed to changes in their elemental enviornment.\nFolktales hold that after the great "draconic calamity" that led to the ruin of Tianqiu Valley, the Geovishaps and Primo Geovishaps burrowed deep into the earth, awaiting their chance to rise once more...`,
+  `After many years, the awesomely powerful Primo Geovishaps have grown accustomed to changes in their elemental environment.\nFolktales hold that after the great "draconic calamity" that led to the ruin of Tianqiu Valley, the Geovishaps and Primo Geovishaps burrowed deep into the earth, awaiting their chance to rise once more...`,
   'Liyue',
   [
     JuvenileJade,
-    ...ElementalCrystals.Geo,
-    ...ElementalCrystals.Electro,
-    ...ElementalCrystals.Cryo,
-    ...ElementalCrystals.Pyro,
-    ...ElementalCrystals.Hydro,
+    ...ElementalCrystals.Geo.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Electro.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Cryo.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Pyro.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Hydro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -79,7 +79,7 @@ export const GeoHypostasis = new WorldBoss(
   'Liyue',
   [
     BasaltPillar,
-    ...ElementalCrystals.Geo,
+    ...ElementalCrystals.Geo.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Instructor,
@@ -94,7 +94,7 @@ export const RuinSerpent = new WorldBoss(
   'Liyue',
   [
     RunicFang,
-    ...ElementalCrystals.Geo,
+    ...ElementalCrystals.Geo.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Instructor,

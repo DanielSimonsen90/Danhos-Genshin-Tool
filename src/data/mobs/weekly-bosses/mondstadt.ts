@@ -6,9 +6,7 @@ import { DreamSolvent } from "@/data/materials/drops/general";
 import { 
   TailOfBoreas, RingOfBoreas, SpiritLocketOfBoreas,
   DvalinsPlume, DvalinsClaw, DvalinsSigh,
-  ChessGameKnight,
-  ChessGameRock,
-  ChessGameQueen
+  ChessGameKnight, ChessGameRook, ChessGameQueen
 } from "@/data/materials/drops/mondstadt";
 
 export const Boreas = new WeeklyBoss(
@@ -17,9 +15,9 @@ export const Boreas = new WeeklyBoss(
   'Mondstadt',
   [
     TailOfBoreas, RingOfBoreas, SpiritLocketOfBoreas,
-    ...ElementalCrystals.Cryo,
-    ...ElementalCrystals.Geo,
-    ...ElementalCrystals.Pyro,
+    ...ElementalCrystals.Cryo.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Geo.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Pyro.getCraftingTreeAsMaterials(),
     DreamSolvent,
     GladiatorsFinale,
     WanderersTroupe,
@@ -35,9 +33,9 @@ export const StormTerror = new WeeklyBoss(
   'Mondstadt',
   [
     DvalinsPlume, DvalinsClaw, DvalinsSigh,
-    ...ElementalCrystals.Anemo,
-    ...ElementalCrystals.Electro,
-    ...ElementalCrystals.Hydro,
+    ...ElementalCrystals.Anemo.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Electro.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Hydro.getCraftingTreeAsMaterials(),
     DreamSolvent,
     GladiatorsFinale,
     WanderersTroupe,
@@ -52,10 +50,10 @@ export const ChessGame = new WeeklyBoss(
   `If you wish to earn the mages' approval, you must face up to the riddle at hand.`,
   'Mondstadt',
   [
-    ChessGameKnight, ChessGameRock, ChessGameQueen,
-    ...ElementalCrystals.Pyro,
-    ...ElementalCrystals.Hydro,
-    ...ElementalCrystals.Electro,
+    ChessGameKnight, ChessGameRook, ChessGameQueen,
+    ...ElementalCrystals.Pyro.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Hydro.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Electro.getCraftingTreeAsMaterials(),
     DreamSolvent,
     GladiatorsFinale,
     WanderersTroupe,
@@ -65,10 +63,3 @@ export const ChessGame = new WeeklyBoss(
     ...Northlander
   ]
 )
-
-export const Mondstadt = {
-  Boreas,
-  StormTerror,
-  ChessGame,
-};
-export default Mondstadt;

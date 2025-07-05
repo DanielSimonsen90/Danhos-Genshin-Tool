@@ -13,9 +13,9 @@ export const ScaramoucheBalladeer = new WeeklyBoss(
     PuppetStrings,
     MirrorOfMushin,
     DakasBell,
-    ...ElementalCrystals.Electro,
-    ...ElementalCrystals.Anemo,
-    ...ElementalCrystals.Hydro,
+    ...ElementalCrystals.Electro.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Anemo.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Hydro.getCraftingTreeAsMaterials(),
     DreamSolvent,
     GladiatorsFinale,
     WanderersTroupe,
@@ -34,7 +34,7 @@ export const Apep = new WeeklyBoss(
     WorldspanFern,
     PrimordialGreenbloom,
     Everamber,
-    ...ElementalCrystals.Dendro,
+    ...ElementalCrystals.Dendro.getCraftingTreeAsMaterials(),
     DreamSolvent,
     GladiatorsFinale,
     WanderersTroupe,
@@ -44,9 +44,3 @@ export const Apep = new WeeklyBoss(
     ...Midlander
   ]
 );
-
-export const Sumeru = {
-  ScaramoucheBalladeer,
-  Apep,
-};
-export default Sumeru;

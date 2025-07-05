@@ -15,8 +15,6 @@
 
   .artifact-image {
     --size: 7.5rem;
-    width: var(--size);
-    height: var(--size);
   }
 
   &:has(.artifact-sets)>header {

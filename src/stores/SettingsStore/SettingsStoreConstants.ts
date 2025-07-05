@@ -6,7 +6,8 @@ export const DEFAULT_SETTINGS: AppSettings = {
   wrap: true,
   preferredTabs: {
     searchOrHistory: 'search',
-    results: 'combined'
+    results: 'combined',
+    craftableMaterial: 'common',
   },
   updated: undefined,
   newUser: true

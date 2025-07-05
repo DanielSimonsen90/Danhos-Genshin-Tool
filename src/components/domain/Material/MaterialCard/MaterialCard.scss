@@ -1,0 +1,78 @@
+@import '../../../../styles/partials';
+
+.material-card {
+  >header {
+    display: grid;
+    grid-template-areas:
+      "image name pagination"
+      "details details pagination";
+    grid-template-columns: auto 1fr;
+    gap: .5em;
+    width: 100%;
+  }
+
+  .material-image {
+    --size: 3.5rem;
+  }
+
+  &__name {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 1.25rem;
+    margin: 0;
+    width: 100%;
+
+    &-text {
+      @extend %text-ellipsis;
+      font-size: inherit;
+      word-break: break-word;
+      flex: 1;
+    }
+  }
+
+  &__details {
+    grid-area: details;
+  }
+
+  &__description {
+    max-height: 10rem;
+    overflow: auto;
+  }
+
+  &__pagination {
+    grid-area: pagination;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &-item {
+      margin: 0.25rem 0;
+      cursor: pointer;
+    }
+
+    &-radio {
+      --size: 1rem;
+      height: var(--size);
+      width: var(--size);
+      cursor: pointer;
+    }
+  }
+}
+
+a.material-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  >header {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    justify-items: center;
+  }
+
+  .material-card__name {
+    text-align: center;
+  }
+}

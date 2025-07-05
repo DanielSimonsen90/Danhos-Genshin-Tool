@@ -14,7 +14,7 @@ export class Character<TElement extends Element = Element> {
     public bonusAbilities: Array<BonusAbility>,
     public rarity: Rarity,
     public region: Region,
-    public ascencion: CharacterAscension<TElement>,
+    public ascension: CharacterAscension<TElement>,
     public sets: CharacterSet[],
   ) {}
 

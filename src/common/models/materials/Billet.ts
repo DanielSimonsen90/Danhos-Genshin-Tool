@@ -1,7 +1,7 @@
 import { Rarity, Region } from "@/common/types";
-import BaseMaterial from "./BaseMaterial";
+import Material from "./Material";
 
-export class Billet extends BaseMaterial {
+export class Billet extends Material {
   public static isBillet(obj: any): obj is Billet {
     return obj instanceof Billet;
   }

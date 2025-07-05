@@ -1,3 +1,5 @@
+import React from 'react';
+
 type Props = {
   src: string;
   alt: string;
@@ -5,6 +7,6 @@ type Props = {
   className?: string;
 }
 
-export default function Image({ src, alt, ...props }: Props) {
-  return <img src={src} alt={alt} title={alt} {...props} />;
-}
+export default React.forwardRef<HTMLImageElement, Props>(({ src, alt, ...props }, ref) => {
+  return <img src={src} alt={alt} title={alt} ref={ref} {...props} />;
+});

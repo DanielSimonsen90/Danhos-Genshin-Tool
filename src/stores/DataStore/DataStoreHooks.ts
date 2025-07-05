@@ -13,3 +13,9 @@ export const useDomainData = () => useDataStore() as Pick<DataStore,
   | 'DomainNames' | 'Domains' | 'DomainsData'
   | 'findDomainByName' | 'getDomainsFromArtifact' | 'getArtifactsFromDomain'
 >;
+export const useMaterialsData = () => useDataStore() as Pick<DataStore,
+ | 'MaterialNames' | 'Materials' | 'MaterialsData'
+>;
+export const useMobData = () => useDataStore() as Pick<DataStore,
+  | 'MobNames' | 'Mobs' | 'MobsData'
+>;

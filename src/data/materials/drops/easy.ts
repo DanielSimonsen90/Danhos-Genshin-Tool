@@ -6,7 +6,7 @@ export const Arrowhead = MobDrop.create('Arrowhead', {
   [Rarity.Uncommon]: 'Sharp',
   [Rarity.Common]: 'Firm',
 }, {
-  [Rarity.Rare]: `An old arrowhead coated in blood.\nThe arrowhead has long since lost its sharpness andthus its use as a weapon.\nHowever, it represents the pride of a hunter and acts as both an amulet and a medal.`,
+  [Rarity.Rare]: `An old arrowhead coated in blood.\nThe arrowhead has long since lost its sharpness and thus its use as a weapon.\nHowever, it represents the pride of a hunter and acts as both an amulet and a medal.`,
   [Rarity.Uncommon]: `A well-made arrowhead. Sharp enough to penetrate armor with the ease of a rock through the surface of water.`,
   [Rarity.Common]: `A roughly produced arrowhead.\nThough unimpressive, neither it nor the bow should be underestimated, for even the bravest knight can be felled by an arrow from the rear.`,
 });
@@ -105,7 +105,7 @@ export const EremiteDrop = MobDrop.create("<placeholder>", {
   [Rarity.Common]: `A piece of red satin used to cover the eyes. The fabric is slightly torn.\nMany Eremites tend to cover their eyes with textiles, but the original intention of this practice has long been lost to the sands of time.,`
 }, {
   onCreate: (name, description, rarity) => new MobDrop(
-    name.replace('<placeholder>', ''),
+    name.replace('<placeholder>', '').trim(),
     description,
     undefined,
     rarity
@@ -132,7 +132,7 @@ export const FungalSpores = MobDrop.create('<placeholder>', {
   [Rarity.Common]: `A small amount of glittering spore powder left behind by Floating Fungi. Seems that a sneeze is all it takes for this powder to vanish without a trace.`,
 }, {
   onCreate: (name, description, rarity) => new MobDrop(
-    name.replace('<placeholder>', ''),
+    name.replace('<placeholder>', '').trim(),
     description,
     undefined,
     rarity
@@ -159,7 +159,7 @@ export const FontemerAberrantPearl = MobDrop.create('<placeholder>', {
   [Rarity.Common]: `A small crystal obtained from a defeated Fontemer Aberrant.\nFontemer Aberrants arise from Fontaine's sea. They are believed to be a unique life form born from the mysterious energy in the water.`,
 }, {
   onCreate: (name, description, rarity) => new MobDrop(
-    name.replace('<placeholder>', ''),
+    name.replace('<placeholder>', '').trim(),
     description,
     undefined,
     rarity

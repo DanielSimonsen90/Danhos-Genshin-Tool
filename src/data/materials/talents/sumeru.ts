@@ -24,10 +24,3 @@ export const Praxis = TalentAscensionMaterial.create(
   MasteryDomains.SteepleOfIgnorance,
   'Wednesday/Saturday',
 );
-
-export const Sumeru = {
-  Admonition,
-  Ingenuity,
-  Praxis,
-};
-export default Sumeru;

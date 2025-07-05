@@ -1,0 +1,110 @@
+@import '../../../../styles/partials';
+
+.mob-card {
+  &[data-type="weekly-boss"] {
+    --color: var(--rarity-legendary);
+  }
+
+  &[data-type="world-boss"] {
+    --color: var(--rarity-epic);
+  }
+
+  &[data-type="boss"] {
+    --color: var(--rarity-rare);
+  }
+
+  &[data-type="elite"] {
+    --color: var(--rarity-uncommon);
+  }
+
+  &[data-type="easy"] {
+    --color: var(--rarity-common);
+  }
+
+  >header {
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+    width: 100%;
+  }
+
+  &__name {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .5em;
+    font-size: 1.25rem;
+    margin: 0;
+    width: 100%;
+
+    &-text {
+      @extend %text-ellipsis;
+      word-break: break-word;
+      flex: 1;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+  }
+
+  &__type {
+    background: var(--background-tertiary);
+    color: var(--color); // Defined on .mob-card[data-type]
+    padding: .25rem .5rem;
+    border-radius: .25rem;
+    font-size: .8em;
+    font-weight: normal;
+    text-transform: capitalize;
+    flex-shrink: 0;
+  }
+
+  &__details {
+    display: none;
+    margin-bottom: 12px;
+  }
+
+  &__description {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.9em;
+    line-height: 1.4;
+    max-height: 10rem;
+    overflow: auto;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__region {
+    color: var(--region);
+  }
+
+  &__drops {
+    h2 {
+      font-size: 1.2em;
+      margin: 0 0 8px;
+    }
+
+    &-list {
+      .mob-drop-container header {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        grid-template-areas: unset;
+        align-items: center;
+        gap: 0.5em;
+
+        img {
+          --size: 3rem;
+        }
+      }
+    }
+  }
+
+  &--show-more {
+    .mob-card__details {
+      display: block;
+    }
+  }
+}

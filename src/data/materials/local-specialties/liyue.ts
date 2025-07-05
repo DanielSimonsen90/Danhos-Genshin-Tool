@@ -53,16 +53,3 @@ export const Violetgrass = new LocalSpecialty(
   `A small flower with strong vitality. It is said that its downward-blooming flower keeps its fragrance from dissipating.`,
   'Liyue',
 );
-
-export const Liyue = {
-  ClearwaterJade,
-  CorLapis,
-  GlazeLily,
-  JueyunChili,
-  NoctilucousJade,
-  Qingxin,
-  SilkFlower,
-  Starconch,
-  Violetgrass,
-}
-export default Liyue;

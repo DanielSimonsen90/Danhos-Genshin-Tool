@@ -83,6 +83,12 @@ function InputType<Setting extends keyof Settings>({ setting, value, onChange }:
         value={(value as Settings['preferredTabs']).searchOrHistory}
         onChange={value => onChange(value as any)}
       />
+      <Select
+        name={`${setting}.${'craftableMaterial' as keyof Settings['preferredTabs']}`}
+        options={['common', 'rarest'] as Array<Settings['preferredTabs']['craftableMaterial']>}
+        value={(value as Settings['preferredTabs']).craftableMaterial}
+        onChange={value => onChange(value as any)}
+      />
     </>);
     default: {
       console.error(`Unknown setting: ${setting}`);

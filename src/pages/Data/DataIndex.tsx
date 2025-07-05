@@ -10,7 +10,7 @@ import { classNames, pascalCaseFromKebabCase, pascalCaseFromSnakeCase } from '@/
 
 import RarityList from '@/components/common/icons/Rarity';
 import Select from '@/components/common/Select';
-import { CharacterImage, ArtifactImage, DomainImage, ElementImage } from '@/components/common/Images';
+import { CharacterImage, ArtifactImage, DomainImage, ElementImage, MaterialImage } from '@/components/common/Images';
 
 import { DataStore, useDataStore } from '@/stores';
 
@@ -20,7 +20,7 @@ const routes = [
   [ROUTES.endRoute('data_artifacts'), 'Artifacts'],
   [ROUTES.endRoute('data_domains'), 'Domains'],
   //  [ROUTES.endRoute('data_weapons'), 'Weapons'],
-  //  [ROUTES.endRoute('data_materials'), 'Materials'],
+  [ROUTES.endRoute('data_materials'), 'Materials'],
 ];
 
 type Order = `${'name' | 'rarity' | 'element'}-${'ascend' | 'descend'}`;
@@ -38,19 +38,23 @@ const getDomainElement = (domain: DomainOfBlessing, dataStore: DataStore, order:
 export default function DataIndex() {
   const DataStore = useDataStore();
   const {
-    CharacterNames, ArtifactNames, DomainNames,
-    Characters, Artifacts, Domains,
+    CharacterNames, ArtifactNames, DomainNames, MaterialNames,
+    Characters, Artifacts, Domains, Materials,
   } = DataStore;
 
   const groups = [
     ['characters', CharacterNames],
     ['artifacts', ArtifactNames],
     ['domains', DomainNames],
+    // ['weapons', WeaponNames],
+    ['materials', MaterialNames]
   ] as const;
   const groupModels = new Map<string, List<Model>>([
     ['characters', Characters],
     ['artifacts', Artifacts],
     ['domains', Domains],
+    // ['weapons', Weapons],
+    ['materials', Materials]
   ]);
 
   const [order, setOrder] = useState<Order>('name-ascend');
@@ -134,9 +138,11 @@ export default function DataIndex() {
                 <ul>
                   {groups.find(([group]) => group === route)?.[1].map(name => {
                     const model = groupModels.get(route)?.find(m => m.name === name);
-                    const element = route === 'characters' ? (model as Character).element
+                    const element = (
+                      route === 'characters' ? (model as Character).element
                       : route === 'artifacts' ? getModelElement(model as ArtifactSet)
-                        : route === 'domains' && getDomainElement(model as DomainOfBlessing, DataStore, order);
+                      : route === 'domains' && getDomainElement(model as DomainOfBlessing, DataStore, order)
+                    );
 
                     return (
                       <li key={name}>
@@ -170,12 +176,18 @@ export default function DataIndex() {
             </summary>
             <ul className='data-details-list'>
               {names.map(name => {
-                const model = group === 'characters' ? Characters.find(c => c.name === name)
+                const model = (
+                  group === 'characters' ? Characters.find(c => c.name === name)
                   : group === 'artifacts' ? Artifacts.find(a => a.name === name)
-                    : Domains.find(d => d.name === name);
-                const element = group === 'characters' ? (model as Character).element
+                  : group === 'domains' ? Domains.find(d => d.name === name)
+                  : group === 'materials' ? Materials.find(m => m.name === name)
+                  : undefined
+                );
+                const element = (
+                  group === 'characters' ? (model as Character).element
                   : group === 'artifacts' ? getModelElement(model as ArtifactSet)
-                    : group === 'domains' && getDomainElement(model as DomainOfBlessing, DataStore, order);
+                  : group === 'domains' && getDomainElement(model as DomainOfBlessing, DataStore, order)
+                );
 
                 return (
                   <li key={name}>
@@ -183,12 +195,18 @@ export default function DataIndex() {
                       {group === 'characters' && <CharacterImage character={name} />}
                       {group === 'artifacts' && <ArtifactImage set={name} piece='Flower' />}
                       {group === 'domains' && <DomainImage domain={name} />}
+                      {group === 'materials' && <MaterialImage material={name} />}
                       <header>
                         <p className='model-name'>
                           <span>{name}</span>
                           {element ? <ElementImage element={element} /> : null}
                         </p>
-                        {'rarity' in model ? <RarityList rarity={model?.rarity} /> : <span>{model.region}</span>}
+                        {model
+                          ? 'rarity' in model
+                            ? <RarityList rarity={model?.rarity} />
+                            : <span>{model.region}</span>
+                          : <p>Unknown model</p>
+                        }
                       </header>
                     </Link>
                   </li>

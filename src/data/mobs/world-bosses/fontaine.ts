@@ -9,8 +9,8 @@ export const LegatusGolem = new WorldBoss(
   'Fontaine',
   [
     FragmentOfAGoldenMelody,
-    ...ElementalCrystals.Pyro,
-    ...ElementalCrystals.Geo,
+    ...ElementalCrystals.Pyro.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Geo.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -26,7 +26,7 @@ export const EmperorOfFireAndIron = new WorldBoss(
   'Fontaine',
   [
     EmperorsResolution,
-    ...ElementalCrystals.Pyro,
+    ...ElementalCrystals.Pyro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -42,7 +42,7 @@ export const HydroTulpa = new WorldBoss(
   'Fontaine',
   [
     WaterThatFailedToTranscend,
-    ...ElementalCrystals.Hydro,
+    ...ElementalCrystals.Hydro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -59,8 +59,8 @@ export const IcewindSuite = new WorldBoss(
   [
     ArtificedSpareClockworkComponent__Coppelia,
     ArtificedSpareClockworkComponent__Coppelius,
-    ...ElementalCrystals.Anemo,
-    ...ElementalCrystals.Cryo,
+    ...ElementalCrystals.Anemo.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Cryo.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -77,7 +77,7 @@ export const ExperimentalFieldGenerator = new WorldBoss(
   'Fontaine',
   [
     TourbillonDevice,
-    ...ElementalCrystals.Geo,
+    ...ElementalCrystals.Geo.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Instructor,
@@ -91,7 +91,7 @@ export const MillennialPearlSeahorse = new WorldBoss(
   'Fontaine',
   [
     FontemerUnihorn,
-    ...ElementalCrystals.Electro,
+    ...ElementalCrystals.Electro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Instructor,

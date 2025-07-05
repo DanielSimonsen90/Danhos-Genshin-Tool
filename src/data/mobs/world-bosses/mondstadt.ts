@@ -14,7 +14,7 @@ export const AnemoHypostasis = new WorldBoss(
   'Mondstadt',
   [
     HurricaneSeed,
-    ...ElementalCrystals.Anemo,
+    ...ElementalCrystals.Anemo.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -28,7 +28,7 @@ export const CryoRegisvine = new WorldBoss(
   'Mondstadt',
   [
     HoarfrostCore,
-    ...ElementalCrystals.Cryo,
+    ...ElementalCrystals.Cryo.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -44,7 +44,7 @@ export const ElectroHypostasis = new WorldBoss(
   'Mondstadt',
   [
     LightningPrism,
-    ...ElementalCrystals.Electro,
+    ...ElementalCrystals.Electro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -62,7 +62,7 @@ export const CryoHypostasis = new WorldBoss(
   'Mondstadt',
   [
     CrystallineBloom,
-    ...ElementalCrystals.Cryo,
+    ...ElementalCrystals.Cryo.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,

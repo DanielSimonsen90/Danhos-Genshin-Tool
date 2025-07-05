@@ -24,10 +24,3 @@ export const Order = TalentAscensionMaterial.create(
   MasteryDomains.PaleForgottenGlory,
   'Wednesday/Saturday',
 );
-
-export const Fontaine = {
-  Equity,
-  Justice,
-  Order,
-}
-export default Fontaine;
