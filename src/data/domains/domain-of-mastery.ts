@@ -40,7 +40,7 @@ export const SteepleOfIgnorance = new DomainOfMastery(
  * Fontaine
  */
 export const PaleForgottenGlory = new DomainOfMastery(
-  "Pale of Forgotten Glory",
+  "Pale Forgotten Glory",
   `In the past, the great white armada that traversed the seas was Fontaine's supreme pride and glory, for the Mistress of Rivers and Oceans blessed her people with the authority and wish to conquer all the waters of the world. However, this lofty ambition was insufficient to overcome the laws of fate. To this day, on the brass masts are inscribed the words: "I have conquered the waves of the four seas."`,
   "Fontaine"
 );
