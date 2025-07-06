@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
+  min-height: 5rem;
 
   h1 {
     text-align: center;

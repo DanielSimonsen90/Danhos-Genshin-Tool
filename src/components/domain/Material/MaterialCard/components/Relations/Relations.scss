@@ -1,0 +1,20 @@
+.material-card__relations {
+  padding: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.material-card__used-by,
+.material-card__acquired-from {
+  margin-bottom: 1rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+}

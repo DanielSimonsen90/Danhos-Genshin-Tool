@@ -26,12 +26,6 @@ export type SearchResultItem = {
   score: number;
   shouldSave: boolean;
 };
-export type CharacterUsingArtifactResult = {
-  character: Character;
-  set: CharacterSet;
-  pieces: CharacterArtifactSet['pieces'];
-  effectiveness: CharacterArtifactSet['effectiveness'];
-};
 
 type LastResult = {
   search: SearchResult;
@@ -213,32 +207,7 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     };
     CacheStore.update('searchResults', { [id]: result });
     debugLog('Result', result);
-    return result;
-  }
-
-  public getCharactersUsing(artifactName: string, DataStore: DataStore): List<CharacterUsingArtifactResult> {
-    const relevantCharacters = DataStore.Characters.filter(character =>
-      character.sets.some(cSet =>
-        cSet.artifactSets.some(artifact => artifact.set.name === artifactName
-          && artifact.effectiveness === CharacterArtifactSet.MOST_EFFECTIVE
-        )));
-
-    const getCharacterSet = (character: Character) => character.sets.find(cSet => 
-      cSet.artifactSets.some(artifact => 
-        artifact.set.name === artifactName 
-        && artifact.effectiveness === CharacterArtifactSet.MOST_EFFECTIVE
-    ));
-    return relevantCharacters.map(character => {
-      const set = getCharacterSet(character);
-      const cSet = set.artifactSets.find(artifact => artifact.set.name === artifactName);
-
-      return {
-        character, set,
-        pieces: cSet.pieces,
-        effectiveness: cSet.effectiveness
-      }
-    });
-  }
+    return result;  }
 
   private _getPartScore(
     character: Character,

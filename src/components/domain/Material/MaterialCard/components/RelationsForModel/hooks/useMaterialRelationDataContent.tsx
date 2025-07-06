@@ -9,8 +9,8 @@ export function useMaterialRelationDataContent<TModelKey extends ModelKeys>(mode
     if (!data || data.length === 0) return undefined
 
     switch (model) {
-      case 'Character': return <SearchableCharacterList items={data as any} cardProps={{ wrapInLink: true }} />;
-      case 'Mob': return <SearchableMobList items={data as any} cardProps={{ wrapInLink: true }} />;
+      case 'Character': return <SearchableCharacterList items={data as any} cardProps={{ wrapInLink: true, nameTag: 'h3' }} />;
+      case 'Mob': return <SearchableMobList items={data as any} cardProps={{ wrapInLink: true, nameTag: 'h3' }} />;
       default: return <div className="no-data">No data available</div>;
     }
   }, [model, data]);

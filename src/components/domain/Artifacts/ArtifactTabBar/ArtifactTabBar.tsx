@@ -1,6 +1,5 @@
 import { ArtifactSet } from "@/common/models";
 import TabBar from "@/components/common/TabBar";
-import { SearchService } from "@/services";
 import ArtifactCard from "../ArtifactCard";
 import SearchableList from "@/components/common/SearchableList";
 import { useDataStore } from "@/stores";
@@ -15,16 +14,16 @@ type Props = {
 export default function ArtifactTabBar({ artifacts }: Props) {
   const DataStore = useDataStore();
 
-  return <TabBar className="artifact-tab-bar" 
+  return <TabBar className="artifact-tab-bar"
     tabs={create => artifacts.map(artifact => create(
       artifact.name,
-      <ArtifactCard key={artifact.name} artifact={artifact} />,
+      <ArtifactCard key={artifact.name} artifact={artifact} nameTag="b" />,
       <SearchableList key={artifact.name}
-        items={SearchService.getCharactersUsing(artifact.name, DataStore)}
+        items={DataStore.getCharactersUsingArtifact(artifact.name)}
         onSearch={(query, item) => item.character.name.toLowerCase().includes(query.toLowerCase())}
         renderItem={({ character, set, pieces, effectiveness }) => (
-          <div className="character-result">
-            <CharacterCard key={character.name} character={character} wrapInLink>
+          <div key={character.name} className="character-result">
+            <CharacterCard character={character} wrapInLink>
               <p>
                 <span className="character-info__name">{character.name}</span> is
                 <span className="character-info__effectiveness">{effectivenessString(effectiveness)}</span> on a

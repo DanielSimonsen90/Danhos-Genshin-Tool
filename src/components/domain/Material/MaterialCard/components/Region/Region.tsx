@@ -6,7 +6,7 @@ type Props<TMaterial extends Material> = {
   material: TMaterial;
 };
 
-export default function MaterialRegion<TMaterial extends Material>({ material }: Props<TMaterial>) {
+export default function Region<TMaterial extends Material>({ material }: Props<TMaterial>) {
   const regions = useMemo(() => (
     Billet.isBillet(material) 
       ? material.regions 

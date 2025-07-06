@@ -1,11 +1,19 @@
 import { create } from 'zustand';
-import { DataStore } from "./DataStoreTypes";
+import { DataStore, CharacterUsingArtifactResult } from "./DataStoreTypes";
 import { DataStoreContent } from './DataStoreConstants';
-import { ArtifactSet, Boss, Character, DomainOfBlessing, DomainOfForgery, DomainOfMastery, Material, Mob, Model, ModelKeys, TalentAscensionMaterial, WeaponAscensionMaterial } from '@/common/models';
+import { ArtifactSet, Boss, Character, CharacterArtifactSet, DomainOfBlessing, DomainOfForgery, DomainOfMastery, Material, Mob, Model, ModelKeys, TalentAscensionMaterial, WeaponAscensionMaterial } from '@/common/models';
 import ModelType from './ModelType';
+import CraftableMaterial from '@/common/models/materials/CraftableMaterial';
 
 export const useDataStore = create<DataStore>((setState, getState) => {
-  const findByName = <T extends { name: string; }>(arr: T[], name: string): T | undefined => arr.find(item => item.name.toLowerCase() === name.toLowerCase());
+  const findByName = <T extends { name: string; }>(arr: T[], name: string): T | undefined => {
+    const result = arr.find(item => item.name.toLowerCase() === name.toLowerCase() 
+      || (CraftableMaterial.isCraftableMaterial(item) && item.getCraftingTreeAsMaterials().some(m => m.name.toLowerCase() === name.toLowerCase())));
+    if (result) return result;
+
+    console.warn(`Item with name "${name}" not found in array.`, arr);
+    return undefined;
+  };
 
   return {
     ...DataStoreContent,
@@ -99,6 +107,29 @@ export const useDataStore = create<DataStore>((setState, getState) => {
     },
     getBossesFromMaterial(material: Material) {
       return getState().Mobs.filter(mob => Boss.isBoss(mob) && mob.drops.some(drop => drop.name === material.name)) as Boss[];
+    },    getCharactersUsingArtifact(artifactName: string) {
+      const relevantCharacters = getState().Characters.filter(character =>
+        character.sets.some(cSet =>
+          cSet.artifactSets.some(artifact => artifact.set.name === artifactName
+            && artifact.effectiveness === CharacterArtifactSet.MOST_EFFECTIVE
+          )));
+
+      const getCharacterSet = (character: Character) => character.sets.find(cSet => 
+        cSet.artifactSets.some(artifact => 
+          artifact.set.name === artifactName 
+          && artifact.effectiveness === CharacterArtifactSet.MOST_EFFECTIVE
+      ));
+      
+      return relevantCharacters.map(character => {
+        const set = getCharacterSet(character);
+        const cSet = set.artifactSets.find(artifact => artifact.set.name === artifactName);
+
+        return {
+          character, set,
+          pieces: cSet.pieces,
+          effectiveness: cSet.effectiveness
+        } as CharacterUsingArtifactResult;
+      });
     },
 
     getModelType: <TModel extends Model>(model: TModel) => new ModelType<TModel>(model),

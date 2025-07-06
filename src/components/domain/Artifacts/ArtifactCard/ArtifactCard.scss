@@ -1,20 +1,16 @@
 .artifact-card {
+  .artifact-details {
+    display: flex;
+    flex-direction: column;
+  }
+
   &__name {
-    font-size: 1.25rem;
-  }
+    --margins: 0;
+    font-size: 2rem;
 
-  .artifact-details p {
-    @media screen and (min-width: 0px) {
-      font-size: 15px;
-    }
-
-    @media screen and (min-width: 1200px) {
-      font-size: 1rem;
-    }
-  }
-
-  .artifact-image {
-    --size: 7.5rem;
+    display: flex;
+    gap: .5ch;
+    align-items: center;
   }
 
   &:has(.artifact-sets)>header {
@@ -96,10 +92,6 @@ a.artifact-card {
     display: grid;
     grid-template-rows: auto 1fr;
     justify-items: center;
-  }
-
-  &:hover {
-    background-color: var(--background-primary--light);
   }
 
   .artifact-card__name {

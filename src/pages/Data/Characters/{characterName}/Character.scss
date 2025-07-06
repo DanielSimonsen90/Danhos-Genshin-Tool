@@ -1,21 +1,16 @@
 .character-page {
   .character-card {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      grid-template-areas: "image details" "sets sets";
-  
-      .character-image {
-        border-radius: 100%;
-        border: 1px solid var(--element);
-      }
-  
-      .character-sets {
-        grid-area: sets;
-      } }
-
-  .character-details {
-    &__name {
+    .model-card__name {
       font-size: 2rem;
+    }
+
+    .character-image {
+      border-radius: 100%;
+      border: 1px solid var(--element);
+    }
+
+    .character-sets {
+      grid-area: sets;
     }
   }
 }

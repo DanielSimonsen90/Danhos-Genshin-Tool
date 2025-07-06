@@ -23,7 +23,16 @@ export default function ArtifactPage() {
     <>
       <ItemHeader itemName="artifact" item={artifact} />
       <main>
-        <ArtifactCard artifact={artifact} showDetails showMoreDetails displayCraftable />
+        <ArtifactCard artifact={artifact} 
+          className="selected-artifact"
+          showRarity 
+          showSetDescriptions 
+          displayCraftable 
+          showCharacterSets 
+          showDomainList
+
+          showMoreDetails 
+        />
       </main>
     </>
   );

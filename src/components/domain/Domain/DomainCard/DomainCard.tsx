@@ -4,59 +4,43 @@ import { DomainImage } from "@/components/common/Images";
 import { ResinIcon } from "@/components/common/icons";
 import { useDomainData } from "@/stores";
 
-import { GetContainer } from "../../Item/functions";
 import { ArtifactCard, ArtifactTabBar } from "../../Artifacts";
 import { Link } from "react-router-dom";
 import { ROUTES } from "@/common/constants/routes";
+import ModelCard, { BaseModelCardProps } from "@/components/common/ModelCard";
 
-export type Props = {
+export interface Props extends BaseModelCardProps {
   domain: Domain<any>;
-  wrapInLink?: boolean;
-
-  showDetails?: boolean;
+  showResin?: boolean;
+  showDescription?: boolean;
   showRewards?: boolean;
   showCharactersBenefitFromRewards?: boolean;
   showNavButton?: boolean;
-};
+}
 
-export default function DomainCard({ domain, ...props }: Props) {
+export default function DomainCard({ 
+  domain, 
+  showResin, showDescription, showRewards, 
+  showCharactersBenefitFromRewards, showNavButton, 
+  ...props 
+}: Props) {
   const DomainData = useDomainData();
   if (!domain) return null;
 
   const { name, description, resinCost, region } = domain;
-  const { wrapInLink, showDetails, showRewards, showCharactersBenefitFromRewards, showNavButton } = props;
-
   const rewards = DomainData.getArtifactsFromDomain(name);
-  const Container = GetContainer(wrapInLink, domain, 'data/domains');
 
   return (
-    <Container className={classNames('domain-card', showDetails && 'domain-card--show-more')}>
-      <section className="main">
-        <div className={classNames('domain-details', showDetails && 'domain-details--show-more')}>
-          <header>
-            <h2 className="domain-card__name" title={name}>{name}</h2>
-            {showDetails && <ResinIcon cost={resinCost} />}
-          </header>
-          {showDetails && <p className="domain-details__description">{description}</p>}
-        </div>
-        {showRewards && (
-          <div className="rewards-list-container">
-            <h3 className="rewards-list-container__title">Rewards</h3>
-            <ul className="domain-rewards">
-              {rewards?.map(artifact => (
-                <ArtifactCard key={artifact.name} artifact={artifact} tagName='h4' showDetails wrapInLink />
-              ))}
-            </ul>
-          </div>
-        )}
-      </section>
-      <aside>
-        <DomainImage domain={name} />
-        <p className="domain-details__region" data-region={region}>
-          {wrapInLink 
-            ? <span>{region}</span> 
-            : (<><b>{name}</b> is located in <span>{region}</span></>)}
-        </p>
+    <ModelCard
+      model="Domain"
+      item={domain}
+      className={classNames('domain-card', props.className)}
+
+      renderImage={() => <DomainImage domain={name} />}
+      renderHeaderContent={() => (<>
+        {showResin && <ResinIcon cost={resinCost} />}
+        {showDescription && <p className="domain-card__description">{description}</p>}
+        <p className="domain-card__region" data-region={region}>{region}</p>
         {showNavButton && (
           <Link to={`/${ROUTES.data_domains}/${name}`} className="domain-card__nav-button">
             <button style={{ width: '100%' }}>
@@ -64,8 +48,30 @@ export default function DomainCard({ domain, ...props }: Props) {
             </button>
           </Link>
         )}
-      </aside>
-      {showCharactersBenefitFromRewards && <ArtifactTabBar artifacts={rewards} />}
-    </Container>
+      </>)}
+
+      renderContent={() => (
+        <section>
+          {showRewards && rewards && (
+            <div className="rewards-list-container">
+              <h3 className="rewards-list-container__title">Rewards</h3>
+              <ul className="domain-rewards">
+                {rewards.map(artifact => <ArtifactCard key={artifact.name} artifact={artifact} nameTag='h4' 
+                  showSetDescriptions 
+                  showRarity 
+                  wrapInLink 
+                />)}
+              </ul>
+            </div>
+          )}
+          {showCharactersBenefitFromRewards && (
+            <div className="characters-benefit-from-rewards">
+              <h3 className="characters-benefit-from-rewards__title">Characters benefit from rewards</h3>
+              <ArtifactTabBar artifacts={rewards} />
+            </div>
+          )}
+        </section>
+      )}
+    />
   );
 }

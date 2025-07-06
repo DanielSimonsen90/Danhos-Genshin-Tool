@@ -1,2 +1,2 @@
-import './ArtifactDetails.scss';
-export { default } from './ArtifactDetails'
+import './ArtifactDescriptions.scss';
+export { default } from './ArtifactDescriptions'

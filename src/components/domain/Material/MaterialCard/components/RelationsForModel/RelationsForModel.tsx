@@ -6,7 +6,7 @@ type Props<TModelKey extends ModelKeys> = {
   materialName: string;
 };
 
-export default function MaterialRelationsForModel<TModelKey extends ModelKeys>({ model, materialName }: Props<TModelKey>) {
+export default function RelationsForModel<TModelKey extends ModelKeys>({ model, materialName }: Props<TModelKey>) {
   const content = useMaterialRelationDataContent(model, materialName);
 
   return content ? (

@@ -31,13 +31,26 @@
     }
   }
 
-  &__details {
-    grid-area: details;
-  }
-
   &__description {
     max-height: 10rem;
     overflow: auto;
+  }
+
+  &__obtainable-days {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: .5rem;
+
+    &-item {
+      font-size: .9rem;
+
+      &:not(:last-of-type)::after {
+        content: '/';
+        font-weight: bold;
+        color: var(--text-muted);
+        margin-inline: .25rem;
+      }
+    }
   }
 
   &__pagination {

@@ -1,12 +1,8 @@
-.artifact-details {
-  > header {
-    display: flex;;
+.artifact-descriptions {
+  >header {
+    display: flex;
     align-items: center;
     gap: 1ch;
-  }
-
-  &__name {
-    margin: 0;
   }
 
   &__2-piece::before {
