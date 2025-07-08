@@ -1,16 +1,19 @@
 .material-card__pagination {
+  grid-area: pagination;
   display: flex;
-  gap: 0.25rem;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
 
-  input[type="radio"] {
-    width: 12px;
-    height: 12px;
-    margin: 0;
+  &-item {
+    margin: 0.25rem 0;
     cursor: pointer;
-    
-    &:checked {
-      accent-color: var(--primary-color);
-    }
+  }
+
+  &-radio {
+    --size: 1rem;
+    height: var(--size);
+    width: var(--size);
+    cursor: pointer;
   }
 }

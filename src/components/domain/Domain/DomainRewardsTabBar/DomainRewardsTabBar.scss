@@ -1,4 +1,4 @@
-.artifact-tab-bar {
+.domain-rewards-tab-bar {
   --artifact-image-size: 3rem;
   grid-column: 1 / -1;
 
@@ -21,7 +21,7 @@
   }
 
   .searchable-list__list {
-    --min: 18em;
+    --min: 15em;
 
     .character-card>p {
       grid-column: 1 / -1;

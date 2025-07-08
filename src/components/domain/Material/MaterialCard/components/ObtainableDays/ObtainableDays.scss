@@ -1,27 +1,17 @@
 .material-card__obtainable-days {
-  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: .5rem;
 
-  h4 {
-    margin: 0 0 0.5rem 0;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--text-secondary);
-  }
+  &-item {
+    font-size: .9rem;
+    font-weight: bold;
 
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.25rem;
-  }
-
-  li {
-    background: var(--background-secondary);
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    color: var(--text-primary);
+    &:not(:last-of-type)::after {
+      content: '/';
+      font-weight: bold;
+      color: var(--text-muted);
+      margin-inline: .25rem;
+    }
   }
 }

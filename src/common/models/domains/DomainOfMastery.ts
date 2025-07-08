@@ -1,6 +1,7 @@
 import { Region, ResinCost } from "@/common/types/genshin";
 import { Domain } from "./Domain";
 import { TalentAscensionMaterial } from "../materials/AscensionMaterial";
+import { DataStore } from "@/stores";
 
 /**
  * Domain for character ascension materials.

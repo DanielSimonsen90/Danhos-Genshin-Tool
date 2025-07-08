@@ -12,14 +12,14 @@ export interface Props extends BaseModelCardProps {
   showCharacterSets?: boolean;
   showDomainList?: boolean;
 
-  showMoreDetails?: boolean;
+  showDomainRewards?: boolean;
   displayCraftable?: boolean;
 }
 
 export default function ArtifactCard({
   artifact,
   showSetDescriptions, showCharacterSets, showDomainList,
-  showMoreDetails, displayCraftable,
+  showDomainRewards, displayCraftable,
   ...props
 }: Props) {
   const { name } = artifact;
@@ -35,7 +35,7 @@ export default function ArtifactCard({
       renderContent={() => (showCharacterSets || showDomainList) && (
         <section className="artifact-content">
           {showCharacterSets && <ArtifactSets artifact={artifact} />}
-          {showDomainList && <DomainList domainNames={artifact.domainNames} title={'Found in domains:'} showDetails={showSetDescriptions} showRewards={showMoreDetails} />}
+          {showDomainList && <DomainList domainNames={artifact.domainNames} title={'Found in domains:'} />}
         </section>
       )}
     />

@@ -49,6 +49,11 @@ export default function SearchableDomainList<TFilterKeys extends string>({
   }}
     onSearch={noBaseSearch ? onSearch : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}
     filterChecks={noBaseFilterChecks ? filterChecks : {
+      type: {
+        artifacts: domain => domain.isBlessing(),
+        talents: domain => domain.isMastery(),
+        weapons: domain => domain.isForgery(),
+      },
       region: {
         monstadt: domain => domain.region === "Mondstadt",
         liyue: domain => domain.region === "Liyue",

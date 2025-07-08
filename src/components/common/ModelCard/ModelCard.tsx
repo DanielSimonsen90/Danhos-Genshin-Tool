@@ -22,7 +22,7 @@ export interface ModelCardProps<TModel extends Model = Model> extends BaseModelC
   renderImage: () => JSX.Element;
   renderHeaderContent?: () => JSX.Element;
   renderHeadingContent?: () => JSX.Element;
-  renderContent: () => JSX.Element;
+  renderContent: () => JSX.Element | undefined;
 }
 
 function GetCardContainer(
@@ -57,7 +57,8 @@ const ModelCard = forwardRef<HTMLDivElement, ModelCardProps>(({
   ...props
 }, ref) => {
   const routePath = `/data/${model.toLowerCase()}s/${item.name.toLowerCase()}`;
-  const className = classNames('model-card', `${model.toLowerCase()}-card`, props.className);
+  const modelClassName = `${model.toLowerCase()}-card`;
+  const className = classNames('model-card', modelClassName, props.className);
 
   const Container = useMemo(() => GetCardContainer(wrapInLink, routePath), [wrapInLink, routePath]);
   const ModelNameContainer = useMemo(() => GetModelNameContainer(linkOnName, routePath), [linkOnName, routePath]);
@@ -66,10 +67,10 @@ const ModelCard = forwardRef<HTMLDivElement, ModelCardProps>(({
     <Container {...props} className={className} ref={ref}>
       <header>
         <Image />
-        <div className="model-card__details">
-          <NameTag className="model-card__name" title={item.name}>
+        <div className={classNames('model-card__details', `${modelClassName}__details`)}>
+          <NameTag className={classNames('model-card__name', `${modelClassName}__name`)} title={item.name}>
             <ModelNameContainer>
-              <span className="model-card__name-text">{item.name}</span>
+              <span className={classNames('model-card__name-text', `${modelClassName}__name-text`)}>{item.name}</span>
               {HeadingContent && <HeadingContent />}
               {showRarity && 'rarity' in item && <RarityList rarity={item.rarity} />}
             </ModelNameContainer>

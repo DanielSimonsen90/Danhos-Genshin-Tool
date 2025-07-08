@@ -5,10 +5,7 @@ import TabBar from "@/components/common/TabBar";
 type Props = {
   title: string;
   domainNames: string[];
-} & {
-  showDetails?: boolean;
-  showRewards?: boolean;
-};
+}
 
 export default function DomainList({ title = "Domains", domainNames, ...props }: Props) {
   const { findDomainByName } = useDomainData();

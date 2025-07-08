@@ -19,18 +19,26 @@
   &__details {
     display: flex;
     flex-direction: column;
-
-    >header {
-      display: grid;
-    }
   }
 
   &__name {
-    @extend %text-ellipsis;
-
-    --margins: .25em;
+    --margins: 0em;
     max-width: calc(100% - var(--margins) * 2);
-    font-size: clamp(1.25rem, 3vw, 3rem);
+    font-size: clamp(1.25rem, 2vw, 3rem);
+  }
+
+  .domain-type {
+    // margin-top: auto;
+    
+    ul {
+      display: flex;
+      justify-content: center;
+
+      .artifact-image,
+      .material-image {
+        --size: 3rem;
+      }
+    }
   }
 
   .domain-card__region {
@@ -70,7 +78,7 @@
 
     .artifact-card {
       padding-inline: .5em;
-      
+
       >header {
         gap: .5em;
       }

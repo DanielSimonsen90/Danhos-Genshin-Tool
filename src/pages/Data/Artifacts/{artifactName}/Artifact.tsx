@@ -31,7 +31,7 @@ export default function ArtifactPage() {
           showCharacterSets 
           showDomainList
 
-          showMoreDetails 
+          showDomainRewards 
         />
       </main>
     </>
