@@ -21,9 +21,14 @@ class AscensionMaterial extends CraftableMaterial {
   }
 
   public isObtainableToday(): boolean {
+    return this.getDataTodayAttr();
+  }
+  public getDataTodayAttr(obtainableDay?: string): boolean {
     const today = new Date().getDay();
     const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const todayName = dayNames[today];
+    if (obtainableDay && obtainableDay !== todayName) return false;
+
     const obtainableDays = this.obtainableDays.split('/');
     return obtainableDays.includes(todayName);
   }

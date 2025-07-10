@@ -53,17 +53,23 @@
   }
 }
 
-a.material-card > header, .material-card__details {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+a.material-card {  
+  >header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-  .material-card__name-text {
-    width: 100%;
-    justify-content: center;
-  }
+    .material-card__details {
+      display: flex;
+      justify-content: center;
+    }
 
-  .material-card__pagination {
-    flex-direction: row;
+    .material-card__name-text {
+      justify-content: center;
+    }
+
+    .material-card__pagination {
+      flex-direction: row;
+    }
   }
 }

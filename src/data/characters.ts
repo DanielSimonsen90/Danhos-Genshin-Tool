@@ -49,8 +49,8 @@ const HydroDMGSets = (priority: CharacterArtifactSet['effectiveness']) => [
 ];
 
 export const Albedo = new Character("Albedo", "Geo", "Sword", [], Rarity.Legendary, 'Mondstadt', {
-  crystal: ElementalCrystals.Geo,
   localSpecialty: LocalSpecialties.Cecilia,
+  crystal: ElementalCrystals.Geo,
   material: TalentAscension.Ballad,
   mobDrop: EasyMobDrops.Scroll,
   worldBossDrop: MobDrops.BasaltPillar,
@@ -67,8 +67,8 @@ export const Albedo = new Character("Albedo", "Geo", "Sword", [], Rarity.Legenda
 ]);
 
 export const Alhaitham = new Character("Alhaitham", "Dendro", "Sword", [], Rarity.Legendary, 'Sumeru', {
-  crystal: ElementalCrystals.Dendro,
   localSpecialty: LocalSpecialties.SandGreasePupa,
+  crystal: ElementalCrystals.Dendro,
   material: TalentAscension.Ingenuity,
   mobDrop: EasyMobDrops.EremiteDrop,
   worldBossDrop: MobDrops.PseudoStamens,
@@ -85,8 +85,8 @@ export const Alhaitham = new Character("Alhaitham", "Dendro", "Sword", [], Rarit
 ]);
 
 export const Aloy = new Character("Aloy", "Cryo", "Bow", [], Rarity.Legendary, 'Unknown', {
-  crystal: ElementalCrystals.Cryo,
   localSpecialty: LocalSpecialties.CrystalMarrow,
+  crystal: ElementalCrystals.Cryo,
   material: TalentAscension.Freedom,
   mobDrop: EasyMobDrops.Spectral,
   worldBossDrop: MobDrops.CrystallineBloom,
@@ -106,11 +106,11 @@ export const Aloy = new Character("Aloy", "Cryo", "Bow", [], Rarity.Legendary, '
 
 export const Amber = new Character("Amber", "Pyro", "Bow", ["Off-field Damage"], Rarity.Epic, 'Mondstadt', {
   material: TalentAscension.Freedom,
-  weeklyBossDrop: MobDrops.DvalinsSigh,
   crystal: ElementalCrystals.Pyro,
-  worldBossDrop: MobDrops.EverflameSeed,
   localSpecialty: LocalSpecialties.SmallLampGrass,
   mobDrop: EasyMobDrops.Arrowhead,
+  worldBossDrop: MobDrops.EverflameSeed,
+  weeklyBossDrop: MobDrops.DvalinsSigh,
 }, [
   new CharacterSet('Off-field Support', ["Energy Recharge"], "Burst/Ult", false, [
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 5),
@@ -138,8 +138,8 @@ export const AratakiItto = new Character("Arataki Itto", "Geo", "Claymore", ["Of
   material: TalentAscension.Elegance,
   weeklyBossDrop: MobDrops.AshenHeart,
   crystal: ElementalCrystals.Geo,
-  worldBossDrop: MobDrops.RiftbornRegalia,
   localSpecialty: LocalSpecialties.Onikabuto,
+  worldBossDrop: MobDrops.RiftbornRegalia,
   mobDrop: EasyMobDrops.Slime,
 }, [
   new CharacterSet("On-field DPS", ["DEF", "HP"], "Normal/Press", true, [
@@ -156,8 +156,8 @@ export const Arlecchino = new Character("Arlecchino", "Pyro", "Polearm", ["Bond 
   material: TalentAscension.Order,
   weeklyBossDrop: MobDrops.FadingCandle,
   crystal: ElementalCrystals.Pyro,
-  worldBossDrop: MobDrops.FragmentOfAGoldenMelody,
   localSpecialty: LocalSpecialties.RainbowRose,
+  worldBossDrop: MobDrops.FragmentOfAGoldenMelody,
   mobDrop: EasyMobDrops.FatuiInsignia,
 }, [
   new CharacterSet("On-field DPS", ["ATK", "HP"], "Normal/Press", true, [
@@ -175,8 +175,8 @@ export const Baizhu = new Character("Baizhu", "Dendro", "Catalyst", ["Heal"], Ra
   weeklyBossDrop: MobDrops.WorldspanFern,
   crystal: ElementalCrystals.Dendro,
   worldBossDrop: MobDrops.EvergloomRing,
-  mobDrop: EasyMobDrops.FungalSpores,
   localSpecialty: LocalSpecialties.Violetgrass,
+  mobDrop: EasyMobDrops.FungalSpores,
 }, [
   new CharacterSet("Off-field Support", ["HP", "Energy Recharge"], "Burst/Ult", false, [
     new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 5),
@@ -193,8 +193,8 @@ export const Barbara = new Character("Barbara", "Hydro", "Catalyst", ["Heal"], R
   material: TalentAscension.Freedom,
   weeklyBossDrop: MobDrops.RingOfBoreas,
   crystal: ElementalCrystals.Hydro,
-  worldBossDrop: MobDrops.CleansingHeart,
   localSpecialty: LocalSpecialties.PhilanemoMushroom,
+  worldBossDrop: MobDrops.CleansingHeart,
   mobDrop: EasyMobDrops.Scroll,
 }, [
   new CharacterSet("Off-field Support", ["HP"], "Skill/Ability", false, [
@@ -216,8 +216,8 @@ export const Beidou = new Character("Beidou", "Electro", "Claymore", ["Shield"],
   material: TalentAscension.Gold,
   weeklyBossDrop: MobDrops.DvalinsSigh,
   crystal: ElementalCrystals.Electro,
-  worldBossDrop: MobDrops.LightningPrism,
   localSpecialty: LocalSpecialties.NoctilucousJade,
+  worldBossDrop: MobDrops.LightningPrism,
   mobDrop: EasyMobDrops.FatuiInsignia,
 }, [
   new CharacterSet("Off-field DPS", ["ATK"], "Burst/Ult", false, [
@@ -235,8 +235,8 @@ export const Bennett = new Character("Bennett", "Pyro", "Sword", ["Heal", "Buff 
   material: TalentAscension.Resistance,
   weeklyBossDrop: MobDrops.DvalinsPlume,
   crystal: ElementalCrystals.Pyro,
-  worldBossDrop: MobDrops.EverflameSeed,
   localSpecialty: LocalSpecialties.WindwheelAster,
+  worldBossDrop: MobDrops.EverflameSeed,
   mobDrop: EasyMobDrops.TreasureHoarderInsignia,
 }, [
   new CharacterSet("Burst Support", ["HP", "ATK"], "Burst/Ult", false, [
@@ -275,8 +275,8 @@ export const Candace = new Character("Candace", "Hydro", "Polearm", ["Shield", "
   material: TalentAscension.Admonition,
   weeklyBossDrop: MobDrops.TearsOfTheCalamitousGod,
   crystal: ElementalCrystals.Hydro,
-  worldBossDrop: MobDrops.LightGuidingTetrahedron,
   localSpecialty: LocalSpecialties.HennaBerry, // Referred to as "Redcrest"
+  worldBossDrop: MobDrops.LightGuidingTetrahedron,
   mobDrop: EasyMobDrops.EremiteDrop,
 }, [
   new CharacterSet("Off-field Support", ["HP", "Energy Recharge"], "Burst/Ult", false, [
@@ -291,8 +291,8 @@ export const Charlotte = new Character("Charlotte", "Cryo", "Catalyst", ["Heal"]
   material: TalentAscension.Justice,
   weeklyBossDrop: MobDrops.LightlessSilkString,
   crystal: ElementalCrystals.Cryo,
-  worldBossDrop: MobDrops.TourbillonDevice,
   localSpecialty: LocalSpecialties.BerylConch,
+  worldBossDrop: MobDrops.TourbillonDevice,
   mobDrop: EasyMobDrops.Gear,
 }, [
   new CharacterSet("Off-field Support", ["ATK", "Energy Recharge"], "Burst/Ult", false, [
@@ -309,8 +309,8 @@ export const Chasca = new Character("Chasca", "Anemo", "Bow", ["Nightsouls Bless
   material: TalentAscension.Conflict,
   weeklyBossDrop: MobDrops.SilkenFeather,
   crystal: ElementalCrystals.Anemo,
-  worldBossDrop: MobDrops.EnsnaringGaze,
   localSpecialty: LocalSpecialties.WitheringPurpurbloom,
+  worldBossDrop: MobDrops.EnsnaringGaze,
   mobDrop: EasyMobDrops.Fang,
 }, [
   new CharacterSet("On-field DPS", ["ATK", "Elemental Mastery"], "Skill/Ability", true, [
@@ -325,8 +325,8 @@ export const Chevreuse = new Character("Chevreuse", "Pyro", "Polearm", ["Heal"],
   material: TalentAscension.Order,
   weeklyBossDrop: MobDrops.LightlessEyeOfTheMaelstrom,
   crystal: ElementalCrystals.Pyro,
-  worldBossDrop: MobDrops.FontemerUnihorn,
   localSpecialty: LocalSpecialties.LumidouceBell,
+  worldBossDrop: MobDrops.FontemerUnihorn,
   mobDrop: EasyMobDrops.Gear,
 }, [
   new CharacterSet("Off-field Support", ["HP"], "Skill/Ability", false, [
@@ -344,8 +344,8 @@ export const Chiori = new Character("Chiori", "Geo", "Sword", ["Off-field Damage
   material: TalentAscension.Light,
   weeklyBossDrop: MobDrops.LightlessSilkString,
   crystal: ElementalCrystals.Geo,
-  worldBossDrop: MobDrops.ArtificedSpareClockworkComponent__Coppelia,
   localSpecialty: LocalSpecialties.Dendrobium,
+  worldBossDrop: MobDrops.ArtificedSpareClockworkComponent__Coppelia,
   mobDrop: EasyMobDrops.Spectral,
 }, [
   new CharacterSet("Off-field DPS", ["DEF", "ATK"], "Skill/Ability", false, [
@@ -359,8 +359,8 @@ export const Chongyun = new Character("Chongyun", "Cryo", "Claymore", [], Rarity
   material: TalentAscension.Diligence,
   weeklyBossDrop: MobDrops.DvalinsSigh,
   crystal: ElementalCrystals.Cryo,
-  worldBossDrop: MobDrops.HoarfrostCore,
   localSpecialty: LocalSpecialties.CorLapis,
+  worldBossDrop: MobDrops.HoarfrostCore,
   mobDrop: EasyMobDrops.Mask,
 }, [
   new CharacterSet("Burst Support", ["ATK"], "Skill/Ability", false, [
@@ -380,8 +380,8 @@ export const Citlali = new Character("Citlali", "Cryo", "Catalyst", ["Shield", "
   material: TalentAscension.Kindling,
   weeklyBossDrop: MobDrops.DenialAndJudgment,
   crystal: ElementalCrystals.Cryo,
-  worldBossDrop: MobDrops.TalismanOftheEnigmaticLand,
   localSpecialty: LocalSpecialties.QuenepaBerry,
+  worldBossDrop: MobDrops.TalismanOftheEnigmaticLand,
   mobDrop: EasyMobDrops.Fang,
 }, [
   new CharacterSet("Off-field Support", ["Elemental Mastery", "Energy Recharge"], "Burst/Ult", false, [
@@ -395,8 +395,8 @@ export const Clorinde = new Character("Clorinde", "Electro", "Sword", ["Bond of 
   material: TalentAscension.Justice,
   weeklyBossDrop: MobDrops.Everamber,
   crystal: ElementalCrystals.Electro,
-  worldBossDrop: MobDrops.FontemerUnihorn,
   localSpecialty: LocalSpecialties.Lumitoile,
+  worldBossDrop: MobDrops.FontemerUnihorn,
   mobDrop: EasyMobDrops.FontemerAberrantPearl,
 }, [
   new CharacterSet("On-field DPS", ["ATK", "HP"], "Skill/Ability", true, [
@@ -410,8 +410,8 @@ export const Collei = new Character("Collei", "Dendro", "Bow", [], Rarity.Epic, 
   material: TalentAscension.Praxis,
   weeklyBossDrop: MobDrops.TearsOfTheCalamitousGod,
   crystal: ElementalCrystals.Dendro,
-  worldBossDrop: MobDrops.MajesticHookedBeak,
   localSpecialty: LocalSpecialties.RukkhashavaMushrooms,
+  worldBossDrop: MobDrops.MajesticHookedBeak,
   mobDrop: EasyMobDrops.Arrowhead,
 }, [
   new CharacterSet("Off-field Support", ["Energy Recharge"], "Burst/Ult", false, [
@@ -427,8 +427,8 @@ export const Cyno = new Character("Cyno", "Electro", "Polearm", [], Rarity.Legen
   material: TalentAscension.Admonition,
   weeklyBossDrop: MobDrops.MudraOfTheMaleficGeneral,
   crystal: ElementalCrystals.Electro,
-  worldBossDrop: MobDrops.ThunderclapFruitcore,
   localSpecialty: LocalSpecialties.Scarab,
+  worldBossDrop: MobDrops.ThunderclapFruitcore,
   mobDrop: EasyMobDrops.Scroll,
 }, [
   new CharacterSet("Quicken DPS", ["Energy Recharge", "Elemental Mastery", "ATK"], "Burst/Ult", true, [
@@ -456,8 +456,8 @@ export const Dehya = new Character("Dehya", "Pyro", "Claymore", ["Self-heal", "O
   material: TalentAscension.Praxis,
   weeklyBossDrop: MobDrops.PuppetStrings,
   crystal: ElementalCrystals.Pyro,
-  worldBossDrop: MobDrops.LightGuidingTetrahedron,
   localSpecialty: LocalSpecialties.SandGreasePupa,
+  worldBossDrop: MobDrops.LightGuidingTetrahedron,
   mobDrop: EasyMobDrops.EremiteDrop,
 }, [
   new CharacterSet("On-field DPS", ["ATK", "HP"], "Burst/Ult", true, [
@@ -485,8 +485,8 @@ export const Diluc = new Character("Diluc", "Pyro", "Claymore", [], Rarity.Legen
   material: TalentAscension.Resistance,
   weeklyBossDrop: MobDrops.DvalinsPlume,
   crystal: ElementalCrystals.Pyro,
-  worldBossDrop: MobDrops.EverflameSeed,
   localSpecialty: LocalSpecialties.SmallLampGrass,
+  worldBossDrop: MobDrops.EverflameSeed,
   mobDrop: EasyMobDrops.FatuiInsignia,
 }, [
   new CharacterSet("On-field DPS", ["ATK"], "Normal/Press", true, [
@@ -502,8 +502,8 @@ export const Diona = new Character("Diona", "Cryo", "Bow", ["Shield"], Rarity.Ep
   material: TalentAscension.Freedom,
   weeklyBossDrop: MobDrops.ShardOfAFoulLegacy,
   crystal: ElementalCrystals.Cryo,
-  worldBossDrop: MobDrops.HoarfrostCore,
   localSpecialty: LocalSpecialties.CallaLily,
+  worldBossDrop: MobDrops.HoarfrostCore,
   mobDrop: EasyMobDrops.Arrowhead,
 }, [
   new CharacterSet("Off-field Support", ["HP", "Energy Recharge"], "Burst/Ult", false, [
@@ -526,8 +526,8 @@ export const Dori = new Character("Dori", "Electro", "Claymore", ["Heal"], Rarit
   material: TalentAscension.Ingenuity,
   weeklyBossDrop: MobDrops.BloodjadeBranch,
   crystal: ElementalCrystals.Electro,
-  worldBossDrop: MobDrops.ThunderclapFruitcore,
   localSpecialty: LocalSpecialties.KalpalataLotus,
+  worldBossDrop: MobDrops.ThunderclapFruitcore,
   mobDrop: EasyMobDrops.EremiteDrop,
 }, [
   new CharacterSet("Off-field Support", ["HP", "Energy Recharge"], "Burst/Ult", false, [
@@ -542,8 +542,8 @@ export const Emilie = new Character("Emilie", "Dendro", "Catalyst", ["Off-field 
   material: TalentAscension.Order,
   weeklyBossDrop: MobDrops.SilkenFeather,
   crystal: ElementalCrystals.Dendro,
-  worldBossDrop: MobDrops.FragmentOfAGoldenMelody,
   localSpecialty: LocalSpecialties.LakelightLily,
+  worldBossDrop: MobDrops.FragmentOfAGoldenMelody,
   mobDrop: EasyMobDrops.Gear,
 }, [
   new CharacterSet("Off-field Support", ["ATK", "Energy Recharge"], "Burst/Ult", false, [
@@ -561,8 +561,8 @@ export const Eula = new Character("Eula", "Cryo", "Claymore", [], Rarity.Legenda
   material: TalentAscension.Resistance,
   weeklyBossDrop: MobDrops.DragonLordsCrown,
   crystal: ElementalCrystals.Cryo,
-  worldBossDrop: MobDrops.CrystallineBloom,
   localSpecialty: LocalSpecialties.DandelionSeed,
+  worldBossDrop: MobDrops.CrystallineBloom,
   mobDrop: EasyMobDrops.Mask,
 }, [
   new CharacterSet("On-field DPS", ["ATK"], "Normal/Press", true, [
@@ -584,8 +584,8 @@ export const Faruzan = new Character("Faruzan", "Anemo", "Bow", ["CRIT Increase:
   material: TalentAscension.Admonition,
   weeklyBossDrop: MobDrops.PuppetStrings,
   crystal: ElementalCrystals.Anemo,
-  worldBossDrop: MobDrops.LightGuidingTetrahedron,
   localSpecialty: LocalSpecialties.HennaBerry,
+  worldBossDrop: MobDrops.LightGuidingTetrahedron,
   mobDrop: EasyMobDrops.EremiteDrop,
 }, [
   new CharacterSet("Off-field Support", ["Energy Recharge"], "Burst/Ult", false, [
@@ -603,8 +603,8 @@ export const Fischl = new Character("Fischl", "Electro", "Bow", ["Off-field Dama
   material: TalentAscension.Ballad,
   weeklyBossDrop: MobDrops.SpiritLocketOfBoreas,
   crystal: ElementalCrystals.Electro,
-  worldBossDrop: MobDrops.LightningPrism,
   localSpecialty: LocalSpecialties.SmallLampGrass,
+  worldBossDrop: MobDrops.LightningPrism,
   mobDrop: EasyMobDrops.Arrowhead,
 }, [
   new CharacterSet("Off-field DPS", ["ATK"], "Skill/Ability", false, [
@@ -629,8 +629,8 @@ export const Freminet = new Character("Freminet", "Cryo", "Claymore", [], Rarity
   material: TalentAscension.Justice,
   weeklyBossDrop: MobDrops.WorldspanFern,
   crystal: ElementalCrystals.Cryo,
-  worldBossDrop: MobDrops.ArtificedSpareClockworkComponent__Coppelius,
   localSpecialty: LocalSpecialties.RomaritimeFlower,
+  worldBossDrop: MobDrops.ArtificedSpareClockworkComponent__Coppelius,
   mobDrop: EasyMobDrops.FontemerAberrantPearl,
 }, [
   new CharacterSet("On-field DPS", ["ATK"], "Normal/Press", true, [
@@ -648,8 +648,8 @@ export const Furina = new Character("Furina", "Hydro", "Sword", ["Heal", "Off-fi
   material: TalentAscension.Justice,
   weeklyBossDrop: MobDrops.LightlessMass,
   crystal: ElementalCrystals.Hydro,
-  worldBossDrop: MobDrops.WaterThatFailedToTranscend,
   localSpecialty: LocalSpecialties.LakelightLily,
+  worldBossDrop: MobDrops.WaterThatFailedToTranscend,
   mobDrop: EasyMobDrops.Nectar,
 }, [
   new CharacterSet("Off-field Support", ["HP"], "Skill/Ability", false, [
@@ -668,8 +668,8 @@ export const Gaming = new Character("Gaming", "Pyro", "Claymore", ["Self-heal"],
   material: TalentAscension.Prosperity,
   weeklyBossDrop: MobDrops.LightlessMass,
   crystal: ElementalCrystals.Pyro,
-  worldBossDrop: MobDrops.EmperorsResolution,
   localSpecialty: LocalSpecialties.Starconch,
+  worldBossDrop: MobDrops.EmperorsResolution,
   mobDrop: EasyMobDrops.Slime,
 }, [
   new CharacterSet("On-field DPS", ["ATK", "HP"], "Normal/Press", true, [
@@ -687,8 +687,8 @@ export const Ganyu = new Character("Ganyu", "Cryo", "Bow", ["Off-field Damage"],
   material: TalentAscension.Diligence,
   weeklyBossDrop: MobDrops.ShadowOfTheWarrior,
   crystal: ElementalCrystals.Cryo,
-  worldBossDrop: MobDrops.ShadowOfTheWarrior,
   localSpecialty: LocalSpecialties.Qingxin,
+  worldBossDrop: MobDrops.ShadowOfTheWarrior,
   mobDrop: EasyMobDrops.Nectar,
 }, [
   new CharacterSet("Melt DPS", ["HP"], "Normal/Press", true, [
@@ -720,8 +720,8 @@ export const Gorou = new Character("Gorou", "Geo", "Bow", ["Shield"], Rarity.Epi
   material: TalentAscension.Light,
   weeklyBossDrop: MobDrops.MoltenMoment,
   crystal: ElementalCrystals.Geo,
-  worldBossDrop: MobDrops.PerpetualHeart,
   localSpecialty: LocalSpecialties.SangoPearl,
+  worldBossDrop: MobDrops.PerpetualHeart,
   mobDrop: EasyMobDrops.Spectral,
 }, [
   new CharacterSet("Off-field Support", ["DEF"], "Skill/Ability", false, [
@@ -737,8 +737,8 @@ export const HuTao = new Character("Hu Tao", "Pyro", "Polearm", ["Self-heal"], R
   material: TalentAscension.Diligence,
   weeklyBossDrop: MobDrops.ShardOfAFoulLegacy,
   crystal: ElementalCrystals.Pyro,
-  worldBossDrop: MobDrops.JuvenileJade,
   localSpecialty: LocalSpecialties.SilkFlower,
+  worldBossDrop: MobDrops.JuvenileJade,
   mobDrop: EasyMobDrops.Nectar,
 }, [
   new CharacterSet("On-field DPS", ["HP", "Elemental Mastery", "ATK"], "Normal/Press", true, [
@@ -756,8 +756,8 @@ export const Jean = new Character("Jean", "Anemo", "Sword", ["Heal"], Rarity.Leg
   material: TalentAscension.Resistance,
   weeklyBossDrop: MobDrops.DvalinsPlume,
   crystal: ElementalCrystals.Anemo,
-  worldBossDrop: MobDrops.HurricaneSeed,
   localSpecialty: LocalSpecialties.DandelionSeed,
+  worldBossDrop: MobDrops.HurricaneSeed,
   mobDrop: EasyMobDrops.Mask,
 }, [
   new CharacterSet("Off-field Support", ["ATK"], "Burst/Ult", false, [
@@ -776,8 +776,8 @@ export const Kachina = new Character("Kachina", "Geo", "Polearm", ["Off-field Da
   material: TalentAscension.Conflict,
   weeklyBossDrop: MobDrops.FadingCandle,
   crystal: ElementalCrystals.Geo,
-  worldBossDrop: MobDrops.OverripeFlamegranate,
   localSpecialty: LocalSpecialties.QuenepaBerry,
+  worldBossDrop: MobDrops.OverripeFlamegranate,
   mobDrop: EasyMobDrops.Whistle,
 }, [
   new CharacterSet("Off-field DPS", ["DEF"], "Skill/Ability", false, [
@@ -795,8 +795,8 @@ export const KaedeharaKazuha = new Character("Kaedehara Kazuha", "Anemo", "Sword
   material: TalentAscension.Diligence,
   weeklyBossDrop: MobDrops.GildedScale,
   crystal: ElementalCrystals.Anemo,
-  worldBossDrop: MobDrops.MarionetteCore,
   localSpecialty: LocalSpecialties.SeaGanoderma,
+  worldBossDrop: MobDrops.MarionetteCore,
   mobDrop: EasyMobDrops.TreasureHoarderInsignia,
 }, [
   new CharacterSet("Off-field Support", ["Elemental Mastery", "Energy Recharge"], "Burst/Ult", false, [
@@ -811,8 +811,8 @@ export const Kaeya = new Character("Kaeya", "Cryo", "Sword", ["Off-field Damage"
   material: TalentAscension.Ballad,
   weeklyBossDrop: MobDrops.SpiritLocketOfBoreas,
   crystal: ElementalCrystals.Cryo,
-  worldBossDrop: MobDrops.HoarfrostCore,
   localSpecialty: LocalSpecialties.CallaLily,
+  worldBossDrop: MobDrops.HoarfrostCore,
   mobDrop: EasyMobDrops.TreasureHoarderInsignia,
 }, [
   new CharacterSet("Freeze Support", ["ATK"], "Burst/Ult", false, [
@@ -838,8 +838,8 @@ export const KamisatoAyaka = new Character("Kamisato Ayaka", "Cryo", "Sword", ["
   material: TalentAscension.Elegance,
   weeklyBossDrop: MobDrops.BloodjadeBranch,
   crystal: ElementalCrystals.Cryo,
-  worldBossDrop: MobDrops.PerpetualHeart,
   localSpecialty: LocalSpecialties.SakuraBloom,
+  worldBossDrop: MobDrops.PerpetualHeart,
   mobDrop: EasyMobDrops.Handguard,
 }, [
   new CharacterSet("On-field DPS", ["ATK"], "Burst/Ult", true, [
@@ -857,8 +857,8 @@ export const KamisatoAyato = new Character("Kamisato Ayato", "Hydro", "Sword", [
   material: TalentAscension.Elegance,
   weeklyBossDrop: MobDrops.MudraOfTheMaleficGeneral,
   crystal: ElementalCrystals.Hydro,
-  worldBossDrop: MobDrops.DewOfRepudiation,
   localSpecialty: LocalSpecialties.SakuraBloom,
+  worldBossDrop: MobDrops.DewOfRepudiation,
   mobDrop: EasyMobDrops.Handguard,
 }, [
   new CharacterSet("On-field DPS", ["ATK"], "Skill/Ability", true, [
@@ -875,8 +875,8 @@ export const Kaveh = new Character("Kaveh", "Dendro", "Claymore", ["Self-heal"],
   material: TalentAscension.Ingenuity,
   weeklyBossDrop: MobDrops.PrimordialGreenbloom,
   crystal: ElementalCrystals.Dendro,
-  worldBossDrop: MobDrops.QuielledCreeper,
   localSpecialty: LocalSpecialties.MourningFlower,
+  worldBossDrop: MobDrops.QuielledCreeper,
   mobDrop: EasyMobDrops.FungalSpores,
 }, [
   new CharacterSet("Bloom DPS", ["Energy Recharge", "Elemental Mastery"], "Burst/Ult", true, [
@@ -892,8 +892,8 @@ export const Keqing = new Character("Keqing", "Electro", "Sword", [], Rarity.Leg
   material: TalentAscension.Prosperity,
   weeklyBossDrop: MobDrops.RingOfBoreas,
   crystal: ElementalCrystals.Electro,
-  worldBossDrop: MobDrops.LightningPrism,
   localSpecialty: LocalSpecialties.CorLapis,
+  worldBossDrop: MobDrops.LightningPrism,
   mobDrop: EasyMobDrops.Nectar,
 }, [
   new CharacterSet("On-field DPS", ["ATK"], "Normal/Press", true, [
@@ -925,8 +925,8 @@ export const Kinich = new Character("Kinich", "Dendro", "Claymore", ["Off-field 
   material: TalentAscension.Kindling,
   weeklyBossDrop: MobDrops.DenialAndJudgment,
   crystal: ElementalCrystals.Dendro,
-  worldBossDrop: MobDrops.OverripeFlamegranate,
   localSpecialty: LocalSpecialties.SaurianClawSucculent,
+  worldBossDrop: MobDrops.OverripeFlamegranate,
   mobDrop: EasyMobDrops.Fang,
 }, [
   new CharacterSet("On-field DPS", ["ATK"], "Skill/Ability", true, [
@@ -948,8 +948,8 @@ export const Kirara = new Character("Kirara", "Dendro", "Sword", ["Shield"], Rar
   material: TalentAscension.Transience,
   weeklyBossDrop: MobDrops.Everamber,
   crystal: ElementalCrystals.Dendro,
-  worldBossDrop: MobDrops.EvergloomRing,
   localSpecialty: LocalSpecialties.AmakumoFruit,
+  worldBossDrop: MobDrops.EvergloomRing,
   mobDrop: EasyMobDrops.Spectral,
 }, [
   new CharacterSet("Off-field Support", ["HP", "Energy Recharge"], "Burst/Ult", false, [
@@ -965,8 +965,8 @@ export const Klee = new Character("Klee", "Pyro", "Catalyst", [], Rarity.Legenda
   material: TalentAscension.Freedom,
   weeklyBossDrop: MobDrops.RingOfBoreas,
   crystal: ElementalCrystals.Pyro,
-  worldBossDrop: MobDrops.EverflameSeed,
   localSpecialty: LocalSpecialties.PhilanemoMushroom,
+  worldBossDrop: MobDrops.EverflameSeed,
   mobDrop: EasyMobDrops.Scroll,
 }, [
   new CharacterSet("On-field DPS", ["ATK"], "Normal/Press", true, [
@@ -984,8 +984,8 @@ export const KujouSara = new Character("Kujou Sara", "Electro", "Bow", ["Off-fie
   material: TalentAscension.Elegance,
   weeklyBossDrop: MobDrops.AshenHeart,
   crystal: ElementalCrystals.Electro,
-  worldBossDrop: MobDrops.StormBeads,
   localSpecialty: LocalSpecialties.Dendrobium,
+  worldBossDrop: MobDrops.StormBeads,
   mobDrop: EasyMobDrops.Mask,
 }, [
   new CharacterSet("Burst Support", ["ATK"], "Skill/Ability", false, [
@@ -1002,8 +1002,8 @@ export const KukiShinobu = new Character("Kuki Shinobu", "Electro", "Sword", ["H
   material: TalentAscension.Elegance,
   weeklyBossDrop: MobDrops.TearsOfTheCalamitousGod,
   crystal: ElementalCrystals.Electro,
-  worldBossDrop: MobDrops.RunicFang,
   localSpecialty: LocalSpecialties.NakuWeed,
+  worldBossDrop: MobDrops.RunicFang,
   mobDrop: EasyMobDrops.Spectral,
 }, [
   new CharacterSet("Hyperbloom Support", ["Elemental Mastery", "HP"], "Skill/Ability", false, [
@@ -1034,8 +1034,8 @@ export const LanYan = new Character("Lan Yan", "Anemo", "Catalyst", ["Shield", "
   material: TalentAscension.Diligence,
   weeklyBossDrop: MobDrops.ErodedSunfire,
   crystal: ElementalCrystals.Anemo,
-  worldBossDrop: MobDrops.SecretSourceAirflowAccumulator,
   localSpecialty: LocalSpecialties.ClearwaterJade,
+  worldBossDrop: MobDrops.SecretSourceAirflowAccumulator,
   mobDrop: EasyMobDrops.Nectar,
 }, [
   new CharacterSet("Off-field Support", ["Elemental Mastery"], "Skill/Ability", false, [
@@ -1053,8 +1053,8 @@ export const Layla = new Character("Layla", "Cryo", "Sword", ["Shield"], Rarity.
   material: TalentAscension.Ingenuity,
   weeklyBossDrop: MobDrops.MirrorOfMushin,
   crystal: ElementalCrystals.Cryo,
-  worldBossDrop: MobDrops.PerpetualCaliber,
   localSpecialty: LocalSpecialties.NilotpalaLotus,
+  worldBossDrop: MobDrops.PerpetualCaliber,
   mobDrop: EasyMobDrops.Scroll,
 }, [
   new CharacterSet("Off-field Support", ["HP", "Energy Recharge"], "Burst/Ult", false, [
@@ -1072,8 +1072,8 @@ export const Lisa = new Character("Lisa", "Electro", "Catalyst", ["Off-field Dam
   material: TalentAscension.Ballad,
   weeklyBossDrop: MobDrops.DvalinsClaw,
   crystal: ElementalCrystals.Electro,
-  worldBossDrop: MobDrops.LightningPrism,
   localSpecialty: LocalSpecialties.Valberry,
+  worldBossDrop: MobDrops.LightningPrism,
   mobDrop: EasyMobDrops.Slime,
 }, [
   new CharacterSet("Aggravate DPS", ["ATK", "Elemental Mastery"], "Burst/Ult", true, [
@@ -1109,8 +1109,8 @@ export const Lynette = new Character("Lynette", "Anemo", "Sword", [], Rarity.Epi
   material: TalentAscension.Order,
   weeklyBossDrop: MobDrops.Everamber,
   crystal: ElementalCrystals.Anemo,
-  worldBossDrop: MobDrops.ArtificedSpareClockworkComponent__Coppelia,
   localSpecialty: LocalSpecialties.LumidouceBell,
+  worldBossDrop: MobDrops.ArtificedSpareClockworkComponent__Coppelia,
   mobDrop: EasyMobDrops.Gear,
 }, [
   new CharacterSet("Off-field Support", ["Energy Recharge"], "Burst/Ult", false, [
@@ -1128,8 +1128,8 @@ export const Lyney = new Character("Lyney", "Pyro", "Bow", ['Self-heal'], Rarity
   material: TalentAscension.Equity,
   weeklyBossDrop: MobDrops.PrimordialGreenbloom,
   crystal: ElementalCrystals.Pyro,
-  worldBossDrop: MobDrops.EmperorsResolution,
   localSpecialty: LocalSpecialties.RainbowRose,
+  worldBossDrop: MobDrops.EmperorsResolution,
   mobDrop: EasyMobDrops.FatuiInsignia,
 }, [
   new CharacterSet("On-field DPS", ["ATK"], "Normal/Press", true, [
@@ -1146,8 +1146,8 @@ export const Mavuika = new Character("Mavuika", "Pyro", "Claymore", ['Nightsouls
   material: TalentAscension.Contention,
   weeklyBossDrop: MobDrops.ErodedHorn,
   crystal: ElementalCrystals.Pyro,
-  worldBossDrop: MobDrops.SecretSourceAirflowAccumulator,
   localSpecialty: LocalSpecialties.WitheringPurpurbloom,
+  worldBossDrop: MobDrops.SecretSourceAirflowAccumulator,
   mobDrop: EasyMobDrops.Whistle,
 }, [
   new CharacterSet("On-field DPS", ["ATK", 'Elemental Mastery'], "Skill/Ability", true, [
@@ -1162,8 +1162,8 @@ export const Mika = new Character("Mika", "Cryo", "Polearm", ["Heal"], Rarity.Ep
   material: TalentAscension.Ballad,
   weeklyBossDrop: MobDrops.MirrorOfMushin,
   crystal: ElementalCrystals.Cryo,
-  worldBossDrop: MobDrops.PseudoStamens,
   localSpecialty: LocalSpecialties.Wolfhook,
+  worldBossDrop: MobDrops.PseudoStamens,
   mobDrop: EasyMobDrops.FatuiInsignia,
 }, [
   new CharacterSet("Off-field Support", ["HP", "Energy Recharge"], "Burst/Ult", false, [
@@ -1179,8 +1179,8 @@ export const Mona = new Character("Mona", "Hydro", "Catalyst", ["Off-field Damag
   material: TalentAscension.Resistance,
   weeklyBossDrop: MobDrops.RingOfBoreas,
   crystal: ElementalCrystals.Hydro,
-  worldBossDrop: MobDrops.CleansingHeart,
   localSpecialty: LocalSpecialties.PhilanemoMushroom,
+  worldBossDrop: MobDrops.CleansingHeart,
   mobDrop: EasyMobDrops.Nectar,
 }, [
   new CharacterSet("Off-field DPS", ["ATK", "Energy Recharge", "Elemental Mastery"], "Burst/Ult", false, [
@@ -1216,8 +1216,8 @@ export const Mualani = new Character("Mualani", "Hydro", "Catalyst", ["Nightsoul
   material: TalentAscension.Contention,
   weeklyBossDrop: MobDrops.LightlessMass,
   crystal: ElementalCrystals.Hydro,
-  worldBossDrop: MobDrops.MarkOfTheBindingBlessing,
   localSpecialty: LocalSpecialties.SprayfeatherGill,
+  worldBossDrop: MobDrops.MarkOfTheBindingBlessing,
   mobDrop: EasyMobDrops.Whistle,
 }, [
   new CharacterSet("On-field DPS", ["HP", "Elemental Mastery"], "Skill/Ability", true, [
@@ -1238,8 +1238,8 @@ export const Nahida = new Character("Nahida", "Dendro", "Catalyst", [
   material: TalentAscension.Ingenuity,
   weeklyBossDrop: MobDrops.PuppetStrings,
   crystal: ElementalCrystals.Dendro,
-  worldBossDrop: MobDrops.QuielledCreeper,
   localSpecialty: LocalSpecialties.KalpalataLotus,
+  worldBossDrop: MobDrops.QuielledCreeper,
   mobDrop: EasyMobDrops.FungalSpores,
 }, [
   new CharacterSet("Off-field Support", ["Elemental Mastery"], "Skill/Ability", false, [
@@ -1253,8 +1253,8 @@ export const Navia = new Character("Navia", "Geo", "Claymore", [], Rarity.Legend
   material: TalentAscension.Equity,
   weeklyBossDrop: MobDrops.LightlessSilkString,
   crystal: ElementalCrystals.Geo,
-  worldBossDrop: MobDrops.ArtificedSpareClockworkComponent__Coppelius,
   localSpecialty: LocalSpecialties.SpringOfTheFirstDewdrop,
+  worldBossDrop: MobDrops.ArtificedSpareClockworkComponent__Coppelius,
   mobDrop: EasyMobDrops.FontemerAberrantPearl,
 }, [
   new CharacterSet("On-field DPS", ["ATK"], "Normal/Press", true, [
@@ -1272,8 +1272,8 @@ export const Neuvillette = new Character("Neuvillette", "Hydro", "Catalyst", ["S
   material: TalentAscension.Equity,
   weeklyBossDrop: MobDrops.Everamber,
   crystal: ElementalCrystals.Hydro,
-  worldBossDrop: MobDrops.FontemerUnihorn,
   localSpecialty: LocalSpecialties.Lumitoile,
+  worldBossDrop: MobDrops.FontemerUnihorn,
   mobDrop: EasyMobDrops.FontemerAberrantPearl,
 }, [
   new CharacterSet("On-field DPS", ["HP", "Energy Recharge"], "Charged/Hold", true, [
@@ -1292,8 +1292,8 @@ export const Nilou = new Character("Nilou", "Hydro", "Sword", [], Rarity.Legenda
   material: TalentAscension.Praxis,
   weeklyBossDrop: MobDrops.TearsOfTheCalamitousGod,
   crystal: ElementalCrystals.Hydro,
-  worldBossDrop: MobDrops.PerpetualCaliber,
   localSpecialty: LocalSpecialties.Padisarah,
+  worldBossDrop: MobDrops.PerpetualCaliber,
   mobDrop: EasyMobDrops.FungalSpores,
 }, [
   new CharacterSet("Bloom Support", ["HP"], "Skill/Ability", false, [
@@ -1312,8 +1312,8 @@ export const Ningguang = new Character("Ningguang", "Geo", "Catalyst", ["Shield"
   material: TalentAscension.Prosperity,
   weeklyBossDrop: MobDrops.SpiritLocketOfBoreas,
   crystal: ElementalCrystals.Geo,
-  worldBossDrop: MobDrops.BasaltPillar,
   localSpecialty: LocalSpecialties.GlazeLily,
+  worldBossDrop: MobDrops.BasaltPillar,
   mobDrop: EasyMobDrops.FatuiInsignia,
 }, [
   new CharacterSet("On-field DPS", ["ATK"], "Burst/Ult", true, [
@@ -1332,8 +1332,8 @@ export const Noelle = new Character("Noelle", "Geo", "Claymore", ["Heal"], Rarit
   material: TalentAscension.Resistance,
   weeklyBossDrop: MobDrops.DvalinsClaw,
   crystal: ElementalCrystals.Geo,
-  worldBossDrop: MobDrops.BasaltPillar,
   localSpecialty: LocalSpecialties.Valberry,
+  worldBossDrop: MobDrops.BasaltPillar,
   mobDrop: EasyMobDrops.Mask,
 }, [
   new CharacterSet("On-field DPS", ["DEF"], "Normal/Press", true, [
@@ -1349,8 +1349,8 @@ export const Ororon = new Character("Ororon", "Electro", "Bow", ['Off-field Dama
   material: TalentAscension.Kindling,
   weeklyBossDrop: MobDrops.LightlessSilkString,
   crystal: ElementalCrystals.Electro,
-  worldBossDrop: MobDrops.MarkOfTheBindingBlessing,
   localSpecialty: LocalSpecialties.GlowingHornshroom,
+  worldBossDrop: MobDrops.MarkOfTheBindingBlessing,
   mobDrop: EasyMobDrops.Fang,
 }, [
   new CharacterSet("Off-field DPS", ["ATK"], "Skill/Ability", false, [
@@ -1363,8 +1363,8 @@ export const Qiqi = new Character("Qiqi", "Cryo", "Sword", ["Heal"], Rarity.Lege
   material: TalentAscension.Prosperity,
   weeklyBossDrop: MobDrops.TailOfBoreas,
   crystal: ElementalCrystals.Cryo,
-  worldBossDrop: MobDrops.HoarfrostCore,
   localSpecialty: LocalSpecialties.Violetgrass,
+  worldBossDrop: MobDrops.HoarfrostCore,
   mobDrop: EasyMobDrops.Scroll,
 }, [
   new CharacterSet("Off-field Support", ["ATK"], "Burst/Ult", false, [
@@ -1381,8 +1381,8 @@ export const RaidenShogun = new Character("Raiden Shogun", "Electro", "Polearm",
   material: TalentAscension.Light,
   weeklyBossDrop: MobDrops.MoltenMoment,
   crystal: ElementalCrystals.Electro,
-  worldBossDrop: MobDrops.StormBeads,
   localSpecialty: LocalSpecialties.AmakumoFruit,
+  worldBossDrop: MobDrops.StormBeads,
   mobDrop: EasyMobDrops.Handguard,
 }, [
   new CharacterSet("On-field DPS", ["ATK", "Energy Recharge"], "Burst/Ult", true, [
@@ -1405,8 +1405,8 @@ export const Razor = new Character("Razor", "Electro", "Claymore", [], Rarity.Ep
   material: TalentAscension.Resistance,
   weeklyBossDrop: MobDrops.DvalinsClaw,
   crystal: ElementalCrystals.Electro,
-  worldBossDrop: MobDrops.LightningPrism,
   localSpecialty: LocalSpecialties.Wolfhook,
+  worldBossDrop: MobDrops.LightningPrism,
   mobDrop: EasyMobDrops.Mask,
 }, [
   new CharacterSet("On-field DPS", ["ATK", "Physical DMG Bonus"], "Normal/Press", true, [
@@ -1423,8 +1423,8 @@ export const Rosaria = new Character("Rosaria", "Cryo", "Polearm", ["Off-field D
   material: TalentAscension.Ballad,
   weeklyBossDrop: MobDrops.ShadowOfTheWarrior,
   crystal: ElementalCrystals.Cryo,
-  worldBossDrop: MobDrops.HoarfrostCore,
   localSpecialty: LocalSpecialties.Valberry,
+  worldBossDrop: MobDrops.HoarfrostCore,
   mobDrop: EasyMobDrops.FatuiInsignia,
 }, [
   new CharacterSet("Reverse-Melt DPS", ["ATK", "Elemental Mastery"], "Burst/Ult", true, [
@@ -1450,8 +1450,8 @@ export const SangonomiyaKokomi = new Character("Sangonomiya Kokomi", "Hydro", "C
   material: TalentAscension.Transience,
   weeklyBossDrop: MobDrops.HellfireButterfly,
   crystal: ElementalCrystals.Hydro,
-  worldBossDrop: MobDrops.DewOfRepudiation,
   localSpecialty: LocalSpecialties.SangoPearl,
+  worldBossDrop: MobDrops.DewOfRepudiation,
   mobDrop: EasyMobDrops.Spectral,
 }, [
   new CharacterSet("Off-field Support", ["HP", "Energy Recharge"], "Skill/Ability", false, [
@@ -1481,8 +1481,8 @@ export const Sayu = new Character("Sayu", "Anemo", "Claymore", ["Heal"], Rarity.
   material: TalentAscension.Light,
   weeklyBossDrop: MobDrops.GildedScale,
   crystal: ElementalCrystals.Anemo,
-  worldBossDrop: MobDrops.MarionetteCore,
   localSpecialty: LocalSpecialties.CrystalMarrow,
+  worldBossDrop: MobDrops.MarionetteCore,
   mobDrop: EasyMobDrops.Nectar,
 }, [
   new CharacterSet("Off-field Support", ["Elemental Mastery", "Energy Recharge", "ATK"], "Burst/Ult", false, [
@@ -1497,8 +1497,8 @@ export const Sethos = new Character("Sethos", "Electro", "Bow", [], Rarity.Epic,
   material: TalentAscension.Praxis,
   weeklyBossDrop: MobDrops.DakasBell,
   crystal: ElementalCrystals.Electro,
-  worldBossDrop: MobDrops.CloudseamScale,
   localSpecialty: LocalSpecialties.Trishiraite,
+  worldBossDrop: MobDrops.CloudseamScale,
   mobDrop: EasyMobDrops.EremiteDrop,
 }, [
   new CharacterSet("Off-field DPS", ["Energy Recharge", "Elemental Mastery"], "Charged/Hold", false, [
@@ -1516,8 +1516,8 @@ export const Shenhe = new Character("Shenhe", "Cryo", "Polearm", ["Off-field Dam
   material: TalentAscension.Prosperity,
   weeklyBossDrop: MobDrops.HellfireButterfly,
   crystal: ElementalCrystals.Cryo,
-  worldBossDrop: MobDrops.DragonheirsFalseFin,
   localSpecialty: LocalSpecialties.Qingxin,
+  worldBossDrop: MobDrops.DragonheirsFalseFin,
   mobDrop: EasyMobDrops.Nectar,
 }, [
   new CharacterSet("Off-field Support", ["ATK", "Energy Recharge"], "Skill/Ability", false, [
@@ -1531,8 +1531,8 @@ export const ShikanoinHeizou = new Character("Shikanoin Heizou", "Anemo", "Catal
   material: TalentAscension.Transience,
   weeklyBossDrop: MobDrops.TheMeaningOfAeons,
   crystal: ElementalCrystals.Anemo,
-  worldBossDrop: MobDrops.RunicFang,
   localSpecialty: LocalSpecialties.Onikabuto,
+  worldBossDrop: MobDrops.RunicFang,
   mobDrop: EasyMobDrops.TreasureHoarderInsignia,
 }, [
   new CharacterSet("Swirl DPS", ["ATK", "Elemental Mastery"], "Skill/Ability", true, [
@@ -1548,8 +1548,8 @@ export const Sigewinne = new Character("Sigewinne", "Hydro", "Bow", ["Heal"], Ra
   material: TalentAscension.Equity,
   weeklyBossDrop: MobDrops.LightlessEyeOfTheMaelstrom,
   crystal: ElementalCrystals.Hydro,
-  worldBossDrop: MobDrops.WaterThatFailedToTranscend,
   localSpecialty: LocalSpecialties.RomaritimeFlower,
+  worldBossDrop: MobDrops.WaterThatFailedToTranscend,
   mobDrop: EasyMobDrops.FontemerAberrantPearl,
 }, [
   new CharacterSet("Off-field Support", ["HP"], "Skill/Ability", false, [
@@ -1564,8 +1564,8 @@ export const Sucrose = new Character("Sucrose", "Anemo", "Catalyst", ["Grouping"
   material: TalentAscension.Freedom,
   weeklyBossDrop: MobDrops.SpiritLocketOfBoreas,
   crystal: ElementalCrystals.Hydro,
-  worldBossDrop: MobDrops.HurricaneSeed,
   localSpecialty: LocalSpecialties.WindwheelAster,
+  worldBossDrop: MobDrops.HurricaneSeed,
   mobDrop: EasyMobDrops.Nectar,
 }, [
   new CharacterSet("Swirl Support", ["Elemental Mastery", "Energy Recharge"], "Skill/Ability", false, [
@@ -1579,8 +1579,8 @@ export const TartagliaChilde = new Character("Tartaglia (Childe)", "Hydro", "Bow
   material: TalentAscension.Freedom,
   weeklyBossDrop: MobDrops.ShardOfAFoulLegacy,
   crystal: ElementalCrystals.Hydro,
-  worldBossDrop: MobDrops.CleansingHeart,
   localSpecialty: LocalSpecialties.Starconch,
+  worldBossDrop: MobDrops.CleansingHeart,
   mobDrop: EasyMobDrops.FatuiInsignia,
 }, [
   new CharacterSet("On-field DPS", ["ATK"], "Normal/Press", true, [
@@ -1598,8 +1598,8 @@ export const Thoma = new Character("Thoma", "Pyro", "Polearm", ["Shield"], Rarit
   material: TalentAscension.Transience,
   weeklyBossDrop: MobDrops.HellfireButterfly,
   crystal: ElementalCrystals.Pyro,
-  worldBossDrop: MobDrops.SmolderingPearl,
   localSpecialty: LocalSpecialties.FluorescentFungus,
+  worldBossDrop: MobDrops.SmolderingPearl,
   mobDrop: EasyMobDrops.TreasureHoarderInsignia,
 }, [
   new CharacterSet("Burgeon Support", ["Energy Recharge", "Elemental Mastery"], "Skill/Ability", false, [
@@ -1624,8 +1624,8 @@ export const Tighnari = new Character("Tighnari", "Dendro", "Bow", ["Off-field D
   material: TalentAscension.Admonition,
   weeklyBossDrop: MobDrops.TheMeaningOfAeons,
   crystal: ElementalCrystals.Dendro,
-  worldBossDrop: MobDrops.MajesticHookedBeak,
   localSpecialty: LocalSpecialties.NilotpalaLotus,
+  worldBossDrop: MobDrops.MajesticHookedBeak,
   mobDrop: EasyMobDrops.FungalSpores,
 }, [
   new CharacterSet("Off-field DPS", ["ATK", "Elemental Mastery"], "Charged/Hold", false, [
@@ -1642,8 +1642,8 @@ export const TravelerAnemo = new Character("Traveler (Anemo)", "Anemo", "Sword",
   material: TalentAscension.Resistance,
   weeklyBossDrop: MobDrops.DvalinsSigh,
   crystal: ElementalCrystals.Anemo,
-  worldBossDrop: null,
   localSpecialty: LocalSpecialties.WindwheelAster,
+  worldBossDrop: null,
   mobDrop: EasyMobDrops.Mask,
 }, [
   new CharacterSet("Swirl DPS", ["Elemental Mastery", "Energy Recharge", "ATK"], "Skill/Ability", true, [
@@ -1659,8 +1659,8 @@ export const TravelerGeo = new Character("Traveler (Geo)", "Geo", "Sword", [], R
   material: TalentAscension.Prosperity,
   weeklyBossDrop: MobDrops.TailOfBoreas,
   crystal: ElementalCrystals.Geo,
-  worldBossDrop: null,
   localSpecialty: LocalSpecialties.WindwheelAster,
+  worldBossDrop: null,
   mobDrop: EasyMobDrops.Mask,
 }, [
   new CharacterSet("On-field DPS", ["ATK"], "Burst/Ult", true, [
@@ -1681,8 +1681,8 @@ export const TravelerElectro = new Character("Traveler (Electro)", "Electro", "S
   material: TalentAscension.Transience,
   weeklyBossDrop: MobDrops.DragonLordsCrown,
   crystal: ElementalCrystals.Electro,
-  worldBossDrop: null,
   localSpecialty: LocalSpecialties.WindwheelAster,
+  worldBossDrop: null,
   mobDrop: EasyMobDrops.Mask,
 }, [
   new CharacterSet("Off-field Support", ["Energy Recharge", "ATK"], "Skill/Ability", false, [
@@ -1697,8 +1697,8 @@ export const TravelerDendro = new Character("Traveler (Dendro)", "Dendro", "Swor
   material: TalentAscension.Admonition,
   weeklyBossDrop: MobDrops.MudraOfTheMaleficGeneral,
   crystal: ElementalCrystals.Dendro,
-  worldBossDrop: null,
   localSpecialty: LocalSpecialties.WindwheelAster,
+  worldBossDrop: null,
   mobDrop: EasyMobDrops.Mask,
 }, [
   new CharacterSet("Off-field Support", ["Elemental Mastery", "Energy Recharge", "ATK"], "Burst/Ult", false, [
@@ -1714,8 +1714,8 @@ export const TravelerHydro = new Character("Traveler (Hydro)", "Hydro", "Sword",
   material: TalentAscension.Equity,
   weeklyBossDrop: MobDrops.WorldspanFern,
   crystal: ElementalCrystals.Hydro,
-  worldBossDrop: null,
   localSpecialty: LocalSpecialties.WindwheelAster,
+  worldBossDrop: null,
   mobDrop: EasyMobDrops.Mask,
 }, [
   new CharacterSet("Off-field Support", ["HP", "Energy Recharge"], "Skill/Ability", false, [
@@ -1728,8 +1728,8 @@ export const TravelerPyro = new Character("Traveler (Pyro)", "Pyro", "Sword", ['
   material: TalentAscension.Contention,
   weeklyBossDrop: null, // This is not a weekly boss drop, but a world quest drop
   crystal: ElementalCrystals.Pyro,
-  worldBossDrop: null,
   localSpecialty: LocalSpecialties.WindwheelAster,
+  worldBossDrop: null,
   mobDrop: EasyMobDrops.Mask,
 }, [
   // TODO: Update when Genshin.gg has data - https://genshin.gg/characters/traveler(pyro)/
@@ -1738,8 +1738,8 @@ export const TravelerCryo = new Character("Traveler (Cryo)", "Cryo", "Sword", []
   material: null,
   weeklyBossDrop: null,
   crystal: ElementalCrystals.Cryo,
-  worldBossDrop: null,
   localSpecialty: LocalSpecialties.WindwheelAster,
+  worldBossDrop: null,
   mobDrop: EasyMobDrops.Mask,
 }, []);
 
@@ -1747,8 +1747,8 @@ export const Venti = new Character("Venti", "Anemo", "Bow", ["Grouping"], Rarity
   material: TalentAscension.Ballad,
   weeklyBossDrop: MobDrops.TailOfBoreas,
   crystal: ElementalCrystals.Anemo,
-  worldBossDrop: MobDrops.HurricaneSeed,
   localSpecialty: LocalSpecialties.Cecilia,
+  worldBossDrop: MobDrops.HurricaneSeed,
   mobDrop: EasyMobDrops.Slime,
 }, [
   new CharacterSet("Swirl Support", ["Elemental Mastery", "Energy Recharge"], "Burst/Ult", false, [
@@ -1762,8 +1762,8 @@ export const WandererScaramouche = new Character("Wanderer (Scaramouche)", "Anem
   material: TalentAscension.Praxis,
   weeklyBossDrop: MobDrops.DakasBell,
   crystal: ElementalCrystals.Anemo,
-  worldBossDrop: MobDrops.PerpetualCaliber,
   localSpecialty: LocalSpecialties.RukkhashavaMushrooms,
+  worldBossDrop: MobDrops.PerpetualCaliber,
   mobDrop: EasyMobDrops.Handguard,
 }, [
   new CharacterSet("On-field DPS", ["ATK", "Elemental Mastery"], "Normal/Press", true, [
@@ -1780,8 +1780,8 @@ export const Wriothesley = new Character("Wriothesley", "Cryo", "Catalyst", [], 
   material: TalentAscension.Order,
   weeklyBossDrop: MobDrops.PrimordialGreenbloom,
   crystal: ElementalCrystals.Cryo,
-  worldBossDrop: MobDrops.TourbillonDevice,
   localSpecialty: LocalSpecialties.SubdetectionUnit,
+  worldBossDrop: MobDrops.TourbillonDevice,
   mobDrop: EasyMobDrops.Gear,
 }, [
   new CharacterSet("On-field DPS", ["ATK", "Energy Recharge"], "Charged/Hold", true, [
@@ -1799,8 +1799,8 @@ export const Xiangling = new Character("Xiangling", "Pyro", "Polearm", ["Off-fie
   material: TalentAscension.Diligence,
   weeklyBossDrop: MobDrops.DvalinsClaw,
   crystal: ElementalCrystals.Pyro,
-  worldBossDrop: MobDrops.EverflameSeed,
   localSpecialty: LocalSpecialties.JueyunChili,
+  worldBossDrop: MobDrops.EverflameSeed,
   mobDrop: EasyMobDrops.Slime,
 }, [
   new CharacterSet("Off-field DPS", ["Energy Recharge", "ATK", "Elemental Mastery"], "Burst/Ult", false, [
@@ -1819,8 +1819,8 @@ export const Xianyun = new Character("Xianyun", "Anemo", "Catalyst", ["Heal"], R
   material: TalentAscension.Gold,
   weeklyBossDrop: MobDrops.LightlessEyeOfTheMaelstrom,
   crystal: ElementalCrystals.Anemo,
-  worldBossDrop: MobDrops.CloudseamScale,
   localSpecialty: LocalSpecialties.ClearwaterJade,
+  worldBossDrop: MobDrops.CloudseamScale,
   mobDrop: EasyMobDrops.Scroll,
 }, [
   new CharacterSet("Off-field Support", ["Energy Recharge", "ATK"], "Burst/Ult", false, [
@@ -1838,8 +1838,8 @@ export const Xiao = new Character("Xiao", "Anemo", "Polearm", [], Rarity.Legenda
   material: TalentAscension.Prosperity,
   weeklyBossDrop: MobDrops.ShadowOfTheWarrior,
   crystal: ElementalCrystals.Anemo,
-  worldBossDrop: MobDrops.JuvenileJade,
   localSpecialty: LocalSpecialties.Qingxin,
+  worldBossDrop: MobDrops.JuvenileJade,
   mobDrop: EasyMobDrops.Slime,
 }, [
   new CharacterSet("On-field DPS", ["ATK"], "Normal/Press", true, [
@@ -1858,8 +1858,8 @@ export const Xilonen = new Character("Xilonen", "Geo", "Sword", [
   material: TalentAscension.Kindling,
   weeklyBossDrop: MobDrops.MirrorOfMushin,
   crystal: ElementalCrystals.Geo,
-  worldBossDrop: MobDrops.SecretSourceAirflowAccumulator,
   localSpecialty: LocalSpecialties.BrilliantChrysanthemum,
+  worldBossDrop: MobDrops.SecretSourceAirflowAccumulator,
   mobDrop: EasyMobDrops.Whistle,
 }, [
   new CharacterSet("Off-field Support", ["DEF"], "Skill/Ability", false, [
@@ -1873,8 +1873,8 @@ export const Xingqiu = new Character("Xingqiu", "Hydro", "Sword", ["Off-field Da
   material: TalentAscension.Gold,
   weeklyBossDrop: MobDrops.TailOfBoreas,
   crystal: ElementalCrystals.Hydro,
-  worldBossDrop: MobDrops.CleansingHeart,
   localSpecialty: LocalSpecialties.SilkFlower,
+  worldBossDrop: MobDrops.CleansingHeart,
   mobDrop: EasyMobDrops.Mask,
 }, [
   new CharacterSet("Off-field DPS", ["Energy Recharge", "ATK"], "Burst/Ult", false, [
@@ -1893,8 +1893,8 @@ export const Xinyan = new Character("Xinyan", "Pyro", "Claymore", [], Rarity.Epi
   material: TalentAscension.Gold,
   weeklyBossDrop: MobDrops.TuskOfMonocerosCaeli,
   crystal: ElementalCrystals.Pyro,
-  worldBossDrop: MobDrops.EverflameSeed,
   localSpecialty: LocalSpecialties.Violetgrass,
+  worldBossDrop: MobDrops.EverflameSeed,
   mobDrop: EasyMobDrops.TreasureHoarderInsignia,
 }, [
   new CharacterSet("Physical DPS", ["Physical DMG Bonus", "ATK", "Energy Recharge"], "Normal/Press", true, [
@@ -1924,8 +1924,8 @@ export const YaeMiko = new Character("Yae Miko", "Electro", "Catalyst", ["Off-fi
   material: TalentAscension.Light,
   weeklyBossDrop: MobDrops.TheMeaningOfAeons,
   crystal: ElementalCrystals.Electro,
-  worldBossDrop: MobDrops.DragonheirsFalseFin,
   localSpecialty: LocalSpecialties.SeaGanoderma,
+  worldBossDrop: MobDrops.DragonheirsFalseFin,
   mobDrop: EasyMobDrops.Handguard,
 }, [
   new CharacterSet("Off-field DPS", ["ATK", "Elemental Mastery", "Energy Recharge"], "Skill/Ability", false, [
@@ -1943,8 +1943,8 @@ export const Yanfei = new Character("Yanfei", "Pyro", "Catalyst", [], Rarity.Epi
   material: TalentAscension.Gold,
   weeklyBossDrop: MobDrops.BloodjadeBranch,
   crystal: ElementalCrystals.Pyro,
-  worldBossDrop: MobDrops.JuvenileJade,
   localSpecialty: LocalSpecialties.NoctilucousJade,
+  worldBossDrop: MobDrops.JuvenileJade,
   mobDrop: EasyMobDrops.TreasureHoarderInsignia,
 }, [
   new CharacterSet("On-field DPS", ["ATK"], "Normal/Press", true, [
@@ -1962,8 +1962,8 @@ export const Yaoyao = new Character("Yaoyao", "Dendro", "Polearm", ["Heal", "Off
   material: TalentAscension.Diligence,
   weeklyBossDrop: MobDrops.DakasBell,
   crystal: ElementalCrystals.Dendro,
-  worldBossDrop: MobDrops.QuielledCreeper,
   localSpecialty: LocalSpecialties.JueyunChili,
+  worldBossDrop: MobDrops.QuielledCreeper,
   mobDrop: EasyMobDrops.Slime,
 }, [
   new CharacterSet("Off-field Support", ["HP", "Energy Recharge"], "Burst/Ult", false, [
@@ -1977,8 +1977,8 @@ export const Yelan = new Character("Yelan", "Hydro", "Bow", ["Off-field Damage"]
   material: TalentAscension.Prosperity,
   weeklyBossDrop: MobDrops.GildedScale,
   crystal: ElementalCrystals.Hydro,
-  worldBossDrop: MobDrops.RunicFang,
   localSpecialty: LocalSpecialties.Starconch,
+  worldBossDrop: MobDrops.RunicFang,
   mobDrop: EasyMobDrops.FatuiInsignia,
 }, [
   new CharacterSet("Off-field DPS", ["HP", "Energy Recharge"], "Burst/Ult", false, [
@@ -1994,8 +1994,8 @@ export const Yoimiya = new Character("Yoimiya", "Pyro", "Bow", [], Rarity.Legend
   material: TalentAscension.Transience,
   weeklyBossDrop: MobDrops.DragonLordsCrown,
   crystal: ElementalCrystals.Pyro,
-  worldBossDrop: MobDrops.SmolderingPearl,
   localSpecialty: LocalSpecialties.NakuWeed,
+  worldBossDrop: MobDrops.SmolderingPearl,
   mobDrop: EasyMobDrops.Scroll,
 }, [
   new CharacterSet("On-field DPS", ["ATK", "Elemental Mastery"], "Normal/Press", true, [
@@ -2012,8 +2012,8 @@ export const YumemizukiMizuki = new Character("Yumemizuki Mizuki", "Anemo", "Cat
   material: TalentAscension.Transience,
   weeklyBossDrop: MobDrops.FadingCandle,
   crystal: ElementalCrystals.Anemo,
-  worldBossDrop: MobDrops.TalismanOftheEnigmaticLand,
   localSpecialty: LocalSpecialties.SeaGanoderma,
+  worldBossDrop: MobDrops.TalismanOftheEnigmaticLand,
   mobDrop: EasyMobDrops.Handguard,
 }, [
   new CharacterSet('On-field DPS', ['Elemental Mastery'], 'Skill/Ability', true, [
@@ -2027,8 +2027,8 @@ export const YunJin = new Character("Yun Jin", "Geo", "Polearm", ["Shield"], Rar
   material: TalentAscension.Diligence,
   weeklyBossDrop: MobDrops.AshenHeart,
   crystal: ElementalCrystals.Geo,
-  worldBossDrop: MobDrops.RiftbornRegalia,
   localSpecialty: LocalSpecialties.GlazeLily,
+  worldBossDrop: MobDrops.RiftbornRegalia,
   mobDrop: EasyMobDrops.Mask,
 }, [
   new CharacterSet("Off-field Support", ["DEF", "Energy Recharge"], "Burst/Ult", false, [
@@ -2043,8 +2043,8 @@ export const Zhongli = new Character("Zhongli", "Geo", "Polearm", ["Shield"], Ra
   material: TalentAscension.Gold,
   weeklyBossDrop: MobDrops.TuskOfMonocerosCaeli,
   crystal: ElementalCrystals.Geo,
-  worldBossDrop: MobDrops.BasaltPillar,
   localSpecialty: LocalSpecialties.CorLapis,
+  worldBossDrop: MobDrops.BasaltPillar,
   mobDrop: EasyMobDrops.Slime,
 }, [
   new CharacterSet("Off-field Support", ["HP"], "Skill/Ability", false, [

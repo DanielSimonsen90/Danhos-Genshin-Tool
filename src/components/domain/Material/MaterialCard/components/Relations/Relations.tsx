@@ -40,6 +40,9 @@ export default function Relations({
         The wilderness of <Region material={material} />.
       </div>
     )),
+    modelKeys.includes('Domain') && tab(`${name}-used-by-domains`, 'Domains', (
+      <MaterialRelationsForModel key={`domain-${name}`} model='Domain' materialName={name} />
+    )),
   ].filter(Boolean), [modelKeys, name]);
 
   if (!showModelsUsing && !showModelAquired) {

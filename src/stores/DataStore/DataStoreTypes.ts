@@ -24,9 +24,13 @@ export type DataStore = typeof DataStoreContent & {
   getModelKeysUsingMaterial: (materialName: string) => ModelKeys[];
   getCharactersUsingMaterial: (materialName: string) => Character[];
   getMobsDroppingMaterial: (materialName: string) => Mob[];
+  getDomainDroppingMaterial: (materialName: string) => Domain<any>;
   getDomainsFromMaterial: (material: Material) => Domain<any>[];
   getBossesFromMaterial: (material: Material) => Boss[];
   getCharactersUsingArtifact: (artifactName: string) => CharacterUsingArtifactResult[];
 
   getModelType: <TModel extends Model>(model: TModel) => ModelType<TModel>;
+  
+  // Cache management
+  clearCache: () => void;
 }

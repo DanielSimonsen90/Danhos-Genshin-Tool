@@ -1,131 +1,243 @@
+// cSpell:ignore CraftableMaterial
 import { create } from 'zustand';
 import { DataStore, CharacterUsingArtifactResult } from "./DataStoreTypes";
 import { DataStoreContent } from './DataStoreConstants';
 import { ArtifactSet, Boss, Character, CharacterArtifactSet, DomainOfBlessing, DomainOfForgery, DomainOfMastery, Material, Mob, Model, ModelKeys, TalentAscensionMaterial, WeaponAscensionMaterial } from '@/common/models';
 import ModelType from './ModelType';
 import CraftableMaterial from '@/common/models/materials/CraftableMaterial';
+import AscensionMaterial from '@/common/models/materials/AscensionMaterial';
 
+/**
+ * Optimized DataStore implementation with:
+ * - Caching for frequently accessed computations
+ * - Improved search performance with early returns
+ * - Better error handling and validation
+ * - Reduced code duplication
+ * - Enhanced type safety
+ */
 export const useDataStore = create<DataStore>((setState, getState) => {
+  // Cache for frequently accessed data
+  const cache = new Map<string, any>();
+  
+  // Cache keys
+  const CACHE_KEYS = {
+    MATERIAL_USERS: 'material_users_',
+    ARTIFACT_DOMAINS: 'artifact_domains_',
+    DOMAIN_ARTIFACTS: 'domain_artifacts_',
+    MATERIAL_DROPPERS: 'material_droppers_',
+    CHARACTER_MATERIALS: 'character_materials_',
+  } as const;
+
+  const clearCache = () => cache.clear();
+
+  const getCachedOrCompute = <T>(key: string, computeFn: () => T): T => {
+    if (cache.has(key)) {
+      return cache.get(key);
+    }
+    const result = computeFn();
+    cache.set(key, result);
+    return result;
+  };
   const findByName = <T extends { name: string; }>(arr: T[], name: string): T | undefined => {
-    const result = arr.find(item => item.name.toLowerCase() === name.toLowerCase() 
-      || (CraftableMaterial.isCraftableMaterial(item) && item.getCraftingTreeAsMaterials().some(m => m.name.toLowerCase() === name.toLowerCase())));
+    const normalizedName = name.toLowerCase();
+    
+    // Direct name match first (most common case)
+    let result = arr.find(item => item.name.toLowerCase() === normalizedName);
+    if (result) return result;
+      // Check materials that can be crafted (less common)
+    result = arr.find(item => 
+      CraftableMaterial.isCraftableMaterial(item) && 
+      item.getCraftingTreeAsMaterials().some(m => m.name.toLowerCase() === normalizedName)
+    );
+    
     if (result) return result;
 
     console.warn(`Item with name "${name}" not found in array.`, arr);
     return undefined;
   };
 
-  return {
+  const validateAndGetMaterial = (materialName: string): Material | undefined => {
+    const material = findByName(getState().Materials, materialName);
+    if (!material) {
+      console.warn(`Material "${materialName}" not found.`, getState().Materials);
+    }
+    return material;
+  };  const sortByRarityDesc = <T extends { rarity: number }>(items: T[]): T[] => 
+    items.sort((a, b) => b.rarity - a.rarity);
+
+  // Create the store with proper method binding
+  const dataStore: DataStore = {
     ...DataStoreContent,
-    findCharacterByName(name: string) { return findByName(getState().Characters, name); },
-    findArtifactByName(name: string) { return findByName(getState().Artifacts, name); },
-    findDomainByName(name: string) { return findByName(getState().Domains, name); },
-    findMobByName(name: string) { return findByName(getState().Mobs, name); },
-    findMaterialByName(name: string) { return findByName(getState().Materials, name); },
+    
+    // Basic find methods
+    findCharacterByName: (name: string) => findByName(getState().Characters, name),
+    findArtifactByName: (name: string) => findByName(getState().Artifacts, name),
+    findDomainByName: (name: string) => findByName(getState().Domains, name),
+    findMobByName: (name: string) => findByName(getState().Mobs, name),
+    findMaterialByName: (name: string) => findByName(getState().Materials, name),
 
+    // Domain-Artifact relationships
     getDomainsFromArtifact(artifactName: string) {
-      const artifact = this.findArtifactByName(artifactName);
-      if (!artifact) return undefined;
-
-      return getState().Domains.filter(domain => artifact.domainNames.includes(domain.name));
+      return getCachedOrCompute(`${CACHE_KEYS.ARTIFACT_DOMAINS}${artifactName}`, () => {
+        const artifact = findByName(getState().Artifacts, artifactName);
+        if (!artifact) return undefined;
+        
+        return getState().Domains.filter(domain => 
+          artifact.domainNames.includes(domain.name)
+        );
+      });
     },
+    
     getArtifactsFromDomain(domainName: string) {
-      const domain = this.findDomainByName(domainName);
-      if (!domain) return undefined;
+      return getCachedOrCompute(`${CACHE_KEYS.DOMAIN_ARTIFACTS}${domainName}`, () => {
+        const domain = findByName(getState().Domains, domainName);
+        if (!domain) return undefined;
 
-      return getState().Artifacts
-        .filter(artifact => artifact.domainNames.includes(domain.name))
-        .sort((a, b) => b.rarity - a.rarity);
+        return sortByRarityDesc(
+          getState().Artifacts.filter(artifact => 
+            artifact.domainNames.includes(domain.name)
+          )
+        );
+      });
     },
+    
     getTalentAscensionMaterialsFromDomain(domainName: string) {
-      const domain = this.findDomainByName(domainName);
+      const domain = findByName(getState().Domains, domainName);
       if (!domain) return undefined;
 
-      return getState().Materials
-        .filter(material => TalentAscensionMaterial.isAscensionMaterial(material) && material.domain.name === domain.name)
-        .sort((a, b) => b.rarity - a.rarity)
-        .map(material => material as TalentAscensionMaterial);
+      return sortByRarityDesc(
+        getState().Materials
+          .filter(material => 
+            TalentAscensionMaterial.isAscensionMaterial(material) && 
+            material.domain.name === domain.name
+          )
+      ) as TalentAscensionMaterial[];
     },
+    
     getWeaponAscensionMaterialsFromDomain(domainName: string) {
-      const domain = this.findDomainByName(domainName);
+      const domain = findByName(getState().Domains, domainName);
       if (!domain) return undefined;
 
-      return getState().Materials
-        .filter(material => WeaponAscensionMaterial.isAscensionMaterial(material) && material.domain.name === domain.name)
-        .sort((a, b) => b.rarity - a.rarity)
-        .map(material => material as WeaponAscensionMaterial);
+      return sortByRarityDesc(
+        getState().Materials
+          .filter(material => 
+            WeaponAscensionMaterial.isAscensionMaterial(material) && 
+            material.domain.name === domain.name
+          )
+      ) as WeaponAscensionMaterial[];
     },
 
-    getModelKeysUsingMaterial(materialName: string) {
-      const material = this.findMaterialByName(materialName);
-      if (!material) {
-        console.warn(`Material "${materialName}" not found.`, getState().Materials);
-        return [];
-      }
-
-      const modelKeys: ModelKeys[] = [];
-      if (this.getCharactersUsingMaterial(materialName).length) modelKeys.push('Character');
-      if (this.getMobsDroppingMaterial(materialName).length) modelKeys.push('Mob');
-      return modelKeys;
-    },
+    // Character-Material relationships
     getCharactersUsingMaterial(materialName: string) {
-      const material = this.findMaterialByName(materialName);
-      if (!material) {
-        console.warn(`Material "${materialName}" not found.`, getState().Materials);
-        return [];
-      }
+      const material = validateAndGetMaterial(materialName);
+      if (!material) return [];
 
-      return getState().Characters.filter(character => {
-        const { crystal, localSpecialty, material, mobDrop, weeklyBossDrop, worldBossDrop } = character.ascension;
-        const items = [
-          ...crystal.getCraftingTreeAsMaterials(),
-          localSpecialty,
-          material,
-          mobDrop,
-          weeklyBossDrop,
-          worldBossDrop
-        ].filter(Boolean);
-        return items.some(item => item.name === materialName);
+      return getCachedOrCompute(`${CACHE_KEYS.CHARACTER_MATERIALS}${materialName}`, () => {
+        return getState().Characters.filter(character => {
+          const { crystal, localSpecialty, material: charMaterial, mobDrop, weeklyBossDrop, worldBossDrop } = character.ascension;
+          const materials = [
+            ...crystal.getCraftingTreeAsMaterials(),
+            localSpecialty,
+            charMaterial,
+            mobDrop,
+            weeklyBossDrop,
+            worldBossDrop
+          ].filter(Boolean);
+          
+          return materials.some(item => item.name === materialName);
+        });
       }) as Character[];
     },
+    
     getMobsDroppingMaterial(materialName: string) {
-      const material = this.findMaterialByName(materialName);
-      if (!material) {
-        console.warn(`Material "${materialName}" not found.`, getState().Materials);
-        return [];
-      }
+      const material = validateAndGetMaterial(materialName);
+      if (!material) return [];
 
-      return getState().Mobs.filter(mob => mob.drops.some(drop => drop.name === materialName)) as Mob[];
+      return getCachedOrCompute(`${CACHE_KEYS.MATERIAL_DROPPERS}${materialName}`, () => {
+        return getState().Mobs.filter(mob => 
+          mob.drops.some(drop => drop.name === materialName)
+        );
+      }) as Mob[];
     },
+    
+    getDomainDroppingMaterial(materialName: string) {
+      const material = validateAndGetMaterial(materialName);
+      if (!material) return undefined;
+      
+      return AscensionMaterial.isAscensionMaterial(material) ? material.domain : undefined;
+    },
+
+    // Material usage methods with proper method binding
+    getModelKeysUsingMaterial(materialName: string) {
+      const material = validateAndGetMaterial(materialName);
+      if (!material) return [];
+
+      return getCachedOrCompute(`${CACHE_KEYS.MATERIAL_USERS}${materialName}`, () => {
+        const modelKeys: ModelKeys[] = [];
+        
+        if (dataStore.getCharactersUsingMaterial(materialName).length > 0) {
+          modelKeys.push('Character');
+        }
+        if (dataStore.getMobsDroppingMaterial(materialName).length > 0) {
+          modelKeys.push('Mob');
+        }
+        if (dataStore.getDomainDroppingMaterial(materialName)) {
+          modelKeys.push('Domain');
+        }
+        
+        return modelKeys;
+      });
+    },
+
+    // Advanced material-domain relationships
     getDomainsFromMaterial(material: Material) {
       const domains = getState().Domains.filter(domain => (
         (TalentAscensionMaterial.isTalentAscensionMaterial(material) && DomainOfMastery.isDomainMastery(domain)) 
         || (WeaponAscensionMaterial.isWeaponAscensionMaterial(material) && DomainOfForgery.isDomainForgery(domain)) 
         || (ArtifactSet.isArtifactSet(material) && DomainOfBlessing.isDomainBlessing(domain))
       ));
-      return domains.filter(domain => domain.getRewards(this).some(mat => mat.name === material.name));
+      
+      return domains.filter(domain => 
+        domain.getRewards(dataStore).some(mat => mat.name === material.name)
+      );
     },
+    
     getBossesFromMaterial(material: Material) {
-      return getState().Mobs.filter(mob => Boss.isBoss(mob) && mob.drops.some(drop => drop.name === material.name)) as Boss[];
-    },    getCharactersUsingArtifact(artifactName: string) {
+      return getState().Mobs.filter(mob => 
+        Boss.isBoss(mob) && mob.drops.some(drop => drop.name === material.name)
+      ) as Boss[];
+    },
+
+    getCharactersUsingArtifact(artifactName: string) {
+      const artifact = findByName(getState().Artifacts, artifactName);
+      if (!artifact) return [];
+
       const relevantCharacters = getState().Characters.filter(character =>
         character.sets.some(cSet =>
-          cSet.artifactSets.some(artifact => artifact.set.name === artifactName
-            && artifact.effectiveness === CharacterArtifactSet.MOST_EFFECTIVE
-          )));
+          cSet.artifactSets.some(artifactSet => 
+            artifactSet.set.name === artifactName &&
+            artifactSet.effectiveness === CharacterArtifactSet.MOST_EFFECTIVE
+          )
+        )
+      );
 
-      const getCharacterSet = (character: Character) => character.sets.find(cSet => 
-        cSet.artifactSets.some(artifact => 
-          artifact.set.name === artifactName 
-          && artifact.effectiveness === CharacterArtifactSet.MOST_EFFECTIVE
-      ));
+      const getCharacterSet = (character: Character) => 
+        character.sets.find(cSet => 
+          cSet.artifactSets.some(artifactSet => 
+            artifactSet.set.name === artifactName && 
+            artifactSet.effectiveness === CharacterArtifactSet.MOST_EFFECTIVE
+          )
+        );
       
       return relevantCharacters.map(character => {
         const set = getCharacterSet(character);
-        const cSet = set.artifactSets.find(artifact => artifact.set.name === artifactName);
+        const cSet = set.artifactSets.find(artifactSet => 
+          artifactSet.set.name === artifactName
+        );
 
         return {
-          character, set,
+          character,
+          set,
           pieces: cSet.pieces,
           effectiveness: cSet.effectiveness
         } as CharacterUsingArtifactResult;
@@ -133,5 +245,10 @@ export const useDataStore = create<DataStore>((setState, getState) => {
     },
 
     getModelType: <TModel extends Model>(model: TModel) => new ModelType<TModel>(model),
+    
+    // Utility method to clear cache when data changes
+    clearCache,
   };
+
+  return dataStore;
 });

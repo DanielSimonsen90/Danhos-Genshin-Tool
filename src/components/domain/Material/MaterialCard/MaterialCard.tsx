@@ -47,16 +47,20 @@ export default function MaterialCard({
       renderImage={() => <MaterialImage material={currentMaterial.name} />}
       renderHeaderContent={(() => (
         <>
-          {showDetails && (
+          {(showDetails || AscensionMaterial.isAscensionMaterial(material)) && (
             <div className="material-card__details">
               <div className="material-card__details-container">
-                <p className="material-card__description">
-                  {currentMaterial.description}
-                </p>
-                <Region material={material} />
+                {showDetails && (
+                  <p className="material-card__description">
+                    {currentMaterial.description}
+                  </p>
+                )}
+                {showDetails && (
+                  <Region material={material} />
+                )}
                 {AscensionMaterial.isAscensionMaterial(material) && <ObtainableDays material={material} />}
               </div>
-            </div>
+                    </div>
           )}
           {allowCycle && craftingTree?.length > 1 && (
             <Pagination
@@ -70,7 +74,7 @@ export default function MaterialCard({
       ))}
 
       renderContent={() => (<Relations
-        material={currentMaterial}
+        material={material}
         showModelsUsing={showModelsUsing}
         showModelAquired={showModelAquired}
       />)}

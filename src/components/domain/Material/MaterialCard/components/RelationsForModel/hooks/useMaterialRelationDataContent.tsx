@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { SearchableCharacterList, SearchableMobList } from "@/components/common/SearchableList";
+import { SearchableCharacterList, SearchableDomainList, SearchableMobList } from "@/components/common/SearchableList";
 import { useMaterialRelationData } from "./useMaterialRelationData";
 import { ModelKeys } from "@/common/models";
 
@@ -11,6 +11,7 @@ export function useMaterialRelationDataContent<TModelKey extends ModelKeys>(mode
     switch (model) {
       case 'Character': return <SearchableCharacterList items={data as any} cardProps={{ wrapInLink: true, nameTag: 'h3' }} />;
       case 'Mob': return <SearchableMobList items={data as any} cardProps={{ wrapInLink: true, nameTag: 'h3' }} />;
+      case 'Domain': return <SearchableDomainList items={data as any} cardProps={{ wrapInLink: true, nameTag: 'h3' }} />;
       default: return <div className="no-data">No data available</div>;
     }
   }, [model, data]);

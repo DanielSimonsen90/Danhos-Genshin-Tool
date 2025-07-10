@@ -7,6 +7,10 @@
     font-size: .9rem;
     font-weight: bold;
 
+    &[data-today=true] span {
+      text-decoration: underline;
+    }
+
     &:not(:last-of-type)::after {
       content: '/';
       font-weight: bold;
