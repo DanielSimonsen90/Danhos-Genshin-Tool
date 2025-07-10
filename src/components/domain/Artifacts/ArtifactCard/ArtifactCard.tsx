@@ -4,6 +4,7 @@ import ArtifactSets from "../ArtifactSets";
 import ArtifactDetails from "../ArtifactDetails";
 import DomainList from "../../Domain/DomainList";
 import ModelCard, { BaseModelCardProps } from "@/components/common/ModelCard";
+import { plural } from "@/common/functions/strings";
 
 export interface Props extends BaseModelCardProps {
   artifact: ArtifactSet;
@@ -35,7 +36,7 @@ export default function ArtifactCard({
       renderContent={() => (showCharacterSets || showDomainList) && (
         <section className="artifact-content">
           {showCharacterSets && <ArtifactSets artifact={artifact} />}
-          {showDomainList && <DomainList domainNames={artifact.domainNames} title={'Found in domains:'} />}
+          {showDomainList && <DomainList domainNames={artifact.domainNames} title={plural(artifact.domainNames.length, 'Found in domain', 'Found in domains')} />}
         </section>
       )}
     />

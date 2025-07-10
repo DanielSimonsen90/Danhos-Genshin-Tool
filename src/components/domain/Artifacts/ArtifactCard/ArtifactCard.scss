@@ -72,15 +72,10 @@
 }
 
 .artifacts-list-item {
-  background-color: var(--background-primary--muted);
   padding: .5em;
   border-radius: .5em;
   height: auto;
   transition: background-color 150ms ease-in-out;
-
-  &:hover {
-    background-color: var(--background-primary--light);
-  }
 }
 
 a.artifact-card {

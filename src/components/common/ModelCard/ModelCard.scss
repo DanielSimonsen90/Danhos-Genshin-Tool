@@ -4,6 +4,8 @@
   display: flex;
   flex-direction: column;
   gap: .5rem;
+  border-radius: .5rem;
+  padding: .5em;
 
   >header {
     display: grid;
@@ -31,8 +33,26 @@
   }
 
   &:is(a) {
-    > header {
+    background-color: var(--background-primary--light);
+
+    &:hover {
+      background-color: var(--background-secondary--muted);
+    }
+
+    >header {
       gap: .5em;
+    }
+
+    .model-card__name {
+      flex-direction: column;
+
+      &-text {
+        width: 100%;
+      }
+    }
+
+    .model-card__details {
+      justify-content: center;
     }
   }
 }

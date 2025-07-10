@@ -73,3 +73,7 @@ export function rarityString(rarity: Rarity) {
   const strings = ['Unknown', 'Common', 'Uncommon', 'Rare', 'Epic', 'Legendary'];
   return strings[rarity];
 }
+
+export function plural(amount: number, singular: string, plural?: string) {
+  return amount === 1 ? singular : (plural || `${singular}s`);
+}

@@ -31,6 +31,15 @@ export class ArtifactSet extends Material {
       rarity
     );
   }
+
+  public includes(query: string): boolean {
+    const keys = [
+      this.name,
+      this.twoPieceSetDescription,
+      this.fourPieceSetDescription,
+    ];
+    return keys.some(key => key.toLowerCase().includes(query));
+  }
 }
 
 export default ArtifactSet;

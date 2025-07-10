@@ -3,12 +3,20 @@
   border-top: 1px solid var(--border-color);
 }
 
-.material-card__used-by,
-.material-card__acquired-from {
+.material-card__models-using,
+.material-card__model-acquired {
   margin-bottom: 1rem;
 
   &:last-child {
     margin-bottom: 0;
+  }
+
+  .local-specialty {
+    display: flex;
+
+    .regions {
+      margin-left: .5ch;
+    }
   }
 
   h4 {

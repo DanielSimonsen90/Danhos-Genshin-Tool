@@ -3,37 +3,44 @@ import { useMemo, useCallback } from "react";
 import TabBar, { type TabsFunction } from "@/components/common/TabBar";
 import MaterialRelationsForModel from "../RelationsForModel";
 import { useDataStore } from "@/stores";
+import { Material } from "@/common/models";
+import LocalSpecialty from "@/common/models/materials/LocalSpecialty";
+import Region from "../Region";
 
 export type Props = {
-  materialName: string;
+  material: Material,
   showModelsUsing?: boolean;
   showModelAquired?: boolean;
 };
 
 export default function Relations({
-  materialName,
+  material,
   showModelsUsing,
   showModelAquired
 }: Props) {
   const DataStore = useDataStore();
-  const modelKeys = useMemo(() => {
-    return DataStore.getModelKeysUsingMaterial(materialName);
-  }, [DataStore, materialName]);
+  const { name } = material;
+  const modelKeys = useMemo(() => DataStore.getModelKeysUsingMaterial(name), [DataStore, name]);
 
   const usedByTabs = useCallback<TabsFunction>((tab) => [
-    modelKeys.includes('Character') && tab(`${materialName}-used-by-characters`, 'Characters', (
-      <MaterialRelationsForModel key={`char-${materialName}`} model='Character' materialName={materialName} />
+    modelKeys.includes('Character') && tab(`${name}-used-by-characters`, 'Characters', (
+      <MaterialRelationsForModel key={`char-${name}`} model='Character' materialName={name} />
     )),
     // modelKeys.includes('Weapon') && tab(`${materialName}-used-by-weapons`, 'Weapons', (
     //   <MaterialRelationsForModel key={`weapon-${materialName}`} model='Weapon' materialName={materialName} />
     // )), // TODO: Add when Weapon model is implemented
-  ].filter(Boolean), [modelKeys, materialName]);
+  ].filter(Boolean), [modelKeys, name]);
 
   const acquiredFromTabs = useCallback<TabsFunction>((tab) => [
-    modelKeys.includes('Mob') && tab(`${materialName}-used-by-mobs`, 'Mobs', (
-      <MaterialRelationsForModel key={`mob-${materialName}`} model='Mob' materialName={materialName} />
+    modelKeys.includes('Mob') && tab(`${name}-used-by-mobs`, 'Mobs', (
+      <MaterialRelationsForModel key={`mob-${name}`} model='Mob' materialName={name} />
     )),
-  ].filter(Boolean), [modelKeys, materialName]);
+    LocalSpecialty.isLocalSpecialty(material) && tab(`${name}-used-by-local-specialty`, 'Local Specialty', (
+      <div className="local-specialty">
+        The wilderness of <Region material={material} />.
+      </div>
+    )),
+  ].filter(Boolean), [modelKeys, name]);
 
   if (!showModelsUsing && !showModelAquired) {
     return null;

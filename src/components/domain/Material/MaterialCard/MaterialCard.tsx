@@ -40,7 +40,6 @@ export default function MaterialCard({
       model="Material"
       item={currentMaterial}
       {...props}
-      className={classNames('material-card', props.className)}
       data-show-details={showDetails}
       data-allow-pagination={allowCycle && craftingTree?.length > 1}
       {...{ 'data-today': AscensionMaterial.isAscensionMaterial(material) && material.isObtainableToday() }}
@@ -70,15 +69,11 @@ export default function MaterialCard({
         </>
       ))}
 
-      renderContent={() => (
-        <>
-          <Relations
-            materialName={material.name}
-            showModelsUsing={showModelsUsing}
-            showModelAquired={showModelAquired}
-          />
-        </>
-      )}
+      renderContent={() => (<Relations
+        material={currentMaterial}
+        showModelsUsing={showModelsUsing}
+        showModelAquired={showModelAquired}
+      />)}
     />
   );
 }
