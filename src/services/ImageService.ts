@@ -66,6 +66,9 @@ export const ImageService = new class ImageService extends BaseService<string> {
       .replace(/[':"]/g, '')
       .replace(/-/g, '_')}.png`;
   }
+  getMobImage(name: string): string {
+    return `${LOCAL_PATH}/mobs/${snakeCaseFromCamelCase(name).replace(/[,:"]/g, '')}.webp`;
+  }
 
   private formatRerollCdnName(name: string): string {
     return name.slice(0, 1).toUpperCase() + snakeCaseFromCamelCase(name).slice(1);

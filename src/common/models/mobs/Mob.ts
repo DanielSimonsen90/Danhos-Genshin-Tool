@@ -1,6 +1,8 @@
 import Material from "../materials/Material";
 import { Berserker, Instructor, TheExile, TravelingDoctor } from "../../../data/artifact-sets";
 
+export type MobType = 'easy' | 'elite' | 'weekly-boss' | 'world-boss';
+
 export abstract class Mob {
   public static isMob(mob: any): mob is Mob {
     return mob instanceof Mob;

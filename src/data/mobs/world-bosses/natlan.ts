@@ -85,7 +85,7 @@ export const LavaDragonStatue = new WorldBoss(
 );
 
 export const SecretSourceAutomationsOverseerDevice = new WorldBoss(
-  "Secret Source Automations: Overseer Device",
+  "Secret Source Automatons: Overseer Device",
   `A domination mechanism from the ancient ruins.\nIn the distant past, a once-mighty ancient race used this mechanism to oversee the operation of their cities. Even now, long after the fall of their civilization, it still retains immense authority.`,
   'Natlan',
   [

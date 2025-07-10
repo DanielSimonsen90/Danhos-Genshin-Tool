@@ -12,7 +12,7 @@ import SearchableList from "../SearchableList";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<Mob, TFilterKeys>>
-  & OptionalProps<Mob, TFilterKeys>  & {
+  & OptionalProps<Mob, TFilterKeys> & {
     noBaseSearch?: boolean;
     noBaseFilterChecks?: boolean;
     cardProps?: Partial<Omit<MobCardProps, 'mob'>>;
@@ -33,7 +33,8 @@ export default function SearchableMobList<TFilterKeys extends string>({
       const open = useContextMenu(item => [
         item('option', 'View', () => navigate(`/mobs/${mob.name}`), '👁️'),
         item('option', 'Hide', () => setHidden([...hidden, mob]), '🙈'),
-      ]);      return hidden.includes(mob) ? null : (
+      ]);
+      return hidden.includes(mob) ? null : (
         <div className="context-menu-item-container" onContextMenu={open}>
           <MobCard mob={mob} {...cardProps} />
         </div>

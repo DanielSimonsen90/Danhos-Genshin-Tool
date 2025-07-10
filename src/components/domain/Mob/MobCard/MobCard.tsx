@@ -7,6 +7,7 @@ import { ResinCost } from "@/common/types";
 import { MaterialCard } from "../../Material";
 import { ArtifactCard } from "../../Artifacts";
 import ModelCard, { BaseModelCardProps } from "@/components/common/ModelCard";
+import MobImage from "@/components/common/Images/MobImage";
 
 export interface Props extends BaseModelCardProps {
   mob: Mob;
@@ -16,12 +17,13 @@ export interface Props extends BaseModelCardProps {
   children?: React.ReactNode;
 }
 
-export default function MobCard({ 
-  mob, 
-  showDrops = true, 
-  showRegion = true, 
-  children, 
-  ...props 
+export default function MobCard({
+  mob,
+  showDetails,
+  showDrops = true,
+  showRegion = true,
+  children,
+  ...props
 }: Props) {
   const { name, description, drops } = mob;
 
@@ -39,9 +41,8 @@ export default function MobCard({
       model="Mob"
       item={mob}
       {...props}
-      className={classNames('mob-card', props.showDetails && 'mob-card--show-more', props.className)}
 
-      renderImage={() => <div>Mob Image Placeholder</div>}
+      renderImage={() => <MobImage mob={mob} />}
       renderHeadingContent={() => (
         <span className="mob-card__type">{mobType.replace('-', ' ')}</span>
       )}
@@ -63,33 +64,33 @@ export default function MobCard({
             </div>
           )}
 
-          <div className="mob-details-section">
-            <div className="mob-card__details">
-              <div className="mob-card__details-container">
-                <p className="mob-card__description">
-                  {description}
-                </p>
+          {showDetails && (
+            <div className="mob-details-section">
+              <div className="mob-card__details">
+                <div className="mob-card__details-container">
+                  <p className="mob-card__description">
+                    {description}
+                  </p>
+                </div>
               </div>
+              {showDrops && drops.length > 0 && (
+                <div className="mob-card__drops">
+                  <h2>Drops</h2>
+                  <ul className="mob-card__drops-list">
+                    {drops.map(drop => (
+                      <div className="mob-drop-container" key={`drop-${drop.name}`}>
+                        {
+                          ArtifactSet.isArtifactSet(drop)
+                            ? <ArtifactCard artifact={drop} />
+                            : <MaterialCard material={drop} allowCycle={false} nameTag="h4" />
+                        }
+                      </div>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
-
-            {showDrops && drops.length > 0 && (
-              <div className="mob-card__drops">
-                <h2>Drops</h2>
-                <ul className="mob-card__drops-list">
-                  {drops.map(drop => (
-                    <div className="mob-drop-container" key={`drop-${drop.name}`}>
-                      {
-                        ArtifactSet.isArtifactSet(drop)
-                          ? <ArtifactCard artifact={drop} />
-                          : <MaterialCard material={drop} allowCycle={false} nameTag="h4" />
-                      }
-                    </div>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-
+          )}
           {children}
         </div>
       )}
