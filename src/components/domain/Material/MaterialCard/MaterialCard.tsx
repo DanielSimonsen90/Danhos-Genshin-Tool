@@ -55,12 +55,10 @@ export default function MaterialCard({
                     {currentMaterial.description}
                   </p>
                 )}
-                {showDetails && (
-                  <Region material={material} />
-                )}
+                {showDetails && <Region material={material} />}
                 {AscensionMaterial.isAscensionMaterial(material) && <ObtainableDays material={material} />}
               </div>
-                    </div>
+            </div>
           )}
           {allowCycle && craftingTree?.length > 1 && (
             <Pagination

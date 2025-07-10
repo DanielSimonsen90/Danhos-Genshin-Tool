@@ -29,12 +29,10 @@ export const useDataStore = create<DataStore>((setState, getState) => {
   } as const;
 
   const clearCache = () => cache.clear();
+  const getCachedOrCompute = <T>(key: string, compute: () => T): T => {
+    if (cache.has(key)) return cache.get(key);
 
-  const getCachedOrCompute = <T>(key: string, computeFn: () => T): T => {
-    if (cache.has(key)) {
-      return cache.get(key);
-    }
-    const result = computeFn();
+    const result = compute();
     cache.set(key, result);
     return result;
   };
@@ -58,12 +56,10 @@ export const useDataStore = create<DataStore>((setState, getState) => {
 
   const validateAndGetMaterial = (materialName: string): Material | undefined => {
     const material = findByName(getState().Materials, materialName);
-    if (!material) {
-      console.warn(`Material "${materialName}" not found.`, getState().Materials);
-    }
+    if (!material) console.warn(`Material "${materialName}" not found.`, getState().Materials);
     return material;
-  };  const sortByRarityDesc = <T extends { rarity: number }>(items: T[]): T[] => 
-    items.sort((a, b) => b.rarity - a.rarity);
+  };  
+  const sortByRarityDesc = <T extends { rarity: number }>(items: T[]): T[] => items.sort((a, b) => b.rarity - a.rarity);
 
   // Create the store with proper method binding
   const dataStore: DataStore = {
@@ -175,15 +171,9 @@ export const useDataStore = create<DataStore>((setState, getState) => {
       return getCachedOrCompute(`${CACHE_KEYS.MATERIAL_USERS}${materialName}`, () => {
         const modelKeys: ModelKeys[] = [];
         
-        if (dataStore.getCharactersUsingMaterial(materialName).length > 0) {
-          modelKeys.push('Character');
-        }
-        if (dataStore.getMobsDroppingMaterial(materialName).length > 0) {
-          modelKeys.push('Mob');
-        }
-        if (dataStore.getDomainDroppingMaterial(materialName)) {
-          modelKeys.push('Domain');
-        }
+        if (dataStore.getCharactersUsingMaterial(materialName).length > 0) modelKeys.push('Character');
+        if (dataStore.getMobsDroppingMaterial(materialName).length > 0) modelKeys.push('Mob');
+        if (dataStore.getDomainDroppingMaterial(materialName)) modelKeys.push('Domain');
         
         return modelKeys;
       });
@@ -245,8 +235,6 @@ export const useDataStore = create<DataStore>((setState, getState) => {
     },
 
     getModelType: <TModel extends Model>(model: TModel) => new ModelType<TModel>(model),
-    
-    // Utility method to clear cache when data changes
     clearCache,
   };
 
