@@ -1035,7 +1035,7 @@ export const LanYan = new Character("Lan Yan", "Anemo", "Catalyst", ["Shield", "
   weeklyBossDrop: MobDrops.ErodedSunfire,
   crystal: ElementalCrystals.Anemo,
   localSpecialty: LocalSpecialties.ClearwaterJade,
-  worldBossDrop: MobDrops.SecretSourceAirflowAccumulator,
+  worldBossDrop: MobDrops.GoldInscribedSecretSourceCore,
   mobDrop: EasyMobDrops.Nectar,
 }, [
   new CharacterSet("Off-field Support", ["Elemental Mastery"], "Skill/Ability", false, [
@@ -1147,7 +1147,7 @@ export const Mavuika = new Character("Mavuika", "Pyro", "Claymore", ['Nightsouls
   weeklyBossDrop: MobDrops.ErodedHorn,
   crystal: ElementalCrystals.Pyro,
   localSpecialty: LocalSpecialties.WitheringPurpurbloom,
-  worldBossDrop: MobDrops.SecretSourceAirflowAccumulator,
+  worldBossDrop: MobDrops.GoldInscribedSecretSourceCore,
   mobDrop: EasyMobDrops.Whistle,
 }, [
   new CharacterSet("On-field DPS", ["ATK", 'Elemental Mastery'], "Skill/Ability", true, [
@@ -1859,7 +1859,7 @@ export const Xilonen = new Character("Xilonen", "Geo", "Sword", [
   weeklyBossDrop: MobDrops.MirrorOfMushin,
   crystal: ElementalCrystals.Geo,
   localSpecialty: LocalSpecialties.BrilliantChrysanthemum,
-  worldBossDrop: MobDrops.SecretSourceAirflowAccumulator,
+  worldBossDrop: MobDrops.GoldInscribedSecretSourceCore,
   mobDrop: EasyMobDrops.Whistle,
 }, [
   new CharacterSet("Off-field Support", ["DEF"], "Skill/Ability", false, [
