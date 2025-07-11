@@ -1,7 +1,7 @@
 import { Percentage, Rarity, WeaponStatName, WeaponType } from "../types";
 import Character from "./characters/Character";
 
-type WeaponDroppedBy = 'Battle Pass' | 'Chest' | 'Crafting' | 'Event' | 'Quest' | 'Starglitter Exchange' | 'Fishing' | 'Vendor' | 'Wish';
+type WeaponDroppedBy = 'Battle Pass' | 'Chest' | 'Crafting' | 'Event' | 'Quest' | 'Starglitter Exchange' | 'Fishing' | 'Vendor' | 'Wish' | `NPC: ${string}`;
 type SecondaryStatValue<TWeaponStatName extends WeaponStatName> =
   TWeaponStatName extends 'Elemental Mastery'
   ? number
