@@ -15,6 +15,13 @@ export const MarkOfTheBindingBlessing = new MobDrop(
   Rarity.Epic
 );
 
+export const GoldInscribedSecretSourceCore = new MobDrop(
+  `Gold-Inscribed Secret Source Core`,
+  `This is a core component that separated from the body fo a Secret Source Automaton: Configuration Device that lost its ability to move after being defeated.\nSome say that the cores that power all the Secret Source Automatons are the same type, and that they simply carry different information, as attested by the fact that the golden patterns on them are different. At first, many commands were only added to the circuits to aid their smooth running, but it seems that all the superimposition and layering of orders onto one another has wound up creating a rudimentary artificial intelligence.`,
+  'Natlan',
+  Rarity.Epic
+);
+
 export const EnsnaringGaze = new MobDrop(
   `Ensnaring Gaze`,
   `An object obtained after defeating the monster known as the Tenebrous Papilla. It may look like a piece of fruit, but it is not.\nFormed from energy that has condensed in a single spot, its "eye" seems to gaze out from a distant, dark otherworld.`,

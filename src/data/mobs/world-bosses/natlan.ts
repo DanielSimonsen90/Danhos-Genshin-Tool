@@ -1,7 +1,7 @@
 import { WorldBoss } from "@/common/models/mobs/Boss";
-import { Adventurer, Berserker, GladiatorsFinale, Instructor, LuckyDog, PrayersOfDestiny, PrayersOfIllumination, PrayersOfSpringtime, TheExile, WanderersTroupe } from "@/data/artifact-sets";
+import { Adventurer, Berserker, GladiatorsFinale, Instructor, LuckyDog, PrayersOfDestiny, PrayersOfIllumination, PrayersOfSpringtime, PrayersOfWisdom, TheExile, WanderersTroupe } from "@/data/artifact-sets";
 import { ElementalCrystals } from "@/data/materials/drops/crystals";
-import { EnsnaringGaze, MarkOfTheBindingBlessing, OverripeFlamegranate, SecretSourceAirflowAccumulator, SparklessStatueCore, TalismanOftheEnigmaticLand } from "@/data/materials/drops/natlan";
+import { EnsnaringGaze, GoldInscribedSecretSourceCore, MarkOfTheBindingBlessing, OverripeFlamegranate, SecretSourceAirflowAccumulator, SparklessStatueCore, TalismanOftheEnigmaticLand } from "@/data/materials/drops/natlan";
 
 export const GluttonousYumkasaurMountainKing = new WorldBoss(
   "Gluttonous Yumkasaur Mountain King",
@@ -31,6 +31,22 @@ export const GoldflameQucusaurTyrant = new WorldBoss(
     Instructor,
     PrayersOfIllumination,
     Adventurer,
+  ]
+);
+
+export const SecretSourceAutomatonConfigurationDevice = new WorldBoss(
+  "Secret Source Automatons: Configuration Device",
+  `An ancient machine used for manufacturing.\nIt is said to be a production machine produced by a long-lost ancient civilization.\nAs it can be both a tool and a weapon, it is far more dangerous than most other Secret Source automaton warriors.`,
+  'Natlan',
+  [
+    GoldInscribedSecretSourceCore,
+    ...ElementalCrystals.Electro.getCraftingTreeAsMaterials(),
+    GladiatorsFinale,
+    WanderersTroupe,
+    Berserker,
+    TheExile,
+    PrayersOfWisdom,
+    Adventurer
   ]
 );
 
