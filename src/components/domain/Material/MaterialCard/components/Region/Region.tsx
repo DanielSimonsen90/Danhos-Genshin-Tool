@@ -8,16 +8,18 @@ type Props<TMaterial extends Material> = {
 
 export default function Region<TMaterial extends Material>({ material }: Props<TMaterial>) {
   const regions = useMemo(() => (
-    Billet.isBillet(material) 
-      ? material.regions 
-      : [material.region]
+    Billet.isBillet(material)
+      ? material.regions
+      : material.region
+        ? [material.region]
+        : []
   ), [material]);
 
-  return (
+  return regions.length > 0 ? (
     <ul className="regions">
       {regions.map((region) => (
         <li data-region={region} key={`material-region-${material.name}-${region}`}>{region}</li>
       ))}
     </ul>
-  );
+  ) : null;
 }

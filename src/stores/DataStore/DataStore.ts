@@ -30,7 +30,10 @@ export const useDataStore = create<DataStore>((setState, getState) => {
 
   const clearCache = () => cache.clear();
   const getCachedOrCompute = <T>(key: string, compute: () => T): T => {
-    if (cache.has(key)) return cache.get(key);
+    if (cache.has(key)) {
+      console.debug(`Cache hit for key: ${key}`, cache.get(key));
+      return cache.get(key);
+    }
 
     const result = compute();
     cache.set(key, result);
@@ -132,6 +135,7 @@ export const useDataStore = create<DataStore>((setState, getState) => {
         return getState().Characters.filter(character => {
           const { crystal, localSpecialty, material: charMaterial, mobDrop, weeklyBossDrop, worldBossDrop } = character.ascension;
           const materials = [
+            crystal,
             ...crystal.getCraftingTreeAsMaterials(),
             localSpecialty,
             charMaterial,

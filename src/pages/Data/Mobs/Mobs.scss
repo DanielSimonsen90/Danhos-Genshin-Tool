@@ -1,0 +1,19 @@
+.mobs-page {
+  .searchable-list__list {
+    --min: 200px;
+  }
+
+  .mob-card > header {
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 1fr;
+    justify-items: center;
+
+    img {
+      --size: 10rem;
+    }
+  }
+
+  .mob-card__region {
+    text-align: center;
+  }
+}

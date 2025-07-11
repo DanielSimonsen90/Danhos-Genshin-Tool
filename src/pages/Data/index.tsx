@@ -9,6 +9,8 @@ export { default as Domains } from './Domains';
 export { default as Domain } from './Domains/{domainName}';
 export { default as Materials } from './Materials';
 export { default as Material } from './Materials/{materialName}';
+export { default as Mobs } from './Mobs';
+export { default as Mob } from './Mobs/{mobName}';
 
 function DataPage() {
   return (

@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 import { getElement } from '@/data/elements';
 
-import type { Element } from '@/common/types';
+import { Element, Rarity } from '@/common/types';
 import { ROUTES } from '@/common/constants/routes';
-import { ArtifactSet, Character, Model, List, Domain, DomainOfBlessing } from '@/common/models';
+import { ArtifactSet, Character, Model, List, Domain, DomainOfBlessing, Mob, WeeklyBoss, WorldBoss, EliteMob, EasyMob } from '@/common/models';
 import { classNames, pascalCaseFromKebabCase, pascalCaseFromSnakeCase } from '@/common/functions/strings';
 
 import RarityList from '@/components/common/icons/Rarity';
@@ -13,6 +13,7 @@ import Select from '@/components/common/Select';
 import { CharacterImage, ArtifactImage, DomainImage, ElementImage, MaterialImage } from '@/components/common/Images';
 
 import { DataStore, useDataStore } from '@/stores';
+import MobImage from '@/components/common/Images/MobImage';
 
 const DATA_PREFIX = ROUTES.data;
 const routes = [
@@ -21,6 +22,7 @@ const routes = [
   [ROUTES.endRoute('data_domains'), 'Domains'],
   //  [ROUTES.endRoute('data_weapons'), 'Weapons'],
   [ROUTES.endRoute('data_materials'), 'Materials'],
+  [ROUTES.endRoute('data_mobs'), 'Mobs'],
 ];
 
 type Order = `${'name' | 'rarity' | 'element'}-${'ascend' | 'descend'}`;
@@ -34,12 +36,29 @@ const getDomainElement = (domain: DomainOfBlessing, dataStore: DataStore, order:
   .filter(Boolean)
   .sort((a, b) => order === 'element-ascend' ? a.localeCompare(b) : b.localeCompare(a))
 [0];
+const getRarityFromMob = (mob: Mob): Rarity | undefined => {
+  const checks = [
+    EasyMob.isEasyMob,
+    EliteMob.isEliteMob,
+    WorldBoss.isWorldBoss,
+    WeeklyBoss.isWeeklyBoss,
+  ];
+  const rarity = [
+    Rarity.Common,
+    // Rarity.Uncommon,
+    Rarity.Rare,
+    Rarity.Epic,
+    Rarity.Legendary,
+  ];
+
+  return rarity[checks.findIndex(check => check(mob))];
+};
 
 export default function DataIndex() {
   const DataStore = useDataStore();
   const {
-    CharacterNames, ArtifactNames, DomainNames, MaterialNames,
-    Characters, Artifacts, Domains, Materials,
+    CharacterNames, ArtifactNames, DomainNames, MaterialNames, MobNames,
+    Characters, Artifacts, Domains, Materials, Mobs,
   } = DataStore;
 
   const groups = [
@@ -47,14 +66,17 @@ export default function DataIndex() {
     ['artifacts', ArtifactNames],
     ['domains', DomainNames],
     // ['weapons', WeaponNames],
-    ['materials', MaterialNames]
+    ['materials', MaterialNames],
+    ['mobs', MobNames],
+
   ] as const;
   const groupModels = new Map<string, List<Model>>([
     ['characters', Characters],
     ['artifacts', Artifacts],
     ['domains', Domains],
     // ['weapons', Weapons],
-    ['materials', Materials]
+    ['materials', Materials],
+    ['mobs', Mobs],
   ]);
 
   const [order, setOrder] = useState<Order>('name-ascend');
@@ -140,8 +162,8 @@ export default function DataIndex() {
                     const model = groupModels.get(route)?.find(m => m.name === name);
                     const element = (
                       route === 'characters' ? (model as Character).element
-                      : route === 'artifacts' ? getModelElement(model as ArtifactSet)
-                      : route === 'domains' && getDomainElement(model as DomainOfBlessing, DataStore, order)
+                        : route === 'artifacts' ? getModelElement(model as ArtifactSet)
+                          : route === 'domains' && getDomainElement(model as DomainOfBlessing, DataStore, order)
                     );
 
                     return (
@@ -178,15 +200,16 @@ export default function DataIndex() {
               {names.map(name => {
                 const model = (
                   group === 'characters' ? Characters.find(c => c.name === name)
-                  : group === 'artifacts' ? Artifacts.find(a => a.name === name)
-                  : group === 'domains' ? Domains.find(d => d.name === name)
-                  : group === 'materials' ? Materials.find(m => m.name === name)
-                  : undefined
+                    : group === 'artifacts' ? Artifacts.find(a => a.name === name)
+                      : group === 'domains' ? Domains.find(d => d.name === name)
+                        : group === 'materials' ? Materials.find(m => m.name === name)
+                          : group === 'mobs' ? Mobs.find(m => m.name === name)
+                            : undefined
                 );
                 const element = (
                   group === 'characters' ? (model as Character).element
-                  : group === 'artifacts' ? getModelElement(model as ArtifactSet)
-                  : group === 'domains' && getDomainElement(model as DomainOfBlessing, DataStore, order)
+                    : group === 'artifacts' ? getModelElement(model as ArtifactSet)
+                      : group === 'domains' && getDomainElement(model as DomainOfBlessing, DataStore, order)
                 );
 
                 return (
@@ -196,15 +219,16 @@ export default function DataIndex() {
                       {group === 'artifacts' && <ArtifactImage set={name} piece='Flower' />}
                       {group === 'domains' && <DomainImage domain={name} />}
                       {group === 'materials' && <MaterialImage material={name} />}
+                      {group === 'mobs' && <MobImage mob={name} />}
                       <header>
                         <p className='model-name'>
                           <span>{name}</span>
                           {element ? <ElementImage element={element} /> : null}
                         </p>
                         {model
-                          ? 'rarity' in model
-                            ? <RarityList rarity={model?.rarity} />
-                            : <span>{model.region}</span>
+                          ? 'rarity' in model || Mob.isMob(model)
+                            ? <RarityList rarity={'rarity' in model ? model.rarity : getRarityFromMob(model)} />
+                            : undefined
                           : <p>Unknown model</p>
                         }
                       </header>

@@ -1,19 +1,16 @@
-import { Mob } from "@/common/models";
 import Image from "./Image";
 import { classNames, pascalCaseFromSnakeCase } from "@/common/functions/strings";
 import { ImageService } from "@/services";
 
 type Props = {
-  mob: Mob;
+  mob: string;
   className?: string;
 };
 
 export default function MobImage({ mob, className }: Props) {
-  const { name } = mob;
-  
   return <Image
-    className={classNames("artifact-image", className)}
-    src={ImageService.getMobImage(name)}
-    alt={name}
+    className={classNames("mob-image", className)}
+    src={ImageService.getMobImage(mob)}
+    alt={mob}
   />;
 }

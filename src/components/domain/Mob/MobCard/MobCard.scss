@@ -21,13 +21,17 @@
     --color: var(--rarity-common);
   }
 
+  .mob-image {
+    border-radius: 50%;
+  }
+
   &__name {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: .5em;
     font-size: 1.25rem;
-    margin: 0;
+    margin-bottom: .5em;
     width: 100%;
 
     &-text {
@@ -67,21 +71,64 @@
 
   &__drops {
     &-list {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
       gap: .5em;
 
       .mob-drop-container header {
         display: grid;
         grid-template-columns: auto 1fr;
-        grid-template-areas: unset;
+        grid-template-rows: auto;
+        // grid-template-areas: unset;
         align-items: center;
         gap: 0.5em;
 
         img {
           --size: 3rem;
         }
+
+        .model-card__details {
+          width: 100%;
+        }
+
+        .model-card__name {
+          font-size: inherit;
+          text-align: left;
+          align-items: flex-start;
+
+          &-text {
+            flex: unset;
+            width: unset;
+            justify-content: flex-start;
+          }
+        }
       }
     }
+  }
+
+  &__relations {
+    .tab-bar__tab .model-card {
+      padding: 0;
+
+      > header {
+        gap: .5em;
+      }
+
+      img {
+        --size: 2rem;
+      }
+    }
+  }
+}
+
+a.mob-card {
+  >header {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    justify-items: center;
+  }
+
+  .mob-card__region {
+    text-align: center;
   }
 }

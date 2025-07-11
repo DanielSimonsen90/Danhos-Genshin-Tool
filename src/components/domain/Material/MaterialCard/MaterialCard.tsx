@@ -22,7 +22,7 @@ export interface Props extends BaseModelCardProps {
 export default function MaterialCard({
   material,
   allowCycle = true,
-  showRarity, showModelsUsing, showModelAquired, showDetails,
+  showModelsUsing, showModelAquired, showDetails,
   ...props
 }: Props) {
   const view = useSettingsStore(ss => ss.getSetting('preferredTabs').craftableMaterial);
@@ -48,16 +48,14 @@ export default function MaterialCard({
       renderHeaderContent={(() => (
         <>
           {(showDetails || AscensionMaterial.isAscensionMaterial(material)) && (
-            <div className="material-card__details">
-              <div className="material-card__details-container">
-                {showDetails && (
-                  <p className="material-card__description">
-                    {currentMaterial.description}
-                  </p>
-                )}
-                {showDetails && <Region material={material} />}
-                {AscensionMaterial.isAscensionMaterial(material) && <ObtainableDays material={material} />}
-              </div>
+            <div className="material-card__details-container">
+              {showDetails && (
+                <p className="material-card__description">
+                  {currentMaterial.description}
+                </p>
+              )}
+              {showDetails && <Region material={material} />}
+              {AscensionMaterial.isAscensionMaterial(material) && <ObtainableDays material={material} />}
             </div>
           )}
           {allowCycle && craftingTree?.length > 1 && (

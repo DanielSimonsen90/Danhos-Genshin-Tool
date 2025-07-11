@@ -50,7 +50,7 @@ export class WeeklyBoss extends Boss {
   ) {
     super(name, description, region, drops);
     this.resinCosts.push(
-      ResinCost.Thirty,
+      // ResinCost.Thirty,
       ResinCost.Sixty,
     )
   }
