@@ -1,20 +1,14 @@
+@use '../../../../styles/partials' as *;
+
 .domain-card {
   display: grid;
+  gap: 1em;
   height: 100%;
 
-  &__name {
-    --margins: .25em;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    max-width: calc(100% - var(--margins) * 2);
-  }
-
-  >aside {
-    display: flex;
-    flex-direction: column;
-    gap: 1ch;
-    align-items: center;
+  &__header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1em;
   }
 
   .domain-image {
@@ -22,42 +16,77 @@
     margin-inline: auto;
   }
 
-  .domain-details__region {
-    text-align: center;
-    color: var(--text-secondary);
+  &__details {
+    display: flex;
+    flex-direction: column;
+  }
 
-    span {
-      color: var(--region);
+  &__name {
+    --margins: 0em;
+    max-width: calc(100% - var(--margins) * 2);
+    font-size: clamp(1.25rem, 2vw, 3rem);
+  }
+
+  .domain-type {
+    // margin-top: auto;
+    
+    ul {
+      display: flex;
+      justify-content: center;
+
+      .artifact-image,
+      .material-image {
+        --size: 3rem;
+      }
     }
+  }
+
+  .domain-card__region {
+    color: var(--region);
   }
 
   .domain-rewards {
     display: flex;
     flex-direction: column;
+
+    .artifact-card {
+      &:hover {
+        border-radius: .25em;
+        background-color: var(--background-secondary);
+      }
+    }
   }
 
   .artifact-card {
-    padding: .5em .25em .5em 0;
-    align-items: flex-start;
-    grid-template-columns: unset;
-
     >header {
       --image-size: 7.5rem;
       display: grid;
       grid-template-columns: var(--image-size) 1fr;
       align-items: center;
+      justify-items: start;
+
+      .artifact-card__name {
+        text-align: left;
+      }
     }
   }
 
-  .artifact-tab-bar .artifact-card {
-    height: 4rem;
+  .artifact-tab-bar {
+    .tab-bar__tab {
+      padding-inline: .5em;
+    }
+
+    .artifact-card {
+      padding-inline: .5em;
+
+      >header {
+        gap: .5em;
+      }
+    }
   }
 }
 
 .domain-card--show-more {
-  display: grid;
-  gap: 1em;
-
   .domain-details {
     >header {
       display: flex;
@@ -82,11 +111,6 @@ a>.domain-card {
 }
 
 @media (min-width: 1000px) {
-  .domain-card--show-more {
-    grid-auto-flow: row;
-    grid-template-columns: 1fr auto;
-  }
-
   .domain-details__description {
     max-width: 66ch;
   }

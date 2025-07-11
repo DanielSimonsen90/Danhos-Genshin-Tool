@@ -144,16 +144,16 @@ export const PrimalConstructPrism = MobDrop.create('Prism', {
 export const Shell = MobDrop.create('Shell', {
   [Rarity.Epic]: `Marked`,
   [Rarity.Rare]: `Sturdy`,
-  [Rarity.Uncommon]: `Deiccated`,
+  [Rarity.Uncommon]: `Desiccated`,
 }, {
   [Rarity.Epic]: `The marked shell of a Consecrated Beast inscribed with ancient script.\nOn the pallid contours of the shell, the regrets of a time long past have been inlaid. One day, the bones of the beast will scatter like dust in the wind, and then, finally, may the exalted deceased greet their final rest...`,
   [Rarity.Rare]: `The sturdy shell of a Consecrated Beast.\nThe remains of a ruinous beast that once gnawed at the flesh of great, fallen beings. Even should the beasts sup a sliver of power from the gods of yesteryear, they too will greet the same end as said gods.`,
   [Rarity.Uncommon]: `The ruined shell of a Consecrated Beast.\nA tangible effigy to the grand calamity that devoured the lands of yore, usually only discovered in places few dare tread.`,
 });
 
-export const HilichurlFlower = MobDrop.create('<plaholder>', {
+export const HilichurlFlower = MobDrop.create('<placeholder>', {
   [Rarity.Epic]: `Wanderer's Blooming Flower`,
-  [Rarity.Rare]: `Treasued Flower`,
+  [Rarity.Rare]: `Treasured Flower`,
   [Rarity.Uncommon]: `A Flower Yet to Bloom`,
 }, {
   [Rarity.Epic]: `A blooming wild flower that a Hilichurl Rogue treasured, bereft of any special qualities.The eternal outlander asks not for reward, but only to see their deeds come to fruition...`,
@@ -161,7 +161,7 @@ export const HilichurlFlower = MobDrop.create('<plaholder>', {
   [Rarity.Uncommon]: `A wild flower that a Hilichurl Rogue treasured. It was plucked before it could bloom.\nThe hilichurl takes nothing with it in its sojourn across the wilderness save this flower.`,
 }, {
   onCreate: (name, description, rarity) => new MobDrop(
-    name.replace('<placeholder>', ''),
+    name.replace('<placeholder>', '').trim(),
     description,
     undefined,
     rarity,
@@ -282,7 +282,7 @@ export const AbyssalLeaf = MobDrop.create('<placeholder>', {
   [Rarity.Uncommon]: `A leaf bud dropped by the monster known as the Tenebrous Mimiflora after being vanquished.\nIt is said that when this creature emerged from the Black Tide, the first things it grew were these tender buds capable of deflecting elemental power.`,
 }, {
   onCreate: (name, description, rarity) => new MobDrop(
-    name.replace('<placeholder>', ''),
+    name.replace('<placeholder>', '').trim(),
     description,
     undefined,
     rarity,
@@ -299,7 +299,7 @@ export const WeaselShell = MobDrop.create('<placeholder>', {
   [Rarity.Uncommon]: `A chunk of shell carved from a Furnace Shell Mountain Weasel's back after its defeat.\nWhere it once blazed brightly, this piece has long since gone cold. The fire-like luster it once held is no more.`,
 }, {
   onCreate: (name, description, rarity) => new MobDrop(
-    name.replace('<placeholder>', ''),
+    name.replace('<placeholder>', '').trim(),
     description,
     undefined,
     rarity,

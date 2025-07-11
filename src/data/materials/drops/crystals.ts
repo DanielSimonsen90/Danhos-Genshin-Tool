@@ -1,5 +1,5 @@
 import { Element, Rarity } from "@/common/types";
-import MobDrop from "@/common/models/materials/MobDrop";
+import MobDrop, { ElementalCrystal } from "@/common/models/materials/MobDrop";
 
 export const ElementalCrystalMap: Record<Element, string> = {
   Anemo: 'Vayuda Turquoise',
@@ -9,7 +9,7 @@ export const ElementalCrystalMap: Record<Element, string> = {
   Dendro: 'Nagadus Emerald',
   Hydro: 'Varunada Lazurite',
   Pyro: 'Agnidus Agate',
-}
+};
 
 export const CrystalChunks = [
   'Sliver',
@@ -20,34 +20,40 @@ export const CrystalChunks = [
 
 export type ElementalCrystals = Record<
   Element,
-  Record<typeof CrystalChunks[number], MobDrop> & {
-    [Symbol.iterator]: () => IterableIterator<MobDrop>;
-  }
->
+  ElementalCrystal
+> & {
+  [Symbol.iterator]: () => IterableIterator<ElementalCrystal>;
+};
 
-export type ElementalCrystal<TElement extends Element> = ElementalCrystals[TElement];
+export type ElementalCrystalGroup<TElement extends Element> = ElementalCrystals[TElement];
 
 export const ElementalCrystals = (function defineElementalCrystals() {
   const crystals = Object.keys(ElementalCrystalMap).reduce((acc, element) => {
-    const chunks = Object.values(CrystalChunks).reduce((acc, chunk) => {
-      acc[chunk] = new MobDrop(
-        `${ElementalCrystalMap[element as keyof typeof ElementalCrystalMap]} ${chunk}`,
-        `Elemental crystal for ${element}.`,
-        undefined,
-        CrystalChunks.indexOf(chunk) + 1 as Rarity,
-      );
-      return acc;
-    }, {} as ElementalCrystals[Element]);
-
-    chunks[Symbol.iterator] = function* () {
-      for (const chunk of CrystalChunks) {
-        yield this[chunk]
-      }
-    };
-
-    acc[element as Element] = chunks;
+    acc[element as Element] = ElementalCrystal.create(
+      ElementalCrystalMap[element as keyof typeof ElementalCrystalMap],
+      {
+        [Rarity.Uncommon]: 'Sliver',
+        [Rarity.Rare]: 'Fragment',
+        [Rarity.Epic]: 'Chunk',
+        [Rarity.Legendary]: 'Gemstone',
+      },
+      {
+        [Rarity.Uncommon]: `${element} elemental crystal`,
+        [Rarity.Rare]: `${element} elemental crystal`,
+        [Rarity.Epic]: `${element} elemental crystal`,
+        [Rarity.Legendary]: `${element} elemental crystal`,
+      },
+      { prependName: true }
+    );;
     return acc;
   }, {} as ElementalCrystals);
+
+
+  crystals[Symbol.iterator] = function* () {
+    for (const element of Object.keys(crystals)) {
+      yield* crystals[element as Element].getCraftingTreeAsMaterials();
+    }
+  };
 
   return crystals;
 })();

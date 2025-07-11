@@ -1,7 +1,8 @@
 .item-page-header {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
+  min-height: 5rem;
 
   h1 {
     text-align: center;

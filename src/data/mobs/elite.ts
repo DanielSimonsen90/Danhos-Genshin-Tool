@@ -206,8 +206,8 @@ export const AvatarsOfLava = new EliteMob(
   ]
 );
 
-export const SecretSourceAutomation__HunterSeeker = new EliteMob(
-  `Secret Source Automation: Hunter-Seeker`,
+export const SecretSourceAutomaton__HunterSeeker = new EliteMob(
+  `Secret Source Automaton: Hunter-Seeker`,
   `An ancient machine used in object collection.\nIt is said that these machines were created by a long-lost civilization, and that they were originally designed to fulfill work functions — in other words, combat was not their intended purpose. Even so, a malfunctioning collection device is still cause for a major headache.`,
   [
     EliteMobDrops.SecretSource,

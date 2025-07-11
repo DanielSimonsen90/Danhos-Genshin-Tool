@@ -3,7 +3,7 @@ import * as MasteryDomains from "@/data/domains/domain-of-mastery";
 
 export const Contention = TalentAscensionMaterial.create(
   'Contention',
-  '', // TODO
+  'Contention is the principle by which all is weighed in the Nation of Pyro.\nWhat defines strength, and what weakness? Only victory and defeat. The results of a contest are more convincing than any words.',
   'Natlan',
   MasteryDomains.BlazingRuins,
   'Monday/Thursday',
@@ -24,10 +24,3 @@ export const Conflict = TalentAscensionMaterial.create(
   MasteryDomains.BlazingRuins,
   'Wednesday/Saturday',
 );
-
-export const Natlan = {
-  Contention,
-  Kindling,
-  Conflict,
-};
-export default Natlan;

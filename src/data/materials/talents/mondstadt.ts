@@ -24,10 +24,3 @@ export const Ballad = TalentAscensionMaterial.create(
   MasteryDomains.ForsakenRift,
   'Wednesday/Saturday',
 );
-
-export const Mondstadt = {
-  Freedom,
-  Resistance,
-  Ballad,
-}
-export default Mondstadt;

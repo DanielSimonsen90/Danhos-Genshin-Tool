@@ -6,7 +6,8 @@ export const useFavoriteStoreProvider = create<FavoriteStore>()(persist((setStat
   const data: ModelsCollection = {
     characters: [],
     artifacts: [],
-    domains: []
+    domains: [],
+    materials: []
   };
 
   const add = <T extends keyof ModelsCollection>(type: T, item: FavoriteModels[T]) => {

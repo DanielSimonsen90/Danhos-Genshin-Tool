@@ -11,6 +11,7 @@ import { useContextMenu } from "@/providers/ContextMenuProvider";
 import { OptionalProps, UncrontrolledProps } from "../Props";
 import SearchableList from "../SearchableList";
 import Star from "../../icons/Star";
+import { Rarity } from "@/common/types";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<Character, TFilterKeys>>
@@ -69,6 +70,13 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
         bow: character => character.weapon === "Bow",
         catalyst: character => character.weapon === "Catalyst",
       },
+      rarity: {
+        '5 star': character => character.rarity === Rarity.Legendary,
+        '4 star': character => character.rarity === Rarity.Epic,
+        // '3 star': character => character.rarity === Rarity.Rare,
+        // '2 star': character => character.rarity === Rarity.Uncommon,
+        // '1 star': character => character.rarity === Rarity.Common,
+      },
       needs: {
         hp: character => character.needsHP(),
         atk: character => character.needsATK(),
@@ -76,6 +84,7 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
         energyRecharge: character => character.needsER(),
         elementalMastery: character => character.needsEM(),
       },
+      onField: character => character.sets[0]?.onField,
       bonusAbility: {
         none: character => character.bonusAbilities.length === 0,
 

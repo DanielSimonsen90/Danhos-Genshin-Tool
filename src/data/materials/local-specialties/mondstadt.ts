@@ -47,15 +47,3 @@ export const Wolfhook = new LocalSpecialty(
   `A berry with thorns that often gets attached to a wolf's pelt. When you look at it, you can almost hear the echoing cries of the wolves in the woods.`,
   'Mondstadt',
 );
-
-export const Mondstadt = {
-  CallaLily,
-  Cecilia,
-  DandelionSeed,
-  PhilanemoMushroom,
-  SmallLampGrass,
-  Valberry,
-  WindwheelAster,
-  Wolfhook,
-}
-export default Mondstadt;

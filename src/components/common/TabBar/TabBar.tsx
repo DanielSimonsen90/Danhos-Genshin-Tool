@@ -3,17 +3,20 @@ import { addTabNavigation } from "@/common/functions/accessibility";
 import { classNames } from "@/common/functions/strings";
 import { Chevron } from "../icons";
 
-import { Props } from "./TabBarTypes";
+import { Props, Tab } from "./TabBarTypes";
 import { createTabItem } from "./TabBarFunctions";
 
 export default function TabBar<TTabKey extends string>(props: Props<TTabKey>) {
   const { collapseArea = 'content', direction = 'horizontal' } = props;
   const { placeChildrenBeforeTabs, hideCollapseChevron } = props;
 
-  const tabs = useMemo(() => typeof props.tabs === 'function' ? props.tabs(createTabItem) : props.tabs, [props.tabs]);
+  const tabs = useMemo(() => {
+    const rawTabs = typeof props.tabs === 'function' ? props.tabs(createTabItem) : props.tabs;
+    return rawTabs.filter((tab): tab is readonly [TTabKey, Tab] => Boolean(tab));
+  }, [props.tabs]);
   const internalTabs = useMemo(() => {
     const set = tabs
-      .filter(([_, value]) => value !== undefined)
+      .filter(([_, value]) => value !== undefined && value.content !== undefined)
       .reduce((acc, [key, { title }]) => acc.set(key, title), new Map<TTabKey, ReactNode>());
     return [...set.entries()];
   }, [tabs, props.id]);
@@ -42,12 +45,11 @@ export default function TabBar<TTabKey extends string>(props: Props<TTabKey>) {
         {typeof content === 'function' ? content() : content}
       </div>
     ))}</>);
-  }, [tabs, activeTab, props.tab]);
-  const setActiveTab = useCallback((tab: TTabKey) => {
+  }, [tabs, activeTab, props.tab]);  const setActiveTab = useCallback((tab: TTabKey) => {
     if (!tab) return;
     if (props.beforeTabChange) props.beforeTabChange(tab);
     (props.setTab ?? _setActiveTab)(tab);
-  }, [props.beforeTabChange, props.setTab]);
+  }, [props.beforeTabChange, props.setTab, _setActiveTab]);
 
   useEffect(function onTabChanged() {
     if (props.onTabChange) props.onTabChange(props.tab ?? activeTab);
@@ -56,9 +58,12 @@ export default function TabBar<TTabKey extends string>(props: Props<TTabKey>) {
   useEffect(function onTabsOptionsChanged() {
     // if active tab key is not in tabs or the value is falsy, set it to the first tab
     if (!tabs.find(([key]) => key === (props.tab ?? activeTab))?.[1]) {
-      setActiveTab(props.defaultTab ?? tabs[0]?.[0] as TTabKey);
+      const newTab = props.defaultTab ?? tabs[0]?.[0] as TTabKey;
+      if (newTab && newTab !== (props.tab ?? activeTab)) {
+        setActiveTab(newTab);
+      }
     }
-  }, [tabs]);
+  }, [tabs, props.tab, activeTab, props.defaultTab, setActiveTab]);
 
   useEffect(function onControlledTabChanged() {
     if (props.tab) setActiveTab(props.tab);

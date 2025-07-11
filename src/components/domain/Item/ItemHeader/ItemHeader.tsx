@@ -17,7 +17,6 @@ export default function ItemHeader({ item, itemName }: Props) {
         <Chevron point="left" />
         <span>Back</span>
       </a>
-      <h1>{item.name}</h1>
       <button onClick={() => console.log(item)}>Log {pascalCaseFromSnakeCase(itemName)}</button>
     </header>
   );

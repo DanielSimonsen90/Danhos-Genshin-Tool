@@ -47,15 +47,3 @@ export const SubdetectionUnit = new LocalSpecialty(
   `Detection units produced by Fontaine Research Institute using new models of artificed components. Its original purpose was monitoring all kinds of environmental data.`,
   'Fontaine',
 );
-
-export const Fontaine = {
-  BerylConch,
-  LakelightLily,
-  LumidouceBell,
-  Lumitoile,
-  RainbowRose,
-  RomaritimeFlower,
-  SpringOfTheFirstDewdrop,
-  SubdetectionUnit,
-};
-export default Fontaine;

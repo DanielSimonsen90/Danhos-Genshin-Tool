@@ -13,7 +13,7 @@ export const LordOfErodedPrimalFire = new WeeklyBoss(
     ErodedHorn,
     ErodedSunfire,
     ErodedScaleFeather,
-    ...ElementalCrystals.Pyro,
+    ...ElementalCrystals.Pyro.getCraftingTreeAsMaterials(),
     DreamSolvent,
     GladiatorsFinale,
     WanderersTroupe,
@@ -23,8 +23,3 @@ export const LordOfErodedPrimalFire = new WeeklyBoss(
     ...Borderlander,
   ]
 );
-
-export const Natlan = {
-  LordOfErodedPrimalFire,
-};
-export default Natlan;

@@ -8,30 +8,8 @@ class AscensionMaterial extends CraftableMaterial {
   public static isAscensionMaterial(obj: any): obj is AscensionMaterial {
     return obj instanceof AscensionMaterial;
   }
-}
-export default AscensionMaterial;
 
-export class TalentAscensionMaterial extends AscensionMaterial {
-  public static create(name: string, description: string, region: Region, domain: DomainOfMastery, obtainableDays: ObtainableDays) {
-    return super.createCraftableMaterial(
-      name,
-      {
-        [Rarity.Uncommon]: 'Teachings of',
-        [Rarity.Rare]: 'Guide of',
-        [Rarity.Epic]: 'Philosophies of'
-      },
-      description,
-      (name, description, rarity) => new TalentAscensionMaterial(
-        name,
-        description,
-        region,
-        rarity,
-        domain,
-        obtainableDays
-      ));
-  }
-
-  private constructor(
+  protected constructor(
     name: string,
     description: string,
     region: Region,
@@ -41,5 +19,69 @@ export class TalentAscensionMaterial extends AscensionMaterial {
   ) {
     super(name, description, region, rarity);
   }
+
+  public isObtainableToday(): boolean {
+    return this.getDataTodayAttr();
+  }
+  public getDataTodayAttr(obtainableDay?: string): boolean {
+    const today = new Date().getDay();
+    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const todayName = dayNames[today];
+    if (obtainableDay && obtainableDay !== todayName) return false;
+
+    const obtainableDays = this.obtainableDays.split('/');
+    return obtainableDays.includes(todayName);
+  }
 }
-export class WeaponAscensionMaterial extends AscensionMaterial { }
+export default AscensionMaterial;
+
+export class TalentAscensionMaterial extends AscensionMaterial {
+  public static isTalentAscensionMaterial(obj: any): obj is TalentAscensionMaterial {
+    return obj instanceof TalentAscensionMaterial;
+  }
+
+  public static create(name: string, description: string, region: Region, domain: DomainOfMastery, obtainableDays: ObtainableDays) {
+    return super.createCraftableMaterial(
+      name,
+      {
+        [Rarity.Uncommon]: 'Teachings of',
+        [Rarity.Rare]: 'Guide to',
+        [Rarity.Epic]: 'Philosophies of'
+      },
+      description,
+      false,
+      (name, description, rarity) => new TalentAscensionMaterial(
+        name,
+        description,
+        region,
+        rarity,
+        domain,
+        obtainableDays
+      ));
+  }
+}
+export class WeaponAscensionMaterial extends AscensionMaterial {
+  public static isWeaponAscensionMaterial(obj: any): obj is WeaponAscensionMaterial {
+    return obj instanceof WeaponAscensionMaterial;
+  }
+
+  public static create(name: string, description: string, region: Region, domain: DomainOfMastery, obtainableDays: ObtainableDays) {
+    return super.createCraftableMaterial(
+      name,
+      {
+        [Rarity.Uncommon]: 'Firm Arrowhead',
+        [Rarity.Rare]: 'Sharp Arrowhead',
+        [Rarity.Epic]: 'Weathered Arrowhead'
+      },
+      description,
+      true,
+      (name, description, rarity) => new WeaponAscensionMaterial(
+        name,
+        description,
+        region,
+        rarity,
+        domain,
+        obtainableDays
+      ));
+  }
+}

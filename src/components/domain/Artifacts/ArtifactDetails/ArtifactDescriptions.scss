@@ -1,0 +1,21 @@
+.artifact-descriptions {
+  >header {
+    display: flex;
+    align-items: center;
+    gap: 1ch;
+  }
+
+  &__2-piece::before {
+    content: "2-piece: ";
+    font-weight: bold;
+  }
+
+  &__4-piece::before {
+    content: "4-piece: ";
+    font-weight: bold;
+  }
+
+  &__craftable {
+    font-weight: bold;
+  }
+}

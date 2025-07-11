@@ -6,6 +6,12 @@ export const BrilliantChrysanthemum = new LocalSpecialty(
   'Natlan',
 );
 
+export const Dracolite = new LocalSpecialty(
+  'Dracolite',
+  `Formed gradually in areas rich in Phlogiston, these red, scale-like crystals are blazing-hot to the touch.`,
+  'Natlan',
+);
+
 export const GlowingHornshroom = new LocalSpecialty(
   'Glowing Hornshroom',
   `A fungus that emits a faint light in the darkness. It is so named because its shape resembles the horny crest of an Iktomisaurus.`,
@@ -24,6 +30,12 @@ export const SaurianClawSucculent = new LocalSpecialty(
   'Natlan',
 );
 
+export const SkysplitGembloom = new LocalSpecialty(
+  'Skysplit Gembloom',
+  `A strange plant whose flower's exterior resembles stone. Only in bloom does it reveal a resplendent, crystal-like core.`,
+  'Natlan',
+);
+
 export const SprayfeatherGill = new LocalSpecialty(
   'Sprayfeather Gill',
   `A special feather-shaped species that grows by the seaside. It looks kind of like a seagrass but is in truth a soft-bodied aquatic coral with a unique shape.`,
@@ -35,13 +47,3 @@ export const WitheringPurpurbloom = new LocalSpecialty(
   `A flower, the leaves and petals of which look scorched and withered, that can often be seen in places where ash abounds.`,
   'Natlan',
 );
-
-export const Natlan = {
-  BrilliantChrysanthemum,
-  GlowingHornshroom,
-  QuenepaBerry,
-  SaurianClawSucculent,
-  SprayfeatherGill,
-  WitheringPurpurbloom,
-};
-export default Natlan;

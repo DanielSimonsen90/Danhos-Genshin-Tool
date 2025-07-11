@@ -3,28 +3,28 @@ import { Rarity } from "@/common/types";
 
 export const HurricaneSeed = new MobDrop(
   'Hurricane Seed',
-  `The imploded form of an Anemo Hypostasis upon its defeat. Contains the sessence of Anemo energy.\nIt is said that the power to create hurricanes resides within its seemingly fragile body. This butterfly of pure Anemo energy must surely be waiting for the day when it can conjure up storms once again.`,
+  `The imploded form of an Anemo Hypostasis upon its defeat. Contains the essence of Anemo energy.\nIt is said that the power to create hurricanes resides within its seemingly fragile body. This butterfly of pure Anemo energy must surely be waiting for the day when it can conjure up storms once again.`,
   'Mondstadt',
   Rarity.Epic,
 );
 
 export const HoarfrostCore = new MobDrop(
   'Hoarfrost Core',
-  `The exposed core of a defeated Cryo Regisvine. Pure Cryo energy can be felt within it.\nEnergy throughts that swell deep within the eartyh will eventually erupt on the surface. Even the deathly silent frost will attach to living things on the ground, turning even ordinary vegetation like vines into huge, vicious predators.`,
+  `The exposed core of a defeated Cryo Regisvine. Pure Cryo energy can be felt within it.\nEnergy thoughts that swell deep within the earth will eventually erupt on the surface. Even the deathly silent frost will attach to living things on the ground, turning even ordinary vegetation like vines into huge, vicious predators.`,
   'Mondstadt',
   Rarity.Epic,
 );
 
 export const LightningPrism = new MobDrop(
   'Lightning Prism',
-  `An Electro Hypostasis channels nearby elemental energy to repair damaged elemental entities. Contains the essense of Electro energy.\nAn ordinary prism separates white light into its component colors; a Lightning Prism, however, channels flowing energies and weaves them into lightning. It will continue to do so even after the Electro Hypostasis has been defeated.`,
+  `An Electro Hypostasis channels nearby elemental energy to repair damaged elemental entities. Contains the essence of Electro energy.\nAn ordinary prism separates white light into its component colors; a Lightning Prism, however, channels flowing energies and weaves them into lightning. It will continue to do so even after the Electro Hypostasis has been defeated.`,
   'Mondstadt',
   Rarity.Epic,
 );
 
 export const CrystallineBloom = new MobDrop(
   'Crystalline Bloom',
-  `An ice crystal of exceeding purity that is created in the frigid blooming of a Cryo Hypostasis.\nThese frosty crystals will conitnue to grow according to their own cold, rigid laws, till one day a flower of winter shall bloom and freeze everything. Perhaps it is stagnant time, that never-thawing bosom, that is the essence of this undying flower.`,
+  `An ice crystal of exceeding purity that is created in the frigid blooming of a Cryo Hypostasis.\nThese frosty crystals will continue to grow according to their own cold, rigid laws, till one day a flower of winter shall bloom and freeze everything. Perhaps it is stagnant time, that never-thawing bosom, that is the essence of this undying flower.`,
   'Mondstadt',
   Rarity.Epic,
 );
@@ -76,15 +76,15 @@ export const ChessGameKnight = new MobDrop(
   'Mondstadt',
   Rarity.Legendary
 );
-export const ChessGameRock = new MobDrop(
-  `Ascended Sample: Rock`,
+export const ChessGameRook = new MobDrop(
+  `Ascended Sample: Rook`,
   `A rare sample resulting from the alchemical activation of a substance.\nThe name of this piece derives from the word for the "Chariot" in the ancient language of Sumeru. In divination, the Chariot card is depicted with two heavenly steeds - one black and one white - symbolizing the alchemical principle of balancing opposing properties.`,
   'Mondstadt',
   Rarity.Legendary
 );
 export const ChessGameQueen = new MobDrop(
   "Ascended Sample: Queen",
-  `A rare sample resulting from the alchemical activation of a substance.\nThe "Queen" was once known as the "Minister," but as the reules of the game evolved, it grew to become the most powerful piece and a representation of the authority of the family behind the throne - a true symbol of gilded royalty.\nPerhaps the promotion of an ordinary foot soldier shares some similarities with the transmutation of matter, yet even should they manage to turn to gold, the most a pawn might hopes for is to be represented by an upturned rook.`,
+  `A rare sample resulting from the alchemical activation of a substance.\nThe "Queen" was once known as the "Minister," but as the rules of the game evolved, it grew to become the most powerful piece and a representation of the authority of the family behind the throne - a true symbol of gilded royalty.\nPerhaps the promotion of an ordinary foot soldier shares some similarities with the transmutation of matter, yet even should they manage to turn to gold, the most a pawn might hopes for is to be represented by an upturned rook.`,
   'Mondstadt',
   Rarity.Legendary
 );

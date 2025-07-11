@@ -10,9 +10,9 @@ export const Azhdaha = new WeeklyBoss(
   'Liyue',
   [
     DragonLordsCrown, BloodjadeBranch, GildedScale,
-    ...ElementalCrystals.Pyro,
-    ...ElementalCrystals.Electro,
-    ...ElementalCrystals.Geo,
+    ...ElementalCrystals.Pyro.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Electro.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Geo.getCraftingTreeAsMaterials(),
     DreamSolvent,
     GladiatorsFinale,
     WanderersTroupe,
@@ -31,9 +31,9 @@ export const Childe = new WeeklyBoss(
     TuskOfMonocerosCaeli,
     ShardOfAFoulLegacy,
     ShadowOfTheWarrior,
-    ...ElementalCrystals.Hydro,
-    ...ElementalCrystals.Electro,
-    ...ElementalCrystals.Cryo,
+    ...ElementalCrystals.Hydro.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Electro.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Cryo.getCraftingTreeAsMaterials(),
     DreamSolvent,
     GladiatorsFinale,
     WanderersTroupe,
@@ -43,9 +43,3 @@ export const Childe = new WeeklyBoss(
     ...Northlander
   ]
 );
-
-export const Liyue = {
-  Azhdaha,
-  Childe,
-};
-export default Liyue;

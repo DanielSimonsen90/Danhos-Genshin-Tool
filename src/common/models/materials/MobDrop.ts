@@ -32,3 +32,28 @@ export class MobDrop extends CraftableMaterial {
   }
 }
 export default MobDrop;
+
+export class ElementalCrystal extends MobDrop {
+  public static isElementalCrystal(obj: any): obj is ElementalCrystal {
+    return obj instanceof ElementalCrystal;
+  }
+
+  public static create<Rarities extends Rarity>(
+    name: string, 
+    map: Record<Rarities, string>, 
+    description: Record<Rarities, string>,
+    options?: MobDropCreationOptions<Rarities>,
+  ) {
+    return super.create(
+      name,
+      map,
+      description,
+      {
+        onCreate: (name, description, rarity) => new ElementalCrystal(
+          name, description, undefined, rarity
+        ),
+        ...options,
+      }
+    );
+  }
+}

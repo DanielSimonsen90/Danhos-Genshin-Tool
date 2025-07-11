@@ -24,10 +24,3 @@ export const Light = TalentAscensionMaterial.create(
   MasteryDomains.VioletCourt,
   'Wednesday/Saturday',
 );
-
-export const Inazuma = {
-  Transience,
-  Elegance,
-  Light,
-}
-export default Inazuma;

@@ -2,7 +2,7 @@ import { WeeklyBoss } from "@/common/models/mobs/Boss";
 import { Adventurer, Berserker, GladiatorsFinale, TheExile, WanderersTroupe } from "@/data/artifact-sets";
 import { Midlander } from "@/data/materials/drops/billets";
 import { ElementalCrystals } from "@/data/materials/drops/crystals";
-import { DenialAndJudgement, FadingCandle, LightlessEyeOfTheMaelstorm, LightlessMass, LightlessSilkString, SilkenFeather } from "@/data/materials/drops/fontaine";
+import { DenialAndJudgment, FadingCandle, LightlessEyeOfTheMaelstrom, LightlessMass, LightlessSilkString, SilkenFeather } from "@/data/materials/drops/fontaine";
 import { DreamSolvent } from "@/data/materials/drops/general";
 
 export const Narwhal = new WeeklyBoss(
@@ -11,9 +11,9 @@ export const Narwhal = new WeeklyBoss(
   'Fontaine',
   [
     LightlessSilkString,
-    LightlessEyeOfTheMaelstorm,
+    LightlessEyeOfTheMaelstrom,
     LightlessMass,
-    ...ElementalCrystals.Hydro,
+    ...ElementalCrystals.Hydro.getCraftingTreeAsMaterials(),
     DreamSolvent,
     GladiatorsFinale,
     WanderersTroupe,
@@ -31,8 +31,8 @@ export const Arlecchino = new WeeklyBoss(
   [
     FadingCandle,
     SilkenFeather,
-    DenialAndJudgement,
-    ...ElementalCrystals.Pyro,
+    DenialAndJudgment,
+    ...ElementalCrystals.Pyro.getCraftingTreeAsMaterials(),
     DreamSolvent,
     GladiatorsFinale,
     WanderersTroupe,
@@ -42,9 +42,3 @@ export const Arlecchino = new WeeklyBoss(
     ...Midlander,
   ]
 );
-
-export const Fontaine = {
-  Narwhal,
-  Arlecchino,
-};
-export default Fontaine;

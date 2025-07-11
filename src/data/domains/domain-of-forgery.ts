@@ -6,7 +6,7 @@ export const CeciliaGarden = new DomainOfForgery(
   "Mondstadt"
 );
 
-export const HiddenPalaceOfZhouFormula = new DomainOfForgery(
+export const HiddenPalaceOfLianshanFormula = new DomainOfForgery(
   "Hidden Palace of Lianshan Formula",
   "The operation of the Lianshan Formula created endless thunderstorms within the bowels of the mountain. It is said that the rumbling sounds of thunder that one hears outside the domain's gates call out to curious souls.",
   "Liyue"

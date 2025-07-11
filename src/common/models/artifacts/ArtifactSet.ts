@@ -1,9 +1,9 @@
 import { Nullable, Rarity } from '@/common/types';
 import Character from '../characters/Character';
 import { CharacterArtifactSet } from '../characters/CharacterArtifactSet';
-import BaseMaterial from '../materials/BaseMaterial';
+import Material from '../materials/Material';
 
-export class ArtifactSet extends BaseMaterial {
+export class ArtifactSet extends Material {
   public static isArtifactSet(obj: any): obj is ArtifactSet {
     return obj instanceof ArtifactSet;
   }
@@ -30,6 +30,15 @@ export class ArtifactSet extends BaseMaterial {
       undefined,
       rarity
     );
+  }
+
+  public includes(query: string): boolean {
+    const keys = [
+      this.name,
+      this.twoPieceSetDescription,
+      this.fourPieceSetDescription,
+    ];
+    return keys.some(key => key.toLowerCase().includes(query));
   }
 }
 

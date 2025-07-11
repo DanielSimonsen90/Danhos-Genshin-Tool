@@ -9,8 +9,8 @@ export const PerpetualMechanicalArray = new WorldBoss(
   'Inazuma',
   [
     PerpetualHeart,
-    ...ElementalCrystals.Cryo,
-    ...ElementalCrystals.Geo,
+    ...ElementalCrystals.Cryo.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Geo.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -26,7 +26,7 @@ export const PyroHypostasis = new WorldBoss(
   'Inazuma',
   [
     SmolderingPearl,
-    ...ElementalCrystals.Pyro,
+    ...ElementalCrystals.Pyro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -42,8 +42,8 @@ export const MaguuKenki = new WorldBoss(
   'Inazuma',
   [
     MarionetteCore,
-    ...ElementalCrystals.Anemo,
-    ...ElementalCrystals.Cryo,
+    ...ElementalCrystals.Anemo.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Cryo.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -58,7 +58,7 @@ export const HydroHypostasis = new WorldBoss(
   'Inazuma',
   [
     DewOfRepudiation,
-    ...ElementalCrystals.Hydro,
+    ...ElementalCrystals.Hydro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -73,8 +73,8 @@ export const BathysmalVishapHerd = new WorldBoss(
   'Inazuma',
   [
     DragonheirsFalseFin,
-    ...ElementalCrystals.Cryo,
-    ...ElementalCrystals.Electro,
+    ...ElementalCrystals.Cryo.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Electro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -90,7 +90,7 @@ export const ThunderManifestation = new WorldBoss(
   'Inazuma',
   [
     StormBeads,
-    ...ElementalCrystals.Electro,
+    ...ElementalCrystals.Electro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Instructor,
@@ -102,11 +102,11 @@ export const ThunderManifestation = new WorldBoss(
 
 export const GoldenWolflord = new WorldBoss(
   `Golden Wolflord`,
-  `A twisted beast from antoher world.\nThis creature is the ruler of the Riftwolves, and wields the power to command them to dissolve space itself.`,
+  `A twisted beast from another world.\nThis creature is the ruler of the Riftwolves, and wields the power to command them to dissolve space itself.`,
   'Inazuma',
   [
     RiftbornRegalia,
-    ...ElementalCrystals.Geo,
+    ...ElementalCrystals.Geo.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Instructor,

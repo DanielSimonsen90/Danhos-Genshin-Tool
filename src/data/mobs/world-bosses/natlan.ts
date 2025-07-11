@@ -1,7 +1,7 @@
 import { WorldBoss } from "@/common/models/mobs/Boss";
-import { Adventurer, Berserker, GladiatorsFinale, Instructor, LuckyDog, PrayersOfDestiny, PrayersOfIllumination, PrayersOfSpringtime, TheExile, WanderersTroupe } from "@/data/artifact-sets";
+import { Adventurer, Berserker, GladiatorsFinale, Instructor, LuckyDog, PrayersOfDestiny, PrayersOfIllumination, PrayersOfSpringtime, PrayersOfWisdom, TheExile, WanderersTroupe } from "@/data/artifact-sets";
 import { ElementalCrystals } from "@/data/materials/drops/crystals";
-import { EnsnaringGaze, MarkOfTheBindingBlessing, OverripeFlamegranate, SecretSourceAirflowAccumulator, SparklessStatueCore, TalismanOftheEnigmaticLand } from "@/data/materials/drops/natlan";
+import { EnsnaringGaze, GoldInscribedSecretSourceCore, MarkOfTheBindingBlessing, OverripeFlamegranate, SecretSourceAirflowAccumulator, SparklessStatueCore, TalismanOftheEnigmaticLand } from "@/data/materials/drops/natlan";
 
 export const GluttonousYumkasaurMountainKing = new WorldBoss(
   "Gluttonous Yumkasaur Mountain King",
@@ -9,7 +9,7 @@ export const GluttonousYumkasaurMountainKing = new WorldBoss(
   'Natlan',
   [
     OverripeFlamegranate,
-    ...ElementalCrystals.Dendro,
+    ...ElementalCrystals.Dendro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -24,7 +24,7 @@ export const GoldflameQucusaurTyrant = new WorldBoss(
   'Natlan',
   [
     MarkOfTheBindingBlessing,
-    ...ElementalCrystals.Pyro,
+    ...ElementalCrystals.Pyro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -34,15 +34,31 @@ export const GoldflameQucusaurTyrant = new WorldBoss(
   ]
 );
 
+export const SecretSourceAutomatonConfigurationDevice = new WorldBoss(
+  "Secret Source Automatons: Configuration Device",
+  `An ancient machine used for manufacturing.\nIt is said to be a production machine produced by a long-lost ancient civilization.\nAs it can be both a tool and a weapon, it is far more dangerous than most other Secret Source automaton warriors.`,
+  'Natlan',
+  [
+    GoldInscribedSecretSourceCore,
+    ...ElementalCrystals.Electro.getCraftingTreeAsMaterials(),
+    GladiatorsFinale,
+    WanderersTroupe,
+    Berserker,
+    TheExile,
+    PrayersOfWisdom,
+    Adventurer
+  ]
+);
+
 export const TenebrousPapilla = new WorldBoss(
   "Tenebrous Papilla",
   `Abyssal monsters that grow like parasitic plants.\nAgents of continuous corrosion, these distorters are capable of extracting memories from deeper layers of the earth, and through the power of the Abyss, reconstructing memories of greater potency. If left unchecked to pursue their corrosion of Teyvat, they may even find a sordid way to twist and trace over the most ancient memories of all.`,
   'Natlan',
   [
     EnsnaringGaze,
-    ...ElementalCrystals.Pyro,
-    ...ElementalCrystals.Electro,
-    ...ElementalCrystals.Anemo,
+    ...ElementalCrystals.Pyro.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Electro.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Anemo.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -58,7 +74,7 @@ export const WaywardHermeticSpiritspeaker = new WorldBoss(
   'Natlan',
   [
     TalismanOftheEnigmaticLand,
-    ...ElementalCrystals.Cryo,
+    ...ElementalCrystals.Cryo.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -74,7 +90,7 @@ export const LavaDragonStatue = new WorldBoss(
   'Natlan',
   [
     SparklessStatueCore,
-    ...ElementalCrystals.Pyro,
+    ...ElementalCrystals.Pyro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -85,12 +101,12 @@ export const LavaDragonStatue = new WorldBoss(
 );
 
 export const SecretSourceAutomationsOverseerDevice = new WorldBoss(
-  "Secret Source Automations: Overseer Device",
+  "Secret Source Automatons: Overseer Device",
   `A domination mechanism from the ancient ruins.\nIn the distant past, a once-mighty ancient race used this mechanism to oversee the operation of their cities. Even now, long after the fall of their civilization, it still retains immense authority.`,
   'Natlan',
   [
     SecretSourceAirflowAccumulator,
-    ...ElementalCrystals.Hydro,
+    ...ElementalCrystals.Hydro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,

@@ -9,7 +9,7 @@ export const ElectroRegisvine = new WorldBoss(
   'Sumeru',
   [
     ThunderclapFruitcore,
-    ...ElementalCrystals.Electro,
+    ...ElementalCrystals.Electro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Instructor,
@@ -25,7 +25,7 @@ export const JadeplumeTerrorshroom = new WorldBoss(
   'Sumeru',
   [
     MajesticHookedBeak,
-    ...ElementalCrystals.Dendro,
+    ...ElementalCrystals.Dendro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -39,8 +39,8 @@ export const AeonblightDrake = new WorldBoss(
   'Sumeru',
   [
     PerpetualCaliber,
-    ...ElementalCrystals.Cryo,
-    ...ElementalCrystals.Hydro,
+    ...ElementalCrystals.Cryo.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Hydro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     TheExile,
@@ -56,7 +56,7 @@ export const DendroHypostasis = new WorldBoss(
   'Sumeru',
   [
     QuielledCreeper,
-    ...ElementalCrystals.Dendro,
+    ...ElementalCrystals.Dendro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -71,8 +71,8 @@ export const AlgorithmOfSemiIntransientMatrixOfOverseerNetwork = new WorldBoss(
   'Sumeru',
   [
     LightGuidingTetrahedron,
-    ...ElementalCrystals.Pyro,
-    ...ElementalCrystals.Anemo,
+    ...ElementalCrystals.Pyro.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Anemo.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -88,7 +88,7 @@ export const SetekhWenut = new WorldBoss(
   'Sumeru',
   [
     PseudoStamens,
-    ...ElementalCrystals.Anemo,
+    ...ElementalCrystals.Anemo.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -103,10 +103,10 @@ export const IniquitousBaptist = new WorldBoss(
   'Sumeru',
   [
     EvergloomRing,
-    ...ElementalCrystals.Electro,
-    ...ElementalCrystals.Cryo,
-    ...ElementalCrystals.Pyro,
-    ...ElementalCrystals.Hydro,
+    ...ElementalCrystals.Electro.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Cryo.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Pyro.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Hydro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,

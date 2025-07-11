@@ -57,6 +57,19 @@ export const ImageService = new class ImageService extends BaseService<string> {
     return this.lastResult = `${LOCAL_PATH}/resins/${name}_resin.png`;
   }
 
+  public getMaterialImage(name: string): string {
+    if (name.includes('Billet')) return this.lastResult = `${LOCAL_PATH}/materials/billets/${snakeCaseFromCamelCase(name)}.webp`;
+    else if (name.includes('Artificed Spare Clockwork Component - ')) return this.lastResult = `${LOCAL_PATH}/materials/drops/${snakeCaseFromCamelCase(name)}.webp`;
+    else if (name === 'Dream Solvent') return this.lastResult = `${LOCAL_PATH}/materials/drops/dream_solvent.webp`;
+
+    return this.lastResult = `${PAIMON_MOE_URL}/items/${snakeCaseFromCamelCase(name)
+      .replace(/[':"]/g, '')
+      .replace(/-/g, '_')}.png`;
+  }
+  getMobImage(name: string): string {
+    return `${LOCAL_PATH}/mobs/${snakeCaseFromCamelCase(name).replace(/[,:"]/g, '')}.webp`;
+  }
+
   private formatRerollCdnName(name: string): string {
     return name.slice(0, 1).toUpperCase() + snakeCaseFromCamelCase(name).slice(1);
   }

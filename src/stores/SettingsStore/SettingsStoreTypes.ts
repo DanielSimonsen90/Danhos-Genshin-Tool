@@ -6,6 +6,7 @@ export type AppSettings = {
   preferredTabs: {
     searchOrHistory: 'search' | 'history';
     results: 'combined' | 'artifacts' | 'characters';
+    craftableMaterial: 'common' | 'rarest';
   },
 
   updated?: number;

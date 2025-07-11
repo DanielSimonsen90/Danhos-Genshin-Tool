@@ -5,10 +5,7 @@ import TabBar from "@/components/common/TabBar";
 type Props = {
   title: string;
   domainNames: string[];
-} & {
-  showDetails?: boolean;
-  showRewards?: boolean;
-};
+}
 
 export default function DomainList({ title = "Domains", domainNames, ...props }: Props) {
   const { findDomainByName } = useDomainData();
@@ -20,8 +17,9 @@ export default function DomainList({ title = "Domains", domainNames, ...props }:
       <TabBar tabs={create => domainNames.map(name => create(
         name,
         checkIsBossDrop(name) ? 'World Bosses' : name,
-        // TODO: Render custom component that displays "Dropped from bosses" + resin count
-        checkIsBossDrop(name) ? <p>Dropped from world bosses.</p> : <DomainCard domain={findDomainByName(name)} {...props} showNavButton />
+        checkIsBossDrop(name) 
+          ? <p>Dropped from world bosses.</p> // TODO: Render custom component that displays "Dropped from bosses" + resin count
+          : <DomainCard domain={findDomainByName(name)} {...props} showDescription showNavButton />
       ))}
       />
     </section>

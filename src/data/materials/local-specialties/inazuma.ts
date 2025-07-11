@@ -53,16 +53,3 @@ export const SeaGanoderma = new LocalSpecialty(
   `A plant species that only grows in certain regions and islands of the ocean. Though it looks like a fungus of some sort, it actually comes from a substance secreted by certain soft-bodied organisms.`,
   'Inazuma',
 );
-
-export const Inazuma = {
-  AmakumoFruit,
-  CrystalMarrow,
-  Dendrobium,
-  FluorescentFungus,
-  NakuWeed,
-  Onikabuto,
-  SakuraBloom,
-  SangoPearl,
-  SeaGanoderma,
-}
-export default Inazuma;

@@ -1,0 +1,39 @@
+.material-page {
+  .main-material-card {
+    >header .material-image {
+      --size: 10rem;
+    }
+
+    &.material-card__name-text {
+      font-size: 2rem;
+    }
+  }
+
+  .material-card {
+    header {
+      gap: 1em;
+    }
+
+    &__name {
+      font-size: clamp(1.5rem, 2vw + 1rem, 2rem);
+      justify-content: center;
+
+      &-text {
+        flex: unset;
+        width: auto;
+      }
+    }
+
+    &__model-acquired {
+      .mob-card {
+        max-height: 30rem;
+        overflow: auto;
+        padding-right: 1em;
+      }
+    }
+
+    .icon svg {
+      --size: 2rem;
+    }
+  }
+}

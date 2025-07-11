@@ -9,12 +9,12 @@ import {
 } from '@/data/artifact-sets';
 
 export const AnemoHypostasis = new WorldBoss(
-  'Anemo Hypostatsis',
+  'Anemo Hypostasis',
   `Code name: Beth. A high-purity Anemo entity. Elemental hypostases are life forms which have completely abandoned their ormer appearance and biological structure, making them able to reach the highest level of elemental purity. Research into hypostases is mainly led by scholars of Sumeru Akademiya, but due to the level of danger that they pose, little of substance is known about hypostases beyojnd their scientific name and code name.`,
   'Mondstadt',
   [
     HurricaneSeed,
-    ...ElementalCrystals.Anemo,
+    ...ElementalCrystals.Anemo.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -28,7 +28,7 @@ export const CryoRegisvine = new WorldBoss(
   'Mondstadt',
   [
     HoarfrostCore,
-    ...ElementalCrystals.Cryo,
+    ...ElementalCrystals.Cryo.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -44,7 +44,7 @@ export const ElectroHypostasis = new WorldBoss(
   'Mondstadt',
   [
     LightningPrism,
-    ...ElementalCrystals.Electro,
+    ...ElementalCrystals.Electro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
@@ -62,7 +62,7 @@ export const CryoHypostasis = new WorldBoss(
   'Mondstadt',
   [
     CrystallineBloom,
-    ...ElementalCrystals.Cryo,
+    ...ElementalCrystals.Cryo.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker,
