@@ -1214,6 +1214,606 @@ export const FruitfulHook = new Weapon(
   'Wish',
 );
 
+export const HakushinRing = new Weapon(
+  'Hakushin Ring',
+  {
+    value: `After the character equipped with this weapon triggers an Electro elemental reaction, nearby party members of an Elemental Type involved in the elemental reaction receive a $0 Elemental DMG Bonus for their element, lasting 6s. Elemental Bonuses gained in this way cannot be stacked.`,
+    refinements: [
+      '10%/12.5%/15%/17.5%/20%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Epic,
+  565,
+  'Energy Recharge',
+  30.6,
+  'Crafting',
+);
+
+export const Halberd = new Weapon(
+  'Halberd',
+  {
+    value: `Normal Attacks deal an additional $0 ATK as DMG. Can only occur once every 10s.`,
+    refinements: [
+      '160%/200%/240%/280%/320%',
+    ]
+  },
+  'Polearm',
+  Rarity.Rare,
+  448,
+  'ATK',
+  23.5,
+  'Chest',
+);
+
+export const Hamayumi = new Weapon(
+  'Hamayumi',
+  {
+    value: `Increases Normal Attack DMG by $0 and Charged Attack DMG by $1. When the equipping character's Energy reaches 100%, this effect is increased by 100%.`,
+    refinements: [
+      '16%/20%/24%/28%/32%',
+      '12%/15%/18%/21%/24%',
+    ]
+  },
+  'Bow',
+  Rarity.Epic,
+  454,
+  'ATK',
+  55.1,
+  'Crafting',
+);
+
+export const HaranGeppakuFutsu = new Weapon(
+  'Haran Geppaku Futsu',
+  {
+    value: `Obtain $0 All Elemental DMG Bonus. When other nearby party members use Elemental Skills, the character equipping this weapon will gain 1 Wavespike stack. Max 2 stacks. This effect can be triggered once every 0.3s. When the character equipping this weapon uses an Elemental Skill, all stacks of Wavespike will be consumed to gain Rippling Upheaval: each stack of Wavespike consumed will increase Normal Attack DMG by $1 for 8s.`,
+    refinements: [
+      '12/15/18/21/24%',
+      '20/25/30/35/40%',
+    ]
+  },
+  'Sword',
+  Rarity.Legendary,
+  608,
+  'Crit Rate',
+  33.1,
+  'Wish',
+  cs => cs.KamisatoAyato
+);
+
+export const HarbingerOfDawn = new Weapon(
+  'Harbinger of Dawn',
+  {
+    value: `When HP is above 90%, increases CRIT Rate by $0.`,
+    refinements: [
+      '14%/17.5%/21%/24.5%/28%',
+    ]
+  },
+  'Sword',
+  Rarity.Rare,
+  401,
+  'Crit DMG',
+  46.9,
+  'Wish'
+);
+
+export const HuntersPath = new Weapon(
+  `Hunter's Path`,
+  {
+    value: `Gain $0 All Elemental DMG Bonus. Obtain the Tireless Hunt effect after hitting an opponent with a Charged Attack. This effect increases Charged Attack DMG by $1 of Elemental Mastery. This effect will be removed after 12 Charged Attacks or 10s. Only 1 instance of Tireless Hunt can be gained every 12s.`,
+    refinements: [
+      '12%/15%/18%/21%/24%',
+      '160/200/240/280/320%',
+    ]
+  },
+  'Bow',
+  Rarity.Legendary,
+  542,
+  'Crit Rate',
+  44.1,
+  'Wish',
+  cs => cs.Tighnari
+);
+
+export const IbisPiercer = new Weapon(
+  'Ibis Piercer',
+  {
+    value: `The character's Elemental Mastery will increase by $0 within 6s after Charged Attacks hit opponents. Max 2 stacks. This effect can be triggered once every 0.5s.`,
+    refinements: [
+      '40/50/60/70/80',
+    ]
+  },
+  'Bow',
+  Rarity.Epic,
+  565,
+  'ATK',
+  27.6,
+  'Event',
+);
+
+export const IronSting = new Weapon(
+  'Iron Sting',
+  {
+    value: `Dealing Elemental DMG increases all DMG by $0 for 6s. Max 2 stacks. Can only occur once every 1s.`,
+    refinements: [
+      '6/7.5/9/10.5/12%',
+    ]
+  },
+  'Sword',
+  Rarity.Epic,
+  510,
+  'Elemental Mastery',
+  165,
+  'Crafting'
+);
+
+export const JadefallsSplendor = new Weapon(
+  `Jadefall's Splendor`,
+  {
+    value: `For 3s after using an Elemental Burst or creating a shield, the equipping character can gain the Primordial Jade Regalia effect: Restore $0 Energy every 2.5s, and gain $1 Elemental DMG Bonus for their corresponding Elemental Type for every 1,000 Max HP they possess, up to $2. Primordial Jade Regalia will still take effect even if the equipping character is not on the field.`,
+    refinements: [
+      '4.5/5/5.5/6/6.5',
+      '0.3/0.5/0.7/0.9/1.1%',
+      '12/20/28/36/44%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Legendary,
+  608,
+  'HP',
+  49.6,
+  'Wish',
+  cs => cs.Baizhu
+);
+
+export const KagotsurubeIsshin = new Weapon(
+  'Kagotsurube Isshin',
+  {
+    value: `When a Normal, Charged, or Plunging Attack hits an opponent, it will whip up a Hewing Gale, dealing AoE DMG equal to 180% of ATK and increasing ATK by 15% for 8s. This effect can be triggered once every 8s.`,
+    refinements: []
+  },
+  'Sword',
+  Rarity.Epic,
+  510,
+  'ATK',
+  41.3,
+  'Quest',
+);
+
+export const KagurasVerity = new Weapon(
+  `Kagura's Verity`,
+  {
+    value: `Gains the Kagura Dance effect when using an Elemental Skill, causing the Elemental Skill DMG of the character wielding this weapon to increase by $0 for 16s. Max 3 stacks. This character will gain $1 All Elemental DMG Bonus when they possess 3 stacks.`,
+    refinements: [
+      '12%/15%/18%/21%/24%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Legendary,
+  608,
+  'Crit DMG',
+  66.2,
+  'Wish',
+  cs => cs.YaeMiko
+);
+
+export const KatsuragikiriNagamasa = new Weapon(
+  'Katsuragikiri Nagamasa',
+  {
+    value: `Increases Elemental Skill DMG by $0. After Elemental Skill hits an opponent, the character loses 3 Energy but regenerates $1 Energy every 2s for the next 6s. This effect can occur once every 10s. Can be triggered even when the character is not on the field.`,
+    refinements: [
+      '16/20/24/28/32%',
+      '3/3.5/4/4.5/5',
+    ]
+  },
+  'Claymore',
+  Rarity.Epic,
+  510,
+  'Energy Recharge',
+  45.9,
+  'Crafting',
+);
+
+export const KeyOfKhajNisut = new Weapon(
+  'Key of Khaj-Nisut',
+  {
+    value: `HP increased by $0. When an Elemental Skill hits opponents, you gain the Grand Hymn effect for 20s. This effect increases the equipping character's Elemental Mastery by $1 of their Max HP. This effect can trigger once every 0.3s. Max 3 stacks. When this effect gains 3 stacks, or when the third stack's duration is refreshed, the Elemental Mastery of all nearby party members will be increased by $2 of the equipping character's max HP for 20s.`,
+    refinements: [
+      '20%/25%/30%/35%/40%',
+      '0.12%/0.15%/0.18%/0.21%/0.24%',
+      '0.2%/0.25%/0.3%/0.35%/0.4%',
+    ]
+  },
+  'Sword',
+  Rarity.Legendary,
+  542,
+  'HP',
+  66.2,
+  'Wish',
+  cs => cs.Nilou
+);
+
+export const KingsSquire = new Weapon(
+  `King's Squire`,
+  {
+    value: `Obtain the Teachings of the Forest effect when unleashing Elemental Skills and Bursts, increasing Elemental Mastery by $0 for 12s. This effect will be removed when switching characters. When the Teachings of the Forest effect ends or is removed, it will deal $1 of ATK as DMG to 1 nearby opponent. The Teachings of the Forest effect can be triggered once every 20s.`,
+    refinements: [
+      '60/80/100/120/140',
+      '100%/120%/140%/160%/180%',
+    ]
+  },
+  'Bow',
+  Rarity.Epic,
+  454,
+  'ATK',
+  55.1,
+  'Crafting',
+);
+
+export const KitainCrossSpear = new Weapon(
+  'Kitain Cross Spear',
+  {
+    value: `Increases Elemental Skill DMG by $0. After Elemental Skill hits an opponent, the character loses 3 Energy but regenerates $1 Energy every 2s for the next 6s. This effect can occur once every 10s. Can be triggered even when the character is not on the field.`,
+    refinements: [
+      '6%/7.5%/9%/10.5%/12%',
+      '3/3.5/4/4.5/5',
+    ]
+  },
+  'Polearm',
+  Rarity.Epic,
+  565,
+  'Elemental Mastery',
+  110,
+  'Crafting',
+);
+
+export const LightOfFoliarIncision = new Weapon(
+  'Light of Foliar Incision',
+  {
+    value: `CRIT Rate is increased by $0. After Normal Attacks deal Elemental DMG, the Foliar Incision effect will be obtained, increasing DMG dealt by Normal Attacks and Elemental Skills by $1 of Elemental Mastery. This effect will disappear after 28 DMG instances or 12s. You can obtain Foliar Incision once every 12s.`,
+    refinements: [
+      '4%/5%/6%/7%/8%',
+      '120%/150%/180%/210%/240%',
+    ]
+  },
+  'Sword',
+  Rarity.Legendary,
+  542,
+  'Crit DMG',
+  88.2,
+  'Wish',
+  cs => cs.Alhaitham
+);
+
+export const LionsRoar = new Weapon(
+  `Lion's Roar`,
+  {
+    value: `Increases DMG against enemies affected by Pyro or Electro by $0.`,
+    refinements: [
+      '20/24/28/32/36%',
+    ]
+  },
+  'Sword',
+  Rarity.Epic,
+  510,
+  'ATK',
+  41.3,
+  'Wish',
+);
+
+export const LithicBlade = new Weapon(
+  'Lithic Blade',
+  {
+    value: `For every characters who hails from Liyue, the characters who equips this weapon gains $0 ATK increase and a $1 CRIT Rate increase. This effect stacks up to 4 times.`,
+    refinements: [
+      '7/8/9/10/11%',
+      '3/4/5/6/7%',
+    ]
+  },
+  'Claymore',
+  Rarity.Epic,
+  565,
+  'ATK',
+  27.6,
+  'Wish',
+);
+
+export const LithicSpear = new Weapon(
+  'Lithic Spear',
+  {
+    value: `For every character in the party who hails from Liyue, the character who equips this weapon gains a $0 ATK increase and a $1 CRIT Rate increase. This effect stacks up to 4 times.`,
+    refinements: [
+      '7%/8%/9%/10%/11%',
+      '3%/4%/5%/6%/7%',
+    ]
+  },
+  'Polearm',
+  Rarity.Epic,
+  565,
+  'ATK',
+  27.6,
+  'Wish',
+);
+
+export const LostPrayerToTheSacredWinds = new Weapon(
+  'Lost Prayer to the Sacred Winds',
+  {
+    value: `Increases Movement SPD by 10%. When in battle, earn a $0 Elemental DMG Bonus every 4s. Max 4 stacks. Lasts until the character falls or leaves combat.`,
+    refinements: [
+      '6/8/10/12/14%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Legendary,
+  608,
+  'Crit Rate',
+  33.1,
+  'Wish',
+);
+
+export const LumidouceElegy = new Weapon(
+  'Lumidouce Elegy',
+  {
+    value: `ATK increased by $0. After the equipping character triggers Burning on an opponent or deals Dendro DMG to Burning opponents, the DMG dealt is increased by $1. This effect lasts for 8s, max 2 stacks. When 2 stacks are reached or when the duration is refreshed at 2 stacks, restore $2 Energy. Energy can be restored this way once every 12s. The 2 aforementioned effects can be triggered even when the character is off-field.`,
+    refinements: [
+      '15/19/23/27/31%',
+      '18/23/28/33/38%',
+      '12/13/14/15/16',
+    ]
+  },
+  'Polearm',
+  Rarity.Legendary,
+  608,
+  'Crit Rate',
+  33.1,
+  'Wish',
+  cs => cs.Emilie,
+);
+
+export const LuxuriousSeaLord = new Weapon(
+  'Luxurious Sea-Lord',
+  {
+    value: `Increases Elemental Burst DMG by $0. When Elemental Burst hits opponents, there is a 100% chance of summoning a titanic tuna that charges and deals $1 ATK as AoE DMG. This effect can occur once every 15s.`,
+    refinements: [
+      '12/15/18/21/24%',
+      '100/125/150/175/200%',
+    ]
+  },
+  'Claymore',
+  Rarity.Epic,
+  454,
+  'ATK',
+  55.1,
+  'Event',
+);
+
+export const MagicGuide = new Weapon(
+  'Magic Guide',
+  {
+    value: `Increases DMG against opponents affected by Hydro or Electro by $0.`,
+    refinements: [
+      '12%/15%/18%/21%/24%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Rare,
+  354,
+  'Elemental Mastery',
+  187,
+  'Wish',
+);
+
+export const MailedFlower = new Weapon(
+  'Mailed Flower',
+  {
+    value: `Within 8s after the character's Elemental Skill hits an opponent or the character triggers an Elemental Reaction, their ATK and Elemental Mastery will be increased by $0 and $1 respectively.`,
+    refinements: [
+      '12/15/18/21/24%',
+      '48/60/72/84/96',
+    ]
+  },
+  'Claymore',
+  Rarity.Epic,
+  565,
+  'Elemental Mastery',
+  110,
+  'Wish',
+);
+
+export const MakhairaAquamarine = new Weapon(
+  'Makhaira Aquamarine',
+  {
+    value: `The following effect will trigger every 10s: The equipping character will gain $0 of their Elemental Mastery as bonus ATK for 12s, with nearby party members gaining 30% of this buff for the same duration. Multiple instances of this weapon can allow this buff to stack. This effect will still trigger even if the character is not on the field.`,
+    refinements: [
+      '24/30/36/42/48%',
+    ]
+  },
+  'Claymore',
+  Rarity.Epic,
+  510,
+  'Elemental Mastery',
+  165,
+  'Wish',
+);
+
+export const MappaMare = new Weapon(
+  'Mappa Mare',
+  {
+    value: `Triggering an Elemental reaction grants a $0 Elemental DMG Bonus for 10s. Max 2 stacks.`,
+    refinements: [
+      '8/10/12/14/16%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Epic,
+  565,
+  'Elemental Mastery',
+  110,
+  'Crafting',
+);
+
+export const MemoryOfDust = new Weapon(
+  'Memory of Dust',
+  {
+    value: `Increase Shield Strength by $0. Scoring hits on opponents increases ATK by $1 for 8s. Max 5 stacks. Can only occur once every 0.3s. While protected by a shield, this ATK increase effect is increased by 100%.`,
+    refinements: [
+      '20/25/30/35/40%',
+      '4/5/6/7/8%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Legendary,
+  608,
+  'ATK',
+  49.6,
+  'Wish',
+  cs => cs.Ningguang
+);
+
+export const Messenger = new Weapon(
+  'Messenger',
+  {
+    value: `Charged Attack hits on weak points deal an additional $0 ATK DMG as CRIT DMG. Can only occur once every 10s.`,
+    refinements: [
+      '100%/125%/150%/175%/200%',
+    ]
+  },
+  'Bow',
+  Rarity.Rare,
+  448,
+  'Crit DMG',
+  31.2,
+  'Chest',
+);
+
+export const MissiveWindspear = new Weapon(
+  'Missive Windspear',
+  {
+    value: `Within 10s after an Elemental Reaction is triggered, ATK is increased by $0 and Elemental Mastery is increased by $1.`,
+    refinements: [
+      '12/15/18/21/24%',
+      '48/60/72/84/96'
+    ]
+  },
+  'Polearm',
+  Rarity.Epic,
+  510,
+  'ATK',
+  41.3,
+  'Event',
+);
+
+export const MistsplitterReforged = new Weapon(
+  'Mistsplitter Reforged',
+  {
+    value: `Gain a $0 Elemental DMG Bonus for every element and receive the might of Mistsplitter's Emblem. At stack levels 1/2/3, Mistsplitter's Emblem provides a $1 Elemental DMG Bonus for the character's Elemental Type. The character will obtain 1 stack of Mistsplitter's Emblem in each of the following scenarios: Normal Attack deals Elemental DMG (stack lasts 5s), casting Elemental Burst (stack lasts 10s); Energy is less than 100% (stack disappears when Energy is full). Each stack's duration is calculated independently.`,
+    refinements: [
+      '12/15/18/21/24%',
+      '(8/16/28%)/(10/20/35%)/(12/24/42%)/(14/28/49%)/(16/32/56%)',
+    ]
+  },
+  'Sword',
+  Rarity.Legendary,
+  674,
+  'Crit DMG',
+  44.1,
+  'Wish',
+  cs => cs.KamisatoAyaka
+);
+
+export const MitternachtsWaltz = new Weapon(
+  'Mitternachts Waltz',
+  {
+    value: `Normal Attack hits on opponents increase Elemental Skill DMG by $0 for 5s. Elemental Skill hits on opponents increase Normal Attack DMG by $1 for 5s.`,
+    refinements: [
+      '20/25/30/35/40%',
+      '20/25/30/35/40%',
+    ]
+  },
+  'Bow',
+  Rarity.Epic,
+  510,
+  'Physical DMG Bonus',
+  51.7,
+  'Wish'
+);
+
+export const Moonpiercer = new Weapon(
+  'Moonpiercer',
+  {
+    value: `After triggering Burning, Quicken, Aggravate, Spread, Bloom, Hyperbloom, or Burgeon, a Leaf of Revival will be created around the character for a maximum of 10s. When picked up, the Leaf will grant the character $0 ATK for 12s. Only 1 Leaf can be generated this way every 20s. This effect can still be triggered if the character is not on the field.`,
+    refinements: [
+      '16/20/24/28/32%',
+    ]
+  },
+  'Polearm',
+  Rarity.Epic,
+  565,
+  'Elemental Mastery',
+  110,
+  'Crafting',
+);
+
+export const MountainBracingBolt = new Weapon(
+  'Mountain-Bracing Bolt',
+  {
+    value: `Decreases Climbing Stamina Consumption by 15% and increases Elemental Skill DMG by $0. Also, after other nearby party members use Elemental Skills, the equipping character's Elemental Skill DMG will also increase by $1 for 8s.`,
+    refinements: [
+      '12%/15%/18%/21%/24%',
+      '12%/15%/18%/21%/24%',
+    ]
+  },
+  'Polearm',
+  Rarity.Epic,
+  565,
+  'Energy Recharge',
+  30.6,
+  'Wish',
+);
+
+export const MouunsMoon = new Weapon(
+  `Mouun's Moon`,
+  {
+    value: `For every point of the entire party's combined maximum Energy capacity, the Elemental Burst DMG of the character equipping this weapon is increased by $0. A maximum of $1 increased Elemental Burst DMG can be achieved this way.`,
+    refinements: [
+      '0.12/0.15/0.18/0.21/0.24%',
+      '40/50/60/70/80%',
+    ]
+  },
+  'Bow',
+  Rarity.Epic,
+  565,
+  'ATK',
+  27.6,
+  'Wish',
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  
 https://paimon.moe/weapons
