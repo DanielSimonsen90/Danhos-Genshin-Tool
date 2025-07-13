@@ -1,5 +1,5 @@
 import { snakeCaseFromCamelCase, snakeCaseFromPascalCase } from '@/common/functions/strings';
-import { ArtifactPartName, Element, Weapon } from '@/common/types';
+import { ArtifactPartName, Element, WeaponType } from '@/common/types';
 import type * as ArtifactSetData from '@/data/artifact-sets';
 import type * as CharacterData from '@/data/characters';
 import type * as DomainsData from '@/data/domains/domain-of-blessing';
@@ -43,7 +43,7 @@ export const ImageService = new class ImageService extends BaseService<string> {
     return this.lastResult = `${REROLL_CDN_URL}/Elements/Element_${this.formatRerollCdnName(name)}.png`;
   }
   
-  public getWeaponTypeImage(name: Weapon): string {
+  public getWeaponTypeImage(name: WeaponType): string {
     return this.lastResult = `${REROLL_CDN_URL}/UI/weapon_${snakeCaseFromCamelCase(name)}.png`;
   }
   public getWeaponImage(name: string): string {
