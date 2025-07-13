@@ -38,8 +38,11 @@ export const UltimateOverlordsMegaMagicSword = new Weapon(
 export const AThousandBlazingSuns = new Weapon(
   "A Thousand Blazing Suns",
   {
-    value: `Gain the "Scorching Brilliance" effect when using an Elemental Skill or Burst: CRIT DMG increased by 40% and ATK increased by 56% for 6s. This effect can trigger once every 10s. While a "Scorching Brilliance" instance if active, its duration is increased by 2s after Normal or Charged attacks deal Elemental DMG. This effect can trigger once every second and the max duration increase is 6s. Additionally, when the equipping character is in the nightsoul's Blessing state, "Scorching Brilliance" effects are increased by 75%, and its duration will not count down when the equipping character is off-field.`,
-    refinements: [], // TODO
+    value: `Gain the "Scorching Brilliance" effect when using an Elemental Skill or Burst: CRIT DMG increased by $0 and ATK increased by $1 for 6s. This effect can trigger once every 10s. While a "Scorching Brilliance" instance is active, its duration is increased by 2s after Normal or Charged attacks deal Elemental DMG. This effect can trigger once every second, and the max duration increase is 6s. Additionally, when the equipping character is in the Nightsoul's Blessing state, "Scorching Brilliance" effects are increased by 75%, and its duration will not count down when the equipping character is off-field.`,
+    refinements: [
+      '20/25/30/35/40%',
+      '28/35/42/49/56%',
+    ],
   },
   'Claymore',
   Rarity.Legendary,
@@ -125,7 +128,7 @@ export const AmenomaKageuchi = new Weapon(
   {
     value: `After casting an Elemental Skill, gain 1 Succession Seed. The Succession Seed lasts for 30s. Up to 3 Succession Seeds may exist simultaneously. After using an Elemental Burst, all Succession Seeds are consumed and after 2s, the character regenerates $0 Energy for each seed consumed.`,
     refinements: [
-      '6' // TODO
+      '6/7.5/9/10.5/12'
     ]
   },
   'Sword',
@@ -139,7 +142,7 @@ export const AmenomaKageuchi = new Weapon(
 export const AmosBow = new Weapon(
   "Amos' Bow",
   {
-    value: `Increases Normal Attack and Aimed Shot DMG by $0. Increases DMG from arrows hsot by a further $1 for every 0.1s that the arrow is in flight, up to 0.5s. Stacks up to 5 times on each arrow.`,
+    value: `Increases Normal Attack and Aimed Shot DMG by $0. Increases DMG from arrows shot by a further $1 for every 0.1s that the arrow is in flight, up to 0.5s. Stacks up to 5 times on each arrow.`,
     refinements: [
       '12/15/18/21/24%',
       '8/10/12/14/16%',
@@ -208,7 +211,9 @@ export const AshGravenDrinkingHorn = new Weapon(
   'Ash-Graven Drinking Horn',
   {
     value: `When an attack hits an opponent, deal AoE DMG equal to $0 of Max HP at the target location. This effect can be triggered once every 15s.`,
-    refinements: ['80%'] // TODO
+    refinements: [
+      '40/50/60/70/80%'
+    ]
   },
   'Catalyst',
   Rarity.Epic,
@@ -224,8 +229,8 @@ export const AstralVulturesCrimsonPlumage = new Weapon(
     value: `For 12s after triggering a Swirld reaction, ATK increases by $0. In addition, when 1/2 or more characters in the party are of a different Elemental Type from the equipping character, the DMG dealt by the equipping character is increased by $1 and Elemental Burst DMG is increased by $2.`,
     refinements: [
       '24/30/36/42/48%',
-      '(20%/40%)/(25%/60%)/(30%/72%)/(35%/84%)/(40%/96%)',
-      '(10%/24%)/(12.5%/30%)/(15%/36%)/(17.5%/42%)/(20%/48%)',
+      '(20/40%)/(25/60%)/(30/72%)/(35/84%)/(40/96%)',
+      '(10/24%)/(12.5/30%)/(15/36%)/(17.5/42%)/(20/48%)',
     ]
   },
   'Bow',
@@ -240,8 +245,12 @@ export const AstralVulturesCrimsonPlumage = new Weapon(
 export const Azurelight = new Weapon(
   'Azurelight',
   {
-    value: `Whithin 12s after an Elemental Skill is used, ATK is increased by 48%. During this time, when the equipping character has 0 Energy, ATK will be further increased by 48%, and CRIT DMG will be increased by 80%.`,
-    refinements: [] // TODO
+    value: `Within 12s after an Elemental Skill is used, ATK is increased by $0. During this time, when the equipping character has 0 Energy, ATK will be further increased by $0, and CRIT DMG will be increased by $2.`,
+    refinements: [
+      '24/30/36/42/48%',
+      '24/30/36/42/48%',
+      '40/50/60/70/80%',
+    ]
   },
   'Sword',
   Rarity.Legendary,
@@ -290,9 +299,9 @@ export const BeaconOfTheReedSea = new Weapon(
   {
     value: `After the character's Elemental Skill hits an opponent, their ATK will be increased by $0 for 8s. After the character takes DMG, their ATK will be increased by $1 for 8s. The 2 aforementioned effects can be triggered even when the character is not on the field. Additionally, when not protected by a shield, the character's Max HP will be increased by $2`,
     refinements: [
-      '20%/25%/30%/35%/40%',
-      '20%/25%/30%/35%/40%',
-      '32%/40%/48%/56%/64%.',
+      '20/25/30/35/40%',
+      '20/25/30/35/40%',
+      '32/40/48/56/64%.',
     ]
   },
   'Claymore',
@@ -323,7 +332,7 @@ export const BlackTassel = new Weapon(
   {
     value: `Increases DMG against slimes by $0.`,
     refinements: [
-      '40%/50%/60%/70%/80%.'
+      '40/50/60/70/80%.'
     ],
   },
   'Polearm',
@@ -339,7 +348,7 @@ export const BlackcliffAgate = new Weapon(
   {
     value: `After defeating an enemy, ATK is increased by $0 for 30s. This effect has a maximum of 3 stacks, and the duration of each stack is independent of the others.`,
     refinements: [
-      '12%/15%/18%/21%/24%',
+      '12/15/18/21/24%',
     ]
   },
   'Catalyst',
@@ -355,7 +364,7 @@ export const BlackcliffLongsword = new Weapon(
   {
     value: `After defeating an enemy, ATK is increased by $0 for 30s. This effect has a maximum of 3 stacks, and the duration of each stack is independent of the others.`,
     refinements: [
-      '12%/15%/18%/21%/24%',
+      '12/15/18/21/24%',
     ]
   },
   'Sword',
@@ -371,7 +380,7 @@ export const BlackcliffPole = new Weapon(
   {
     value: `After defeating an enemy, ATK is increased by $0 for 30s. This effect has a maximum of 3 stacks, and the duration of each stack is independent of the others.`,
     refinements: [
-      '12%/15%/18%/21%/24%',
+      '12/15/18/21/24%',
     ]
   },
   'Polearm',
@@ -387,7 +396,7 @@ export const BlackcliffSlasher = new Weapon(
   {
     value: `After defeating an enemy, ATK is increased by $0 for 30s. This effect has a maximum of 3 stacks, and the duration of each stack is independent of the others.`,
     refinements: [
-      '12%/15%/18%/21%/24%',
+      '12/15/18/21/24%',
     ]
   },
   'Claymore',
@@ -403,7 +412,7 @@ export const BlackcliffWarbow = new Weapon(
   {
     value: `After defeating an enemy, ATK is increased by $0 for 30s. This effect has a maximum of 3 stacks, and the duration of each stack is independent of the others.`,
     refinements: [
-      '12%/15%/18%/21%/24%',
+      '12/15/18/21/24%',
     ]
   },
   'Bow',
@@ -419,7 +428,7 @@ export const BloodtaintedGreatsword = new Weapon(
   {
     value: `Increases DMG dealt against opponents affected by Pyro or Electro by $0.`,
     refinements: [
-      '12%/15%/18%/21%/24%',
+      '12/15/18/21/24%',
     ]
   },
   'Claymore',
@@ -435,8 +444,8 @@ export const CalamityOfEshu = new Weapon(
   {
     value: `While characters are protected by a Shield, DMG dealt by Normal and Charged Attacks is increased by $0, and Normal and Charged Attack CRIT Rate is increased by $1.`,
     refinements: [
-      '20%/25%/30%/35%/40%',
-      '8%/10%/12%/14%/16%',
+      '20/25/30/35/40%',
+      '8/10/12/14/16%',
     ],
   },
   'Sword',
@@ -452,8 +461,8 @@ export const CalamityQueller = new Weapon(
   {
     value: `Gain $0 All Elemental DMG Bonus. Obtain Consummation for 20s after using an Elemental Skill, causing ATK to increase by $1 per second. This ATK increase has a maximum of 6 stacks. When the character equipped with this weapon is not on the field, Consummation's ATK increase is doubled.`,
     refinements: [
-      '12%/15%/18%/21%/24%',
-      '3.2%/4%/4.8%/5.6%/6.4%',
+      '12/15/18/21/24%',
+      '3.2/4/4.8/5.6/6.4%',
     ]
   },
   'Polearm',
@@ -490,7 +499,7 @@ export const ChainBreaker = new Weapon(
   {
     value: `For every party member from Natlan or who has a different Elemental Type from the equipping character, the equipping character gains $0 increased ATK. When there are no less than 3 of the aforementioned characters, the equipping character gains $1 Elemental Mastery.`,
     refinements: [
-      '4.8%/6%/7.2%/8.4%/9.6%',
+      '4.8/6/7.2/8.4/9.6%',
       '24/30/36/42/48',
     ]
   },
@@ -507,7 +516,7 @@ export const CinnabarSpindle = new Weapon(
   {
     value: `Elemental Skill DMG is increased by $0 of DEF. The effect will be triggered no more than once every 1.5s and will be cleared 0.1s after the Elemental Skill deals DMG.`,
     refinements: [
-      '40%/50%/60%/70%/80%',
+      '40/50/60/70/80%',
     ]
   },
   'Sword',
@@ -573,7 +582,7 @@ export const CranesEchoingCall = new Weapon(
   {
     value: `After the equipping character hits an opponent with a Plunging Attack, all nearby party members' Plunging Attacks deal $0 increased DMG for 20s. When nearby party members hit opponents with Plunging Attacks, they will restore $1 Energy to the equipping character. Energy can be restored this way every 0.7s.`,
     refinements: [
-      '28%/41%/54%/67%/80%',
+      '28/41/54/67/80%',
       '2.5/2.75/3/3.25/3.5',
     ]
   },
@@ -625,7 +634,7 @@ export const DarkIronSword = new Weapon(
   {
     value: `Upon causing an Overloaded, Superconduct, Electro-Charged, Quicken, Aggravate, Hyperbloom, or Electro-infused Swirl reaction, ATK is increased by $0 for 12s.`,
     refinements: [
-      '20%/25%/30%/35%/40%',
+      '20/25/30/35/40%',
     ]
   },
   'Sword',
@@ -742,7 +751,7 @@ export const EarthShaker = new Weapon(
   {
     value: `After a party member triggers a Pyro-related reaction, the equipping character's Elemental Skill DMG is increased by $0 for 8s. This effect can be triggered even when the triggering party member is not on the field.`,
     refinements: [
-      '16%/20%/24%/28%/32%',
+      '16/20/24/28/32%',
     ]
   },
   'Claymore',
@@ -777,7 +786,7 @@ export const EmeraldOrb = new Weapon(
   {
     value: `Upon causing a Vaporize, Electro-Charged, Frozen, Bloom, or a Hydro-infused Swirl reaction, increases ATK by $0 for 12s.`,
     refinements: [
-      '20%/25%/30%/35%/40%',
+      '20/25/30/35/40%',
     ]
   },
   'Catalyst',
@@ -863,7 +872,7 @@ export const FadingTwilight = new Weapon(
   {
     value: `Has three states, Evengleam, Afterglow, and Dawnblaze, which increase DMG dealt by $0 respectively. When attacks hit opponents, this weapon will switch to the next state. This weapon can change states once every 7s. The character equipping this weapon can still trigger the state switch while not on the field.`,
     refinements: [
-      '(6%/10%/14%)/(7.5%/12.5%/17.5%)/(9%/15%/21%)/(10.5%/17.5%/24.5%)/(12%/20%/28%)',
+      '(6/10/14%)/(7.5/12.5/17.5%)/(9/15/21%)/(10.5/17.5/24.5%)/(12/20/28%)',
     ]
   },
   'Bow',
@@ -879,7 +888,7 @@ export const FangOfTheMountainKing = new Weapon(
   {
     value: `Gain 1 stack of Canopy's Favor after hitting an opponent with an Elemental Skill. This can be triggered once every 0.5s. After a nearby party member triggers a Burning or Burgeon reaction, the equipping character will gain 3 stacks. This effect can be triggered once every 2s and can be triggered even when the triggering party member is off-field. Canopy's Favor: Elemental Skill and Burst DMG is increased by 20% for 6s. Max 6 stacks. Each stack is counted independently.`,
     refinements: [
-      '10%/12.5%/15%/17.5%/20%',
+      '10/12.5/15/17.5/20%',
     ]
   },
   'Claymore',
@@ -981,7 +990,7 @@ export const FerrousShadow = new Weapon(
   {
     value: `When HP falls below $0, increases Charged Attack DMG by $1 and Charged Attacks become harder to interrupt.`,
     refinements: [
-      '70%/75%/80%/85%/90%',
+      '70/75/80/85/90%',
       '20/25/30/35/40%',
     ]
   },
@@ -1015,7 +1024,7 @@ export const FilletBlade = new Weapon(
   {
     value: `On hit, has a 50% chance to deal $0 ATK DMG to a single opponent. Can only occur once every $1.`,
     refinements: [
-      '240%/280%/320%/360%/400%',
+      '240/280/320/360/400%',
       '15/14/13/12/11s',
     ]
   },
@@ -1067,7 +1076,7 @@ export const FlowerWreathedFeathers = new Weapon(
   {
     value: `Decreases Gliding Stamina consumption by 15%. When using Aimed Shots, the DMG dealt by Charged Attacks increases by $0 every 0.5s. This effect can stack up to 6 times and will be removed 10s after leaving Aiming Mode.`,
     refinements: [
-      '6%/7.5%/9%/10.5%/12%',
+      '6/7.5/9/10.5/12%',
     ]
   },
   'Bow',
@@ -1101,7 +1110,7 @@ export const FluteOfEzpitzal = new Weapon(
   {
     value: `Using an Elemental Skill increases DEF by $0 for 15s.`,
     refinements: [
-      '16%/20%/24%/28%/32%',
+      '16/20/24/28/32%',
     ]
   },
   'Sword',
@@ -1117,7 +1126,7 @@ export const FootprintOfTheRainbow = new Weapon(
   {
     value: `Using an Elemental Skill increases DEF by $0 for 15s.`,
     refinements: [
-      '16%/20%/24%/28%/32%',
+      '16/20/24/28/32%',
     ]
   },
   'Polearm',
@@ -1202,8 +1211,8 @@ export const FruitfulHook = new Weapon(
   {
     value: `Increase Plunging Attack CRIT Rate by $0; After a Plunging Attack hits an opponent, Normal, Charged, and Plunging Attack DMG increased by $1 for 10s.`,
     refinements: [
-      '16%/20%/24%/28%/32%',
-      '16%/20%/24%/28%/32%',
+      '16/20/24/28/32%',
+      '16/20/24/28/32%',
     ]
   },
   'Claymore',
@@ -1219,7 +1228,7 @@ export const HakushinRing = new Weapon(
   {
     value: `After the character equipped with this weapon triggers an Electro elemental reaction, nearby party members of an Elemental Type involved in the elemental reaction receive a $0 Elemental DMG Bonus for their element, lasting 6s. Elemental Bonuses gained in this way cannot be stacked.`,
     refinements: [
-      '10%/12.5%/15%/17.5%/20%',
+      '10/12.5/15/17.5/20%',
     ]
   },
   'Catalyst',
@@ -1235,7 +1244,7 @@ export const Halberd = new Weapon(
   {
     value: `Normal Attacks deal an additional $0 ATK as DMG. Can only occur once every 10s.`,
     refinements: [
-      '160%/200%/240%/280%/320%',
+      '160/200/240/280/320%',
     ]
   },
   'Polearm',
@@ -1251,8 +1260,8 @@ export const Hamayumi = new Weapon(
   {
     value: `Increases Normal Attack DMG by $0 and Charged Attack DMG by $1. When the equipping character's Energy reaches 100%, this effect is increased by 100%.`,
     refinements: [
-      '16%/20%/24%/28%/32%',
-      '12%/15%/18%/21%/24%',
+      '16/20/24/28/32%',
+      '12/15/18/21/24%',
     ]
   },
   'Bow',
@@ -1286,7 +1295,7 @@ export const HarbingerOfDawn = new Weapon(
   {
     value: `When HP is above 90%, increases CRIT Rate by $0.`,
     refinements: [
-      '14%/17.5%/21%/24.5%/28%',
+      '14/17.5/21/24.5/28%',
     ]
   },
   'Sword',
@@ -1302,7 +1311,7 @@ export const HuntersPath = new Weapon(
   {
     value: `Gain $0 All Elemental DMG Bonus. Obtain the Tireless Hunt effect after hitting an opponent with a Charged Attack. This effect increases Charged Attack DMG by $1 of Elemental Mastery. This effect will be removed after 12 Charged Attacks or 10s. Only 1 instance of Tireless Hunt can be gained every 12s.`,
     refinements: [
-      '12%/15%/18%/21%/24%',
+      '12/15/18/21/24%',
       '160/200/240/280/320%',
     ]
   },
@@ -1385,7 +1394,7 @@ export const KagurasVerity = new Weapon(
   {
     value: `Gains the Kagura Dance effect when using an Elemental Skill, causing the Elemental Skill DMG of the character wielding this weapon to increase by $0 for 16s. Max 3 stacks. This character will gain $1 All Elemental DMG Bonus when they possess 3 stacks.`,
     refinements: [
-      '12%/15%/18%/21%/24%',
+      '12/15/18/21/24%',
     ]
   },
   'Catalyst',
@@ -1419,9 +1428,9 @@ export const KeyOfKhajNisut = new Weapon(
   {
     value: `HP increased by $0. When an Elemental Skill hits opponents, you gain the Grand Hymn effect for 20s. This effect increases the equipping character's Elemental Mastery by $1 of their Max HP. This effect can trigger once every 0.3s. Max 3 stacks. When this effect gains 3 stacks, or when the third stack's duration is refreshed, the Elemental Mastery of all nearby party members will be increased by $2 of the equipping character's max HP for 20s.`,
     refinements: [
-      '20%/25%/30%/35%/40%',
-      '0.12%/0.15%/0.18%/0.21%/0.24%',
-      '0.2%/0.25%/0.3%/0.35%/0.4%',
+      '20/25/30/35/40%',
+      '0.12/0.15/0.18/0.21/0.24%',
+      '0.2/0.25/0.3/0.35/0.4%',
     ]
   },
   'Sword',
@@ -1439,7 +1448,7 @@ export const KingsSquire = new Weapon(
     value: `Obtain the Teachings of the Forest effect when unleashing Elemental Skills and Bursts, increasing Elemental Mastery by $0 for 12s. This effect will be removed when switching characters. When the Teachings of the Forest effect ends or is removed, it will deal $1 of ATK as DMG to 1 nearby opponent. The Teachings of the Forest effect can be triggered once every 20s.`,
     refinements: [
       '60/80/100/120/140',
-      '100%/120%/140%/160%/180%',
+      '100/120/140/160/180%',
     ]
   },
   'Bow',
@@ -1455,7 +1464,7 @@ export const KitainCrossSpear = new Weapon(
   {
     value: `Increases Elemental Skill DMG by $0. After Elemental Skill hits an opponent, the character loses 3 Energy but regenerates $1 Energy every 2s for the next 6s. This effect can occur once every 10s. Can be triggered even when the character is not on the field.`,
     refinements: [
-      '6%/7.5%/9%/10.5%/12%',
+      '6/7.5/9/10.5/12%',
       '3/3.5/4/4.5/5',
     ]
   },
@@ -1472,8 +1481,8 @@ export const LightOfFoliarIncision = new Weapon(
   {
     value: `CRIT Rate is increased by $0. After Normal Attacks deal Elemental DMG, the Foliar Incision effect will be obtained, increasing DMG dealt by Normal Attacks and Elemental Skills by $1 of Elemental Mastery. This effect will disappear after 28 DMG instances or 12s. You can obtain Foliar Incision once every 12s.`,
     refinements: [
-      '4%/5%/6%/7%/8%',
-      '120%/150%/180%/210%/240%',
+      '4/5/6/7/8%',
+      '120/150/180/210/240%',
     ]
   },
   'Sword',
@@ -1523,8 +1532,8 @@ export const LithicSpear = new Weapon(
   {
     value: `For every character in the party who hails from Liyue, the character who equips this weapon gains a $0 ATK increase and a $1 CRIT Rate increase. This effect stacks up to 4 times.`,
     refinements: [
-      '7%/8%/9%/10%/11%',
-      '3%/4%/5%/6%/7%',
+      '7/8/9/10/11%',
+      '3/4/5/6/7%',
     ]
   },
   'Polearm',
@@ -1592,7 +1601,7 @@ export const MagicGuide = new Weapon(
   {
     value: `Increases DMG against opponents affected by Hydro or Electro by $0.`,
     refinements: [
-      '12%/15%/18%/21%/24%',
+      '12/15/18/21/24%',
     ]
   },
   'Catalyst',
@@ -1675,7 +1684,7 @@ export const Messenger = new Weapon(
   {
     value: `Charged Attack hits on weak points deal an additional $0 ATK DMG as CRIT DMG. Can only occur once every 10s.`,
     refinements: [
-      '100%/125%/150%/175%/200%',
+      '100/125/150/175/200%',
     ]
   },
   'Bow',
@@ -1759,8 +1768,8 @@ export const MountainBracingBolt = new Weapon(
   {
     value: `Decreases Climbing Stamina Consumption by 15% and increases Elemental Skill DMG by $0. Also, after other nearby party members use Elemental Skills, the equipping character's Elemental Skill DMG will also increase by $1 for 8s.`,
     refinements: [
-      '12%/15%/18%/21%/24%',
-      '12%/15%/18%/21%/24%',
+      '12/15/18/21/24%',
+      '12/15/18/21/24%',
     ]
   },
   'Polearm',
@@ -1788,31 +1797,1635 @@ export const MouunsMoon = new Weapon(
   'Wish',
 );
 
+export const OathswornEye = new Weapon(
+  'Oathsworn Eye',
+  {
+    value: `Increases Energy Recharge by $0 for 10s after using an Elemental Skill.`,
+    refinements: [
+      '12/15/18/21/24%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Epic,
+  565,
+  'ATK',
+  27.6,
+  'Event',
+);
 
+export const OtherworldlyStory = new Weapon(
+  'Otherworldly Story',
+  {
+    value: `Picking up an Elemental Energy Orb/Particle recovers $0 HP.`,
+    refinements: [
+      '1/1.25/1.5/1.75/2%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Rare,
+  401,
+  'Energy Recharge',
+  39,
+  'Chest',
+);
 
+export const PeakPatrolSong = new Weapon(
+  'Peak Patrol Song',
+  {
+    value: `Gain "Ode to Flowers" after Normal or Plunging Attacks hit an opponent: DEF increases by $0 and gain a $1 All Elemental DMG Bonus for 6s. Max 2 stacks. Can trigger once per 0.1s. When this effect reaches 2 stacks or the 2nd stack's duration is refreshed, increase all nearby party members' All Elemental DMG Bonus by $2 for every 1,000 DEF the equipping character has, up to a maximum of $3, for 15s.`,
+    refinements: [
+      '8/10/12/14/16%',
+      '10/12.5/15/17.5/20%',
+      '8/10/12/14/16%',
+      '25.6/32/38.4/44.8/51.2%'
+    ]
+  },
+  'Sword',
+  Rarity.Legendary,
+  542,
+  'DEF',
+  82.7,
+  'Wish',
+  cs => cs.Xilonen
+);
 
+export const PolarStar = new Weapon(
+  'Polar Star',
+  {
+    value: `Elemental Skill and Elemental Burst DMG increased by $0. After a Normal Attack, Charged Attack, Elemental Skill or Elemental Burst hits an opponent, 1 stack of Ashen Nightstar will be gained for 12s. When 1/2/3/4 stacks of Ashen Nightstar are present, ATK is increased by $1. The stack of Ashen Nightstar created by the Normal Attack, Charged Attack, Elemental Skill or Elemental Burst will be counted independently of the others.`,
+    refinements: [
+      '12/15/18/21/24%',
+      '10/20/30/48%',
+    ]
+  },
+  'Bow',
+  Rarity.Legendary,
+  608,
+  'Crit Rate',
+  33.1,
+  'Wish',
+  cs => cs.TartagliaChilde
+);
 
+export const PortablePowerSaw = new Weapon(
+  'Portable Power Saw',
+  {
+    value: `When the wielder is healed or heals others, they will gain a Stoic's Symbol that lasts 30s, up to a maximum of 3 Symbols. When using their Elemental Skill or Burst, all Symbols will be consumed and the Roused effect will be granted for 10s. For each Symbol consumed, gain $0 Elemental Mastery, and 2s after the effect occurs, $1 Energy per Symbol consumed will be restored for said character. The Roused effect can be triggered once every 15s, and Symbols can be gained even when the character is not on the field.`,
+    refinements: [
+      '40/50/60/70/80',
+      '2/2.5/3/3.5/4',
+    ]
+  },
+  'Claymore',
+  Rarity.Epic,
+  454,
+  'HP',
+  55.1,
+  'Wish',
+);
 
+export const Predator = new Weapon(
+  'Predator',
+  {
+    value: `Effective only on the following platform: "PlayStation™Network"\nDealing Cryo DMG to opponents increases this character's Normal and Charged Attack DMG by 10% for 6s. This effect can have a maximum of 2 stacks. Additionally, when Aloy equips Predator, ATK is increased by 66.`,
+    refinements: []
+  },
+  'Bow',
+  Rarity.Epic,
+  510,
+  'ATK',
+  41.3,
+  'Event',
+);
 
+export const PrimordialJadeCutter = new Weapon(
+  'Primordial Jade Cutter',
+  {
+    value: `HP increased by $0. Additionally, provides an ATK bonus based on $1 of the weilder's Max HP.`,
+    refinements: [
+      '20/25/30/35/40%',
+      '1.2/1.5/1.8/2.1/2.4%',
+    ]
+  },
+  'Sword',
+  Rarity.Legendary,
+  542,
+  'Crit Rate',
+  44.1,
+  'Wish',
+);
 
+export const PrimordialJadeWingedSpear = new Weapon(
+  'Primordial Jade Winged-Spear',
+  {
+    value: `On hit, increases ATK by $0 for 6s. Max 7 stacks. This effect can only occur once every 0.3s. While in possession of the maximum possible stacks, DMG dealt is increased by $1.`,
+    refinements: [
+      '3.2/3.9/4.6/5.3/6%',
+      '12/15/18/21/24%',
+    ]
+  },
+  'Polearm',
+  Rarity.Legendary,
+  674,
+  'Crit Rate',
+  22.1,
+  'Wish',
+  cs => cs.Xiao,
+);
 
+export const ProspectorsDrill = new Weapon(
+  `Prospector's Drill`,
+  {
+    value: `When the wielder is healed or heals others, they will gain a Unity's Symbol that lasts 30s, up to a maximum of 3 Symbols. When using their Elemental Skill or Burst, all Symbols will be consumed and the Struggle effect will be granted for 10s. For each Symbol consumed, gain $0 ATK and $1 All Elemental DMG Bonus. The Struggle effect can be triggered once every 15s, and Symbols can be gained even when the character is not on the field.`,
+    refinements: [
+      '3/4/5/6/7%',
+      '7/8.5/10/11.5/13%',
+    ]
+  },
+  'Polearm',
+  Rarity.Epic,
+  565,
+  'ATK',
+  27.6,
+  'Wish',
+);
 
+export const PrototypeAmber = new Weapon(
+  'Prototype Amber',
+  {
+    value: `Using an Elemental Burst regenerates $0 Energy every 2s for 6s. Additionally, all party members will regenerate $1 HP every 2s for this duration.`,
+    refinements: [
+      '4/4.5/5/5.5/6',
+      '4/4.5/5/5.5/6%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Epic,
+  510,
+  'HP',
+  41.3,
+  'Crafting',
+);
 
+export const PrototypeArchaic = new Weapon(
+  'Prototype Archaic',
+  {
+    value: `On hit, Normal or Charged Attacks have a 50% chance to deal an additional $0 ATK DMG to enemies within a small radius. Can only occur once every 15s.`,
+    refinements: [
+      '240/300/360/420/480%',
+    ]
+  },
+  'Claymore',
+  Rarity.Epic,
+  565,
+  'ATK',
+  27.6,
+  'Crafting',
+);
 
+export const PrototypeCrescent = new Weapon(
+  'Prototype Crescent',
+  {
+    value: `Aimed Shot hits on weak points increase Movement SPD by 10% and ATK by $0 for 10s.`,
+    refinements: [
+      '36/45/54/63/72%'
+    ]
+  },
+  'Bow',
+  Rarity.Epic,
+  510,
+  'ATK',
+  41.3,
+  'Crafting',
+);
 
+export const PrototypeRancour = new Weapon(
+  'Prototype Rancour',
+  {
+    value: `On hit, Normal or Charged Attacks increase Base ATK and DEF by $0 for 6s. Max 4 stacks. Can only occur once every 0.3s.`,
+    refinements: [
+      '4/4.5/5/5.5/6%',
+    ]
+  },
+  'Sword',
+  Rarity.Epic,
+  565,
+  'Physical DMG Bonus',
+  34.5,
+  'Crafting',
+);
 
+export const PrototypeStarglitter = new Weapon(
+  'Prototype Starglitter',
+  {
+    value: `After using an Elemental Skill, increases Normal and Charged Attack DMG by $0 for 12s. Max 2 stacks.`,
+    refinements: [
+      '8/10/12/14/16%',
+    ]
+  },
+  'Sword',
+  Rarity.Epic,
+  510,
+  'Energy Recharge',
+  45.9,
+  'Crafting',
+);
 
+export const Rainslasher = new Weapon(
+  'Rainslasher',
+  {
+    value: `Increases DMG against enemies affected by Hydro or Electro by $0.`,
+    refinements: [
+      '20/25/30/35/40%',
+    ]
+  },
+  'Claymore',
+  Rarity.Epic,
+  510,
+  'Elemental Mastery',
+  165,
+  'Wish',
+);
 
+export const RangeGauge = new Weapon(
+  'Range Gauge',
+  {
+    value: `When the wielder is healed or heals others, they will gain a Unity's Symbol that lasts 30s, up to a maximum of 3 Symbols. When using their Elemental Skill or Burst, all Symbols will be consumed and the Struggle effect will be granted for 10s. For each Symbol consumed, gain $0 ATK and $1 All Elemental DMG Bonus. The Struggle effect can be triggered once every 15s, and Symbols can be gained even when the character is not on the field.`,
+    refinements: [
+      '3/4/5/6/7%',
+      '7/8.5/10/11.5/13%'
+    ]
+  },
+  'Bow',
+  Rarity.Epic,
+  565,
+  'ATK',
+  27.6,
+  'Wish',
+);
 
+export const RavenBow = new Weapon(
+  'Raven Bow',
+  {
+    value: `Increases DMG against opponents affected by Hydro or Pyro by $0.`,
+    refinements: [
+      '12/15/18/21/24%',
+    ]
+  },
+  'Bow',
+  Rarity.Rare,
+  448,
+  'Elemental Mastery',
+  94,
+  'Wish',
+);
 
+export const RecurveBow = new Weapon(
+  'Recurve Bow',
+  {
+    value: `Defeating an opponent restores $0 HP.`,
+    refinements: [
+      '8/10/12/14/16%',
+    ]
+  },
+  'Bow',
+  Rarity.Rare,
+  354,
+  'HP',
+  46.9,
+  'Chest',
+);
 
+export const RedhornStonethresher = new Weapon(
+  'Redhorn Stonethresher',
+  {
+    value: `DEF is increased by $0. Normal and Charged Attack DMG is increased by $1 of DEF.`,
+    refinements: [
+      '28/35/42/49/56%',
+      '40/50/60/70/80%',
+    ]
+  },
+  'Claymore',
+  Rarity.Legendary,
+  542,
+  'Crit DMG',
+  88.2,
+  'Wish',
+  cs => cs.AratakiItto
+);
 
+export const RightfulReward = new Weapon(
+  'Rightful Reward',
+  {
+    value: `When the wielder is healed, restore $0 Energy. This effect can be triggered once every 10s, and can occur even when the character is not on the field..`,
+    refinements: [
+      '8/10/12/14/16',
+    ]
+  },
+  'Polearm',
+  Rarity.Epic,
+  510,
+  'HP',
+  27.6,
+  'Crafting',
+);
 
+export const RingOfYaxche = new Weapon(
+  'Ring of Yaxche',
+  {
+    value: `Using an Elemental Skill grants the Jade-Forged Crown effect: Every 1,000 Max HP will increase the Normal Attack DMG dealt by the equipping character by $0 for 10s. Normal Attack DMG can be increased this way by a maximum of $1.`,
+    refinements: [
+      '0.6/0.7/0.8/0.9/1%',
+      '16/20/24/28/32%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Epic,
+  510,
+  'HP',
+  41.3,
+  'Crafting',
+);
 
+export const RoyalBow = new Weapon(
+  'Royal Bow',
+  {
+    value: `Upon damaging an enemy, increases CRIT Rate by $0. Max 5 stacks. A CRIT hit removes all stacks.`,
+    refinements: [
+      '8/10/12/14/16%',
+    ]
+  },
+  'Bow',
+  Rarity.Rare,
+  510,
+  'ATK',
+  41.3,
+  'Starglitter Exchange',
+);
 
+export const RoyalGreatsword = new Weapon(
+  'Royal Greatsword',
+  {
+    value: `Upon damaging an enemy, increases CRIT Rate by $0. Max 5 stacks. A CRIT hit removes all stacks.`,
+    refinements: [
+      '8/10/12/14/16%',
+    ]
+  },
+  'Claymore',
+  Rarity.Rare,
+  565,
+  'ATK',
+  27.6,
+  'Starglitter Exchange',
+);
 
+export const RoyalGrimoire = new Weapon(
+  'Royal Grimoire',
+  {
+    value: `Upon damaging an enemy, increases CRIT Rate by $0. Max 5 stacks. A CRIT hit removes all stacks.`,
+    refinements: [
+      '8/10/12/14/16%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Rare,
+  565,
+  'ATK',
+  27.6,
+  'Starglitter Exchange',
+);
 
+export const RoyalLongsword = new Weapon(
+  'Royal Longsword',
+  {
+    value: `Upon damaging an enemy, increases CRIT Rate by $0. Max 5 stacks. A CRIT hit removes all stacks.`,
+    refinements: [
+      '8/10/12/14/16%',
+    ]
+  },
+  'Sword',
+  Rarity.Rare,
+  510,
+  'ATK',
+  41.3,
+  'Starglitter Exchange',
+);
 
+export const RoyalSpear = new Weapon(
+  'Royal Spear',
+  {
+    value: `Upon damaging an enemy, increases CRIT Rate by $0. Max 5 stacks. A CRIT hit removes all stacks.`,
+    refinements: [
+      '8/10/12/14/16%',
+    ]
+  },
+  'Polearm',
+  Rarity.Rare,
+  565,
+  'ATK',
+  27.6,
+  'Starglitter Exchange',
+);
+
+export const Rust = new Weapon(
+  'Rust',
+  {
+    value: `Increases Normal Attack DMG by $0 but decreases Aimed Shot DMG by $1`,
+    refinements: [
+      '40/50/60/70/80%',
+      '8/9/10/11/12%',
+    ]
+  },
+  'Bow',
+  Rarity.Epic,
+  510,
+  'ATK',
+  41.3,
+  'Wish',
+);
+
+export const SacrificialBow = new Weapon(
+  'Sacrificial Bow',
+  {
+    value: `After damaging an opponent with an Elemental Skill, the skill has a $0 chance to end its own CD. Can only occur once every $1.`,
+    refinements: [
+      '40/50/60/70/80%',
+      '30/26/22/18/14s',
+    ]
+  },
+  'Bow',
+  Rarity.Epic,
+  565,
+  'Energy Recharge',
+  30.6,
+  'Wish',
+);
+
+export const SacrificialFragments = new Weapon(
+  'Sacrificial Fragments',
+  {
+    value: `After damaging an opponent with an Elemental Skill, the skill has a $0 chance to end its own CD. Can only occur once every $1.`,
+    refinements: [
+      '40/50/60/70/80%',
+      '30/26/22/18/14s',
+    ]
+  },
+  'Catalyst',
+  Rarity.Epic,
+  454,
+  'Elemental Mastery',
+  221,
+  'Wish',
+);
+
+export const SacrificialGreatsword = new Weapon(
+  'Sacrificial Greatsword',
+  {
+    value: `After damaging an opponent with an Elemental Skill, the skill has a $0 chance to end its own CD. Can only occur once every $1.`,
+    refinements: [
+      '40/50/60/70/80%',
+      '30/26/22/18/14s',
+    ]
+  },
+  'Claymore',
+  Rarity.Epic,
+  565,
+  'Energy Recharge',
+  30.6,
+  'Wish',
+);
+
+export const SacrificialJade = new Weapon(
+  'Sacrificial Jade',
+  {
+    value: `When not on the field for more than 5s, Max HP will be increased by $0 and Elemental Mastery will be increased by $1. These effects will be canceled after the wielder has been on the field for 10s.`,
+    refinements: [
+      '32/40/48/56/64%',
+      '40/50/60/70/80',
+    ]
+  },
+  'Catalyst',
+  Rarity.Epic,
+  454,
+  'Crit Rate',
+  36.8,
+  'Battle Pass',
+);
+
+export const SacrificialSword = new Weapon(
+  'Sacrificial Sword',
+  {
+    value: `After damaging an opponent with an Elemental Skill, the skill has a $0 chance to end its own CD. Can only occur once every $1.`,
+    refinements: [
+      '40/50/60/70/80%',
+      '30/26/22/18/14s',
+    ]
+  },
+  'Sword',
+  Rarity.Epic,
+  454,
+  'Energy Recharge',
+  61.3,
+  'Wish',
+);
+
+export const SapwoodBlade = new Weapon(
+  'Sapwood Blade',
+  {
+    value: `After triggering Burning, Quicken, Aggravate, Spread, Bloom, Hyperbloom, or Burgeon, a Leaf of Consciousness will be created around the character for a maximum of 10s. When picked up, the Leaf will grant the character $0 Elemental Mastery for 12s. Only 1 Leaf can be generated this way every 20s. This effect can still be triggered if the character is not on the field. The Leaf of Consciousness' effect cannot stack.`,
+    refinements: [
+      '60/75/90/105/120',
+    ]
+  },
+  'Sword',
+  Rarity.Epic,
+  565,
+  'Energy Recharge',
+  30.6,
+  'Crafting',
+);
+
+export const ScionOfTheBlazingSun = new Weapon(
+  'Scion of the Blazing Sun',
+  {
+    value: `After a Charged Attack hits an opponent, a Sunfire Arrow will descend upon the opponent hit, dealing $0 ATK as DMG, and applying the Heartsearer effect to the opponent damaged by said Arrow for 10s. Opponents affected by Heartsearer take $1 more Charged Attack DMG from the wielder. A Sunfire Arrow can be triggered once every 10s.`,
+    refinements: [
+      '60/75/90/105/120%',
+      '28/35/42/49/56%',
+    ]
+  },
+  'Bow',
+  Rarity.Epic,
+  565,
+  'Crit Rate',
+  18.4,
+  'Battle Pass',
+);
+
+export const SequenceOfSolitude = new Weapon(
+  'Sequence of Solitude',
+  {
+    value: `When an attack hits an opponent, deal AoE DMG equal to $0 of Max HP at the target location. This effect can be triggered once every 15s.`,
+    refinements: [
+      '40/50/60/70/80%',
+    ]
+  },
+  'Bow',
+  Rarity.Epic,
+  510,
+  'HP',
+  41.3,
+  'Event'
+);
+
+export const SerpentSpine = new Weapon(
+  'Serpent Spine',
+  {
+    value: `Every 4s a character is on the field, they will deal $0 more DMG and take $1 more DMG. This effect has a maximum of 5 stacks and will not be reset if the character leaves the field, but will be cleared when the character takes DMG.`,
+    refinements: [
+      '6/7/8/9/10%',
+      '3/2.7/2.4/2.1/1.8%',
+    ]
+  },
+  'Claymore',
+  Rarity.Epic,
+  510,
+  'Crit Rate',
+  27.6,
+  'Battle Pass'
+);
+
+export const SharpshootersOath = new Weapon(
+  `Sharpshooter's Oath`,
+  {
+    value: `Increases DMG against weak spots by $0.`,
+    refinements: [
+      '24/30/36/42/48%',
+    ]
+  },
+  'Bow',
+  Rarity.Rare,
+  401,
+  'Crit DMG',
+  46.9,
+  'Wish',
+);
+
+export const SilvershowerHeartstrings = new Weapon(
+  'Silvershower Heartstrings',
+  {
+    value: `The equipping character can gain the Remedy effect. When they possess 1/2/3 Remedy stacks, Max HP will increase by $0. 1 stack may be gained when the following conditions are met: 1 stack for 25s when using an Elemental Skill; 1 stack for 25s when the value of a Bond of Life value increases; 1 stack for 20s for performing healing. Stacks can still be triggered when the equipping character is not on the field. Each stack's duration is counted independently. In addition, when 3 stacks are active, Elemental Burst CRIT Rate will be increased by $1. This effect will be canceled 4s after falling under 3 stacks.`,
+    refinements: [
+      '(12/24/40%)/(15/30/50%)/(18/36/60%)/(21/42/70%)/(24/48/80%)',
+      '28/35/42/49/56%',
+    ]
+  },
+  'Bow',
+  Rarity.Legendary,
+  542,
+  'HP',
+  66.2,
+  'Wish',
+  cs => cs.Sigewinne
+);
+
+export const SkyriderGreatsword = new Weapon(
+  'Skyrider Greatsword',
+  {
+    value: `On hit, Normal or Charged Attacks increase ATK by $0 for 6s. Max 4 stacks. Can occur once every 0.5s.`,
+    refinements: [
+      '6/7/8/9/10%',
+    ]
+  },
+  'Claymore',
+  Rarity.Rare,
+  401,
+  'Physical DMG Bonus',
+  43.9,
+  'Chest',
+);
+
+export const SkyriderSword = new Weapon(
+  'Skyrider Sword',
+  {
+    value: `Using an Elemental Burst grants a $0 increase in ATK and Movement SPD for 15s.`,
+    refinements: [
+      '12/15/18/21/24%',
+    ]
+  },
+  'Sword',
+  Rarity.Rare,
+  354,
+  'Energy Recharge',
+  52.1,
+  'Wish',
+);
+
+export const SkywardAtlas = new Weapon(
+  'Skyward Atlas',
+  {
+    value: `Increases Elemental DMG Bonus by $0. Normal or Charged Attacks have a 50% chance to trigger a lightning storm that deals $1 ATK as AoE DMG. This effect can occur once every 30s.`,
+    refinements: [
+      '12/15/18/21/24%',
+      '160/200/240/280/320%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Legendary,
+  674,
+  'ATK',
+  33.1,
+  'Wish',
+);
+
+export const SkywardBlade = new Weapon(
+  'Skyward Blade',
+  {
+    value: `CRIT Rate increased by $0. Gains Skypiercing Might upon using an Elemental Burst: Increases Movement SPD by 10%, increases ATK SPD by 10%, and increases the DMG of Normal and Charged Attack hits by $1 for 12s.`,
+    refinements: [
+      '4/5/6/7/8%',
+      '20/25/30/35/40%',
+    ]
+  },
+  'Sword',
+  Rarity.Legendary,
+  608,
+  'Energy Recharge',
+  55.1,
+  'Wish',
+);
+
+export const SkywardHarp = new Weapon(
+  'Skyward Harp',
+  {
+    value: `Increases CRIT DMG by $0. Hits have a $1 chance to inflict a small AoE attack, dealing 125% Physical ATK DMG. Can only occur once every $2.`,
+    refinements: [
+      '20/25/30/35/40%',
+      '60/70/80/90/100%',
+      '4/3.5/3/2.5/2s'
+    ]
+  },
+  'Bow',
+  Rarity.Legendary,
+  674,
+  'Crit Rate',
+  22.1,
+  'Wish',
+);
+
+export const SkywardPride = new Weapon(
+  'Skyward Pride',
+  {
+    value: `Increases all DMG by $0. After using an Elemental Burst, Normal or Charged Attack, on hit, creates a vacuum blade that does $1 Physical DMG to enemies along its path. Lasts for 20s or 8 vacuum blades.`,
+    refinements: [
+      '8/10/12/14/16%',
+      '80/100/120/140/160%',
+    ]
+  },
+  'Claymore',
+  Rarity.Legendary,
+  674,
+  'Energy Recharge',
+  38.6,
+  'Wish',
+);
+
+export const SkywardSpine = new Weapon(
+  'Skyward Spine',
+  {
+    value: `Increases CRIT Rate by $0 and increases Normal ATK SPD by $1. Additionally, Normal and Charged Attacks hits on enemies have a $2 chance to trigger a vacuum blade that deals $3 of ATK as DMG in a small AoE. This effect can occur no more than once every 2s.`,
+    refinements: [
+      '8/10/12/14/16%',
+      '12/12/12/12/12%',
+      '50/50/50/50/50%',
+      '40/55/70/85/100%',
+    ]
+  },
+  'Polearm',
+  Rarity.Legendary,
+  674,
+  'Energy Recharge',
+  38.6,
+  'Wish',
+);
+
+export const Slingshot = new Weapon(
+  'Slingshot',
+  {
+    value: `If a Normal or Charged Attack hits a target within 0.3s of being fired, increases DMG by $0. Otherwise, decreases DMG by 10%.`,
+    refinements: [
+      '36/42/48/54/60%',
+    ]
+  },
+  'Bow',
+  Rarity.Rare,
+  354,
+  'Crit Rate',
+  31.2,
+  'Wish',
+);
+
+export const SnowTombedStarsilver = new Weapon(
+  'Snow-Tombed Starsilver',
+  {
+    value: `Hitting an opponent with Normal and Charged Attacks has a $0 chance of forming and dropping an Everfrost Icicle above them, dealing $1 AoE ATK DMG. Opponents affected by Cryo are dealt $2 ATK DMG. Can only occur once every 10s.`,
+    refinements: [
+      '60/70/80/90/100%',
+      '80/95/110/125/140%',
+      '200/240/280/320/360%',
+    ]
+  },
+  'Claymore',
+  Rarity.Epic,
+  565,
+  'Physical DMG Bonus',
+  34.5,
+  'Crafting',
+);
+
+export const SolarPearl = new Weapon(
+  'Solar Pearl',
+  {
+    value: `Normal Attack hits increase Elemental Skill and Elemental Burst DMG by $0 for 6s. Likewise, Elemental Skill or Elemental Burst hits increase Normal Attack DMG by $1 for 6s.`,
+    refinements: [
+      '20/25/30/35/40%',
+      '20/25/30/35/40%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Epic,
+  510,
+  'Crit Rate',
+  27.6,
+  'Battle Pass',
+);
+
+export const SongOfBrokenPines = new Weapon(
+  'Song of Broken Pines',
+  {
+    value: `A part of the "Millennial Movement" that wanders amidst the winds. Increases ATK by $0, and when Normal or Charged Attacks hit opponents, the character gains a Sigil of Whispers. This effect can be triggered once every 0.3s. When you possess four Sigils of Whispers, all of them will be consumed and all nearby party members will obtain the "Millennial Movement: Banner-Hymn" effect for 12s. "Millennial Movement: Banner-Hymn" increases Normal ATK SPD by $1 and increases ATK by $2. Once this effect is triggered, you will not gain Sigils of Whispers for 20s. Of the many effects of the "Millennial Movement, " buffs of the same type will not stack.`,
+    refinements: [
+      '16/20/24/28/32%',
+      '12/15/18/21/24%',
+      '20/25/30/35/40%',
+    ]
+  },
+  'Claymore',
+  Rarity.Legendary,
+  741,
+  'Physical DMG Bonus',
+  20.7,
+  'Wish',
+  cs => cs.Eula,
+);
+
+export const SongOfStillness = new Weapon(
+  'Song of Stillness',
+  {
+    value: `After the wielder is healed, they will deal $0 more DMG for 8s. This can be triggered even when the character is not on the field.`,
+    refinements: [
+      '16/20/24/28/32%',
+    ]
+  },
+  'Bow',
+  Rarity.Epic,
+  510,
+  'ATK',
+  41.3,
+  'Crafting',
+);
+
+export const SplendorOfTranquilWaters = new Weapon(
+  'Splendor of Tranquil Waters',
+  {
+    value: `When the equipping character's current HP increases or decreases, Elemental Skill DMG dealt will be increased by $0 for 6s. Max 3 stacks. This effect can be triggered once every 0.2s. When other party members' current HP increases or decreases, the equipping character's Max HP will be increased by $1 for 6s. Max 2 stacks. This effect can be triggered once every 0.2s. The aforementioned effects can be triggered even if the wielder is off-field.`,
+    refinements: [
+      '8/10/12/14/16%',
+      '14/17.5/21/24.5/28%',
+    ]
+  },
+  'Sword',
+  Rarity.Legendary,
+  542,
+  'Crit DMG',
+  88.2,
+  'Wish',
+  cs => cs.Furina
+);
+
+export const StaffOfHoma = new Weapon(
+  'Staff of Homa',
+  {
+    value: `HP increased by $0. Additionally, provides an ATK bonus based on $1 of the wielder's Max HP. When the wielder's HP is equal to or falls below 50%, this ATK bonus is increased by an additional $2 of Max HP.`,
+    refinements: [
+      '20/25/30/35/40%',
+      '0.8/1/1.2/1.4/1.6%',
+      '1/1.2/1.4/1.6/1.8%',
+    ]
+  },
+  'Polearm',
+  Rarity.Legendary,
+  608,
+  'Crit DMG',
+  66.2,
+  'Wish',
+  cs => cs.HuTao
+);
+
+export const StaffOfTheScarletSands = new Weapon(
+  'Staff of the Scarlet Sands',
+  {
+    value: `The equipping character gains $0 of their Elemental Mastery as bonus ATK. When an Elemental Skill hits opponents, the Dream of the Scarlet Sands effect will be gained for 10s: The equipping character will gain $1 of their Elemental Mastery as bonus ATK. Max 3 stacks.`,
+    refinements: [
+      '52/65/78/91/104%',
+      '28/35/42/49/56%',
+    ]
+  },
+  'Polearm',
+  Rarity.Legendary,
+  542,
+  'Crit Rate',
+  44.1,
+  'Wish',
+  cs => cs.Cyno
+);
+
+export const StarcallersWatch = new Weapon(
+  `Starcaller's Watch`,
+  {
+    value: `Increases Elemental Mastery by $0. Gain the "Mirror of Night" effect within 15s after the equipping character creates a shield: The current active party member deals $1 increased DMG to nearby opponents. You can gain the "Mirror of Night" effect once every 14s.`,
+    refinements: [
+      '100/125/150/175/200',
+      '28/35/42/49/56%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Legendary,
+  542,
+  'Elemental Mastery',
+  265,
+  'Wish',
+  cs => cs.Citlali
+);
+
+export const StudyBone = new Weapon(
+  'Study Bone',
+  {
+    value: `Sprint or Alternate Sprint Stamina Consumption decreased by 15%. Additionally, after using Sprint or Alternate Sprint, Normal Attack DMG is increased by $0 of ATK. This effect expires after triggering 18 times or 7s.`,
+    refinements: [
+      '16/20/24/28/32%',
+    ]
+  },
+  'Sword',
+  Rarity.Epic,
+  542,
+  'ATK',
+  27.6,
+  'Wish',
+);
+
+export const SummitShaper = new Weapon(
+  'Summit Shaper',
+  {
+    value: `Increases Shield Strength by $0. Scoring hits on opponents increases ATK by $1 for 8s. Max 5 stacks. Can only occur once every 0.3s. While protected by a shield, this ATK increase effect is increased by 100%.`,
+    refinements: [
+      '20/25/30/35/40%',
+      '4/5/6/7/8%',
+    ]
+  },
+  'Sword',
+  Rarity.Legendary,
+  608,
+  'ATK',
+  49.6,
+  'Wish',
+  cs => cs.Qiqi
+);
+
+export const SunnyMorningSleepIn = new Weapon(
+  'Sunny Morning Sleep-In',
+  {
+    value: `Elemental Mastery increases by $0 for 6s after triggering Swirl. Elemental Mastery increases by $1 for 9s after the wielder's Elemental Skill hits an opponent. Elemental Mastery increases by $2 for 30s after the wielder's Elemental Burst hits an opponent.`,
+    refinements: [
+      '120/150/180/210/240',
+      '96/120/144/168/192',
+      '32/40/48/56/64',
+    ]
+  },
+  'Catalyst',
+  Rarity.Legendary,
+  542,
+  'Elemental Mastery',
+  265,
+  'Wish',
+  cs => cs.YumemizukiMizuki
+);
+
+export const SurfsUp = new Weapon(
+  `Surfs Up`,
+  {
+    value: `Max HP increased by $0. Once every 15s, for the 14s after using an Elemental Skill: Gain 4 Scorching Summer stacks. Each stack increases Normal Attack DMG by $1. For the duration of the effect, once every 1.5s, lose 1 stack after a Normal Attack hits an opponent; once every 1.5s, gain 1 stack after triggering a Vaporize reaction on an opponent. Max 4 Scorching Summer stacks.`,
+    refinements: [
+      '20/25/30/35/40%',
+      '12/15/18/21/24%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Legendary,
+  542,
+  'Crit DMG',
+  88.2,
+  'Wish',
+  cs => cs.Mualani
+);
+
+export const SwordOfDescension = new Weapon(
+  'Sword of Descension',
+  {
+    value: `Effective only on the following platform: "PlayStation™Network"\nHitting opponents with Normal and Charged Attacks grants a 50% chance to deal 200% ATK as DMG in a small AoE. This effect can only occur once every 10s. Additionally, if the Traveler equips the Sword of Descension, their ATK is increased by 66.`,
+    refinements: []
+  },
+  'Sword',
+  Rarity.Epic,
+  440,
+  'ATK',
+  35.2,
+  'Event',
+);
+
+export const SymphonyOfScents = new Weapon(
+  'Symphony of Scents',
+  {
+    value: `ATK is increased by $0. When the equipping character is off-field, ATK is increased by an additional $1. After initiating healing, the equipping character and the character(s) they have healed will obtain the "Sweet Echoes" effect, increasing their ATK by $2 for 3s. This effect can be triggered even if the equipping character is off-field.`,
+    refinements: [
+      '12/15/18/21/24%',
+      '12/15/18/21/24%',
+      '32/40/48/56/64%',
+    ]
+  },
+  'Polearm',
+  Rarity.Legendary,
+  608,
+  'Crit DMG',
+  66.2,
+  'Wish',
+  // cs => cs.Escoffier // TODO
+);
+
+export const SwordOfNarzissenkreuz = new Weapon(
+  'Sword of Narzissenkreuz',
+  {
+    value: `When the equipping character does not have an Arkhe: When Normal Attacks, Charged Attacks, or Plunging Attacks strike, a Pneuma or Ousia energy blast will be unleashed, dealing $0 of ATK as DMG. This effect can be triggered once every 12s. The energy blast type is determined by the current type of the Sword of Narzissenkreuz.`,
+    refinements: [
+      '160/200/240/280/320%',
+    ]
+  },
+  'Sword',
+  Rarity.Epic,
+  510,
+  'ATK',
+  41.3,
+  'Quest',
+);
+  
+
+export const TalkingStick = new Weapon(
+  'Talking Stick',
+  {
+    value: `ATK will be increased by $0 for 15s after being affected by Pyro. This effect can be triggered once every 12s. All Elemental DMG Bonus will be increased by $1 for 15s after being affected by Hydro, Cryo, Electro, or Dendro. This effect can be triggered once every 12s.`,
+    refinements: [
+      '16/20/24/28/32%',
+      '12/15/18/21/24%',
+    ]
+  },
+  'Claymore',
+  Rarity.Epic,
+  565,
+  'Crit Rate',
+  18.4,
+  'Battle Pass',
+);
+
+export const TamayurateiNoOhanashi = new Weapon(
+  'Tamayuratei no Ohanashi',
+  {
+    value: `Increase ATK by $0 and Movement SPD by 10% for 10s when using an Elemental Skill.`,
+    refinements: [
+      '20/25/30/35/40%'
+    ]
+  },
+  'Polearm',
+  Rarity.Epic,
+  565,
+  'Energy Recharge',
+  30.6,
+  'Event',
+);
+
+export const TheAlleyFlash = new Weapon(
+  'The Alley Flash',
+  {
+    value: `Increases DMG dealt by the character equipping this weapon by $0. Taking DMG disables this effect for 5s.`,
+    refinements: [
+      '12/15/18/21/24%',
+    ]
+  },
+  'Sword',
+  Rarity.Epic,
+  620,
+  'Elemental Mastery',
+  55,
+  'Wish'
+);
+
+export const TheBell = new Weapon(
+  'The Bell',
+  {
+    value: `Taking DMG generates a shield which absorbs DMG up to $0 of Max HP. This shield lasts for 10s or until broken, and can only be triggered once every 45s. While protected by the shield, the character gains $1 increased DMG.`,
+    refinements: [
+      '20/23/26/29/32%',
+      '12/15/18/21/24%',
+    ]
+  },
+  'Claymore',
+  Rarity.Epic,
+  510,
+  'HP',
+  41.3,
+  'Wish',
+);
+
+export const TheBlackSword = new Weapon(
+  'The Black Sword',
+  {
+    value: `Increases DMG dealt by Normal and Charged Attacks by $0. Additionally, regenerates $1 of ATK as HP when Normal and Charged Attacks score a CRIT Hit. This effect can occur once every 5s.`,
+    refinements: [
+      '20/25/30/35/40%',
+      '60/70/80/90/100%',
+    ]
+  },
+  'Sword',
+  Rarity.Epic,
+  510,
+  'Crit Rate',
+  27.6,
+  'Battle Pass',
+);
+
+export const TheDockhandsAssistant = new Weapon(
+  `The Dockhand's Assistant`,
+  {
+    value: `When the wielder is healed or heals others, they will gain a Stoic's Symbol that lasts 30s, up to a maximum of 3 Symbols. When using their Elemental Skill or Burst, all Symbols will be consumed and the Roused effect will be granted for 10s. For each Symbol consumed, gain $0 Elemental Mastery, and 2s after the effect occurs, $1 Energy per Symbol consumed will be restored for said character. The Roused effect can be triggered once every 15s, and Symbols can be gained even when the character is not on the field.`,
+    refinements: [
+      '40/50/60/70/80',
+      '2/2.5/3/3.5/4',
+    ]
+  },
+  'Sword',
+  Rarity.Epic,
+  510,
+  'HP',
+  41.3,
+  'Wish',
+);
+
+export const TheFirstGreatMagic = new Weapon(
+  'The First Great Magic',
+  {
+    value: `DMG dealt by Charged Attacks increased by $0. For every party member with the same Elemental Type as the wielder (including the wielder themselves), gain 1 Gimmick stack. For every party member with a different Elemental Type from the wielder, gain 1 Theatrics stack. When the wielder has 1/2/3 or more Gimmick stacks, ATK will be increased by $1. When the wielder has 1/2/3 or more Theatrics stacks, Movement SPD will be increased by $2.`,
+    refinements: [
+      '16/20/24/28/32%',
+      '(16/32/48%)/(20/40/60%)/(24/48/72%)/(28/56/84%)/(32/64/96%)',
+      '(4/7/10%)/(6/9/12%)/(8/11/14%)/(10/13/16%)/(12/15/18%)',
+    ]
+  },
+  'Bow',
+  Rarity.Legendary,
+  608,
+  'Crit DMG',
+  66.2,
+  'Wish',
+  cs => cs.Lyney
+);
+
+export const TheFlute = new Weapon(
+  'The Flute',
+  {
+    value: `Normal or Charged Attacks grant a Harmonic on hits. Gaining 5 Harmonics triggers the power of music and deals $0 ATK DMG to surrounding opponents. Harmonics last up to 30s, and a maximum of 1 can be gained every 0.5s.`,
+    refinements: [
+      '100/125/150/175/200%',
+    ]
+  },
+  'Sword',
+  Rarity.Epic,
+  510,
+  'ATK',
+  41.3,
+  'Wish',
+);
+
+export const TheStringless = new Weapon(
+  'The Stringless',
+  {
+    value: `Increases Elemental Skill and Elemental Burst DMG by $0.`,
+    refinements: [
+      '24/30/36/42/48%',
+    ]
+  },
+  'Bow',
+  Rarity.Epic,
+  510,
+  'Elemental Mastery',
+  165,
+  'Wish',
+);
+
+export const TheUnforged = new Weapon(
+  'The Unforged',
+  {
+    value: `Increases Shield Strength by $0. Scoring hits on opponents increases ATK by $1 for 8s. Max 5 stacks. Can only occur once every 0.3s. While protected by a shield, this ATK increase effect is increased by 100%.`,
+    refinements: [
+      '20/25/30/35/40%',
+      '4/5/6/7/8%',
+    ]
+  },
+  'Claymore',
+  Rarity.Legendary,
+  608,
+  'ATK',
+  49.6,
+  'Wish',
+  cs => cs.Xinyan
+);
+
+export const TheViridescentHunt = new Weapon(
+  'The Viridescent Hunt',
+  {
+    value: `Upon hit, Normal and Charged Attacks have a 50% chance to generate a Cyclone, which will continuously attract surrounding opponents, dealing $0 of ATK as DMG to these opponents every 0.5s for 4s. This effect can only occur once every $1.`,
+    refinements: [
+      '40/50/60/70/80%',
+      '14/13/12/11/10s',
+    ]
+  },
+  'Bow',
+  Rarity.Epic,
+  510,
+  'Crit Rate',
+  27.6,
+  'Battle Pass',
+);
+
+export const TheWidsith = new Weapon(
+  'The Widsith',
+  {
+    value: `When a character takes the field, they will gain a random theme song for 10s. This can only occur once every 30s.\nRecitative: Increases Base ATK by $0\nAria: Increases all Elemental DMG by $1\nInterlude: Elemental Mastery is increased by $2`,
+    refinements: [
+      '60/75/90/105/120%',
+      '48/60/72/84/96%',
+      '240/300/360/420/480'
+    ]
+  },
+  'Catalyst',
+  Rarity.Epic,
+  510,
+  'Crit DMG',
+  55.1,
+  'Wish',
+);
+
+export const ThrillingTalesOfDragonSlayers = new Weapon(
+  'Thrilling Tales of Dragon Slayers',
+  {
+    value: `When switching characters, the new character taking the field has their ATK increased by $0 for 10s. This effect can only occur once every 20s.`,
+    refinements: [
+      '24/30/36/42/48%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Rare,
+  401,
+  'HP',
+  35.2,
+  'Wish',
+);
+
+export const ThunderingPulse = new Weapon(
+  'Thundering Pulse',
+  {
+    value: `Increases ATK by $0 and grants the might of the Thunder Emblem. At stack levels 1/2/3, the Thunder Emblem increases Normal Attack DMG by $1. The character will obtain 1 stack of Thunder Emblem in each of the following scenarios: Normal Attack deals DMG (stack lasts 5s), casting Elemental Skill (stack lasts 10s); Energy is less than 100% (stack disappears when Energy is full). Each stack's duration is calculated independently.`,
+    refinements: [
+      '20/25/30/35/40%',
+      '(12/24/40%)/(15/30/50%)/(18/36/60%)/(21/42/70%)/(24/48/80%)',
+    ]
+  },
+  'Bow',
+  Rarity.Legendary,
+  608,
+  'Crit DMG',
+  66.2,
+  'Wish',
+  cs => cs.Yoimiya
+);
+
+export const TidalShadow = new Weapon(
+  'Tidal Shadow',
+  {
+    value: `After the wielder is healed, ATK will be increased by $0 for 8s. This can be triggered even when the character is not on the field.`,
+    refinements: [
+      '24/30/36/42/48%',
+    ]
+  },
+  'Sword',
+  Rarity.Epic,
+  510,
+  'ATK',
+  41.3,
+  'Crafting',
+);
+
+export const TomeOfTheEternalFlow = new Weapon(
+  'Tome of the Eternal Flow',
+  {
+    value: `HP is increased by $0. When current HP increases or decreases, Charged Attack DMG will be increased by $1 for 4s. Max 3 stacks. This effect can be triggered once every 0.3s. When the character has 3 stacks or a third stack's duration refreshes, $2 Energy will be restored. This Energy restoration effect can be triggered once every 12s.`,
+    refinements: [
+      '16/20/24/28/32%',
+      '14/18/22/26/30%',
+      '8/9/10/11/12'
+    ]
+  },
+  'Catalyst',
+  Rarity.Legendary,
+  542,
+  'Crit DMG',
+  88.2,
+  'Wish',
+  cs => cs.Neuvillette
+);
+
+export const ToukabouShigure = new Weapon(
+  'Toukabou Shigure',
+  {
+    value: `After an attack hits opponents, it will inflict an instance of Cursed Parasol upon one of them for 10s. This effect can be triggered once every 15s. If this opponent is defeated during Cursed Parasol's duration, Cursed Parasol's CD will be refreshed immediately. The character wielding this weapon will deal $0 more DMG to the opponent affected by Cursed Parasol.`,
+    refinements: [
+      '16/20/24/28/32%',
+    ]
+  },
+  'Sword',
+  Rarity.Legendary,
+  510,
+  'Elemental Mastery',
+  165,
+  'Event',
+);
+
+export const TravelersHandySword = new Weapon(
+  `Traveler's Handy Sword`,
+  {
+    value: `Each Elemental Orb or Particle collected restores $0 HP.`,
+    refinements: [
+      '1/1.25/1.5/1.75/2%'
+    ]
+  },
+  'Sword',
+  Rarity.Rare,
+  448,
+  'DEF',
+  29.3,
+  'Chest',
+);
+
+export const TulaytullahsRemembrance = new Weapon(
+  `Tulaytullah's Remembrance`,
+  {
+    value: `Normal Attack SPD is increased by $0. After the wielder unleashes an Elemental Skill, Normal Attack DMG will increase by $1 every second for 14s. After hitting an opponent with a Normal Attack during this duration, Normal Attack DMG will be increased by $2. This increase can be triggered once every 0.3s. The maximum Normal Attack DMG increase per single duration of the overall effect is $3. The effect will be removed when the wielder leaves the field, and using the Elemental Skill again will reset all DMG buffs.`,
+    refinements: [
+      '10/12.5/15/17.5/20%',
+      '4.8/6/7.2/8.4/9.6%',
+      '9.6/12/14.4/16.8/19.2%',
+      '48/60/72/84/96%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Legendary,
+  674,
+  'Crit DMG',
+  44.1,
+  'Wish',
+  cs => cs.WandererScaramouche
+);
+
+export const TwinNephrite = new Weapon(
+  'Twin Nephrite',
+  {
+    value: `Defeating an opponent increases Movement SPD and ATK by $0 for 15s.`,
+    refinements: [
+      '12/14/16/18/20%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Rare,
+  448,
+  'Crit Rate',
+  15.6,
+  'Chest',
+);
+
+export const UrakuMisugiri = new Weapon(
+  'Uraku Misugiri',
+  {
+    value: `Normal Attack DMG is increased by $0 and Elemental Skill DMG is increased by $1. After a nearby active character deals Geo DMG, the aforementioned effects increase by 100% for 15s. Additionally, the wielder's DEF is increased by $2.`,
+    refinements: [
+      '16/20/24/28/32%',
+      '24/30/36/42/48%',
+      '20/25/30/35/40%'
+    ]
+  },
+  'Sword',
+  Rarity.Legendary,
+  542,
+  'Crit DMG',
+  88.2,
+  'Wish',
+  cs => cs.Chiori
+);
+
+export const Verdict = new Weapon(
+  'Verdict',
+  {
+    value: `Increases ATK by $0. When party members obtain Elemental Shards from Crystallize reactions, the equipping character will gain 1 Seal, increasing Elemental Skill DMG by $1. The Seal lasts for 15s, and the equipper may have up to 2 Seals at once. All of the equipper's Seals will disappear 0.2s after their Elemental Skill deals DMG.`,
+    refinements: [
+      '20/25/30/35/40%',
+      '18/22.5/27/31.5/36%',
+    ]
+  },
+  'Claymore',
+  Rarity.Legendary,
+  674,
+  'Crit Rate',
+  22.1,
+  'Wish',
+  cs => cs.Navia
+);
+
+export const VividNotions = new Weapon(
+  'Vivid Notions',
+  {
+    value: `ATK is increased by $0. When you use a Plunging Attack, you will gain the "Dawn's First Hue" effect: Plunging Attack CRIT DMG is increased by $1. When you use an Elemental Skill or Burst, you will gain the "Twilight's Splendor" effect: Plunging Attack CRIT DMG is increased by $2. The two effects above each last for 15s, and will be canceled 0.1s after the ground impact hits a target.`,
+    refinements: [
+      '28/35/42/49/56%',
+      '28/35/42/49/56%',
+      '40/50/60/70/80%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Legendary,
+  674,
+  'Crit DMG',
+  44.1,
+  'Wish',
+  // cs => cs.Varesa // TODO
+);
+
+export const VortexVanquisher = new Weapon(
+  'Vortex Vanquisher',
+  {
+    value: `Increases Shield Strength by $0. Scoring hits on opponents increases ATK by $1 for 8s. Max 5 stacks. Can only occur once every 0.3s. While protected by a shield, this ATK increase effect is increased by 100%.`,
+    refinements: [
+      '20/25/30/35/40%',
+      '4/5/6/7/8%',
+    ]
+  },
+  'Polearm',
+  Rarity.Legendary,
+  608,
+  'ATK',
+  49.6,
+  'Wish',
+  cs => cs.Zhongli
+);
+
+export const WanderingEvenstar = new Weapon(
+  'Wandering Evenstar',
+  {
+    value: `The following effect will trigger every 10s: The equipping character will gain $0 of their Elemental Mastery as bonus ATK for 12s, with nearby party members gaining 30% of this buff for the same duration. Multiple instances of this weapon can allow this buff to stack. This effect will still trigger even if the character is not on the field.`,
+    refinements: [
+      '24/30/36/42/48%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Epic,
+  510,
+  'Elemental Mastery',
+  165,
+  'Wish',
+);
+
+export const WavebreakersFin = new Weapon(
+  `Wavebreaker's Fin`,
+  {
+    value: `For every point of the entire party's combined maximum Energy capacity, the Elemental Burst DMG of the character equipping this weapon is increased by $0. A maximum of $1 increased Elemental Burst DMG can be achieved this way.`,
+    refinements: [
+      '0.12/0.15/0.18/0.21/0.24%',
+      '40/50/60/70/80%'
+    ]
+  },
+  'Polearm',
+  Rarity.Epic,
+  620,
+  'ATK',
+  13.8,
+  'Wish',
+);
+
+export const WaveridingWhirl = new Weapon(
+  'Waveriding Whirl',
+  {
+    value: `Decreases Swimming Stamina consumption by 15%. In addition, for 10s after using an Elemental Skill, Max HP is increased by $0. For every Hydro Elemental Type character in the party, Max HP is increased by another $1, and the maximum increase that can be achieved in this way is $2. Can be triggered once every 15s.`,
+    refinements: [
+      '20/25/30/35/40%',
+      '12/15/18/21/24%',
+      '24/30/36/42/48%'
+    ]
+  },
+  'Catalyst',
+  Rarity.Epic,
+  454,
+  'Energy Recharge',
+  61.3,
+  'Wish',
+);
+
+export const WhiteIronGreatsword = new Weapon(
+  'White Iron Greatsword',
+  {
+    value: `Defeating an opponent restores $0 HP.`,
+    refinements: [
+      '8/10/12/14/16%',
+    ]
+  },
+  'Claymore',
+  Rarity.Rare,
+  401,
+  'DEF',
+  43.9,
+  'Chest',
+);
+
+export const WhiteTassel = new Weapon(
+  'White Tassel',
+  {
+    value: `Increases Normal Attack DMG by $0.`,
+    refinements: [
+      '24/30/36/42/48%'
+    ]
+  },
+  'Polearm',
+  Rarity.Rare,
+  401,
+  'Crit Rate',
+  23.4,
+  'Chest',
+);
+
+export const Whiteblind = new Weapon(
+  'Whiteblind',
+  {
+    value: `On hit, Normal or Charged Attacks increase ATK and DEF by $0 for 6s. Max 4 stacks. This effect can only occur once every 0.5s.`,
+    refinements: [
+      '6/7.5/9/10.5/12%',
+    ]
+  },
+  'Claymore',
+  Rarity.Rare,
+  510,
+  'DEF',
+  51.7,
+  'Crafting',
+);
+
+export const WindblumeOde = new Weapon(
+  'Windblume Ode',
+  {
+    value: `After using an Elemental Skill, receive a boon from the ancient wish of the Windblume, increasing ATK by $0 for 6s.`,
+    refinements: [
+      '16/20/24/28/32%',
+    ]
+  },
+  'Bow',
+  Rarity.Rare,
+  510,
+  'Elemental Mastery',
+  165,
+  'Event',
+);
+
+export const WineAndSong = new Weapon(
+  'Wine and Song',
+  {
+    value: `Hitting an opponent with a Normal Attack decreases the Stamina consumption of Sprint or Alternate Sprint by $0 for 5s. Additionally, using a Sprint or Alternate Sprint ability increases ATK by $1 for 5s.`,
+    refinements: [
+      '14/16/18/20/22%',
+      '20/25/30/35/40%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Rare,
+  565,
+  'Energy Recharge',
+  30.6,
+  'Wish',
+);
+
+export const WolfFang = new Weapon(
+  'Wolf-Fang',
+  {
+    value: `DMG dealt by Elemental Skill and Elemental Burst is increased by $0. When an Elemental Skill hits an opponent, its CRIT Rate will be increased by $1. When an Elemental Burst hits an opponent, its CRIT Rate will be increased by $2. Both of these effects last 10s separately, have 4 max stacks, and can be triggered once every 0.1s.`,
+    refinements: [
+      '16/20/24/28/32%',
+      '2/2.5/3/3.5/4%',
+      '2/2.5/3/3.5/4%',
+    ]
+  },
+  'Sword',
+  Rarity.Rare,
+  510,
+  'Crit Rate',
+  27.6,
+  'Battle Pass',
+);
+
+export const WolfsGravestone = new Weapon(
+  `Wolf's Gravestone`,
+  {
+    value: `Increases ATK by $0. On hit, attacks against enemies with less than 30% HP increase all party members' Base ATK by $1 for 12s. Can only occur once every 30s.`,
+    refinements: [
+      '20/25/30/35/40%',
+      '40/50/60/70/80%',
+    ]
+  },
+  'Claymore',
+  Rarity.Legendary,
+  608,
+  'ATK',
+  49.6,
+  'Wish',
+);
+
+export const XiphosMoonlight = new Weapon(
+  `Xiphos' Moonlight`,
+  {
+    value: `The following effect will trigger every 10s: The equipping character will gain $0 Energy Recharge for each point of Elemental Mastery they possess for 12s, with nearby party members gaining 30% of this buff for the same duration. Multiple instances of this weapon can allow this buff to stack. This effect will still trigger even if the character is not on the field.`,
+    refinements: [
+      '0.036/0.045/0.054/0.063/0.072%',
+    ]
+  },
+  'Sword',
+  Rarity.Rare,
+  510,
+  'Elemental Mastery',
+  165,
+  'Wish',
+);
 
 /**
  
