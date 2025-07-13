@@ -2,12 +2,12 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { FavoriteModels, FavoriteStore, ModelsCollection } from "./FavoriteStoreTypes";
 
-export const useFavoriteStoreProvider = create<FavoriteStore>()(persist((setState, getState) => {
-  const data: ModelsCollection = {
+export const useFavoriteStoreProvider = create<FavoriteStore>()(persist((setState, getState) => {  const data: ModelsCollection = {
     characters: [],
     artifacts: [],
     domains: [],
-    materials: []
+    materials: [],
+    weapons: []
   };
 
   const add = <T extends keyof ModelsCollection>(type: T, item: FavoriteModels[T]) => {
@@ -24,11 +24,12 @@ export const useFavoriteStoreProvider = create<FavoriteStore>()(persist((setStat
       [type]: data[type].filter(i => i.name !== item.name)
     }));
   }
-  const isFavorite = <T extends keyof ModelsCollection>(type: T, item: FavoriteModels[T]) => getState()[type].some(entry => entry.name === item.name);
-  const clear = () => setState({
+  const isFavorite = <T extends keyof ModelsCollection>(type: T, item: FavoriteModels[T]) => getState()[type].some(entry => entry.name === item.name);  const clear = () => setState({
     characters: [],
     artifacts: [],
-    domains: []
+    domains: [],
+    materials: [],
+    weapons: []
   });
 
   return { 

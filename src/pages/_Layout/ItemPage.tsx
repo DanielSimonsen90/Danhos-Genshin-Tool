@@ -9,7 +9,7 @@ import { Model } from "@/common/models";
 
 type DataKeys = keyof Pick<
   DataStore,
-  'Characters' | 'Artifacts' | 'Domains' | 'Mobs' | 'Materials'
+  'Characters' | 'Artifacts' | 'Domains' | 'Mobs' | 'Materials' | 'Weapons'
 >;
 type DataKeysSingular = DataKeys extends `${infer T}s` ? T : never;
 

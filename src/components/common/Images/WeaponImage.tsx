@@ -3,11 +3,18 @@ import Image from "./Image";
 import { ImageService } from "@/services";
 
 type Props = {
-  weapon: WeaponType;
-};
+  weaponType: WeaponType;
+} | {
+  weapon: string;
+}
 
-export default function WeaponImage({ weapon }: Props) {
-  const src = ImageService.getWeaponTypeImage(weapon);
+export default function WeaponImage(props: Props) {
+  const src = 'weaponType' in props 
+    ? ImageService.getWeaponTypeImage(props.weaponType)
+    : ImageService.getWeaponImage(props.weapon);
 
-  return <Image className="weapon-image" src={src} alt={weapon} />;
+  const className = 'weaponType' in props ? `weapon-type-image` : 'weapon-image';
+  const alt = 'weaponType' in props ? props.weaponType : props.weapon;
+
+  return <Image className={className} src={src} alt={alt} />;
 }

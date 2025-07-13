@@ -30,7 +30,7 @@ class AscensionMaterial extends CraftableMaterial {
     if (obtainableDay && obtainableDay !== todayName) return false;
 
     const obtainableDays = this.obtainableDays.split('/');
-    return obtainableDays.includes(todayName);
+    return obtainableDays.includes(todayName) || todayName === 'Sunday';
   }
 }
 export default AscensionMaterial;

@@ -76,10 +76,19 @@ const DataStoreContent__MaterialsData = {
   MaterialNames: List.from(MaterialsData).map(material => material.name),
 }
 
+
+import * as WeaponsData from '@/data/weapons';
+const DataStoreContent__WeaponsData = {
+  WeaponsData,
+  Weapons: List.from(WeaponsData),
+  WeaponNames: List.from(WeaponsData).map(weapon => weapon.name),
+}
+
 export const DataStoreContent = {
   ...DataStoreContent__ArtifactsData,
   ...DataStoreContent__CharactersData,
   ...DataStoreContent__DomainsData,
   ...DataStoreContent__MobsData,
   ...DataStoreContent__MaterialsData,
+  ...DataStoreContent__WeaponsData,
 }

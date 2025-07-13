@@ -26,6 +26,7 @@ export const useDataStore = create<DataStore>((setState, getState) => {
     DOMAIN_ARTIFACTS: 'domain_artifacts_',
     MATERIAL_DROPPERS: 'material_droppers_',
     CHARACTER_MATERIALS: 'character_materials_',
+    WEAPON_SIGNATURES: 'weapon_signatures_',
   } as const;
 
   const clearCache = () => cache.clear();
@@ -63,6 +64,14 @@ export const useDataStore = create<DataStore>((setState, getState) => {
     return material;
   };  
   const sortByRarityDesc = <T extends { rarity: number }>(items: T[]): T[] => items.sort((a, b) => b.rarity - a.rarity);
+  const getSignatureWeapons = () => getCachedOrCompute(CACHE_KEYS.WEAPON_SIGNATURES, () => {
+    const weaponsWithSignature = getState().Weapons.filter(weapon => weapon.signatureWeaponFor);
+    return weaponsWithSignature.map(weapon => {
+      const character = weapon.signatureWeaponFor(getState().CharactersData);
+      return { weapon, character };
+    }); 
+  });
+
 
   // Create the store with proper method binding
   const dataStore: DataStore = {
@@ -74,6 +83,7 @@ export const useDataStore = create<DataStore>((setState, getState) => {
     findDomainByName: (name: string) => findByName(getState().Domains, name),
     findMobByName: (name: string) => findByName(getState().Mobs, name),
     findMaterialByName: (name: string) => findByName(getState().Materials, name),
+    findWeaponByName: (name: string) => findByName(getState().Weapons, name),
 
     // Domain-Artifact relationships
     getDomainsFromArtifact(artifactName: string) {
@@ -235,6 +245,18 @@ export const useDataStore = create<DataStore>((setState, getState) => {
           pieces: cSet.pieces,
           effectiveness: cSet.effectiveness
         } as CharacterUsingArtifactResult;
+      });
+    },
+
+    getSignatureWeaponFor(character: Character) {
+      const cached = cache.get(`${CACHE_KEYS.WEAPON_SIGNATURES}${character.name}`);
+      if (cached) return cached;
+
+      const signatureWeaponData = getSignatureWeapons();
+      if (!signatureWeaponData || signatureWeaponData.length === 0) return undefined;
+
+      return getCachedOrCompute(`${CACHE_KEYS.WEAPON_SIGNATURES}${character.name}`, () => {
+        return signatureWeaponData.find(weapon => weapon.character.name === character.name)?.weapon;
       });
     },
 

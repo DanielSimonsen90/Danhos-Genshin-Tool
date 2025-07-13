@@ -18,6 +18,13 @@
 
   &__name {
     --margins: 0em;
+
+    >*:not(:last-child)::after {
+      content: '•';
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-left: .5em;
+    }
   }
 
   &__details {
@@ -45,6 +52,10 @@
 
     .model-card__name {
       flex-direction: column;
+
+      >*::after {
+        content: none;
+      }
 
       &-text {
         width: 100%;

@@ -1,7 +1,6 @@
 @import '../../../../styles/partials';
 
 .material-card {
-
   &[data-allow-pagination=true][data-show-details=true] {
     .material-card__details {
       grid-template-areas:
@@ -22,9 +21,10 @@
 
   &__details {
     display: grid;
-
     grid-template-columns: 1fr auto;
     gap: .5em;
+
+    height: auto;
     width: 100%;
   }
 

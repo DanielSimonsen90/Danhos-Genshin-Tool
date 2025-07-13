@@ -13,6 +13,8 @@ export * from './materials/Material';
 export * from './mobs/Mob';
 export * from './mobs/Boss';
 
+export * from './weapon';
+
 export * from './List';
 export * from './Model';
 export * from './Stat';

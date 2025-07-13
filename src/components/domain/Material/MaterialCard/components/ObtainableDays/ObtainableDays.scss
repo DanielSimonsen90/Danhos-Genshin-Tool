@@ -1,7 +1,8 @@
 .material-card__obtainable-days {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
-  margin-top: .5rem;
+  // margin-top: .5rem;
 
   &-item {
     font-size: .9rem;

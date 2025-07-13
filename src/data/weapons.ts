@@ -157,20 +157,6 @@ export const AmosBow = new Weapon(
   cs => cs.Ganyu,
 );
 
-export const ApprenticesNotes = new Weapon(
-  "Apprentice's Notes",
-  {
-    value: `Notes left behind by a top student. Many useful spells are listed, and the handwriting is beautiful.`,
-    refinements: [],
-  },
-  'Catalyst',
-  Rarity.Common,
-  185,
-  undefined,
-  undefined,
-  'Chest'
-);
-
 export const AquaSimulacra = new Weapon(
   'Aqua Simulacra',
   {
@@ -311,20 +297,6 @@ export const BeaconOfTheReedSea = new Weapon(
   33.1,
   'Wish',
   cs => cs.Dehya,
-);
-
-export const BeginnersProtector = new Weapon(
-  "Beginner's Protector",
-  {
-    value: `A polearm as straight as a flag pole. Well suited to most combat situations, it has an imposing presence when swung.`,
-    refinements: [],
-  },
-  'Polearm',
-  Rarity.Common,
-  185,
-  undefined,
-  undefined,
-  'Chest'
 );
 
 export const BlackTassel = new Weapon(
@@ -2793,8 +2765,8 @@ export const SwordOfDescension = new Weapon(
   'Event',
 );
 
-export const SymphonyOfScents = new Weapon(
-  'Symphony of Scents',
+export const SymphonistOfScents = new Weapon(
+  'Symphonist of Scents',
   {
     value: `ATK is increased by $0. When the equipping character is off-field, ATK is increased by an additional $1. After initiating healing, the equipping character and the character(s) they have healed will obtain the "Sweet Echoes" effect, increasing their ATK by $2 for 3s. This effect can be triggered even if the equipping character is off-field.`,
     refinements: [

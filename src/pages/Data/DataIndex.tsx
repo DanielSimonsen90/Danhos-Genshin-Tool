@@ -1,26 +1,38 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
 import { getElement } from '@/data/elements';
 
-import { Element, Rarity } from '@/common/types';
+import { Element } from '@/common/types';
 import { ROUTES } from '@/common/constants/routes';
-import { ArtifactSet, Character, Model, List, Domain, DomainOfBlessing, Mob, WeeklyBoss, WorldBoss, EliteMob, EasyMob } from '@/common/models';
-import { classNames, pascalCaseFromKebabCase, pascalCaseFromSnakeCase } from '@/common/functions/strings';
+import {
+  ArtifactSet, Character, Model,
+  List, Domain, DomainOfBlessing,
+  Mob,
+  Weapon,
+} from '@/common/models';
+import { pascalCaseFromSnakeCase } from '@/common/functions/strings';
 
 import RarityList from '@/components/common/icons/Rarity';
-import Select from '@/components/common/Select';
-import { CharacterImage, ArtifactImage, DomainImage, ElementImage, MaterialImage } from '@/components/common/Images';
+import { WeaponImage } from '@/components/common/Images';
 
 import { DataStore, useDataStore } from '@/stores';
-import MobImage from '@/components/common/Images/MobImage';
+import { useDebounceValue } from '@/hooks/useDebounceValue';
+
+// Import existing model cards
+import { CharacterCard } from '@/components/domain/Character';
+import { ArtifactCard } from '@/components/domain/Artifacts';
+import { DomainCard } from '@/components/domain/Domain';
+import { MaterialCard } from '@/components/domain/Material';
+import { MobCard } from '@/components/domain/Mob';
+import { WeaponCard } from '@/components/domain/Weapon';
 
 const DATA_PREFIX = ROUTES.data;
 const routes = [
   [ROUTES.endRoute('data_characters'), 'Characters'],
   [ROUTES.endRoute('data_artifacts'), 'Artifacts'],
   [ROUTES.endRoute('data_domains'), 'Domains'],
-  //  [ROUTES.endRoute('data_weapons'), 'Weapons'],
+  [ROUTES.endRoute('data_weapons'), 'Weapons'],
   [ROUTES.endRoute('data_materials'), 'Materials'],
   [ROUTES.endRoute('data_mobs'), 'Mobs'],
 ];
@@ -36,36 +48,19 @@ const getDomainElement = (domain: DomainOfBlessing, dataStore: DataStore, order:
   .filter(Boolean)
   .sort((a, b) => order === 'element-ascend' ? a.localeCompare(b) : b.localeCompare(a))
 [0];
-const getRarityFromMob = (mob: Mob): Rarity | undefined => {
-  const checks = [
-    EasyMob.isEasyMob,
-    EliteMob.isEliteMob,
-    WorldBoss.isWorldBoss,
-    WeeklyBoss.isWeeklyBoss,
-  ];
-  const rarity = [
-    Rarity.Common,
-    // Rarity.Uncommon,
-    Rarity.Rare,
-    Rarity.Epic,
-    Rarity.Legendary,
-  ];
-
-  return rarity[checks.findIndex(check => check(mob))];
-};
 
 export default function DataIndex() {
   const DataStore = useDataStore();
   const {
-    CharacterNames, ArtifactNames, DomainNames, MaterialNames, MobNames,
-    Characters, Artifacts, Domains, Materials, Mobs,
+    CharacterNames, ArtifactNames, DomainNames, WeaponNames, MaterialNames, MobNames,
+    Characters, Artifacts, Domains, Weapons, Materials, Mobs,
   } = DataStore;
 
   const groups = [
     ['characters', CharacterNames],
     ['artifacts', ArtifactNames],
     ['domains', DomainNames],
-    // ['weapons', WeaponNames],
+    ['weapons', WeaponNames],
     ['materials', MaterialNames],
     ['mobs', MobNames],
 
@@ -74,172 +69,133 @@ export default function DataIndex() {
     ['characters', Characters],
     ['artifacts', Artifacts],
     ['domains', Domains],
-    // ['weapons', Weapons],
+    ['weapons', Weapons],
     ['materials', Materials],
     ['mobs', Mobs],
   ]);
 
-  const [order, setOrder] = useState<Order>('name-ascend');
   const [search, setSearch] = useState('');
+  const debouncedSearch = useDebounceValue(search, 300);
+  const isSearching = debouncedSearch.length > 0;
 
-  const sortedGroups = groups.map(([group, names]) => {
-    const models = groupModels.get(group);
-    return [group, names
-      .filter(name => name.toLowerCase().includes(search.toLowerCase()))
-      .sort((a, b) => {
-        const aModel = models.find(m => m.name === a);
-        const bModel = models.find(m => m.name === b);
+  const categoryStats = useMemo(() => groups.map(([group, names]) => ({
+    group,
+    count: names.length,
+    route: ROUTES.endRoute(`data_${group}`),
+    displayName: pascalCaseFromSnakeCase(group),
+    featured: names.slice(0, 9)
+  })), [groups]);
+  const sortedGroups = useMemo(() => {
+    if (!isSearching) return [];
 
-        switch (order) {
-          case 'name-ascend': return a.localeCompare(b);
-          case 'name-descend': return b.localeCompare(a);
-          case 'rarity-ascend':
-          case 'rarity-descend': {
-            if (!('rarity' in aModel) || !('rarity' in bModel)) return 0;
+    return groups.map(([group, names]) => {
+      const filteredNames = names.filter(name => name.toLowerCase().includes(debouncedSearch.toLowerCase()));
+      return [group, filteredNames] as const;
+    });
+  }, [groups, groupModels, debouncedSearch, isSearching, DataStore]);
 
-            return (order === 'rarity-ascend'
-              ? bModel.rarity - aModel.rarity
-              : aModel.rarity - bModel.rarity
-            );
-          }
-          case 'element-ascend':
-          case 'element-descend': {
-            if ('element' in aModel && 'element' in bModel) {
-              return (order === 'element-ascend'
-                ? aModel.element.localeCompare(bModel.element)
-                : bModel.element.localeCompare(aModel.element)
-              );
-            }
-            if (ArtifactSet.isArtifactSet(aModel) && ArtifactSet.isArtifactSet(bModel)) {
-              const aElement: Element | undefined = getModelElement(aModel);
-              const bElement: Element | undefined = getModelElement(bModel);
+  return (
+    <div className="data-hub">
+      <header className="data-hub__header">
+        <input
+          type='search'
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          placeholder='Search for a character, artifact, domain, weapon, material or mob...'
+        />
 
-              return aElement && bElement
-                ? order === 'element-ascend'
-                  ? aElement.localeCompare(bElement)
-                  : bElement.localeCompare(aElement)
-                : aElement
-                  ? -1
-                  : bElement
-                    ? 1
-                    : 0;
-            }
-            if (Domain.isDomain(aModel) && Domain.isDomain(bModel)) {
-              if (aModel.isBlessing() && bModel.isBlessing()) {
-                const aElement = getDomainElement(aModel, DataStore, order);
-                const bElement = getDomainElement(bModel, DataStore, order);
-
-                return aElement && bElement
-                  ? order === 'element-ascend'
-                    ? aElement.localeCompare(bElement)
-                    : bElement.localeCompare(aElement)
-                  : aElement
-                    ? -1
-                    : bElement
-                      ? 1
-                      : 0;
-              }
-              // TODO: Implement remaining domains
-            }
-          }
-          default: return 0;
-        }
-      })] as const;
-  });
-
-  return (<>
-    <aside>
-      <nav>
-        <ul>
+        <nav>
           {routes.map(([route, name]) => (
-            <li key={route}>
-              <details open className={classNames('data-route', `data-route--${route}`)}>
-                <summary>
-                  <Link to={`/${DATA_PREFIX}/${route}`}>{name}</Link>
-                </summary>
-                <ul>
-                  {groups.find(([group]) => group === route)?.[1].map(name => {
-                    const model = groupModels.get(route)?.find(m => m.name === name);
-                    const element = (
-                      route === 'characters' ? (model as Character).element
-                        : route === 'artifacts' ? getModelElement(model as ArtifactSet)
-                          : route === 'domains' && getDomainElement(model as DomainOfBlessing, DataStore, order)
-                    );
+            <Link key={route} to={`/${DATA_PREFIX}/${route}`} className="quick-nav-item">
+              {name}
+            </Link>
+          ))}
+        </nav>
+      </header>
+
+      <main className="data-hub__content">
+        {!isSearching ? (
+          <section className="categories-overview">
+            {categoryStats.map(({ group, count, route, displayName, featured }) => (
+              <div key={group} className="category-section">
+                <header className="category-section__header">
+                  <Link to={`/${DATA_PREFIX}/${group}`}>
+                    <h2>{displayName}</h2>
+                  </Link>
+                  <span className="model-count">{count} items</span>
+                </header>
+
+                <ul className="models-grid">
+                  {featured.map(name => {
+                    const model = groupModels.get(group)?.find(m => m.name === name);
+                    if (!model) return null;
+
+                    const Card = (() => {
+                      switch (group) {
+                        case 'characters': return <CharacterCard key={name} character={model as Character} wrapInLink nameTag='h3' />;
+                        case 'artifacts': return <ArtifactCard key={name} artifact={model as ArtifactSet} wrapInLink nameTag='h3' />;
+                        case 'domains': return <DomainCard key={name} domain={model as Domain<any>} wrapInLink nameTag='h3' />;
+                        case 'materials': return <MaterialCard key={name} material={model as any} wrapInLink nameTag='h3' />;
+                        case 'mobs': return <MobCard key={name} mob={model as Mob} wrapInLink nameTag='h3' />;
+                        case 'weapons': return <WeaponCard key={name} weapon={model as Weapon} wrapInLink nameTag='h3' />;
+                        default: return null;
+                      }
+                    })();
 
                     return (
                       <li key={name}>
-                        {element ? <ElementImage element={element} /> : null}
-                        <Link to={`/${DATA_PREFIX}/${route}/${name}`}>{name}</Link>
+                        {Card}
                       </li>
                     );
                   })}
                 </ul>
-              </details>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </aside>
-    <main>
-      <header>
-        <div className="input-group">
-          <input type='search' value={search} onChange={e => setSearch(e.target.value)} placeholder='Search for a model...' />
-          <Select name="order" value={order} onChange={order => setOrder(order as Order)}
-            options={['name', 'rarity', 'element'].flatMap(orderBy => [`${orderBy}-ascend`, `${orderBy}-descend`])}
-            displayValue={value => pascalCaseFromKebabCase(value).replace('Ascend', '⬆️').replace('Descend', '⬇️')}
-          />
-        </div>
-      </header>
-      <section>
-        {sortedGroups.map(([group, names]) => (
-          <details key={group} open>
-            <summary>
-              <Link to={`/${DATA_PREFIX}/${group}`}>{pascalCaseFromSnakeCase(group)}</Link>
-            </summary>
-            <ul className='data-details-list'>
-              {names.map(name => {
-                const model = (
-                  group === 'characters' ? Characters.find(c => c.name === name)
-                    : group === 'artifacts' ? Artifacts.find(a => a.name === name)
-                      : group === 'domains' ? Domains.find(d => d.name === name)
-                        : group === 'materials' ? Materials.find(m => m.name === name)
-                          : group === 'mobs' ? Mobs.find(m => m.name === name)
-                            : undefined
-                );
-                const element = (
-                  group === 'characters' ? (model as Character).element
-                    : group === 'artifacts' ? getModelElement(model as ArtifactSet)
-                      : group === 'domains' && getDomainElement(model as DomainOfBlessing, DataStore, order)
-                );
+              </div>
+            ))}
+          </section>
+        ) : (
+          <section className="search-results">
+            {sortedGroups.length === 0 ? (
+              <p className="no-results">No results found for "{debouncedSearch}"</p>
+            ) : (
+              sortedGroups.map(([group, names]) => (
+                names.length > 0 && (
+                  <details key={group} open className="search-group">
+                    <summary>
+                      <Link to={`/${DATA_PREFIX}/${group}`}>
+                        {pascalCaseFromSnakeCase(group)} ({names.length})
+                      </Link>
+                    </summary>
+                    <div className='search-results-grid'>
+                      {names.map(name => {
+                        const model = (
+                          group === 'characters' ? Characters.find(c => c.name === name)
+                            : group === 'artifacts' ? Artifacts.find(a => a.name === name)
+                              : group === 'domains' ? Domains.find(d => d.name === name)
+                                : group === 'weapons' ? Weapons.find(w => w.name === name)
+                                  : group === 'materials' ? Materials.find(m => m.name === name)
+                                    : group === 'mobs' ? Mobs.find(m => m.name === name)
+                                      : undefined
+                        );
+                        if (!model) return null;
 
-                return (
-                  <li key={name}>
-                    <Link to={`/${DATA_PREFIX}/${group}/${name}`} title={name}>
-                      {group === 'characters' && <CharacterImage character={name} />}
-                      {group === 'artifacts' && <ArtifactImage set={name} piece='Flower' />}
-                      {group === 'domains' && <DomainImage domain={name} />}
-                      {group === 'materials' && <MaterialImage material={name} />}
-                      {group === 'mobs' && <MobImage mob={name} />}
-                      <header>
-                        <p className='model-name'>
-                          <span>{name}</span>
-                          {element ? <ElementImage element={element} /> : null}
-                        </p>
-                        {model
-                          ? 'rarity' in model || Mob.isMob(model)
-                            ? <RarityList rarity={'rarity' in model ? model.rarity : getRarityFromMob(model)} />
-                            : undefined
-                          : <p>Unknown model</p>
+                        switch (group) {
+                          case 'characters': return <CharacterCard key={name} character={model as Character} wrapInLink />;
+                          case 'artifacts': return <ArtifactCard key={name} artifact={model as ArtifactSet} wrapInLink />;
+                          case 'domains': return <DomainCard key={name} domain={model as Domain<any>} wrapInLink />;
+                          case 'materials': return <MaterialCard key={name} material={model as any} wrapInLink />;
+                          case 'mobs': return <MobCard key={name} mob={model as Mob} wrapInLink />;
+                          case 'weapons': return <WeaponCard key={name} weapon={model as Weapon} wrapInLink />;
+                          default: return null;
                         }
-                      </header>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </details>
-        ))}
-      </section>
-    </main>
-  </>);
+                      })}
+                    </div>
+                  </details>
+                )
+              ))
+            )}
+          </section>
+        )}
+      </main>
+    </div>
+  );
 }

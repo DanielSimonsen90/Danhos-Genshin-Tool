@@ -19,3 +19,7 @@ export const useMaterialsData = () => useDataStore() as Pick<DataStore,
 export const useMobData = () => useDataStore() as Pick<DataStore,
   | 'MobNames' | 'Mobs' | 'MobsData'
 >;
+export const useWeaponData = () => useDataStore() as Pick<DataStore,
+  | 'WeaponNames' | 'Weapons' | 'WeaponsData'
+  | 'findWeaponByName'
+>;

@@ -6,6 +6,8 @@ import CharacterSet from "../CharacterSet";
 import TabBar from "@/components/common/TabBar";
 import ModelCard, { BaseModelCardProps } from "@/components/common/ModelCard";
 import { MaterialCard } from "../../Material";
+import { WeaponCard } from "../../Weapon";
+import { useDataStore } from "@/stores";
 
 export interface Props extends BaseModelCardProps {
   character: Character;
@@ -14,6 +16,7 @@ export interface Props extends BaseModelCardProps {
 
   showAscensionSection?: boolean;
   showCharacterSets?: boolean;
+  showSignatureWeapon?: boolean;
   children?: React.ReactNode;
 }
 
@@ -21,10 +24,14 @@ export default function CharacterCard({
   character, score,
   showAscensionSection,
   showCharacterSets,
+  showSignatureWeapon,
   children,
   ...props
 }: Props) {
   const { name, bonusAbilities, sets, rarity } = character;
+
+  const DataStore = useDataStore();
+  const signatureWeapon = DataStore.getSignatureWeaponFor(character);
   const ascensionMaterials = useMemo(() => {
     if (!showAscensionSection) return [];
     const keys: Array<keyof Character['ascension']> = [
@@ -93,6 +100,12 @@ export default function CharacterCard({
                   <CharacterSet set={set} character={character} />
                 ))}
               />
+            </div>
+          )}
+          {showSignatureWeapon && signatureWeapon && (
+            <div className="character-signature-weapon">
+              <h3>Signature Weapon</h3>
+              <WeaponCard weapon={signatureWeapon} wrapInLink showDetails />
             </div>
           )}
 

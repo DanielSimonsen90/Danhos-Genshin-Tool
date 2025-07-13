@@ -1,6 +1,7 @@
 import { ArtifactSet, Character, Domain, TalentAscensionMaterial, WeaponAscensionMaterial, Material, Mob, Model, ModelKeys, Boss, CharacterSet, CharacterArtifactSet } from '@/common/models';
 import type { DataStoreContent } from './DataStoreConstants';
 import ModelType from './ModelType';
+import { Weapon } from '@/common/models/weapon';
 
 export type CharacterUsingArtifactResult = {
   character: Character;
@@ -15,6 +16,7 @@ export type DataStore = typeof DataStoreContent & {
   findDomainByName: (name: string) => Domain<any> | undefined;
   findMobByName: (name: string) => Mob | undefined;
   findMaterialByName: (name: string) => Material | undefined;
+  findWeaponByName: (name: string) => Weapon | undefined;
 
   getDomainsFromArtifact: (artifactName: string) => Domain<any>[] | undefined;
   getArtifactsFromDomain: (domainName: string) => ArtifactSet[] | undefined;
@@ -28,6 +30,7 @@ export type DataStore = typeof DataStoreContent & {
   getDomainsFromMaterial: (material: Material) => Domain<any>[];
   getBossesFromMaterial: (material: Material) => Boss[];
   getCharactersUsingArtifact: (artifactName: string) => CharacterUsingArtifactResult[];
+  getSignatureWeaponFor(character: Character): Weapon | undefined;
 
   getModelType: <TModel extends Model>(model: TModel) => ModelType<TModel>;
   

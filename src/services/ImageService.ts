@@ -47,7 +47,7 @@ export const ImageService = new class ImageService extends BaseService<string> {
     return this.lastResult = `${REROLL_CDN_URL}/UI/weapon_${snakeCaseFromCamelCase(name)}.png`;
   }
   public getWeaponImage(name: string): string {
-    return this.lastResult = `${REROLL_CDN_URL}/Weapons/${this.formatRerollCdnName(name)}.png`;
+    return this.lastResult = `${PAIMON_MOE_URL}/weapons/${snakeCaseFromCamelCase(name).replace(/[':"]/g, '')}.png`;
   }
 
   public getDomainImage(name: keyof typeof DomainsData | string): string {

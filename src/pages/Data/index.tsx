@@ -11,6 +11,8 @@ export { default as Materials } from './Materials';
 export { default as Material } from './Materials/{materialName}';
 export { default as Mobs } from './Mobs';
 export { default as Mob } from './Mobs/{mobName}';
+export { default as Weapons } from './Weapons';
+export { default as Weapon } from './Weapons/{weaponName}';
 
 function DataPage() {
   return (

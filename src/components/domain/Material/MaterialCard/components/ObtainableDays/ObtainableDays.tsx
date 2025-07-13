@@ -15,7 +15,11 @@ export default function ObtainableDays({ material }: Props) {
           </span>
         </li>
       ))}
-      <li className="material-card__obtainable-days-item">Sunday</li>
+      <li className="material-card__obtainable-days-item" data-today={material.getDataTodayAttr('Sunday')}>
+        <span>
+          Sunday
+        </span>
+      </li>
     </ul>
   );
 }

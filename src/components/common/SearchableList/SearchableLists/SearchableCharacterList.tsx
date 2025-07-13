@@ -5,7 +5,7 @@ import { Character } from "@/common/models";
 import { CharacterCard } from "@/components/domain/Character";
 import { Props as CharacterCardProps } from "@/components/domain/Character/CharacterCard/CharacterCard";
 
-import { useFavoriteStore } from "@/stores";
+import { useDataStore, useFavoriteStore } from "@/stores";
 import { useContextMenu } from "@/providers/ContextMenuProvider";
 
 import { OptionalProps, UncrontrolledProps } from "../Props";
@@ -31,6 +31,7 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
   const navigate = useNavigate();
   const [hidden, setHidden] = useState(new Array<Character>());
   const { add: addToFavorite, remove: removeFromFavorite, isFavorite } = useFavoriteStore('characters');
+  const DataStore = useDataStore();
 
   return <SearchableList items={items}
     sort={(a, b) => isFavorite(a) === isFavorite(b) ? 0 : isFavorite(a) ? -1 : 1}
@@ -96,6 +97,7 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
         shield: character => character.bonusAbilities.includes('Shield'),
         special: character => character.bonusAbilities.toString().includes(':'),
       },
+      hasSignatureWeapon: character => DataStore.getSignatureWeaponFor(character), 
       region: {
         mondstadt: character => character.region === "Mondstadt",
         liyue: character => character.region === "Liyue",

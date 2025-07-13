@@ -6,5 +6,6 @@ export default function Character() {
     showRarity
     showAscensionSection
     showCharacterSets 
+    showSignatureWeapon
   />} />;
 }
