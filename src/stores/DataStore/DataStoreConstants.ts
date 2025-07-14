@@ -17,6 +17,7 @@ import { ElementalCrystals } from '@/data/materials/drops/crystals';
 import Billets from '@/data/materials/drops/billets';
 import * as MaterialLocalSpecialtiesData from '@/data/materials/local-specialties';
 import * as MaterialTalentData from '@/data/materials/talents';
+import * as WeaponTalentData from '@/data/materials/weapon-materials';
 
 const MaterialsData = Object.assign({},
   Object.assign({}, 
@@ -26,7 +27,8 @@ const MaterialsData = Object.assign({},
   ),
   Object.assign({}, 
     ElementalCrystals,
-    Billets
+    Billets,
+    WeaponTalentData
   )
 );
 

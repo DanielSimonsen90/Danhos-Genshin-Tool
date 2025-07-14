@@ -1,6 +1,8 @@
 import { Rarity, Region } from "@/common/types";
-import { DomainOfMastery } from "../domains/";
+import { DomainOfForgery, DomainOfMastery } from "../domains/";
 import CraftableMaterial from "./CraftableMaterial";
+import * as DomainsOfForgery from '../domains/DomainOfForgery';
+import object from "@/common/functions/object";
 
 type ObtainableDays = 'Monday/Thursday' | 'Tuesday/Friday' | 'Wednesday/Saturday';
 
@@ -14,7 +16,7 @@ class AscensionMaterial extends CraftableMaterial {
     description: string,
     region: Region,
     rarity: Rarity,
-    public domain: DomainOfMastery,
+    public domain: DomainOfMastery | DomainOfForgery,
     public obtainableDays: ObtainableDays
   ) {
     super(name, description, region, rarity);
@@ -65,23 +67,27 @@ export class WeaponAscensionMaterial extends AscensionMaterial {
     return obj instanceof WeaponAscensionMaterial;
   }
 
-  public static create(name: string, description: string, region: Region, domain: DomainOfMastery, obtainableDays: ObtainableDays) {
-    return super.createCraftableMaterial(
-      name,
-      {
-        [Rarity.Uncommon]: 'Firm Arrowhead',
-        [Rarity.Rare]: 'Sharp Arrowhead',
-        [Rarity.Epic]: 'Weathered Arrowhead'
-      },
-      description,
-      true,
-      (name, description, rarity) => new WeaponAscensionMaterial(
-        name,
-        description,
-        region,
-        rarity,
-        domain,
-        obtainableDays
-      ));
+  public static create<TRarity extends Rarity>(
+    names: Record<TRarity, string>,
+    description: Record<TRarity, string>,
+    region: Region,
+    domain: DomainOfForgery,
+    obtainableDays: ObtainableDays
+  ) {
+
+    let root: WeaponAscensionMaterial | undefined;
+    let current: AscensionMaterial | undefined;
+    
+    for (const rarity in names) {
+      const name = rarity in names ? names[rarity as TRarity] : '';
+      const desc = rarity in description ? description[rarity as TRarity] : '';
+      const material = new WeaponAscensionMaterial(name, desc, region, rarity, domain, obtainableDays);
+
+      if (current) current.setCraftable(3, material);
+      if (!root) root = material;
+      current = material;
+    }
+
+    return root;
   }
 }
