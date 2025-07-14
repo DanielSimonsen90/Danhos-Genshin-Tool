@@ -25,7 +25,8 @@ export abstract class CraftableMaterial extends Material {
     return tree;
   }
   public getCraftingTreeAsMaterials() {
-    return this.getCraftingTree().map(craftable => craftable.into);
+    const remainder = this.getCraftingTree().map(craftable => craftable.into);
+    return [this, ...remainder];
   }
 
   protected static createCraftableMaterial<T extends CraftableMaterial>(

@@ -16,13 +16,11 @@ export function useRelationsTabs(material: Material) {
     modelKeys.includes('Character') && createTabItem(`${name}-used-by-characters`, 'Characters', (
       <MaterialRelationsForModel key={`char-${name}`} model='Character' materialName={name} />
     )),
-    // modelKeys.includes('Weapon') && createTabItem(`${name}-used-by-weapons`, 'Weapons', (
-    //   <MaterialRelationsForModel key={`weapon-${name}`} model='Weapon' materialName={name} />
-    // )), // TODO: Add when Weapon model is implemented
+    modelKeys.includes('Weapon') && createTabItem(`${name}-used-by-weapons`, 'Weapons', (
+      <MaterialRelationsForModel key={`weapon-${name}`} model='Weapon' materialName={name} />
+    )),
   ].filter(Boolean), [modelKeys, name]);
-  const usedByTabs = useCallback<TabsFunction>((tab) => createUsedByTabs().map(([key, tabData]) =>
-    tab(key, tabData.title, tabData.content)
-  ), [createUsedByTabs]);
+  const usedByTabs = useCallback<TabsFunction>(createUsedByTabs, [createUsedByTabs]);
   const hasUsedByTabs = useMemo(() => createUsedByTabs().length > 0, [createUsedByTabs]);
 
   const createAcquiredFromTabs = useCallback(() => [
@@ -38,9 +36,7 @@ export function useRelationsTabs(material: Material) {
       <MaterialRelationsForModel key={`domain-${name}`} model='Domain' materialName={name} />
     )),
   ].filter(Boolean), [modelKeys, name, material]);
-  const acquiredFromTabs = useCallback<TabsFunction>((tab) => createAcquiredFromTabs().map(([key, tabData]) =>
-    tab(key, tabData.title, tabData.content)
-  ), [createAcquiredFromTabs]);
+  const acquiredFromTabs = useCallback<TabsFunction>(createAcquiredFromTabs, [createAcquiredFromTabs]);
   const hasAcquiredFromTabs = useMemo(() => createAcquiredFromTabs().length > 0, [createAcquiredFromTabs]);
 
   return {

@@ -2,7 +2,7 @@
 import { create } from 'zustand';
 import { DataStore, CharacterUsingArtifactResult } from "./DataStoreTypes";
 import { DataStoreContent } from './DataStoreConstants';
-import { ArtifactSet, Boss, Character, CharacterArtifactSet, DomainOfBlessing, DomainOfForgery, DomainOfMastery, Material, Mob, Model, ModelKeys, TalentAscensionMaterial, WeaponAscensionMaterial } from '@/common/models';
+import { ArtifactSet, Boss, Character, CharacterArtifactSet, DomainOfBlessing, DomainOfForgery, DomainOfMastery, Material, Mob, Model, ModelKeys, TalentAscensionMaterial, Weapon, WeaponAscensionMaterial } from '@/common/models';
 import ModelType from './ModelType';
 import CraftableMaterial from '@/common/models/materials/CraftableMaterial';
 import AscensionMaterial from '@/common/models/materials/AscensionMaterial';
@@ -21,7 +21,9 @@ export const useDataStore = create<DataStore>((setState, getState) => {
   
   // Cache keys
   const CACHE_KEYS = {
-    MATERIAL_USERS: 'material_users_',
+    MATERIAL_CHARACTERS: 'material_characters_',
+    MATERIAL_WEAPONS: 'material_weapons_',
+    MATERIAL_MODEL_KEYS: 'material_model_keys_',
     ARTIFACT_DOMAINS: 'artifact_domains_',
     DOMAIN_ARTIFACTS: 'domain_artifacts_',
     MATERIAL_DROPPERS: 'material_droppers_',
@@ -136,7 +138,6 @@ export const useDataStore = create<DataStore>((setState, getState) => {
       ) as WeaponAscensionMaterial[];
     },
 
-    // Character-Material relationships
     getCharactersUsingMaterial(materialName: string) {
       const material = validateAndGetMaterial(materialName);
       if (!material) return [];
@@ -157,6 +158,17 @@ export const useDataStore = create<DataStore>((setState, getState) => {
           return materials.some(item => item.name === materialName);
         });
       }) as Character[];
+    },
+
+    getWeaponsUsingMaterial(materialName) {
+      const material = validateAndGetMaterial(materialName);
+      if (!material) return [];
+
+      return getCachedOrCompute(`${CACHE_KEYS.MATERIAL_WEAPONS}${materialName}`, () => {
+        return getState().Weapons.filter(weapon => 
+          weapon.ascensionMaterials.some(mat => mat.name === materialName)
+        );
+      }) as Weapon[];
     },
     
     getMobsDroppingMaterial(materialName: string) {
@@ -182,10 +194,11 @@ export const useDataStore = create<DataStore>((setState, getState) => {
       const material = validateAndGetMaterial(materialName);
       if (!material) return [];
 
-      return getCachedOrCompute(`${CACHE_KEYS.MATERIAL_USERS}${materialName}`, () => {
+      return getCachedOrCompute(`${CACHE_KEYS.MATERIAL_MODEL_KEYS}${materialName}`, () => {
         const modelKeys: ModelKeys[] = [];
         
         if (dataStore.getCharactersUsingMaterial(materialName).length > 0) modelKeys.push('Character');
+        if (dataStore.getWeaponsUsingMaterial(materialName).length > 0) modelKeys.push('Weapon');
         if (dataStore.getMobsDroppingMaterial(materialName).length > 0) modelKeys.push('Mob');
         if (dataStore.getDomainDroppingMaterial(materialName)) modelKeys.push('Domain');
         

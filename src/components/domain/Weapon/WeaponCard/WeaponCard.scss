@@ -124,6 +124,17 @@
   }
 }
 
+.weapon-ascension__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1em;
+
+  .weapon-ascension__item, .material-card {
+    height: 100%;
+    justify-content: center;
+  }
+}
+
 a.weapon-card {
   .model-card__name {
     @extend %text-ellipsis;

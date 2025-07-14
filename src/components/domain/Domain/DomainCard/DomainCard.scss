@@ -99,14 +99,21 @@
   }
 }
 
-a>.domain-card {
-  &__name {
-    margin-inline: auto;
+a.domain-card {
+  > header {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
   }
 
-  >aside {
-    display: grid;
-    align-content: space-between;
+  .domain-card__name {
+    margin-inline: auto;
+  }
+  .domain-card__details {
+    align-items: center;
+  }
+
+  p {
+    --margins: .25em;
   }
 }
 

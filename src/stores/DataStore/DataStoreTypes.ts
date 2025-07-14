@@ -25,10 +25,14 @@ export type DataStore = typeof DataStoreContent & {
 
   getModelKeysUsingMaterial: (materialName: string) => ModelKeys[];
   getCharactersUsingMaterial: (materialName: string) => Character[];
+  getWeaponsUsingMaterial: (materialName: string) => Weapon[];
+
   getMobsDroppingMaterial: (materialName: string) => Mob[];
   getDomainDroppingMaterial: (materialName: string) => Domain<any>;
+  
   getDomainsFromMaterial: (material: Material) => Domain<any>[];
   getBossesFromMaterial: (material: Material) => Boss[];
+  
   getCharactersUsingArtifact: (artifactName: string) => CharacterUsingArtifactResult[];
   getSignatureWeaponFor(character: Character): Weapon | undefined;
 

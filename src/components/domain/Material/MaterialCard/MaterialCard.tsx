@@ -28,7 +28,7 @@ export default function MaterialCard({
   const view = useSettingsStore(ss => ss.getSetting('preferredTabs').craftableMaterial);
 
   const craftingTree = CraftableMaterial.isCraftableMaterial(material) ?
-    [material, ...material.getCraftingTreeAsMaterials()] :
+    material.getCraftingTreeAsMaterials() :
     undefined;
   const [currentIndex, setCurrentIndex] = useState(() => (view === 'rarest' && allowCycle ? craftingTree?.length - 1 : undefined) ?? 0);
   const currentMaterial = useMemo(() => allowCycle ? craftingTree?.[currentIndex] ?? material : material, [craftingTree, currentIndex, material]);

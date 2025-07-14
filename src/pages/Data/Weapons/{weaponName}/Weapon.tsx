@@ -7,6 +7,7 @@ export default function Weapon() {
     showRarity
     showDetails
     showSource
+    showAscensionSection
     showSignatureCharacter
   />} />;
 }

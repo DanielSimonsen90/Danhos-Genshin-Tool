@@ -56,6 +56,11 @@ const ModelCard = forwardRef<HTMLDivElement, ModelCardProps>(({
   renderContent: Content,
   ...props
 }, ref) => {
+  if (!item.name) {
+    console.log(`Model in question:`, item);
+    throw new Error(`ModelCard requires a valid item with a 'name' property.`);
+  }
+
   const routePath = `/data/${model.toLowerCase()}s/${item.name.toLowerCase()}`;
   const modelClassName = `${model.toLowerCase()}-card`;
   const className = classNames('model-card', modelClassName, props.className);

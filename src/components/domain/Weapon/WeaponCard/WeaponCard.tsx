@@ -5,6 +5,7 @@ import { WeaponImage } from "@/components/common/Images";
 import ModelCard, { BaseModelCardProps } from "@/components/common/ModelCard";
 import { useCharacterData } from "@/stores";
 import { CharacterCard } from "../../Character";
+import { MaterialCard } from "../../Material";
 
 export interface Props extends BaseModelCardProps {
   weapon: Weapon;
@@ -12,6 +13,7 @@ export interface Props extends BaseModelCardProps {
   showStats?: boolean;
   showDetails?: boolean;
   showSource?: boolean;
+  showAscensionSection?: boolean;
   showSignatureCharacter?: boolean;
 }
 
@@ -20,10 +22,11 @@ export default function WeaponCard({
   showStats,
   showDetails,
   showSource,
+  showAscensionSection,
   showSignatureCharacter,
   ...props
 }: Props) {
-  const { name, description, type, rarity, baseAttack, secondaryStat, secondaryStatValue, droppedBy, signatureWeaponFor } = weapon;
+  const { name, description, type, rarity, baseAttack, secondaryStat, secondaryStatValue, ascensionMaterials, droppedBy, signatureWeaponFor } = weapon;
   const { CharactersData } = useCharacterData();
 
   const signatureCharacter = useMemo(() => (
@@ -93,6 +96,18 @@ export default function WeaponCard({
       renderContent={() => showDetails ? (
         <section className="weapon-card__content">
           <p className="weapon-description" dangerouslySetInnerHTML={{ __html: processedDescription }} />
+          {showAscensionSection && (
+            <div className="weapon-ascension">
+              <h3>Ascension Materials</h3>
+              <ul className="weapon-ascension__list">
+                {ascensionMaterials.map(item => (
+                  <li key={item.name} className="weapon-ascension__item">
+                    <MaterialCard material={item} allowCycle={false} wrapInLink nameTag="h4" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           {signatureCharacter && (
             <div className="weapon-signature">
               <h4>Signature weapon for</h4>

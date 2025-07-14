@@ -2,7 +2,6 @@ import Weapon from "@/common/models/weapon";
 import { Rarity } from "@/common/types";
 import * as WeaponAscensionMaterials from './materials/weapon-materials';
 import * as Drops from './materials/drops';
-import { WeaponAscensionMaterial } from "@/common/models";
 
 export const TheCatch = new Weapon(
   '"The Catch"',
@@ -1769,6 +1768,7 @@ export const KagurasVerity = new Weapon(
   {
     value: `Gains the Kagura Dance effect when using an Elemental Skill, causing the Elemental Skill DMG of the character wielding this weapon to increase by $0 for 16s. Max 3 stacks. This character will gain $1 All Elemental DMG Bonus when they possess 3 stacks.`,
     refinements: [
+      '12/15/18/21/24%',
       '12/15/18/21/24%',
     ]
   },

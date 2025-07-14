@@ -1,4 +1,4 @@
-import { ArtifactSet, DomainReward, DomainType } from "@/common/models";
+import { ArtifactSet, Character, DomainReward, DomainType, Weapon } from "@/common/models";
 import TabBar from "@/components/common/TabBar";
 import ArtifactCard from "../../Artifacts/ArtifactCard";
 import SearchableList from "@/components/common/SearchableList";
@@ -7,6 +7,7 @@ import { CharacterCard } from "../../Character";
 import { effectivenessString } from "@/common/functions/strings";
 import { MaterialCard } from "../../Material";
 import { useCallback } from "react";
+import { WeaponCard } from "../../Weapon";
 
 type Props<TDomainType extends DomainType> = {
   domainType: TDomainType,
@@ -30,8 +31,8 @@ function AscensionMaterialTabBar({ rewards, domainType }: Props<'Forgery' | 'Mas
   const DataStore = useDataStore();
   const getItems = useCallback((name: string) => (
     domainType === 'Mastery' ? DataStore.getCharactersUsingMaterial(name)
-      // domainType === 'Forgery' ? DataStore.getWeaponsUsingMaterial(name) // TODO
-      : undefined
+      : domainType === 'Forgery' ? DataStore.getWeaponsUsingMaterial(name)
+        : undefined
   ), [DataStore]);
 
   return <TabBar className="domain-rewards-tab-bar"
@@ -39,10 +40,12 @@ function AscensionMaterialTabBar({ rewards, domainType }: Props<'Forgery' | 'Mas
       reward.name,
       <MaterialCard key={reward.name} material={reward} allowCycle={false} />,
       <SearchableList key={reward.name}
-        items={getItems(reward.name)}
-        onSearch={(query, character) => character.name.toLowerCase().includes(query.toLowerCase())}
-        renderItem={character => (
-          <CharacterCard key={character.name} className="character-result" character={character} wrapInLink />
+        items={getItems(reward.name) as Array<(Character & Weapon)>}
+        onSearch={(query, item) => item.name.toLowerCase().includes(query.toLowerCase())}
+        renderItem={item => (
+          item instanceof Character 
+            ? <CharacterCard key={item.name} className="character-result" character={item} wrapInLink />
+            : <WeaponCard key={(item as Weapon).name} className="weapon-result" weapon={item} wrapInLink />
         )}
       />
     ))}
