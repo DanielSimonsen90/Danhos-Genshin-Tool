@@ -1,5 +1,8 @@
 import Weapon from "@/common/models/weapon";
 import { Rarity } from "@/common/types";
+import * as WeaponAscensionMaterials from './materials/weapon-materials';
+import * as Drops from './materials/drops';
+import { WeaponAscensionMaterial } from "@/common/models";
 
 export const TheCatch = new Weapon(
   '"The Catch"',
@@ -15,7 +18,12 @@ export const TheCatch = new Weapon(
   510,
   'Energy Recharge',
   45.9,
-  'Fishing'
+  [
+    WeaponAscensionMaterials.MaskOfTheX,
+    Drops.RuinSentinelChaos,
+    Drops.Spectral
+  ],
+  'Fishing',
 );
 
 export const UltimateOverlordsMegaMagicSword = new Weapon(
@@ -32,6 +40,11 @@ export const UltimateOverlordsMegaMagicSword = new Weapon(
   565,
   'Energy Recharge',
   30.6,
+  [
+    WeaponAscensionMaterials.GobletOfThePristineSea,
+    Drops.Operatives,
+    Drops.Gear
+  ],
   'Event',
 );
 
@@ -49,6 +62,11 @@ export const AThousandBlazingSuns = new Weapon(
   741,
   'Crit Rate',
   11,
+  [
+    WeaponAscensionMaterials.BlazingSacrificialHearts,
+    Drops.SecretSource,
+    Drops.Fang,
+  ],
   'Wish',
   cs => cs.Mavuika
 );
@@ -67,6 +85,11 @@ export const AThousandFloatingDreams = new Weapon(
   542,
   'Elemental Mastery',
   265,
+  [
+    WeaponAscensionMaterials.OasisGardens,
+    Drops.PrimalConstructPrism,
+    Drops.FungalSpores
+  ],
   'Wish',
   cs => cs.Nahida,
 );
@@ -85,6 +108,11 @@ export const Absolution = new Weapon(
   674,
   'Crit DMG',
   44.1,
+  [
+    WeaponAscensionMaterials.AncientChord,
+    Drops.Operatives,
+    Drops.Gear,
+  ],
   'Wish',
   cs => cs.Clorinde,
 );
@@ -103,6 +131,11 @@ export const Akuoumaru = new Weapon(
   510,
   "ATK",
   41.3,
+  [
+    WeaponAscensionMaterials.XOfDandelionGladiator,
+    Drops.RuinGuardChaos,
+    Drops.Slime,
+  ],
   'Wish',
 );
 
@@ -120,6 +153,11 @@ export const AlleyHunter = new Weapon(
   565,
   'ATK',
   41.3,
+  [
+    WeaponAscensionMaterials.XBranchOfAXSea,
+    Drops.ConcealedClaw,
+    Drops.Handguard
+  ],
   'Wish',
 );
 
@@ -136,6 +174,11 @@ export const AmenomaKageuchi = new Weapon(
   454,
   'ATK',
   55.1,
+  [
+    WeaponAscensionMaterials.XBranchOfAXSea,
+    Drops.RuinSentinelChaos,
+    Drops.Handguard
+  ],
   'Crafting',
 );
 
@@ -153,6 +196,11 @@ export const AmosBow = new Weapon(
   608,
   'ATK',
   49.6,
+  [
+    WeaponAscensionMaterials.XOfDandelionGladiator,
+    Drops.RuinGuardChaos,
+    Drops.Slime
+  ],
   'Wish',
   cs => cs.Ganyu,
 );
@@ -170,6 +218,11 @@ export const AquaSimulacra = new Weapon(
   542,
   'Crit DMG',
   88.2,
+  [
+    WeaponAscensionMaterials.XFromGuyun,
+    Drops.Statuette,
+    Drops.Spectral,
+  ],
   'Wish',
   cs => cs.Yelan,
 );
@@ -189,6 +242,11 @@ export const AquilaFavonia = new Weapon(
   674,
   'Physical DMG Bonus',
   41.3,
+  [
+    WeaponAscensionMaterials.XOfDecarabiansX,
+    Drops.Horn,
+    Drops.Arrowhead
+  ],
   'Wish',
   cs => cs.Jean,
 );
@@ -206,6 +264,11 @@ export const AshGravenDrinkingHorn = new Weapon(
   510,
   'HP',
   41.3,
+  [
+    WeaponAscensionMaterials.NightWindsMysticX,
+    Drops.SecretSource,
+    Drops.Fang,
+  ],
   'Event',
 );
 
@@ -224,6 +287,11 @@ export const AstralVulturesCrimsonPlumage = new Weapon(
   608,
   'Crit DMG',
   66.2,
+  [
+    WeaponAscensionMaterials.NightWindsMysticX,
+    Drops.AbyssalLeaf,
+    Drops.Whistle,
+  ],
   'Wish',
   cs => cs.Chasca,
 );
@@ -243,8 +311,13 @@ export const Azurelight = new Weapon(
   674,
   'Crit Rate',
   22.1,
+  [
+    WeaponAscensionMaterials.NightWindsMysticX,
+    Drops.AbyssalLeaf,
+    Drops.Whistle,
+  ],
   'Wish',
-  // cs => cs.Skirk,
+  // cs => cs.Skirk, // TODO
 );
 
 export const BalladOfTheBoundlessBlue = new Weapon(
@@ -261,6 +334,11 @@ export const BalladOfTheBoundlessBlue = new Weapon(
   565,
   'Energy Recharge',
   30.6,
+  [
+    WeaponAscensionMaterials.BorealWolfsXTooth,
+    Drops.BoneShard,
+    Drops.TreasureHoarderInsignia
+  ],
   'Event',
 );
 
@@ -277,6 +355,11 @@ export const BalladOfTheFjords = new Weapon(
   510,
   'Crit Rate',
   27.6,
+  [
+    WeaponAscensionMaterials.GobletOfThePristineSea,
+    Drops.HilichurlFlower,
+    Drops.Nectar,
+  ],
   'Battle Pass',
 );
 
@@ -295,6 +378,11 @@ export const BeaconOfTheReedSea = new Weapon(
   608,
   'Crit Rate',
   33.1,
+  [
+    WeaponAscensionMaterials.ScorchingMight,
+    Drops.Shell,
+    Drops.EremiteDrop,
+  ],
   'Wish',
   cs => cs.Dehya,
 );
@@ -312,6 +400,11 @@ export const BlackTassel = new Weapon(
   354,
   'HP',
   46.9,
+  [
+    WeaponAscensionMaterials.XOfAerosiderite,
+    Drops.BoneShard,
+    Drops.Arrowhead,
+  ],
   'Wish',
 );
 
@@ -328,6 +421,11 @@ export const BlackcliffAgate = new Weapon(
   510,
   'Crit DMG',
   55.1,
+  [
+    WeaponAscensionMaterials.XFromGuyun,
+    Drops.SacrificialKnife,
+    Drops.Scroll,
+  ],
   'Starglitter Exchange'
 );
 
@@ -344,6 +442,11 @@ export const BlackcliffLongsword = new Weapon(
   565,
   'Crit DMG',
   36.8,
+  [
+    WeaponAscensionMaterials.XFromGuyun,
+    Drops.SacrificialKnife,
+    Drops.Arrowhead,
+  ],
   'Starglitter Exchange'
 );
 
@@ -360,6 +463,11 @@ export const BlackcliffPole = new Weapon(
   510,
   'Crit DMG',
   55.1,
+  [
+    WeaponAscensionMaterials.MistXElixir,
+    Drops.MistGrass,
+    Drops.FatuiInsignia
+  ],
   'Starglitter Exchange'
 );
 
@@ -376,6 +484,11 @@ export const BlackcliffSlasher = new Weapon(
   510,
   'Crit DMG',
   55.1,
+  [
+    WeaponAscensionMaterials.MistXElixir,
+    Drops.MistGrass,
+    Drops.FatuiInsignia
+  ],
   'Starglitter Exchange'
 );
 
@@ -392,6 +505,11 @@ export const BlackcliffWarbow = new Weapon(
   565,
   'Crit DMG',
   36.8,
+  [
+    WeaponAscensionMaterials.XFromGuyun,
+    Drops.SacrificialKnife,
+    Drops.Nectar
+  ],
   'Starglitter Exchange'
 );
 
@@ -408,6 +526,11 @@ export const BloodtaintedGreatsword = new Weapon(
   354,
   'Elemental Mastery',
   187,
+  [
+    WeaponAscensionMaterials.BorealWolfsXTooth,
+    Drops.LeyLineBranch,
+    Drops.Arrowhead
+  ],
   'Wish',
 );
 
@@ -425,6 +548,11 @@ export const CalamityOfEshu = new Weapon(
   565,
   'ATK',
   27.6,
+  [
+    WeaponAscensionMaterials.DeliriousXOfTheSacredLord,
+    Drops.AbyssalLeaf,
+    Drops.Whistle,
+  ],
   'Event'
 );
 
@@ -442,6 +570,11 @@ export const CalamityQueller = new Weapon(
   741,
   'ATK',
   16.5,
+  [
+    WeaponAscensionMaterials.MistXElixir,
+    Drops.MistGrass,
+    Drops.Nectar
+  ],
   'Wish',
   cs => cs.Shenhe
 );
@@ -462,6 +595,11 @@ export const CashflowSupervision = new Weapon(
   674,
   'Crit Rate',
   22.1,
+  [
+    WeaponAscensionMaterials.GobletOfThePristineSea,
+    Drops.Operatives,
+    Drops.FontemerAberrantPearl
+  ],
   'Wish',
   cs => cs.Wriothesley
 );
@@ -480,6 +618,11 @@ export const ChainBreaker = new Weapon(
   565,
   'ATK',
   27.6,
+  [
+    WeaponAscensionMaterials.NightWindsMysticX,
+    Drops.Fin,
+    Drops.Fang,
+  ],
   'Crafting'
 );
 
@@ -496,6 +639,11 @@ export const CinnabarSpindle = new Weapon(
   454,
   'DEF',
   69,
+  [
+    WeaponAscensionMaterials.XOfDecarabiansX,
+    Drops.RuinGuardChaos,
+    Drops.Mask
+  ],
   'Event',
 );
 
@@ -512,6 +660,11 @@ export const Cloudforged = new Weapon(
   510,
   'Elemental Mastery',
   165,
+  [
+    WeaponAscensionMaterials.XOfAerosiderite,
+    Drops.Hilt,
+    Drops.FatuiInsignia
+  ],
   'Wish'
 );
 
@@ -529,6 +682,11 @@ export const CompoundBow = new Weapon(
   454,
   'Physical DMG Bonus',
   69,
+  [
+    WeaponAscensionMaterials.XOfAerosiderite,
+    Drops.BoneShard,
+    Drops.FatuiInsignia
+  ],
   'Crafting',
 );
 
@@ -546,6 +704,11 @@ export const CoolSteel = new Weapon(
   401,
   'ATK',
   35.2,
+  [
+    WeaponAscensionMaterials.XOfDecarabiansX,
+    Drops.Horn,
+    Drops.Arrowhead
+  ],
   'Wish',
 );
 
@@ -563,6 +726,11 @@ export const CranesEchoingCall = new Weapon(
   741,
   'ATK',
   16.5,
+  [
+    WeaponAscensionMaterials.MistXElixir,
+    Drops.Fin,
+    Drops.Scroll
+  ],
   'Wish',
   cs => cs.Xianyun
 );
@@ -580,6 +748,11 @@ export const CrescentPike = new Weapon(
   565,
   'Physical DMG Bonus',
   34.5,
+  [
+    WeaponAscensionMaterials.XFromGuyun,
+    Drops.SacrificialKnife,
+    Drops.TreasureHoarderInsignia
+  ],
   'Crafting',
 );
 
@@ -597,6 +770,11 @@ export const CrimsonMoonsSemblance = new Weapon(
   674,
   'Crit Rate',
   22.1,
+  [
+    WeaponAscensionMaterials.GobletOfThePristineSea,
+    Drops.Hilt,
+    Drops.Gear,
+  ],
   'Wish',
   cs => cs.Arlecchino
 );
@@ -614,6 +792,11 @@ export const DarkIronSword = new Weapon(
   401,
   'Elemental Mastery',
   141,
+  [
+    WeaponAscensionMaterials.XFromGuyun,
+    Drops.SacrificialKnife,
+    Drops.Mask
+  ],
   'NPC: Chen the Sharp',
 );
 
@@ -632,6 +815,11 @@ export const Deathmatch = new Weapon(
   454,
   'Crit Rate',
   36.8,
+  [
+    WeaponAscensionMaterials.BorealWolfsXTooth,
+    Drops.LeyLineBranch,
+    Drops.Nectar,
+  ],
   'Battle Pass'
 );
 
@@ -648,6 +836,11 @@ export const DebateClub = new Weapon(
   401,
   'ATK',
   35.2,
+  [
+    WeaponAscensionMaterials.MistXElixir,
+    Drops.MistGrass,
+    Drops.Mask,
+  ],
   'Wish',
 );
 
@@ -664,6 +857,11 @@ export const DialoguesOfTheDesertSages = new Weapon(
   510,
   'HP',
   41.3,
+  [
+    WeaponAscensionMaterials.TalismanOfTheForestDew,
+    Drops.Fin,
+    Drops.Spectral
+  ],
   'Event',
 );
 
@@ -681,6 +879,11 @@ export const DodocoTales = new Weapon(
   454,
   'ATK',
   55.1,
+  [
+    WeaponAscensionMaterials.BorealWolfsXTooth,
+    Drops.LeyLineBranch,
+    Drops.Mask
+  ],
   'Event',
 );
 
@@ -697,6 +900,11 @@ export const DragonsBane = new Weapon(
   454,
   'Elemental Mastery',
   221,
+  [
+    WeaponAscensionMaterials.MistXElixir,
+    Drops.MistGrass,
+    Drops.Scroll,
+  ],
   'Wish',
 );
 
@@ -715,6 +923,11 @@ export const DragonspineSpear = new Weapon(
   454,
   'Physical DMG Bonus',
   69,
+  [
+    WeaponAscensionMaterials.BorealWolfsXTooth,
+    Drops.MistGrass,
+    Drops.FatuiInsignia
+  ],
   'Crafting',
 );
 
@@ -731,6 +944,11 @@ export const EarthShaker = new Weapon(
   565,
   'ATK',
   27.6,
+  [
+    WeaponAscensionMaterials.BlazingSacrificialHearts,
+    Drops.Ignited,
+    Drops.Whistle,
+  ],
   'Crafting',
 );
 
@@ -749,6 +967,11 @@ export const ElegyForTheEnd = new Weapon(
   608,
   'Energy Recharge',
   55.1,
+  [
+    WeaponAscensionMaterials.BorealWolfsXTooth,
+    Drops.Horn,
+    Drops.FatuiInsignia
+  ],
   'Wish',
   cs => cs.Venti
 );
@@ -766,6 +989,11 @@ export const EmeraldOrb = new Weapon(
   448,
   'Elemental Mastery',
   94,
+  [
+    WeaponAscensionMaterials.XFromGuyun,
+    Drops.SacrificialKnife,
+    Drops.TreasureHoarderInsignia
+  ],
   'Wish'
 );
 
@@ -782,6 +1010,11 @@ export const EndOfTheLine = new Weapon(
   510,
   'Energy Recharge',
   45.9,
+  [
+    WeaponAscensionMaterials.ScorchingMight,
+    Drops.FungalNucleus,
+    Drops.FungalSpores
+  ],
   'Fishing'
 );
 
@@ -800,6 +1033,11 @@ export const EngulfingLightning = new Weapon(
   608,
   'Energy Recharge',
   55.1,
+  [
+    WeaponAscensionMaterials.MaskOfTheX,
+    Drops.RuinSentinelChaos,
+    Drops.Handguard
+  ],
   'Wish',
   cs => cs.RaidenShogun
 );
@@ -818,6 +1056,11 @@ export const EverlastingMoonglow = new Weapon(
   608,
   'HP',
   49.6,
+  [
+    WeaponAscensionMaterials.XBranchOfAXSea,
+    Drops.Prism,
+    Drops.Spectral
+  ],
   'Wish',
   cs => cs.SangonomiyaKokomi
 );
@@ -836,6 +1079,11 @@ export const EyeOfPerception = new Weapon(
   454,
   'ATK',
   55.1,
+  [
+    WeaponAscensionMaterials.MistXElixir,
+    Drops.MistGrass,
+    Drops.Mask,
+  ],
   'Wish',
 );
 
@@ -852,6 +1100,11 @@ export const FadingTwilight = new Weapon(
   565,
   'Energy Recharge',
   30.6,
+  [
+    WeaponAscensionMaterials.XOfAerosiderite,
+    Drops.SacrificialKnife,
+    Drops.Scroll,
+  ],
   'Wish',
 );
 
@@ -868,6 +1121,11 @@ export const FangOfTheMountainKing = new Weapon(
   741,
   'Crit Rate',
   11,
+  [
+    WeaponAscensionMaterials.DeliriousXOfTheSacredLord,
+    Drops.Ignited,
+    Drops.Whistle,
+  ],
   'Wish',
   cs => cs.Kinich
 );
@@ -886,6 +1144,11 @@ export const FavoniusCodex = new Weapon(
   510,
   'Energy Recharge',
   45.9,
+  [
+    WeaponAscensionMaterials.XOfDecarabiansX,
+    Drops.Horn,
+    Drops.Scroll
+  ],
   'Wish',
 );
 
@@ -903,6 +1166,11 @@ export const FavoniusGreatsword = new Weapon(
   454,
   'Energy Recharge',
   61.3,
+  [
+    WeaponAscensionMaterials.XOfDandelionGladiator,
+    Drops.RuinGuardChaos,
+    Drops.FatuiInsignia,
+  ],
   'Wish',
 );
 
@@ -920,6 +1188,11 @@ export const FavoniusLance = new Weapon(
   565,
   'Energy Recharge',
   30.6,
+  [
+    WeaponAscensionMaterials.XOfDandelionGladiator,
+    Drops.RuinGuardChaos,
+    Drops.Slime
+  ],
   'Wish',
 );
 
@@ -937,6 +1210,11 @@ export const FavoniusSword = new Weapon(
   545,
   'Energy Recharge',
   61.3,
+  [
+    WeaponAscensionMaterials.XOfDecarabiansX,
+    Drops.Horn,
+    Drops.Arrowhead,
+  ],
   'Wish',
 );
 
@@ -954,6 +1232,11 @@ export const FavoniusWarbow = new Weapon(
   454,
   'Energy Recharge',
   61.3,
+  [
+    WeaponAscensionMaterials.XOfDandelionGladiator,
+    Drops.RuinGuardChaos,
+    Drops.Nectar
+  ],
   'Wish',
 );
 
@@ -971,6 +1254,11 @@ export const FerrousShadow = new Weapon(
   401,
   'HP',
   35.2,
+  [
+    WeaponAscensionMaterials.XOfDecarabiansX,
+    Drops.Horn,
+    Drops.Nectar
+  ],
   'Wish',
 );
 
@@ -988,6 +1276,11 @@ export const FesteringDesire = new Weapon(
   510,
   'Elemental Mastery',
   45.9,
+  [
+    WeaponAscensionMaterials.XOfDandelionGladiator,
+    Drops.Horn,
+    Drops.FatuiInsignia
+  ],
   'Event',
 );
 
@@ -1005,6 +1298,11 @@ export const FilletBlade = new Weapon(
   401,
   'ATK',
   35.2,
+  [
+    WeaponAscensionMaterials.MistXElixir,
+    Drops.MistGrass,
+    Drops.TreasureHoarderInsignia
+  ],
   'Chest',
 );
 
@@ -1023,6 +1321,11 @@ export const FinaleOfTheDeep = new Weapon(
   656,
   'ATK',
   27.6,
+  [
+    WeaponAscensionMaterials.PureSacredDewdrop,
+    Drops.TaintedWater,
+    Drops.Handguard
+  ],
   'Crafting',
 );
 
@@ -1040,6 +1343,11 @@ export const FleuveCendreFerryman = new Weapon(
   510,
   'Energy Recharge',
   45.9,
+  [
+    WeaponAscensionMaterials.AncientChord,
+    Drops.TaintedWater,
+    Drops.FontemerAberrantPearl
+  ],
   'Fishing',
 );
 
@@ -1056,6 +1364,11 @@ export const FlowerWreathedFeathers = new Weapon(
   510,
   'ATK',
   41.3,
+  [
+    WeaponAscensionMaterials.NightWindsMysticX,
+    Drops.Ignited,
+    Drops.Whistle
+  ],
   'Wish',
 );
 
@@ -1074,6 +1387,11 @@ export const FlowingPurity = new Weapon(
   565,
   'ATK',
   27.6,
+  [
+    WeaponAscensionMaterials.PureSacredDewdrop,
+    Drops.BreacherCore,
+    Drops.FontemerAberrantPearl
+  ],
   'Crafting',
 );
 
@@ -1090,6 +1408,11 @@ export const FluteOfEzpitzal = new Weapon(
   454,
   'DEF',
   69,
+  [
+    WeaponAscensionMaterials.BlazingSacrificialHearts,
+    Drops.Hilt,
+    Drops.Fang
+  ],
   'Crafting',
 );
 
@@ -1106,6 +1429,11 @@ export const FootprintOfTheRainbow = new Weapon(
   510,
   'DEF',
   51.7,
+  [
+    WeaponAscensionMaterials.DeliriousXOfTheSacredLord,
+    Drops.SecretSource,
+    Drops.Whistle,
+  ],
   'Crafting',
 );
 
@@ -1122,6 +1450,11 @@ export const ForestRegalia = new Weapon(
   510,
   'Energy Recharge',
   30.6,
+  [
+    WeaponAscensionMaterials.TalismanOfTheForestDew,
+    Drops.RuinDrakeChaos,
+    Drops.EremiteDrop
+  ],
   'Crafting',
 );
 
@@ -1140,6 +1473,11 @@ export const FreedomSworn = new Weapon(
   608,
   'Elemental Mastery',
   198,
+  [
+    WeaponAscensionMaterials.XOfDandelionGladiator,
+    Drops.RuinGuardChaos,
+    Drops.Scroll,
+  ],
   'Wish',
   cs => cs.KaedeharaKazuha,
 );
@@ -1159,6 +1497,11 @@ export const Frostbearer = new Weapon(
   510,
   'ATK',
   41.3,
+  [
+    WeaponAscensionMaterials.XOfDandelionGladiator,
+    Drops.RuinGuardChaos,
+    Drops.Nectar
+  ],
   'Crafting',
 );
 
@@ -1175,6 +1518,11 @@ export const FruitOfFulfillment = new Weapon(
   510,
   'Energy Recharge',
   45.9,
+  [
+    WeaponAscensionMaterials.OasisGardens,
+    Drops.Statuette,
+    Drops.FungalSpores
+  ],
   'Crafting',
 );
 
@@ -1192,6 +1540,11 @@ export const FruitfulHook = new Weapon(
   565,
   'ATK',
   27.6,
+  [
+    WeaponAscensionMaterials.NightWindsMysticX,
+    Drops.SecretSource,
+    Drops.Fang
+  ],
   'Wish',
 );
 
@@ -1208,6 +1561,11 @@ export const HakushinRing = new Weapon(
   565,
   'Energy Recharge',
   30.6,
+  [
+    WeaponAscensionMaterials.XBranchOfAXSea,
+    Drops.Prism,
+    Drops.Scroll,
+  ],
   'Crafting',
 );
 
@@ -1224,6 +1582,11 @@ export const Halberd = new Weapon(
   448,
   'ATK',
   23.5,
+  [
+    WeaponAscensionMaterials.MistXElixir,
+    Drops.MistGrass,
+    Drops.Nectar,
+  ],
   'Chest',
 );
 
@@ -1241,6 +1604,11 @@ export const Hamayumi = new Weapon(
   454,
   'ATK',
   55.1,
+  [
+    WeaponAscensionMaterials.NarukamisX,
+    Drops.Prism,
+    Drops.Arrowhead,
+  ],
   'Crafting',
 );
 
@@ -1258,6 +1626,11 @@ export const HaranGeppakuFutsu = new Weapon(
   608,
   'Crit Rate',
   33.1,
+  [
+    WeaponAscensionMaterials.NarukamisX,
+    Drops.Statuette,
+    Drops.Handguard,
+  ],
   'Wish',
   cs => cs.KamisatoAyato
 );
@@ -1275,6 +1648,11 @@ export const HarbingerOfDawn = new Weapon(
   401,
   'Crit DMG',
   46.9,
+  [
+    WeaponAscensionMaterials.BorealWolfsXTooth,
+    Drops.LeyLineBranch,
+    Drops.Slime
+  ],
   'Wish'
 );
 
@@ -1292,6 +1670,11 @@ export const HuntersPath = new Weapon(
   542,
   'Crit Rate',
   44.1,
+  [
+    WeaponAscensionMaterials.ScorchingMight,
+    Drops.FungalNucleus,
+    Drops.EremiteDrop
+  ],
   'Wish',
   cs => cs.Tighnari
 );
@@ -1309,6 +1692,11 @@ export const IbisPiercer = new Weapon(
   565,
   'ATK',
   27.6,
+  [
+    WeaponAscensionMaterials.TalismanOfTheForestDew,
+    Drops.HilichurlFlower,
+    Drops.EremiteDrop
+  ],
   'Event',
 );
 
@@ -1325,6 +1713,11 @@ export const IronSting = new Weapon(
   510,
   'Elemental Mastery',
   165,
+  [
+    WeaponAscensionMaterials.XOfAerosiderite,
+    Drops.BoneShard,
+    Drops.Nectar,
+  ],
   'Crafting'
 );
 
@@ -1343,6 +1736,11 @@ export const JadefallsSplendor = new Weapon(
   608,
   'HP',
   49.6,
+  [
+    WeaponAscensionMaterials.XFromGuyun,
+    Drops.HilichurlFlower,
+    Drops.FungalSpores,
+  ],
   'Wish',
   cs => cs.Baizhu
 );
@@ -1358,6 +1756,11 @@ export const KagotsurubeIsshin = new Weapon(
   510,
   'ATK',
   41.3,
+  [
+    WeaponAscensionMaterials.MaskOfTheX,
+    Drops.Statuette,
+    Drops.Spectral
+  ],
   'Quest',
 );
 
@@ -1374,6 +1777,11 @@ export const KagurasVerity = new Weapon(
   608,
   'Crit DMG',
   66.2,
+  [
+    WeaponAscensionMaterials.MaskOfTheX,
+    Drops.ConcealedClaw,
+    Drops.Spectral
+  ],
   'Wish',
   cs => cs.YaeMiko
 );
@@ -1392,6 +1800,11 @@ export const KatsuragikiriNagamasa = new Weapon(
   510,
   'Energy Recharge',
   45.9,
+  [
+    WeaponAscensionMaterials.NarukamisX,
+    Drops.RuinSentinelChaos,
+    Drops.Handguard
+  ],
   'Crafting',
 );
 
@@ -1410,6 +1823,11 @@ export const KeyOfKhajNisut = new Weapon(
   542,
   'HP',
   66.2,
+  [
+    WeaponAscensionMaterials.TalismanOfTheForestDew,
+    Drops.PrimalConstructPrism,
+    Drops.EremiteDrop
+  ],
   'Wish',
   cs => cs.Nilou
 );
@@ -1428,6 +1846,11 @@ export const KingsSquire = new Weapon(
   454,
   'ATK',
   55.1,
+  [
+    WeaponAscensionMaterials.ScorchingMight,
+    Drops.FungalNucleus,
+    Drops.Arrowhead,
+  ],
   'Crafting',
 );
 
@@ -1445,6 +1868,11 @@ export const KitainCrossSpear = new Weapon(
   565,
   'Elemental Mastery',
   110,
+  [
+    WeaponAscensionMaterials.MaskOfTheX,
+    Drops.RuinSentinelChaos,
+    Drops.Handguard,
+  ],
   'Crafting',
 );
 
@@ -1462,6 +1890,11 @@ export const LightOfFoliarIncision = new Weapon(
   542,
   'Crit DMG',
   88.2,
+  [
+    WeaponAscensionMaterials.TalismanOfTheForestDew,
+    Drops.Shell,
+    Drops.EremiteDrop,
+  ],
   'Wish',
   cs => cs.Alhaitham
 );
@@ -1479,6 +1912,11 @@ export const LionsRoar = new Weapon(
   510,
   'ATK',
   41.3,
+  [
+    WeaponAscensionMaterials.XFromGuyun,
+    Drops.SacrificialKnife,
+    Drops.TreasureHoarderInsignia
+  ],
   'Wish',
 );
 
@@ -1496,6 +1934,11 @@ export const LithicBlade = new Weapon(
   565,
   'ATK',
   27.6,
+  [
+    WeaponAscensionMaterials.XFromGuyun,
+    Drops.SacrificialKnife,
+    Drops.Arrowhead
+  ],
   'Wish',
 );
 
@@ -1513,6 +1956,11 @@ export const LithicSpear = new Weapon(
   565,
   'ATK',
   27.6,
+  [
+    WeaponAscensionMaterials.XOfAerosiderite,
+    Drops.BoneShard,
+    Drops.Arrowhead,
+  ],
   'Wish',
 );
 
@@ -1529,6 +1977,11 @@ export const LostPrayerToTheSacredWinds = new Weapon(
   608,
   'Crit Rate',
   33.1,
+  [
+    WeaponAscensionMaterials.XOfDandelionGladiator,
+    Drops.RuinGuardChaos,
+    Drops.Slime
+  ],
   'Wish',
 );
 
@@ -1547,6 +2000,11 @@ export const LumidouceElegy = new Weapon(
   608,
   'Crit Rate',
   33.1,
+  [
+    WeaponAscensionMaterials.GobletOfThePristineSea,
+    Drops.Hilt,
+    Drops.Nectar,
+  ],
   'Wish',
   cs => cs.Emilie,
 );
@@ -1565,6 +2023,11 @@ export const LuxuriousSeaLord = new Weapon(
   454,
   'ATK',
   55.1,
+  [
+    WeaponAscensionMaterials.XOfAerosiderite,
+    Drops.BoneShard,
+    Drops.Slime,
+  ],
   'Event',
 );
 
@@ -1581,6 +2044,11 @@ export const MagicGuide = new Weapon(
   354,
   'Elemental Mastery',
   187,
+  [
+    WeaponAscensionMaterials.XOfDecarabiansX,
+    Drops.Horn,
+    Drops.Slime
+  ],
   'Wish',
 );
 
@@ -1598,6 +2066,11 @@ export const MailedFlower = new Weapon(
   565,
   'Elemental Mastery',
   110,
+  [
+    WeaponAscensionMaterials.XOfDandelionGladiator,
+    Drops.Shell,
+    Drops.Spectral
+  ],
   'Wish',
 );
 
@@ -1614,6 +2087,11 @@ export const MakhairaAquamarine = new Weapon(
   510,
   'Elemental Mastery',
   165,
+  [
+    WeaponAscensionMaterials.ScorchingMight,
+    Drops.RuinDrakeChaos,
+    Drops.TreasureHoarderInsignia
+  ],
   'Wish',
 );
 
@@ -1630,6 +2108,11 @@ export const MappaMare = new Weapon(
   565,
   'Elemental Mastery',
   110,
+  [
+    WeaponAscensionMaterials.XOfAerosiderite,
+    Drops.BoneShard,
+    Drops.Slime,  
+  ],
   'Crafting',
 );
 
@@ -1647,6 +2130,11 @@ export const MemoryOfDust = new Weapon(
   608,
   'ATK',
   49.6,
+  [
+    WeaponAscensionMaterials.XOfAerosiderite,
+    Drops.BoneShard,
+    Drops.Mask
+  ],
   'Wish',
   cs => cs.Ningguang
 );
@@ -1664,6 +2152,11 @@ export const Messenger = new Weapon(
   448,
   'Crit DMG',
   31.2,
+  [
+    WeaponAscensionMaterials.MistXElixir,
+    Drops.MistGrass,
+    Drops.TreasureHoarderInsignia
+  ],
   'Chest',
 );
 
@@ -1681,6 +2174,11 @@ export const MissiveWindspear = new Weapon(
   510,
   'ATK',
   41.3,
+  [
+    WeaponAscensionMaterials.BorealWolfsXTooth,
+    Drops.Statuette,
+    Drops.Slime,
+  ],
   'Event',
 );
 
@@ -1698,6 +2196,11 @@ export const MistsplitterReforged = new Weapon(
   674,
   'Crit DMG',
   44.1,
+  [
+    WeaponAscensionMaterials.XBranchOfAXSea,
+    Drops.RuinDrakeChaos,
+    Drops.Handguard
+  ],
   'Wish',
   cs => cs.KamisatoAyaka
 );
@@ -1716,6 +2219,11 @@ export const MitternachtsWaltz = new Weapon(
   510,
   'Physical DMG Bonus',
   51.7,
+  [
+    WeaponAscensionMaterials.XOfDecarabiansX,
+    Drops.Horn,
+    Drops.TreasureHoarderInsignia
+  ],
   'Wish'
 );
 
@@ -1732,6 +2240,11 @@ export const Moonpiercer = new Weapon(
   565,
   'Elemental Mastery',
   110,
+  [
+    WeaponAscensionMaterials.OasisGardens,
+    Drops.RuinDrakeChaos,
+    Drops.FatuiInsignia,
+  ],
   'Crafting',
 );
 
@@ -1749,6 +2262,11 @@ export const MountainBracingBolt = new Weapon(
   565,
   'Energy Recharge',
   30.6,
+  [
+    WeaponAscensionMaterials.DeliriousXOfTheSacredLord,
+    Drops.Ignited,
+    Drops.Nectar
+  ],
   'Wish',
 );
 
@@ -1766,6 +2284,11 @@ export const MouunsMoon = new Weapon(
   565,
   'ATK',
   27.6,
+  [
+    WeaponAscensionMaterials.NarukamisX,
+    Drops.Prism,
+    Drops.Spectral
+  ],
   'Wish',
 );
 
@@ -1782,6 +2305,11 @@ export const OathswornEye = new Weapon(
   565,
   'ATK',
   27.6,
+  [
+    WeaponAscensionMaterials.XBranchOfAXSea,
+    Drops.ConcealedClaw,
+    Drops.Spectral
+  ],
   'Event',
 );
 
@@ -1798,6 +2326,11 @@ export const OtherworldlyStory = new Weapon(
   401,
   'Energy Recharge',
   39,
+  [
+    WeaponAscensionMaterials.XOfDandelionGladiator,
+    Drops.RuinGuardChaos,
+    Drops.Mask
+  ],
   'Chest',
 );
 
@@ -1817,6 +2350,11 @@ export const PeakPatrolSong = new Weapon(
   542,
   'DEF',
   82.7,
+  [
+    WeaponAscensionMaterials.NightWindsMysticX,
+    Drops.SecretSource,
+    Drops.Fang,
+  ],
   'Wish',
   cs => cs.Xilonen
 );
@@ -1835,6 +2373,11 @@ export const PolarStar = new Weapon(
   608,
   'Crit Rate',
   33.1,
+  [
+    WeaponAscensionMaterials.MaskOfTheX,
+    Drops.ConcealedClaw,
+    Drops.Spectral
+  ],
   'Wish',
   cs => cs.TartagliaChilde
 );
@@ -1853,6 +2396,11 @@ export const PortablePowerSaw = new Weapon(
   454,
   'HP',
   55.1,
+  [
+    WeaponAscensionMaterials.GobletOfThePristineSea,
+    Drops.BreacherCore,
+    Drops.Gear
+  ],
   'Wish',
 );
 
@@ -1867,6 +2415,11 @@ export const Predator = new Weapon(
   510,
   'ATK',
   41.3,
+  [
+    WeaponAscensionMaterials.NarukamisX,
+    Drops.Prism,
+    Drops.Arrowhead
+  ],
   'Event',
 );
 
@@ -1884,6 +2437,11 @@ export const PrimordialJadeCutter = new Weapon(
   542,
   'Crit Rate',
   44.1,
+  [
+    WeaponAscensionMaterials.MistXElixir,
+    Drops.MistGrass,
+    Drops.TreasureHoarderInsignia
+  ],
   'Wish',
 );
 
@@ -1901,6 +2459,11 @@ export const PrimordialJadeWingedSpear = new Weapon(
   674,
   'Crit Rate',
   22.1,
+  [
+    WeaponAscensionMaterials.XFromGuyun,
+    Drops.SacrificialKnife,
+    Drops.FatuiInsignia
+  ],
   'Wish',
   cs => cs.Xiao,
 );
@@ -1919,6 +2482,11 @@ export const ProspectorsDrill = new Weapon(
   565,
   'ATK',
   27.6,
+  [
+    WeaponAscensionMaterials.AncientChord,
+    Drops.Operatives,
+    Drops.Gear
+  ],
   'Wish',
 );
 
@@ -1936,6 +2504,11 @@ export const PrototypeAmber = new Weapon(
   510,
   'HP',
   41.3,
+  [
+    WeaponAscensionMaterials.MistXElixir,
+    Drops.MistGrass,
+    Drops.Arrowhead
+  ],
   'Crafting',
 );
 
@@ -1952,6 +2525,11 @@ export const PrototypeArchaic = new Weapon(
   565,
   'ATK',
   27.6,
+  [
+    WeaponAscensionMaterials.XOfAerosiderite,
+    Drops.BoneShard,
+    Drops.Mask,
+  ],
   'Crafting',
 );
 
@@ -1968,6 +2546,11 @@ export const PrototypeCrescent = new Weapon(
   510,
   'ATK',
   41.3,
+  [
+    WeaponAscensionMaterials.MistXElixir,
+    Drops.MistGrass,
+    Drops.TreasureHoarderInsignia
+  ],
   'Crafting',
 );
 
@@ -1984,6 +2567,11 @@ export const PrototypeRancour = new Weapon(
   565,
   'Physical DMG Bonus',
   34.5,
+  [
+    WeaponAscensionMaterials.MistXElixir,
+    Drops.MistGrass,
+    Drops.FatuiInsignia
+  ],
   'Crafting',
 );
 
@@ -2000,6 +2588,11 @@ export const PrototypeStarglitter = new Weapon(
   510,
   'Energy Recharge',
   45.9,
+  [
+    WeaponAscensionMaterials.XOfAerosiderite,
+    Drops.BoneShard,
+    Drops.Mask
+  ],
   'Crafting',
 );
 
@@ -2016,6 +2609,11 @@ export const Rainslasher = new Weapon(
   510,
   'Elemental Mastery',
   165,
+  [
+    WeaponAscensionMaterials.MistXElixir,
+    Drops.MistGrass,
+    Drops.Scroll
+  ],
   'Wish',
 );
 
@@ -2033,6 +2631,11 @@ export const RangeGauge = new Weapon(
   565,
   'ATK',
   27.6,
+  [
+    WeaponAscensionMaterials.AncientChord,
+    Drops.TaintedWater,
+    Drops.FontemerAberrantPearl
+  ],
   'Wish',
 );
 
@@ -2049,6 +2652,11 @@ export const RavenBow = new Weapon(
   448,
   'Elemental Mastery',
   94,
+  [
+    WeaponAscensionMaterials.XOfDecarabiansX,
+    Drops.Horn,
+    Drops.Arrowhead
+  ],
   'Wish',
 );
 
@@ -2065,6 +2673,11 @@ export const RecurveBow = new Weapon(
   354,
   'HP',
   46.9,
+  [
+    WeaponAscensionMaterials.XOfDandelionGladiator,
+    Drops.RuinGuardChaos,
+    Drops.Scroll
+  ],
   'Chest',
 );
 
@@ -2082,6 +2695,11 @@ export const RedhornStonethresher = new Weapon(
   542,
   'Crit DMG',
   88.2,
+  [
+    WeaponAscensionMaterials.NarukamisX,
+    Drops.ConcealedClaw,
+    Drops.Handguard
+  ],
   'Wish',
   cs => cs.AratakiItto
 );
@@ -2099,6 +2717,11 @@ export const RightfulReward = new Weapon(
   510,
   'HP',
   27.6,
+  [
+    WeaponAscensionMaterials.GobletOfThePristineSea,
+    Drops.BreacherCore,
+    Drops.Gear
+  ],
   'Crafting',
 );
 
@@ -2116,6 +2739,11 @@ export const RingOfYaxche = new Weapon(
   510,
   'HP',
   41.3,
+  [
+    WeaponAscensionMaterials.DeliriousXOfTheSacredLord,
+    Drops.WayobWill,
+    Drops.Mask,
+  ],
   'Crafting',
 );
 
@@ -2132,6 +2760,11 @@ export const RoyalBow = new Weapon(
   510,
   'ATK',
   41.3,
+  [
+    WeaponAscensionMaterials.XOfDandelionGladiator,
+    Drops.RuinGuardChaos,
+    Drops.Slime
+  ],
   'Starglitter Exchange',
 );
 
@@ -2148,6 +2781,11 @@ export const RoyalGreatsword = new Weapon(
   565,
   'ATK',
   27.6,
+  [
+    WeaponAscensionMaterials.XOfDandelionGladiator,
+    Drops.RuinGuardChaos,
+    Drops.Slime
+  ],
   'Starglitter Exchange',
 );
 
@@ -2164,6 +2802,11 @@ export const RoyalGrimoire = new Weapon(
   565,
   'ATK',
   27.6,
+  [
+    WeaponAscensionMaterials.XOfDecarabiansX,
+    Drops.Horn,
+    Drops.FatuiInsignia
+  ],
   'Starglitter Exchange',
 );
 
@@ -2180,6 +2823,11 @@ export const RoyalLongsword = new Weapon(
   510,
   'ATK',
   41.3,
+  [
+    WeaponAscensionMaterials.XOfDecarabiansX,
+    Drops.Horn,
+    Drops.Arrowhead
+  ],
   'Starglitter Exchange',
 );
 
@@ -2196,6 +2844,11 @@ export const RoyalSpear = new Weapon(
   565,
   'ATK',
   27.6,
+  [
+    WeaponAscensionMaterials.MistXElixir,
+    Drops.MistGrass,
+    Drops.FatuiInsignia
+  ],
   'Starglitter Exchange',
 );
 
@@ -2213,6 +2866,11 @@ export const Rust = new Weapon(
   510,
   'ATK',
   41.3,
+  [
+    WeaponAscensionMaterials.XFromGuyun,
+    Drops.SacrificialKnife,
+    Drops.Mask
+  ],
   'Wish',
 );
 
@@ -2230,6 +2888,11 @@ export const SacrificialBow = new Weapon(
   565,
   'Energy Recharge',
   30.6,
+  [
+    WeaponAscensionMaterials.BorealWolfsXTooth,
+    Drops.LeyLineBranch,
+    Drops.Slime
+  ],
   'Wish',
 );
 
@@ -2247,6 +2910,11 @@ export const SacrificialFragments = new Weapon(
   454,
   'Elemental Mastery',
   221,
+  [
+    WeaponAscensionMaterials.XOfDandelionGladiator,
+    Drops.RuinGuardChaos,
+    Drops.TreasureHoarderInsignia
+  ],
   'Wish',
 );
 
@@ -2264,6 +2932,11 @@ export const SacrificialGreatsword = new Weapon(
   565,
   'Energy Recharge',
   30.6,
+  [
+    WeaponAscensionMaterials.BorealWolfsXTooth,
+    Drops.LeyLineBranch,
+    Drops.Arrowhead
+  ],
   'Wish',
 );
 
@@ -2281,6 +2954,11 @@ export const SacrificialJade = new Weapon(
   454,
   'Crit Rate',
   36.8,
+  [
+    WeaponAscensionMaterials.XFromGuyun,
+    Drops.MistGrass,
+    Drops.Scroll
+  ],
   'Battle Pass',
 );
 
@@ -2298,6 +2976,11 @@ export const SacrificialSword = new Weapon(
   454,
   'Energy Recharge',
   61.3,
+  [
+    WeaponAscensionMaterials.XOfDandelionGladiator,
+    Drops.RuinGuardChaos,
+    Drops.Scroll
+  ],
   'Wish',
 );
 
@@ -2314,6 +2997,11 @@ export const SapwoodBlade = new Weapon(
   565,
   'Energy Recharge',
   30.6,
+  [
+    WeaponAscensionMaterials.TalismanOfTheForestDew,
+    Drops.RuinDrakeChaos,
+    Drops.EremiteDrop,
+  ],
   'Crafting',
 );
 
@@ -2331,6 +3019,11 @@ export const ScionOfTheBlazingSun = new Weapon(
   565,
   'Crit Rate',
   18.4,
+  [
+    WeaponAscensionMaterials.ScorchingMight,
+    Drops.HilichurlFlower,
+    Drops.FungalSpores
+  ],
   'Battle Pass',
 );
 
@@ -2347,6 +3040,11 @@ export const SequenceOfSolitude = new Weapon(
   510,
   'HP',
   41.3,
+  [
+    WeaponAscensionMaterials.AncientChord,
+    Drops.WeaselShell,
+    Drops.Gear
+  ],
   'Event'
 );
 
@@ -2364,6 +3062,11 @@ export const SerpentSpine = new Weapon(
   510,
   'Crit Rate',
   27.6,
+  [
+    WeaponAscensionMaterials.XOfAerosiderite,
+    Drops.BoneShard,
+    Drops.Nectar
+  ],
   'Battle Pass'
 );
 
@@ -2380,6 +3083,11 @@ export const SharpshootersOath = new Weapon(
   401,
   'Crit DMG',
   46.9,
+  [
+    WeaponAscensionMaterials.BorealWolfsXTooth,
+    Drops.LeyLineBranch,
+    Drops.Slime
+  ],
   'Wish',
 );
 
@@ -2397,6 +3105,11 @@ export const SilvershowerHeartstrings = new Weapon(
   542,
   'HP',
   66.2,
+  [
+    WeaponAscensionMaterials.PureSacredDewdrop,
+    Drops.Fin,
+    Drops.FontemerAberrantPearl
+  ],
   'Wish',
   cs => cs.Sigewinne
 );
@@ -2414,6 +3127,11 @@ export const SkyriderGreatsword = new Weapon(
   401,
   'Physical DMG Bonus',
   43.9,
+  [
+    WeaponAscensionMaterials.XOfAerosiderite,
+    Drops.BoneShard,
+    Drops.TreasureHoarderInsignia
+  ],
   'Chest',
 );
 
@@ -2430,6 +3148,11 @@ export const SkyriderSword = new Weapon(
   354,
   'Energy Recharge',
   52.1,
+  [
+    WeaponAscensionMaterials.XOfAerosiderite,
+    Drops.BoneShard,
+    Drops.FatuiInsignia
+  ],
   'Wish',
 );
 
@@ -2447,6 +3170,11 @@ export const SkywardAtlas = new Weapon(
   674,
   'ATK',
   33.1,
+  [
+    WeaponAscensionMaterials.BorealWolfsXTooth,
+    Drops.LeyLineBranch,
+    Drops.Arrowhead
+  ],
   'Wish',
 );
 
@@ -2464,6 +3192,11 @@ export const SkywardBlade = new Weapon(
   608,
   'Energy Recharge',
   55.1,
+  [
+    WeaponAscensionMaterials.BorealWolfsXTooth,
+    Drops.LeyLineBranch,
+    Drops.Slime
+  ],
   'Wish',
 );
 
@@ -2482,6 +3215,11 @@ export const SkywardHarp = new Weapon(
   674,
   'Crit Rate',
   22.1,
+  [
+    WeaponAscensionMaterials.BorealWolfsXTooth,
+    Drops.LeyLineBranch,
+    Drops.Arrowhead
+  ],
   'Wish',
 );
 
@@ -2499,6 +3237,11 @@ export const SkywardPride = new Weapon(
   674,
   'Energy Recharge',
   38.6,
+  [
+    WeaponAscensionMaterials.BorealWolfsXTooth,
+    Drops.LeyLineBranch,
+    Drops.Slime
+  ],
   'Wish',
 );
 
@@ -2518,6 +3261,11 @@ export const SkywardSpine = new Weapon(
   674,
   'Energy Recharge',
   38.6,
+  [
+    WeaponAscensionMaterials.XOfDandelionGladiator,
+    Drops.RuinGuardChaos,
+    Drops.Scroll
+  ],
   'Wish',
 );
 
@@ -2534,6 +3282,11 @@ export const Slingshot = new Weapon(
   354,
   'Crit Rate',
   31.2,
+  [
+    WeaponAscensionMaterials.XFromGuyun,
+    Drops.SacrificialKnife,
+    Drops.Mask
+  ],
   'Wish',
 );
 
@@ -2552,6 +3305,11 @@ export const SnowTombedStarsilver = new Weapon(
   565,
   'Physical DMG Bonus',
   34.5,
+  [
+    WeaponAscensionMaterials.XOfDecarabiansX,
+    Drops.Horn,
+    Drops.Slime
+  ],
   'Crafting',
 );
 
@@ -2569,6 +3327,11 @@ export const SolarPearl = new Weapon(
   510,
   'Crit Rate',
   27.6,
+  [
+    WeaponAscensionMaterials.XFromGuyun,
+    Drops.SacrificialKnife,
+    Drops.Nectar
+  ],
   'Battle Pass',
 );
 
@@ -2587,6 +3350,11 @@ export const SongOfBrokenPines = new Weapon(
   741,
   'Physical DMG Bonus',
   20.7,
+  [
+    WeaponAscensionMaterials.XOfDecarabiansX,
+    Drops.Horn,
+    Drops.Mask
+  ],
   'Wish',
   cs => cs.Eula,
 );
@@ -2604,6 +3372,11 @@ export const SongOfStillness = new Weapon(
   510,
   'ATK',
   41.3,
+  [
+    WeaponAscensionMaterials.AncientChord,
+    Drops.TaintedWater,
+    Drops.Arrowhead,
+  ],
   'Crafting',
 );
 
@@ -2621,6 +3394,11 @@ export const SplendorOfTranquilWaters = new Weapon(
   542,
   'Crit DMG',
   88.2,
+  [
+    WeaponAscensionMaterials.PureSacredDewdrop,
+    Drops.TaintedWater,
+    Drops.FontemerAberrantPearl
+  ],
   'Wish',
   cs => cs.Furina
 );
@@ -2640,6 +3418,11 @@ export const StaffOfHoma = new Weapon(
   608,
   'Crit DMG',
   66.2,
+  [
+    WeaponAscensionMaterials.XOfAerosiderite,
+    Drops.LeyLineBranch,
+    Drops.Slime
+  ],
   'Wish',
   cs => cs.HuTao
 );
@@ -2658,6 +3441,11 @@ export const StaffOfTheScarletSands = new Weapon(
   542,
   'Crit Rate',
   44.1,
+  [
+    WeaponAscensionMaterials.OasisGardens,
+    Drops.RuinGuardChaos,
+    Drops.FungalSpores
+  ],
   'Wish',
   cs => cs.Cyno
 );
@@ -2676,6 +3464,11 @@ export const StarcallersWatch = new Weapon(
   542,
   'Elemental Mastery',
   265,
+  [
+    WeaponAscensionMaterials.DeliriousXOfTheSacredLord,
+    Drops.WayobWill,
+    Drops.Whistle
+  ],
   'Wish',
   cs => cs.Citlali
 );
@@ -2693,6 +3486,11 @@ export const StudyBone = new Weapon(
   542,
   'ATK',
   27.6,
+  [
+    WeaponAscensionMaterials.BlazingSacrificialHearts,
+    Drops.WayobWill,
+    Drops.Whistle
+  ],
   'Wish',
 );
 
@@ -2710,6 +3508,11 @@ export const SummitShaper = new Weapon(
   608,
   'ATK',
   49.6,
+  [
+    WeaponAscensionMaterials.XFromGuyun,
+    Drops.SacrificialKnife,
+    Drops.Mask
+  ],
   'Wish',
   cs => cs.Qiqi
 );
@@ -2729,6 +3532,11 @@ export const SunnyMorningSleepIn = new Weapon(
   542,
   'Elemental Mastery',
   265,
+  [
+    WeaponAscensionMaterials.NarukamisX,
+    Drops.Ignited,
+    Drops.Spectral
+  ],
   'Wish',
   cs => cs.YumemizukiMizuki
 );
@@ -2747,6 +3555,11 @@ export const SurfsUp = new Weapon(
   542,
   'Crit DMG',
   88.2,
+  [
+    WeaponAscensionMaterials.BlazingSacrificialHearts,
+    Drops.WayobWill,
+    Drops.Fang
+  ],
   'Wish',
   cs => cs.Mualani
 );
@@ -2762,6 +3575,11 @@ export const SwordOfDescension = new Weapon(
   440,
   'ATK',
   35.2,
+  [
+    WeaponAscensionMaterials.BorealWolfsXTooth,
+    Drops.LeyLineBranch,
+    Drops.TreasureHoarderInsignia
+  ],
   'Event',
 );
 
@@ -2780,6 +3598,11 @@ export const SymphonistOfScents = new Weapon(
   608,
   'Crit DMG',
   66.2,
+  [
+    WeaponAscensionMaterials.PureSacredDewdrop,
+    Drops.TaintedWater,
+    Drops.FontemerAberrantPearl
+  ],
   'Wish',
   // cs => cs.Escoffier // TODO
 );
@@ -2797,6 +3620,11 @@ export const SwordOfNarzissenkreuz = new Weapon(
   510,
   'ATK',
   41.3,
+  [
+    WeaponAscensionMaterials.AncientChord,
+    Drops.Operatives,
+    Drops.FontemerAberrantPearl
+  ],
   'Quest',
 );
   
@@ -2815,6 +3643,11 @@ export const TalkingStick = new Weapon(
   565,
   'Crit Rate',
   18.4,
+  [
+    WeaponAscensionMaterials.OasisGardens,
+    Drops.Shell,
+    Drops.Slime,
+  ],
   'Battle Pass',
 );
 
@@ -2831,6 +3664,11 @@ export const TamayurateiNoOhanashi = new Weapon(
   565,
   'Energy Recharge',
   30.6,
+  [
+    WeaponAscensionMaterials.MaskOfTheX,
+    Drops.AbyssalLeaf,
+    Drops.Handguard,
+  ],
   'Event',
 );
 
@@ -2847,6 +3685,11 @@ export const TheAlleyFlash = new Weapon(
   620,
   'Elemental Mastery',
   55,
+  [
+    WeaponAscensionMaterials.XOfDecarabiansX,
+    Drops.Horn,
+    Drops.Scroll
+  ],
   'Wish'
 );
 
@@ -2864,6 +3707,11 @@ export const TheBell = new Weapon(
   510,
   'HP',
   41.3,
+  [
+    WeaponAscensionMaterials.XOfDecarabiansX,
+    Drops.Horn,
+    Drops.Nectar
+  ],
   'Wish',
 );
 
@@ -2881,6 +3729,11 @@ export const TheBlackSword = new Weapon(
   510,
   'Crit Rate',
   27.6,
+  [
+    WeaponAscensionMaterials.BorealWolfsXTooth,
+    Drops.LeyLineBranch,
+    Drops.Slime
+  ],
   'Battle Pass',
 );
 
@@ -2898,6 +3751,11 @@ export const TheDockhandsAssistant = new Weapon(
   510,
   'HP',
   41.3,
+  [
+    WeaponAscensionMaterials.PureSacredDewdrop,
+    Drops.Operatives,
+    Drops.FontemerAberrantPearl
+  ],
   'Wish',
 );
 
@@ -2916,6 +3774,11 @@ export const TheFirstGreatMagic = new Weapon(
   608,
   'Crit DMG',
   66.2,
+  [
+    WeaponAscensionMaterials.AncientChord,
+    Drops.TaintedWater,
+    Drops.FontemerAberrantPearl
+  ],
   'Wish',
   cs => cs.Lyney
 );
@@ -2933,6 +3796,11 @@ export const TheFlute = new Weapon(
   510,
   'ATK',
   41.3,
+  [
+    WeaponAscensionMaterials.BorealWolfsXTooth,
+    Drops.LeyLineBranch,
+    Drops.Slime
+  ],
   'Wish',
 );
 
@@ -2949,6 +3817,11 @@ export const TheStringless = new Weapon(
   510,
   'Elemental Mastery',
   165,
+  [
+    WeaponAscensionMaterials.XOfDecarabiansX,
+    Drops.Horn,
+    Drops.Arrowhead
+  ],
   'Wish',
 );
 
@@ -2966,6 +3839,11 @@ export const TheUnforged = new Weapon(
   608,
   'ATK',
   49.6,
+  [
+    WeaponAscensionMaterials.MistXElixir,
+    Drops.MistGrass,
+    Drops.TreasureHoarderInsignia
+  ],
   'Wish',
   cs => cs.Xinyan
 );
@@ -2984,6 +3862,11 @@ export const TheViridescentHunt = new Weapon(
   510,
   'Crit Rate',
   27.6,
+  [
+    WeaponAscensionMaterials.XOfDecarabiansX,
+    Drops.Horn,
+    Drops.Arrowhead
+  ],
   'Battle Pass',
 );
 
@@ -3002,6 +3885,11 @@ export const TheWidsith = new Weapon(
   510,
   'Crit DMG',
   55.1,
+  [
+    WeaponAscensionMaterials.BorealWolfsXTooth,
+    Drops.LeyLineBranch,
+    Drops.Mask
+  ],
   'Wish',
 );
 
@@ -3018,6 +3906,11 @@ export const ThrillingTalesOfDragonSlayers = new Weapon(
   401,
   'HP',
   35.2,
+  [
+    WeaponAscensionMaterials.BorealWolfsXTooth,
+    Drops.LeyLineBranch,
+    Drops.Scroll
+  ],
   'Wish',
 );
 
@@ -3035,6 +3928,11 @@ export const ThunderingPulse = new Weapon(
   608,
   'Crit DMG',
   66.2,
+  [
+    WeaponAscensionMaterials.NarukamisX,
+    Drops.Prism,
+    Drops.Arrowhead
+  ],
   'Wish',
   cs => cs.Yoimiya
 );
@@ -3052,6 +3950,11 @@ export const TidalShadow = new Weapon(
   510,
   'ATK',
   41.3,
+  [
+    WeaponAscensionMaterials.GobletOfThePristineSea,
+    Drops.BreacherCore,
+    Drops.Gear
+  ],
   'Crafting',
 );
 
@@ -3070,6 +3973,11 @@ export const TomeOfTheEternalFlow = new Weapon(
   542,
   'Crit DMG',
   88.2,
+  [
+    WeaponAscensionMaterials.PureSacredDewdrop,
+    Drops.TaintedWater,
+    Drops.Gear
+  ],
   'Wish',
   cs => cs.Neuvillette
 );
@@ -3087,6 +3995,11 @@ export const ToukabouShigure = new Weapon(
   510,
   'Elemental Mastery',
   165,
+  [
+    WeaponAscensionMaterials.NarukamisX,
+    Drops.PrimalConstructPrism,
+    Drops.Handguard
+  ],
   'Event',
 );
 
@@ -3103,6 +4016,11 @@ export const TravelersHandySword = new Weapon(
   448,
   'DEF',
   29.3,
+  [
+    WeaponAscensionMaterials.XOfDandelionGladiator,
+    Drops.RuinGuardChaos,
+    Drops.Scroll
+  ],
   'Chest',
 );
 
@@ -3122,6 +4040,11 @@ export const TulaytullahsRemembrance = new Weapon(
   674,
   'Crit DMG',
   44.1,
+  [
+    WeaponAscensionMaterials.ScorchingMight,
+    Drops.FungalNucleus,
+    Drops.FungalSpores
+  ],
   'Wish',
   cs => cs.WandererScaramouche
 );
@@ -3139,6 +4062,11 @@ export const TwinNephrite = new Weapon(
   448,
   'Crit Rate',
   15.6,
+  [
+    WeaponAscensionMaterials.MistXElixir,
+    Drops.MistGrass,
+    Drops.FatuiInsignia
+  ],
   'Chest',
 );
 
@@ -3157,6 +4085,11 @@ export const UrakuMisugiri = new Weapon(
   542,
   'Crit DMG',
   88.2,
+  [
+    WeaponAscensionMaterials.XBranchOfAXSea,
+    Drops.RuinDrakeChaos,
+    Drops.Handguard
+  ],
   'Wish',
   cs => cs.Chiori
 );
@@ -3175,6 +4108,11 @@ export const Verdict = new Weapon(
   674,
   'Crit Rate',
   22.1,
+  [
+    WeaponAscensionMaterials.AncientChord,
+    Drops.BreacherCore,
+    Drops.Gear
+  ],
   'Wish',
   cs => cs.Navia
 );
@@ -3194,6 +4132,11 @@ export const VividNotions = new Weapon(
   674,
   'Crit DMG',
   44.1,
+  [
+    WeaponAscensionMaterials.DeliriousXOfTheSacredLord,
+    Drops.WeaselShell,
+    Drops.Fang
+  ],
   'Wish',
   // cs => cs.Varesa // TODO
 );
@@ -3212,6 +4155,11 @@ export const VortexVanquisher = new Weapon(
   608,
   'ATK',
   49.6,
+  [
+    WeaponAscensionMaterials.XOfAerosiderite,
+    Drops.BoneShard,
+    Drops.TreasureHoarderInsignia
+  ],
   'Wish',
   cs => cs.Zhongli
 );
@@ -3229,6 +4177,11 @@ export const WanderingEvenstar = new Weapon(
   510,
   'Elemental Mastery',
   165,
+  [
+    WeaponAscensionMaterials.OasisGardens,
+    Drops.FungalNucleus,
+    Drops.FungalSpores
+  ],
   'Wish',
 );
 
@@ -3246,6 +4199,11 @@ export const WavebreakersFin = new Weapon(
   620,
   'ATK',
   13.8,
+  [
+    WeaponAscensionMaterials.MaskOfTheX,
+    Drops.ConcealedClaw,
+    Drops.Handguard
+  ],
   'Wish',
 );
 
@@ -3264,6 +4222,11 @@ export const WaveridingWhirl = new Weapon(
   454,
   'Energy Recharge',
   61.3,
+  [
+    WeaponAscensionMaterials.BlazingSacrificialHearts,
+    Drops.WayobWill,
+    Drops.Fang
+  ],
   'Wish',
 );
 
@@ -3280,6 +4243,11 @@ export const WhiteIronGreatsword = new Weapon(
   401,
   'DEF',
   43.9,
+  [
+    WeaponAscensionMaterials.XOfDandelionGladiator,
+    Drops.RuinGuardChaos,
+    Drops.Slime
+  ],
   'Chest',
 );
 
@@ -3296,6 +4264,11 @@ export const WhiteTassel = new Weapon(
   401,
   'Crit Rate',
   23.4,
+  [
+    WeaponAscensionMaterials.XFromGuyun,
+    Drops.SacrificialKnife,
+    Drops.FatuiInsignia
+  ],
   'Chest',
 );
 
@@ -3312,6 +4285,11 @@ export const Whiteblind = new Weapon(
   510,
   'DEF',
   51.7,
+  [
+    WeaponAscensionMaterials.XFromGuyun,
+    Drops.SacrificialKnife,
+    Drops.TreasureHoarderInsignia
+  ],
   'Crafting',
 );
 
@@ -3328,6 +4306,11 @@ export const WindblumeOde = new Weapon(
   510,
   'Elemental Mastery',
   165,
+  [
+    WeaponAscensionMaterials.XOfDandelionGladiator,
+    Drops.LeyLineBranch,
+    Drops.Nectar
+  ],
   'Event',
 );
 
@@ -3345,6 +4328,11 @@ export const WineAndSong = new Weapon(
   565,
   'Energy Recharge',
   30.6,
+  [
+    WeaponAscensionMaterials.BorealWolfsXTooth,
+    Drops.LeyLineBranch,
+    Drops.TreasureHoarderInsignia
+  ],
   'Wish',
 );
 
@@ -3363,6 +4351,11 @@ export const WolfFang = new Weapon(
   510,
   'Crit Rate',
   27.6,
+  [
+    WeaponAscensionMaterials.XOfDecarabiansX,
+    Drops.RuinGuardChaos,
+    Drops.Mask
+  ],
   'Battle Pass',
 );
 
@@ -3380,6 +4373,11 @@ export const WolfsGravestone = new Weapon(
   608,
   'ATK',
   49.6,
+  [
+    WeaponAscensionMaterials.XOfDandelionGladiator,
+    Drops.RuinGuardChaos,
+    Drops.Scroll
+  ],
   'Wish',
 );
 
@@ -3396,6 +4394,11 @@ export const XiphosMoonlight = new Weapon(
   510,
   'Elemental Mastery',
   165,
+  [
+    WeaponAscensionMaterials.TalismanOfTheForestDew,
+    Drops.PrimalConstructPrism,
+    Drops.EremiteDrop
+  ],
   'Wish',
 );
 
