@@ -13,8 +13,8 @@ import { getDefaultTiers, generateBlankTier, generateEntry } from './TierlistFun
 import { useStateReset } from '@/hooks/useStateReset';
 
 export default function Tierlist<T, TStorageData extends object>({
-  items,
-  onUnsortedSearch, onTierChange, onEntryChange,
+  model, items,
+  onSearch, onTierChange, onEntryChange,
   ...props
 }: TierlistProps<T, TStorageData>) {
   const storageKey = 'storageKey' in props ? props.storageKey : 'storage' in props ? props.storage.key : '';
@@ -54,8 +54,14 @@ export default function Tierlist<T, TStorageData extends object>({
     ) : undefined).filter(Boolean);
   }), onStorageLoaded ? null : tiers);
   const [newTier, setNewTier] = useState<FormTier<T>>(generateBlankTier(tiers));
+  const [search, setSearch] = useState('');
 
-  const orderedTiers = tiers.sort((a, b) => a.position - b.position);
+  const orderedTiers = tiers
+    .map(tier => {
+      const entries = tier.entries.filter(entry => onSearch(search, entry.item))
+      return { ...tier, entries }
+    })
+    .sort((a, b) => a.position - b.position);
   const render = useMemo(() => (
     'renderItem' in props ? props.renderItem
     : 'children' in props ? props.children
@@ -179,13 +185,17 @@ export default function Tierlist<T, TStorageData extends object>({
         setNewTier(generateBlankTier(tiers)());
       }} submitText='Add tier' />
 
+      <input type="search" placeholder={`Search for a ${model.toLowerCase()}...`}
+        value={search} onChange={e => setSearch(e.target.value)} 
+      />
+
       <DragDropContext onDragEnd={onDragEnd}>
         {orderedTiers.map(tier => (
           <TierComponent key={tier.id} {...{
             render,
             tier, updateTier, onMoveToIndex, onSendToTier,
             tiers, setTiers,
-            unsorted, onUnsortedSearch
+            unsorted, onSearch
           }} />
         ))}
       </DragDropContext>

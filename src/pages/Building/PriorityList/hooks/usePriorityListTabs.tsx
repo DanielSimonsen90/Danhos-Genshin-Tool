@@ -47,7 +47,8 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
         title: <PriorityListTab title={tierlistTitle} onEdit={() => onEdit(tierlistTitle)} onDelete={() => deleteTab(tierlistTitle)} />,
         content: (
           <Tierlist key={tierlistTitle} {...{
-            items, onUnsortedSearch,
+            model: modelType,
+            items, onSearch: onUnsortedSearch,
             defaultTiers: priorityList.tiers,
             onTierChange: onTierChange(tierlistTitle)
           }}>
