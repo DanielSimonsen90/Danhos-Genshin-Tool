@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import TabBar from "@/components/common/TabBar";
 import useOnChange from "@/hooks/useOnChange";
-import { RegionData, useDataStore, useRegionData, useRegionStore } from "@/stores";
+import { useDataStore, useRegionData, useRegionStore } from "@/stores";
 
 import { CreatePriorityListButton } from "./components";
 import { useModifyPriorityList, usePriorityListTabs } from "./hooks";
@@ -30,8 +30,8 @@ export default function PriorityList() {
     priorityLists,
     setPriorityLists
   });
-  const tabs = usePriorityListTabs({ priorityLists, setPriorityLists, openUpdateModal });
-
+  const tabs = usePriorityListTabs({ priorityLists, setPriorityLists, openUpdateModal });    
+  
   useOnChange(region, (current, previous) => {
     debugLog(`Region changed from ${previous} to ${current}`);
 
@@ -39,13 +39,14 @@ export default function PriorityList() {
       regionData.priorityLists
       ?? getDefaultPriorityLists(DataStore)
     );
+    
     if (JSON.stringify(priorityLists) !== JSON.stringify(update)) setPriorityLists(update);
   }, [regionData.priorityLists, DataStore]);
 
-  useOnChange(priorityLists, () => RegionStore.setRegionData({ priorityLists }));
+  useOnChange(priorityLists, priorityLists => RegionStore.setRegionData({ priorityLists }));
 
   return (<>
-    <TabBar direction="vertical" collapseArea="tabs" className="priority-list" 
+    <TabBar direction="vertical" collapseArea="tabs" className="priority-list"
       tabs={tabs} noTabs={<NoTabs />} id={`priority-list-${region}`}
       placeChildrenBeforeTabs
     >

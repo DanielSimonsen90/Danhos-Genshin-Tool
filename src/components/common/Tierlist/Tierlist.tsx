@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+// @ts-ignore
+import isEqual from 'lodash/fp/isEqual';
 
 import { generateId } from '@/common/functions/random';
 import useOnChange from '@/hooks/useOnChange';
@@ -18,7 +20,6 @@ export default function Tierlist<T, TStorageData extends object>({
   const storageKey = 'storageKey' in props ? props.storageKey : 'storage' in props ? props.storage.key : '';
   const onStorageLoaded = 'onStorageLoaded' in props ? props.onStorageLoaded : undefined;
   const onStorageSave = 'onStorageSave' in props ? props.onStorageSave : undefined;
-
   const [tiers, setTiers, resetTiers] = useStateReset(() => {
     if (!props.defaultTiers) return getDefaultTiers(items);
     const itemsNotIncluded = items.filter(item => !props.defaultTiers?.some(tier => tier.entries.some(entry => {
@@ -30,7 +31,10 @@ export default function Tierlist<T, TStorageData extends object>({
     const unsortedTier = props.defaultTiers.find(tier => tier.id === 'unsorted');
     const unsortedTierIndex = props.defaultTiers.indexOf(unsortedTier!);
     const result = [...props.defaultTiers];
-    result[unsortedTierIndex] = { ...unsortedTier!, entries: [...unsortedTier!.entries, ...itemsNotIncluded.map(generateEntry)] };
+    result[unsortedTierIndex] = { 
+      ...unsortedTier!, 
+      entries: [...unsortedTier!.entries, ...itemsNotIncluded.map(generateEntry)] 
+    };
 
     return result;
   });
@@ -54,14 +58,29 @@ export default function Tierlist<T, TStorageData extends object>({
   const orderedTiers = tiers.sort((a, b) => a.position - b.position);
   const render = useMemo(() => (
     'renderItem' in props ? props.renderItem
-      : 'children' in props ? props.children
-        : () => 'No render method provided.'
+    : 'children' in props ? props.children
+    : () => 'No render method provided.'
   ), [props]);
-  const unsorted = tiers.find(tier => tier.id === 'unsorted')!;
 
-  useOnChange(props.defaultTiers, defaultTiers => {
-    console.log('Default tiers changed:', defaultTiers);
-    resetTiers();
+  const unsorted = tiers.find(tier => tier.id === 'unsorted')!;  // Compare content ignoring entry IDs to prevent unnecessary resets
+  const tiersWithoutIds = useMemo(() => 
+    tiers.map(tier => ({
+      ...tier,
+      entries: tier.entries.map(entry => ({ ...entry, id: undefined as any }))
+    })), [tiers]);
+  
+  const defaultTiersWithoutIds = useMemo(() => 
+    props.defaultTiers?.map(tier => ({
+      ...tier,
+      entries: tier.entries.map(entry => ({ ...entry, id: undefined as any }))
+    })), [props.defaultTiers]);
+
+    useOnChange(props.defaultTiers, defaultTiers => {
+    const contentEqual = isEqual(tiersWithoutIds, defaultTiersWithoutIds);
+    
+    if (!contentEqual) {
+      resetTiers();
+    }
   });
   useOnChange(tiers, tiers => {
     const storageData = onStorageSave?.(tiers) ?? tiers;
@@ -129,8 +148,8 @@ export default function Tierlist<T, TStorageData extends object>({
     onEntryChange?.(updatedTierContainedItem, updatedTierContainedItem.entries);
     return tiers.map(tier => (
       tier.id === updatedTierContainedItem.id ? updatedTierContainedItem
-        : tier.id === updatedTargetTier.id ? updatedTargetTier
-          : tier
+      : tier.id === updatedTargetTier.id ? updatedTargetTier
+      : tier
     ));
   });
   const onMoveToIndex = (entry: Entry<T>, index: number) => setTiers(tiers => {

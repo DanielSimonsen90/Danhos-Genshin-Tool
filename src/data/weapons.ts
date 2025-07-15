@@ -316,7 +316,7 @@ export const Azurelight = new Weapon(
     Drops.Whistle,
   ],
   'Wish',
-  // cs => cs.Skirk, // TODO
+  cs => cs.Skirk,
 );
 
 export const BalladOfTheBoundlessBlue = new Weapon(
@@ -3604,7 +3604,7 @@ export const SymphonistOfScents = new Weapon(
     Drops.FontemerAberrantPearl
   ],
   'Wish',
-  // cs => cs.Escoffier // TODO
+  cs => cs.Escoffier
 );
 
 export const SwordOfNarzissenkreuz = new Weapon(
@@ -4138,7 +4138,7 @@ export const VividNotions = new Weapon(
     Drops.Fang
   ],
   'Wish',
-  // cs => cs.Varesa // TODO
+  cs => cs.Varesa
 );
 
 export const VortexVanquisher = new Weapon(

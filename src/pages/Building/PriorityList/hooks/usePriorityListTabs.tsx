@@ -1,6 +1,6 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useCallback } from "react";
 
-import { CharacterImage, ArtifactImage, DomainImage } from "@/components/common/Images";
+import { CharacterImage, ArtifactImage, DomainImage, MaterialImage, MobImage, WeaponImage } from "@/components/common/Images";
 import Tierlist, { Tier } from "@/components/common/Tierlist";
 import { useDataStore } from "@/stores";
 
@@ -15,27 +15,27 @@ type UsePriorityListTabsProps = {
 };
 
 export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdateModal }: UsePriorityListTabsProps) {
-  const DataStore = useDataStore();
-
-  const onTierChange = (tierlistTitle: string) => (tiers: Array<Tier<string>>) => setPriorityLists(state => ({
-    ...state,
-    [tierlistTitle]: {
-      ...state[tierlistTitle],
-      tiers
-    }
-  }));
-
-  const onEdit = (tierlistKey: string) => {
+  const DataStore = useDataStore();  const onTierChange = useCallback((tierlistTitle: string) => (tiers: Array<Tier<string>>) => {
+    setPriorityLists(state => ({
+      ...state,
+      [tierlistTitle]: {
+        ...state[tierlistTitle],
+        tiers
+      }
+    }));
+  }, [setPriorityLists]);
+  const onEdit = useCallback((tierlistKey: string) => {
     const priorityList = priorityLists?.[tierlistKey];
     openUpdateModal(priorityList, tierlistKey);
-  };
-  const deleteTab = (tab: string) => {
+  }, [priorityLists, openUpdateModal]);
+  
+  const deleteTab = useCallback((tab: string) => {
     if (!confirm(`Are you sure you want to delete the tab "${tab}"?`)) return;
 
     let { [tab]: _, ...newPriorityList } = priorityLists;
     if (!Object.keys(newPriorityList).length) newPriorityList = getDefaultPriorityLists(DataStore);
     setPriorityLists(newPriorityList);
-  };
+  }, [priorityLists, DataStore, setPriorityLists]);
 
   return Array.from(Object.entries(priorityLists)).map(([tierlistTitle, priorityList]) => {
     const modelType = priorityList.model;
@@ -56,6 +56,9 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
                 case 'Character': return <CharacterImage character={modelName} />;
                 case 'Artifact': return <ArtifactImage set={modelName} />;
                 case 'Domain': return <DomainImage domain={modelName} />;
+                case 'Material': return <MaterialImage material={modelName} />;
+                case 'Mob': return <MobImage mob={modelName} />;
+                case 'Weapon': return <WeaponImage weapon={modelName} />;
                 default: return `Unknown model for ${modelName}`;
               }
             }}
