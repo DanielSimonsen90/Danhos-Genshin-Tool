@@ -23,12 +23,14 @@ export default forwardRef(function SelectMultiple<TValue extends string>({
     internalRef.current = instance;
     return internalRef;
   };
-
   const onToggleShowOptionsEvent = useCallback<EventHandler<any>>(e => {
     e.preventDefault();
     e.stopPropagation();
-    setShowOptions(v => !v);
-  }, []);
+    setShowOptions(v => {
+      if (!v) props.onOpen?.();
+      return !v;
+    });
+  }, [props.onOpen]);
   const toggleOption = useCallback((value: TValue) => {
     setSelectedValues(values => values.includes(value)
       ? values.filter(v => v !== value)
@@ -36,12 +38,7 @@ export default forwardRef(function SelectMultiple<TValue extends string>({
     );
     setTimeSelectedValues(values => ({ ...values, [Date.now()]: value }));
   }, []);
-
   useClickOutsideRef(internalRef, () => setShowOptions(false));
-
-  useOnChange(showOptions, () => {
-    if (showOptions) props.onOpen?.();
-  })
 
   useEffect(() => {
     if (max && selectedValues.length > max) {
