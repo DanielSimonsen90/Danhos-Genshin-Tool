@@ -5,6 +5,10 @@
     --min: 17em;
   }
 
+  .character-image {
+    border-radius: 50%
+  }
+
   .character-details__grouped {
     @extend %character-details-dropdown;
   }

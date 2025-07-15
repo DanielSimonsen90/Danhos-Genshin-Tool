@@ -115,8 +115,6 @@ export const Statuette = MobDrop.create('Statuette', {
   [Rarity.Epic]: `A one-eyed carving that emanates an ominous energy, with no indication of what it's made of.\nAs you gaze upon this idol, you can almost hear a strange, comforting whisper...\n"See, my child. All that lies under the throne of heaven shall be destroyed by upheaval. The eternal peace of the pitch-dark void shall embrace us all."`,
   [Rarity.Rare]: `An idol made in the likeness of some unknown, one-eyed person.\nYou can feel a strange warmth emanating from within as you hold onto it, like the shoulder of a dear friend. Perhaps this icon can indeed give people who understand its significance the courage to carry on.`,
   [Rarity.Uncommon]: `An idol made in the likeness of some unknown person.\nEven though this carving has seen many years pass, it still has not been damaged in any way. It seems that its previous owner must have cherished it like some holy icon.`,
-}, {
-  prependName: true,
 });
 
 export const RuinDrakeChaos = MobDrop.create('Chaos ', {
@@ -273,7 +271,7 @@ export const SecretSource = MobDrop.create('of the Secret Source', {
 });
 
 export const AbyssalLeaf = MobDrop.create('<placeholder>', {
-  [Rarity.Epic]: `Illusory Leadcoil`,
+  [Rarity.Epic]: `Illusory Leafcoil`,
   [Rarity.Rare]: `Bewildering Broadleaf`,
   [Rarity.Uncommon]: `Refractive Bud`,
 }, {

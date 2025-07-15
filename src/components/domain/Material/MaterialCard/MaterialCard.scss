@@ -21,7 +21,7 @@
 
   &__details {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-rows: 1fr auto;
     gap: .5em;
 
     height: auto;
@@ -37,8 +37,6 @@
     width: 100%;
 
     &-text {
-      @extend %text-ellipsis;
-
       display: flex;
       align-items: center;
       font-size: inherit;
@@ -65,7 +63,7 @@ a.material-card {
     }
 
     .material-card__name-text {
-      justify-content: center;
+      text-align: center;
     }
 
     .material-card__pagination {

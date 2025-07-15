@@ -58,6 +58,8 @@
       }
 
       &-text {
+        display: inline;
+        @extend %text-ellipsis;
         width: 100%;
       }
     }

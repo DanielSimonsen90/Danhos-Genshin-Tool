@@ -15,6 +15,7 @@ export interface Props extends BaseModelCardProps {
   allowCycle?: boolean;
 
   showDetails?: boolean;
+  showRegion?: boolean;
   showModelsUsing?: boolean;
   showModelAquired?: boolean;
 }
@@ -22,7 +23,7 @@ export interface Props extends BaseModelCardProps {
 export default function MaterialCard({
   material,
   allowCycle = true,
-  showModelsUsing, showModelAquired, showDetails,
+  showModelsUsing, showModelAquired, showDetails, showRegion,
   ...props
 }: Props) {
   const view = useSettingsStore(ss => ss.getSetting('preferredTabs').craftableMaterial);
@@ -54,7 +55,7 @@ export default function MaterialCard({
                   {currentMaterial.description}
                 </p>
               )}
-              {showDetails && <Region material={material} />}
+              {(showDetails || showRegion) && <Region material={material} />}
               {AscensionMaterial.isAscensionMaterial(material) && <ObtainableDays material={material} />}
             </div>
           )}
