@@ -60,6 +60,11 @@ a.material-card {
     .material-card__details {
       display: flex;
       justify-content: center;
+
+      [data-region] {
+        text-align: center;
+        margin-bottom: .5ch;
+      }
     }
 
     .material-card__name-text {

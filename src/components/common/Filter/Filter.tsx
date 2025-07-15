@@ -9,16 +9,16 @@ import FilterOption from "./FilterOption";
 import { getCloseAllMultipleSelects, getDefaultValueForRefs, getOnClickedOutside } from "./FilterFunctions";
 import { addTabNavigation } from "@/common/functions/accessibility";
 
-export type FilterObject<FilterKeys extends string, TItem, TValue = FilterCallback<TItem>> = Record<FilterKeys, TValue | Record<string, TValue>>;
+export type FilterObject<FilterKeys extends string, TItem, TValue = FilterCallback<TItem>> = Record<FilterKeys, TValue | Record<string, TValue> | undefined>;
 export type FilterCallback<TItem> = (item: TItem) => boolean;
 
 type Props<FilterKeys extends string, TItem> = {
   placeholder?: string,
   filterChecks: FilterObject<FilterKeys, TItem>,
 
-  filters: FilterObject<FilterKeys, TItem, boolean>,
-  setFilters: Dispatch<SetStateAction<FilterObject<FilterKeys, TItem, boolean>>>,
-  onChange: (filters: FilterObject<FilterKeys, TItem, boolean>) => void,
+  filters: FilterObject<FilterKeys, TItem, boolean | undefined>,
+  setFilters: Dispatch<SetStateAction<FilterObject<FilterKeys, TItem, boolean | undefined>>>,
+  onChange: (filters: FilterObject<FilterKeys, TItem, boolean | undefined>) => void,
 };
 
 export default function Filter<FilterKeys extends string, TItem>(props: Props<FilterKeys, TItem>) {
@@ -56,27 +56,33 @@ export default function Filter<FilterKeys extends string, TItem>(props: Props<Fi
               displayValue={pascalCaseFromCamelCase}
 
               value={Object.keys(filters[filter] ?? {})}
-              setValue={selectedValues => setFilters(filters => ({ 
-                ...filters, 
+              setValue={selectedValues => setFilters(filters => ({
+                ...filters,
                 [filter]: Object.fromEntries((
                   typeof selectedValues === 'function' ?
                     selectedValues(Object.keys(filters[filter] ?? {}).filter(Boolean)) :
                     selectedValues
-                ).map(value => [value, true])) 
+                ).map(value => [value, true]))
               }))}
 
-            />
-            : <FilterOption key={i} i={i} 
+            /> : <FilterOption key={i} i={i}
               name={filter} option={filter}
-              value={filters[filter] as boolean}
-              onSelect={() => setFilters({ ...filters, [filter]: !filters[filter] })}
+              value={filters[filter] as boolean | undefined}
+              onSelect={(newValue) => {
+                const newFilters = { ...filters };
+                if (newValue === undefined) {
+                  delete newFilters[filter];
+                } else {
+                  newFilters[filter] = newValue;
+                }
+                setFilters(newFilters);
+              }}
             />
         ))}
-
         <button className="brand--light secondary" onClick={e => {
           e.preventDefault();
           e.stopPropagation();
-          setFilters({} as FilterObject<FilterKeys, TItem, boolean>);
+          setFilters({} as FilterObject<FilterKeys, TItem, boolean | undefined>);
           closeAllMultipleSelects();
         }}>
           Clear Filters

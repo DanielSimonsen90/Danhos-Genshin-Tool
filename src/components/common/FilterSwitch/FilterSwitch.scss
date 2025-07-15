@@ -1,0 +1,50 @@
+.filter-switch {
+  width: max-content;
+  position: relative;
+
+  button:hover {
+    box-shadow: none;
+  }
+
+  &__current {
+    display: flex;
+    align-items: center;
+    gap: .5ch;
+    color: inherit;
+  }
+
+  &__chevron {
+    font-size: .5rem;
+    color: var(--text-secondary);
+  }
+
+  &__dropdown {
+    position: absolute;
+    right: 100%;
+    top: 0;
+    z-index: 10;
+
+    padding: .5em;
+    background-color: var(--background-primary);
+
+    display: grid;
+
+
+    box-shadow: 0 0 1rem var(--background-primary--light);
+    border-radius: .5rem;
+    min-width: 4rem;
+    overflow: hidden;
+  }
+
+  &__option-icon {
+    min-width: 2ch;
+  }
+}
+
+[data-filter-switch-value=true] {
+  color: var(--text-success);
+}
+
+[data-filter-switch-value=false] {
+  color: var(--text-danger);
+}

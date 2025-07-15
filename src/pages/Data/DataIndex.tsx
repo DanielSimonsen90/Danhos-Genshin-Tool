@@ -13,9 +13,6 @@ import {
 } from '@/common/models';
 import { pascalCaseFromSnakeCase } from '@/common/functions/strings';
 
-import RarityList from '@/components/common/icons/Rarity';
-import { WeaponImage } from '@/components/common/Images';
-
 import { DataStore, useDataStore } from '@/stores';
 import { useDebounceValue } from '@/hooks/useDebounceValue';
 
@@ -81,7 +78,6 @@ export default function DataIndex() {
   const categoryStats = useMemo(() => groups.map(([group, names]) => ({
     group,
     count: names.length,
-    route: ROUTES.endRoute(`data_${group}`),
     displayName: pascalCaseFromSnakeCase(group),
     featured: names.slice(0, 9)
   })), [groups]);
@@ -116,13 +112,13 @@ export default function DataIndex() {
       <main className="data-hub__content">
         {!isSearching ? (
           <section className="categories-overview">
-            {categoryStats.map(({ group, count, route, displayName, featured }) => (
+            {categoryStats.map(({ group, count, displayName, featured }) => (
               <div key={group} className="category-section">
                 <header className="category-section__header">
                   <Link to={`/${DATA_PREFIX}/${group}`}>
                     <h2>{displayName}</h2>
                   </Link>
-                  <span className="model-count">{count} items</span>
+                  <span className="model-count">{count} {group}</span>
                 </header>
 
                 <ul className="models-grid">

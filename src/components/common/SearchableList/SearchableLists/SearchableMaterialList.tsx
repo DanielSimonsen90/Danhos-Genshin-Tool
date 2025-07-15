@@ -14,7 +14,7 @@ import { useFavoriteStore } from "@/stores/FavoriteStore/FavoriteStoreHooks";
 import Star from "../../icons/Star";
 import Material from "@/common/models/materials/Material";
 import CraftableMaterial from "@/common/models/materials/CraftableMaterial";
-import { TalentAscensionMaterial, WeaponAscensionMaterial } from "@/common/models/materials/AscensionMaterial";
+import AscensionMaterial, { TalentAscensionMaterial, WeaponAscensionMaterial } from "@/common/models/materials/AscensionMaterial";
 import LocalSpecialty from "@/common/models/materials/LocalSpecialty";
 import MobDrop, { ElementalCrystal } from "@/common/models/materials/MobDrop";
 import { CrystalChunks } from "@/data/materials/drops/crystals";
@@ -73,6 +73,7 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
         weeklyBoss: material => material instanceof MobDrop && DataStore.getBossesFromMaterial(material).filter(WeeklyBoss.isWeeklyBoss).length > 0,
         crafting: CraftableMaterial.isCraftableMaterial,
       },
+      obtainableToday: material => AscensionMaterial.isAscensionMaterial(material) ? material.isObtainableToday() : undefined,
       rarity: {
         legendary: material => material.rarity === Rarity.Legendary,
         epic: material => material.rarity === Rarity.Epic,

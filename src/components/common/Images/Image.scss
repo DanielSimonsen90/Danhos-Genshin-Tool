@@ -19,6 +19,7 @@ img {
   --size: 6rem;
   background-color: var(--rarity--muted);
   border: 1px solid var(--element);
+  border-radius: 50%;
 }
 
 .artifact-image {

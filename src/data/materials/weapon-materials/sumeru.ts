@@ -23,8 +23,8 @@ export const TalismanOfTheForestDew = WeaponAscensionMaterial.create(
 export const OasisGardens = WeaponAscensionMaterial.create(
   {
     [Rarity.Uncommon]: `Oasis Garden's Reminiscence`,
-    [Rarity.Rare]: `Oasis Gardens's Kindness`,
-    [Rarity.Epic]: `Oasis Gardens's Mourning`,
+    [Rarity.Rare]: `Oasis Garden's Kindness`,
+    [Rarity.Epic]: `Oasis Garden's Mourning`,
     [Rarity.Legendary]: `Oasis Garden's Truth`,
   },
   {

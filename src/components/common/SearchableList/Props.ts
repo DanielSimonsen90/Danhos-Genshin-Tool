@@ -22,9 +22,9 @@ export type ControlledProps<TItem, FilterKeys extends string> = {
   search: string,
   setSearch: Dispatch<SetStateAction<string>>,
 
-  filters: FilterObject<FilterKeys, TItem, boolean>,
-  setFilters: Dispatch<SetStateAction<FilterObject<FilterKeys, TItem, boolean>>>,
-  onFilterChange: (filters: FilterObject<FilterKeys, TItem, boolean>) => void,
+  filters: FilterObject<FilterKeys, TItem, boolean | undefined>,
+  setFilters: Dispatch<SetStateAction<FilterObject<FilterKeys, TItem, boolean | undefined>>>,
+  onFilterChange: (filters: FilterObject<FilterKeys, TItem, boolean | undefined>) => void,
   sort?: (a: TItem, b: TItem) => number,
   children: [ReactNode, TItem][],
 };
@@ -37,7 +37,7 @@ export type RenderItemOrChildren<TItem> = {
 export type UncrontrolledProps<TItem, FilterKeys extends string> = RenderItemOrChildren<TItem> & {
   items: Array<TItem> | List<TItem>,  
   onSearch: (search: string, itemMatch: TItem) => boolean,
-  onSearchOrFilterChange?: (search: string, filters: FilterObject<FilterKeys, TItem, boolean>) => void,
+  onSearchOrFilterChange?: (search: string, filters: FilterObject<FilterKeys, TItem, boolean | undefined>) => void,
 };
 
 export type Props<TItem, FilterKeys extends string = string> = 

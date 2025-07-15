@@ -2056,7 +2056,7 @@ export const Yanfei = new Character("Yanfei", "Pyro", "Catalyst", [], Rarity.Epi
   ])
 ]);
 
-export const Yaoyao = new Character("Yaoyao", "Dendro", "Polearm", ["Heal", "Off-field Damage"], Rarity.Legendary, 'Sumeru', {
+export const Yaoyao = new Character("Yaoyao", "Dendro", "Polearm", ["Heal", "Off-field Damage"], Rarity.Epic, 'Sumeru', {
   material: TalentAscension.Diligence,
   weeklyBossDrop: MobDrops.DakasBell,
   crystal: ElementalCrystals.Dendro,

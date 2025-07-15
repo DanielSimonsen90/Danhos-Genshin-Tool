@@ -97,7 +97,7 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
         shield: character => character.bonusAbilities.includes('Shield'),
         special: character => character.bonusAbilities.toString().includes(':'),
       },
-      hasSignatureWeapon: character => DataStore.getSignatureWeaponFor(character), 
+      hasSignatureWeapon: character => !!DataStore.getSignatureWeaponFor(character), 
       region: {
         mondstadt: character => character.region === "Mondstadt",
         liyue: character => character.region === "Liyue",

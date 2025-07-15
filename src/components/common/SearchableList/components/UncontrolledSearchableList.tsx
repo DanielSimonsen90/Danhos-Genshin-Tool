@@ -31,29 +31,33 @@ export default function UncontrolledSearchableList<TItem, FilterKeys extends str
         />
         {filterChecks && <Filter {...filterProps} />}
       </div>
-      {Object.values(filters).some(Boolean) && (
-        <ul className="filter-tags">
-          {Object.entries(filters).map(([filterOrGroup, value], index) => (
-            typeof value === 'object'
-              ? Object.entries(value).filter(([key, value]) => value !== undefined).map(([filter]) => (
-                <li key={filter} className="filter-tag" onClick={() => {
-                  const {
-                    [filter as keyof FilterObject<FilterKeys, TItem>[FilterKeys]]: _,
-                    ...newValue
-                  } = filters[filterOrGroup as FilterKeys] as Record<FilterKeys, boolean>;
-                  return setFilters(filters => ({ ...filters, [filterOrGroup]: newValue }));
-                }}>
-                  {pascalCaseFromCamelCase(filter)}
-                </li>
-              ))
-              : value && (
-                <li key={`${filterOrGroup}-${index}`} className="filter-tag" onClick={() => setFilters({ ...filters, [filterOrGroup]: false })}>
-                  {pascalCaseFromCamelCase(filterOrGroup)}
-                </li>
-              )
-          ))}
-        </ul>
-      )}
+      {Object.values(filters).some(value =>
+        typeof value === 'object'
+          ? Object.values(value).some(v => v !== undefined)
+          : value !== undefined
+      ) && (
+          <ul className="filter-tags">
+            {Object.entries(filters).map(([filterOrGroup, value], index) => (
+              typeof value === 'object'
+                ? Object.entries(value).filter(([key, value]) => value !== undefined).map(([filter, filterValue]) => (
+                  <li key={filter} className={`filter-tag ${filterValue === false ? 'filter-tag--false' : ''}`} onClick={() => {
+                    const {
+                      [filter as keyof FilterObject<FilterKeys, TItem>[FilterKeys]]: _,
+                      ...newValue
+                    } = filters[filterOrGroup as FilterKeys] as Record<FilterKeys, boolean>;
+                    return setFilters(filters => ({ ...filters, [filterOrGroup]: newValue }));
+                  }}>
+                    {filterValue === false ? '×' : filterValue === true ? '✓' : '/'} {pascalCaseFromCamelCase(filter)}
+                  </li>
+                ))
+                : value !== undefined && (
+                  <li key={`${filterOrGroup}-${index}`} className={`filter-tag ${value === false ? 'filter-tag--false' : ''}`} onClick={() => setFilters({ ...filters, [filterOrGroup]: undefined })}>
+                    {value === false ? '×' : value === true ? '✓' : '/'} {pascalCaseFromCamelCase(filterOrGroup)}
+                  </li>
+                )
+            ))}
+          </ul>
+        )}
       {children.length > 0 && (
         <ul className={classNames("searchable-list__list", "hoverable", ulClassName)}>
           {sortedChildren.map(([child, item], key) => (

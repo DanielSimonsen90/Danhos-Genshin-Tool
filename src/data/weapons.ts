@@ -644,6 +644,7 @@ export const CinnabarSpindle = new Weapon(
     Drops.Mask
   ],
   'Event',
+  cs => cs.Albedo
 );
 
 export const Cloudforged = new Weapon(

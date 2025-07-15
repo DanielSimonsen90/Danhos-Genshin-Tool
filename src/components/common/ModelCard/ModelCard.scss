@@ -51,6 +51,7 @@
     }
 
     .model-card__name {
+      display: flex;
       flex-direction: column;
 
       >*::after {

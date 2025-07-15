@@ -1,8 +1,7 @@
 .material-card__obtainable-days {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
-  // margin-top: .5rem;
+  margin-top: .5rem;
 
   &-item {
     font-size: .9rem;
@@ -19,4 +18,9 @@
       margin-inline: .25rem;
     }
   }
+}
+
+a.material-card .material-card__obtainable-days {
+  justify-content: center;
+  margin-top: 0;
 }
