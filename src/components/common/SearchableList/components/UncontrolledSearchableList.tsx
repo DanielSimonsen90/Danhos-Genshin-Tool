@@ -47,7 +47,7 @@ export default function UncontrolledSearchableList<TItem, FilterKeys extends str
                     } = filters[filterOrGroup as FilterKeys] as Record<FilterKeys, boolean>;
                     return setFilters(filters => ({ ...filters, [filterOrGroup]: newValue }));
                   }}>
-                    {filterValue === false ? '×' : filterValue === true ? '✓' : '/'} {pascalCaseFromCamelCase(filter)}
+                    {filterValue === false ? '×' : ''} {pascalCaseFromCamelCase(filter)}
                   </li>
                 ))
                 : value !== undefined && (

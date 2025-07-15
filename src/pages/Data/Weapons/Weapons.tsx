@@ -3,7 +3,7 @@ import { useWeaponData } from "@/stores";
 
 export default function Weapons() {
   const weapons = useWeaponData().Weapons;
-  return <SearchableWeaponList className="weapons-list" items={weapons} cardProps={{ 
+  return <SearchableWeaponList className="weapons-list" items={weapons} placeholder="Search for a weapon..." cardProps={{ 
     wrapInLink: true,
     showRarity: true,
   }} />;

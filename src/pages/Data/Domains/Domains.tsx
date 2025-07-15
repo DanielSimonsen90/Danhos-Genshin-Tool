@@ -3,7 +3,7 @@ import SearchableDomainList from "@/components/common/SearchableList/SearchableL
 
 export default function Domains() {
   const domains = useDomainData().Domains;
-  return <SearchableDomainList liClassName='domains-list-item' items={domains} cardProps={{ 
+  return <SearchableDomainList liClassName='domains-list-item' items={domains} placeholder="Search for a domain..." cardProps={{ 
     wrapInLink: true,
     showMinRewards: true,
   }} />;

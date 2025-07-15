@@ -4,7 +4,7 @@ import { useArtifactData } from "@/stores";
 
 export default function Artifacts() {
   const artifacts = useArtifactData().Artifacts;
-  return <SearchableArtifactList liClassName="artifacts-list-item" items={artifacts} cardProps={{ 
+  return <SearchableArtifactList liClassName="artifacts-list-item" items={artifacts} placeholder="Search for an artifact..." cardProps={{ 
     wrapInLink: true,
     showRarity: true,
   }} />

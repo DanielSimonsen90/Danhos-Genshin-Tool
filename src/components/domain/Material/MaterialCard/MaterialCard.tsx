@@ -48,7 +48,7 @@ export default function MaterialCard({
       renderImage={() => <MaterialImage material={currentMaterial.name} />}
       renderHeaderContent={(() => (
         <>
-          {(showDetails || AscensionMaterial.isAscensionMaterial(material)) && (
+          {(showDetails || showRegion || AscensionMaterial.isAscensionMaterial(material)) && (
             <div className="material-card__details-container">
               {showDetails && (
                 <p className="material-card__description">

@@ -3,7 +3,8 @@ import SearchableMobList from "@/components/common/SearchableList/SearchableList
 
 export default function Mobs() {
   const mobs = useMobData().Mobs;
-  return <SearchableMobList className="mobs-list" items={mobs} cardProps={{
+  return <SearchableMobList className="mobs-list" items={mobs} placeholder="Search for a mob..." cardProps={{
     wrapInLink: true,
+    showRegion: true,
   }} />;
 }

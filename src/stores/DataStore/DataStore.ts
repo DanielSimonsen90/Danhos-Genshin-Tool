@@ -42,7 +42,7 @@ export const useDataStore = create<DataStore>((setState, getState) => {
     cache.set(key, result);
     return result;
   };
-  const findByName = <T extends { name: string; }>(arr: T[], name: string): T | undefined => {
+  const findByName = <T extends { name: string; }>(arr: T[], name: string, suppressWarning = false): T | undefined => {
     const normalizedName = name.toLowerCase();
     
     // Direct name match first (most common case)
@@ -56,12 +56,12 @@ export const useDataStore = create<DataStore>((setState, getState) => {
     
     if (result) return result;
 
-    console.warn(`Item with name "${name}" not found in array.`, arr);
+    if (!suppressWarning) console.warn(`Item with name "${name}" not found in array.`, arr);
     return undefined;
   };
 
   const validateAndGetMaterial = (materialName: string): Material | undefined => {
-    const material = findByName(getState().Materials, materialName)
+    const material = findByName(getState().Materials, materialName, true)
       ?? findByName(getState().Artifacts, materialName)
     if (!material) console.warn(`Material "${materialName}" not found.`, getState().Materials);
     return material;

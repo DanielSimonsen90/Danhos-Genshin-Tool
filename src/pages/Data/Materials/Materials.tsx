@@ -3,7 +3,7 @@ import SearchableMaterialList from "@/components/common/SearchableList/Searchabl
 
 export default function Materials() {
   const materials = useMaterialsData().Materials;
-  return <SearchableMaterialList className="materials-list" items={materials} cardProps={{
+  return <SearchableMaterialList className="materials-list" items={materials} placeholder="Search for a material or mob drop..." cardProps={{
     wrapInLink: true,
     showRegion: true,
   }} />;

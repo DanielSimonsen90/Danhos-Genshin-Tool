@@ -94,7 +94,6 @@ export default function DomainCard({
                       wrapInLink
                     /> 
                     : <MaterialCard key={reward.name} material={reward} nameTag='h4'
-                      showDetails
                       wrapInLink
                     />
                   ))}
