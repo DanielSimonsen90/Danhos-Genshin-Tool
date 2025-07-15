@@ -10,9 +10,11 @@ export default function Layout() {
   return (
     <GlobalProvider>
       <SettingsLayer>
-        <Header />
-        <Outlet />
-        <Footer />
+        <div id="app">
+          <Header />
+          <Outlet />
+          <Footer />
+        </div>
       </SettingsLayer>
     </GlobalProvider>
   );

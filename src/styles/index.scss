@@ -25,9 +25,10 @@
     min-height: 100vh;
   }
 
-  #root {
+  #app {
     display: grid;
-    grid-template-rows: auto auto 1fr auto;
+    grid-template-rows: auto 1fr auto;
+    height: 100vh;
   }
 
   .hidden {
@@ -36,6 +37,10 @@
 
   .muted {
     color: var(--text-muted);
+  }
+
+  .disclaimer {
+    font-size: .8em;
   }
 
   .clickable {

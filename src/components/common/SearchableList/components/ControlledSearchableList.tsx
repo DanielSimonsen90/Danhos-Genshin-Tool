@@ -28,8 +28,8 @@ export default function ControlledSearchableList<TItem, FilterKeys extends strin
   useOnChange({ search, filters }, ({ search, filters }) => props.onSearchOrFilterChange?.(search, filters));
 
   return <UncontrolledSearchableList onFilterChange={() => { }}
-    search={search} setSearch={setSearch} filters={filters} setFilters={setFilters} filterChecks={filterChecks}
     {...props}
+    search={search} setSearch={setSearch} filters={filters} setFilters={setFilters} filterChecks={filterChecks}
     children={results.map((result) => [render(result, items.indexOf(result), items), result] as [ReactNode, TItem])}
   />;
 }

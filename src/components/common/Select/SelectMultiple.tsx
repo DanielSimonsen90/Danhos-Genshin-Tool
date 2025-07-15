@@ -59,7 +59,7 @@ export default forwardRef(function SelectMultiple<TValue extends string>({
     ...internalRef.current,
     open: () => setShowOptions(true),
     close: () => setShowOptions(false),
-  }), [selectedValues]);
+  }), [selectedValues, showOptions]);
 
   return (
     <div ref={combinedRef} className="select select--multiple" aria-required={props.required}>

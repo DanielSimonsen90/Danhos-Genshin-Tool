@@ -1,5 +1,10 @@
 @use '../../../styles/partials' as *;
 
+.tab-bar {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
 .tab-bar--vertical {
   display: grid;
   grid-template-areas: "tabs content";
@@ -41,6 +46,8 @@
     border-left: 1px solid var(--background-tertiary);
     border-bottom: 1px solid var(--background-tertiary);
     overflow: auto;
+    border-top-right-radius: .25rem;
+    border-bottom-right-radius: .25rem;
   }
 
   .collapse-chevron {

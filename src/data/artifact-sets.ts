@@ -35,6 +35,8 @@ const canTriggerReaction = (character: Character, reaction: Reaction) => {
   );
 };
 
+// #region A-G
+
 /**
  * @two Max HP +1000
  * @four Opening a chest regenerates 30% Max HP for 5s.
@@ -250,6 +252,25 @@ export const EmblemOfSeveredFate = new ArtifactSet(
 );
 
 /**
+ * @two Cryo DMG Bonus +15%
+ * @four When equipping character has 0 elemental energy, Normal Attack DMG is increased by 60% and Burst DMG increased by 60%. After equipping character deals Normal Attack DMG, aforementioned burst effect will stop applying for 6s. Likewise for Burst DMG to Normal Attack DMG. Can trigger off-field.
+ */
+export const FinaleOfTheDeepGalleries = new ArtifactSet(
+  "Finale of the Deep Galleries",
+  "Cryo DMG Bonus +15%",
+  "When equipping character has 0 elemental energy, Normal Attack DMG is increased by 60% and Burst DMG increased by 60%. After equipping character deals Normal Attack DMG, aforementioned burst effect will stop applying for 6s. Likewise for Burst DMG to Normal Attack DMG. Can trigger off-field.",
+  Rarity.Legendary,
+  [Domains.DerelictMasonryDock.name],
+  false,
+  (c, set) => c.sets.map(cSet => {
+    let value = 0;
+    if (c.element === 'Cryo') value += correctElement;
+    if (cSet.favoredAbility === 'Burst/Ult' || cSet.talentStats.includes('Energy Recharge') && set.pieces === 4) value += correctElement;
+    return value;
+  }).sort().shift()
+);
+
+/**
  * @two Elemental Mastery +80
  * @four Wearer's Bloom, Hyperbloom & Burgeon reaction DMG +40%. After reaction, +25% DMG Of effect. Max 4 stacks where each stack lasts 10s. Can only trigger once per second. Can trigger off-field.
  */
@@ -282,7 +303,7 @@ export const FragmentOfHarmonicWhimsy = new ArtifactSet(
   "When value Of Bond Of Life changes, character deals 18% increased DMG for 6s. Max 3 stacks.",
   Rarity.Legendary,
   [Domains.FadedTheater.name],
-  false,
+  true,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.talentStats.includes('ATK')) value += correctElement;
@@ -375,6 +396,10 @@ export const GoldenTroupe = new ArtifactSet(
   }).sort().shift()
 );
 
+// #endregion A-G
+
+// #region H-N
+
 /**
  * @two Hydro DMG Bonus +15%
  * @four After using Skill (ability); Normal and Charged Attack DMG +30% for 15s
@@ -445,6 +470,27 @@ export const Lavawalker = new ArtifactSet(
     if (set.pieces === 4) value += correctElement;
     return value;
   }
+);
+
+/**
+ * @two Plunging Attack DMG +25%
+ * @four After Plunging/Charged/Skill hits an opponent, gain 1/2/2 stacks of "Radiance Everlasting". Plunging, Charged or Skill can each trigger effect once every 1s. Radiance Everlasting: Plunging deal 15% increased dmg for 6s. Max 5 stacks, each duration counted independently.
+ */
+export const LongNightsOath = new ArtifactSet(
+  "Long Night's Oath",
+  "Plunging Attack DMG increased by 25%",
+  `After Plunging/Charged/Skill hits an opponent, gain 1/2/2 stacks of "Radiance Everlasting". Plunging, Charged or Skill can each trigger effect once every 1s. Radiance Everlasting: Plunging deal 15% increased dmg for 6s. Max 5 stacks, each duration counted independently.`,
+  Rarity.Legendary,
+  [Domains.DerelictMasonryDock.name],
+  false,
+  (c, set) => c.sets.map(cSet => {
+    let value = 0;
+    const isPlungingSet = cSet.favoredAbility === 'Plunging/Hold' && cSet.artifactSets.includes(set);
+
+    if (isPlungingSet) value += correctElement;
+    if (isPlungingSet && cSet.onField && cSet.artifactSets.includes(set)) value += correctElement;
+    return value;
+  }).sort().shift()
 );
 
 /**
@@ -530,7 +576,7 @@ export const NighttimeWhispersInTheEchoingWoods = new ArtifactSet(
   "After using Elemental Skill, +20% Geo DMG Bonus for 10s. While shielded by Crystalize reaction, effect increased by 150%. Additional increase disappears 1s after shield is lost.",
   Rarity.Legendary,
   [Domains.WaterfallWen.name],
-  false,
+  true,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.talentStats.includes('ATK')) value += correctElement;
@@ -578,6 +624,10 @@ export const NymphsDream = new ArtifactSet(
   }
 );
 
+// #endregion H-N
+
+// #region O-Z
+
 /**
  * @two While equipping character is in Nightsoul's Blessing and on field, DMG dealt +15%
  * @four After equipping chracter consumes 1 Nightsoul point on field, CRIT Rate +40% for 6s. Can trigger 1/s.
@@ -607,7 +657,7 @@ export const OceanHuedClam = new ArtifactSet(
   Rarity.Legendary,
   [Domains.SlumberingCourt.name],
   true,
-  c => c.bonusAbilities.includes('Heal' )? correctElement : 0
+  c => c.bonusAbilities.includes('Heal') ? correctElement : 0
 );
 
 /**
@@ -699,6 +749,7 @@ export const Scholar = new ArtifactSet(
     Domains.ClearPoolAndMountaincavern.name,
     Domains.MoltenIronFortress.name,
     Domains.FadedTheater.name,
+    Domains.DerelictMasonryDock.name,
   ],
   false,
   (c, set) => c.sets.map(cSet => {
@@ -757,8 +808,8 @@ export const SongOfDaysPast = new ArtifactSet(
   "When equipping character heals party member, Yearning effect created for 6s, which records total healing (and overflow) amount provided. When duration expires, Yearning turns into Waves Of Days Past effect: When active party member hits opponent with normal-, charged-, plunging attack, elemental skill or burst, DMG dealt +8% Of recorded amount. Effect removed after 5x usage or 10s.",
   Rarity.Legendary,
   [Domains.WaterfallWen.name],
-  false,
-  c => c.bonusAbilities.includes('Heal' )? correctElement : 0
+  true,
+  c => c.bonusAbilities.includes('Heal') ? correctElement : 0
 );
 
 /**
@@ -791,7 +842,7 @@ export const TheExile = new ArtifactSet(
   "The Exile",
   "Energy Recharge +20%",
   "Using Burst (ult); party members (excl. wearer) gain 2 energy every 2s for 6s. Max 10 energy. Non-stackable.",
-  Rarity.Epic, 
+  Rarity.Epic,
   ["BOSS_DROP"],
   false,
   c => c.sets.map(cSet => cSet.talentStats.includes('Energy Recharge') ? correctElement : 0).sort().shift()
@@ -858,6 +909,7 @@ export const TinyMiracle = new ArtifactSet(
     Domains.SpireofSolitaryEnlightenment.name,
     Domains.MomijiDyedCourt.name,
     Domains.WaterfallWen.name,
+    Domains.DerelictMasonryDock.name,
   ],
   false,
   c => c.sets.map(cSet => !cSet.onField ? threeStar : 0).sort().shift()
@@ -874,7 +926,7 @@ export const TravelingDoctor = new ArtifactSet(
   Rarity.Uncommon,
   [Domains.ValleyOfRemembrance.name],
   false,
-  c => c.bonusAbilities.includes('Heal' )? correctElement : 0
+  c => c.bonusAbilities.includes('Heal') ? correctElement : 0
 );
 
 /**
@@ -887,7 +939,7 @@ export const UnfinishedReverie = new ArtifactSet(
   "After combat left for 3s, DMG dealt +50%. In combat, if no Burning opponents nearby more than 6s, DMG bonus decrease by 10%/s until 0%. When Burning opponent exists, increase by 10% until 50%. Can trigger off-field.",
   Rarity.Legendary,
   [Domains.FadedTheater.name],
-  false,
+  true,
   (c, set) => c.sets.map(cSet => {
     let value = 0;
     if (cSet.talentStats.includes('ATK')) value += correctElement;
@@ -958,7 +1010,7 @@ export const WanderersTroupe = new ArtifactSet(
   "Wanderer's Troupe",
   "Elemental Mastery +80",
   "Catalyst/Bow wearer, Charged Attack DMG +35%",
-  Rarity.Legendary, 
+  Rarity.Legendary,
   ["BOSS_DROP"],
   true,
   (c, set) => c.sets.map(cSet => {
@@ -968,3 +1020,5 @@ export const WanderersTroupe = new ArtifactSet(
     return value;
   }).sort().shift()
 );
+
+// #endregion O-Z

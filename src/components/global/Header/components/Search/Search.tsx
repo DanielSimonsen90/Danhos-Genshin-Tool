@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { SearchFormData } from "@/common/types/store-data";
@@ -16,6 +16,7 @@ import { useActionState } from "@/hooks/useActionState";
 import { useComponent } from "@/hooks/useComponent";
 
 import { useCacheStore } from "@/stores/CacheStore";
+import { ArtifactImage } from "@/components/common/Images";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchComponent);
 
@@ -34,6 +35,7 @@ export default function Search() {
       return acc;
     }, {} as SearchFormData);
   }, [query]);
+  const [artifactSetName, setArtifactSetName] = useState<string | undefined>(defaultSearch?.artifactSetName);
   const [loading, onSubmit] = useActionState<SearchFormData>(data => {
     debugLog('onSubmit', data);
     if (data.subStats.filter(Boolean).length > 4) return window.alert('Substats must be 4 or less'); // TODO: Consider adding visual form indicator?
@@ -61,7 +63,10 @@ export default function Search() {
 
   return (
     <form className="search-form" onSubmit={onSubmit}>
-      <SelectArtifactSet name="artifactSetName" defaultValue={defaultSearch?.artifactSetName} required />
+      <div className="artifact-set-select">
+        {artifactSetName ? <ArtifactImage set={artifactSetName} piece="Flower" /> : null}
+        <SelectArtifactSet name="artifactSetName" defaultValue={defaultSearch?.artifactSetName} required onChange={setArtifactSetName} />
+      </div>
       <SelectArtifactPartName name="artifactPartName" defaultValue={defaultSearch?.artifactPartName} required
         onChange={part => setSelectMainStat({
           artifactPartName: part,

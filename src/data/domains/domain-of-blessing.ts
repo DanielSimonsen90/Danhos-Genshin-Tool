@@ -1,4 +1,4 @@
-import { DomainOfBlessing } from "@/common/models/domains";
+import { DomainOfBlessing } from "@/common/models/domains/Domain";
 
 export const MidsummerCourtyard = new DomainOfBlessing(
   "Midsummer Courtyard",
@@ -7,7 +7,7 @@ export const MidsummerCourtyard = new DomainOfBlessing(
 );
 export const ValleyOfRemembrance = new DomainOfBlessing(
   "Valley of Remembrance",
-  "After a period of time, the people of the continent lost track of the past. They attempt to explore downwards, searching for the things that they had forgotten. On the other side of the ancient tree's hollow, the secrets of yesterday ave become today's treasures.",
+  "After a period of time, the people of the continent lost track of the past. They attempt to explore downwards, searching for the things that they had forgotten. On the other side of the ancient tree's hollow, the secrets of yesterday's ave become today's treasures.",
   'Mondstadt',
 );
 export const HiddenPalaceOfZhouFormula = new DomainOfBlessing(
@@ -57,12 +57,12 @@ export const SpireofSolitaryEnlightenment = new DomainOfBlessing(
 );
 export const CityOfGold = new DomainOfBlessing(
   "City of Gold",
-  "This stronghold, once protected by the seven mighty battlements, crumbled overnight when King Deshret fell and an age of chaos ensued. Where gold-eyed warriors once stood guard over watchtowers of gilded luster, now, only a desiccated temple built upon sundered rocks remains, more akin to a tomb for an age of radiance long lost.",
+  "This stronghold, once protected by the seven mighty battlements, crumbled overnight when King Deshretfell and an age of chaos ensued. Where gold-eyed warriors once stood guard over watchtowers of gilded luster, now, only a desiccated temple built upon sundered rocks remains, more akin to a tomb for an age of radiance long lost.",
   'Sumeru',
 );
 export const MoltenIronFortress = new DomainOfBlessing(
   "Molten Iron Fortress",
-  "Legend has it that the territory of the red desert was marked by an ancient barrier of iron and bronze. The Lord of the Blazing Sun used to set out from here on his chariot to drive away the evil spirits wandering among the grim mountains. However, the gilded nations later sank into the sand and towering parapets of iron and bronze thus faded into oblivion along with their parent nations, leaving only unrecognizable ruins.",
+  "Legend has it that the territory of the red desert was marked by an ancient barrier of iron and bronze. The Lord of the Blazing Sun used to set out from here on his chariot to drive away the evil spirits wandering among the grim mountains. However, the gilded nations  later sank into the sand and towering parapets of iron and bronze thus faded into oblivion along with their parent nations, leaving only unrecognizable ruins.",
   'Sumeru',
 );
 export const FadedTheater = new DomainOfBlessing(
@@ -82,6 +82,12 @@ export const WaterfallWen = new DomainOfBlessing(
 );
 export const SanctumOfRainbowSpirits = new DomainOfBlessing(
   "Sanctum of Rainbow Spirits",
-  "It is said that the first sage to learn how to use phlogiston created a place of great purity, and that within this place, warriors were taught to wield the power of prismatic flames and flowing light. Later, even before they were used to resist common enemies, these powers were employed as weapons in conflicts between the tribes. Disheartened by this state of affairs, the Sage of the Stolen Flame withdrew from the world, vanishing from the pages of many tales. Devoid of their original purpose, these empty trial grounds were left behind, along with all those stories that came to be forgotten...",
+  "It is said that the first sage to learn how to use phlogiston created a place of great purity, and that within this place, warriors were taught to wield the power of prismatic flames and flowing light. Later, even before they were used to resist common enemies, these powers were employed as weapons in conflicts between the tribes. Disheartened by this state of affairs, the Sage of the sStolen Flame withdrew from the world, vanishing from the pages of many tales. Devoid of their original purpose, these empty trail grounds were left behind, along with all those stories that came to be forgotten...",
+  'Natlan',
+);
+
+export const DerelictMasonryDock = new DomainOfBlessing(
+  "Derelict Masonry Dock",
+  "An environment incomprehensible to the inhabitants of today's lands, one where ash-gray mechanisms driven by golden runes replaced the toil of flesh, effortlessly bringing brilliance and imagination to life above pools of flame. After this era was ended by tyrannical outsiders, the once-powerful race stagnated in their submission. Now, the only visitors left to this place are mourners of a bygone era.",
   'Natlan',
 );

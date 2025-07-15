@@ -7,8 +7,9 @@ export default function Cache() {
   const navigate = useNavigate();
   const { query } = useParams();
   const CacheStore = useCacheStore();
-  const options = Object.values(CacheStore.get('searchHistory', {})).filter(Boolean);
-  const currentSearch = query ? CacheStore.get('searchHistory', {})?.[query] : undefined;
+  const searchHistory = useCacheStore(store => store.get('searchHistory', {}));
+  const options = Object.values(searchHistory).filter(Boolean);
+  const currentSearch = query ? searchHistory?.[query] : undefined;
 
   useEffect(() => {
     if (!CacheStore.has('searchHistory')) CacheStore.load('searchHistory', '{}');
@@ -27,7 +28,9 @@ export default function Cache() {
           }}
         />
       : <p>No search history yet.</p>}
-      {/* <button className='clear-cache danger secondary' onClick={() => confirm("You're about to clear the search cache.") && CacheStore.clear()}>Clear Cache</button> */}
+      {options.length > 0 && (
+        <button className='clear-cache danger secondary' onClick={() => confirm("You're about to clear the search cache.") && CacheStore.clearCache()}>Clear Cache</button>
+      )}
     </div>
   );
 }

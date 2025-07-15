@@ -8,6 +8,9 @@ import { CreatePriorityListButton } from "./components";
 import { useModifyPriorityList, usePriorityListTabs } from "./hooks";
 import { PriorityList } from "./PriorityListTypes";
 import { getDefaultPriorityLists } from "./PriorityListFunctions";
+import { DebugLog } from '@/common/functions/dev';
+
+const debugLog = DebugLog(DebugLog.DEBUGS.priorityList);
 
 export default function PriorityList() {
   const DataStore = useDataStore();
@@ -30,30 +33,21 @@ export default function PriorityList() {
   const tabs = usePriorityListTabs({ priorityLists, setPriorityLists, openUpdateModal });
 
   useOnChange(region, (current, previous) => {
+    debugLog(`Region changed from ${previous} to ${current}`);
+
     const update = (
       regionData.priorityLists
       ?? getDefaultPriorityLists(DataStore)
     );
     if (JSON.stringify(priorityLists) !== JSON.stringify(update)) setPriorityLists(update);
-
-    if (previous === current) return;
-    RegionStore.setState(store => ({
-      ...store,
-      regions: {
-        ...store.regions,
-        [previous]: {
-          ...store.regions[previous],
-          priorityLists
-        } as RegionData
-      }
-    }));
-  }, [priorityLists, regionData.priorityLists, RegionStore]);
+  }, [regionData.priorityLists, DataStore]);
 
   useOnChange(priorityLists, () => RegionStore.setRegionData({ priorityLists }));
 
   return (<>
-    <TabBar direction="vertical" collapseArea="tabs" className="priority-list" placeChildrenBeforeTabs
-      tabs={tabs} noTabs={<NoTabs />}
+    <TabBar direction="vertical" collapseArea="tabs" className="priority-list" 
+      tabs={tabs} noTabs={<NoTabs />} id={`priority-list-${region}`}
+      placeChildrenBeforeTabs
     >
       {collapsed => <CreatePriorityListButton tabBarCollapsed={collapsed} onClick={() => openCreateModal()} />}
     </TabBar>

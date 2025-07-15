@@ -35,7 +35,22 @@ const config: ForgeConfig = {
   plugins: [
     new AutoUnpackNativesPlugin({}),    new WebpackPlugin({
       mainConfig,
-      devContentSecurityPolicy: "default-src 'self'; img-src 'self' https://rerollcdn.com https://paimon.moe https://static.wikia.nocookie.net; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; data:; connect-src 'self'; font-src 'self'; frame-src 'self'; object-src 'self'; media-src 'self'; frame-ancestors 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'; manifest-src 'self';",
+      devContentSecurityPolicy: [
+        "default-src 'self'",
+        "img-src 'self' https://lustonpull.com https://rerollcdn.com https://paimon.moe https://static.wikia.nocookie.net",
+        "script-src 'self' 'unsafe-eval'",
+        "style-src 'self' 'unsafe-inline'",
+        "connect-src 'self'",
+        "font-src 'self'",
+        "frame-src 'self'",
+        "object-src 'self'",
+        "media-src 'self'",
+        "frame-ancestors 'self'",
+        "worker-src 'self'",
+        "base-uri 'self'",
+        "form-action 'self'",
+        "manifest-src 'self'",
+      ].join('; '),
       renderer: {
         config: rendererConfig,
         entryPoints: [

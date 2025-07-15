@@ -53,7 +53,7 @@ export default function Filter<FilterKeys extends string, TItem>(props: Props<Fi
 
               placeholder={pascalCaseFromCamelCase(filter)}
               options={Object.keys(filterChecks[filter])}
-              displayValue={option => pascalCaseFromCamelCase(option)}
+              displayValue={pascalCaseFromCamelCase}
 
               value={Object.keys(filters[filter] ?? {})}
               setValue={selectedValues => setFilters(filters => ({ 

@@ -2,10 +2,13 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { Cache, CacheKeys, CacheStore, DefaultValueString } from "./CacheStoreTypes";
 
+const LOCAL_STORAGE_KEY = 'CacheStore';
+
 export const useCacheStore = create<CacheStore>()(persist((setState, getState) => {
-  const setCache = <TKey extends CacheKeys>(key: TKey, value: Cache[TKey]) => setState(state => ({ ...state, [key]: value }));
-  const getCache = <TKey extends CacheKeys>(key: TKey): Cache[TKey] | undefined => getState()[key];
-  const clearCache = () => setState({} as Cache);
+  const clearCache = () => {
+    setState({} as Cache);
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
+  }
 
   const has = <TKey extends CacheKeys>(key: TKey): boolean => !!getState()[key];
   const findObject = <TKey extends CacheKeys, TChildKey extends keyof Cache[TKey]>(
@@ -31,9 +34,8 @@ export const useCacheStore = create<CacheStore>()(persist((setState, getState) =
       : value 
   }));
   const deleteItem = <TKey extends CacheKeys>(key: TKey): void => setState(state => {
-    const update = { ...state };
-    delete update[key];
-    return update;
+    const { [key]: _, ...rest } = state;
+    return rest;
   });
   const load = <TKey extends CacheKeys>(key: TKey, defaultValue?: any): void => {
     if (!has(key)) set(key, defaultValue);
@@ -43,14 +45,14 @@ export const useCacheStore = create<CacheStore>()(persist((setState, getState) =
     searchHistory: {},
     searchResults: {},
 
-    setCache, getCache, clearCache,
+    clearCache,
 
     has, findObject,
     set, get, getFromItem, update, delete: deleteItem,
     load
   });
 }, {
-  name: 'CacheStore',
+  name: LOCAL_STORAGE_KEY,
 }));
 
 export default useCacheStore;

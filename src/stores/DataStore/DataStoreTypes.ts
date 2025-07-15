@@ -10,6 +10,11 @@ export type CharacterUsingArtifactResult = {
   effectiveness: CharacterArtifactSet['effectiveness'];
 };
 
+
+export type DataStoreModelCollections = Extract<
+  keyof typeof DataStoreContent,
+  'Characters' | 'Artifacts' | 'Domains'
+>;
 export type DataStore = typeof DataStoreContent & {
   findCharacterByName: (name: string) => Character | undefined;
   findArtifactByName: (name: string) => ArtifactSet | undefined;
@@ -29,15 +34,15 @@ export type DataStore = typeof DataStoreContent & {
 
   getMobsDroppingMaterial: (materialName: string) => Mob[];
   getDomainDroppingMaterial: (materialName: string) => Domain<any>;
-  
+
   getDomainsFromMaterial: (material: Material) => Domain<any>[];
   getBossesFromMaterial: (material: Material) => Boss[];
-  
+
   getCharactersUsingArtifact: (artifactName: string) => CharacterUsingArtifactResult[];
   getSignatureWeaponFor(character: Character): Weapon | undefined;
 
   getModelType: <TModel extends Model>(model: TModel) => ModelType<TModel>;
-  
+
   // Cache management
   clearCache: () => void;
-}
+};

@@ -8,8 +8,8 @@ type Props = {
   filterChecks: FilterObject<string, any>,
 };
 
-export const getDefaultValueForRefs = (filterChecks: Props['filterChecks']): Array<SelectRef> => Object.keys(filterChecks).map(() => ({ current: null }));
-export const getCloseAllMultipleSelects = (refs: Props['refs']) => (except?: number) => refs.current.forEach((ref, i) => i !== except && ref.current?.close?.());
+export const getDefaultValueForRefs = (filterChecks: Props['filterChecks']): Array<SelectRef> => Object.keys(filterChecks).map(() => ({ current: null as any }));
+export const getCloseAllMultipleSelects = (refs: Props['refs']) => (except?: number) => refs.current.forEach((ref, i) => i !== except && ref.current?.close());
 export const getOnClickedOutside = (closeAllMultipleSelects: ReturnType<typeof getCloseAllMultipleSelects>, setShowOptions: Props['setShowOptions']) => () => {
   closeAllMultipleSelects();
   setShowOptions(false);

@@ -39,9 +39,9 @@ const SHOULD_SAVE_THRESHOLD = 100;
 const ARTIFACT_PIECES_SCORES: Record<ArtifactPartName, number> = {
   Flower: 0,
   Feather: 0,
-  Circlet: 3,
-  Goblet: 2,
   Sands: 2,
+  Goblet: 2,
+  Circlet: 3,
 };
 
 export const SearchService = new class SearchService extends BaseService<LastResult> {
@@ -139,9 +139,10 @@ export const SearchService = new class SearchService extends BaseService<LastRes
       debugLog('group', 'getScores');
       const result = characters.map(character => {
         const cSet = getSetFromCharacter(character);
-        const setScore = cSet.artifactSets.reduce((acc, equippingSet) => acc + set.checkIsGood(character, equippingSet), 0);
+        // const setScore = cSet.artifactSets.reduce((acc, equippingSet) => acc + set.checkIsGood(character, equippingSet), 0);
+        const setScore = cSet.artifactSets.find(equippingSet => equippingSet.set.name === set.name)?.effectiveness ?? 0;
         const partScore = this._getPartScore(character, artifactPartName, mainStat, subStats);
-        const score = Math.round(setScore + partScore);
+        const score = Math.round(setScore * partScore);
         debugLog(`Score data for ${character.name}`, { setScore, partScore, score, SHOULD_SAVE_THRESHOLD });
 
         return {
@@ -176,7 +177,7 @@ export const SearchService = new class SearchService extends BaseService<LastRes
   ): SearchResult {
     const cachedResult = CacheStore.findObject('searchResults', 
       data => data.id === id 
-      || ([...data.form.entries()].every(([key, value]) => _form.get(key) === value)));
+      || ([...data.form.entries()].every(([key, value]) => 'get' in _form && _form.get(key) === value)));
     if (cachedResult) {
       debugLog('Cached result found', cachedResult);
       return this.lastResult.search = cachedResult;
@@ -228,7 +229,7 @@ export const SearchService = new class SearchService extends BaseService<LastRes
       if (artifact.isFlower() || artifact.isFeather()) return 0;
       if (mainStat === 'Physical DMG Bonus') return character.needsPhysicalDMG() ? 10 : 0; // Garbage stat
       if (mainStat.includes('Crit')) return 20; // Crit stats are always good
-      if (mainStat.includes('DMG Bonus')) return 20; // Elemental DMG Bonuses are not to be messed with
+      if (mainStat.includes('DMG Bonus')) return mainStat.includes(character.element) ? 60 : 20; // Elemental DMG Bonuses are not to be messed with
       if (mainStat === 'Elemental Mastery') return character.needsEM() ? 10 : 5;
       if (mainStat === 'Energy Recharge') return character.needsER() ? 10 : 10; // I never get ER artifacts, please send some
       if (mainStat === 'Healing Bonus') return character.canHeal() ? 10 : 2; // Healing bonus is decent but rarely used
@@ -243,6 +244,7 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     debugLog('group', 'subStatsScore');
     const subStatsScore = artifact.subStats.reduce((acc, stat) => {
       const result = (() => {
+        if (!stat) return acc; // Skip if stat is undefined or null
         if (stat === 'HP' || stat === 'HP%') return acc + (character.needsHP() ? 20 : 1);
         if (stat === 'ATK' || stat === 'ATK%') return acc + (character.needsATK() ? 20 : 1);
         if (stat === 'DEF' || stat === 'DEF%') return acc + (character.needsDEF() ? 20 : 0);
@@ -273,6 +275,8 @@ export const SearchService = new class SearchService extends BaseService<LastRes
   }
   private _getOrderByFunctions(set: ArtifactSet, byCharacterRecommendation: List<SearchResultItem>): Array<OrderByComparator<SearchResultItem>> {
     return [
+      (a, b) => b.score - a.score,
+
       // effectiveness, characterRecommendation, score
       (a, b) => {
         const effectiveA = a.character.sets.reduce((acc, cSet) => {
@@ -294,7 +298,6 @@ export const SearchService = new class SearchService extends BaseService<LastRes
         const recommendedB = byCharacterRecommendation.some(c => c.character.name === b.character.name);
         return recommendedA && !recommendedB ? -1 : recommendedB && !recommendedA ? 1 : 0;
       },
-      (a, b) => b.score - a.score
     ]
   }
 };
