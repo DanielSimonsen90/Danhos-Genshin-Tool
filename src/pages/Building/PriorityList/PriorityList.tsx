@@ -1,49 +1,36 @@
-import { useState } from "react";
-
+import type { SetStateAction } from "react";
 import TabBar from "@/components/common/TabBar";
-import useOnChange from "@/hooks/useOnChange";
 import { useDataStore, useRegionData, useRegionStore } from "@/stores";
 
 import { CreatePriorityListButton } from "./components";
 import { useModifyPriorityList, usePriorityListTabs } from "./hooks";
-import { PriorityList } from "./PriorityListTypes";
+import { PriorityList, PriorityLists } from "./PriorityListTypes";
 import { getDefaultPriorityLists } from "./PriorityListFunctions";
-import { DebugLog } from '@/common/functions/dev';
-
-const debugLog = DebugLog(DebugLog.DEBUGS.priorityList);
 
 export default function PriorityList() {
   const DataStore = useDataStore();
   const RegionStore = useRegionStore();
-  const { region, ...regionData } = useRegionData();
+  const { region, ...regionData } = useRegionData();  const priorityLists = regionData.priorityLists ?? getDefaultPriorityLists(DataStore);
 
-  const [priorityLists, setPriorityLists] = useState(
-    regionData.priorityLists ?? getDefaultPriorityLists(DataStore)
-  );
+  const updatePriorityLists = (newPriorityListsOrUpdater: SetStateAction<PriorityLists>) => {
+    const newPriorityLists = typeof newPriorityListsOrUpdater === 'function'
+      ? newPriorityListsOrUpdater(priorityLists)
+      : newPriorityListsOrUpdater;
+    
+    RegionStore.setRegionData({ priorityLists: newPriorityLists });
+  };
+
   const [CreateModal, openCreateModal] = useModifyPriorityList({
     crud: 'create',
     priorityLists,
-    setPriorityLists
+    setPriorityLists: updatePriorityLists
   });
   const [UpdateModal, openUpdateModal] = useModifyPriorityList({
     crud: 'update',
     priorityLists,
-    setPriorityLists
-  });
-  const tabs = usePriorityListTabs({ priorityLists, setPriorityLists, openUpdateModal });    
-  
-  useOnChange(region, (current, previous) => {
-    debugLog(`Region changed from ${previous} to ${current}`);
-
-    const update = (
-      regionData.priorityLists
-      ?? getDefaultPriorityLists(DataStore)
-    );
-    
-    if (JSON.stringify(priorityLists) !== JSON.stringify(update)) setPriorityLists(update);
-  }, [regionData.priorityLists, DataStore]);
-
-  useOnChange(priorityLists, priorityLists => RegionStore.setRegionData({ priorityLists }));
+    setPriorityLists: updatePriorityLists
+  });  
+  const tabs = usePriorityListTabs({ priorityLists, setPriorityLists: updatePriorityLists, openUpdateModal });
 
   return (<>
     <TabBar direction="vertical" collapseArea="tabs" className="priority-list"
