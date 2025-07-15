@@ -1,0 +1,72 @@
+@import '../../../styles/partials';
+
+.model-card {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  border-radius: .5rem;
+  padding: .5em;
+
+  >header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 1em;
+
+    width: 100%;
+  }
+
+  &__name {
+    --margins: 0em;
+
+    >*:not(:last-child)::after {
+      content: '•';
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-left: .5em;
+    }
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  >section {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  &:is(a) {
+    background-color: var(--background-primary--light);
+
+    &:hover {
+      background-color: var(--background-secondary--muted);
+    }
+
+    >header {
+      gap: .5em;
+    }
+
+    .model-card__name {
+      display: flex;
+      flex-direction: column;
+
+      >*::after {
+        content: none;
+      }
+
+      &-text {
+        display: inline;
+        @extend %text-ellipsis;
+        width: 100%;
+      }
+    }
+
+    .model-card__details {
+      justify-content: center;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+.material-relations-for-model {
+  .searchable-list__list {
+    --min: 250px;
+  }
+
+  .character-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    
+    .character-image {
+      border-radius: 50%;
+      --size: 5rem;
+    }
+  }
+}

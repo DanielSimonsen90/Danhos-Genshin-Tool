@@ -1,0 +1,19 @@
+.material-card__pagination {
+  grid-area: pagination;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &-item {
+    margin: 0.25rem 0;
+    cursor: pointer;
+  }
+
+  &-radio {
+    --size: 1rem;
+    height: var(--size);
+    width: var(--size);
+    cursor: pointer;
+  }
+}

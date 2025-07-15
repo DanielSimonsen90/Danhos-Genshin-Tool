@@ -13,6 +13,8 @@ export const ROUTES = new class Routes {
   public data_weapon = `${this.data_weapons}/:weaponName` as const;
   public data_materials = `${this.data}/materials` as const;
   public data_material = `${this.data_materials}/:materialName` as const;
+  public data_mobs = `${this.data}/mobs` as const;
+  public data_mob = `${this.data_mobs}/:mobName` as const;
 
   public building = 'building' as const;
   public building_priority_list = `${this.building}/priority-list` as const;

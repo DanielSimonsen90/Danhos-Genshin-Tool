@@ -1,0 +1,26 @@
+.material-card__obtainable-days {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: .5rem;
+
+  &-item {
+    font-size: .9rem;
+    font-weight: bold;
+
+    &[data-today=true] span {
+      text-decoration: underline;
+    }
+
+    &:not(:last-of-type)::after {
+      content: '/';
+      font-weight: bold;
+      color: var(--text-muted);
+      margin-inline: .25rem;
+    }
+  }
+}
+
+a.material-card .material-card__obtainable-days {
+  justify-content: center;
+  margin-top: 0;
+}

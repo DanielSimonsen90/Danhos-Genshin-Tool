@@ -49,7 +49,7 @@ export default function SearchableArtifactList<TFilterKeys extends string>({
         </div>
       );
     }}
-    onSearch={noBaseSearch ? onSearch : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}
+    onSearch={noBaseSearch ? onSearch : (query, item) => (item.includes(query.toLowerCase())) && (onSearch?.(query, item) ?? true)}
     filterChecks={noBaseFilterChecks ? filterChecks : {
       obtainableThrough: {
         domains: artifact => artifact.domainNames.length > 0 && artifact.domainNames[0] !== "BOSS_DROP",

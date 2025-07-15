@@ -6,6 +6,9 @@ import {
   Characters, Character,
   Artifacts, Artifact,
   Domains, Domain,
+  Materials, Material,
+  Mobs, Mob,
+  Weapons, Weapon,
   
   BuildingIndex,
   PriorityList,
@@ -38,7 +41,16 @@ export const Router = () => (
             <Route index element={<Domains />} />
             <Route path={ROUTES.endRoute('data_domain')} element={<Domain />} />
           </Route>
-          {/* TODO: Add weapons & materials */}
+          <Route path={ROUTES.endRoute('data_materials')}>
+            <Route index element={<Materials />} />
+            <Route path={ROUTES.endRoute('data_material')} element={<Material />} />
+          </Route>          <Route path={ROUTES.endRoute('data_mobs')}>
+            <Route index element={<Mobs />} />
+            <Route path={ROUTES.endRoute('data_mob')} element={<Mob />} />
+          </Route>          <Route path={ROUTES.endRoute('data_weapons')}>
+            <Route index element={<Weapons />} />
+            <Route path={ROUTES.endRoute('data_weapon')} element={<Weapon />} />
+          </Route>
         </Route>
 
         <Route path={ROUTES.building}>

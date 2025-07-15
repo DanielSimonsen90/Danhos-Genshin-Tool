@@ -1,18 +1,20 @@
-import { Element, Weapon, BonusAbility, Rarity, Region } from '@/common/types';
+import { Element, WeaponType, BonusAbility, Rarity, Region } from '@/common/types';
 import CharacterSet from './CharacterSet';
+import CharacterAscension from './CharacterAscension';
 
-export class Character {
+export class Character<TElement extends Element = Element> {
   public static isCharacter(obj: any): obj is Character {
     return obj instanceof Character;
   }
 
   constructor(
     public name: string,
-    public element: Element,
-    public weapon: Weapon,
+    public element: TElement,
+    public weapon: WeaponType,
     public bonusAbilities: Array<BonusAbility>,
     public rarity: Rarity,
     public region: Region,
+    public ascension: CharacterAscension<TElement>,
     public sets: CharacterSet[],
   ) {}
 

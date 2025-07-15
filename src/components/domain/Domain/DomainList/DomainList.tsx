@@ -1,18 +1,19 @@
-import { useDomainData } from "@/stores";
+import { useDataStore, useDomainData } from "@/stores";
 import DomainCard from "../DomainCard";
 import TabBar from "@/components/common/TabBar";
+import { SearchableMobList } from "@/components/common/SearchableList";
 
 type Props = {
+  artifactSetName: string;
   title: string;
   domainNames: string[];
-} & {
-  showDetails?: boolean;
-  showRewards?: boolean;
-};
+}
 
-export default function DomainList({ title = "Domains", domainNames, ...props }: Props) {
+export default function DomainList({ title = "Domains", domainNames, artifactSetName }: Props) {
+  const DataStore = useDataStore();
   const { findDomainByName } = useDomainData();
   const checkIsBossDrop = (name: string) => name === 'BOSS_DROP';
+  
 
   return (
     <section className="domain-list-section">
@@ -20,8 +21,11 @@ export default function DomainList({ title = "Domains", domainNames, ...props }:
       <TabBar tabs={create => domainNames.map(name => create(
         name,
         checkIsBossDrop(name) ? 'World Bosses' : name,
-        // TODO: Render custom component that displays "Dropped from bosses" + resin count
-        checkIsBossDrop(name) ? <p>Dropped from world bosses.</p> : <DomainCard domain={findDomainByName(name)} {...props} showNavButton />
+        checkIsBossDrop(name) 
+          ? (
+            <SearchableMobList items={DataStore.getMobsDroppingMaterial(artifactSetName)} cardProps={{ wrapInLink: true, showRegion: true }} />
+          )
+          : <DomainCard domain={findDomainByName(name)} showDescription showNavButton />
       ))}
       />
     </section>

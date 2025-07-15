@@ -1,3 +1,4 @@
+import './Development.scss';
 import Development from './Development';
 
 export default function DevelopmentPage() {

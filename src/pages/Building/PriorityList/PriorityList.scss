@@ -1,13 +1,11 @@
 .priority-list {
   height: 100%;
-  // max-height: calc(100vh - 33vh);
 
   .tab-bar__tab {
     padding: .25em .75em;
   }
 
   .priority-list-tab {
-    // display: flex;
     display: grid;
     grid-template-columns: 13ch auto;
     align-items: center;
@@ -28,5 +26,6 @@
 
   .character-image {
     --size: 4rem;
+    border-radius: unset;
   }
 }

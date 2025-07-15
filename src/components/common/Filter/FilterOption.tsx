@@ -1,27 +1,24 @@
 import { pascalCaseFromCamelCase } from "@/common/functions/strings";
-import { RefObject } from "react";
+import FilterSwitch from "../FilterSwitch";
 
 type FilterOptionProps = {
   name: string,
   i: number,
   option: string,
-  value: boolean,
+  value: boolean | undefined,
 
-  onSelect: (option: string) => void,
+  onSelect: (value: boolean | undefined) => void,
 };
 
 export default function FilterOption({
-  name, i, option, value,
+  option, value,
   onSelect,
 }: FilterOptionProps) {
   return (
-    <li onClick={() => onSelect(option)} className="select__option">
-      <input
-        name={`${name}[${i}]`}
-        type="checkbox"
-        value={option}
-        checked={value ?? false}
-        // onChange={() => { }}
+    <li className="select__option filter-option">
+      <FilterSwitch
+        value={value}
+        onChange={onSelect}
       />
       <label>
         {pascalCaseFromCamelCase(option)}

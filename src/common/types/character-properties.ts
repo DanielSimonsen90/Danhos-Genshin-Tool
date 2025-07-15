@@ -8,5 +8,5 @@ export type BonusAbility = (
 | 'Grouping'
 | `Buff ATK: ${string}` | `Elemental based: ${string}` | `CRIT Increase: ${string}` | `Buff ATK Speed: ${string}`
 );
-export type Weapon = 'Sword' | 'Claymore' | 'Polearm' | 'Bow' | 'Catalyst';
+export type WeaponType = 'Sword' | 'Claymore' | 'Polearm' | 'Bow' | 'Catalyst';
 export type CharacterSetName = `${'On-field' | 'Off-field' | Reaction | 'Burst' | 'Freeze' | 'Reverse-Melt' | 'Physical'} ${'DPS' | 'Support'}`;

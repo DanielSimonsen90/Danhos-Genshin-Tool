@@ -1,36 +1,14 @@
-.artifact-sets {
-  width: 100%;
-}
-
 .artifact-sets-pieces-content {
-  display: grid;
-  grid-auto-flow: row;
-  grid-template-columns: unset;
-  gap: 1em;
+  --min: 300px;
 
   &__list-item a {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 1rem;
-    align-items: center;
-
     .character-image {
       --size: 5em;
-      width: var(--size);
-      height: var(--size);
-      border-radius: 50%;
-      border: 1px solid var(--element);
     }
 
     h3 {
       margin: 0;
       margin-top: .25em;
-    }
-
-    header {
-      display: flex;
-      align-items: center;
-      gap: 1ch;
     }
   }
 }

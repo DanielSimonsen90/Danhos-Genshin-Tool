@@ -56,3 +56,20 @@
     }
   }
 }
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 1ch;
+  padding: 0.5ch 1ch;
+
+  label {
+    cursor: pointer;
+    user-select: none;
+    flex: 1; // Allow label to take available space
+  }
+
+  &:hover {
+    background-color: var(--background-tertiary--muted);
+  }
+}

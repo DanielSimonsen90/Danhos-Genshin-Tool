@@ -84,6 +84,8 @@
 }
 
 .tab-bar__tab {
+  display: flex;
+  align-items: center;
   box-shadow: none;
   border-right: 1px solid var(--background-tertiary);
   background-color: var(--background-secondary--muted);
