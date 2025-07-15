@@ -61,7 +61,8 @@ export const useDataStore = create<DataStore>((setState, getState) => {
   };
 
   const validateAndGetMaterial = (materialName: string): Material | undefined => {
-    const material = findByName(getState().Materials, materialName);
+    const material = findByName(getState().Materials, materialName)
+      ?? findByName(getState().Artifacts, materialName)
     if (!material) console.warn(`Material "${materialName}" not found.`, getState().Materials);
     return material;
   };  

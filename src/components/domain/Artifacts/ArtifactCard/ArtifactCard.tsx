@@ -36,7 +36,7 @@ export default function ArtifactCard({
       renderContent={() => (showCharacterSets || showDomainList) && (
         <section className="artifact-content">
           {showCharacterSets && <ArtifactSets artifact={artifact} />}
-          {showDomainList && <DomainList domainNames={artifact.domainNames} title={plural(artifact.domainNames.length, 'Found in domain', 'Found in domains')} />}
+          {showDomainList && <DomainList artifactSetName={name} domainNames={artifact.domainNames} title={plural(artifact.domainNames.length, 'Found in domain', 'Found in domains')} />}
         </section>
       )}
     />
