@@ -24,7 +24,9 @@ export default function useInterval(
         clearInterval(intervalId);
       }
     };
-  }, [intervalId]);  const start = useCallback(() => {
+  }, [intervalId]);  
+  
+  const start = useCallback(() => {
     if (intervalId || delay === null) return;
     const id = setInterval(() => callbackRef.current(), delay);
     setIntervalId(id);
@@ -36,7 +38,9 @@ export default function useInterval(
       const id = setInterval(() => callbackRef.current(), delay);
       setIntervalId(id);
     }
-  }, [delay]);  const stop = useCallback(() => {
+  }, [delay]);  
+  
+  const stop = useCallback(() => {
     if (intervalId) {
       clearInterval(intervalId);
       setIntervalId(null);

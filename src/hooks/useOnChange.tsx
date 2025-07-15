@@ -8,7 +8,9 @@ export default function useOnChange<TValue>(
   deps: DependencyList = []
 ) {
   const previousValue = useRef(value);
-  const stableOnChange = useCallback(onChange, deps);  useEffect(() => {
+  const stableOnChange = useCallback(onChange, deps);  
+  
+  useEffect(() => {
     if (isEqual(previousValue.current, value)) return;
     
     stableOnChange(value, previousValue.current);
