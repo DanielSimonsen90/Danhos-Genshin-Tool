@@ -17,7 +17,7 @@ export const MarkOfTheBindingBlessing = new MobDrop(
 
 export const GoldInscribedSecretSourceCore = new MobDrop(
   `Gold-Inscribed Secret Source Core`,
-  `This is a core component that separated from the body fo a Secret Source Automaton: Configuration Device that lost its ability to move after being defeated.\nSome say that the cores that power all the Secret Source Automatons are the same type, and that they simply carry different information, as attested by the fact that the golden patterns on them are different. At first, many commands were only added to the circuits to aid their smooth running, but it seems that all the superimposition and layering of orders onto one another has wound up creating a rudimentary artificial intelligence.`,
+  `This is a core component that separated from the body of a Secret Source Automaton: Configuration Device that lost its ability to move after being defeated.\nSome say that the cores that power all the Secret Source Automatons are the same type, and that they simply carry different information, as attested by the fact that the golden patterns on them are different. At first, many commands were only added to the circuits to aid their smooth running, but it seems that all the superimposition and layering of orders onto one another has wound up creating a rudimentary artificial intelligence.`,
   'Natlan',
   Rarity.Epic
 );
@@ -31,7 +31,7 @@ export const EnsnaringGaze = new MobDrop(
 
 export const TalismanOftheEnigmaticLand = new MobDrop(
   `Talisman of the Enigmatic Land`,
-  `A talisman that somehow appeared in your inventory after you passed the Wayward Hermetic Spiritspeaker's test.\nIn some records kept by the Masters of the Night-Wind, priests masterful in Spiritspeaking can use meditation to pass their consciousness through the light and shadow that reflects offal obsidian, thus reaching the enigmatic underground realm that only the dead may enter. This deed is, however, perilous, and priests who perform it must often wear such talismans to guard their souls from being lost in that mysterious land. However, this talisman's symbolic value far outstrips its real effects. Perhaps the hermit-priest who grants this to a warrior who passes the test only does so as a simple blessing.`,
+  `A talisman that somehow appeared in your inventory after you passed the Wayward Hermetic Spiritspeaker's test.\nIn some records kept by the Masters of the Night-Wind, priests masterful in Spiritspeaking can use meditation to pass their consciousness through the light and shadow that reflects off obsidian, thus reaching the enigmatic underground realm that only the dead may enter. This deed is, however, perilous, and priests who perform it must often wear such talismans to guard their souls from being lost in that mysterious land. However, this talisman's symbolic value far outstrips its real effects. Perhaps the hermit-priest who grants this to a warrior who passes the test only does so as a simple blessing.`,
   'Natlan',
   Rarity.Epic
 );

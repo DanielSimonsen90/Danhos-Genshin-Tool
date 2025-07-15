@@ -12,7 +12,7 @@ export const HilichurlShooter = new EasyMob(
 
 export const Hilichurl = new EasyMob(
   "Hilichurl",
-  `Primitive humanoid monsters taht can be found all across Teyvat.\nMost people have already given up on trying to communicate with the hilichurls, believing that they are monsters simply incapable of communication.`,
+  `Primitive humanoid monsters that can be found all across Teyvat.\nMost people have already given up on trying to communicate with the hilichurls, believing that they are monsters simply incapable of communication.`,
   [
     EasyMobDrops.Mask
   ]
@@ -118,7 +118,7 @@ export const TribalWarriors = new EasyMob(
 
 export const Saurian = new EasyMob(
   "Saurian",
-  `The Saurians that inhabit the land of Natlan.\nAccording to legend, more ancient dragons were better able to adapt to their enviornments, taking on different shapes and forms based on their surroundings. It is said that after losing their power, they were forced to become ever more depedent on their enviornments for survivial, finally settling into other forms they still have as Saurians today.\nBut whether this is true or not, no one really knows.`,
+  `The Saurians that inhabit the land of Natlan.\nAccording to legend, more ancient dragons were better able to adapt to their environments, taking on different shapes and forms based on their surroundings. It is said that after losing their power, they were forced to become ever more dependent on their environments for survival, finally settling into other forms they still have as Saurians today.\nBut whether this is true or not, no one really knows.`,
   [
     EasyMobDrops.Fang,
   ]

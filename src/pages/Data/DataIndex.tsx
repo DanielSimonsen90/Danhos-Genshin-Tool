@@ -74,21 +74,38 @@ export default function DataIndex() {
   const [search, setSearch] = useState('');
   const debouncedSearch = useDebounceValue(search, 300);
   const isSearching = debouncedSearch.length > 0;
+  // Helper function to render model cards
+  const renderModelCard = (model: Model, group: string, name: string, nameTag?: 'h3') => {
+    const cardProps = { key: name, wrapInLink: true, ...(nameTag && { nameTag }) };
+    
+    switch (group) {
+      case 'characters': return <CharacterCard {...cardProps} character={model as Character} />;
+      case 'artifacts': return <ArtifactCard {...cardProps} artifact={model as ArtifactSet} />;
+      case 'domains': return <DomainCard {...cardProps} domain={model as Domain<any>} />;
+      case 'materials': return <MaterialCard {...cardProps} material={model as any} />;
+      case 'mobs': return <MobCard {...cardProps} mob={model as Mob} />;
+      case 'weapons': return <WeaponCard {...cardProps} weapon={model as Weapon} />;
+      default: return null;
+    }
+  };
 
-  const categoryStats = useMemo(() => groups.map(([group, names]) => ({
-    group,
-    count: names.length,
-    displayName: pascalCaseFromSnakeCase(group),
-    featured: names.slice(0, 9)
-  })), [groups]);
-  const sortedGroups = useMemo(() => {
-    if (!isSearching) return [];
-
+  // Unified data structure for both default and search views
+  const displayGroups = useMemo(() => {
     return groups.map(([group, names]) => {
-      const filteredNames = names.filter(name => name.toLowerCase().includes(debouncedSearch.toLowerCase()));
-      return [group, filteredNames] as const;
+      const filteredNames = isSearching 
+        ? names.filter(name => name.toLowerCase().includes(debouncedSearch.toLowerCase()))
+        : names.slice(0, 9); // Show first 9 for default view
+      
+      return {
+        group,
+        displayName: pascalCaseFromSnakeCase(group),
+        totalCount: names.length,
+        filteredCount: filteredNames.length,
+        names: filteredNames,
+        isVisible: isSearching ? filteredNames.length > 0 : true
+      };
     });
-  }, [groups, groupModels, debouncedSearch, isSearching, DataStore]);
+  }, [groups, debouncedSearch, isSearching]);
 
   return (
     <div className="data-hub">
@@ -107,88 +124,39 @@ export default function DataIndex() {
             </Link>
           ))}
         </nav>
-      </header>
-
-      <main className="data-hub__content">
-        {!isSearching ? (
-          <section className="categories-overview">
-            {categoryStats.map(({ group, count, displayName, featured }) => (
-              <div key={group} className="category-section">
-                <header className="category-section__header">
-                  <Link to={`/${DATA_PREFIX}/${group}`}>
-                    <h2>{displayName}</h2>
-                  </Link>
-                  <span className="model-count">{count} {group}</span>
-                </header>
-
-                <ul className="models-grid">
-                  {featured.map(name => {
-                    const model = groupModels.get(group)?.find(m => m.name === name);
-                    if (!model) return null;
-
-                    const Card = (() => {
-                      switch (group) {
-                        case 'characters': return <CharacterCard key={name} character={model as Character} wrapInLink nameTag='h3' />;
-                        case 'artifacts': return <ArtifactCard key={name} artifact={model as ArtifactSet} wrapInLink nameTag='h3' />;
-                        case 'domains': return <DomainCard key={name} domain={model as Domain<any>} wrapInLink nameTag='h3' />;
-                        case 'materials': return <MaterialCard key={name} material={model as any} wrapInLink nameTag='h3' />;
-                        case 'mobs': return <MobCard key={name} mob={model as Mob} wrapInLink nameTag='h3' />;
-                        case 'weapons': return <WeaponCard key={name} weapon={model as Weapon} wrapInLink nameTag='h3' />;
-                        default: return null;
-                      }
-                    })();
-
-                    return (
-                      <li key={name}>
-                        {Card}
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            ))}
-          </section>
+      </header>      <main className="data-hub__content">
+        {isSearching && displayGroups.every(group => group.filteredCount === 0) ? (
+          <p className="no-results">No results found for "{debouncedSearch}"</p>
         ) : (
-          <section className="search-results">
-            {sortedGroups.length === 0 ? (
-              <p className="no-results">No results found for "{debouncedSearch}"</p>
-            ) : (
-              sortedGroups.map(([group, names]) => (
-                names.length > 0 && (
-                  <details key={group} open className="search-group">
-                    <summary>
-                      <Link to={`/${DATA_PREFIX}/${group}`}>
-                        {pascalCaseFromSnakeCase(group)} ({names.length})
-                      </Link>
-                    </summary>
-                    <div className='search-results-grid'>
-                      {names.map(name => {
-                        const model = (
-                          group === 'characters' ? Characters.find(c => c.name === name)
-                            : group === 'artifacts' ? Artifacts.find(a => a.name === name)
-                              : group === 'domains' ? Domains.find(d => d.name === name)
-                                : group === 'weapons' ? Weapons.find(w => w.name === name)
-                                  : group === 'materials' ? Materials.find(m => m.name === name)
-                                    : group === 'mobs' ? Mobs.find(m => m.name === name)
-                                      : undefined
-                        );
-                        if (!model) return null;
+          <section className="categories-overview">
+            {displayGroups.map(({ group, displayName, totalCount, filteredCount, names, isVisible }) => (
+              isVisible && (
+                <div key={group} className="category-section">
+                  <header className="category-section__header">
+                    <Link to={`/${DATA_PREFIX}/${group}`}>
+                      <h2>{displayName}</h2>
+                    </Link>
+                    <span className="model-count">
+                      {isSearching ? `${filteredCount} of ${totalCount}` : `${totalCount}`} {group}
+                    </span>
+                  </header>
 
-                        switch (group) {
-                          case 'characters': return <CharacterCard key={name} character={model as Character} wrapInLink />;
-                          case 'artifacts': return <ArtifactCard key={name} artifact={model as ArtifactSet} wrapInLink />;
-                          case 'domains': return <DomainCard key={name} domain={model as Domain<any>} wrapInLink />;
-                          case 'materials': return <MaterialCard key={name} material={model as any} wrapInLink />;
-                          case 'mobs': return <MobCard key={name} mob={model as Mob} wrapInLink />;
-                          case 'weapons': return <WeaponCard key={name} weapon={model as Weapon} wrapInLink />;
-                          default: return null;
-                        }
-                      })}
-                    </div>
-                  </details>
-                )
-              ))
-            )}
+                  <ul className="models-grid">
+                    {names.map(name => {
+                      const model = groupModels.get(group)?.find(m => m.name === name);
+                      if (!model) return null;
+
+                      const card = renderModelCard(model, group, name, isSearching ? undefined : 'h3');
+                      return (
+                        <li key={name}>
+                          {card}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              )
+            ))}
           </section>
         )}
       </main>

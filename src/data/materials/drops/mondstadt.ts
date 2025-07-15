@@ -52,7 +52,7 @@ export const SpiritLocketOfBoreas = new MobDrop(
 // Stormterror
 export const DvalinsPlume = new MobDrop(
   `Dvalin's Plume`,
-  `A feather from the tail of the Dragon of the East.\nAs a dragon's feather it has experienced more than a thousand years' worth of winds. One senses within it a yearning for freedom so strong that it coudl whip up a light breeze to rescue it from its current confines. Its former owner's recognition of you is what makes it content to stay in your hands.`,
+  `A feather from the tail of the Dragon of the East.\nAs a dragon's feather it has experienced more than a thousand years' worth of winds. One senses within it a yearning for freedom so strong that it could whip up a light breeze to rescue it from its current confines. Its former owner's recognition of you is what makes it content to stay in your hands.`,
   'Mondstadt',
   Rarity.Legendary,
 );

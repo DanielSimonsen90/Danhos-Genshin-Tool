@@ -20,7 +20,7 @@ export const LeyLineBranch = MobDrop.create('Ley Line ', {
 }, {
   [Rarity.Epic]: `It is said that there was a great tree whose roots once spread out to every corner of the world, and this branch is said to be part of it.\nIt is almost if it was never broken off and taken far away, for its vitality is such that it still sprouts new leaves even now.`,
   [Rarity.Rare]: `A twig from deep within the earth.\nThough it is far from where it once lay, its leaves still pulsate with energy.`,
-  [Rarity.Uncommon]: `Fragile branches from deep within the earth. Even after years of aging, from beneath it's mottled surface you can see that its power is not yet entirely lost.`
+  [Rarity.Uncommon]: `Fragile branches from deep within the earth. Even after years of aging, from beneath its mottled surface you can see that its power is not yet entirely lost.`
 }, {
   prependName: true,
   onCreate: (name, description, rarity) => new MobDrop(
@@ -154,7 +154,7 @@ export const HilichurlFlower = MobDrop.create('<placeholder>', {
   [Rarity.Rare]: `Treasured Flower`,
   [Rarity.Uncommon]: `A Flower Yet to Bloom`,
 }, {
-  [Rarity.Epic]: `A blooming wild flower that a Hilichurl Rogue treasured, bereft of any special qualities.The eternal outlander asks not for reward, but only to see their deeds come to fruition...`,
+  [Rarity.Epic]: `A blooming wild flower that a Hilichurl Rogue treasured, bereft of any special qualities. The eternal outlander asks not for reward, but only to see their deeds come to fruition...`,
   [Rarity.Rare]: `A wild flower that a Hilichurl Rogue treasured, bereft of any special qualities.\nFlowers can be used as gifts or offerings to express one's feelings in many cultures.`,
   [Rarity.Uncommon]: `A wild flower that a Hilichurl Rogue treasured. It was plucked before it could bloom.\nThe hilichurl takes nothing with it in its sojourn across the wilderness save this flower.`,
 }, {

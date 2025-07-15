@@ -10,7 +10,7 @@ export const FragmentOfAGoldenMelody = new MobDrop(
 
 export const EmperorsResolution = new MobDrop(
   "Emperor's Resolution",
-  `The war hammer of the Emperor of Fire and Iron.\nThe mighty crab has crushed countless foes with this giant claw. Be they clockwork meka, other Fontemer Aberrants, on hunters with ill-placed curiosity — all have yielded under its power.\nFontemer Aberrants are different from human beings in that the concepts of aristocracy or inheritance are entirely foreign to them. None of them are born superior. One that survives deadly Predators and adversities can accumulate infinite power as it keeps hunting and feeding over centuries. Such a creature is often referred to as an overlord for the fear it inspires.`,
+  `The war hammer of the Emperor of Fire and Iron.\nThe mighty crab has crushed countless foes with this giant claw. Be they clockwork meka, other Fontemer Aberrants, or hunters with ill-placed curiosity — all have yielded under its power.\nFontemer Aberrants are different from human beings in that the concepts of aristocracy or inheritance are entirely foreign to them. None of them are born superior. One that survives deadly Predators and adversities can accumulate infinite power as it keeps hunting and feeding over centuries. Such a creature is often referred to as an overlord for the fear it inspires.`,
   "Fontaine",
   Rarity.Epic,
 );

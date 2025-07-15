@@ -7,17 +7,17 @@ export const MidsummerCourtyard = new DomainOfBlessing(
 );
 export const ValleyOfRemembrance = new DomainOfBlessing(
   "Valley of Remembrance",
-  "After a period of time, the people of the continent lost track of the past. They attempt to explore downwards, searching for the things that they had forgotten. On the other side of the ancient tree's hollow, the secrets of yesterday's ave become today's treasures.",
+  "After a period of time, the people of the continent lost track of the past. They attempt to explore downwards, searching for the things that they had forgotten. On the other side of the ancient tree's hollow, the secrets of yesterday's have become today's treasures.",
   'Mondstadt',
 );
 export const HiddenPalaceOfZhouFormula = new DomainOfBlessing(
   "Hidden Palace of Zhou Formula",
-  "There is a secret ritual that can conceal one gate out of eight, cutting off the route for evil to escape. This ritual was performed here long ago, sealing demons within this labyrinth. Rumor has it that the Mehotd to fit Pillars with Zhou Formula presently seals an evil Chi.",
+  "There is a secret ritual that can conceal one gate out of eight, cutting off the route for evil to escape. This ritual was performed here long ago, sealing demons within this labyrinth. Rumor has it that the Method to fit Pillars with Zhou Formula presently seals an evil Chi.",
   'Mondstadt',
 );
 export const RidgeWatch = new DomainOfBlessing(
   "Ridge Watch",
-  "Standing proudly over the start of the ridge, these ancient city ruins overlook both north and south, both mountain and river, like a boundary marker. Elgend has it that its gates and blessings are only open to those whose hearts are lit with an eternal blaze.",
+  "Standing proudly over the start of the ridge, these ancient city ruins overlook both north and south, both mountain and river, like a boundary marker. Legend has it that its gates and blessings are only open to those whose hearts are lit with an eternal blaze.",
   'Mondstadt',
 );
 export const PeakOfVindagnyr = new DomainOfBlessing(

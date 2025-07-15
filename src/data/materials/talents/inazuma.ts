@@ -11,7 +11,7 @@ export const Transience = TalentAscensionMaterial.create(
 
 export const Elegance = TalentAscensionMaterial.create(
   'Elegance',
-  `Elegance is the form of the nation of thunder. Elegance brooks no flattery, and the elegant are ever notble. They are like the sea eagles who soar on high contend with the resounding storms. They will not cater to philistine vulgarity, as one would not cast a flower crown into the mud, staining its dignity.`,
+  `Elegance is the form of the nation of thunder. Elegance brooks no flattery, and the elegant are ever noble. They are like the sea eagles who soar on high to contend with the resounding storms. They will not cater to philistine vulgarity, as one would not cast a flower crown into the mud, staining its dignity.`,
   'Inazuma',
   MasteryDomains.VioletCourt,
   'Tuesday/Friday',

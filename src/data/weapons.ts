@@ -73,7 +73,7 @@ export const AThousandBlazingSuns = new Weapon(
 export const AThousandFloatingDreams = new Weapon(
   "A Thousand Floating Dreams",
   {
-    value: `Party members other than the equipping character will provide the equipping character with buffs based on whether their Elemental Type is the same as the latter or not. If their Elemental Types are the same, increase Elemental Mastery by $0. If not, increase the equipping character's DMG Bonus from their Elemental Type by $1. Each of the aforementioned effects can have up to 3 stacks. Additionally, all nearby party members other than the equipping character will have their Elemental MMastery increased by 40. Multiple such effects from multiple such weapons can stack.`,
+    value: `Party members other than the equipping character will provide the equipping character with buffs based on whether their Elemental Type is the same as the latter or not. If their Elemental Types are the same, increase Elemental Mastery by $0. If not, increase the equipping character's DMG Bonus from their Elemental Type by $1. Each of the aforementioned effects can have up to 3 stacks. Additionally, all nearby party members other than the equipping character will have their Elemental Mastery increased by 40. Multiple such effects from multiple such weapons can stack.`,
     refinements: [
       '32/40/48/56/64',
       '10/14/18/22/26%',

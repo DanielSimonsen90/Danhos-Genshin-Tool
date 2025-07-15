@@ -160,7 +160,7 @@ export const TaintedHydroPhantasm = new EliteMob(
 
 export const BreacherPrimus = new EliteMob(
   "Breacher Primus",
-  `A strange and mysterious life form.\nIt has no know similarities with any other creatures on Teyvat.`,
+  `A strange and mysterious life form.\nIt has no known similarities with any other creatures on Teyvat.`,
   [
     EliteMobDrops.BreacherCore,
   ]

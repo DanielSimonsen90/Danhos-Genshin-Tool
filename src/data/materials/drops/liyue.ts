@@ -3,7 +3,7 @@ import { Rarity } from "@/common/types";
 
 export const CleansingHeart = new MobDrop(
   'Cleansing Heart',
-  `A palmful of eternal water left by an oceanid.\nThough it has already diffused among the depths of the lake, its purity remains all the same. But why would a creature so pure and clean as an oceanid covet the appearance of a being that roams the land, and assume such a form with pure wataer? They need not breathe nor do they reqwuire sustenance...`,
+  `A palmful of eternal water left by an oceanid.\nThough it has already diffused among the depths of the lake, its purity remains all the same. But why would a creature so pure and clean as an oceanid covet the appearance of a being that roams the land, and assume such a form with pure water? They need not breathe nor do they require sustenance...`,
   'Liyue',
   Rarity.Epic
 );
@@ -38,7 +38,7 @@ export const BasaltPillar = new MobDrop(
 
 export const RunicFang = new MobDrop(
   'Runic Fang',
-  `A "fang" with which the mysterious, snakelike machine of old dug into mountains' depth.\nThere are many ominous runes carved on it.\nIt is said taht giant serpents lurk in the dark dissures deep beneath the ground. Burning with eternal resentment and malice toward the world above, they throw themselves into digging great tunnels, yet none know what their malicious purposes are...`,
+  `A "fang" with which the mysterious, snakelike machine of old dug into mountains' depth.\nThere are many ominous runes carved on it.\nIt is said that giant serpents lurk in the dark fissures deep beneath the ground. Burning with eternal resentment and malice toward the world above, they throw themselves into digging great tunnels, yet none know what their malicious purposes are...`,
   'Liyue',
   Rarity.Epic
 );
@@ -46,7 +46,7 @@ export const RunicFang = new MobDrop(
 // Azdaha
 export const DragonLordsCrown = new MobDrop(
   `Dragon Lord's Crown`,
-  `Horns created from hardened jade crystallized oer a thousand years are the natural crown of the dragon king.\nInfused with spirit and carved from bedrock, it was born from the mountain's heart to show the srength of the earth to the land amidst monoliths, and its long golden horns are the mark of its ancient strife with an ancient lord. For a time, this horn was shattered and lost its luster, but now it gleams cold and gold as it sits in your palm.`,
+  `Horns created from hardened jade crystallized over a thousand years are the natural crown of the dragon king.\nInfused with spirit and carved from bedrock, it was born from the mountain's heart to show the strength of the earth to the land amidst monoliths, and its long golden horns are the mark of its ancient strife with an ancient lord. For a time, this horn was shattered and lost its luster, but now it gleams cold and gold as it sits in your palm.`,
   'Liyue',
   Rarity.Legendary
 );
