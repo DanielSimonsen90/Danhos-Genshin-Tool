@@ -1,5 +1,6 @@
 export const AREAS = [
   'General Priority', 'Battle pass',
+  'Crown Priority', 'DoE Priority',
 
   'Artifacts', 'Artifacts level',
   'Weapon materials', 'Weapon level',
