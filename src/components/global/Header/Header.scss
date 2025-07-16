@@ -2,9 +2,9 @@
 
 .site-header {
   display: flex;
-  justify-content: center;  
+  justify-content: center;
   gap: 1em;
-  
+
   padding: 1em;
   box-shadow: 0 0 5px 3px #22222266;
   min-height: 5rem;
@@ -15,8 +15,80 @@
 
     ul {
       display: flex;
+      align-items: center;
       justify-content: center;
       gap: 1rem;
+
+      li {
+        position: relative;
+
+        &.has-dropdown {
+          .navigation-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: max-content;
+            min-width: 160px;
+            background-color: var(--background-secondary);
+            border-radius: .25rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition:
+              opacity 0.2s ease,
+              visibility 0.2s ease,
+              transform 0.2s ease;
+
+            ul {
+              flex-direction: column;
+              gap: 0;
+              padding: 0.5rem 0;
+              margin: 0;
+
+              li {
+                position: static;
+                width: 100%;
+
+                a {
+                  display: block;
+                  padding: 0.5rem 1rem;
+                  border-radius: 0;
+                  background-color: transparent;
+                  border-bottom: 1px solid var(--background-tertiary);
+                  white-space: nowrap;
+
+                  &:hover {
+                    background-color: var(--background-tertiary);
+                    box-shadow: none;
+                  }
+                }
+
+                &:last-child a {
+                  border-bottom: none;
+                }
+              }
+            }
+          }
+
+          &:hover .navigation-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+          }
+
+          >a .chevron {
+            margin-left: 0.5rem;
+            font-size: 0.8em;
+            transition: transform 0.2s ease;
+          }
+
+          &:hover>a .chevron {
+            transform: rotate(180deg);
+          }
+        }
+      }
 
       a {
         text-decoration: none;

@@ -18,7 +18,7 @@ export const ROUTES = new class Routes {
   public building_artifact_helper = `${this.building}/artifact-helper` as const;
   public building_artifact_helper_search = `${this.building_artifact_helper}/search/:query` as const;
 
-  public building_plan = `${this.building}/plan` as const;
+  // public building_plan = `${this.building}/plan` as const;
 
   public generator = 'generator' as const;
   public generator_teams = `${this.generator}/teams` as const;
