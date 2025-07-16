@@ -10,6 +10,10 @@ type SecondaryStatValue<TWeaponStatName extends WeaponStatName> =
   : Percentage<number>;
 
 export class Weapon<TWeaponStatName extends WeaponStatName = WeaponStatName> {
+  public static isWeapon(obj: any): obj is Weapon {
+    return obj instanceof Weapon;
+  }
+
   constructor(
     public name: string,
     public description: {

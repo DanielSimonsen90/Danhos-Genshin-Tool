@@ -2,16 +2,17 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { FavoriteModels, FavoriteStore, ModelsCollection } from "./FavoriteStoreTypes";
 
-export const useFavoriteStoreProvider = create<FavoriteStore>()(persist((setState, getState) => {  const data: ModelsCollection = {
+export const useFavoriteStoreProvider = create<FavoriteStore>()(persist((setState, getState) => {  
+  const data: ModelsCollection = {
     characters: [],
     artifacts: [],
     domains: [],
     materials: [],
-    weapons: []
+    weapons: [],
+    mobs: [],
   };
 
   const add = <T extends keyof ModelsCollection>(type: T, item: FavoriteModels[T]) => {
-    console.log(`${type} added to favorites`, item);
     setState(data => ({
       ...data,
       [type]: [...data[type], item]
@@ -24,16 +25,27 @@ export const useFavoriteStoreProvider = create<FavoriteStore>()(persist((setStat
       [type]: data[type].filter(i => i.name !== item.name)
     }));
   }
-  const isFavorite = <T extends keyof ModelsCollection>(type: T, item: FavoriteModels[T]) => getState()[type].some(entry => entry.name === item.name);  const clear = () => setState({
+  const isFavorite = <T extends keyof ModelsCollection>(type: T, item: FavoriteModels[T]) => getState()[type].some(entry => entry.name === item.name);  
+  const clear = () => setState({
     characters: [],
     artifacts: [],
     domains: [],
     materials: [],
-    weapons: []
+    weapons: [],
+    mobs: [],
   });
+  const getAll = () => {
+    const keys = Object.keys(data) as (keyof ModelsCollection)[];
+    return keys.reduce((acc, key) => {
+      acc[key as keyof ModelsCollection] = getState()[key] as any;
+      return acc;
+    }, {} as ModelsCollection);
+  };
+  const hasAnyFavorites = () => Object.values(getState()).some(favorites => favorites.length > 0);
 
   return { 
     ...data,
-    add, remove, isFavorite, clear
+    add, remove, isFavorite, 
+    clear, getAll, hasAnyFavorites
    };
 }, { name: "FavoriteStore" }));

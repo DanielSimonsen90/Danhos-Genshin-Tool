@@ -84,12 +84,9 @@ a.artifact-card {
   align-items: center;
 
   >header {
-    display: grid;
-    grid-template-rows: auto 1fr;
+    display: flex;
+    // display: grid;
+    // grid-template-rows: auto 1fr;
     justify-items: center;
-  }
-
-  .artifact-card__name {
-    // text-align: center;
   }
 }

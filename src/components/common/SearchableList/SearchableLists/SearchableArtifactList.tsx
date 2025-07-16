@@ -12,7 +12,7 @@ import { useContextMenu } from "@/providers/ContextMenuProvider";
 import { OptionalProps, UncrontrolledProps } from "../Props";
 import SearchableList from "../SearchableList";
 import { useFavoriteStore } from "@/stores/FavoriteStore/FavoriteStoreHooks";
-import Star from "../../icons/Star";
+import { FavoriteStar } from "../../icons/Star";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<ArtifactSet, TFilterKeys>>
@@ -40,11 +40,9 @@ export default function SearchableArtifactList<TFilterKeys extends string>({
         item('option', 'View', () => navigate(`/artifacts/${artifact.name}`), '👁️'),
         item('option', FavoriteStore.isFavorite(artifact) ? 'Unfavorite' : 'Favorite', () => FavoriteStore.isFavorite(artifact) ? FavoriteStore.remove(artifact) : FavoriteStore.add(artifact), '⭐'),
         item('option', 'Hide', () => setHidden([...hidden, artifact]), '🙈'),
-      ]);
-
-      return hidden.includes(artifact) ? null : (
+      ]);      return hidden.includes(artifact) ? null : (
         <div className="context-menu-item-container" onContextMenu={open}>
-          {FavoriteStore.isFavorite(artifact) && <Star className="favorite-star" onClick={() => FavoriteStore.remove(artifact)} />}
+          {FavoriteStore.isFavorite(artifact) && <FavoriteStar model={artifact} />}
           <ArtifactCard artifact={artifact} {...cardProps} />
         </div>
       );

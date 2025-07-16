@@ -6,13 +6,15 @@ export type FavoriteStore = ModelsCollection & {
   remove: <T extends keyof FavoriteModels>(type: T, item: FavoriteModels[T]) => void;
   isFavorite: <T extends keyof FavoriteModels>(type: T, item: FavoriteModels[T]) => boolean;
 
+  getAll: () => ModelsCollection;
+  hasAnyFavorites(): boolean;
   clear: () => void;
 }
 
 export type ModelsCollection = {
   [Key in keyof FavoriteModels]: Array<FavoriteModels[Key]>;
 }
-export type FavoriteModel = Character | ArtifactSet | Domain<any> | Material | Weapon;
+export type FavoriteModel = Character | ArtifactSet | Domain<any> | Material | Weapon | Mob;
 
 export type FavoriteModels = {
   characters: Character;

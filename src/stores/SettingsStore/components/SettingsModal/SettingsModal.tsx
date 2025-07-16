@@ -9,13 +9,15 @@ import { useSettingsStore } from "@/stores/SettingsStore";
 import { useFavoriteStoreProvider } from '@/stores/FavoriteStore';
 import { useRegionStore } from '@/stores/RegionStore';
 
-import SettingsOption from "./SettingsOption";
+import SettingsOption from "./components/SettingsOption";
+import Collapsible from '@/components/common/Collapsible';
+import FavoritesOverview from './components/FavoritesOverview';
 
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsModal);
 
 export default function SettingsModal(props: ModalConsumerProps) {
   const SettingsStore = useSettingsStore();
-  const favoriteStore = useFavoriteStoreProvider(); // TODO
+  const FavoriteStore = useFavoriteStoreProvider();
   const RegionStore = useRegionStore();
   const [submitting, onSubmit] = useActionState<Settings>(data => {
     delete data._form;
@@ -44,6 +46,10 @@ export default function SettingsModal(props: ModalConsumerProps) {
         {Object.entries(Object.assign({}, SettingsStore.changeableSettings, RegionStore.regionSettings)).map(([key, value]) => (
           <SettingsOption key={key} setting={key as keyof Settings} value={value as Settings[keyof Settings]} />
         ))}
+
+        <Collapsible title="Manage Favorites">
+          <FavoritesOverview />
+        </Collapsible>
 
         <div className="button-panel">
           {SettingsStore.hasCustomSettings && <button type="reset" className="danger secondary" disabled={submitting} onClick={onReset}>Reset settings</button>}

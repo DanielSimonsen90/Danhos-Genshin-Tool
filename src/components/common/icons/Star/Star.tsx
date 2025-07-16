@@ -3,7 +3,7 @@ import { classNames } from "@/common/functions/strings";
 type Props = {
   color?: string;
   className?: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 };
 export default function Star({ className, onClick, ...props }: Props) {
   return (

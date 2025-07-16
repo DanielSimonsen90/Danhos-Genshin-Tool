@@ -1,0 +1,21 @@
+.favorites-overview {
+  h3 {
+    text-transform: capitalize;
+  }
+
+  .searchable-list__list {
+    --min: 10em;
+  }
+
+  .artifact-card > header {
+    flex-direction: column;
+  }
+
+  .domain-image {
+    --size: 10rem;
+  }
+
+  .model-card__details {
+    height: auto;
+  }
+}

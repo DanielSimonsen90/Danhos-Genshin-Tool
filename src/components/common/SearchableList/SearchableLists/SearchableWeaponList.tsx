@@ -10,7 +10,7 @@ import { useContextMenu } from "@/providers/ContextMenuProvider";
 
 import { OptionalProps, UncrontrolledProps } from "../Props";
 import SearchableList from "../SearchableList";
-import Star from "../../icons/Star";
+import { FavoriteStar } from "../../icons/Star";
 import { Rarity } from "@/common/types";
 
 type Props<TFilterKeys extends string> = (
@@ -39,11 +39,9 @@ export default function SearchableWeaponList<TFilterKeys extends string>({
         item('option', 'View', () => navigate(`/weapons/${weapon.name}`), '👁️'),
         item('option', FavoriteStore.isFavorite(weapon) ? 'Unfavorite' : 'Favorite', () => FavoriteStore.isFavorite(weapon) ? FavoriteStore.remove(weapon) : FavoriteStore.add(weapon), '⭐'),
         item('option', 'Hide', () => setHidden([...hidden, weapon]), '🙈'),
-      ]);
-
-      return hidden.includes(weapon) ? null : (
+      ]);      return hidden.includes(weapon) ? null : (
         <div className="context-menu-item-container" onContextMenu={open}>
-          {FavoriteStore.isFavorite(weapon) && <Star className="favorite-star" onClick={() => FavoriteStore.remove(weapon)} />}
+          {FavoriteStore.isFavorite(weapon) && <FavoriteStar model={weapon} />}
           <WeaponCard weapon={weapon} {...cardProps} />
         </div>
       );

@@ -5,7 +5,7 @@
 .favorite-star {
   color: var(--rarity-legendary);
   position: absolute;
-  z-index: 2;
+  z-index: 1;
 
   --gap: .25ch;
   top: var(--gap);

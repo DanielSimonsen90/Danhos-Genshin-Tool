@@ -53,6 +53,7 @@
     .model-card__name {
       display: flex;
       flex-direction: column;
+      font-size: 1.25rem;
 
       >*::after {
         content: none;

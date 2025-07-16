@@ -11,7 +11,7 @@ import { useContextMenu } from "@/providers/ContextMenuProvider";
 import { OptionalProps, UncrontrolledProps } from "../Props";
 import SearchableList from "../SearchableList";
 import { useFavoriteStore } from "@/stores/FavoriteStore/FavoriteStoreHooks";
-import Star from "../../icons/Star";
+import { FavoriteStar } from "../../icons/Star";
 import Material from "@/common/models/materials/Material";
 import CraftableMaterial from "@/common/models/materials/CraftableMaterial";
 import AscensionMaterial, { TalentAscensionMaterial, WeaponAscensionMaterial } from "@/common/models/materials/AscensionMaterial";
@@ -49,11 +49,9 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
         item('option', 'View', () => navigate(`/materials/${material.name}`), '👁️'),
         item('option', FavoriteStore.isFavorite(material) ? 'Unfavorite' : 'Favorite', () => FavoriteStore.isFavorite(material) ? FavoriteStore.remove(material) : FavoriteStore.add(material), '⭐'),
         item('option', 'Hide', () => setHidden([...hidden, material]), '🙈'),
-      ]);
-
-      return hidden.includes(material) ? null : (
+      ]);      return hidden.includes(material) ? null : (
         <div className="context-menu-item-container" onContextMenu={open}>
-          {FavoriteStore.isFavorite(material) && <Star className="favorite-star" onClick={() => FavoriteStore.remove(material)} />}
+          {FavoriteStore.isFavorite(material) && <FavoriteStar model={material} />}
           <MaterialCard material={material} {...cardProps} />
         </div>
       );

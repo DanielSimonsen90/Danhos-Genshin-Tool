@@ -8,8 +8,9 @@
   }
 
   .artifact-card > header {
-    grid-auto-flow: column;
-    grid-template-columns: 1fr;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto 1fr;
 
     .artifact-details {
       align-items: center;

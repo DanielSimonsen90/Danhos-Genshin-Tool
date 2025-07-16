@@ -23,7 +23,8 @@
 
   &__name {
     --margins: 0em;
-    max-width: calc(100% - var(--margins) * 2);
+    // max-width: calc(100% - var(--margins) * 2);
+    max-width: 100%;
     font-size: clamp(1.25rem, 2vw, 3rem);
   }
 

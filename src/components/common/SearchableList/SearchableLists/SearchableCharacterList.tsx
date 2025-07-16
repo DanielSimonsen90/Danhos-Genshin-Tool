@@ -11,7 +11,7 @@ import { useContextMenu } from "@/providers/ContextMenuProvider";
 
 import { OptionalProps, UncrontrolledProps } from "../Props";
 import SearchableList from "../SearchableList";
-import Star from "../../icons/Star";
+import { FavoriteStar } from "../../icons/Star";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<Character, TFilterKeys>>
@@ -40,11 +40,9 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
         item('option', 'View', () => navigate(`/characters/${character.name}`), '👁️'),
         item('option', FavoriteStore.isFavorite(character) ? 'Unfavorite' : 'Favorite', () => FavoriteStore.isFavorite(character) ? FavoriteStore.remove(character) : FavoriteStore.add(character), '⭐'),
         item('option', 'Hide', () => setHidden([...hidden, character]), '🙈'),
-      ]);
-
-      return hidden.includes(character) ? null : (
+      ]);      return hidden.includes(character) ? null : (
         <div className="context-menu-item-container" onContextMenu={open}>
-          {FavoriteStore.isFavorite(character) && <Star className="favorite-star" onClick={() => FavoriteStore.remove(character)} />}
+          {FavoriteStore.isFavorite(character) && <FavoriteStar model={character} />}
           <CharacterCard character={character} {...cardProps} />
         </div>
       );

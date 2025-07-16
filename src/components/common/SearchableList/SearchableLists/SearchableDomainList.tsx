@@ -10,7 +10,7 @@ import { useFavoriteStore } from "@/stores";
 
 import SearchableList from "../SearchableList";
 import { OptionalProps, UncrontrolledProps } from "../Props";
-import Star from "../../icons/Star";
+import { FavoriteStar } from "../../icons/Star";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<Domain<any>, TFilterKeys>>
@@ -38,11 +38,9 @@ export default function SearchableDomainList<TFilterKeys extends string>({
         item('option', 'View', () => navigate(`/domains/${domain.name}`), '👁️'),
         item('option', FavoriteStore.isFavorite(domain) ? 'Unfavorite' : 'Favorite', () => FavoriteStore.isFavorite(domain) ? FavoriteStore.remove(domain) : FavoriteStore.add(domain), '⭐'),
         item('option', 'Hide', () => setHidden([...hidden, domain]), '🙈'),
-      ]);
-
-      return hidden.includes(domain) ? null : (
+      ]);      return hidden.includes(domain) ? null : (
         <div className="context-menu-item-container" onContextMenu={open}>
-          {FavoriteStore.isFavorite(domain) && <Star className="favorite-star" onClick={() => FavoriteStore.remove(domain)} />}
+          {FavoriteStore.isFavorite(domain) && <FavoriteStar model={domain} />}
           <DomainCard domain={domain} {...cardProps} />
         </div>
       );
