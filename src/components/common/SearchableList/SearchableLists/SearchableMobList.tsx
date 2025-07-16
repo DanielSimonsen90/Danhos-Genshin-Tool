@@ -39,7 +39,9 @@ export default function SearchableMobList<TFilterKeys extends string>({
         item('option', 'View', () => navigate(`/mobs/${mob.name}`), '👁️'),
         item('option', FavoriteStore.isFavorite(mob) ? 'Unfavorite' : 'Favorite', () => FavoriteStore.isFavorite(mob) ? FavoriteStore.remove(mob) : FavoriteStore.add(mob), '⭐'),
         item('option', 'Hide', () => setHidden([...hidden, mob]), '🙈'),
-      ]);      return hidden.includes(mob) ? null : (
+      ]);      
+      
+      return hidden.includes(mob) ? null : (
         <div className="context-menu-item-container" onContextMenu={open}>
           {FavoriteStore.isFavorite(mob) && <FavoriteStar model={mob} />}
           <MobCard mob={mob} {...cardProps} />

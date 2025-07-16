@@ -49,7 +49,9 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
         item('option', 'View', () => navigate(`/materials/${material.name}`), '👁️'),
         item('option', FavoriteStore.isFavorite(material) ? 'Unfavorite' : 'Favorite', () => FavoriteStore.isFavorite(material) ? FavoriteStore.remove(material) : FavoriteStore.add(material), '⭐'),
         item('option', 'Hide', () => setHidden([...hidden, material]), '🙈'),
-      ]);      return hidden.includes(material) ? null : (
+      ]);      
+      
+      return hidden.includes(material) ? null : (
         <div className="context-menu-item-container" onContextMenu={open}>
           {FavoriteStore.isFavorite(material) && <FavoriteStar model={material} />}
           <MaterialCard material={material} {...cardProps} />

@@ -38,7 +38,9 @@ export default function SearchableDomainList<TFilterKeys extends string>({
         item('option', 'View', () => navigate(`/domains/${domain.name}`), '👁️'),
         item('option', FavoriteStore.isFavorite(domain) ? 'Unfavorite' : 'Favorite', () => FavoriteStore.isFavorite(domain) ? FavoriteStore.remove(domain) : FavoriteStore.add(domain), '⭐'),
         item('option', 'Hide', () => setHidden([...hidden, domain]), '🙈'),
-      ]);      return hidden.includes(domain) ? null : (
+      ]);      
+      
+      return hidden.includes(domain) ? null : (
         <div className="context-menu-item-container" onContextMenu={open}>
           {FavoriteStore.isFavorite(domain) && <FavoriteStar model={domain} />}
           <DomainCard domain={domain} {...cardProps} />

@@ -40,7 +40,9 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
         item('option', 'View', () => navigate(`/characters/${character.name}`), '👁️'),
         item('option', FavoriteStore.isFavorite(character) ? 'Unfavorite' : 'Favorite', () => FavoriteStore.isFavorite(character) ? FavoriteStore.remove(character) : FavoriteStore.add(character), '⭐'),
         item('option', 'Hide', () => setHidden([...hidden, character]), '🙈'),
-      ]);      return hidden.includes(character) ? null : (
+      ]);      
+      
+      return hidden.includes(character) ? null : (
         <div className="context-menu-item-container" onContextMenu={open}>
           {FavoriteStore.isFavorite(character) && <FavoriteStar model={character} />}
           <CharacterCard character={character} {...cardProps} />

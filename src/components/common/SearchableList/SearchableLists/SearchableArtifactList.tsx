@@ -33,14 +33,16 @@ export default function SearchableArtifactList<TFilterKeys extends string>({
   const [hidden, setHidden] = useState(new Array<ArtifactSet>());
   const FavoriteStore = useFavoriteStore('artifacts');
 
-  return <SearchableList items={items} 
+  return <SearchableList items={items}
     sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
     renderItem={artifact => {
       const open = useContextMenu(item => [
         item('option', 'View', () => navigate(`/artifacts/${artifact.name}`), '👁️'),
         item('option', FavoriteStore.isFavorite(artifact) ? 'Unfavorite' : 'Favorite', () => FavoriteStore.isFavorite(artifact) ? FavoriteStore.remove(artifact) : FavoriteStore.add(artifact), '⭐'),
         item('option', 'Hide', () => setHidden([...hidden, artifact]), '🙈'),
-      ]);      return hidden.includes(artifact) ? null : (
+      ]);
+      
+      return hidden.includes(artifact) ? null : (
         <div className="context-menu-item-container" onContextMenu={open}>
           {FavoriteStore.isFavorite(artifact) && <FavoriteStar model={artifact} />}
           <ArtifactCard artifact={artifact} {...cardProps} />
