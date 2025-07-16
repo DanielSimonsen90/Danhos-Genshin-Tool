@@ -134,7 +134,10 @@ export const Amber = new Character("Amber", "Pyro", "Bow", ["Off-field Damage"],
   ])
 ]);
 
-export const AratakiItto = new Character("Arataki Itto", "Geo", "Claymore", ["Off-field Damage"], Rarity.Legendary, 'Inazuma', {
+export const AratakiItto = new Character("Arataki Itto", "Geo", "Claymore", [
+  "Off-field Damage",
+  "Elemental Infusion: After Skill/Ability, Arataki Itto gains Geo infusion"
+], Rarity.Legendary, 'Inazuma', {
   material: TalentAscension.Elegance,
   weeklyBossDrop: MobDrops.AshenHeart,
   crystal: ElementalCrystals.Geo,
@@ -231,7 +234,11 @@ export const Beidou = new Character("Beidou", "Electro", "Claymore", ["Shield"],
   ])
 ]);
 
-export const Bennett = new Character("Bennett", "Pyro", "Sword", ["Heal", "Buff ATK: While inside Bennett's ult"], Rarity.Epic, 'Mondstadt', {
+export const Bennett = new Character("Bennett", "Pyro", "Sword", [
+  "Heal", 
+  "Buff ATK: While inside Bennett's ult",
+  "Elemental Infusion: If C6 activated, Bennet provides Sword/Claymore/Polearm characters Pyro infusion"
+], Rarity.Epic, 'Mondstadt', {
   material: TalentAscension.Resistance,
   weeklyBossDrop: MobDrops.DvalinsPlume,
   crystal: ElementalCrystals.Pyro,
@@ -271,7 +278,11 @@ export const Bennett = new Character("Bennett", "Pyro", "Sword", ["Heal", "Buff 
   ])
 ]);
 
-export const Candace = new Character("Candace", "Hydro", "Polearm", ["Shield", "Off-field Damage"], Rarity.Epic, 'Sumeru', {
+export const Candace = new Character("Candace", "Hydro", "Polearm", [
+  "Shield", 
+  "Off-field Damage",
+  "Elemental Infusion: After Burst/Ult, Candace provides Sword/Claymore/Polearm characters Hydro infusion"
+], Rarity.Epic, 'Sumeru', {
   material: TalentAscension.Admonition,
   weeklyBossDrop: MobDrops.TearsOfTheCalamitousGod,
   crystal: ElementalCrystals.Hydro,
@@ -340,7 +351,10 @@ export const Chevreuse = new Character("Chevreuse", "Pyro", "Polearm", ["Heal"],
   ]),
 ]);
 
-export const Chiori = new Character("Chiori", "Geo", "Sword", ["Off-field Damage"], Rarity.Legendary, 'Inazuma', {
+export const Chiori = new Character("Chiori", "Geo", "Sword", [
+  "Off-field Damage",
+  `Elemental Infusion: After triggering "Tapestry effect", Chiori gains Geo infusion for 5 seconds`
+], Rarity.Legendary, 'Inazuma', {
   material: TalentAscension.Light,
   weeklyBossDrop: MobDrops.LightlessSilkString,
   crystal: ElementalCrystals.Geo,
@@ -355,7 +369,9 @@ export const Chiori = new Character("Chiori", "Geo", "Sword", ["Off-field Damage
   ])
 ]);
 
-export const Chongyun = new Character("Chongyun", "Cryo", "Claymore", [], Rarity.Epic, 'Liyue', {
+export const Chongyun = new Character("Chongyun", "Cryo", "Claymore", [
+  "Elemental Infusion: After Skill/Ability, Chongyun provides Sword/Claymore characters Cryo infusion",
+], Rarity.Epic, 'Liyue', {
   material: TalentAscension.Diligence,
   weeklyBossDrop: MobDrops.DvalinsSigh,
   crystal: ElementalCrystals.Cryo,
@@ -497,7 +513,9 @@ export const Dehya = new Character("Dehya", "Pyro", "Claymore", ["Self-heal", "O
   ])
 ]);
 
-export const Diluc = new Character("Diluc", "Pyro", "Claymore", [], Rarity.Legendary, 'Mondstadt', {
+export const Diluc = new Character("Diluc", "Pyro", "Claymore", [
+  'Elemental Infusion: After Burst/Ult, Diluc gains Pyro infusion'
+], Rarity.Legendary, 'Mondstadt', {
   material: TalentAscension.Resistance,
   weeklyBossDrop: MobDrops.DvalinsPlume,
   crystal: ElementalCrystals.Pyro,
@@ -538,7 +556,10 @@ export const Diona = new Character("Diona", "Cryo", "Bow", ["Shield"], Rarity.Ep
   ]),
 ]);
 
-export const Dori = new Character("Dori", "Electro", "Claymore", ["Heal"], Rarity.Epic, 'Sumeru', {
+export const Dori = new Character("Dori", "Electro", "Claymore", [
+  "Heal",
+  "Elemental Infusion: If C6 activated, after Skill/Ability, Dori gains Electro infusion"
+], Rarity.Epic, 'Sumeru', {
   material: TalentAscension.Ingenuity,
   weeklyBossDrop: MobDrops.BloodjadeBranch,
   crystal: ElementalCrystals.Electro,
@@ -764,7 +785,10 @@ export const Gorou = new Character("Gorou", "Geo", "Bow", ["Shield"], Rarity.Epi
   ])
 ]);
 
-export const HuTao = new Character("Hu Tao", "Pyro", "Polearm", ["Self-heal"], Rarity.Legendary, 'Liyue', {
+export const HuTao = new Character("Hu Tao", "Pyro", "Polearm", [
+  "Self-heal",
+  "Elemental Infusion: After Skill/Ability, Hu Tao gains Pyro infusion"
+], Rarity.Legendary, 'Liyue', {
   material: TalentAscension.Diligence,
   weeklyBossDrop: MobDrops.ShardOfAFoulLegacy,
   crystal: ElementalCrystals.Pyro,
@@ -854,7 +878,10 @@ export const Kachina = new Character("Kachina", "Geo", "Polearm", ["Off-field Da
 ]);
 
 export const KaedeharaKazuha = new Character("Kaedehara Kazuha", "Anemo", "Sword", [
-  "Off-field Damage", "Grouping", "Elemental based: Ult can be infused with other party member elements excl. Anemo & Dendro"
+  "Off-field Damage", 
+  "Grouping", 
+  "Elemental based: Ult can be infused with other party member elements excl. Anemo & Dendro",
+  "Elemental Infusion: If C6 activated, after Skill/Ability or Burst/Ult, Kazuha gains Anemo infusion for 5 seconds"
 ], Rarity.Legendary, 'Inazuma', {
   material: TalentAscension.Diligence,
   weeklyBossDrop: MobDrops.GildedScale,
@@ -898,7 +925,10 @@ export const Kaeya = new Character("Kaeya", "Cryo", "Sword", ["Off-field Damage"
   ])
 ]);
 
-export const KamisatoAyaka = new Character("Kamisato Ayaka", "Cryo", "Sword", ["Off-field Damage"], Rarity.Legendary, 'Inazuma', {
+export const KamisatoAyaka = new Character("Kamisato Ayaka", "Cryo", "Sword", [
+  "Off-field Damage",
+  "Elemental Infusion: After re-appearing from alternate sprint, Ayaka gains Cryo infusion for a short duration",
+], Rarity.Legendary, 'Inazuma', {
   material: TalentAscension.Elegance,
   weeklyBossDrop: MobDrops.BloodjadeBranch,
   crystal: ElementalCrystals.Cryo,
@@ -952,7 +982,9 @@ export const Kaveh = new Character("Kaveh", "Dendro", "Claymore", ["Self-heal"],
   ])
 ]);
 
-export const Keqing = new Character("Keqing", "Electro", "Sword", [], Rarity.Legendary, 'Liyue', {
+export const Keqing = new Character("Keqing", "Electro", "Sword", [
+  "Elemental Infusion: After Skill/Ability, Keqing gains Electro infusion for 5 seconds",
+], Rarity.Legendary, 'Liyue', {
   material: TalentAscension.Prosperity,
   weeklyBossDrop: MobDrops.RingOfBoreas,
   crystal: ElementalCrystals.Electro,
@@ -1169,7 +1201,9 @@ export const Lisa = new Character("Lisa", "Electro", "Catalyst", ["Off-field Dam
   ])
 ]);
 
-export const Lynette = new Character("Lynette", "Anemo", "Sword", [], Rarity.Epic, 'Fontaine', {
+export const Lynette = new Character("Lynette", "Anemo", "Sword", [
+  "Elemental Infusion: If C6 activated, after Skill/Ability, Lynette gains Anemo infusion for 6 seconds",
+], Rarity.Epic, 'Fontaine', {
   material: TalentAscension.Order,
   weeklyBossDrop: MobDrops.Everamber,
   crystal: ElementalCrystals.Anemo,
@@ -1441,7 +1475,9 @@ export const Qiqi = new Character("Qiqi", "Cryo", "Sword", ["Heal"], Rarity.Lege
   ])
 ]);
 
-export const RaidenShogun = new Character("Raiden Shogun", "Electro", "Polearm", ["Off-field Damage"], Rarity.Legendary, 'Inazuma', {
+export const RaidenShogun = new Character("Raiden Shogun", "Electro", "Polearm", [
+  "Off-field Damage",
+], Rarity.Legendary, 'Inazuma', {
   material: TalentAscension.Light,
   weeklyBossDrop: MobDrops.MoltenMoment,
   crystal: ElementalCrystals.Electro,
@@ -1624,7 +1660,10 @@ export const Sigewinne = new Character("Sigewinne", "Hydro", "Bow", ["Heal", "Bo
   ])
 ]);
 
-export const Skirk = new Character("Skirk", "Cryo", "Sword", ["Serpent's Subtlety"], Rarity.Legendary, 'Unknown', {
+export const Skirk = new Character("Skirk", "Cryo", "Sword", [
+  "Serpent's Subtlety",
+  "Elemental Infusion: After Skill/Ability, Skirk gains Cryo infusion"
+], Rarity.Legendary, 'Unknown', {
   material: TalentAscension.Contention,
   weeklyBossDrop: MobDrops.ChessGameKnight,
   crystal: ElementalCrystals.Cryo,
@@ -1652,7 +1691,9 @@ export const Sucrose = new Character("Sucrose", "Anemo", "Catalyst", ["Grouping"
   ])
 ]);
 
-export const TartagliaChilde = new Character("Tartaglia (Childe)", "Hydro", "Bow", [], Rarity.Legendary, 'Snezhnaya', {
+export const TartagliaChilde = new Character("Tartaglia (Childe)", "Hydro", "Bow", [
+  "Elemental Infusion: After Skill/Ability, Tartaglia (Childe) gains Hydro infusion"
+], Rarity.Legendary, 'Snezhnaya', {
   material: TalentAscension.Freedom,
   weeklyBossDrop: MobDrops.ShardOfAFoulLegacy,
   crystal: ElementalCrystals.Hydro,
@@ -1932,7 +1973,9 @@ export const Xianyun = new Character("Xianyun", "Anemo", "Catalyst", ["Heal"], R
   ])
 ]);
 
-export const Xiao = new Character("Xiao", "Anemo", "Polearm", [], Rarity.Legendary, 'Liyue', {
+export const Xiao = new Character("Xiao", "Anemo", "Polearm", [
+  "Elemental Infusion: Afer Burst/Ult, gains Anemo infusion"
+], Rarity.Legendary, 'Liyue', {
   material: TalentAscension.Prosperity,
   weeklyBossDrop: MobDrops.ShadowOfTheWarrior,
   crystal: ElementalCrystals.Anemo,
@@ -2088,7 +2131,9 @@ export const Yelan = new Character("Yelan", "Hydro", "Bow", ["Off-field Damage"]
   ])
 ]);
 
-export const Yoimiya = new Character("Yoimiya", "Pyro", "Bow", [], Rarity.Legendary, 'Inazuma', {
+export const Yoimiya = new Character("Yoimiya", "Pyro", "Bow", [
+  "Elemental Infusion: After Skill/Ability, gains Pyro infusion",
+], Rarity.Legendary, 'Inazuma', {
   material: TalentAscension.Transience,
   weeklyBossDrop: MobDrops.DragonLordsCrown,
   crystal: ElementalCrystals.Pyro,
