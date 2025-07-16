@@ -12,7 +12,7 @@ export default function PriorityList() {
   const RegionStore = useRegionStore();
   const { region, ...regionData } = useRegionData();  const priorityLists = regionData.priorityLists ?? getDefaultPriorityLists(DataStore);
 
-  const updatePriorityLists = (newPriorityListsOrUpdater: SetStateAction<PriorityLists>) => {
+  const setPriorityLists = (newPriorityListsOrUpdater: SetStateAction<PriorityLists>) => {
     const newPriorityLists = typeof newPriorityListsOrUpdater === 'function'
       ? newPriorityListsOrUpdater(priorityLists)
       : newPriorityListsOrUpdater;
@@ -23,19 +23,26 @@ export default function PriorityList() {
   const [CreateModal, openCreateModal] = useModifyPriorityList({
     crud: 'create',
     priorityLists,
-    setPriorityLists: updatePriorityLists
+    setPriorityLists
   });
   const [UpdateModal, openUpdateModal] = useModifyPriorityList({
     crud: 'update',
     priorityLists,
-    setPriorityLists: updatePriorityLists
+    setPriorityLists
   });  
-  const tabs = usePriorityListTabs({ priorityLists, setPriorityLists: updatePriorityLists, openUpdateModal });
-
-  return (<>
-    <TabBar direction="vertical" collapseArea="tabs" className="priority-list"
-      tabs={tabs} noTabs={<NoTabs />} id={`priority-list-${region}`}
+  const tabs = usePriorityListTabs({ priorityLists, setPriorityLists, openUpdateModal });  return (<>
+    <TabBar 
+      direction="vertical" 
+      collapseArea="tabs" 
+      className="priority-list"
+      tabs={tabs} 
+      noTabs={<NoTabs />} 
+      id={`priority-list-${region}`}
       placeChildrenBeforeTabs
+      resizable
+      minSize={100}
+      initialSize={180}
+      maxSize={600}
     >
       {collapsed => <CreatePriorityListButton tabBarCollapsed={collapsed} onClick={() => openCreateModal()} />}
     </TabBar>

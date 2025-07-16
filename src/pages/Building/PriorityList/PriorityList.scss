@@ -2,17 +2,22 @@
   height: 100%;
 
   .tab-bar__tab {
+    min-width: auto;
     padding: .25em .75em;
   }
 
   .priority-list-tab {
-    display: grid;
-    grid-template-columns: 13ch auto;
+    display: flex;
     align-items: center;
     gap: .5ch;
 
+    span {
+      flex: 1 1 auto;
+    }
+
     .close {
       position: relative;
+      width: auto;
     }
   }
 

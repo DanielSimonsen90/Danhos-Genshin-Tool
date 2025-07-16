@@ -16,8 +16,9 @@ export interface Tier<TItem> {
 }
 
 type BaseTierlistProps<TItem, TStorageData> = {
+  model: string;
   items: Array<TItem>;
-  onUnsortedSearch: (search: string, item: TItem) => boolean;
+  onSearch: (search: string, item: TItem) => boolean;
   
   defaultTiers?: Array<Tier<TItem>>;
   onTierChange?: (tiers: Array<Tier<TItem>>) => void;

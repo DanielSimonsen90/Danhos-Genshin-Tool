@@ -29,11 +29,20 @@ export type Props<
   /** @default false */
   placeChildrenBeforeTabs?: boolean,
   /** @default false */
-  hideCollapseChevron?: boolean,
+  hideCollapseChevron?: boolean,  
   /** @default horizontal */
   direction?: Direction;
   /** @default content */
   collapseArea?: CollapseArea,
+  
+  /** Enable resizing for vertical direction */
+  resizable?: boolean;
+  /** Minimum size for resizable area in pixels */
+  minSize?: number;
+  /** Maximum size for resizable area in pixels */
+  maxSize?: number;
+  /** Initial size for resizable area in pixels */
+  initialSize?: number;
 
   beforeTabChange?: (tab: TTabKey) => void,
   onTabChange?: (tab: TTabKey) => void,

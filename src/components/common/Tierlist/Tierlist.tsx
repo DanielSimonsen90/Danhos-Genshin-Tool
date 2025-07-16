@@ -13,8 +13,8 @@ import { getDefaultTiers, generateBlankTier, generateEntry } from './TierlistFun
 import { useStateReset } from '@/hooks/useStateReset';
 
 export default function Tierlist<T, TStorageData extends object>({
-  items,
-  onUnsortedSearch, onTierChange, onEntryChange,
+  model, items,
+  onSearch, onTierChange, onEntryChange,
   ...props
 }: TierlistProps<T, TStorageData>) {
   const storageKey = 'storageKey' in props ? props.storageKey : 'storage' in props ? props.storage.key : '';
@@ -31,9 +31,9 @@ export default function Tierlist<T, TStorageData extends object>({
     const unsortedTier = props.defaultTiers.find(tier => tier.id === 'unsorted');
     const unsortedTierIndex = props.defaultTiers.indexOf(unsortedTier!);
     const result = [...props.defaultTiers];
-    result[unsortedTierIndex] = { 
-      ...unsortedTier!, 
-      entries: [...unsortedTier!.entries, ...itemsNotIncluded.map(generateEntry)] 
+    result[unsortedTierIndex] = {
+      ...unsortedTier!,
+      entries: [...unsortedTier!.entries, ...itemsNotIncluded.map(generateEntry)]
     };
 
     return result;
@@ -54,30 +54,36 @@ export default function Tierlist<T, TStorageData extends object>({
     ) : undefined).filter(Boolean);
   }), onStorageLoaded ? null : tiers);
   const [newTier, setNewTier] = useState<FormTier<T>>(generateBlankTier(tiers));
+  const [search, setSearch] = useState('');
 
-  const orderedTiers = tiers.sort((a, b) => a.position - b.position);
+  const orderedTiers = tiers
+    .map(tier => {
+      const entries = tier.entries.filter(entry => onSearch(search, entry.item));
+      return { ...tier, entries };
+    })
+    .sort((a, b) => a.position - b.position);
   const render = useMemo(() => (
     'renderItem' in props ? props.renderItem
-    : 'children' in props ? props.children
-    : () => 'No render method provided.'
+      : 'children' in props ? props.children
+        : () => 'No render method provided.'
   ), [props]);
 
   const unsorted = tiers.find(tier => tier.id === 'unsorted')!;  // Compare content ignoring entry IDs to prevent unnecessary resets
-  const tiersWithoutIds = useMemo(() => 
+  const tiersWithoutIds = useMemo(() =>
     tiers.map(tier => ({
       ...tier,
       entries: tier.entries.map(entry => ({ ...entry, id: undefined as any }))
     })), [tiers]);
-  
-  const defaultTiersWithoutIds = useMemo(() => 
+
+  const defaultTiersWithoutIds = useMemo(() =>
     props.defaultTiers?.map(tier => ({
       ...tier,
       entries: tier.entries.map(entry => ({ ...entry, id: undefined as any }))
     })), [props.defaultTiers]);
 
-    useOnChange(props.defaultTiers, defaultTiers => {
+  useOnChange(props.defaultTiers, defaultTiers => {
     const contentEqual = isEqual(tiersWithoutIds, defaultTiersWithoutIds);
-    
+
     if (!contentEqual) {
       resetTiers();
     }
@@ -148,8 +154,8 @@ export default function Tierlist<T, TStorageData extends object>({
     onEntryChange?.(updatedTierContainedItem, updatedTierContainedItem.entries);
     return tiers.map(tier => (
       tier.id === updatedTierContainedItem.id ? updatedTierContainedItem
-      : tier.id === updatedTargetTier.id ? updatedTargetTier
-      : tier
+        : tier.id === updatedTargetTier.id ? updatedTargetTier
+          : tier
     ));
   });
   const onMoveToIndex = (entry: Entry<T>, index: number) => setTiers(tiers => {
@@ -179,13 +185,17 @@ export default function Tierlist<T, TStorageData extends object>({
         setNewTier(generateBlankTier(tiers)());
       }} submitText='Add tier' />
 
+      <input type="search" placeholder={`Search for a ${model.toLowerCase()}...`}
+        value={search} onChange={e => setSearch(e.target.value)}
+      />
+
       <DragDropContext onDragEnd={onDragEnd}>
         {orderedTiers.map(tier => (
           <TierComponent key={tier.id} {...{
             render,
             tier, updateTier, onMoveToIndex, onSendToTier,
             tiers, setTiers,
-            unsorted, onUnsortedSearch
+            unsorted, onSearch
           }} />
         ))}
       </DragDropContext>

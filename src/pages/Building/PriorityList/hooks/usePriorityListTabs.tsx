@@ -15,7 +15,8 @@ type UsePriorityListTabsProps = {
 };
 
 export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdateModal }: UsePriorityListTabsProps) {
-  const DataStore = useDataStore();  const onTierChange = useCallback((tierlistTitle: string) => (tiers: Array<Tier<string>>) => {
+  const DataStore = useDataStore();  
+  const onTierChange = useCallback((tierlistTitle: string) => (tiers: Array<Tier<string>>) => {
     setPriorityLists(state => ({
       ...state,
       [tierlistTitle]: {
@@ -28,26 +29,57 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
     const priorityList = priorityLists?.[tierlistKey];
     openUpdateModal(priorityList, tierlistKey);
   }, [priorityLists, openUpdateModal]);
-  
-  const deleteTab = useCallback((tab: string) => {
+  const onDelete = useCallback((tab: string) => {
     if (!confirm(`Are you sure you want to delete the tab "${tab}"?`)) return;
 
     let { [tab]: _, ...newPriorityList } = priorityLists;
     if (!Object.keys(newPriorityList).length) newPriorityList = getDefaultPriorityLists(DataStore);
     setPriorityLists(newPriorityList);
   }, [priorityLists, DataStore, setPriorityLists]);
+  const onClone = useCallback((tab: string) => {
+    const priorityList = priorityLists?.[tab];
+    if (!priorityList) return;
 
-  return Array.from(Object.entries(priorityLists)).map(([tierlistTitle, priorityList]) => {
+    setPriorityLists(state => ({
+      ...state,
+      [`${tab} (copy)`]: { ...priorityList, tiers: [...priorityList.tiers] }
+    }));
+  }, [priorityLists, setPriorityLists]);
+  const onMove = useCallback((tab: string, direction: 'up' | 'down') => {
+    const keys = Object.keys(priorityLists);
+    const index = keys.indexOf(tab);
+    if (index === -1) return;
+
+    const newIndex = direction === 'up' ? index - 1 : index + 1;
+    if (newIndex < 0 || newIndex >= keys.length) return;
+
+    const updatedPriorityLists = { ...priorityLists };
+    const [movedTab] = keys.splice(index, 1);
+    keys.splice(newIndex, 0, movedTab);
+
+    setPriorityLists(keys.reduce((acc, key) => {
+      acc[key] = updatedPriorityLists[key];
+      return acc;
+    }, {} as PriorityLists));
+  }, [priorityLists, setPriorityLists]);
+
+  return Array.from(Object.entries(priorityLists)).map(([tierlistTitle, priorityList], index, array) => {
     const modelType = priorityList.model;
     const items = DataStore[`${modelType}Names`];
 
     return [
       tierlistTitle,
       {
-        title: <PriorityListTab title={tierlistTitle} onEdit={() => onEdit(tierlistTitle)} onDelete={() => deleteTab(tierlistTitle)} />,
+        title: <PriorityListTab title={tierlistTitle} priorityListIndex={index} isLastIndex={index === array.length - 1}
+          onEdit={() => onEdit(tierlistTitle)} 
+          onDelete={() => onDelete(tierlistTitle)} 
+          onClone={() => onClone(tierlistTitle)}
+          onMove={direction => onMove(tierlistTitle, direction)}
+        />,
         content: (
           <Tierlist key={tierlistTitle} {...{
-            items, onUnsortedSearch,
+            model: modelType,
+            items, onSearch: onUnsortedSearch,
             defaultTiers: priorityList.tiers,
             onTierChange: onTierChange(tierlistTitle)
           }}>
