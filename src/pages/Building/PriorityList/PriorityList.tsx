@@ -40,8 +40,8 @@ export default function PriorityList() {
       id={`priority-list-${region}`}
       placeChildrenBeforeTabs
       resizable
-      minSize={200}
-      initialSize={300}
+      minSize={100}
+      initialSize={180}
       maxSize={600}
     >
       {collapsed => <CreatePriorityListButton tabBarCollapsed={collapsed} onClick={() => openCreateModal()} />}
