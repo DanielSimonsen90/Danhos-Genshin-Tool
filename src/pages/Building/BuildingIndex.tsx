@@ -3,7 +3,7 @@ import { ROUTES } from "@/common/constants/routes";
 
 const routes = [
   [ROUTES.endRoute('building_priority_list'), 'Priority list', `Make your own tierlist-based priority lists on all models like characters, artifacts and domains.`],
-  // [ROUTES.endRoute('focus_day'), 'Focus day', `List of items in the game, how to obtain them, when they're available and any other relevant information.`],
+  [ROUTES.endRoute('building_artifact_helper'), 'Artifact Helper', `Insert the data of your artifact and get a list of characters that would benefit from it.`],
   // [ROUTES.endRoute('plan'), 'Plan', `Create your own plan to build your characters, including what to farm and when.`],
 ];
 

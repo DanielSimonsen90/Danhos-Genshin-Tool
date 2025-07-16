@@ -2,10 +2,12 @@
 
 .site-header {
   display: flex;
-  flex-direction: column;
+  justify-content: center;  
   gap: 1em;
+  
   padding: 1em;
   box-shadow: 0 0 5px 3px #22222266;
+  min-height: 5rem;
 
   nav {
     display: flex;
@@ -38,43 +40,13 @@
     }
   }
 
-  .tab-bar {
-    width: fit-content;
-    margin-inline: auto;
-  }
-}
-
-.top-header {
-  display: grid;
-  grid-template-areas: "blank nav settings";
-  grid-template-columns: 1fr auto 1fr;
-
-  @media (max-width: 920px) {
-    grid-template-areas: "nav settings";
-    grid-template-columns: auto auto;
-  }
-
-  @media (max-width: 700px) {
-    grid-template-areas: "settings" "nav";
-    grid-template-columns: 1fr;
-    justify-items: center;
-    gap: 1em;
-  }
-
-  nav {
-    grid-area: nav;
-  }
-
   .settings-container {
-    grid-area: settings;
     display: flex;
     align-items: center;
     gap: .5em;
-    justify-self: end;
 
-    @media (max-width: 700px) {
-      justify-self: auto;
-    }
+    position: absolute;
+    right: 1em;
 
     .input-group {
       flex-direction: column;

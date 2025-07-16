@@ -1,6 +1,6 @@
 import { Routes, Route, HashRouter } from "react-router-dom";
 import {
-  Layout, Home, Search,
+  Layout, Home,
 
   DataIndex,
   Characters, Character,
@@ -10,8 +10,9 @@ import {
   Mobs, Mob,
   Weapons, Weapon,
   
-  BuildingIndex,
-  PriorityList,
+  BuildingIndex, 
+  PriorityList, 
+  ArtifactHelper, Search,
 
   Development,
 } from '@/pages';
@@ -22,9 +23,6 @@ export const Router = () => (
     <Routes>
       <Route path="*" Component={Layout}>
         <Route index element={<Home />} />
-        <Route path={ROUTES.search}>
-          <Route path={ROUTES.endRoute('search_query')} element={<Search />} />
-        </Route>
 
         <Route path={ROUTES.data}>
           <Route index element={<DataIndex />} />
@@ -44,10 +42,12 @@ export const Router = () => (
           <Route path={ROUTES.endRoute('data_materials')}>
             <Route index element={<Materials />} />
             <Route path={ROUTES.endRoute('data_material')} element={<Material />} />
-          </Route>          <Route path={ROUTES.endRoute('data_mobs')}>
+          </Route>          
+          <Route path={ROUTES.endRoute('data_mobs')}>
             <Route index element={<Mobs />} />
             <Route path={ROUTES.endRoute('data_mob')} element={<Mob />} />
-          </Route>          <Route path={ROUTES.endRoute('data_weapons')}>
+          </Route>          
+          <Route path={ROUTES.endRoute('data_weapons')}>
             <Route index element={<Weapons />} />
             <Route path={ROUTES.endRoute('data_weapon')} element={<Weapon />} />
           </Route>
@@ -56,11 +56,12 @@ export const Router = () => (
         <Route path={ROUTES.building}>
           <Route index element={<BuildingIndex />} />
           <Route path={ROUTES.endRoute('building_priority_list')} element={<PriorityList />} />
+          <Route path={ROUTES.endRoute('building_artifact_helper')}>
+            <Route index element={<ArtifactHelper />} />
+            <Route path={ROUTES.endRoute('building_artifact_helper_search')} element={<Search />} />
+          </Route>
           {/* 
-
-          /focus-day
           /plan
-
           */}
         </Route>
 

@@ -17,6 +17,7 @@ import { useComponent } from "@/hooks/useComponent";
 
 import { useCacheStore } from "@/stores/CacheStore";
 import { ArtifactImage } from "@/components/common/Images";
+import { ROUTES } from "@/common/constants/routes";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchComponent);
 
@@ -50,7 +51,7 @@ export default function Search() {
         timestamp: Date.now()
       }
     });
-    navigate(`/search/${searchId}`);
+    navigate(ROUTES.endRoute('building_artifact_helper_search').replace(':query', searchId));
   }, 4);
   const [SelectMainStat, setSelectMainStat] = useComponent(SelectMainStatComponent, {
     name: 'mainStat',

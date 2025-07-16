@@ -25,12 +25,12 @@
   border-radius: .25em;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  transition-duration: 200ms;
 
   &:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     background-color: var(--background-secondary--muted);
     transform: translateY(-.25em);
-    transition: var(--transition);
   }
 
   a {

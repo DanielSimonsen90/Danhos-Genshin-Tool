@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Select from "@/components/common/Select";
 import { useCacheStore } from "@/stores";
+import { ROUTES } from "@/common/constants/routes";
 
 export default function Cache() {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ export default function Cache() {
           placeholder="Previous searches"
           onChange={value => {
             const searchId = options.find(item => item.title === value)?.id;
-            navigate(`/search/${searchId}`);
+            navigate(ROUTES.endRoute('building_artifact_helper_search').replace(':query', searchId));
           }}
         />
       : <p>No search history yet.</p>}
