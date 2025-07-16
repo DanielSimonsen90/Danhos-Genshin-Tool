@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Rarity } from "@/common/types";
 
@@ -35,28 +35,34 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
   noBaseFilterChecks, noBaseSearch, cardProps,
   ...props
 }: Props<TFilterKeys>) {
+  const { query, filters } = useParams();
   const navigate = useNavigate();
   const [hidden, setHidden] = useState(new Array<Material>());
-  const { add, remove, isFavorite } = useFavoriteStore('materials');
+  const FavoriteStore = useFavoriteStore('materials');
   const DataStore = useDataStore();
 
   return <SearchableList
     items={items}
-    sort={(a, b) => isFavorite(a) === isFavorite(b) ? 0 : isFavorite(a) ? -1 : 1}
-    onSearchOrFilterChange={() => setHidden([])}
+    sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
     renderItem={material => {
       const open = useContextMenu(item => [
         item('option', 'View', () => navigate(`/materials/${material.name}`), '👁️'),
-        item('option', isFavorite(material) ? 'Unfavorite' : 'Favorite', () => isFavorite(material) ? remove(material) : add(material), '⭐'),
+        item('option', FavoriteStore.isFavorite(material) ? 'Unfavorite' : 'Favorite', () => FavoriteStore.isFavorite(material) ? FavoriteStore.remove(material) : FavoriteStore.add(material), '⭐'),
         item('option', 'Hide', () => setHidden([...hidden, material]), '🙈'),
       ]);
 
       return hidden.includes(material) ? null : (
         <div className="context-menu-item-container" onContextMenu={open}>
-          {isFavorite(material) && <Star className="favorite-star" onClick={() => remove(material)} />}
+          {FavoriteStore.isFavorite(material) && <Star className="favorite-star" onClick={() => FavoriteStore.remove(material)} />}
           <MaterialCard material={material} {...cardProps} />
         </div>
       );
+    }}
+    search={query}
+    filters={filters ? JSON.parse(filters) : {}}
+    onSearchOrFilterChange={(search, filters) => {
+      setHidden([]);
+      navigate(`?query=${search}&filters=${JSON.stringify(filters)}`);
     }}
     onSearch={noBaseSearch ? onSearch : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}
     filterChecks={noBaseFilterChecks ? filterChecks : {

@@ -5,7 +5,6 @@ import { useDataStore } from "@/stores";
 import { ItemHeader } from "@/components/domain/Item";
 import { DataStore } from "@/stores/DataStore/DataStoreTypes";
 import { ROUTES } from "@/common/constants/routes";
-import { Model } from "@/common/models";
 
 type DataKeys = keyof Pick<
   DataStore,

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { ArtifactSet } from "@/common/models";
 import { ArtifactCard } from "@/components/domain/Artifacts";
@@ -28,26 +28,32 @@ export default function SearchableArtifactList<TFilterKeys extends string>({
   noBaseFilterChecks, noBaseSearch, cardProps,
   ...props
 }: Props<TFilterKeys>) {
+  const { query, filters } = useParams();
   const navigate = useNavigate();
   const [hidden, setHidden] = useState(new Array<ArtifactSet>());
-  const { add, remove, isFavorite } = useFavoriteStore('artifacts');
+  const FavoriteStore = useFavoriteStore('artifacts');
 
   return <SearchableList items={items} 
-    sort={(a, b) => isFavorite(a) === isFavorite(b) ? 0 : isFavorite(a) ? -1 : 1}
-    onSearchOrFilterChange={() => setHidden([])}
+    sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
     renderItem={artifact => {
       const open = useContextMenu(item => [
         item('option', 'View', () => navigate(`/artifacts/${artifact.name}`), '👁️'),
-        item('option', isFavorite(artifact) ? 'Unfavorite' : 'Favorite', () => isFavorite(artifact) ? remove(artifact) : add(artifact), '⭐'),
+        item('option', FavoriteStore.isFavorite(artifact) ? 'Unfavorite' : 'Favorite', () => FavoriteStore.isFavorite(artifact) ? FavoriteStore.remove(artifact) : FavoriteStore.add(artifact), '⭐'),
         item('option', 'Hide', () => setHidden([...hidden, artifact]), '🙈'),
       ]);
 
       return hidden.includes(artifact) ? null : (
         <div className="context-menu-item-container" onContextMenu={open}>
-          {isFavorite(artifact) && <Star className="favorite-star" onClick={() => remove(artifact)} />}
+          {FavoriteStore.isFavorite(artifact) && <Star className="favorite-star" onClick={() => FavoriteStore.remove(artifact)} />}
           <ArtifactCard artifact={artifact} {...cardProps} />
         </div>
       );
+    }}
+    search={query}
+    filters={filters ? JSON.parse(filters) : {}}
+    onSearchOrFilterChange={(search, filters) => {
+      setHidden([]);
+      navigate(`?query=${search}&filters=${JSON.stringify(filters)}`);
     }}
     onSearch={noBaseSearch ? onSearch : (query, item) => (item.includes(query.toLowerCase())) && (onSearch?.(query, item) ?? true)}
     filterChecks={noBaseFilterChecks ? filterChecks : {

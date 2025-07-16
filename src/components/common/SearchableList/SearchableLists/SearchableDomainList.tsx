@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Domain } from "@/common/models";
 import { DomainCard } from "@/components/domain/Domain";
@@ -26,27 +26,33 @@ export default function SearchableDomainList<TFilterKeys extends string>({
   noBaseFilterChecks, noBaseSearch, cardProps,
   ...props
 }: Props<TFilterKeys>) {
+  const { query, filters } = useParams();
   const navigate = useNavigate();
   const [hidden, setHidden] = useState(new Array<Domain<any>>());
-  const { add, remove, isFavorite } = useFavoriteStore('domains');
+  const FavoriteStore = useFavoriteStore('domains');
 
-  return <SearchableList items={items} 
-    sort={(a, b) => isFavorite(a) === isFavorite(b) ? 0 : isFavorite(a) ? -1 : 1}
-    onSearchOrFilterChange={() => setHidden([])}
-  renderItem={domain => {
-    const open = useContextMenu(item => [
-      item('option', 'View', () => navigate(`/domains/${domain.name}`), '👁️'),
-      item('option', isFavorite(domain) ? 'Unfavorite' : 'Favorite', () => isFavorite(domain) ? remove(domain) : add(domain), '⭐'),
-      item('option', 'Hide', () => setHidden([...hidden, domain]), '🙈'),
-    ]);
+  return <SearchableList items={items}
+    sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
+    renderItem={domain => {
+      const open = useContextMenu(item => [
+        item('option', 'View', () => navigate(`/domains/${domain.name}`), '👁️'),
+        item('option', FavoriteStore.isFavorite(domain) ? 'Unfavorite' : 'Favorite', () => FavoriteStore.isFavorite(domain) ? FavoriteStore.remove(domain) : FavoriteStore.add(domain), '⭐'),
+        item('option', 'Hide', () => setHidden([...hidden, domain]), '🙈'),
+      ]);
 
-    return hidden.includes(domain) ? null : (
-      <div className="context-menu-item-container" onContextMenu={open}>
-        {isFavorite(domain) && <Star className="favorite-star" onClick={() => remove(domain)} />}
-        <DomainCard domain={domain} {...cardProps} />
-      </div>
-    );
-  }}
+      return hidden.includes(domain) ? null : (
+        <div className="context-menu-item-container" onContextMenu={open}>
+          {FavoriteStore.isFavorite(domain) && <Star className="favorite-star" onClick={() => FavoriteStore.remove(domain)} />}
+          <DomainCard domain={domain} {...cardProps} />
+        </div>
+      );
+    }}
+    search={query}
+    filters={filters ? JSON.parse(filters) : {}}
+    onSearchOrFilterChange={(search, filters) => {
+      setHidden([]);
+      navigate(`?query=${search}&filters=${JSON.stringify(filters)}`);
+    }}
     onSearch={noBaseSearch ? onSearch : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}
     filterChecks={noBaseFilterChecks ? filterChecks : {
       type: {

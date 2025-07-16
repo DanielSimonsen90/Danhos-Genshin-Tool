@@ -1,4 +1,4 @@
-import { ArtifactSet, Character, Domain, Weapon } from "@/common/models";
+import { ArtifactSet, Character, Domain, Mob, Weapon } from "@/common/models";
 import Material from "@/common/models/materials/Material";
 
 export type FavoriteStore = ModelsCollection & {
@@ -18,6 +18,7 @@ export type FavoriteModels = {
   characters: Character;
   artifacts: ArtifactSet;
   domains: Domain<any>;
+  mobs: Mob;
   materials: Material;
   weapons: Weapon;
 }

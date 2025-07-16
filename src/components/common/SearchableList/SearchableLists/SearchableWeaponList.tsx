@@ -30,29 +30,32 @@ export default function SearchableWeaponList<TFilterKeys extends string>({
   const { query, filters } = useParams();
   const navigate = useNavigate();
   const [hidden, setHidden] = useState(new Array<Weapon>());
-  const { add: addToFavorite, remove: removeFromFavorite, isFavorite } = useFavoriteStore('weapons');
+  const FavoriteStore = useFavoriteStore('weapons');
 
   return <SearchableList items={items}
-    sort={(a, b) => isFavorite(a) === isFavorite(b) ? 0 : isFavorite(a) ? -1 : 1}
+    sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
     renderItem={weapon => {
       const open = useContextMenu(item => [
         item('option', 'View', () => navigate(`/weapons/${weapon.name}`), '👁️'),
-        item('option', isFavorite(weapon) ? 'Unfavorite' : 'Favorite', () => isFavorite(weapon) ? removeFromFavorite(weapon) : addToFavorite(weapon), '⭐'),
+        item('option', FavoriteStore.isFavorite(weapon) ? 'Unfavorite' : 'Favorite', () => FavoriteStore.isFavorite(weapon) ? FavoriteStore.remove(weapon) : FavoriteStore.add(weapon), '⭐'),
         item('option', 'Hide', () => setHidden([...hidden, weapon]), '🙈'),
       ]);
 
       return hidden.includes(weapon) ? null : (
         <div className="context-menu-item-container" onContextMenu={open}>
-          {isFavorite(weapon) && <Star className="favorite-star" onClick={() => removeFromFavorite(weapon)} />}
+          {FavoriteStore.isFavorite(weapon) && <Star className="favorite-star" onClick={() => FavoriteStore.remove(weapon)} />}
           <WeaponCard weapon={weapon} {...cardProps} />
         </div>
       );
     }}
-
     search={query}
     filters={filters ? JSON.parse(filters) : {}}
-    onSearchOrFilterChange={(search, filters) => navigate(`?query=${search}&filters=${JSON.stringify(filters)}`)}
-    onSearch={noBaseSearch ? onSearch : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}    filterChecks={noBaseFilterChecks ? filterChecks : {
+    onSearchOrFilterChange={(search, filters) => {
+      setHidden([]);
+      navigate(`?query=${search}&filters=${JSON.stringify(filters)}`);
+    }}
+    onSearch={noBaseSearch ? onSearch : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}
+    filterChecks={noBaseFilterChecks ? filterChecks : {
       weaponType: {
         sword: weapon => weapon.type === "Sword",
         claymore: weapon => weapon.type === "Claymore",

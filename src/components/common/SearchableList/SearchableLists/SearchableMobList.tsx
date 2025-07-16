@@ -9,6 +9,7 @@ import { useContextMenu } from "@/providers/ContextMenuProvider";
 
 import { OptionalProps, UncrontrolledProps } from "../Props";
 import SearchableList from "../SearchableList";
+import { useFavoriteStore } from "@/stores";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<Mob, TFilterKeys>>
@@ -27,11 +28,15 @@ export default function SearchableMobList<TFilterKeys extends string>({
   const { query, filters } = useParams();
   const navigate = useNavigate();
   const [hidden, setHidden] = useState(new Array<Mob>());
+  const FavoriteStore = useFavoriteStore('mobs')
 
-  return <SearchableList items={items}
+  return <SearchableList 
+    items={items}
+    sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
     renderItem={mob => {
       const open = useContextMenu(item => [
         item('option', 'View', () => navigate(`/mobs/${mob.name}`), '👁️'),
+        item('option', FavoriteStore.isFavorite(mob) ? 'Unfavorite' : 'Favorite', () => FavoriteStore.isFavorite(mob) ? FavoriteStore.remove(mob) : FavoriteStore.add(mob), '⭐'),
         item('option', 'Hide', () => setHidden([...hidden, mob]), '🙈'),
       ]);
       return hidden.includes(mob) ? null : (
@@ -42,7 +47,10 @@ export default function SearchableMobList<TFilterKeys extends string>({
     }}
     search={query}
     filters={filters ? JSON.parse(filters) : {}}
-    onSearchOrFilterChange={(search, filters) => navigate(`?query=${search}&filters=${JSON.stringify(filters)}`)}
+    onSearchOrFilterChange={(search, filters) => {
+      setHidden([]);
+      navigate(`?query=${search}&filters=${JSON.stringify(filters)}`);
+    }}
     onSearch={noBaseSearch ? onSearch : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}
     filterChecks={noBaseFilterChecks ? filterChecks : {
       type: {

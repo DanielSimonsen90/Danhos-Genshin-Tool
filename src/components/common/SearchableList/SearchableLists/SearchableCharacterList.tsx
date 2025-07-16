@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Character } from "@/common/models";
 import { CharacterCard } from "@/components/domain/Character";
 import { Props as CharacterCardProps } from "@/components/domain/Character/CharacterCard/CharacterCard";
+import { Rarity } from "@/common/types";
 
 import { useDataStore, useFavoriteStore } from "@/stores";
 import { useContextMenu } from "@/providers/ContextMenuProvider";
@@ -11,7 +12,6 @@ import { useContextMenu } from "@/providers/ContextMenuProvider";
 import { OptionalProps, UncrontrolledProps } from "../Props";
 import SearchableList from "../SearchableList";
 import Star from "../../icons/Star";
-import { Rarity } from "@/common/types";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<Character, TFilterKeys>>
@@ -30,21 +30,21 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
   const { query, filters } = useParams();
   const navigate = useNavigate();
   const [hidden, setHidden] = useState(new Array<Character>());
-  const { add: addToFavorite, remove: removeFromFavorite, isFavorite } = useFavoriteStore('characters');
+  const FavoriteStore = useFavoriteStore('characters');
   const DataStore = useDataStore();
 
   return <SearchableList items={items}
-    sort={(a, b) => isFavorite(a) === isFavorite(b) ? 0 : isFavorite(a) ? -1 : 1}
+    sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
     renderItem={character => {
       const open = useContextMenu(item => [
         item('option', 'View', () => navigate(`/characters/${character.name}`), '👁️'),
-        item('option', isFavorite(character) ? 'Unfavorite' : 'Favorite', () => isFavorite(character) ? removeFromFavorite(character) : addToFavorite(character), '⭐'),
+        item('option', FavoriteStore.isFavorite(character) ? 'Unfavorite' : 'Favorite', () => FavoriteStore.isFavorite(character) ? FavoriteStore.remove(character) : FavoriteStore.add(character), '⭐'),
         item('option', 'Hide', () => setHidden([...hidden, character]), '🙈'),
       ]);
 
       return hidden.includes(character) ? null : (
         <div className="context-menu-item-container" onContextMenu={open}>
-          {isFavorite(character) && <Star className="favorite-star" onClick={() => removeFromFavorite(character)} />}
+          {FavoriteStore.isFavorite(character) && <Star className="favorite-star" onClick={() => FavoriteStore.remove(character)} />}
           <CharacterCard character={character} {...cardProps} />
         </div>
       );
@@ -52,7 +52,10 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
 
     search={query}
     filters={filters ? JSON.parse(filters) : {}}
-    onSearchOrFilterChange={(search, filters) => navigate(`?query=${search}&filters=${JSON.stringify(filters)}`)}
+    onSearchOrFilterChange={(search, filters) => {
+      setHidden([]);
+      navigate(`?query=${search}&filters=${JSON.stringify(filters)}`)
+    }}
     onSearch={noBaseSearch ? onSearch : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}
     filterChecks={noBaseFilterChecks ? filterChecks : {
       element: {
