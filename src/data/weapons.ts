@@ -4380,6 +4380,7 @@ export const WolfsGravestone = new Weapon(
     Drops.Scroll
   ],
   'Wish',
+  cs => cs.Diluc
 );
 
 export const XiphosMoonlight = new Weapon(
