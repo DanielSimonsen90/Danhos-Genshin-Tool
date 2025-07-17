@@ -1,4 +1,4 @@
-import { SearchableWeaponList } from "@/components/common/SearchableList";
+import { SearchableWeaponList } from "@/components/domain/SearchableList";
 import { ItemHeader } from "@/components/domain/Item";
 import { useWeaponData } from "@/stores";
 

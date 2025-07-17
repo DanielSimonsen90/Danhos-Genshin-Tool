@@ -1,4 +1,4 @@
-import Switch from "@/components/common/Switch";
+import { Switch } from "@/components/common/FormItems";
 import { SearchResult } from "@/services";
 import { useSetting } from "@/stores";
 import { useEffect, useState } from "react";

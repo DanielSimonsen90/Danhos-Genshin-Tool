@@ -3,7 +3,7 @@ import {
   SearchableArtifactList, SearchableCharacterList,
   SearchableDomainList, SearchableMaterialList,
   SearchableMobList, SearchableWeaponList
-} from "@/components/common/SearchableList";
+} from "@/components/domain/SearchableList";
 import { useDataStore } from "@/stores/DataStore";
 import { ModelsCollection, useFavoriteStore } from "@/stores/FavoriteStore";
 

@@ -1,4 +1,4 @@
-import Switch from "@/components/common/Switch";
+import Switch from "@/components/common/FormItems/Switch";
 import { useSetting } from "@/stores";
 
 export const Wrap = () => {

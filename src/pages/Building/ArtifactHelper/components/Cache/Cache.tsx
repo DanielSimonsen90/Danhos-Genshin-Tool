@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Select from "@/components/common/Select";
+import { Select } from "@/components/common/FormItems";
 import { useCacheStore } from "@/stores";
 import { ROUTES } from "@/common/constants/routes";
 

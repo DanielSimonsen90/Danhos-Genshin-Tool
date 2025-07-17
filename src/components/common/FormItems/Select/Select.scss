@@ -1,0 +1,69 @@
+@use '../../../../styles/partials' as *;
+
+.select__internal {
+  display: none;
+}
+
+.select {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  min-width: 10ch;
+  user-select: none;
+
+  &--multiple {
+    padding: unset;
+    min-width: 20ch;
+  }
+
+  &__header {
+    --margin: 0;
+    border: none;
+  }
+
+  &:has(.select__options--open) &__header {
+    background-color: var(--background-tertiary);
+  }
+
+  &__options {
+
+    &--open {
+      border-top: 1px solid var(--background-tertiary);
+      border-bottom-left-radius: .5rem;
+      border-bottom-right-radius: .5rem;
+    }
+
+    &:not(&--open) {
+      @extend %hidden;
+    }
+
+    li,
+    option {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 1ch;
+      min-width: fit-content;
+      padding: 1ch 0;
+      cursor: pointer;
+      user-select: none;
+
+      &:hover {
+        background-color: var(--background-tertiary);
+      }
+
+      input {
+        height: 1rem;
+      }
+    }
+
+    &.floatable {
+      position: absolute;
+      z-index: 2;
+      background-color: var(--background-secondary);
+      box-shadow: 0 0 15px 3px #222222aa;
+      width: 100%;
+      top: calc(100% + .5ch);
+    }
+  }
+}

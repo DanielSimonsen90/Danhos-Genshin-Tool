@@ -1,5 +1,5 @@
 import { ArtifactSet } from '@/common/models';
-import { CharacterCard, CharacterSet } from '@/components/domain/Character';
+import { CharacterCard, CharacterSet } from '@/components/domain/models/Character';
 import { SearchResultItem } from '@/services/SearchService';
 
 type Props = {

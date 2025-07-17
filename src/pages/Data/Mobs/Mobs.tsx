@@ -1,6 +1,6 @@
 import { ItemHeader } from "@/components/domain/Item";
 import { useMobData } from "@/stores";
-import SearchableMobList from "@/components/common/SearchableList/SearchableLists/SearchableMobList";
+import SearchableMobList from "@/components/domain/SearchableList/SearchableLists/SearchableMobList";
 
 export default function Mobs() {
   const mobs = useMobData().Mobs;

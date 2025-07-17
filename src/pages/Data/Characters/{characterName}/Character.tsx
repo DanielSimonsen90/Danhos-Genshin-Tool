@@ -1,4 +1,4 @@
-import { CharacterCard } from "@/components/domain/Character";
+import { CharacterCard } from "@/components/domain/models/Character";
 import ItemPage from "@/pages/_Layout/ItemPage";
 
 export default function Character() {

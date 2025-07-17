@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { pascalCaseFromSnakeCase } from "@/common/functions/strings";
-import Chevron from "@/components/common/icons/Chevron";
+import Chevron from "@/components/common/media/icons/Chevron";
 import { IS_DEVELOPMENT_ENVIRONMENT } from "@/common/constants/dev";
 
 type Props = {

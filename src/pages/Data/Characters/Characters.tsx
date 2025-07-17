@@ -1,4 +1,4 @@
-import { SearchableCharacterList } from "@/components/common/SearchableList";
+import { SearchableCharacterList } from "@/components/domain/SearchableList";
 import { ItemHeader } from "@/components/domain/Item";
 import { useCharacterData } from "@/stores";
 

@@ -1,6 +1,6 @@
 import { ItemHeader } from "@/components/domain/Item";
 import { useDomainData } from "@/stores";
-import SearchableDomainList from "@/components/common/SearchableList/SearchableLists/SearchableDomainList";
+import SearchableDomainList from "@/components/domain/SearchableList/SearchableLists/SearchableDomainList";
 
 export default function Domains() {
   const domains = useDomainData().Domains;

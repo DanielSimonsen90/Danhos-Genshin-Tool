@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useCallback } from "react";
 
-import { CharacterImage, ArtifactImage, DomainImage, MaterialImage, MobImage, WeaponImage } from "@/components/common/Images";
+import { CharacterImage, ArtifactImage, DomainImage, MaterialImage, MobImage, WeaponImage } from "@/components/common/media/Images";
 import Tierlist, { Tier } from "@/components/common/Tierlist";
 import { useDataStore } from "@/stores";
 

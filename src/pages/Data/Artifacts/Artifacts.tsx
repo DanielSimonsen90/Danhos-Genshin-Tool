@@ -1,4 +1,4 @@
-import { SearchableArtifactList } from "@/components/common/SearchableList";
+import { SearchableArtifactList } from "@/components/domain/SearchableList";
 import { ItemHeader } from "@/components/domain/Item";
 import { useArtifactData } from "@/stores";
 

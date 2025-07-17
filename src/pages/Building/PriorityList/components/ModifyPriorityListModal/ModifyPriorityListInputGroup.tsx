@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ObjectUtils from "@/common/functions/object";
 import { ModifyPriorityListPayload } from "../../PriorityListTypes";
-import Select from "@/components/common/Select";
+import { Select } from "@/components/common/FormItems";
 import { ModelKeys } from "@/common/models";
 import { pascalCaseFromCamelCase } from "@/common/functions/strings";
 import { AREAS, NO_PRESET } from "../../PriorityListConstants";

@@ -1,4 +1,4 @@
-import { MobCard } from '@/components/domain/Mob';
+import { MobCard } from '@/components/domain/models/Mob';
 import ItemPage from '@/pages/_Layout/ItemPage';
 
 export default function Mob() {

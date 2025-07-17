@@ -2,7 +2,7 @@ import { ArtifactSet } from "@/common/models";
 import { classNames } from "@/common/functions/strings";
 import { SearchResultItem } from "@/services";
 import SearchResultItemComponent from "./SearchResultItem";
-import SearchableList from "@/components/common/SearchableList";
+import SearchableList from "@/components/domain/SearchableList";
 
 type Props = {
   results: Array<SearchResultItem>;

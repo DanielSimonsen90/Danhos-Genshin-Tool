@@ -2,7 +2,7 @@ import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "re
 import { addTabNavigation } from "@/common/functions/accessibility";
 import { classNames } from "@/common/functions/strings";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { Chevron } from "../icons";
+import { Chevron } from "../media/icons";
 
 import { Props, Tab } from "./TabBarTypes";
 import { createTabItem } from "./TabBarFunctions";

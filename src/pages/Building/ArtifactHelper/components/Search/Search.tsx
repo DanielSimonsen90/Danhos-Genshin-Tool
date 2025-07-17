@@ -10,13 +10,13 @@ import {
   SelectArtifactPartName, SelectArtifactSet,
   SelectMainStat as SelectMainStatComponent,
   SelectSubStat
-} from "@/components/common/Select";
+} from "@/components/common/FormItems";
 
 import { useActionState } from "@/hooks/useActionState";
 import { useComponent } from "@/hooks/useComponent";
 
 import { useCacheStore } from "@/stores/CacheStore";
-import { ArtifactImage } from "@/components/common/Images";
+import { ArtifactImage } from "@/components/common/media/Images";
 import { ROUTES } from "@/common/constants/routes";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchComponent);

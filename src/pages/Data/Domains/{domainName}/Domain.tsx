@@ -1,4 +1,4 @@
-import { DomainCard } from "@/components/domain/Domain";
+import { DomainCard } from "@/components/domain/models/Domain";
 import ItemPage from "@/pages/_Layout/ItemPage";
 
 export default function Domain() {

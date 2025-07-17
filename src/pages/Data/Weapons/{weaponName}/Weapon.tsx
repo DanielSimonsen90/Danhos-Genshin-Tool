@@ -1,4 +1,4 @@
-import { WeaponCard } from "@/components/domain/Weapon";
+import { WeaponCard } from "@/components/domain/models/Weapon";
 import ItemPage from "@/pages/_Layout/ItemPage";
 
 export default function Weapon() {

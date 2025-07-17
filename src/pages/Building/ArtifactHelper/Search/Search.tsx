@@ -5,8 +5,8 @@ import { pascalCaseFromSnakeCase } from "@/common/functions/strings";
 import { DebugLog } from "@/common/functions/dev";
 import { SearchFormData } from "@/common/types";
 
-import { ArtifactImage } from "@/components/common/Images";
-import { ArtifactDetails } from "@/components/domain/Artifacts";
+import { ArtifactImage } from "@/components/common/media/Images";
+import { ArtifactDetails } from "@/components/domain/models/Artifacts";
 
 import { SearchResult, SearchService } from "@/services";
 

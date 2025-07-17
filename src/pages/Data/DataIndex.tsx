@@ -17,12 +17,12 @@ import { DataStore, useDataStore } from '@/stores';
 import { useDebounceValue } from '@/hooks/useDebounceValue';
 
 // Import existing model cards
-import { CharacterCard } from '@/components/domain/Character';
-import { ArtifactCard } from '@/components/domain/Artifacts';
-import { DomainCard } from '@/components/domain/Domain';
-import { MaterialCard } from '@/components/domain/Material';
-import { MobCard } from '@/components/domain/Mob';
-import { WeaponCard } from '@/components/domain/Weapon';
+import { CharacterCard } from '@/components/domain/models/Character';
+import { ArtifactCard } from '@/components/domain/models/Artifacts';
+import { DomainCard } from '@/components/domain/models/Domain';
+import { MaterialCard } from '@/components/domain/models/Material';
+import { MobCard } from '@/components/domain/models/Mob';
+import { WeaponCard } from '@/components/domain/models/Weapon';
 
 const DATA_PREFIX = ROUTES.data;
 const routes = [

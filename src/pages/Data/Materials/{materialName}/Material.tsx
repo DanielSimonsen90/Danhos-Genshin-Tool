@@ -1,4 +1,4 @@
-import { MaterialCard } from '@/components/domain/Material';
+import { MaterialCard } from '@/components/domain/models/Material';
 import ItemPage from '@/pages/_Layout/ItemPage';
 
 export default function Material() {

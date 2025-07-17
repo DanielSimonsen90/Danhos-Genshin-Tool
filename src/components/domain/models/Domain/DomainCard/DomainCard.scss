@@ -1,0 +1,124 @@
+@use '../../../../../styles/partials' as *;
+
+.domain-card {
+  display: grid;
+  gap: 1em;
+  height: 100%;
+
+  &__header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1em;
+  }
+
+  .domain-image {
+    border-radius: .25em;
+    margin-inline: auto;
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__name {
+    --margins: 0em;
+    // max-width: calc(100% - var(--margins) * 2);
+    max-width: 100%;
+    font-size: clamp(1.25rem, 2vw, 3rem);
+  }
+
+  .domain-type {
+    ul {
+      display: flex;
+      justify-content: center;
+
+      .artifact-image,
+      .material-image {
+        --size: 3rem;
+      }
+    }
+  }
+
+  .domain-card__region {
+    color: var(--region);
+  }
+
+  .domain-rewards {
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1em;
+
+    .artifact-card {
+      &:hover {
+        border-radius: .25em;
+        background-color: var(--background-secondary);
+      }
+    }
+  }
+
+  .artifact-card {
+    >header {
+      --image-size: 7.5rem;
+      display: grid;
+      grid-template-columns: var(--image-size) 1fr;
+      align-items: center;
+      justify-items: start;
+
+      .artifact-card__name {
+        text-align: left;
+      }
+    }
+  }
+
+  .artifact-tab-bar {
+    .tab-bar__tab {
+      padding-inline: .5em;
+    }
+
+    .artifact-card {
+      padding-inline: .5em;
+
+      >header {
+        gap: .5em;
+      }
+    }
+  }
+}
+
+.domain-card--show-more {
+  .domain-details {
+    >header {
+      display: flex;
+      gap: 1ch;
+
+      .resin-cost::before {
+        content: ' • ';
+      }
+    }
+  }
+}
+
+a.domain-card {
+  > header {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .domain-card__name {
+    margin-inline: auto;
+  }
+  .domain-card__details {
+    align-items: center;
+  }
+
+  p {
+    --margins: .25em;
+  }
+}
+
+@media (min-width: 1000px) {
+  .domain-details__description {
+    max-width: 66ch;
+  }
+}

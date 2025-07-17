@@ -2,8 +2,8 @@ import { classNames } from "@/common/functions/strings";
 import { ArtifactSet, Character } from "@/common/models";
 import { Domain } from "@/common/models/domains/Domain";
 import { List } from "@/common/models/List";
-import SearchableList from "@/components/common/SearchableList";
-import { FilterProps } from "@/components/common/SearchableList/Props";
+import SearchableList from "@/components/domain/SearchableList";
+import { FilterProps } from "@/components/domain/SearchableList/Props";
 import { useDataStore } from "@/stores";
 import { DataStore } from "@/stores/DataStore/DataStoreTypes";
 

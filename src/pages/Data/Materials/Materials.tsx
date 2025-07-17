@@ -1,6 +1,6 @@
 import { ItemHeader } from "@/components/domain/Item";
 import { useMaterialsData } from "@/stores";
-import SearchableMaterialList from "@/components/common/SearchableList/SearchableLists/SearchableMaterialList";
+import SearchableMaterialList from "@/components/domain/SearchableList/SearchableLists/SearchableMaterialList";
 
 export default function Materials() {
   const materials = useMaterialsData().Materials;

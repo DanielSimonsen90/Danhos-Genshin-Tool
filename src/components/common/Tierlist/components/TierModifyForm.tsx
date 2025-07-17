@@ -4,7 +4,7 @@ import { generateRandomColor, colorConvert } from "@/common/functions/colors";
 import { classNames } from "@/common/functions/strings";
 import { useActionState } from "@/hooks/useActionState";
 
-import Switch from "../../Switch";
+import { Switch } from "../../FormItems";
 import { Tier } from "../TierlistTypes";
 
 export type FormTier<T> = Omit<Partial<Tier<T>> & Pick<Tier<T>, 'id'>, 'entries'>;

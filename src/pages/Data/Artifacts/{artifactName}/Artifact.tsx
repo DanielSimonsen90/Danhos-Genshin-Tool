@@ -1,5 +1,5 @@
 import { Link, useParams } from 'react-router-dom';
-import { ArtifactCard } from '@/components/domain/Artifacts';
+import { ArtifactCard } from '@/components/domain/models/Artifacts';
 import { useDataStore } from '@/stores';
 import { useMemo } from 'react';
 import { ItemHeader } from '@/components/domain/Item';
