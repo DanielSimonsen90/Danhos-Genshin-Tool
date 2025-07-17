@@ -5,17 +5,17 @@ import { useRelationsTabs } from "./useRelationsTabs";
 export type Props = {
   material: Material,
   showModelsUsing?: boolean;
-  showModelAquired?: boolean;
+  showModelAcquired?: boolean;
 };
 
 export default function Relations({
   material,
   showModelsUsing,
-  showModelAquired
+  showModelAcquired
 }: Props) {
   const { usedByTabs, acquiredFromTabs, hasUsedByTabs, hasAcquiredFromTabs } = useRelationsTabs(material);
 
-  if (!showModelsUsing && !showModelAquired) return null;
+  if (!showModelsUsing && !showModelAcquired) return null;
   return (
     <section>
       {showModelsUsing && hasUsedByTabs && (
@@ -24,7 +24,7 @@ export default function Relations({
           <TabBar tabs={usedByTabs} />
         </div>
       )}
-      {showModelAquired && hasAcquiredFromTabs && (
+      {showModelAcquired && hasAcquiredFromTabs && (
         <div className="material-card__model-acquired">
           <h2>Acquired from</h2>
           <TabBar tabs={acquiredFromTabs} />

@@ -19,13 +19,13 @@ export interface Props extends BaseModelCardProps {
   showDetails?: boolean;
   showRegion?: boolean;
   showModelsUsing?: boolean;
-  showModelAquired?: boolean;
+  showModelAcquired?: boolean;
 }
 
 export default function MaterialCard({
   material,
   allowCycle = true,
-  showModelsUsing, showModelAquired, showDetails, showRegion,
+  showModelsUsing, showModelAcquired, showDetails, showRegion,
   ...props
 }: Props) {
   const view = useSettingsStore(ss => ss.getSetting('preferredTabs')?.craftableMaterial);
@@ -106,7 +106,7 @@ export default function MaterialCard({
       renderContent={() => (<Relations
         material={material}
         showModelsUsing={showModelsUsing}
-        showModelAquired={showModelAquired}
+        showModelAcquired={showModelAcquired}
       />)}
     />
   );

@@ -6,6 +6,6 @@ export default function Material() {
     showDetails
     showRarity 
     showModelsUsing 
-    showModelAquired 
+    showModelAcquired 
   />} />
 }
