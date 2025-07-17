@@ -37,6 +37,7 @@
 
     * {
       @extend %text-ellipsis;
+      width: 100%;
     }
   }
 
@@ -84,6 +85,8 @@
 }
 
 .tab-bar__tab {
+  display: flex;
+  align-items: center;
   box-shadow: none;
   border-right: 1px solid var(--background-tertiary);
   background-color: var(--background-secondary--muted);
@@ -124,7 +127,6 @@
   &--collapsed {
     @extend .hidden;
   }
-
   &-page {
     grid-area: content;
 
@@ -137,5 +139,48 @@
   .select,
   button {
     margin-inline: 0;
+  }
+}
+
+// Resizable TabBar styles
+.tab-bar--resizable.tab-bar--vertical {
+  --tabs-size: 250px;
+  position: relative;
+  grid-template-columns: var(--tabs-size) 1fr;
+  
+  &:has(.tab-bar__tabs--collapsed) {
+    grid-template-columns: 2em 1fr;
+  }
+  
+  .tab-bar__tabs {
+    border-right: none; // Remove border since resize handle will show it
+  }
+  
+  .tab-bar__content {
+    border-left: none; // Remove border since resize handle will show it
+  }
+  
+  .tab-bar__resize-handle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--tabs-size);
+    width: 4px;
+    margin-left: -2px; // Center the handle on the border
+    cursor: col-resize;
+    background-color: transparent;
+    border-left: 1px solid var(--background-tertiary);
+    border-right: 1px solid var(--background-tertiary);
+    z-index: 10;
+    
+    &:hover,
+    &--dragging {
+      background-color: var(--brand);
+      border-color: var(--brand);
+    }
+    
+    &--dragging {
+      user-select: none;
+    }
   }
 }

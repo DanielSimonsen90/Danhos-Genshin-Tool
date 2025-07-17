@@ -17,8 +17,24 @@ export const Roadmap = () => (
           'Tierlist-like setup with character, artifact or domain icons',
           'You are able to have multiple priority lists per earth region. Changing region will load priority lists saved for that region',
         ]} />
-        <FeatureIdea title="Character Focus Day" version={2.1} features={[
-          'What characters/items are farmable today (ascension materials for characters and weapons'
+        <FeatureIdea completed title="Character Focus Day" version={2.1} features={[
+          'What characters/items are farmable today (ascension materials for characters and weapons',
+          {
+            'This includes a bulk amount of data from in game models such as:': [
+              {
+                'Farmable materials such as': [
+                  'Character ascension materials',
+                  'Character talent ascension items',
+                  'Weapon ascension materials',
+                  'Weapon talent ascension items',
+                  'Regional items',
+                  'Mob drops',
+                ],
+              },
+              'All mobs that drop the materials, including bosses, elite and easy enemies',
+              'All weapons excluding common/uncommon weapons'
+            ]
+          },
         ]} />
         <FeatureIdea title="Character Plan" version={2.2} features={[
           'Implement "forum-like" system',

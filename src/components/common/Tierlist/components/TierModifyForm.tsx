@@ -4,7 +4,7 @@ import { generateRandomColor, colorConvert } from "@/common/functions/colors";
 import { classNames } from "@/common/functions/strings";
 import { useActionState } from "@/hooks/useActionState";
 
-import Switch from "../../Switch";
+import { Switch } from "../../FormItems";
 import { Tier } from "../TierlistTypes";
 
 export type FormTier<T> = Omit<Partial<Tier<T>> & Pick<Tier<T>, 'id'>, 'entries'>;
@@ -28,7 +28,7 @@ export default function TierModifyForm<T>({ tier, submitText, onTierUpdate, add 
 
   const [submitting, onSubmit] = useActionState<Tier<T>>(data => {
     delete data._form;
-    console.log('TierModifyForm', data);
+    // console.log('TierModifyForm', data);
     onTierUpdate(data.id, data);
 
     setTitle('');

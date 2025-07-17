@@ -1,7 +1,4 @@
 export const ROUTES = new class Routes {
-  public search = 'search' as const;
-  public search_query = `${this.search}/:query` as const;
-
   public data = 'data' as const;
   public data_characters = `${this.data}/characters` as const;
   public data_character = `${this.data_characters}/:characterName` as const;
@@ -13,11 +10,15 @@ export const ROUTES = new class Routes {
   public data_weapon = `${this.data_weapons}/:weaponName` as const;
   public data_materials = `${this.data}/materials` as const;
   public data_material = `${this.data_materials}/:materialName` as const;
+  public data_mobs = `${this.data}/mobs` as const;
+  public data_mob = `${this.data_mobs}/:mobName` as const;
 
   public building = 'building' as const;
   public building_priority_list = `${this.building}/priority-list` as const;
-  public building_focus_day = `${this.building}/focus-day` as const;
-  public building_plan = `${this.building}/plan` as const;
+  public building_artifact_helper = `${this.building}/artifact-helper` as const;
+  public building_artifact_helper_search = `${this.building_artifact_helper}/search/:query` as const;
+
+  // public building_plan = `${this.building}/plan` as const;
 
   public generator = 'generator' as const;
   public generator_teams = `${this.generator}/teams` as const;

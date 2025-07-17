@@ -27,3 +27,5 @@ export const DEBUGS = {
   regionStore: false,
   settingsStore: false,
 };
+
+export const IS_DEVELOPMENT_ENVIRONMENT = process.env.NODE_ENV === "development";

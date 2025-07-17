@@ -1,10 +1,10 @@
 import { DebugLog } from "@/common/functions/dev";
 
-import SettingsCog from "@/components/common/icons/SettingsCog";
-import { CharacterImage } from "@/components/common/Images";
+import SettingsCog from "@/components/common/media/icons/SettingsCog";
+import { CharacterImage } from "@/components/common/media/Images";
 import { useRegionStore } from "@/stores/RegionStore";
 
-import SettingsOption from "../../../../stores/SettingsStore/components/SettingsModal/SettingsOption";
+import SettingsOption from "../../../../stores/SettingsStore/components/SettingsModal/components/SettingsOption";
 import { addTabNavigation } from "@/common/functions/accessibility";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsContainer);

@@ -2,7 +2,7 @@ import './BuildingIndex.scss';
 import BuildingIndex from './BuildingIndex';
 
 export { default as PriorityList } from './PriorityList';
-// export { default as FocusDay } from './FocusDay';
+export * from './ArtifactHelper';
 // export { default as Plan } from './Plan';
 
 function BuildingPage() {

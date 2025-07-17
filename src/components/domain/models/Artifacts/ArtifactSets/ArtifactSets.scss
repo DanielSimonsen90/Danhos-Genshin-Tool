@@ -1,0 +1,14 @@
+.artifact-sets-pieces-content {
+  --min: 300px;
+
+  &__list-item a {
+    .character-image {
+      --size: 5em;
+    }
+
+    h3 {
+      margin: 0;
+      margin-top: .25em;
+    }
+  }
+}

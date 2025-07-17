@@ -1,14 +1,14 @@
-import { pascalCaseFromSnakeCase } from "@/common/functions/strings";
-import Chevron from "@/components/common/icons/Chevron";
 import { useNavigate } from "react-router-dom";
+import { pascalCaseFromSnakeCase } from "@/common/functions/strings";
+import Chevron from "@/components/common/media/icons/Chevron";
+import { IS_DEVELOPMENT_ENVIRONMENT } from "@/common/constants/dev";
 
 type Props = {
   itemName: string;
-  item: {
-    name: string;
-  }
+  item: any
+  showItemName?: boolean;
 }
-export default function ItemHeader({ item, itemName }: Props) {
+export default function ItemHeader({ item, itemName, showItemName }: Props) {
   const navigate = useNavigate();
   
   return (
@@ -17,8 +17,8 @@ export default function ItemHeader({ item, itemName }: Props) {
         <Chevron point="left" />
         <span>Back</span>
       </a>
-      <h1>{item.name}</h1>
-      <button onClick={() => console.log(item)}>Log {pascalCaseFromSnakeCase(itemName)}</button>
+      {showItemName && <h1 className="item-name">{itemName}</h1>}
+      {IS_DEVELOPMENT_ENVIRONMENT && <button onClick={() => console.log(item)}>Log {pascalCaseFromSnakeCase(itemName)}</button>}
     </header>
   );
 }

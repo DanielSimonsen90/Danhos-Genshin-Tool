@@ -1,0 +1,55 @@
+@use '../../../styles/partials' as *;
+
+.searchable-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  .input-group {
+    gap: 0;
+  }
+
+  &__search {
+    width: calc(100% - .25rem);
+  }
+
+  &__list {
+    --min: 150px;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--min), 1fr));
+    gap: 1em;
+    width: 100%;
+  }
+
+  &__list-item {
+    display: grid;
+
+    > * {
+      height: 100%;
+      width: 100%;
+      display: grid;
+    }
+  }
+
+  &__list-item--end {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    color: var(--text-muted);
+  }
+
+  &__search {
+    margin: 0;
+  }
+
+  &:not(:has(.searchable-list__list)) &__list-item--end {
+    margin-top: 0;
+  }
+
+  &.characters-list {
+    .searchable-list__list-item {
+      display: flex;
+    }
+  }
+}

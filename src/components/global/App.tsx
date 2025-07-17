@@ -1,4 +1,16 @@
 import Router from "./Router";
+import { ErrorBoundary, useErrorBoundaryToast } from "./ErrorBoundary";
 
-export const App = () => <Router />;
+const AppWithErrorHandling = () => {
+  const { handleProductionError } = useErrorBoundaryToast();
+  
+  return (
+    <ErrorBoundary onProductionError={handleProductionError}>
+      <Router />
+    </ErrorBoundary>
+  );
+};
+
+export const App = () => <AppWithErrorHandling />;
+
 export default App;

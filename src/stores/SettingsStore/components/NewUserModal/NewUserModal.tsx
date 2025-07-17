@@ -4,7 +4,7 @@ import { useActionState } from "@/hooks/useActionState";
 import { useRegionStore, RegionSettings, DEFAULT_REGION_DATA } from "@/stores/RegionStore";
 
 import { useSettingsStore } from "../../SettingsStore";
-import SettingsOption from "../SettingsModal/SettingsOption";
+import SettingsOption from "../SettingsModal/components/SettingsOption";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsStore);
 

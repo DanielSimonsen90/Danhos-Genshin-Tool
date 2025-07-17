@@ -1,8 +1,12 @@
-import { Region, ResinCost } from "@/common/types";
-import ArtifactSet from "../artifacts/ArtifactSet";
-import { DataStore } from "@/stores/DataStore/DataStoreTypes";
+import type { Region, ResinCost } from "@/common/types";
+import type { DataStore } from "@/stores/DataStore/DataStoreTypes";
 
-export abstract class Domain<TReward> {
+import type DomainOfBlessing from "./DomainOfBlessing";
+import type DomainOfForgery from "./DomainOfForgery";
+import type DomainOfMastery from "./DomainOfMastery";
+import { DomainReward, DomainType } from "../Model";
+
+export abstract class Domain<TReward extends DomainReward> {
   public static isDomain(obj: any): obj is Domain<any> {
     return obj instanceof Domain;
   }
@@ -16,24 +20,19 @@ export abstract class Domain<TReward> {
 
   public getRewards(DataStore: DataStore): TReward[] {
     if (this.isBlessing()) return DataStore.getArtifactsFromDomain(this.name) as any as TReward[];
+    if (this.isMastery()) return DataStore.getTalentAscensionMaterialsFromDomain(this.name) as any as TReward[];
+    if (this.isForgery()) return DataStore.getWeaponAscensionMaterialsFromDomain(this.name) as any as TReward[];
     console.error('Domain.getRewards() not implemented for', this);
     return [];
   }
+  public getDomainType(): DomainType {
+    if (this.isBlessing()) return 'Blessing';
+    if (this.isMastery()) return 'Mastery';
+    if (this.isForgery()) return 'Forgery';
+    throw new Error(`getDomainType() not implemented for ${this.name}`);
+  }
 
-  public isBlessing(): this is DomainOfBlessing {
-    return this instanceof DomainOfBlessing;
-  }
-}
-
-export class DomainOfBlessing extends Domain<ArtifactSet> {
-  public static isDomainOfBlessing(obj: any): obj is DomainOfBlessing {
-    return obj instanceof DomainOfBlessing;
-  }
-  constructor(
-    public name: string,
-    public description: string,
-    public region: Region,
-  ) {
-    super(name, description, ResinCost.Twenty, region);
-  }
+  public isBlessing(): this is DomainOfBlessing { return false; }
+  public isMastery(): this is DomainOfMastery { return false; }
+  public isForgery(): this is DomainOfForgery { return false; }
 }

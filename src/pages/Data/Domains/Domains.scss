@@ -1,5 +1,5 @@
 .domains-page {
-  --card-size: 20em;
+  --card-size: 17.5em;
 
   .searchable-list__list {
     --min: var(--card-size);
@@ -17,13 +17,22 @@
       }
 
       .favorite-star {
-        top: -.5ch;
+        top: -.25ch;
+      }
+
+      .domain-card > header {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+
+        .model-card__details * {
+          text-align: center;
+        }
       }
     }
 
     .domain-card__name {
       text-align: center;
-      --margins: .5em;
+      --margins: .25em;
     }
 
     .domain-image {

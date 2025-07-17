@@ -1,0 +1,92 @@
+.artifact-card {
+  .artifact-details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__name {
+    --margins: 0;
+    font-size: 2rem;
+
+    display: flex;
+    gap: .5ch;
+    align-items: center;
+  }
+
+  &:has(.artifact-sets)>header {
+    display: grid;
+    gap: 1em;
+    align-items: center;
+
+    @media screen and (min-width: 0px) {
+      grid-template-rows: auto 1fr;
+      grid-template-columns: unset;
+      justify-items: center;
+    }
+
+    @media screen and (min-width: 750px) {
+      grid-template-columns: auto 1fr;
+      justify-items: unset;
+    }
+  }
+
+  @media screen and (min-width: 1100px) {
+    display: grid;
+    grid-template-areas:
+      "header header"
+      "artifact-sets domain-list-secion";
+    gap: 1em;
+    grid-template-columns: 30em 1fr;
+
+    >header {
+      grid-area: header;
+    }
+
+    >.artifact-sets {
+      grid-area: artifact-sets;
+    }
+
+    >.domain-list-secion {
+      grid-area: domain-list-secion;
+    }
+
+    .artifact-details {
+      max-width: 66ch;
+    }
+
+    .domain-card {
+      grid-auto-flow: row;
+      grid-template-columns: unset;
+
+      .domain-image {
+        margin-inline: auto;
+      }
+    }
+  }
+
+  @media screen and (min-width: 1400px) {
+    .domain-card {
+      grid-auto-flow: column;
+    }
+  }
+}
+
+.artifacts-list-item {
+  padding: .5em;
+  border-radius: .5em;
+  height: auto;
+  transition: background-color 150ms ease-in-out;
+}
+
+a.artifact-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  >header {
+    display: flex;
+    // display: grid;
+    // grid-template-rows: auto 1fr;
+    justify-items: center;
+  }
+}

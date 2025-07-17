@@ -33,12 +33,11 @@ const config: ForgeConfig = {
   rebuildConfig: {},
   makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
   plugins: [
-    new AutoUnpackNativesPlugin({}),
-    new WebpackPlugin({
+    new AutoUnpackNativesPlugin({}),    new WebpackPlugin({
       mainConfig,
       devContentSecurityPolicy: [
         "default-src 'self'",
-        "img-src 'self' https://lustonpull.com https://rerollcdn.com https://paimon.moe",
+        "img-src 'self' https://sunderarmor.com https://lustonpull.com https://rerollcdn.com https://paimon.moe https://static.wikia.nocookie.net",
         "script-src 'self' 'unsafe-eval'",
         "style-src 'self' 'unsafe-inline'",
         "connect-src 'self'",

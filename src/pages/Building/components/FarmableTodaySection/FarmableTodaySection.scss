@@ -1,0 +1,13 @@
+.farmable-today-section {
+  .searchable-list__list {
+    --min: 250px;
+  }
+
+  .farmable-model-collapsible {
+    margin-bottom: 1.5rem;
+
+    .collapsible__content {
+      --max-height: 33rem;
+    }
+  }
+}

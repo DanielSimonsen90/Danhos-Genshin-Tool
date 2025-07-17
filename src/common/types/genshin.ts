@@ -8,10 +8,15 @@ export type Reaction =
   | 'Swirl' | 'Crystallize';
 
 export enum Rarity {
+  /** White */
   Common = 1,
+  /** Green */
   Uncommon = 2,
+  /** Blue */
   Rare = 3,
+  /** Purple */
   Epic = 4,
+  /** Orange */
   Legendary = 5,
 }
 

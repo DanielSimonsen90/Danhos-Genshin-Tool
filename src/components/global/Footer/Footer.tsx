@@ -4,8 +4,9 @@ export default function Footer() {
   const sources = [
     { name: 'Hoyoverse', url: 'https://genshin.hoyoverse.com/en/' },
     { name: 'Paimon.moe', url: 'https://paimon.moe/' },
-    { name: 'LustonPull', url: 'https://lustonpull.com/' },
+    // { name: 'LustonPull', url: 'https://lustonpull.com/' },
     // { name: 'Rerollcdn', url: 'https://rerollcdn.com/' },
+    { name: 'Sunderarmor', url: 'https://sunderarmor.com/' },
   ]
   
   return (

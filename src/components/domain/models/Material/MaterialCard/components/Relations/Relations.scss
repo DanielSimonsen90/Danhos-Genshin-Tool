@@ -1,0 +1,28 @@
+.material-card__relations {
+  padding: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.material-card__models-using,
+.material-card__model-acquired {
+  margin-bottom: 1rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .local-specialty {
+    display: flex;
+
+    .regions {
+      margin-left: .5ch;
+    }
+  }
+
+  h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+}

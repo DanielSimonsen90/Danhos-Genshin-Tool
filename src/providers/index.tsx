@@ -1,9 +1,12 @@
 import { PropsWithChildren } from "react";
 import ContextMenuProvider from "./ContextMenuProvider";
+import ToastProvider from "./ToastProvider";
 
 const GlobalProvider = ({ children }: PropsWithChildren) => (
   <ContextMenuProvider>
-    {children}
+    <ToastProvider>
+      {children}
+    </ToastProvider>
   </ContextMenuProvider>
 );
 

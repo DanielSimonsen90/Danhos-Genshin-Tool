@@ -1,0 +1,73 @@
+.collapsible {
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+
+  &__header {
+    width: 100%;
+    padding: .75rem 1rem;
+    margin: 0;
+    background-color: var(--background-secondary);
+    border: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    transition: background-color 0.2s ease;
+
+    &:focus {
+      outline: 2px solid var(--brand);
+      outline-offset: -2px;
+    }
+  }
+
+  &__title {
+    flex: 1;
+    user-select: none;
+  }
+
+  &__icon {
+    font-size: 12px;
+    transition: transform 0.3s ease;
+    user-select: none;
+
+    &.open {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__content {
+    background-color: var(--background-secondary);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0 1rem;
+
+    input, select {
+      background-color: var(--background-tertiary);
+    }
+  }
+
+  &--open {
+    .collapsible__header {
+      border-bottom: 1px solid var(--background-tertiary);
+    }
+
+    .collapsible__content {
+      --max-height: 20rem;
+      max-height: var(--max-height);
+      padding-top: .5rem;
+      padding-bottom: .5rem;
+      overflow: auto;
+    }
+  }
+
+  &--closed {
+    .collapsible__content {
+      padding-bottom: 0;
+    }
+  }
+}

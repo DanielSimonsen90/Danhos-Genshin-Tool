@@ -9,12 +9,15 @@ export type Tab = {
   content: Functionable<JSX.Element>,
 }
 
+export type TabCreator = typeof createTabItem;
+export type TabsFunction<TTabKey extends string = string> = (creator: TabCreator) => Array<readonly [TTabKey, Tab] | false | null | undefined>;
+
 export type Props<
   TTabKey extends string,
   TTabs extends Array<(readonly [TTabKey, Tab])> = Array<(readonly [TTabKey, Tab])>,
 > = {
   defaultTab?: TTabKey,
-  tabs: TTabs | ((creator: typeof createTabItem) => TTabs),
+  tabs: TTabs | TabsFunction<TTabKey>,
   noTabs?: JSX.Element,
 
   tab?: TTabKey,
@@ -26,11 +29,20 @@ export type Props<
   /** @default false */
   placeChildrenBeforeTabs?: boolean,
   /** @default false */
-  hideCollapseChevron?: boolean,
+  hideCollapseChevron?: boolean,  
   /** @default horizontal */
   direction?: Direction;
   /** @default content */
   collapseArea?: CollapseArea,
+  
+  /** Enable resizing for vertical direction */
+  resizable?: boolean;
+  /** Minimum size for resizable area in pixels */
+  minSize?: number;
+  /** Maximum size for resizable area in pixels */
+  maxSize?: number;
+  /** Initial size for resizable area in pixels */
+  initialSize?: number;
 
   beforeTabChange?: (tab: TTabKey) => void,
   onTabChange?: (tab: TTabKey) => void,

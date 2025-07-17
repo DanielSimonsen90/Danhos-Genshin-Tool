@@ -6,4 +6,14 @@
   .searchable-list__list {
     --min: 13rem;
   }
+
+  .artifact-card > header {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto 1fr;
+
+    .artifact-details {
+      align-items: center;
+    }
+  }
 }

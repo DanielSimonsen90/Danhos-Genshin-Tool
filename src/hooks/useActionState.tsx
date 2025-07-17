@@ -61,11 +61,11 @@ export function useActionState<TResult extends Record<string, any>>(
     });
 
     if (hasPlaceholder) {
-      console.error('Invalid data recieved - placeholder value', data);
+      console.error('Invalid data received - placeholder value', data);
       setLoading(false);
       return;
     } else if (expectedPropertyLength !== -1 && Object.keys(data).length !== expectedPropertyLength + 1) { // +1 for '_form'
-      console.error('Invalid data recieved - expectedPropertyLength exeeds returned data length', data);
+      console.error('Invalid data received - expectedPropertyLength exceeds returned data length', data);
       setLoading(false);
       return;
     }
