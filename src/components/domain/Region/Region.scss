@@ -20,10 +20,11 @@
 
 .region-item {
   display: inline-block;
+  max-width: max-content;
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
   background-color: var(--region--muted);
   color: var(--region);
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   white-space: nowrap;
 }

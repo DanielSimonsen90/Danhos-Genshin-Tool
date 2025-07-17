@@ -32,7 +32,7 @@ const routes = [
   [ROUTES.endRoute('data_weapons'), 'Weapons'],
   [ROUTES.endRoute('data_materials'), 'Materials'],
   [ROUTES.endRoute('data_mobs'), 'Mobs'],
-];
+].sort(([a], [b]) => a.localeCompare(b));
 
 type Order = `${'name' | 'rarity' | 'element'}-${'ascend' | 'descend'}`;
 

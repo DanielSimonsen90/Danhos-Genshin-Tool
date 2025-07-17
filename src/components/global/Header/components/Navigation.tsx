@@ -27,7 +27,8 @@ const getSubRoutes = (parentRoute: string) => {
     .map(([key, route]) => ({
       to: `/${route}`,
       label: key.replace(`${parentKey}_`, '').replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
-    }));
+    }))
+    .sort((a, b) => a.label.localeCompare(b.label));
 };
 
 const routes = [

@@ -1,11 +1,12 @@
-import { Link } from "react-router-dom";
 import { ROUTES } from "@/common/constants/routes";
+import HubCardList from "./components/HubCardList";
+import FarmableTodaySection from "./components/FarmableTodaySection";
 
 const routes = [
   [ROUTES.endRoute('building_priority_list'), 'Priority list', `Make your own tierlist-based priority lists on all models like characters, artifacts and domains.`],
   [ROUTES.endRoute('building_artifact_helper'), 'Artifact Helper', `Insert the data of your artifact and get a list of characters that would benefit from it.`],
   // [ROUTES.endRoute('plan'), 'Plan', `Create your own plan to build your characters, including what to farm and when.`],
-];
+] as Array<[route: string, name: string, description: string]>;
 
 export default function BuildingIndex() {
   return (<>
@@ -15,16 +16,8 @@ export default function BuildingIndex() {
         <p>This is your hub to help you build your characters.</p>
       </header>
 
-      <ul className="hub-card-list">
-        {routes.map(([route, name, description]) => (
-          <li key={route} className="hub-card">
-            <Link to={`/${ROUTES.building}/${route}`}>
-              <h2 className="hub-card__title">{name}</h2>
-              <p className="hub-card__description">{description}</p>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <HubCardList routes={routes} />
+      <FarmableTodaySection />
     </main>
   </>);
 }

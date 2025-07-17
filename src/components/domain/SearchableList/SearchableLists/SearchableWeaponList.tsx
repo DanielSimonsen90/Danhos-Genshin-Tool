@@ -5,7 +5,7 @@ import { Weapon } from "@/common/models";
 import { WeaponCard } from "@/components/domain/models/Weapon";
 import { Props as WeaponCardProps } from "@/components/domain/models/Weapon/WeaponCard/WeaponCard";
 
-import { useFavoriteStore } from "@/stores";
+import { useDataStore, useFavoriteStore } from "@/stores";
 import { useContextMenu } from "@/providers/ContextMenuProvider";
 
 import { OptionalProps, UncrontrolledProps } from "@/components/domain/SearchableList/Props";
@@ -30,6 +30,7 @@ export default function SearchableWeaponList<TFilterKeys extends string>({
   const { query, filters } = useParams();
   const navigate = useNavigate();
   const [hidden, setHidden] = useState(new Array<Weapon>());
+  const DataStore = useDataStore();
   const FavoriteStore = useFavoriteStore('weapons');
 
   return <SearchableList items={items}
@@ -39,7 +40,8 @@ export default function SearchableWeaponList<TFilterKeys extends string>({
         item('option', 'View', () => navigate(`/weapons/${weapon.name}`), '👁️'),
         item('option', FavoriteStore.isFavorite(weapon) ? 'Unfavorite' : 'Favorite', () => FavoriteStore.isFavorite(weapon) ? FavoriteStore.remove(weapon) : FavoriteStore.add(weapon), '⭐'),
         item('option', 'Hide', () => setHidden([...hidden, weapon]), '🙈'),
-      ]);      return hidden.includes(weapon) ? null : (
+      ]);
+      return hidden.includes(weapon) ? null : (
         <div className="context-menu-item-container" onContextMenu={open}>
           {FavoriteStore.isFavorite(weapon) && <FavoriteStar model={weapon} />}
           <WeaponCard weapon={weapon} {...cardProps} />
@@ -52,7 +54,16 @@ export default function SearchableWeaponList<TFilterKeys extends string>({
       setHidden([]);
       navigate(`?query=${search}&filters=${JSON.stringify(filters)}`);
     }}
-    onSearch={noBaseSearch ? onSearch : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}
+    onSearch={noBaseSearch ? onSearch : (query, item) => (() => {
+      const { name, description, } = item;
+      const signatureCharacter = item.signatureWeaponFor?.(DataStore.CharactersData);
+      const strings = [
+        name, description.value,
+        signatureCharacter ? signatureCharacter.name : '',
+      ]
+
+      return strings.some(str => str.toLowerCase().includes(query.toLowerCase()));
+    })() && (onSearch?.(query, item) ?? true)}
     filterChecks={noBaseFilterChecks ? filterChecks : {
       weaponType: {
         sword: weapon => weapon.type === "Sword",

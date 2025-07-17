@@ -1,50 +1,37 @@
 .building-page {
-  h1 {
-    --margins: .25em;
-  }
-
-  header {
+  main {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin-bottom: 2em;
-  }
-}
+    gap: 1em;
 
-.hub-card-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-gap: 1rem;
-}
+    >header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
-.hub-card {
-  display: flex;
-  flex-direction: column;
-  background-color: var(--background-primary--light);
-  padding: 1em;
-  border-radius: .25em;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition-duration: 200ms;
+      h1 {
+        --margins: .25em;
+      }
 
-  &:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    background-color: var(--background-secondary--muted);
-    transform: translateY(-.25em);
-  }
-
-  a {
-    font-size: inherit;
-    color: inherit;
-    text-decoration: none;
-
-    &:hover .hub-card__title {
-      text-decoration: underline;
+      p {
+        color: var(--text-secondary);
+      }
     }
-  }
 
-  &__title {
-    font-size: 1.25em;
-    margin: 0;
+
+
+    >section {
+      &:not(:last-of-type)::after {
+        content: '';
+        display: block;
+        width: 100%;
+        margin-top: 2.5em;
+        border-bottom: 1px solid var(--background-tertiary);
+      }
+
+      >h2 {
+        text-align: center;
+      }
+    }
   }
 }

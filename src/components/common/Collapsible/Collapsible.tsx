@@ -1,4 +1,4 @@
-import React, { forwardRef, useMemo, useState } from 'react';
+import { forwardRef, useState } from 'react';
 import { CollapsibleProps } from './CollapsibleProps';
 import './Collapsible.scss';
 import { classNames } from '@/common/functions/strings';
@@ -9,7 +9,7 @@ const Collapsible = forwardRef<HTMLDivElement, CollapsibleProps>(({
   className,
   ...props
 }, ref) => {
-    const [internalOpen, setInternalOpen] = useState(false);
+    const [internalOpen, setInternalOpen] = useState(props.defaultOpen ?? false);
     const open = props.open !== undefined ? props.open : internalOpen;
     const setOpen = props.setOpen !== undefined ? props.setOpen : setInternalOpen;
     
