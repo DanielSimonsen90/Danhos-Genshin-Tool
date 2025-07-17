@@ -53,6 +53,7 @@
 
   &__description {
     max-height: 10rem;
+    margin-bottom: 0;
     overflow: auto;
   }
 }
@@ -66,11 +67,6 @@ a.material-card {
     .material-card__details {
       display: flex;
       justify-content: center;
-
-      [data-region] {
-        text-align: center;
-        margin-bottom: .5ch;
-      }
     }
 
     .material-card__name-text {
@@ -79,6 +75,10 @@ a.material-card {
 
     .material-card__pagination {
       flex-direction: row;
+    }
+
+    .material-card__region {
+      justify-content: center;
     }
   }
 }

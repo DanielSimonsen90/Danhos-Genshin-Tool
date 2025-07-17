@@ -7,7 +7,7 @@ export const XBranchOfAXSea = WeaponAscensionMaterial.create(
     [Rarity.Uncommon]: `Coral Branch of a Distant Sea`,
     [Rarity.Rare]: `Jeweled Branch of a Distant Sea`,
     [Rarity.Epic]: `Jade Branch of a Distant Sea`,
-    [Rarity.Legendary]: `Golden Branch of a Golden Sea`,
+    [Rarity.Legendary]: `Golden Branch of a Distant Sea`,
   },
   {
     [Rarity.Uncommon]: `Watatsumi Island is the furthest from Narukami Island in the Inazuman island chain, and its name means "the god of the oceans" in the island's ancient tongue.\nLegend has it that when the great serpent first arose within the abyssal nation of ever-night, its fluorescent body was covered in myriad-colored coral.`,

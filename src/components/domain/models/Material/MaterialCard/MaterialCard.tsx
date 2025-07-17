@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 
 import Material from "@/common/models/materials/Material";
 import CraftableMaterial from "@/common/models/materials/CraftableMaterial";
@@ -28,15 +28,39 @@ export default function MaterialCard({
   showModelsUsing, showModelAquired, showDetails, showRegion,
   ...props
 }: Props) {
-  const view = useSettingsStore(ss => ss.getSetting('preferredTabs').craftableMaterial);
+  const view = useSettingsStore(ss => ss.getSetting('preferredTabs')?.craftableMaterial);
+  const hasInteractedWithPagination = useRef(false);
 
   const craftingTree = CraftableMaterial.isCraftableMaterial(material) ?
     material.getCraftingTreeAsMaterials() :
     undefined;
-  const [currentIndex, setCurrentIndex] = useState(() => (view === 'rarest' && allowCycle ? craftingTree?.length - 1 : undefined) ?? 0);
-  const currentMaterial = useMemo(() => allowCycle ? craftingTree?.[currentIndex] ?? material : material, [craftingTree, currentIndex, material]);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const onIndexChange = useCallback((index: number) => setCurrentIndex(index), []);
+  const currentMaterial = useMemo(() => allowCycle ? craftingTree?.[currentIndex] ?? material : material, [craftingTree, currentIndex, material]);
+  const materialRegions = Billet.isBillet(material) ? material.regions : [material.region];
+  const hasRegion = materialRegions.filter(Boolean).length > 0;
+
+  const onIndexChange = useCallback((index: number) => {
+    hasInteractedWithPagination.current = true;
+    setCurrentIndex(index);
+  }, []);
+
+  // Set the initial index based on user preferences and update when settings change
+  useEffect(() => {
+    // Only auto-set the index if the user hasn't manually interacted with pagination
+    if (!hasInteractedWithPagination.current) {
+      if (view === 'rarest' && allowCycle && craftingTree && craftingTree.length > 0) {
+        setCurrentIndex(craftingTree.length - 1);
+      } else if (view !== 'rarest' || !allowCycle) {
+        setCurrentIndex(0);
+      }
+    }
+  }, [view, allowCycle, craftingTree]);
+
+  // Reset user interaction flag when the material changes
+  useEffect(() => {
+    hasInteractedWithPagination.current = false;
+  }, [material]);
 
   return (
     <ModelCard
@@ -50,7 +74,7 @@ export default function MaterialCard({
       renderImage={() => <MaterialImage material={currentMaterial.name} />}
       renderHeaderContent={(() => (
         <>
-          {(showDetails || showRegion || AscensionMaterial.isAscensionMaterial(material)) && (
+          {(showDetails || (showRegion && hasRegion) || AscensionMaterial.isAscensionMaterial(material)) && (
             <div className="material-card__details-container">
               {showDetails && (
                 <p className="material-card__description">
@@ -58,12 +82,8 @@ export default function MaterialCard({
                 </p>
               )}
               {(showDetails || showRegion) && (
-                <Region 
-                  region={
-                    Billet.isBillet(material) 
-                      ? material.regions 
-                      : material.region || 'Unknown'
-                  }
+                <Region
+                  region={materialRegions}
                   className="material-card__region"
                   tag="ul"
                   keyPrefix={`material-region-${material.name}`}

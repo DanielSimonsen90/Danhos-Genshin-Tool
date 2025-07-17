@@ -1347,7 +1347,10 @@ export const Nahida = new Character("Nahida", "Dendro", "Catalyst", [
   ])
 ]);
 
-export const Navia = new Character("Navia", "Geo", "Claymore", [], Rarity.Legendary, "Fontaine", {
+export const Navia = new Character("Navia", "Geo", "Claymore", [
+  "Off-field Damage",
+  "Elemental Infusion: After Skill/Ability, Navia gains Geo infusion"
+], Rarity.Legendary, "Fontaine", {
   material: TalentAscension.Equity,
   weeklyBossDrop: MobDrops.LightlessSilkString,
   crystal: ElementalCrystals.Geo,

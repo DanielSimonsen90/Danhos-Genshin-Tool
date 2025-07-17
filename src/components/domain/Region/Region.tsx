@@ -1,8 +1,9 @@
-import React from 'react';
+import { classNames } from '@/common/functions/strings';
+import { Arrayable } from '@/common/types';
 import { Region as RegionType } from '@/common/types/genshin';
 
 type Props = {
-  region: RegionType | RegionType[];
+  region: Arrayable<RegionType>;
   className?: string;
   itemClassName?: string;
   tag?: 'p' | 'span' | 'div' | 'ul' | 'li';
@@ -20,13 +21,16 @@ export default function Region({
   id,
   keyPrefix = 'region',
 }: Props) {
-  const regions = Array.isArray(region) ? region : [region];
+  const regions = (Array.isArray(region) ? region : [region]).filter(Boolean) as RegionType[];
+
+  // No regions to display
+  if (regions.length === 0) return null;
 
   // Single region as simple tag
   if (regions.length === 1 && Tag !== 'ul') {
     return (
       <Tag
-        className={`region ${className}`.trim()}
+        className={classNames('region', 'region-item', className)}
         data-region={regions[0]}
         id={id}
       >
@@ -37,14 +41,17 @@ export default function Region({
   // Multiple regions or ul tag requested
   const isUl = Tag === 'ul';
   const WrapperTag = isUl ? 'ul' : Tag;
-  const wrapperClassName = isUl ? `regions ${className}`.trim() : `region ${className}`.trim();
+  const wrapperClassName = classNames(
+    isUl ? 'regions' : 'region',
+    className
+  )
 
   return (
     <WrapperTag className={wrapperClassName} id={id}>
       {regions.map((regionValue, index) => (
         <ItemTag
           key={`${keyPrefix}-${regionValue}-${index}`}
-          className={`region-item ${itemClassName}`.trim()}
+          className={classNames('region-item', itemClassName)}
           data-region={regionValue}
         >
           {regionValue}
