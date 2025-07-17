@@ -124,7 +124,8 @@ export default function DataIndex() {
             </Link>
           ))}
         </nav>
-      </header>      <main className="data-hub__content">
+      </header>
+      <main className="data-hub__content">
         {isSearching && displayGroups.every(group => group.filteredCount === 0) ? (
           <p className="no-results">No results found for "{debouncedSearch}"</p>
         ) : (

@@ -12,6 +12,7 @@ import RelationsForModel from "../../Material/MaterialCard/components/RelationsF
 import TabBar from "@/components/common/TabBar";
 import { ElementalCrystal } from "@/common/models/materials/MobDrop";
 import { Billet } from "@/common/models/materials/Billet";
+import { Region } from "@/components/domain";
 
 export interface Props extends BaseModelCardProps {
   mob: Mob;
@@ -71,19 +72,15 @@ export default function MobCard({
                   ? 'Weekly bosses have a 3 time use per week where drops cost 30 resin. Once weekly limit is exceeded, weekly bosses not defeated will cost 60 resin.'
                   : undefined}
               />)}
-            </div>
-          )}
+            </div>          )}
 
           {showDetails && (
             <p className="mob-card__description">
               {description}
             </p>
           )}
-
           {Boss.isBoss(mob) && showRegion && (
-            <p className="mob-card__region" data-region={mob.region}>
-              {mob.region}
-            </p>
+            <Region region={mob.region} className="mob-card__region" />
           )}
         </div>
       )}

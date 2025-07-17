@@ -5,7 +5,9 @@ import CraftableMaterial from "@/common/models/materials/CraftableMaterial";
 import { classNames } from "@/common/functions/strings";
 
 import { useSettingsStore } from "@/stores";
-import { Relations, Pagination, ObtainableDays, Region } from "./components";
+import { Relations, Pagination, ObtainableDays } from "./components";
+import { Region } from "@/components/domain";
+import { Billet } from "@/common/models/materials/Billet";
 import ModelCard, { BaseModelCardProps } from "@/components/domain/ModelCard";
 import { MaterialImage } from "@/components/common/media/Images";
 import AscensionMaterial from "@/common/models/materials/AscensionMaterial";
@@ -55,7 +57,18 @@ export default function MaterialCard({
                   {currentMaterial.description}
                 </p>
               )}
-              {(showDetails || showRegion) && <Region material={material} />}
+              {(showDetails || showRegion) && (
+                <Region 
+                  region={
+                    Billet.isBillet(material) 
+                      ? material.regions 
+                      : material.region || 'Unknown'
+                  }
+                  className="material-card__region"
+                  tag="ul"
+                  keyPrefix={`material-region-${material.name}`}
+                />
+              )}
               {AscensionMaterial.isAscensionMaterial(material) && <ObtainableDays material={material} />}
             </div>
           )}

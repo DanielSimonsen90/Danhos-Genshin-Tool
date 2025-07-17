@@ -4,7 +4,8 @@ import MaterialRelationsForModel from "../RelationsForModel";
 import { useDataStore } from "@/stores";
 import { Material } from "@/common/models";
 import LocalSpecialty from "@/common/models/materials/LocalSpecialty";
-import Region from "../Region";
+import { Region } from "@/components/domain";
+import { Billet } from "@/common/models/materials/Billet";
 import { createTabItem } from "@/components/common/TabBar/TabBarFunctions";
 
 export function useRelationsTabs(material: Material) {
@@ -29,7 +30,14 @@ export function useRelationsTabs(material: Material) {
     )),
     LocalSpecialty.isLocalSpecialty(material) && createTabItem(`${name}-used-by-local-specialty`, 'Local Specialty', (
       <div className="local-specialty">
-        The wilderness of <Region material={material} />.
+        The wilderness of <Region 
+          region={
+            Billet.isBillet(material) 
+              ? material.regions 
+              : material.region || 'Unknown'
+          }
+          tag="span"
+        />.
       </div>
     )),
     modelKeys.includes('Domain') && createTabItem(`${name}-used-by-domains`, 'Domains', (

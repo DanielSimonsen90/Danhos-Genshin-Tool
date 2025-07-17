@@ -61,7 +61,7 @@ export default function SearchableDomainList<TFilterKeys extends string>({
         weapons: domain => domain.isForgery(),
       },
       region: {
-        monstadt: domain => domain.region === "Mondstadt",
+        mondstadt: domain => domain.region === "Mondstadt",
         liyue: domain => domain.region === "Liyue",
         inazuma: domain => domain.region === "Inazuma",
         sumeru: domain => domain.region === "Sumeru",

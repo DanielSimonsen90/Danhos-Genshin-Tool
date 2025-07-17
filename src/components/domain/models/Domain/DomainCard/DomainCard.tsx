@@ -16,6 +16,7 @@ import { ArtifactCard } from "../../Artifacts";
 
 import { MaterialCard } from "../../Material";
 import DomainRewardsTabBar from "../DomainRewardsTabBar";
+import { Region } from "@/components/domain";
 
 export interface Props extends BaseModelCardProps {
   domain: Domain<any>;
@@ -70,7 +71,7 @@ export default function DomainCard({
         </div>
         {showResin && <ResinIcon cost={resinCost} />}
         {showDescription && <p className="domain-card__description">{description}</p>}
-        <p className="domain-card__region" data-region={region}>{region}</p>
+        <Region region={region} className="domain-card__region" />
         {showNavButton && (
           <Link to={`/${ROUTES.data_domains}/${name}`} className="domain-card__nav-button">
             <button style={{ width: '100%' }}>

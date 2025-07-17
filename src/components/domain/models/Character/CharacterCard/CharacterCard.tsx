@@ -8,6 +8,7 @@ import ModelCard, { BaseModelCardProps } from "@/components/domain/ModelCard";
 import { MaterialCard } from "../../Material";
 import { WeaponCard } from "../../Weapon";
 import { useDataStore } from "@/stores";
+import { Region } from "@/components/domain";
 
 export interface Props extends BaseModelCardProps {
   character: Character;
@@ -69,7 +70,7 @@ export default function CharacterCard({
               </ul>
             ) : <span>No special traits.</span>}
           </ul>
-          {!props.wrapInLink && <p className="region" data-region={character.region}>{character.region}</p>}
+          {!props.wrapInLink && <Region region={character.region} className="region" />}
           {score && score > 0 && (
             <p className="character-details__score">
               Score: <b>{score}</b>
