@@ -14,6 +14,7 @@ import {
 
 import { useActionState } from "@/hooks/useActionState";
 import { useComponent } from "@/hooks/useComponent";
+import { useToast } from "@/providers/ToastProvider";
 
 import { useCacheStore } from "@/stores/CacheStore";
 import { ArtifactImage } from "@/components/common/media/Images";
@@ -25,6 +26,7 @@ export default function Search() {
   const navigate = useNavigate();
   const { query } = useParams();
   const CacheStore = useCacheStore();
+  const { error } = useToast();
   const defaultSearch = useMemo(() => {
     if (!query) return undefined;
     const currentSearch = CacheStore.findObject('searchResults', result => result.id === query);
@@ -39,7 +41,10 @@ export default function Search() {
   const [artifactSetName, setArtifactSetName] = useState<string | undefined>(defaultSearch?.artifactSetName);
   const [loading, onSubmit] = useActionState<SearchFormData>(data => {
     debugLog('onSubmit', data);
-    if (data.subStats.filter(Boolean).length > 4) return window.alert('Substats must be 4 or less'); // TODO: Consider adding visual form indicator?
+    if (data.subStats.filter(Boolean).length > 4) {
+      error('Substats must be 4 or less');
+      return;
+    }
 
     const searchId = generateId();
     CacheStore.update('searchHistory', {
