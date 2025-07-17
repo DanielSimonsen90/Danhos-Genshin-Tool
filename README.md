@@ -1,5 +1,5 @@
 # Danho's Genshin Tool
-Using data from [Paimon.moe](https://paimon.moe), this tool helps you save the best artifacts for your characters and help you organize your building plan in Genshin Impact.
+Using data from [Paimon.moe](https://paimon.moe) & Genshin Impact, this tool helps you save the best artifacts for your characters and help you organize your building plan in Genshin Impact.
 
 # Functionality
 The core functionality of the Genshin Tool is for you to search up artifact sets with main- and sub-stats while also providing utilities to help you plan out your future character builds. When searching for an artifact, the tool will provide you a list of characters, where the artifact can be useful for. You can also search for characters and see which artifact sets are useful for them, however [Paimon.moe](https://paimon.moe) already provides this functionality and much more (although they're not really updating anymore).
