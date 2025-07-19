@@ -115,7 +115,7 @@ export default function CharacterCard({
           {showSignatureWeapon && signatureWeapon && (
             <div className="character-signature-weapon">
               <h3>Signature Weapon</h3>
-              <WeaponCard weapon={signatureWeapon} wrapInLink showStats showSource showDetails />
+              <WeaponCard weapon={signatureWeapon} wrapInLink showRarity showStats showSource showDetails />
             </div>
           )}
 
