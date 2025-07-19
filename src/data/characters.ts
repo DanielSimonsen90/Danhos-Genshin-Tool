@@ -66,7 +66,9 @@ export const Albedo = new Character("Albedo", "Geo", "Sword", [], Rarity.Legenda
   ])
 ]);
 
-export const Alhaitham = new Character("Alhaitham", "Dendro", "Sword", [], Rarity.Legendary, 'Sumeru', {
+export const Alhaitham = new Character("Alhaitham", "Dendro", "Sword", [
+  "Elemental Infusion: After Skill/Ability, Alhaitham gains Dendro infusion",
+], Rarity.Legendary, 'Sumeru', {
   localSpecialty: LocalSpecialties.SandGreasePupa,
   crystal: ElementalCrystals.Dendro,
   material: TalentAscension.Ingenuity,
