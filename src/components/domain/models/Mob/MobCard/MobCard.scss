@@ -128,7 +128,8 @@ a.mob-card {
     justify-items: center;
   }
 
-  .mob-card__region {
-    text-align: center;
+  .mob-card__details {
+    display: flex;
+    align-items: center;
   }
 }
