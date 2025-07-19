@@ -1,3 +1,5 @@
+@use '../../../../styles/partials' as *;
+
 .settings-notice:not(.hidden) {
   display: flex;
   justify-content: center;
@@ -21,7 +23,7 @@
 }
 
 .settings-notice.hidden {
-  height: 0;
+  @extend %collapsed;
 
   p {
     margin: 0;

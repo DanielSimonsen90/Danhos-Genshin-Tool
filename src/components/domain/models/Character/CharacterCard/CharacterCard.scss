@@ -9,25 +9,29 @@
 
   width: 100%;
 
+  .bonus-ability {
+    @extend %text-ellipsis;
+  }
+
   .character-card__name {
     margin: 0;
     color: var(--element);
     font-weight: bold;
     font-size: 1.25rem;
-  
+
     display: flex;
     align-items: center;
     gap: .5ch;
-  
+
     &__value {
       @extend %text-ellipsis;
     }
-  
+
     img {
       --max-size: 1.5rem;
       flex-shrink: 0;
     }
-  
+
     a {
       font-size: 1.75rem;
       color: var(--element);
@@ -38,22 +42,56 @@
     color: var(--region);
   }
 
-  .character-ascension__list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
-    gap: 1em;
+  .passive-talent {
+    color: var(--text-tertiary);
 
-    .model-card {
-      height: 100%;
-      justify-content: center;
-    }
-
-    .material-image {
-      --size: 5rem;
+    strong {
+      margin-right: .5ch;
     }
   }
 
+  &:has(.character-ascension, .character-sets, .character-signature-weapon) .character-card__content {
+    display: grid;
+    grid-template-areas:
+      "ascension ascension"
+      "sets signature-weapon";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+
+    @media screen and (max-width: 1100px) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .character-ascension {
+    grid-area: ascension;
+
+    &__list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+      gap: 1em;
+
+      .model-card {
+        height: 100%;
+        justify-content: center;
+      }
+
+      .material-image {
+        --size: 5rem;
+      }
+    }
+  }
+
+  .character-sets {
+    grid-area: sets;
+  }
+
   .character-signature-weapon {
+    grid-area: signature-weapon;
+    display: grid;
+    grid-template-rows: auto 1fr;
+
     .weapon-image {
       --size: 10rem;
     }

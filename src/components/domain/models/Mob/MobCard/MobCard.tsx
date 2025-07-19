@@ -13,6 +13,8 @@ import TabBar from "@/components/common/TabBar";
 import { ElementalCrystal } from "@/common/models/materials/MobDrop";
 import { Billet } from "@/common/models/materials/Billet";
 import { Region } from "@/components/domain";
+import { MaterialImage } from "@/components/common/media/Images";
+import { useMaterialMultiModelRelations } from "../../Material/MaterialCard/components/RelationsForModel/hooks/useMaterialRelationData";
 
 export interface Props extends BaseModelCardProps {
   mob: Mob;
@@ -42,6 +44,7 @@ export default function MobCard({
     if (EasyMob.isEasyMob(mob)) return "easy";
     return "mob";
   }, [mob]);
+  
   const dropRelations = useMemo(() => drops.filter(drop => {
     if (ArtifactSet.isArtifactSet(drop)) return false;
     if (ElementalCrystal.isElementalCrystal(drop)) {
@@ -51,7 +54,11 @@ export default function MobCard({
     if (Billet.isBillet(drop)) return false;
     if (drop.name === 'Dream Solvent') return false;
     return true;
-  }), [drops]);
+  }), [drops]);  // Get relation data for all materials to check if tabs should be shown
+  const relationsData = dropRelations.map(drop => ({
+    drop,
+    relations: useMaterialMultiModelRelations(drop.name, ['Character', 'Weapon'] as const)
+  }));
 
   return (
     <ModelCard
@@ -72,7 +79,7 @@ export default function MobCard({
                   ? 'Weekly bosses have a 3 time use per week where drops cost 30 resin. Once weekly limit is exceeded, weekly bosses not defeated will cost 60 resin.'
                   : undefined}
               />)}
-            </div>          )}
+            </div>)}
 
           {showDetails && (
             <p className="mob-card__description">
@@ -105,14 +112,35 @@ export default function MobCard({
               )}
               {showRelations && drops.length > 0 && (
                 <div className="mob-card__relations">
-                  <h2>Relations</h2>
-                  <TabBar tabs={tab => dropRelations.map(drop => (
-                    tab(
-                        drop.name,
-                        <MaterialCard key={drop.name} material={drop} allowCycle={false} nameTag="h3" />,
-                        <RelationsForModel key={drop.name} materialName={drop.name} model="Character" />
-                      )
-                  ))} />
+                  <h2>Relations</h2>                  
+                  <TabBar tabs={tab => relationsData.flatMap(({ drop, relations }) => {
+                    const [characterRelations, weaponRelations] = relations;
+                    const hasCharacterRelations = Boolean(characterRelations?.length);
+                    const hasWeaponRelations = Boolean(weaponRelations?.length);
+                    const hasMultipleTabs = hasCharacterRelations && hasWeaponRelations;
+                    
+                    return [
+                      // Character tab - only if there are character relations
+                      ...(hasCharacterRelations ? [tab(
+                        `${drop.name}--Characters`,
+                        <div className="material-card--light">
+                          <MaterialImage material={drop.name} />
+                          <h3>{drop.name} {hasMultipleTabs && <span>(for Characters)</span>}</h3>
+                        </div>,
+                        <RelationsForModel key={`${drop.name}-char`} materialName={drop.name} model="Character" models={characterRelations} />
+                      )] : []),
+                      
+                      // Weapon tab - only if there are weapon relations
+                      ...(hasWeaponRelations ? [tab(
+                        `${drop.name}--Weapons`,
+                        <div className="material-card--light">
+                          <MaterialImage material={drop.name} />
+                          <h3>{drop.name} {hasMultipleTabs && <span>(for Weapons)</span>}</h3>
+                        </div>,
+                        <RelationsForModel key={`${drop.name}-weapon`} materialName={drop.name} model="Weapon" models={weaponRelations} />
+                      )] : [])
+                    ];
+                  })} />
                 </div>
               )}
             </div>

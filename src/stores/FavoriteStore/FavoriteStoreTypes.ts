@@ -1,4 +1,4 @@
-import { ArtifactSet, Character, Domain, Mob, Weapon } from "@/common/models";
+import { ArtifactSet, Character, Domain, Mob, Weapon, Model } from "@/common/models";
 import Material from "@/common/models/materials/Material";
 
 export type FavoriteStore = ModelsCollection & {
@@ -14,7 +14,7 @@ export type FavoriteStore = ModelsCollection & {
 export type ModelsCollection = {
   [Key in keyof FavoriteModels]: Array<FavoriteModels[Key]>;
 }
-export type FavoriteModel = Character | ArtifactSet | Domain<any> | Material | Weapon | Mob;
+export type FavoriteModel = Model;
 
 export type FavoriteModels = {
   characters: Character;

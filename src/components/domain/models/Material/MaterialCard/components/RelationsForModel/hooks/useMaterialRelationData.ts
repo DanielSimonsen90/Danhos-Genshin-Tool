@@ -1,24 +1,30 @@
 import { useMemo } from "react";
-import { ModelKeys } from "@/common/models";
+import { ModelKeys, ModelData } from "@/common/models";
 import { useDataStore } from "@/stores";
 
-export function useMaterialRelationData<TModelKey extends ModelKeys>(model: TModelKey, materialName: string) {
+export function useMaterialMultiModelRelations<TModelKeys extends readonly ModelKeys[]>(
+  materialName: string, 
+  models: TModelKeys
+) {
   const dataStore = useDataStore();
-  const data = useMemo(() => {
-    switch (model) {
-      case 'Character': return dataStore.getCharactersUsingMaterial(materialName);
-      case 'Weapon': return dataStore.getWeaponsUsingMaterial(materialName);
-      case 'Mob': return dataStore.getMobsDroppingMaterial(materialName);
-      case 'Domain': return [dataStore.getDomainDroppingMaterial(materialName)];
-      default: return [];
-    }
+  return useMemo(() => {
+    return models.map(model => {
+      switch (model) {
+        case 'Character': return dataStore.getCharactersUsingMaterial(materialName);
+        case 'Weapon': return dataStore.getWeaponsUsingMaterial(materialName);
+        case 'Mob': return dataStore.getMobsDroppingMaterial(materialName);
+        case 'Domain': return [dataStore.getDomainDroppingMaterial(materialName)];
+        default: return [];
+      }
+    }) as {
+      [K in keyof TModelKeys]: TModelKeys[K] extends ModelKeys ? ModelData<TModelKeys[K]> : never;
+    };
   }, [
-    dataStore.getCharactersUsingMaterial, 
-    dataStore.getMobsDroppingMaterial, 
-    dataStore.getDomainDroppingMaterial, 
+    dataStore.getCharactersUsingMaterial,
     dataStore.getWeaponsUsingMaterial, 
-    model, materialName
+    dataStore.getMobsDroppingMaterial,
+    dataStore.getDomainDroppingMaterial,
+    materialName,
+    models
   ]);
-
-  return data;
 }

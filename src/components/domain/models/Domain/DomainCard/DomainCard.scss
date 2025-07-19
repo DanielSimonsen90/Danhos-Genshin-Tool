@@ -57,13 +57,13 @@
     >header {
       --image-size: 7.5rem;
       display: grid;
-      grid-template-columns: var(--image-size) 1fr;
+      grid-template-columns: auto;
+      grid-template-rows: var(--image-size) 1fr;
       align-items: center;
-      justify-items: start;
+      justify-items: center;
 
       .artifact-card__name {
-        text-align: left;
-        align-items: flex-start;
+        text-align: center;
       }
     }
   }

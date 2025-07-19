@@ -3,7 +3,6 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 0;
-  // padding-left: 2ch;
 
   li {
     // list-style: disc !important;
@@ -11,12 +10,17 @@
   }
 }
 
-%hidden {
+%visually-hidden {
   opacity: 0;
-  height: 0;
+  max-height: 0;
   z-index: -1;
   pointer-events: none;
   visibility: hidden;
+}
+
+%collapsed {
+  height: 0;
+  overflow: hidden;
 }
 
 %text-ellipsis {

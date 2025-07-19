@@ -12,3 +12,10 @@ export const ModelKeys: Array<ModelKeys> = ['Character', 'Artifact', 'Domain', '
 
 export type DomainType = 'Blessing' | 'Mastery' | 'Forgery';
 export type DomainReward = ArtifactSet | TalentAscensionMaterial | WeaponAscensionMaterial;
+
+export type ModelData<TModelKey extends ModelKeys> = 
+  TModelKey extends 'Character' ? Character[] :
+  TModelKey extends 'Weapon' ? Weapon[] :
+  TModelKey extends 'Mob' ? Mob[] :
+  TModelKey extends 'Domain' ? Domain<any>[] :
+  never;

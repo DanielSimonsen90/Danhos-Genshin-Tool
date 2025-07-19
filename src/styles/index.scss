@@ -26,13 +26,12 @@
   }
 
   #app {
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
 
   .hidden {
-    @extend %hidden;
+    display: none;
   }
 
   .muted {

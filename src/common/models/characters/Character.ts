@@ -1,4 +1,4 @@
-import { Element, WeaponType, BonusAbility, Rarity, Region } from '@/common/types';
+import { Element, WeaponType, BonusAbility, Rarity, Region, PassiveTalent } from '@/common/types';
 import CharacterSet from './CharacterSet';
 import CharacterAscension from './CharacterAscension';
 
@@ -15,6 +15,7 @@ export class Character<TElement extends Element = Element> {
     public rarity: Rarity,
     public region: Region,
     public ascension: CharacterAscension<TElement>,
+    public passiveTalent: PassiveTalent | undefined,
     public sets: CharacterSet[],
   ) {}
 

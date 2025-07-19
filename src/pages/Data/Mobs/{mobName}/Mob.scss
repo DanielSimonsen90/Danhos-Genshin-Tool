@@ -1,0 +1,14 @@
+.main-mob-card {
+  .mob-image {
+    --size: 10rem;
+  }
+
+  h1 {
+    font-size: clamp(1.25rem, 2vw + 1rem, 2rem);
+    margin: 0;
+  }
+
+  .mob-card__details {
+    justify-content: center;
+  }
+}

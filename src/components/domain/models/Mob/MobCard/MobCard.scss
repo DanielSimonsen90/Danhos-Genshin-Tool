@@ -107,15 +107,24 @@
   }
 
   &__relations {
-    .tab-bar__tab .model-card {
-      padding: 0;
-
-      > header {
-        gap: .5em;
-      }
+    .tab-bar__tab .material-card--light {
+      display: flex;
+      align-items: center;
+      gap: .5em;
 
       img {
         --size: 2rem;
+      }
+
+      h3 {
+        display: flex;
+        align-items: center;
+        gap: .5ch;
+      }
+
+      span {
+        font-size: 1rem;
+        color: var(--text-muted);
       }
     }
   }

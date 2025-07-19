@@ -15,6 +15,7 @@ export interface Props extends BaseModelCardProps {
 
   score?: number;
 
+  showPassiveTalent?: boolean;
   showAscensionSection?: boolean;
   showCharacterSets?: boolean;
   showSignatureWeapon?: boolean;
@@ -23,6 +24,7 @@ export interface Props extends BaseModelCardProps {
 
 export default function CharacterCard({
   character, score,
+  showPassiveTalent,
   showAscensionSection,
   showCharacterSets,
   showSignatureWeapon,
@@ -74,6 +76,12 @@ export default function CharacterCard({
           {score && score > 0 && (
             <p className="character-details__score">
               Score: <b>{score}</b>
+            </p>
+          )}
+          {showPassiveTalent && (
+            <p className="passive-talent">
+              <strong>Passive Talent:</strong>
+              <span>{character.passiveTalent}</span>
             </p>
           )}
         </>

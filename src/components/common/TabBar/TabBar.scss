@@ -123,16 +123,18 @@
   grid-template-areas: "content";
   padding: .5em .75em .5em;
   border: 1px solid var(--background-tertiary);
+  overflow: hidden auto;
 
   &--collapsed {
-    @extend .hidden;
+    display: none;
   }
+  
   &-page {
     grid-area: content;
 
     &:not(&--active),
     &:not(&--active) * {
-      @extend .hidden;
+      display: none;
     }
   }
 
