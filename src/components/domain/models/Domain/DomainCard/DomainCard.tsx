@@ -17,11 +17,13 @@ import { ArtifactCard } from "../../Artifacts";
 import { MaterialCard } from "../../Material";
 import DomainRewardsTabBar from "../DomainRewardsTabBar";
 import { Region } from "@/components/domain";
+import LeyLineDisorderPagination from "./LeyLineDisorderPagination";
 
 export interface Props extends BaseModelCardProps {
   domain: Domain<any>;
   showResin?: boolean;
   showDescription?: boolean;
+  showLeyLineDisorder?: boolean;
   showMinRewards?: boolean;
   showDetailedRewards?: boolean;
   showCharactersBenefitFromRewards?: boolean;
@@ -30,18 +32,19 @@ export interface Props extends BaseModelCardProps {
 
 export default function DomainCard({
   domain,
-  showResin, showDescription, showMinRewards, showDetailedRewards,
+  showResin, showDescription, showLeyLineDisorder, showMinRewards, showDetailedRewards,
   showCharactersBenefitFromRewards, showNavButton,
   ...props
 }: Props) {
   const DataStore = useDataStore();
   if (!domain) return null;
 
-  const { name, description, resinCost, region } = domain;
+  const { name, description, leyLineDisorder: leylineDisorder, resinCost, region } = domain;
   const rewards = domain.getRewards(DataStore);
   const type = domain.getDomainType();
   const minRewards = useMemo(() => {
     if (domain.isBlessing()) return domain.getRewards(DataStore).filter(artifact => artifact.rarity === Rarity.Legendary);
+    if (domain.isForgery()) return domain.getRewards(DataStore);
     if (domain.isMastery()) return domain.getRewards(DataStore).filter(talent => talent.isObtainableToday());
     return [];
   }, [rewards]);
@@ -54,6 +57,9 @@ export default function DomainCard({
       className={classNames('domain-card', props.className)}
 
       renderImage={() => <DomainImage domain={name} />}
+      renderHeadingContent={() => (
+        showResin && <ResinIcon cost={resinCost} />
+      )}
       renderHeaderContent={() => (<>
         <div className="domain-type">
           <p>{type}</p>
@@ -69,7 +75,6 @@ export default function DomainCard({
             </ul>
           )}
         </div>
-        {showResin && <ResinIcon cost={resinCost} />}
         {showDescription && <p className="domain-card__description">{description}</p>}
         <Region region={region} className="domain-card__region" />
         {showNavButton && (
@@ -82,8 +87,12 @@ export default function DomainCard({
       </>)}
 
       renderContent={() => (
-        (showDetailedRewards || showCharactersBenefitFromRewards) ? (
+        (showLeyLineDisorder || showDetailedRewards || showCharactersBenefitFromRewards) ? (
           <section>
+            {showLeyLineDisorder && <LeyLineDisorderPagination
+              domainName={name}
+              leyLineDisorder={leylineDisorder}
+            />}
             {showDetailedRewards && rewards && (
               <div className="rewards-list-container">
                 <h3 className="rewards-list-container__title">Rewards</h3>
@@ -93,10 +102,10 @@ export default function DomainCard({
                       showSetDescriptions
                       showRarity
                       wrapInLink
-                    /> 
-                    : <MaterialCard key={reward.name} material={reward} nameTag='h4'
-                      wrapInLink
                     />
+                      : <MaterialCard key={reward.name} material={reward} nameTag='h4'
+                        wrapInLink
+                      />
                   ))}
                 </ul>
               </div>

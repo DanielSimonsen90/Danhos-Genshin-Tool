@@ -1,7 +1,6 @@
 import { Region, ResinCost } from "@/common/types/genshin";
 import { Domain } from "./Domain";
 import { TalentAscensionMaterial } from "../materials/AscensionMaterial";
-import { DataStore } from "@/stores";
 
 /**
  * Domain for character ascension materials.
@@ -13,9 +12,10 @@ export class DomainOfMastery extends Domain<TalentAscensionMaterial> {
   constructor(
     public name: string,
     public description: string,
+    public leyLineDisorder: Record<number, string>,
     public region: Region,
   ) {
-    super(name, description, ResinCost.Twenty, region);
+    super(name, description, leyLineDisorder, ResinCost.Twenty, region);
   }
 
   public isMastery(): this is DomainOfMastery { return true; }

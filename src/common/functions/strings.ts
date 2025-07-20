@@ -77,3 +77,19 @@ export function rarityString(rarity: Rarity) {
 export function plural(amount: number, singular: string, plural?: string) {
   return amount === 1 ? singular : (plural || `${singular}s`);
 }
+
+export function romanNumerals(value: number) {
+  switch (value) {
+    case 1: return 'I';
+    case 2: return 'II';
+    case 3: return 'III';
+    case 4: return 'IV';
+    case 5: return 'V';
+    case 6: return 'VI';
+    case 7: return 'VII';
+    case 8: return 'VIII';
+    case 9: return 'IX';
+    case 10: return 'X';
+    default: return value.toString();
+  }
+}

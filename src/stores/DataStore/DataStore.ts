@@ -120,7 +120,7 @@ export const useDataStore = create<DataStore>((setState, getState) => {
       return sortByRarityDesc(
         getState().Materials
           .filter(material => 
-            TalentAscensionMaterial.isAscensionMaterial(material) && 
+            TalentAscensionMaterial.isTalentAscensionMaterial(material) && 
             material.domain.name === domain.name
           )
       ) as TalentAscensionMaterial[];
@@ -133,7 +133,7 @@ export const useDataStore = create<DataStore>((setState, getState) => {
       return sortByRarityDesc(
         getState().Materials
           .filter(material => 
-            WeaponAscensionMaterial.isAscensionMaterial(material) && 
+            WeaponAscensionMaterial.isWeaponAscensionMaterial(material) && 
             material.domain.name === domain.name
           )
       ) as WeaponAscensionMaterial[];

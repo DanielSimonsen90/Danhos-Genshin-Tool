@@ -1,6 +1,6 @@
 import { WeaponAscensionMaterial } from "@/common/models";
 import { Rarity } from "@/common/types";
-import { AncientWatchtower, EchoesOftheDeepTides } from "@/data/domains/domain-of-forgery";
+import { AncientWatchtower } from "@/data/domains/domain-of-forgery";
 
 export const BlazingSacrificialHearts = WeaponAscensionMaterial.create(
   {
@@ -34,7 +34,7 @@ export const DeliriousXOfTheSacredLord = WeaponAscensionMaterial.create(
     [Rarity.Legendary]: `The Sacred Lord of the ineffable city often murmured non-human languages in his dreams, and when he beheld himself in the mirror, he saw how the single pupil that was visible through his mask was gradually becoming vertical. This only served to further fuel his growing hatred for the dragons.\nIt is said that when the scarlet-eyed youth burned down that city above a city, submerged in shadow as it was, he witnessed a half-human figure before the royal hall who had been driven mad. As if tearing off its very face, it ripped away at its indelible divine visage, revealing gaping holes that were fearsomely draconic.\nConsumed by the golden flames it spewed, the disfigured form of that deranged soul fell from a great height into the pitch-black mire below. Forsaken by all, thus was the tragic end that this delusional outcast is said to have met.`,
   },
   'Natlan',
-  EchoesOftheDeepTides,
+  AncientWatchtower,
   'Tuesday/Friday'
 );
 
@@ -52,6 +52,6 @@ export const NightWindsMysticX = WeaponAscensionMaterial.create(
     [Rarity.Legendary]: `Regardless of how they are polished, representations of worldly matter cannot be made to transcend their physical nature - they will always remain material in essence. Similarly, pure human spirit can neither be expressed solely through the "tree" of intention, nor embodied through obsidian mirrors that need constant polishing. As the power of the Night Kingdom and the Nightsouls grew, so too did the types of objects that could be used for spiritual fusion. Eventually, the Wayob came to be capable of conveying revelations of the Night Kingdom through various thoughts alone, dispensing of the need for devotees to perform the ritual of polishing stones into mirrors. Thus were such ritual tools rendered obsolete.`,
   },
   'Natlan',
-  EchoesOftheDeepTides,
+  AncientWatchtower,
   'Wednesday/Saturday'
 );
