@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useMemo, useState } from "react";
+import { ReactNode, useMemo, useState } from "react";
 import { OptionalProps, UncrontrolledProps } from "../Props";
 import UncontrolledSearchableList from "./UncontrolledSearchableList";
 import { FilterObject } from "../../../common/FormItems/Filter/Filter";
@@ -58,13 +58,15 @@ export default function ControlledSearchableList<TItem, FilterKeys extends strin
     }
     return true;
   }), [items, search, filters, props]);
+  const hasSearchOrFilters = useMemo(() => results.length !== items.length || !!search || Object.keys(filters).length > 0, [results, items, search, filters]);
+
   const render = 'children' in props ? props.children : props.renderItem;
   
   useOnChange({ search, filters }, ({ search, filters }) => props.onSearchOrFilterChange?.(search, filters));
 
   return <UncontrolledSearchableList onFilterChange={() => { }}
     {...props}
-    search={search} setSearch={setSearch} filters={filters} setFilters={setFilters} filterChecks={filterChecks}
+    search={search} setSearch={setSearch} filters={filters} setFilters={setFilters} filterChecks={filterChecks} hasSearchOrFilters={hasSearchOrFilters}
     children={results.map((result) => [render(result, items.indexOf(result), items), result] as [ReactNode, TItem])}
   />;
 }

@@ -27,9 +27,8 @@
 
   &__name {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    gap: .5em;
+    gap: .25em;
     font-size: 1.25rem;
     margin-bottom: .5em;
     width: 100%;
@@ -37,9 +36,18 @@
     &-text {
       @extend %text-ellipsis;
       word-break: break-word;
-      flex: 1;
-      font-weight: 600;
+      font-weight: bold;
       color: var(--text-primary);
+    }
+  }
+
+  &__resin {
+    flex: 1;
+    display: flex;
+    align-items: center;
+
+    &::after {
+      display: none;
     }
   }
 

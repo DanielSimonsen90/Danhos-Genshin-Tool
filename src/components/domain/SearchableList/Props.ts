@@ -19,6 +19,8 @@ export type OptionalProps<TItem, FilterKeys extends string> = FilterProps<TItem,
 }
 
 export type ControlledProps<TItem, FilterKeys extends string> = {
+  hasSearchOrFilters: boolean,
+  
   search: string,
   setSearch: Dispatch<SetStateAction<string>>,
 

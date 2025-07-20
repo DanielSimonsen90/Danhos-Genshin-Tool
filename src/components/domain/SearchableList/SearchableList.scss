@@ -25,18 +25,19 @@
   &__list-item {
     display: grid;
 
-    > * {
+    >* {
       height: 100%;
       width: 100%;
       display: grid;
     }
-  }
 
-  &__list-item--end {
-    width: 100%;
-    text-align: center;
-    justify-content: center;
-    color: var(--text-muted);
+    &--end {
+      width: 100%;
+      max-width: unset;
+      text-align: center;
+      justify-content: center;
+      color: var(--text-muted);
+    }
   }
 
   &__search {

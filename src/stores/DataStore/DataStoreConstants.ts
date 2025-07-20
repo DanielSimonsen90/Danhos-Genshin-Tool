@@ -21,14 +21,14 @@ import * as WeaponTalentData from '@/data/materials/weapon-materials';
 
 const MaterialsData = Object.assign({},
   Object.assign({}, 
-    MaterialDropsData,
-    MaterialLocalSpecialtiesData,
     MaterialTalentData,
+    WeaponTalentData,
+    MaterialLocalSpecialtiesData,
   ),
   Object.assign({}, 
+    MaterialDropsData,
     ElementalCrystals,
     Billets,
-    WeaponTalentData
   )
 );
 
