@@ -16,7 +16,7 @@ export function useMaterialMultiModelRelations<TModelKeys extends readonly Model
         case 'Domain': return [dataStore.getDomainDroppingMaterial(materialName)];
         default: return [];
       }
-    }) as {
+    }) as unknown as {
       [K in keyof TModelKeys]: TModelKeys[K] extends ModelKeys ? ModelData<TModelKeys[K]> : never;
     };
   }, [

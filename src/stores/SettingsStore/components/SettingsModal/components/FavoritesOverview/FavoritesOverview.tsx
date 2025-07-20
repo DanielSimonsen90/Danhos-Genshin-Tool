@@ -5,10 +5,10 @@ import {
   SearchableMobList, SearchableWeaponList
 } from "@/components/domain/SearchableList";
 import { useDataStore } from "@/stores/DataStore";
-import { ModelsCollection, useFavoriteStore } from "@/stores/FavoriteStore";
+import { FavoritesCollection, useFavorites } from "@/stores/RegionStore";
 
 export default function FavoritesOverview() {
-  const FavoriteStore = useFavoriteStore();
+  const FavoriteStore = useFavorites();
 
   if (!FavoriteStore.hasAnyFavorites()) return (
     <p>
@@ -20,12 +20,12 @@ export default function FavoritesOverview() {
 
   return (
     <div className="favorites-overview">
-      {Object.entries(FavoriteStore.getAll()).map(([type, favorites]) => (
+      {Object.entries(FavoriteStore.getAllFavorites()).map(([type, favorites]) => (
         favorites.length > 0 && (
           <section key={type}>
             <h3>{type}</h3>
             <ModelComponentList
-              modelType={type as keyof ModelsCollection}
+              modelType={type as keyof FavoritesCollection}
               models={favorites}
             />
           </section>
@@ -36,12 +36,12 @@ export default function FavoritesOverview() {
 }
 
 type ModelComponentListProps = {
-  modelType: keyof ModelsCollection;
+  modelType: keyof FavoritesCollection;
   models: Array<{ name: string; }>;
 };
 function ModelComponentList({ modelType, models }: ModelComponentListProps) {
   const DataStore = useDataStore();
-  const dataStoreKey = modelType[0].toUpperCase() + modelType.slice(1) as keyof typeof DataStore;
+  const dataStoreKey = (modelType as string)[0].toUpperCase() + (modelType as string).slice(1) as keyof typeof DataStore;
   const items = (DataStore[dataStoreKey] as Array<Model>)
     .filter(model => models.some(fav => fav.name === model.name));
 

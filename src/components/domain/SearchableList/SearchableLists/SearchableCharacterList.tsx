@@ -6,7 +6,7 @@ import { CharacterCard } from "@/components/domain/models/Character";
 import { Props as CharacterCardProps } from "@/components/domain/models/Character/CharacterCard/CharacterCard";
 import { Rarity } from "@/common/types";
 
-import { useDataStore, useFavoriteStore } from "@/stores";
+import { useDataStore, useFavorite } from "@/stores";
 import { useContextMenu } from "@/providers/ContextMenuProvider";
 
 import { OptionalProps, UncrontrolledProps } from "@/components/domain/SearchableList/Props";
@@ -30,7 +30,7 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
   const { query, filters } = useParams();
   const navigate = useNavigate();
   const [hidden, setHidden] = useState(new Array<Character>());
-  const FavoriteStore = useFavoriteStore('characters');
+  const FavoriteStore = useFavorite('characters');
   const DataStore = useDataStore();
 
   return <SearchableList items={items}

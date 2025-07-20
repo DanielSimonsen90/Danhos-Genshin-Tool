@@ -122,7 +122,7 @@ export default function MobCard({
                     return [
                       // Character tab - only if there are character relations
                       ...(hasCharacterRelations ? [tab(
-                        `${drop.name}--Characters`,
+                        `${drop.name}--Characters` as string,
                         <div className="material-card--light">
                           <MaterialImage material={drop.name} />
                           <h3>{drop.name} {hasMultipleTabs && <span>(for Characters)</span>}</h3>
@@ -132,7 +132,7 @@ export default function MobCard({
                       
                       // Weapon tab - only if there are weapon relations
                       ...(hasWeaponRelations ? [tab(
-                        `${drop.name}--Weapons`,
+                        `${drop.name}--Weapons` as string,
                         <div className="material-card--light">
                           <MaterialImage material={drop.name} />
                           <h3>{drop.name} {hasMultipleTabs && <span>(for Weapons)</span>}</h3>

@@ -10,15 +10,13 @@ import { useContextMenu } from "@/providers/ContextMenuProvider";
 
 import { OptionalProps, UncrontrolledProps } from "@/components/domain/SearchableList/Props";
 import SearchableList from "@/components/domain/SearchableList/SearchableList";
-import { useFavoriteStore } from "@/stores/FavoriteStore/FavoriteStoreHooks";
+import { useFavorite, useDataStore } from "@/stores";
 import { FavoriteStar } from "@/components/common/media/icons/Star";
 import Material from "@/common/models/materials/Material";
 import CraftableMaterial from "@/common/models/materials/CraftableMaterial";
 import AscensionMaterial, { TalentAscensionMaterial, WeaponAscensionMaterial } from "@/common/models/materials/AscensionMaterial";
 import LocalSpecialty from "@/common/models/materials/LocalSpecialty";
 import MobDrop, { ElementalCrystal } from "@/common/models/materials/MobDrop";
-import { CrystalChunks } from "@/data/materials/drops/crystals";
-import { useDataStore } from "@/stores";
 import { WeeklyBoss, WorldBoss } from "@/common/models";
 
 type Props<TFilterKeys extends string> = (
@@ -38,7 +36,7 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
   const { query, filters } = useParams();
   const navigate = useNavigate();
   const [hidden, setHidden] = useState(new Array<Material>());
-  const FavoriteStore = useFavoriteStore('materials');
+  const FavoriteStore = useFavorite('materials');
   const DataStore = useDataStore();
 
   return <SearchableList

@@ -11,7 +11,7 @@ import { useContextMenu } from "@/providers/ContextMenuProvider";
 
 import { OptionalProps, UncrontrolledProps } from "@/components/domain/SearchableList/Props";
 import SearchableList from "@/components/domain/SearchableList/SearchableList";
-import { useFavoriteStore } from "@/stores/FavoriteStore/FavoriteStoreHooks";
+import { useFavorite } from "@/stores";
 import { FavoriteStar } from "@/components/common/media/icons/Star";
 
 type Props<TFilterKeys extends string> = (
@@ -31,7 +31,7 @@ export default function SearchableArtifactList<TFilterKeys extends string>({
   const { query, filters } = useParams();
   const navigate = useNavigate();
   const [hidden, setHidden] = useState(new Array<ArtifactSet>());
-  const FavoriteStore = useFavoriteStore('artifacts');
+  const FavoriteStore = useFavorite('artifacts');
 
   return <SearchableList items={items}
     sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
