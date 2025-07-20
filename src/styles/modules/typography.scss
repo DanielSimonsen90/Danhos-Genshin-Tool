@@ -34,6 +34,7 @@ p {
   --margins: .5em;
   margin-block-start: var(--margins);
   margin-block-end: var(--margins);
+  max-width: 75ch;
 }
 
 span {

@@ -12,9 +12,10 @@ export class DomainOfForgery extends Domain<WeaponAscensionMaterial> {
   constructor(
     public name: string,
     public description: string,
+    public leyLineDisorder: Record<number, string>,
     public region: Region,
   ) {
-    super(name, description, ResinCost.Twenty, region);
+    super(name, description, leyLineDisorder, ResinCost.Twenty, region);
   }
 
   public isForgery(): this is DomainOfForgery { return true; }

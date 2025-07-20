@@ -6,7 +6,7 @@ import { CharacterCard } from "@/components/domain/models/Character";
 import { Props as CharacterCardProps } from "@/components/domain/models/Character/CharacterCard/CharacterCard";
 import { Rarity } from "@/common/types";
 
-import { useDataStore, useFavoriteStore } from "@/stores";
+import { useDataStore, useFavorite } from "@/stores";
 import { useContextMenu } from "@/providers/ContextMenuProvider";
 
 import { OptionalProps, UncrontrolledProps } from "@/components/domain/SearchableList/Props";
@@ -30,8 +30,10 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
   const { query, filters } = useParams();
   const navigate = useNavigate();
   const [hidden, setHidden] = useState(new Array<Character>());
-  const FavoriteStore = useFavoriteStore('characters');
+  const FavoriteStore = useFavorite('characters');
   const DataStore = useDataStore();
+  
+  const [internalCardProps, setInteralCardProps] = useState<Pick<Props<TFilterKeys>, 'cardProps'>['cardProps']>({});
 
   return <SearchableList items={items}
     sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
@@ -40,12 +42,12 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
         item('option', 'View', () => navigate(`/characters/${character.name}`), '👁️'),
         item('option', FavoriteStore.isFavorite(character) ? 'Unfavorite' : 'Favorite', () => FavoriteStore.isFavorite(character) ? FavoriteStore.remove(character) : FavoriteStore.add(character), '⭐'),
         item('option', 'Hide', () => setHidden([...hidden, character]), '🙈'),
-      ]);      
-      
+      ]);
+
       return hidden.includes(character) ? null : (
         <div className="context-menu-item-container" onContextMenu={open}>
           {FavoriteStore.isFavorite(character) && <FavoriteStar model={character} />}
-          <CharacterCard character={character} {...cardProps} />
+          <CharacterCard character={character} {...internalCardProps} {...cardProps} />
         </div>
       );
     }}
@@ -54,9 +56,20 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
     filters={filters ? JSON.parse(filters) : {}}
     onSearchOrFilterChange={(search, filters) => {
       setHidden([]);
-      navigate(`?query=${search}&filters=${JSON.stringify(filters)}`)
+      navigate(`?query=${search}&filters=${JSON.stringify(filters)}`);
     }}
     onSearch={noBaseSearch ? onSearch : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}
+    onFilterChange={filter => {
+      const updatedInternalFilter = Object.entries(filter).reduce((acc, [key, value]) => {
+        switch (key) {
+          case 'passiveTalents': return { ...acc, showPassiveTalent: Object.keys(value).length > 0 };
+          case 'hasSignatureWeapon': return { ...acc, showSignatureWeapon: value as boolean };
+          default: return acc;
+        }
+      }, {} as Partial<CharacterCardProps>);
+
+      setInteralCardProps(props => ({ ...props, ...updatedInternalFilter }));
+    }}
     filterChecks={noBaseFilterChecks ? filterChecks : {
       element: {
         anemo: character => character.element === "Anemo",
@@ -93,14 +106,40 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
         none: character => character.bonusAbilities.length === 0,
 
         bondOfLife: character => character.bonusAbilities.includes('Bond of Life'),
+        buffAttack: character => character.bonusAbilities.some(ability => ability.startsWith('Buff ATK: ')),
+        buffAttackSpeed: character => character.bonusAbilities.some(ability => ability.startsWith('Buff ATK Speed: ')),
+        critIncrease: character => character.bonusAbilities.some(ability => ability.startsWith('CRIT Increase: ')),
+        elementalBased: character => character.bonusAbilities.some(ability => ability.startsWith('Elemental based: ')),
+        elementalInfusion: character => character.bonusAbilities.some(ability => ability.startsWith('Elemental Infusion: ')),
+        grouping: character => character.bonusAbilities.includes('Grouping'),
         heal: character => character.bonusAbilities.includes('Heal'),
         nightsoulsBlessing: character => character.bonusAbilities.includes('Nightsouls Blessing'),
         offFieldDamage: character => character.bonusAbilities.includes('Off-field Damage'),
         selfHeal: character => character.bonusAbilities.includes('Self-heal'),
+        serpentSubtlety: character => character.bonusAbilities.includes(`Serpent's Subtlety`),
         shield: character => character.bonusAbilities.includes('Shield'),
-        special: character => character.bonusAbilities.toString().includes(':'),
       },
-      hasSignatureWeapon: character => !!DataStore.getSignatureWeaponFor(character), 
+      passiveTalents: {
+        doubleProduct: character => character.passiveTalent?.toLowerCase().includes('double product'),
+        expeditionMoreRewards: character => character.passiveTalent?.toLowerCase().includes('more rewards'),
+        expeditionTimeReduction: character => character.passiveTalent?.toLowerCase().includes('time consumption reduction'),
+        increaseSpeed: character => (
+          character.passiveTalent?.toLowerCase().includes('increase')
+          && character.passiveTalent?.toLowerCase().includes('speed')
+        ),
+        localSpecialty: character => character.passiveTalent?.toLowerCase().includes('local specialties'),
+        moraCostReductionOnWeapon: character => (
+          character.passiveTalent?.toLowerCase().includes('mora cost reduction')
+          && character.passiveTalent?.toLowerCase().includes('weapon')
+        ),
+        refundMaterials: character => character.passiveTalent?.toLowerCase().includes('refund materials'),
+        refundOre: character => character.passiveTalent?.toLowerCase().includes('refunding ore'),
+        transportationConsumptionReduction: character => (
+          character.passiveTalent?.toLowerCase().includes('consumption reduction')
+          && !character.passiveTalent?.toLowerCase().includes('time')
+        ),
+      },
+      hasSignatureWeapon: character => !!DataStore.getSignatureWeaponFor(character),
       region: {
         mondstadt: character => character.region === "Mondstadt",
         liyue: character => character.region === "Liyue",

@@ -5,12 +5,6 @@
   gap: 1em;
   height: 100%;
 
-  &__header {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 1em;
-  }
-
   .domain-image {
     border-radius: .25em;
     margin-inline: auto;
@@ -22,8 +16,10 @@
   }
 
   &__name {
+    display: flex;
+    align-items: center;
+    gap: .5ch;
     --margins: 0em;
-    // max-width: calc(100% - var(--margins) * 2);
     max-width: 100%;
     font-size: clamp(1.25rem, 2vw, 3rem);
   }
@@ -57,13 +53,13 @@
     >header {
       --image-size: 7.5rem;
       display: grid;
-      grid-template-columns: var(--image-size) 1fr;
+      grid-template-columns: auto;
+      grid-template-rows: var(--image-size) 1fr;
       align-items: center;
-      justify-items: start;
+      justify-items: center;
 
       .artifact-card__name {
-        text-align: left;
-        align-items: flex-start;
+        text-align: center;
       }
     }
   }

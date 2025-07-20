@@ -6,7 +6,7 @@ import { DomainCard } from "@/components/domain/models/Domain";
 import { Props as DomainCardProps } from "@/components/domain/models/Domain/DomainCard/DomainCard";
 
 import { useContextMenu } from "@/providers/ContextMenuProvider";
-import { useFavoriteStore } from "@/stores";
+import { useFavorite } from "@/stores";
 
 import SearchableList from "@/components/domain/SearchableList/SearchableList";
 import { OptionalProps, UncrontrolledProps } from "@/components/domain/SearchableList/Props";
@@ -29,7 +29,7 @@ export default function SearchableDomainList<TFilterKeys extends string>({
   const { query, filters } = useParams();
   const navigate = useNavigate();
   const [hidden, setHidden] = useState(new Array<Domain<any>>());
-  const FavoriteStore = useFavoriteStore('domains');
+  const FavoriteStore = useFavorite('domains');
 
   return <SearchableList items={items}
     sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}

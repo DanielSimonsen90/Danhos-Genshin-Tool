@@ -9,7 +9,7 @@ import { useContextMenu } from "@/providers/ContextMenuProvider";
 
 import { OptionalProps, UncrontrolledProps } from "@/components/domain/SearchableList/Props";
 import SearchableList from "@/components/domain/SearchableList/SearchableList";
-import { useFavoriteStore } from "@/stores";
+import { useFavorite } from "@/stores";
 import { FavoriteStar } from "@/components/common/media/icons/Star";
 
 type Props<TFilterKeys extends string> = (
@@ -29,7 +29,7 @@ export default function SearchableMobList<TFilterKeys extends string>({
   const { query, filters } = useParams();
   const navigate = useNavigate();
   const [hidden, setHidden] = useState(new Array<Mob>());
-  const FavoriteStore = useFavoriteStore('mobs')
+  const FavoriteStore = useFavorite('mobs');
 
   return <SearchableList 
     items={items}

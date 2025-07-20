@@ -102,10 +102,10 @@
           box-shadow: 0 0 5px 3px #22222266;
         }
       }
-    }
-
+    }    
+    
     li:has(a[href*=skip-nav]:not(:focus)) {
-      @extend %hidden;
+      @extend %visually-hidden;
 
       visibility: visible;
       position: absolute;

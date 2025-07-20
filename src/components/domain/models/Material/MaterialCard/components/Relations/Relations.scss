@@ -5,7 +5,6 @@
 
 .material-card__models-using,
 .material-card__model-acquired {
-  margin-bottom: 1rem;
 
   &:last-child {
     margin-bottom: 0;
@@ -14,15 +13,15 @@
   .local-specialty {
     display: flex;
 
-    .regions {
+    .region {
       margin-left: .5ch;
     }
   }
 
   h4 {
     margin: 0 0 0.5rem 0;
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: .9rem;
+    font-weight: bold;
     color: var(--text-secondary);
   }
 }

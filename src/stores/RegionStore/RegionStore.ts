@@ -3,17 +3,27 @@ import { create } from 'zustand';
 import * as ObjectUtils from '@/common/functions/object';
 import StorageService from '@/services/StorageService';
 
-import { RegionData, Region, Traveler, RegionContextType, RegionStore, RegionSettings } from './RegionStoreTypes';
-import { DEFAULT_REGION, DEFAULT_REGION_DATA, LOCAL_STORAGE_KEY, REGIONS } from './RegionStoreConstants';
+import { RegionData, Region, Traveler, RegionContextType, RegionStore, RegionSettings, FavoriteModels, FavoritesCollection, FavoritesAPI, FavoriteModel } from './RegionStoreTypes';
+import { DEFAULT_REGION, DEFAULT_REGION_DATA, LOCAL_STORAGE_KEY, REGIONS, DEFAULT_FAVORITES } from './RegionStoreConstants';
+import { Model } from '@/common/models/Model';
 
 export const useRegionStore = create<RegionStore>((setState, getState) => {
   const storageService = StorageService<RegionContextType>(LOCAL_STORAGE_KEY);
 
   const regions = storageService.get() ?? { [DEFAULT_REGION]: DEFAULT_REGION_DATA } as RegionContextType;
-  const getCurrentRegion = (regions: RegionContextType) => Object.keys(regions).find(region => regions[region as keyof typeof regions].selected) as keyof RegionContextType;
-  const getRegionData = (regions: RegionContextType) => {
+  const getCurrentRegion = (regions: RegionContextType) => Object.keys(regions).find(region => regions[region as keyof typeof regions].selected) as keyof RegionContextType;  const getRegionData = (regions: RegionContextType) => {
     const currentRegion = getCurrentRegion(regions);
-    return currentRegion ? Object.assign({}, regions[currentRegion as keyof typeof regions], { setRegionData }) : undefined;
+    const regionData = currentRegion ? regions[currentRegion as keyof typeof regions] : undefined;
+    
+    if (!regionData) return undefined;
+    
+    // Ensure favorites are always initialized
+    const dataWithFavorites = {
+      ...regionData,
+      favorites: regionData.favorites ?? DEFAULT_FAVORITES,
+    };
+    
+    return Object.assign({}, dataWithFavorites, { setRegionData });
   };
   
   const setRegionData = (update: Partial<RegionData> | ((state: RegionData) => RegionData)) => {
@@ -28,7 +38,7 @@ export const useRegionStore = create<RegionStore>((setState, getState) => {
       const region = _region as keyof RegionContextType;
       const storedData: RegionData = regions[region] ?? Object.assign(
         ObjectUtils.exclude(DEFAULT_REGION_DATA, 'selected'),
-        { region, selected: false } as RegionData,
+        { region, selected: false, favorites: DEFAULT_FAVORITES } as RegionData,
       );
 
       if (region === resolvedRegionDataUpdate.region) acc[region] = {
@@ -56,10 +66,50 @@ export const useRegionStore = create<RegionStore>((setState, getState) => {
       currentRegion: getCurrentRegion(next),
       regionData: getRegionData(next),
     });
-  }
+  };
   const setRegion = (region: Region) => setRegionData({ region });
   const setTraveler = (traveler: Traveler) => setRegionData({ traveler });
+  // Unified favorites API
+  const favorites: FavoritesAPI = {
+    getAllFavorites: (): FavoritesCollection => getState().regionData.favorites ?? DEFAULT_FAVORITES,
 
+    hasAnyFavorites: (): boolean => {
+      const favorites = getState().regionData.favorites ?? DEFAULT_FAVORITES;
+      return Object.values(favorites).some(favList => favList.length > 0);
+    },
+
+    clearFavorites: () => setRegionData({ favorites: DEFAULT_FAVORITES }),
+
+    getFavorite: <TFavoriteModel extends keyof FavoriteModels>(type: TFavoriteModel): FavoriteModel<TFavoriteModel> => ({
+      add: (item: FavoriteModels[TFavoriteModel]) => {
+        const currentFavorites = getState().regionData.favorites ?? DEFAULT_FAVORITES;
+        const favorites = {
+          ...currentFavorites,
+          [type]: [...(currentFavorites[type] || []), item]
+        };
+        setRegionData({ favorites });
+      },
+
+      remove: (item: FavoriteModels[TFavoriteModel]) => {
+        const currentFavorites = getState().regionData.favorites ?? DEFAULT_FAVORITES;
+        const favorites = {
+          ...currentFavorites,
+          [type]: (currentFavorites[type] as Model[]).filter((model: Model) => model.name !== item.name)
+        };
+        setRegionData({ favorites });
+      },
+
+      isFavorite: (item: FavoriteModels[TFavoriteModel]) => {
+        const currentFavorites = getState().regionData.favorites ?? DEFAULT_FAVORITES;
+        return currentFavorites[type]?.some((model: Model) => model.name === item.name) ?? false;
+      },
+
+      getFavorites: (): Array<FavoriteModels[TFavoriteModel]> => {
+        const currentFavorites = getState().regionData.favorites ?? DEFAULT_FAVORITES;
+        return (currentFavorites[type] ?? []) as Array<FavoriteModels[TFavoriteModel]>;
+      }
+    })
+  };
   return {
     regions,
     currentRegion: getCurrentRegion(regions),
@@ -67,11 +117,12 @@ export const useRegionStore = create<RegionStore>((setState, getState) => {
     get regionSettings(): RegionSettings {
       return ObjectUtils.pick(getState().regionData, 'region', 'traveler');
     },
-    
     setRegionData,
     setRegion,
     setTraveler,
     setState,
+
+    favorites,
 
     storageService,
   };

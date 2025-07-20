@@ -4,5 +4,9 @@
     .weapon-image {
       --size: 10rem;
     }
+
+    .weapon-card__name {
+      font-size: clamp(1.25rem, 2vw + 1rem, 2rem);
+    }
   }
 }

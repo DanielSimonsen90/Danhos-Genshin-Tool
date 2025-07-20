@@ -5,7 +5,7 @@ import { Weapon } from "@/common/models";
 import { WeaponCard } from "@/components/domain/models/Weapon";
 import { Props as WeaponCardProps } from "@/components/domain/models/Weapon/WeaponCard/WeaponCard";
 
-import { useDataStore, useFavoriteStore } from "@/stores";
+import { useDataStore, useFavorite } from "@/stores";
 import { useContextMenu } from "@/providers/ContextMenuProvider";
 
 import { OptionalProps, UncrontrolledProps } from "@/components/domain/SearchableList/Props";
@@ -31,7 +31,7 @@ export default function SearchableWeaponList<TFilterKeys extends string>({
   const navigate = useNavigate();
   const [hidden, setHidden] = useState(new Array<Weapon>());
   const DataStore = useDataStore();
-  const FavoriteStore = useFavoriteStore('weapons');
+  const FavoriteStore = useFavorite('weapons');
 
   return <SearchableList items={items}
     sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}

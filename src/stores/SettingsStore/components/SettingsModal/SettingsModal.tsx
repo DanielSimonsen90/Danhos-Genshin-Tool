@@ -6,7 +6,6 @@ import Modal, { ModalConsumerProps } from "@/components/common/Modal";
 import { useActionState } from "@/hooks/useActionState";
 
 import { useSettingsStore } from "@/stores/SettingsStore";
-import { useFavoriteStoreProvider } from '@/stores/FavoriteStore';
 import { useRegionStore } from '@/stores/RegionStore';
 
 import SettingsOption from "./components/SettingsOption";
@@ -17,7 +16,6 @@ const debugLog = DebugLog(DebugLog.DEBUGS.settingsModal);
 
 export default function SettingsModal(props: ModalConsumerProps) {
   const SettingsStore = useSettingsStore();
-  const FavoriteStore = useFavoriteStoreProvider();
   const RegionStore = useRegionStore();
   const [submitting, onSubmit] = useActionState<Settings>(data => {
     delete data._form;

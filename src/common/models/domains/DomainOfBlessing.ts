@@ -12,9 +12,10 @@ export class DomainOfBlessing extends Domain<ArtifactSet> {
   constructor(
     public name: string,
     public description: string,
+    public leyLineDisorder: Record<number, string>,
     public region: Region,
   ) {
-    super(name, description, ResinCost.Twenty, region);
+    super(name, description, leyLineDisorder, ResinCost.Twenty, region);
   }
 
   public isBlessing(): this is DomainOfBlessing { return true; }

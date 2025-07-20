@@ -25,6 +25,11 @@
       font-size: 1rem;
       margin-left: .5em;
     }
+
+    &-text {
+      display: flex;
+      align-items: center;
+    }
   }
 
   &__details {

@@ -3474,8 +3474,8 @@ export const StarcallersWatch = new Weapon(
   cs => cs.Citlali
 );
 
-export const StudyBone = new Weapon(
-  'Study Bone',
+export const SturdyBone = new Weapon(
+  'Sturdy Bone',
   {
     value: `Sprint or Alternate Sprint Stamina Consumption decreased by 15%. Additionally, after using Sprint or Alternate Sprint, Normal Attack DMG is increased by $0 of ATK. This effect expires after triggering 18 times or 7s.`,
     refinements: [

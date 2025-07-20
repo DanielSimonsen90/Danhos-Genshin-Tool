@@ -1,0 +1,46 @@
+.leyline-disorder-pagination {
+  display: flex;
+  gap: 1rem;
+
+  &__controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: start;
+    justify-content: center;
+  }
+
+  &__control-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.25rem;
+    cursor: pointer;
+  }
+
+  &__radio {
+    --margin: 0;
+  }
+
+  &__title {
+    margin: 0 0 0.5rem 0;
+  }
+
+  &__description {
+    margin: 0;
+
+    ul {
+      display: flex;
+    }
+
+    li {
+      color: var(--element);
+
+      &:not(:last-child)::after {
+        content: '/';
+        color: var(--text-secondary);
+        margin-inline: .25ch;
+      }
+    }
+  }
+}

@@ -1,6 +1,5 @@
 import { Model } from "@/common/models";
-import { useFavoriteStore } from "@/stores/FavoriteStore/FavoriteStoreHooks";
-import { getModelType } from "@/stores/FavoriteStore/model-type";
+import { useFavorites, getModelType } from "@/stores/RegionStore";
 import Star from "./Star";
 
 type Props = {
@@ -8,7 +7,7 @@ type Props = {
 };
 
 export default function FavoriteStar({ model }: Props) {
-  const favoriteStore = useFavoriteStore();
+  const FavoriteStore = useFavorites();
   const modelType = getModelType(model);
   
   return <Star className="favorite-star" onClick={e => {
@@ -16,7 +15,7 @@ export default function FavoriteStar({ model }: Props) {
     e.preventDefault();
 
     if (confirm(`Are you sure you want to remove ${model.name} from favorites?`)) {
-      favoriteStore.remove(modelType, model as any);
+      FavoriteStore.getFavorite(modelType).remove(model as any);
     }
   }} />;
 }

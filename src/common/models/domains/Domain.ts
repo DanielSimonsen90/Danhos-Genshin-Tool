@@ -14,6 +14,7 @@ export abstract class Domain<TReward extends DomainReward> {
   constructor(
     public name: string,
     public description: string,
+    public leyLineDisorder: Record<number, string>,
     public resinCost: ResinCost,
     public region: Region,
   ) {}
