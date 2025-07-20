@@ -120,21 +120,24 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
         shield: character => character.bonusAbilities.includes('Shield'),
       },
       passiveTalents: {
-        localSpecialty: character => character.passiveTalent?.toLowerCase().includes('local specialties'),
-        transportationConsumptionReduction: character => character.passiveTalent?.toLowerCase().includes('consumption reduction'),
+        doubleProduct: character => character.passiveTalent?.toLowerCase().includes('double product'),
+        expeditionMoreRewards: character => character.passiveTalent?.toLowerCase().includes('more rewards'),
+        expeditionTimeReduction: character => character.passiveTalent?.toLowerCase().includes('time consumption reduction'),
         increaseSpeed: character => (
           character.passiveTalent?.toLowerCase().includes('increase')
           && character.passiveTalent?.toLowerCase().includes('speed')
         ),
-        refundMaterials: character => character.passiveTalent?.toLowerCase().includes('refund materials'),
-        doubleProduct: character => character.passiveTalent?.toLowerCase().includes('double product'),
+        localSpecialty: character => character.passiveTalent?.toLowerCase().includes('local specialties'),
         moraCostReductionOnWeapon: character => (
           character.passiveTalent?.toLowerCase().includes('mora cost reduction')
           && character.passiveTalent?.toLowerCase().includes('weapon')
         ),
-        refundingOre: character => character.passiveTalent?.toLowerCase().includes('refunding ore'),
-        expeditionTimeReduction: character => character.passiveTalent?.toLowerCase().includes('time consumption reduction'),
-        expeditionMoreRewards: character => character.passiveTalent?.toLowerCase().includes('more rewards'),
+        refundMaterials: character => character.passiveTalent?.toLowerCase().includes('refund materials'),
+        refundOre: character => character.passiveTalent?.toLowerCase().includes('refunding ore'),
+        transportationConsumptionReduction: character => (
+          character.passiveTalent?.toLowerCase().includes('consumption reduction')
+          && !character.passiveTalent?.toLowerCase().includes('time')
+        ),
       },
       hasSignatureWeapon: character => !!DataStore.getSignatureWeaponFor(character),
       region: {
