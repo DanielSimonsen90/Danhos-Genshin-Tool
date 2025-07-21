@@ -4,12 +4,14 @@ import type * as ArtifactSetData from '@/data/artifact-sets';
 import type * as CharacterData from '@/data/characters';
 import type * as DomainsData from '@/data/domains/domain-of-blessing';
 import BaseService from './BaseService';
+import { IS_DEVELOPMENT_ENVIRONMENT } from '@/common/constants/dev';
+import { PROJECT_GITHUB_URL } from '@/common/constants/domain';
 
 const PAIMON_MOE_URL = 'https://paimon.moe/images';
 // const REROLL_CDN_URL = 'https://rerollcdn.com/GENSHIN'; -- Archived replaced by LustonPull
 // const LUSTON_PULL_CDN_URL = 'https://lustonpull.com/GENSHIN' -- Archived replaced by Sunderarmor
 const SUNDERARMOR_CDN_URL = 'https://sunderarmor.com/GENSHIN';
-const LOCAL_PATH = '../assets/images';
+const LOCAL_PATH = IS_DEVELOPMENT_ENVIRONMENT ? '../assets/images' : `${PROJECT_GITHUB_URL}/tree/main/src/assets/images`;
 
 export const ImageService = new class ImageService extends BaseService<string> {
   public getArtifactImage(set: keyof typeof ArtifactSetData | string, part: ArtifactPartName): string {
