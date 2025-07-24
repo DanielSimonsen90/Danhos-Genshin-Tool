@@ -3,7 +3,7 @@ import { create } from 'zustand';
 import * as ObjectUtils from '@/common/functions/object';
 import StorageService from '@/services/StorageService';
 
-import { RegionData, Region, Traveler, RegionContextType, RegionStore, RegionSettings, FavoriteModels, FavoritesCollection, FavoritesAPI, FavoriteModel } from './RegionStoreTypes';
+import { RegionData, WorldRegion, Traveler, RegionContextType, RegionStore, RegionSettings, FavoriteModels, FavoritesCollection, FavoritesAPI, FavoriteModel } from './RegionStoreTypes';
 import { DEFAULT_REGION, DEFAULT_REGION_DATA, LOCAL_STORAGE_KEY, REGIONS, DEFAULT_FAVORITES } from './RegionStoreConstants';
 import { Model } from '@/common/models/Model';
 
@@ -67,7 +67,7 @@ export const useRegionStore = create<RegionStore>((setState, getState) => {
       regionData: getRegionData(next),
     });
   };
-  const setRegion = (region: Region) => setRegionData({ region });
+  const setRegion = (region: WorldRegion) => setRegionData({ region });
   const setTraveler = (traveler: Traveler) => setRegionData({ traveler });
   // Unified favorites API
   const favorites: FavoritesAPI = {

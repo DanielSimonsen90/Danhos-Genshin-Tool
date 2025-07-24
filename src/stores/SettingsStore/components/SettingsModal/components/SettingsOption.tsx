@@ -5,7 +5,7 @@ import { Settings } from "@/common/types/app-types";
 import { CharacterImage } from "@/components/common/media/Images";
 import { Select, Switch } from "@/components/common/FormItems";
 
-import { Region, Traveler } from "@/stores/RegionStore/RegionStoreTypes";
+import { WorldRegion, Traveler } from "@/stores/RegionStore/RegionStoreTypes";
 import { DEFAULT_REGION_DATA, REGIONS } from "@/stores/RegionStore/RegionStoreConstants";
 
 type Props<Setting extends keyof Settings> = {
@@ -53,7 +53,7 @@ function InputType<Setting extends keyof Settings>({ setting, value, onChange }:
   switch (setting) {
     case 'showAll': return <Switch name={setting} enabled={value as Settings['showAll']} onChange={value => onChange(value as Settings[Setting])} />;
     case 'wrap': return <Switch name={setting} enabled={value as Settings['wrap']} onChange={value => onChange(value as Settings[Setting])} />;
-    case 'region': return <Select name={setting} options={Object.values(REGIONS)} value={value as Region} onChange={value => onChange(value as Settings[Setting])} />;
+    case 'region': return <Select name={setting} options={Object.values(REGIONS)} value={value as WorldRegion} onChange={value => onChange(value as Settings[Setting])} />;
     case 'traveler': return (() => {
       const [traveler, setTraveler] = useState(value as Traveler);  
 

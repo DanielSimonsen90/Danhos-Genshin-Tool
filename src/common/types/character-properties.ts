@@ -1,4 +1,4 @@
-import type { Reaction, Region } from "./genshin";
+import type { Reaction, GenshinRegion } from "./genshin";
 
 export type AbilityType = 'Normal/Press' | 'Charged/Hold' | 'Plunging/Hold' | 'Skill/Ability' | 'Burst/Ult';
 export type BonusAbility = (
@@ -14,7 +14,7 @@ export type CharacterSetName = `${'On-field' | 'Off-field' | Reaction | 'Burst' 
 export type PlayerTransportationType = 'Sprinting' | 'Gliding' | 'Swimming' | 'Climbing' | 'Aquatic Stamina' | 'Underwater Sprint Speed'
 export type CraftableType = 'Potions' | 'Character Talent Materials' | 'Weapon Ascension Materials';
 export type FoodBuffType = 'Restorative' | 'Attack' | 'Defense' | 'Adventure'
-export type MapIconType = 'Ore veins used in forging' | `Local Specialties in ${Region}` | 'Recovery Orbs (stamina & hp gained from collision increased by 25%)'
+export type MapIconType = 'Ore veins used in forging' | `Local Specialties in ${GenshinRegion}` | 'Recovery Orbs (stamina & hp gained from collision increased by 25%)'
 
 
 export type PassiveTalent = 
@@ -44,7 +44,7 @@ export type PassiveTalent =
   | `When in party, party members that consumed non reviving foods have a 30% chance of recovering additional HP. Trigger chance is increased depending on friendship level of the food consuming character.`
   
   | `Shows ${MapIconType} on minimap.`
-  | `${'25'}% ${'time consumption reduction' | 'more rewards'} when on expeditions in ${Region}.`
+  | `${'25'}% ${'time consumption reduction' | 'more rewards'} when on expeditions in ${GenshinRegion}.`
   | 'Party members will not startle Crystalflies and certain other animals.'
   | `Party members will not startle animals who produce: Fowl, Raw or Chilled meat.`
   
@@ -52,7 +52,7 @@ export type PassiveTalent =
   | `${'100'}% chance of refunding a portion of materials used when crafting building, courtyard and landscape-type furnishings.`
 
   | `Increase your own party members' Normal Attack level by 1.`
-  | `${'20'}% of double catch when fishing in ${Region}.`
+  | `${'20'}% of double catch when fishing in ${GenshinRegion}.`
   | `${'25'}% chance of receiving additional log when party members attack trees.`
   | `Can use Skill to interact with some harvestable items within a fixed AoE.`
   | `When in team, certain harvestable items will trigger a healing effect on the active character consisting of 2.5% of this character's Max HP.`

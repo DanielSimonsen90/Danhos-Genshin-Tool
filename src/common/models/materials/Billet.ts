@@ -1,4 +1,4 @@
-import { Rarity, Region } from "@/common/types";
+import { Rarity, GenshinRegion } from "@/common/types";
 import Material from "./Material";
 
 export class Billet extends Material {
@@ -9,7 +9,7 @@ export class Billet extends Material {
   constructor(
     public name: string,
     public description: string,
-    public regions: Array<Region>,
+    public regions: Array<GenshinRegion>,
   ) {
     super(name, description, undefined, Rarity.Epic);
   }
