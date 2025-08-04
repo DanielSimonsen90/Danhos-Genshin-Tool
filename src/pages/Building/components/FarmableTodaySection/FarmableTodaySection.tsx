@@ -3,19 +3,21 @@ import { ModelKeys } from "@/common/models";
 import AscensionMaterial from "@/common/models/materials/AscensionMaterial";
 import Collapsible from "@/components/common/Collapsible";
 import { SearchableCharacterList, SearchableWeaponList } from "@/components/domain/SearchableList";
-import { useDataStore } from "@/stores";
+import { useDataStore, useRegionStore } from "@/stores";
 import { plural } from '@/common/functions/strings';
 
 const modelKeys: Array<ModelKeys> = ['Character', 'Weapon'];
 
 export default function FarmableTodaySection() {
   const DataStore = useDataStore();
+  const RegionStore = useRegionStore();
+
   const farmableCharacters = useMemo(() => DataStore.Characters.filter(character =>
     Object.values(character.ascension)
-      .some(material => AscensionMaterial.isAscensionMaterial(material) && material.isObtainableToday())
+      .some(material => AscensionMaterial.isAscensionMaterial(material) && material.isObtainableToday(RegionStore))
   ), [DataStore.Characters]);
   const farmableWeapons = useMemo(() => DataStore.Weapons.filter(weapon =>
-    weapon.ascensionMaterials.some(material => AscensionMaterial.isAscensionMaterial(material) && material.isObtainableToday())
+    weapon.ascensionMaterials.some(material => AscensionMaterial.isAscensionMaterial(material) && material.isObtainableToday(RegionStore))
   ), [DataStore.Weapons]);
 
   return (

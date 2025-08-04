@@ -42,7 +42,7 @@
   }
 
   &__resin {
-    flex: 1;
+    min-width: fit-content;
     display: flex;
     align-items: center;
 
