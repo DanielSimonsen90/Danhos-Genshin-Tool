@@ -83,6 +83,10 @@
   --region: var(--element-pyro);
   --region--muted: var(--element-pyro--muted);
 }
+*[data-region=Nod-Krai] {
+  --region: var(--element-cryo);
+  --region--muted: var(--element-cryo--muted);
+}
 *[data-region=Snezhnaya] {
   --region: var(--element-cryo);
   --region--muted: var(--element-cryo--muted);

@@ -2,7 +2,7 @@ import { ArtifactSet, Character, DomainReward, DomainType, Weapon } from "@/comm
 import TabBar from "@/components/common/TabBar";
 import ArtifactCard from "../../Artifacts/ArtifactCard";
 import SearchableList from "@/components/domain/SearchableList";
-import { useDataStore } from "@/stores";
+import { useDataStore, useRegionStore } from "@/stores";
 import { CharacterCard } from "../../Character";
 import { effectivenessString } from "@/common/functions/strings";
 import { MaterialCard } from "../../Material";
@@ -29,6 +29,8 @@ export default function DomainRewardsTabBar<TDomainType extends DomainType>({ re
 
 function AscensionMaterialTabBar({ rewards, domainType }: Props<'Forgery' | 'Mastery'>) {
   const DataStore = useDataStore();
+  const RegionStore = useRegionStore();
+
   const getItems = useCallback((name: string) => (
     domainType === 'Mastery' ? DataStore.getCharactersUsingMaterial(name)
       : domainType === 'Forgery' ? DataStore.getWeaponsUsingMaterial(name)
@@ -49,7 +51,7 @@ function AscensionMaterialTabBar({ rewards, domainType }: Props<'Forgery' | 'Mas
         )}
       />
     ))}
-    defaultTab={rewards.find(reward => reward.isObtainableToday())?.name}
+    defaultTab={rewards.find(reward => reward.isObtainableToday(RegionStore))?.name}
   />;
 }
 

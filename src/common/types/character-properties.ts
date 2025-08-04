@@ -4,7 +4,7 @@ export type AbilityType = 'Normal/Press' | 'Charged/Hold' | 'Plunging/Hold' | 'S
 export type BonusAbility = (
 | 'Off-field Damage' 
 | 'Shield' | 'Heal' | 'Self-heal' | 'Bond of Life' 
-| 'Nightsouls Blessing' | `Serpent's Subtlety` 
+| 'Nightsouls Blessing' | `Serpent's Subtlety`  | 'Enables Lunar-Charged Reaction'
 | 'Grouping'
 | `Buff ATK: ${string}` | `Elemental based: ${string}` | `CRIT Increase: ${string}` | `Buff ATK Speed: ${string}` | `Elemental Infusion: ${string}`
 );
@@ -18,6 +18,7 @@ export type MapIconType = 'Ore veins used in forging' | `Local Specialties in ${
 
 
 export type PassiveTalent = 
+  // Movement
   | `${'15' | '20' | '35'}% ${PlayerTransportationType} consumption reduction.`
   | `${'15'}% ${PlayerTransportationType} speed increase.`
   | `During ${'Night (18:00 - 06:00)' | 'Day (06:00 - 18:00)'}, party members gain ${'10'}% increased movement speed.`
@@ -25,6 +26,7 @@ export type PassiveTalent =
   | `${'10%'} movement speed increase when not wearing default skin or wings for any party member.`
   | `While under water and your active character's HP fall below 50%, the active character will be healed over 2.5s and gain Elemental and Physical resistance decrease by 10% for 10s. This can be triggered once every 20s.`
   
+  // Nightsoul
   | `Triggering Nightsoul Transmission restores 15 Phlogiston.`
   | `25 Phlogiston is restored when own party members defeat an opponent. This effect can be triggered once every 12s.`
   | `Triggering Nightsoul Burst within an area with Phlogiston Mechanics in Natlan restores 20 Phlogiston.`
@@ -33,24 +35,29 @@ export type PassiveTalent =
   | `Sprint speed increased but sprint consumption is also increased outside of combat. Additionally, party members will restore 20 Phlogiston when consuming food. This effect can be triggered once every 10s.`
   | `When current character or indwelt saurian has less than 40% HP, they are healed by 40% of their HP with that consumes 10 Phlogiston. This effect can be triggered once every 10s.`
 
+  // Materials
   | `${'10' | '20' | '25'}% chance of ${`refund materials used` | `double product`} when crafting ${CraftableType}${` and ${CraftableType}` |''}.`
   | `${'25'}% chance to get 1 regional ${CraftableType} when crafting ${CraftableType}.`
   
+  // Refund
   | `${'50'}% mora cost reduction when ascending ${WeaponType} and ${WeaponType} weapons.`
   | `${'15'}% chance of refunding ore when crafting ${WeaponType} weapons.`
+  | `${'100'}% chance of refunding a portion of materials used when crafting decoration, ornament and landscape-type furnishings.`
+  | `${'100'}% chance of refunding a portion of materials used when crafting building, courtyard and landscape-type furnishings.`
   
+  // Food
   | `${'12'}% chance of double product when cooking ${FoodBuffType} foods.`
   | `${'18'}% chance of receiving additional "Suspicious" dish of same food type when cooking.`
   | `When in party, party members that consumed non reviving foods have a 30% chance of recovering additional HP. Trigger chance is increased depending on friendship level of the food consuming character.`
+  | `When using food, there is a ${'30'}% chance of gaining seasoning ingredient.`
   
+  // Expedition
   | `Shows ${MapIconType} on minimap.`
   | `${'25'}% ${'time consumption reduction' | 'more rewards'} when on expeditions in ${GenshinRegion}.`
   | 'Party members will not startle Crystalflies and certain other animals.'
   | `Party members will not startle animals who produce: Fowl, Raw or Chilled meat.`
   
-  | `${'100'}% chance of refunding a portion of materials used when crafting decoration, ornament and landscape-type furnishings.`
-  | `${'100'}% chance of refunding a portion of materials used when crafting building, courtyard and landscape-type furnishings.`
-
+  // Special
   | `Increase your own party members' Normal Attack level by 1.`
   | `${'20'}% of double catch when fishing in ${GenshinRegion}.`
   | `${'25'}% chance of receiving additional log when party members attack trees.`

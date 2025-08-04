@@ -21,24 +21,7 @@ export const ImageService = new class ImageService extends BaseService<string> {
   }
   
   public getCharacterImage(name: keyof typeof CharacterData | string): string {
-    name = (() => {
-      switch (name as keyof typeof CharacterData | string) {
-        case 'Arataki Itto': return 'Itto';
-        case 'Kaedehara Kazuha': return 'Kazuha';
-        case 'Kamisato Ayaka': return 'Ayaka';
-        case 'Kamisato Ayato': return 'Ayato';
-        case 'Kujou Sara': return 'Sara';
-        case 'Raiden Shogun': return 'Raiden';
-        case 'Sangonomiya Kokomi': return 'Kokomi';
-        case 'Shikanoin Heizou': return 'Heizou';
-        case 'Tartaglia': return 'Childe';
-        default: return name;
-      }
-    })();
-
-    return this.lastResult = name.toLowerCase().includes('traveler') 
-      ? `${PAIMON_MOE_URL}/characters/${snakeCaseFromCamelCase(name)}.png`
-      : `${SUNDERARMOR_CDN_URL}/Characters/1/${name}.png`;
+    return this.lastResult = `${PAIMON_MOE_URL}/characters/${snakeCaseFromCamelCase(name).replace(/[':"]/g, '')}.png`;
   }
 
   public getElementImage(name: Element): string {

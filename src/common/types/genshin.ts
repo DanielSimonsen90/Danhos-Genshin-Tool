@@ -4,7 +4,7 @@ export type Element = 'Anemo' | 'Pyro' | 'Hydro' | 'Electro' | 'Cryo' | 'Geo' | 
 export type Reaction =
   | 'Vaporize' | 'Overloaded' | 'Melt' | 'Burning'
   | 'Frozen' | 'Shatter' | 'Burgeon' | 'Hyperbloom' | 'Bloom'
-  | 'Electro-Charged' | 'Superconduct' | 'Quicken' | 'Aggravate' | 'Spread'
+  | 'Electro-Charged' | 'Lunar-Charged' | 'Superconduct' | 'Quicken' | 'Aggravate' | 'Spread'
   | 'Swirl' | 'Crystallize';
 
 export enum Rarity {
@@ -27,4 +27,4 @@ export enum ResinCost {
   Sixty = 60, // Weekly bosses (after 3 times)
 }
 
-export type GenshinRegion = 'Mondstadt' | 'Liyue' | 'Inazuma' | 'Sumeru' | 'Fontaine' | 'Natlan' | 'Snezhnaya' | 'Unknown';
+export type GenshinRegion = 'Mondstadt' | 'Liyue' | 'Inazuma' | 'Sumeru' | 'Fontaine' | 'Natlan' | 'Nod-Krai' | 'Snezhnaya' | 'Unknown';
