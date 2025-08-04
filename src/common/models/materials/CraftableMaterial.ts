@@ -1,4 +1,4 @@
-import { Rarity, Region } from "@/common/types";
+import { Rarity, GenshinRegion } from "@/common/types";
 import Material from "./Material";
 
 export abstract class CraftableMaterial extends Material {

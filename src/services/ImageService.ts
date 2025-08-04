@@ -4,12 +4,14 @@ import type * as ArtifactSetData from '@/data/artifact-sets';
 import type * as CharacterData from '@/data/characters';
 import type * as DomainsData from '@/data/domains/domain-of-blessing';
 import BaseService from './BaseService';
+import { IS_DEVELOPMENT_ENVIRONMENT } from '@/common/constants/dev';
+import { PROJECT_GITHUB_URL } from '@/common/constants/domain';
 
 const PAIMON_MOE_URL = 'https://paimon.moe/images';
 // const REROLL_CDN_URL = 'https://rerollcdn.com/GENSHIN'; -- Archived replaced by LustonPull
 // const LUSTON_PULL_CDN_URL = 'https://lustonpull.com/GENSHIN' -- Archived replaced by Sunderarmor
 const SUNDERARMOR_CDN_URL = 'https://sunderarmor.com/GENSHIN';
-const LOCAL_PATH = '../assets/images';
+const LOCAL_PATH = IS_DEVELOPMENT_ENVIRONMENT ? '../assets/images' : `${PROJECT_GITHUB_URL}/tree/main/src/assets/images`;
 
 export const ImageService = new class ImageService extends BaseService<string> {
   public getArtifactImage(set: keyof typeof ArtifactSetData | string, part: ArtifactPartName): string {
@@ -19,24 +21,7 @@ export const ImageService = new class ImageService extends BaseService<string> {
   }
   
   public getCharacterImage(name: keyof typeof CharacterData | string): string {
-    name = (() => {
-      switch (name as keyof typeof CharacterData | string) {
-        case 'Arataki Itto': return 'Itto';
-        case 'Kaedehara Kazuha': return 'Kazuha';
-        case 'Kamisato Ayaka': return 'Ayaka';
-        case 'Kamisato Ayato': return 'Ayato';
-        case 'Kujou Sara': return 'Sara';
-        case 'Raiden Shogun': return 'Raiden';
-        case 'Sangonomiya Kokomi': return 'Kokomi';
-        case 'Shikanoin Heizou': return 'Heizou';
-        case 'Tartaglia': return 'Childe';
-        default: return name;
-      }
-    })();
-
-    return this.lastResult = name.toLowerCase().includes('traveler') 
-      ? `${PAIMON_MOE_URL}/characters/${snakeCaseFromCamelCase(name)}.png`
-      : `${SUNDERARMOR_CDN_URL}/Characters/1/${name}.png`;
+    return this.lastResult = `${PAIMON_MOE_URL}/characters/${snakeCaseFromCamelCase(name).replace(/[':"]/g, '')}.png`;
   }
 
   public getElementImage(name: Element): string {

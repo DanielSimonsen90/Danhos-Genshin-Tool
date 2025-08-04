@@ -1,6 +1,6 @@
 import { classNames } from '@/common/functions/strings';
 import { Arrayable } from '@/common/types';
-import { Region as RegionType } from '@/common/types/genshin';
+import { GenshinRegion as RegionType } from '@/common/types/genshin';
 
 type Props = {
   region: Arrayable<RegionType>;

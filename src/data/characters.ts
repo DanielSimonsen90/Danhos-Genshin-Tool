@@ -860,6 +860,25 @@ export const Ifa = new Character('Ifa', "Anemo", "Catalyst", [
   ])
 ]);
 
+export const Ineffa = new Character("Ineffa", "Electro", "Polearm", [
+  "Enables Lunar-Charged Reaction",
+  "Off-field Damage",
+  "Shield",
+], Rarity.Legendary, 'Nod-Krai', {
+  material: TalentAscension.Conflict,
+  weeklyBossDrop: MobDrops.ErodedSunfire,
+  crystal: ElementalCrystals.Electro,
+  localSpecialty: LocalSpecialties.GlowingHornshroom,
+  worldBossDrop: MobDrops.SecretSourceAirflowAccumulator,
+  mobDrop: EasyMobDrops.Whistle,
+}, 'When using food, there is a 30% chance of gaining seasoning ingredient.', [
+  new CharacterSet("Off-field Support", ['ATK'], 'Skill/Ability', false, [
+    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 5),
+    new CharacterArtifactSet(Sets.GildedDreams, 4, 4),
+    ...AttackSets(3)
+  ])
+])
+
 export const Jean = new Character("Jean", "Anemo", "Sword", ["Heal"], Rarity.Legendary, 'Mondstadt', {
   material: TalentAscension.Resistance,
   weeklyBossDrop: MobDrops.DvalinsPlume,
