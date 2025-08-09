@@ -873,9 +873,9 @@ export const Ineffa = new Character("Ineffa", "Electro", "Polearm", [
   mobDrop: EasyMobDrops.Whistle,
 }, 'When using food, there is a 30% chance of gaining seasoning ingredient.', [
   new CharacterSet("Off-field Support", ['ATK'], 'Skill/Ability', false, [
-    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 5),
+    ...AttackSets(5),
     new CharacterArtifactSet(Sets.GildedDreams, 4, 4),
-    ...AttackSets(3)
+    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 3),
   ])
 ])
 

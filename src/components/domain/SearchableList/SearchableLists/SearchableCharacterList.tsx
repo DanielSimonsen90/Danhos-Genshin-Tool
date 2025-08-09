@@ -147,6 +147,7 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
         sumeru: character => character.region === "Sumeru",
         fontaine: character => character.region === "Fontaine",
         natlan: character => character.region === "Natlan",
+        nodKrai: character => character.region === "Nod-Krai",
         snezhnaya: character => character.region === "Snezhnaya",
         unknown: character => character.region === "Unknown",
       },
