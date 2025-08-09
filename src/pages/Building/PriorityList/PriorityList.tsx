@@ -30,7 +30,9 @@ export default function PriorityList() {
     priorityLists,
     setPriorityLists
   });  
-  const tabs = usePriorityListTabs({ priorityLists, setPriorityLists, openUpdateModal });  return (<>
+  const tabs = usePriorityListTabs({ priorityLists, setPriorityLists, openUpdateModal });  
+  
+  return (<>
     <TabBar 
       direction="vertical" 
       collapseArea="tabs" 
