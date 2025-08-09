@@ -12,6 +12,17 @@ export type Tab = {
 export type TabCreator = typeof createTabItem;
 export type TabsFunction<TTabKey extends string = string> = (creator: TabCreator) => Array<readonly [TTabKey, Tab] | false | null | undefined>;
 
+export interface TabBarRef<TTabKey extends string> {
+  /** Clear the cache for all tabs or specific tabs */
+  clearCache: (tabsToKeep?: TTabKey[]) => void;
+  /** Preload a specific tab's content */
+  preloadTab: (tab: TTabKey) => void;
+  /** Get the currently cached tabs */
+  getCachedTabs: () => TTabKey[];
+  /** Get the currently rendered tabs */
+  getRenderedTabs: () => TTabKey[];
+}
+
 export type Props<
   TTabKey extends string,
   TTabs extends Array<(readonly [TTabKey, Tab])> = Array<(readonly [TTabKey, Tab])>,
@@ -43,6 +54,13 @@ export type Props<
   maxSize?: number;
   /** Initial size for resizable area in pixels */
   initialSize?: number;
+
+  /** @default true - Enable lazy loading of tab content */
+  lazyLoad?: boolean;
+  /** @default true - Cache rendered tab content to preserve state */
+  cacheContent?: boolean;
+  /** @default [] - Pre-load content for these tabs immediately */
+  preloadTabs?: TTabKey[];
 
   beforeTabChange?: (tab: TTabKey) => void,
   onTabChange?: (tab: TTabKey) => void,
