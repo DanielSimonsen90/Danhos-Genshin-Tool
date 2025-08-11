@@ -65,7 +65,7 @@ function ArtifactTabBar({ rewards: artifacts }: Props<'Blessing'>) {
       <SearchableList key={artifact.name}
         items={DataStore.getCharactersUsingArtifact(artifact.name)}
         onSearch={(query, item) => item.character.name.toLowerCase().includes(query.toLowerCase())}
-        renderItem={({ character, set, pieces, effectiveness }) => (
+        renderItem={({ character, cSet: { effectiveness, pieces, set } }) => (
           <CharacterCard key={character.name} className="character-result" character={character} wrapInLink>
             <p>
               <span className="character-info__name">{character.name}</span> is

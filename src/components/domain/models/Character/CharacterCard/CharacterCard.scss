@@ -51,17 +51,8 @@
   }
 
   &:has(.character-ascension, .character-sets, .character-signature-weapon) .character-card__content {
-    display: grid;
-    grid-template-areas:
-      "ascension ascension"
-      "sets signature-weapon";
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 1fr;
-
-    @media screen and (max-width: 1100px) {
-      display: flex;
-      flex-direction: column;
-    }
+    display: flex;
+    flex-direction: column;
   }
 
   .character-ascension {
@@ -83,8 +74,8 @@
     }
   }
 
-  .character-sets {
-    grid-area: sets;
+  .character-playstyle-wrapper {
+    grid-area: playstyle;
   }
 
   .character-signature-weapon {

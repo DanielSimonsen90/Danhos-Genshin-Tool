@@ -13,8 +13,8 @@ type Props = {
 export default function ArtifactSets({ artifact }: Props) {
   const DataStore = useDataStore();
   const characters = useMemo(() => DataStore.getCharactersUsingArtifact(artifact.name), [DataStore, artifact.name]);
-  const fourPieceCharacters = useMemo(() => characters.filter(({ pieces }) => pieces === 4), [characters]);
-  const twoPieceCharacters = useMemo(() => characters.filter(({ pieces }) => pieces === 2), [characters]);
+  const fourPieceCharacters = useMemo(() => characters.filter(({ cSet }) => cSet.pieces === 4), [characters]);
+  const twoPieceCharacters = useMemo(() => characters.filter(({ cSet }) => cSet.pieces === 2), [characters]);
   const anyWantsThisPiece = fourPieceCharacters.length > 0 && twoPieceCharacters.length > 0;
 
   return (

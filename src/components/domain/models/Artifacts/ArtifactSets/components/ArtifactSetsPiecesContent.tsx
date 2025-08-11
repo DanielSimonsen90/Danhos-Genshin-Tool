@@ -13,23 +13,12 @@ export default function ArtifactSetsPiecesContent({ results, displayPieces }: Ar
     <SearchableList 
       ulClassName="artifact-sets-pieces-content" 
       liClassName="artifact-sets-pieces-content__list-item"
-      items={results.sort((a, b) => {
-        const setA = a.character.sets.indexOf(a.set);
-        const setB = b.character.sets.indexOf(b.set);
-        return setA - setB;
-      })} 
+      items={results.sort((a, b) => b.cSet.effectiveness - a.cSet.effectiveness)} 
       onSearch={(search, item) => item.character.name.toLowerCase().includes(search.toLowerCase())}
-      renderItem={({ character, set, pieces }) => (
+      renderItem={({ character, cSet }) => (
         <CharacterCard character={character} wrapInLink>
-          <p>
-            <span className="artifact-sets-pieces-content__set-name">
-              {set.name}
-            </span>
-            <span className="artifact-sets-pieces-content__set-effectiveness">
-              [{effectivenessString(character.sets.indexOf(set), true)}]
-            </span>
-          </p>
-          {displayPieces && <p className="set-pieces">{pieces}-Piece</p>}
+          <p><b>{cSet.effectiveness}%</b> of players use this plan.</p>
+          {displayPieces && <p className="set-pieces">{cSet.pieces}-Piece</p>}
         </CharacterCard>
       )}
     />

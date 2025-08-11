@@ -2,8 +2,7 @@ import { useMemo } from "react";
 import { rarityString } from "@/common/functions/strings";
 import { Character } from "@/common/models";
 import { CharacterImage, MaterialImage } from "@/components/common/media/Images";
-import CharacterSet from "../CharacterSet";
-import TabBar from "@/components/common/TabBar";
+import CharacterPlaystyle from "../CharacterPlaystyle";
 import ModelCard, { BaseModelCardProps } from "@/components/domain/ModelCard";
 import { MaterialCard } from "../../Material";
 import { WeaponCard } from "../../Weapon";
@@ -17,7 +16,7 @@ export interface Props extends BaseModelCardProps {
 
   showPassiveTalent?: boolean;
   showAscensionSection?: boolean;
-  showCharacterSets?: boolean;
+  showCharacterPlaystyle?: boolean;
   showSignatureWeapon?: boolean;
   children?: React.ReactNode;
 }
@@ -26,12 +25,12 @@ export default function CharacterCard({
   character, score,
   showPassiveTalent,
   showAscensionSection,
-  showCharacterSets,
+  showCharacterPlaystyle,
   showSignatureWeapon,
   children,
   ...props
 }: Props) {
-  const { name, bonusAbilities, sets, rarity } = character;
+  const { name, bonusAbilities, rarity } = character;
 
   const DataStore = useDataStore();
   const signatureWeapon = DataStore.getSignatureWeaponFor(character);
@@ -100,16 +99,10 @@ export default function CharacterCard({
               </ul>
             </div>
           )}
-          {showCharacterSets && (
-            <div className="character-sets">
-              <h3 className="character-sets__title">Character Sets</h3>
-              <TabBar id={`${name}-sets`}
-                tabs={create => sets.map(set => create(
-                  set.name,
-                  set.name,
-                  <CharacterSet set={set} character={character} />
-                ))}
-              />
+          {showCharacterPlaystyle && (
+            <div className="character-playstyle-wrapper">
+              <h3 className="character-playstyle-wrapper__title">Playstyle</h3>
+              <CharacterPlaystyle character={character} />
             </div>
           )}
           {showSignatureWeapon && signatureWeapon && (

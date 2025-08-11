@@ -101,7 +101,7 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
         energyRecharge: character => character.needsER(),
         elementalMastery: character => character.needsEM(),
       },
-      onField: character => character.sets[0]?.onField,
+      onField: character => character.playstyle.onField,
       bonusAbility: {
         none: character => character.bonusAbilities.length === 0,
 

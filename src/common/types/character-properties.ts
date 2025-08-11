@@ -1,6 +1,6 @@
-import type { Reaction, GenshinRegion } from "./genshin";
+import type { Reaction, GenshinRegion, Element } from "./genshin";
 
-export type AbilityType = 'Normal/Press' | 'Charged/Hold' | 'Plunging/Hold' | 'Skill/Ability' | 'Burst/Ult';
+export type AbilityType = 'Normal/Press' | 'Charged/Hold' | 'Plunging/Press' | 'Skill/Ability' | 'Burst/Ult';
 export type BonusAbility = (
 | 'Off-field Damage' 
 | 'Shield' | 'Heal' | 'Self-heal' | 'Bond of Life' 
@@ -9,7 +9,7 @@ export type BonusAbility = (
 | `Buff ATK: ${string}` | `Elemental based: ${string}` | `CRIT Increase: ${string}` | `Buff ATK Speed: ${string}` | `Elemental Infusion: ${string}`
 );
 export type WeaponType = 'Sword' | 'Claymore' | 'Polearm' | 'Bow' | 'Catalyst';
-export type CharacterSetName = `${'On-field' | 'Off-field' | Reaction | 'Burst' | 'Freeze' | 'Reverse-Melt' | 'Physical'} ${'DPS' | 'Support'}`;
+export type CharacterSetName = `${'On-field' | 'Off-field' | 'Burst'}${` ${Reaction | Element}` | ''} ${'DPS' | 'Support'}`;
 
 export type PlayerTransportationType = 'Sprinting' | 'Gliding' | 'Swimming' | 'Climbing' | 'Aquatic Stamina' | 'Underwater Sprint Speed'
 export type CraftableType = 'Potions' | 'Character Talent Materials' | 'Weapon Ascension Materials';

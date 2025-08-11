@@ -1,13 +1,11 @@
-import { ArtifactSet, Character, Domain, TalentAscensionMaterial, WeaponAscensionMaterial, Material, Mob, Model, ModelKeys, Boss, CharacterSet, CharacterArtifactSet } from '@/common/models';
+import { ArtifactSet, Character, Domain, TalentAscensionMaterial, WeaponAscensionMaterial, Material, Mob, Model, ModelKeys, Boss, CharacterPlaystyle, CharacterArtifactSet } from '@/common/models';
 import type { DataStoreContent } from './DataStoreConstants';
 import ModelType from './ModelType';
 import { Weapon } from '@/common/models/weapon';
 
 export type CharacterUsingArtifactResult = {
   character: Character;
-  set: CharacterSet;
-  pieces: CharacterArtifactSet['pieces'];
-  effectiveness: CharacterArtifactSet['effectiveness'];
+  cSet: CharacterArtifactSet
 };
 
 

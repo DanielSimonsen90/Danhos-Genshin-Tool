@@ -1,0 +1,35 @@
+.character-playstyle {
+  display: grid;
+  grid-template-rows: min-content max-content auto;
+  gap: 1em;
+  max-width: 100%;
+
+  &.character-result {
+    padding-inline: .5em;
+  }
+
+  p, a {
+    color: var(--text-secondary);
+  }
+
+  .playstyle-recommendations {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2em;
+
+    @media screen and (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+
+    ol {
+      background-color: var(--background-secondary--muted);
+      border-radius: .5em;
+      padding: 1em;
+      padding-inline-start: 2em;
+    }
+  }
+}
+
+li:has(> .character-playstyle) {
+  padding: .5em;
+}
