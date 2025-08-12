@@ -80,7 +80,7 @@ export const ImageService = new class ImageService extends BaseService<string> {
   }
 
   public getDomainImage(name: keyof typeof DomainsData | string): string {
-    return this.lastResult = `${LOCAL_PATH}/domains/${snakeCaseFromPascalCase(name)}.png`;
+    return this.lastResult = `${LOCAL_PATH}/domains/${snakeCaseFromCamelCase(name).toLowerCase()}.png`;
   }
   public getResinImage(name: 'original'): string {
     return this.lastResult = `${LOCAL_PATH}/resins/${name}_resin.png`;
@@ -96,7 +96,7 @@ export const ImageService = new class ImageService extends BaseService<string> {
       .replace(/[':"]/g, '')
       .replace(/-/g, '_')}.png`;
   }
-  getMobImage(name: string): string {
+  public getMobImage(name: string): string {
     return `${LOCAL_PATH}/mobs/${snakeCaseFromCamelCase(name).replace(/[,:"]/g, '')}.webp`;
   }
 

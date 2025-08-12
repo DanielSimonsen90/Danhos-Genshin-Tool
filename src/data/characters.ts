@@ -96,7 +96,7 @@ export const Alhaitham = new Character("Alhaitham", "Dendro", "Sword", [
   worldBossDrop: MobDrops.PseudoStamens,
   weeklyBossDrop: MobDrops.MirrorOfMushin,
 }, '10% chance of double product when crafting Weapon Ascension Materials.',
-  new CharacterPlaystyle("On-field Dendro DPS", ["Elemental Mastery", "ATK"], ["Skill/Ability"], true, [
+  new CharacterPlaystyle("On-field Dendro DPS", ["Elemental Mastery", "ATK"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
     new CharacterArtifactSet(Sets.GildedDreams, 4, 72.7),
     new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 7.3),
     ...DendroDMGSets(6.3),
@@ -193,7 +193,7 @@ export const Barbara = new Character("Barbara", "Hydro", "Catalyst", ["Heal"], R
   worldBossDrop: MobDrops.CleansingHeart,
   mobDrop: EasyMobDrops.Scroll,
 }, '12% chance of double product when cooking Restorative foods.',
-  new CharacterPlaystyle("Off-field Support", ["HP"], ["Skill/Ability"], false, [
+  new CharacterPlaystyle("Off-field Support", ["HP"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
     new CharacterArtifactSet(Sets.MaidenBeloved, 4, 78.1),
     new CharacterArtifactSet(Sets.OceanHuedClam, 2, 29.0),
     new CharacterArtifactSet(Sets.MaidenBeloved, 2, 3.5),
@@ -403,7 +403,7 @@ export const Cyno = new Character("Cyno", "Electro", "Polearm", [], Rarity.Legen
   worldBossDrop: MobDrops.ThunderclapFruitcore,
   mobDrop: EasyMobDrops.Scroll,
 }, '25% more rewards when on expeditions in Sumeru.',
-  new CharacterPlaystyle("On-field DPS", ["Energy Recharge", "Elemental Mastery"], ["Burst/Ult"], true, [
+  new CharacterPlaystyle("On-field DPS", ["Energy Recharge", "Elemental Mastery"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], true, [
     new CharacterArtifactSet(Sets.GildedDreams, 4, 56.3),
     new CharacterArtifactSet(Sets.ThunderingFury, 4, 19.9),
     new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 6.3),
@@ -1054,7 +1054,7 @@ export const Mika = new Character("Mika", "Cryo", "Polearm", ["Heal"], Rarity.Ep
   worldBossDrop: MobDrops.PseudoStamens,
   mobDrop: EasyMobDrops.FatuiInsignia,
 }, 'Shows Local Specialties in Mondstadt on minimap.',
-  new CharacterPlaystyle("Burst Support", ["Energy Recharge", "HP"], ["Burst/Ult"], false, [
+  new CharacterPlaystyle("Burst Support", ["Energy Recharge", "HP"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 57.0),
     ...HPSets(8.9),
     ...EnergyRechargeSets(8.9),

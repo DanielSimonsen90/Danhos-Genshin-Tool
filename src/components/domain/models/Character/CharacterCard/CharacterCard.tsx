@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { rarityString } from "@/common/functions/strings";
 import { Character } from "@/common/models";
 
-import { CharacterImage, ElementImage } from "@/components/common/media/Images";
+import { CharacterImage, ElementImage, WeaponImage } from "@/components/common/media/Images";
 import ModelCard, { BaseModelCardProps } from "@/components/domain/ModelCard";
 import { Region } from "@/components/domain";
 
@@ -63,6 +63,7 @@ export default function CharacterCard({
       renderHeadingContent={() => (
         <span className="element-image-container">
           <ElementImage element={character.element} />
+          <WeaponImage weaponType={character.weapon} />
         </span>
       )}
       renderHeaderContent={() => (
