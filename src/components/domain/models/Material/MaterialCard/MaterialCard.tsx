@@ -62,9 +62,6 @@ export default function MaterialCard({
   useEffect(() => {
     hasInteractedWithPagination.current = false;
   }, [material]);
-
-  if (!material) return null;
-  return (
     <ModelCard
       model="Material"
       item={currentMaterial}
