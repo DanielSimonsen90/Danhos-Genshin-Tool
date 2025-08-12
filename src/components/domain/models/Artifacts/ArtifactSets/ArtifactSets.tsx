@@ -13,8 +13,8 @@ type Props = {
 export default function ArtifactSets({ artifact }: Props) {
   const DataStore = useDataStore();
   const characters = useMemo(() => DataStore.getCharactersUsingArtifact(artifact.name), [DataStore, artifact.name]);
-  const fourPieceCharacters = useMemo(() => characters.filter(({ pieces }) => pieces === 4), [characters]);
-  const twoPieceCharacters = useMemo(() => characters.filter(({ pieces }) => pieces === 2), [characters]);
+  const fourPieceCharacters = useMemo(() => characters.filter(({ cSet }) => cSet.pieces === 4), [characters]);
+  const twoPieceCharacters = useMemo(() => characters.filter(({ cSet }) => cSet.pieces === 2), [characters]);
   const anyWantsThisPiece = fourPieceCharacters.length > 0 && twoPieceCharacters.length > 0;
 
   return (
@@ -23,9 +23,9 @@ export default function ArtifactSets({ artifact }: Props) {
       <TabBar defaultTab="four"
         noTabs={<p className="muted">There are no characters that use this set.</p>}
         tabs={tab => [
-          tab('any', anyWantsThisPiece && 'Any', anyWantsThisPiece && <ArtifactSetsPiecesContent results={characters} displayPieces />),
-          tab('four', fourPieceCharacters.length > 0 && 'Four-Piece', fourPieceCharacters.length > 0 && <ArtifactSetsPiecesContent results={fourPieceCharacters} />),
-          tab('two', twoPieceCharacters.length > 0 && 'Two-Piece', twoPieceCharacters.length > 0 && <ArtifactSetsPiecesContent results={twoPieceCharacters} />),
+          anyWantsThisPiece && tab('any', 'Any', <ArtifactSetsPiecesContent results={characters} displayPieces />),
+          fourPieceCharacters.length > 0 && tab('four', 'Four-Piece', <ArtifactSetsPiecesContent results={fourPieceCharacters} />),
+          twoPieceCharacters.length > 0 && tab('two', 'Two-Piece', <ArtifactSetsPiecesContent results={twoPieceCharacters} />),
         ]}
       />
     </div>

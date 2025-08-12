@@ -8,11 +8,11 @@ type Props = {
 };
 
 export const SearchResultItemComponent = ({ result, set: artifactSet }: Props) => {
-  const { character, score, set } = result;
+  const { character, score } = result;
 
   return (<>
     <CharacterCard character={character} score={score} linkOnName />
-    <CharacterSet character={character} set={set} artifactSet={artifactSet} />
+    <CharacterSet character={character} artifactSet={artifactSet} />
   </>);
 };
 

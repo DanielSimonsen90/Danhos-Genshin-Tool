@@ -221,36 +221,23 @@ export const useDataStore = create<DataStore>((setState, getState) => {
       if (!artifact) return [];
 
       const relevantCharacters = getState().Characters.filter(character =>
-        character.sets.some(cSet =>
-          cSet.artifactSets.some(artifactSet =>
-            artifactSet.set.name === artifactName &&
-            artifactSet.effectiveness === CharacterArtifactSet.MOST_EFFECTIVE
-          )
-        )
+        // character.playstyle?.recommendedArtifactSets[0].set.name === artifactName
+        character.playstyle?.recommendedArtifactSets.some(cSet => cSet.set.name === artifactName)
       );
 
-      const getCharacterSet = (character: Character) =>
-        character.sets.find(cSet =>
-          cSet.artifactSets.some(artifactSet =>
-            artifactSet.set.name === artifactName &&
-            artifactSet.effectiveness === CharacterArtifactSet.MOST_EFFECTIVE
-          )
-        );
+      const getCharacterSet = (character: Character) => character.playstyle?.recommendedArtifactSets.find(cSet =>
+        cSet.set.name === artifactName
+      );
 
       return relevantCharacters.map(character => {
-        const set = getCharacterSet(character);
-        const cSet = set.artifactSets.find(artifactSet =>
-          artifactSet.set.name === artifactName
-        );
+        const set = getCharacterSet(character) ?? {};
 
         return {
           character,
-          set,
-          pieces: cSet.pieces,
-          effectiveness: cSet.effectiveness
+          cSet: set,
         } as CharacterUsingArtifactResult;
       });
-    },    
+    },
     getSignatureWeaponFor(character: Character) {
       return getCachedOrCompute(`${CACHE_KEYS.WEAPON_SIGNATURES}${character.name}`, () => {
         const signatureWeaponData = getSignatureWeapons();

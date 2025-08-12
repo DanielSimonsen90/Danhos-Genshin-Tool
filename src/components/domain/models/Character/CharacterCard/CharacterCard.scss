@@ -13,9 +13,24 @@
     @extend %text-ellipsis;
   }
 
+  :is(h1:not(::after), h2, h3, .character-card__name-text) {
+    background: linear-gradient(to bottom, var(--element) 60%, var(--element--muted) 95%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    /* Fallback for browsers that don't support background-clip: text */
+    @supports not (-webkit-background-clip: text) {
+      color: var(--element);
+    }
+
+    &::after {
+      -webkit-text-fill-color: initial;
+    }
+  }
+
   .character-card__name {
     margin: 0;
-    color: var(--element);
     font-weight: bold;
     font-size: 1.25rem;
 
@@ -51,17 +66,8 @@
   }
 
   &:has(.character-ascension, .character-sets, .character-signature-weapon) .character-card__content {
-    display: grid;
-    grid-template-areas:
-      "ascension ascension"
-      "sets signature-weapon";
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 1fr;
-
-    @media screen and (max-width: 1100px) {
-      display: flex;
-      flex-direction: column;
-    }
+    display: flex;
+    flex-direction: column;
   }
 
   .character-ascension {
@@ -83,8 +89,8 @@
     }
   }
 
-  .character-sets {
-    grid-area: sets;
+  .character-playstyle-wrapper {
+    grid-area: playstyle;
   }
 
   .character-signature-weapon {
@@ -139,7 +145,7 @@ li:has(> .character-card, > * > .character-card) {
 
 li:has(.character-card) {
   .character-card {
-    padding: .5em;
+      padding: .5em;
     border-radius: .5em;
   }
 }
@@ -149,5 +155,14 @@ a.character-card {
 
   &:hover {
     background-color: var(--element--muted);
+  }
+
+  .element-image-container {
+    width: max-content;
+    margin-right: 1ch;
+  }
+
+  .element-image {
+    --max-size: 1.25rem;
   }
 }
