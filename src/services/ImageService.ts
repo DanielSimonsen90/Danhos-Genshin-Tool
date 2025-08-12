@@ -21,23 +21,39 @@ export const ImageService = new class ImageService extends BaseService<string> {
       ? `${PAIMON_MOE_URL}/artifacts/${snakeCaseFromCamelCase(set).replace("'", '')}_${part === 'Feather' ? 'plume' : snakeCaseFromCamelCase(part)}.png`
       : `${SUNDERARMOR_CDN_URL}/Gear/${snakeCaseFromCamelCase(set)}.png`;
   }
-  
+
   public getCharacterImage(name: keyof typeof CharacterData | string): string {
     return this.lastResult = `${PAIMON_MOE_URL}/characters/${snakeCaseFromCamelCase(name).replace(/[':"]/g, '')}.png`;
   }
   public getTalentImage(character: Character, talentType: TalentType) {
-    const imageName = (() => {
+    let imageName = (() => {
       switch (talentType) {
         case 'Normal/Press':
         case 'Charged/Hold':
         case 'Plunging/Press':
           return `UI_GachaTypeIcon_${character.weapon}`;
         case 'Skill/Ability':
-          return `1/${character.name}/talent_2`;
+          return `1/<character-name>/talent_2`;
         case 'Burst/Ult':
-          return `1/${character.name}/talent_3`;
+          return `1/<character-name>/talent_3`;
       }
     })();
+
+    imageName = imageName.replace('<character-name>', (() => {
+      if (character.name.includes('Traveler')) return `Traveler ${character.element}`;
+
+      switch (character.name) {
+        case 'Arataki Itto': return 'Itto';
+        case 'Kaedehara Kazuha': return 'Kazuha';
+        case 'Kamisato Ayaka': return 'Ayaka';
+        case 'Kamisato Ayato': return 'Ayato';
+        case 'Kujou Sara': return 'Sara';
+        case 'Raiden Shogun': return 'Raiden';
+        case 'Sangonomiya Kokomi': return 'Kokomi';
+        case 'Shikanoin Heizou': return 'Heizou';
+        default: return character.name.split('(')[0].trim();
+      }
+    })());
 
     return this.lastResult = `${SUNDERARMOR_CDN_URL}/Skill/${imageName}.png`;
   }
@@ -45,7 +61,7 @@ export const ImageService = new class ImageService extends BaseService<string> {
   public getElementImage(name: Element): string {
     return this.lastResult = `${SUNDERARMOR_CDN_URL}/Elements/Element_${this.formatRerollCdnName(name)}.png`;
   }
-  
+
   public getWeaponTypeImage(name: WeaponType): string {
     return this.lastResult = `${SUNDERARMOR_CDN_URL}/UI/weapon_${snakeCaseFromCamelCase(name)}.png`;
   }
@@ -76,6 +92,6 @@ export const ImageService = new class ImageService extends BaseService<string> {
   private formatRerollCdnName(name: string): string {
     return name.slice(0, 1).toUpperCase() + snakeCaseFromCamelCase(name).slice(1);
   }
-}
+};
 
 export default ImageService;

@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { rarityString } from "@/common/functions/strings";
 import { Character } from "@/common/models";
 
-import { CharacterImage } from "@/components/common/media/Images";
+import { CharacterImage, ElementImage } from "@/components/common/media/Images";
 import ModelCard, { BaseModelCardProps } from "@/components/domain/ModelCard";
 import { Region } from "@/components/domain";
 
@@ -41,13 +41,13 @@ export default function CharacterCard({
   const ascensionMaterials = useMemo(() => {
     if (!showAscensionSection) return [];
     const keys: Array<keyof Character['ascension']> = [
-      'localSpecialty', 
+      'localSpecialty',
       'material',
       'mobDrop',
       'crystal',
       'worldBossDrop',
       'weeklyBossDrop',
-    ]
+    ];
     return keys.map(key => [key, character.ascension[key]] as const);
   }, [character, showAscensionSection]);
 
@@ -60,6 +60,11 @@ export default function CharacterCard({
       {...props}
 
       renderImage={() => <CharacterImage character={name} />}
+      renderHeadingContent={() => (
+        <span className="element-image-container">
+          <ElementImage element={character.element} />
+        </span>
+      )}
       renderHeaderContent={() => (
         <>
           <ul className="character-details__grouped">

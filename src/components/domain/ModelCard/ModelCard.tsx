@@ -80,11 +80,6 @@ const ModelCard = forwardRef<HTMLDivElement, ModelCardProps>(({
               <span className={classNames('model-card__name-text', `${modelClassName}__name-text`)}>
                 {item.name}
               </span>
-              {'data-element' in props && (
-                <span className="element-image-container">
-                  <ElementImage element={props['data-element'] as Element} />
-                </span>
-              )}
               {HeadingContent && <HeadingContent />}
               {showRarity && 'rarity' in item && <RarityList rarity={item.rarity} />}
             </ModelNameContainer>

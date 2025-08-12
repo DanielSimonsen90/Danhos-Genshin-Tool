@@ -38,7 +38,7 @@ export default function MaterialCard({
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const currentMaterial = useMemo(() => allowCycle ? craftingTree?.[currentIndex] ?? material : material, [craftingTree, currentIndex, material]);
-  const materialRegions = Billet.isBillet(material) ? material.regions : [material.region];
+  const materialRegions = material ? Billet.isBillet(material) ? material.regions : [material.region] : [];
   const hasRegion = materialRegions.filter(Boolean).length > 0;
 
   const onIndexChange = useCallback((index: number) => {
@@ -63,6 +63,7 @@ export default function MaterialCard({
     hasInteractedWithPagination.current = false;
   }, [material]);
 
+  if (!material) return null;
   return (
     <ModelCard
       model="Material"

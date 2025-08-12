@@ -145,7 +145,7 @@ li:has(> .character-card, > * > .character-card) {
 
 li:has(.character-card) {
   .character-card {
-    padding: .5em;
+      padding: .5em;
     border-radius: .5em;
   }
 }
@@ -155,6 +155,11 @@ a.character-card {
 
   &:hover {
     background-color: var(--element--muted);
+  }
+
+  .element-image-container {
+    width: max-content;
+    margin-right: 1ch;
   }
 
   .element-image {
