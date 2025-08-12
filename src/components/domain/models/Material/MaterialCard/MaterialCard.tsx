@@ -62,52 +62,53 @@ export default function MaterialCard({
   useEffect(() => {
     hasInteractedWithPagination.current = false;
   }, [material]);
-    <ModelCard
-      key={`${RegionStore.currentRegion}-${currentMaterial.name}`}
-      model="Material"
-      item={currentMaterial}
-      {...props}
-      data-show-details={showDetails}
-      data-allow-pagination={allowCycle && craftingTree?.length > 1}
-      {...{ 'data-today': AscensionMaterial.isAscensionMaterial(material) && material.isObtainableToday(RegionStore) }}
 
-      renderImage={() => <MaterialImage material={currentMaterial.name} />}
-      renderHeaderContent={(() => (
-        <>
-          {(showDetails || (showRegion && hasRegion) || AscensionMaterial.isAscensionMaterial(material)) && (
-            <div className="material-card__details-container">
-              {showDetails && (
-                <p className="material-card__description">
-                  {currentMaterial.description}
-                </p>
-              )}
-              {(showDetails || showRegion) && (
-                <Region
-                  region={materialRegions}
-                  className="material-card__region"
-                  tag="ul"
-                  keyPrefix={`material-region-${material.name}`}
-                />
-              )}
-              {AscensionMaterial.isAscensionMaterial(material) && <ObtainableDays material={material} />}
-            </div>
-          )}
-          {allowCycle && craftingTree?.length > 1 && (
-            <Pagination
-              materialName={material.name}
-              craftingTree={craftingTree}
-              currentIndex={currentIndex}
-              onIndexChange={onIndexChange}
-            />
-          )}
-        </>
-      ))}
+  if (!material) return null;
+  return <ModelCard
+    key={`${RegionStore.currentRegion}-${currentMaterial.name}`}
+    model="Material"
+    item={currentMaterial}
+    {...props}
+    data-show-details={showDetails}
+    data-allow-pagination={allowCycle && craftingTree?.length > 1}
+    {...{ 'data-today': AscensionMaterial.isAscensionMaterial(material) && material.isObtainableToday(RegionStore) }}
 
-      renderContent={() => (<Relations
-        material={material}
-        showModelsUsing={showModelsUsing}
-        showModelAcquired={showModelAcquired}
-      />)}
-    />
-  );
+    renderImage={() => <MaterialImage material={currentMaterial.name} />}
+    renderHeaderContent={(() => (
+      <>
+        {(showDetails || (showRegion && hasRegion) || AscensionMaterial.isAscensionMaterial(material)) && (
+          <div className="material-card__details-container">
+            {showDetails && (
+              <p className="material-card__description">
+                {currentMaterial.description}
+              </p>
+            )}
+            {(showDetails || showRegion) && (
+              <Region
+                region={materialRegions}
+                className="material-card__region"
+                tag="ul"
+                keyPrefix={`material-region-${material.name}`}
+              />
+            )}
+            {AscensionMaterial.isAscensionMaterial(material) && <ObtainableDays material={material} />}
+          </div>
+        )}
+        {allowCycle && craftingTree?.length > 1 && (
+          <Pagination
+            materialName={material.name}
+            craftingTree={craftingTree}
+            currentIndex={currentIndex}
+            onIndexChange={onIndexChange}
+          />
+        )}
+      </>
+    ))}
+
+    renderContent={() => (<Relations
+      material={material}
+      showModelsUsing={showModelsUsing}
+      showModelAcquired={showModelAcquired}
+    />)}
+  />;
 }

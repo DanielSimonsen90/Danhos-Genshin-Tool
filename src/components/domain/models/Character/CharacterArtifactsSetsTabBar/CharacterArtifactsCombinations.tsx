@@ -41,26 +41,30 @@ export default function CharacterArtifactsCombinations({ character, set, artifac
       setHoveredSetBonus(null);
       timeoutRef.current = null;
     }, 100);
-  }; const groupedSets = useMemo(() => {
-    const groups: { [key: string]: CharacterArtifactSet[]; } = {};
-
-    artifactSets.forEach((artifactSet) => {
+  };
+  const groupedSets = useMemo(() => {
+    const groups = artifactSets.reduce((acc, artifactSet) => {
       if (artifactSet.pieces === 2) {
         // For 2-piece sets, group by effectiveness (original behavior)
-        groups[artifactSet.effectiveness] ??= [];
-        groups[artifactSet.effectiveness].push(artifactSet);
+        acc[artifactSet.effectiveness] ??= Object.assign([], { effectiveness: artifactSet.effectiveness });
+        acc[artifactSet.effectiveness].push(artifactSet);
       } else {
         // For 4-piece sets, keep them separate
         const uniqueKey = `${artifactSet.set.name}-${artifactSet.pieces}-${artifactSet.effectiveness}`;
-        groups[uniqueKey] = [artifactSet];
+        acc[uniqueKey] = [artifactSet];
       }
-    });
 
-    return Object.values(groups).map((group): GroupedSet => ({
-      representative: group[0],
-      allSets: group,
-      isGroup: group.length > 1
-    }));
+      return acc;
+    }, {} as { [key: string]: (CharacterArtifactSet & { effectiveness: number; })[]; });
+
+    return Object
+      .values(groups)
+      .sort((a, b) => b[0].effectiveness - a[0].effectiveness)
+      .map((group): GroupedSet => ({
+        representative: group[0],
+        allSets: group,
+        isGroup: group.length > 1
+      }));
   }, [artifactSets]);
 
   if (!artifactSets.length) return null;
@@ -78,59 +82,60 @@ export default function CharacterArtifactsCombinations({ character, set, artifac
           )
           : null;
         return (
-              onMouseLeave={() => handleMouseLeave()}
-              style={{ position: 'relative' }}
-            >
-              <Link to={`/${ROUTES.data_artifacts}/${representative.set.name}`} title={representative.set.name}>
+          <li key={key}
+            onMouseLeave={() => handleMouseLeave()}
+            style={{ position: 'relative' }}
+          >
+            <Link to={`/${ROUTES.data_artifacts}/${representative.set.name}`} title={representative.set.name}>
+              <div className="combination-container"
+                onMouseEnter={() => isGroup && handleMouseEnter(groupId, representative.set.twoPieceSetDescription)}
+              >
+                <ArtifactImage set={representative.set.name} piece='Flower' />
+                <span className="piece">{representative.pieces}</span>
+              </div>
+              {secondRepresentative && (
                 <div className="combination-container"
-                  onMouseEnter={() => isGroup && handleMouseEnter(groupId, representative.set.twoPieceSetDescription)}
+                  onMouseEnter={() => isGroup && handleMouseEnter(groupId, secondRepresentative.set.twoPieceSetDescription)}
                 >
-                  <ArtifactImage set={representative.set.name} piece='Flower' />
-                  <span className="piece">{representative.pieces}</span>
-                </div>
-                {secondRepresentative && (
-                  <div className="combination-container"
-                    onMouseEnter={() => isGroup && handleMouseEnter(groupId, secondRepresentative.set.twoPieceSetDescription)}
-                  >
-                    <ArtifactImage set={secondRepresentative.set.name} piece='Flower' />
-                    <span className="piece">{secondRepresentative.pieces}</span>
-                  </div>
-                )}
-                <span className="character-artifacts-combinations__effectiveness">
-                  {representative.effectiveness}%
-                </span>
-              </Link>
-              {/* Hover tooltip for grouped sets - positioned below */}
-              {isGroup && hoveredGroupId === groupId && hoveredSetBonus && (
-                <div
-                  className="group-tooltip"
-                  style={{
-                    position: 'absolute',
-                    top: '100%',
-                    left: '0',
-                    marginTop: '8px',
-                    zIndex: 1000
-                  }}
-                  onMouseEnter={() => handleMouseEnter(groupId, hoveredSetBonus)}
-                  onMouseLeave={() => setHoveredGroupId(null)}
-                >
-                  <p>{hoveredSetBonus}</p>
-                  <ul>
-                    {allSets
-                      .filter(artifactSet => artifactSet.set.twoPieceSetDescription === hoveredSetBonus)
-                      .map(({ set }) => (
-                        <li key={set.name}>
-                          <Link to={`/${ROUTES.data_artifacts}/${set.name}`}>
-                            <ArtifactImage set={set.name} piece='Flower' />
-                            <span>{set.name}</span>
-                          </Link>
-                        </li>
-                      ))}
-                  </ul>
+                  <ArtifactImage set={secondRepresentative.set.name} piece='Flower' />
+                  <span className="piece">{secondRepresentative.pieces}</span>
                 </div>
               )}
-            </li>
-          );
+              <span className="character-artifacts-combinations__effectiveness">
+                {representative.effectiveness}%
+              </span>
+            </Link>
+            {/* Hover tooltip for grouped sets - positioned below */}
+            {isGroup && hoveredGroupId === groupId && hoveredSetBonus && (
+              <div
+                className="group-tooltip"
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: '0',
+                  marginTop: '8px',
+                  zIndex: 1000
+                }}
+                onMouseEnter={() => handleMouseEnter(groupId, hoveredSetBonus)}
+                onMouseLeave={() => setHoveredGroupId(null)}
+              >
+                <p>{hoveredSetBonus}</p>
+                <ul>
+                  {allSets
+                    .filter(artifactSet => artifactSet.set.twoPieceSetDescription === hoveredSetBonus)
+                    .map(({ set }) => (
+                      <li key={set.name}>
+                        <Link to={`/${ROUTES.data_artifacts}/${set.name}`}>
+                          <ArtifactImage set={set.name} piece='Flower' />
+                          <span>{set.name}</span>
+                        </Link>
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            )}
+          </li>
+        );
       })}
     </ul>
   );
