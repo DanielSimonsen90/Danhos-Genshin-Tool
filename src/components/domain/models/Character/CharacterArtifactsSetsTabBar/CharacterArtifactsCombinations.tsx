@@ -6,6 +6,8 @@ import { ArtifactSet, Character, CharacterArtifactSet } from "@/common/models";
 
 import { ArtifactImage } from "@/components/common/media/Images";
 
+const HOVER_TIMEOUT = 100;
+
 type Props = {
   character: Character;
   set: ArtifactSet;
@@ -40,7 +42,7 @@ export default function CharacterArtifactsCombinations({ character, set, artifac
       setHoveredGroupId(null);
       setHoveredSetBonus(null);
       timeoutRef.current = null;
-    }, 100);
+    }, HOVER_TIMEOUT);
   };
   const groupedSets = useMemo(() => {
     const groups = artifactSets.reduce((acc, artifactSet) => {
