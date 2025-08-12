@@ -15,10 +15,10 @@ export default function FarmableTodaySection() {
   const farmableCharacters = useMemo(() => DataStore.Characters.filter(character =>
     Object.values(character.ascension)
       .some(material => AscensionMaterial.isAscensionMaterial(material) && material.isObtainableToday(RegionStore))
-  ), [DataStore.Characters]);
+  ), [DataStore.Characters, RegionStore.currentRegion]);
   const farmableWeapons = useMemo(() => DataStore.Weapons.filter(weapon =>
     weapon.ascensionMaterials.some(material => AscensionMaterial.isAscensionMaterial(material) && material.isObtainableToday(RegionStore))
-  ), [DataStore.Weapons]);
+  ), [DataStore.Weapons, RegionStore.currentRegion]);
 
   return (
     <section className="farmable-today-section">
@@ -26,10 +26,10 @@ export default function FarmableTodaySection() {
       {modelKeys.map(modelKey => (
         <Collapsible key={modelKey} className='farmable-model-collapsible' title={plural(2, modelKey)} defaultOpen>
           {
-            modelKey === 'Character' ? <SearchableCharacterList items={farmableCharacters} cardProps={{
+            modelKey === 'Character' ? <SearchableCharacterList key={`${RegionStore.currentRegion}-farmable-characters`} items={farmableCharacters} cardProps={{
               wrapInLink: true,
             }} />
-            : modelKey === 'Weapon' ? <SearchableWeaponList items={farmableWeapons} cardProps={{
+            : modelKey === 'Weapon' ? <SearchableWeaponList key={`${RegionStore.currentRegion}-farmable-weapons`} items={farmableWeapons} cardProps={{
               wrapInLink: true,
             }} />
             : null

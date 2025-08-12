@@ -41,6 +41,7 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
   const RegionStore = useRegionStore();
 
   return <SearchableList
+    key={RegionStore.currentRegion}
     items={items}
     sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
     renderItem={material => {

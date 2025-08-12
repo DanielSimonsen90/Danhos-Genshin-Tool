@@ -65,6 +65,7 @@ export default function MaterialCard({
 
   return (
     <ModelCard
+      key={`${RegionStore.currentRegion}-${currentMaterial.name}`}
       model="Material"
       item={currentMaterial}
       {...props}

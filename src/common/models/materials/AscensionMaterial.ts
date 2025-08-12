@@ -66,7 +66,7 @@ class AscensionMaterial extends CraftableMaterial {
       previousDay.setDate(previousDay.getDate() - 1);
       return previousDay.getDay();
     }
-    
+
     return serverTime.getDay();
   }
 }
