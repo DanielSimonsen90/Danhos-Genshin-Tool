@@ -76,8 +76,8 @@ export default function CharacterArtifactsCombinations({ character, set, artifac
             allSets.find(cSet => cSet.set.twoPieceSetDescription !== representative.set.twoPieceSetDescription)
             || allSets.find(cSet => cSet.set.name !== representative.set.name)
           )
-          : null; return (
-            <li key={key}
+          : null;
+        return (
               onMouseLeave={() => handleMouseLeave()}
               style={{ position: 'relative' }}
             >
