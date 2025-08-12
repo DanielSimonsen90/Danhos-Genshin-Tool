@@ -23,9 +23,9 @@ export default function ArtifactSets({ artifact }: Props) {
       <TabBar defaultTab="four"
         noTabs={<p className="muted">There are no characters that use this set.</p>}
         tabs={tab => [
-          tab('any', anyWantsThisPiece && 'Any', anyWantsThisPiece && <ArtifactSetsPiecesContent results={characters} displayPieces />),
-          tab('four', fourPieceCharacters.length > 0 && 'Four-Piece', fourPieceCharacters.length > 0 && <ArtifactSetsPiecesContent results={fourPieceCharacters} />),
-          tab('two', twoPieceCharacters.length > 0 && 'Two-Piece', twoPieceCharacters.length > 0 && <ArtifactSetsPiecesContent results={twoPieceCharacters} />),
+          anyWantsThisPiece && tab('any', 'Any', <ArtifactSetsPiecesContent results={characters} displayPieces />),
+          fourPieceCharacters.length > 0 && tab('four', 'Four-Piece', <ArtifactSetsPiecesContent results={fourPieceCharacters} />),
+          twoPieceCharacters.length > 0 && tab('two', 'Two-Piece', <ArtifactSetsPiecesContent results={twoPieceCharacters} />),
         ]}
       />
     </div>
