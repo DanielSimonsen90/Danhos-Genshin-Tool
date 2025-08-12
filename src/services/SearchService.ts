@@ -1,4 +1,4 @@
-import { Artifact, ArtifactSet, Character, CharacterArtifactSet, CharacterSet } from '@/common/models';
+import { Artifact, ArtifactSet, Character, CharacterArtifactSet, CharacterPlaystyle } from '@/common/models';
 import type { ArtifactPartName, BonusAbility, MainStatName, SubStatName } from '@/common/types';
 import { SearchFormData } from '@/common/types/store-data';
 import { DebugLog } from '@/common/functions/dev';
@@ -22,7 +22,6 @@ export type SearchResult = {
 };
 export type SearchResultItem = {
   character: Character;
-  set: CharacterSet;
   score: number;
   shouldSave: boolean;
 };
@@ -62,10 +61,8 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     const result = this.lastResult.searchArtifactSets = Characters.map(character => {
       debugLog('group', character.name);
       debugLog('group', 'setScoreOnCharacter');
-      const setScoreOnCharacter = character.sets.reduce((acc, cSet) => {
-        const compatibility = cSet.artifactSets.find(equippingSet =>
-          equippingSet.set.name === set.name
-        )?.effectiveness ?? 0;
+      const setScoreOnCharacter = character.playstyle.recommendedArtifactSets.reduce((acc, cSet) => {
+        const compatibility = cSet.set.name === set.name ? cSet.effectiveness : 0;
         debugLog('Compatibility', compatibility);
         const result = acc + compatibility;
         debugLog('Accumulated', result);
@@ -80,12 +77,6 @@ export const SearchService = new class SearchService extends BaseService<LastRes
 
       const result = {
         character,
-        set: character.sets
-          .filter(cSet => cSet.artifactSets.some(equippingSet => equippingSet.set.name === set.name))
-          .sort((a, b) =>
-            b.artifactSets.find(equippingSet => equippingSet.set.name === set.name)?.effectiveness ?? 0
-            - a.artifactSets.find(equippingSet => equippingSet.set.name === set.name)?.effectiveness ?? 0
-          )[0],
         score,
         shouldSave: score > SHOULD_SAVE_THRESHOLD
       } as SearchResultItem;
@@ -107,13 +98,11 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     debugLog('group', 'searchCharacterRecommendations');
 
     const getSetFromCharacter = (character: Character) => (
-      character.sets.find(cSet => cSet.artifactSets
-        .map(equppingSet => equppingSet.set.name)
-        .includes(set.name))
+      character.playstyle.recommendedArtifactSets.find(cSet => cSet.set.name === set.name)
     );
     const isEffectiveForCharacter = (max: number) => (character: Character) => {
       const cSet = getSetFromCharacter(character);
-      return cSet.artifactSets.find(equippingSet => equippingSet.set.name === set.name)?.effectiveness ?? 0 >= max;
+      return cSet?.effectiveness ?? 0 >= max;
     };
 
     // Filter characters that use the artifact set
@@ -139,20 +128,13 @@ export const SearchService = new class SearchService extends BaseService<LastRes
       debugLog('group', 'getScores');
       const result = characters.map(character => {
         const cSet = getSetFromCharacter(character);
-        // const setScore = cSet.artifactSets.reduce((acc, equippingSet) => acc + set.checkIsGood(character, equippingSet), 0);
-        const setScore = cSet.artifactSets.find(equippingSet => equippingSet.set.name === set.name)?.effectiveness ?? 0;
+        const setScore = cSet?.effectiveness ?? 0;
         const partScore = this._getPartScore(character, artifactPartName, mainStat, subStats);
         const score = Math.round(setScore * partScore);
         debugLog(`Score data for ${character.name}`, { setScore, partScore, score, SHOULD_SAVE_THRESHOLD });
 
         return {
           character,
-          set: character.sets
-            .filter(cSet => cSet.artifactSets.some(equippingSet => equippingSet.set.name === set.name))
-            .sort((a, b) =>
-              b.artifactSets.find(equippingSet => equippingSet.set.name === set.name)?.effectiveness ?? 0
-              - a.artifactSets.find(equippingSet => equippingSet.set.name === set.name)?.effectiveness ?? 0
-            )[0],
           score,
           shouldSave: score > SHOULD_SAVE_THRESHOLD
         } as SearchResultItem;
@@ -279,18 +261,8 @@ export const SearchService = new class SearchService extends BaseService<LastRes
 
       // effectiveness, characterRecommendation, score
       (a, b) => {
-        const effectiveA = a.character.sets.reduce((acc, cSet) => {
-          const compatibility = cSet.artifactSets.find(equippingSet =>
-            equippingSet.set.name === set.name
-          )?.effectiveness ?? 0;
-          return acc + compatibility;
-        }, 0);
-        const effectiveB = b.character.sets.reduce((acc, cSet) => {
-          const compatibility = cSet.artifactSets.find(equippingSet =>
-            equippingSet.set.name === set.name
-          )?.effectiveness ?? 0;
-          return acc + compatibility;
-        }, 0);
+        const effectiveA = a.character.playstyle.recommendedArtifactSets.find(cSet => cSet.set.name === set.name)?.effectiveness ?? 0;
+        const effectiveB = b.character.playstyle.recommendedArtifactSets.find(cSet => cSet.set.name === set.name)?.effectiveness ?? 0;
         return effectiveB - effectiveA;
       },
       (a, b) => {

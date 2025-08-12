@@ -53,6 +53,7 @@ export default function DomainCard({
 
   return (
     <ModelCard
+      key={`${RegionStore.currentRegion}-${name}`}
       model="Domain"
       item={domain}
       {...props}

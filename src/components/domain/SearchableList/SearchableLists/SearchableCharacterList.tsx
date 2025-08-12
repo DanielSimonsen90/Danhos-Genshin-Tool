@@ -101,7 +101,7 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
         energyRecharge: character => character.needsER(),
         elementalMastery: character => character.needsEM(),
       },
-      onField: character => character.sets[0]?.onField,
+      onField: character => character.playstyle.onField,
       bonusAbility: {
         none: character => character.bonusAbilities.length === 0,
 
@@ -147,6 +147,7 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
         sumeru: character => character.region === "Sumeru",
         fontaine: character => character.region === "Fontaine",
         natlan: character => character.region === "Natlan",
+        nodKrai: character => character.region === "Nod-Krai",
         snezhnaya: character => character.region === "Snezhnaya",
         unknown: character => character.region === "Unknown",
       },

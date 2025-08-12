@@ -195,7 +195,10 @@ export default function Tierlist<T, TStorageData extends object>({
             render,
             tier, updateTier, onMoveToIndex, onSendToTier,
             tiers, setTiers,
-            unsorted, onSearch
+            unsorted,
+            renderCustomEntryContextMenuItems: props.renderCustomEntryContextMenuItems ?
+              (entry, item) => props.renderCustomEntryContextMenuItems(entry as Entry<T>, tier, item)
+              : undefined,
           }} />
         ))}
       </DragDropContext>

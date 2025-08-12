@@ -38,7 +38,7 @@ export default function MaterialCard({
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const currentMaterial = useMemo(() => allowCycle ? craftingTree?.[currentIndex] ?? material : material, [craftingTree, currentIndex, material]);
-  const materialRegions = Billet.isBillet(material) ? material.regions : [material.region];
+  const materialRegions = material ? Billet.isBillet(material) ? material.regions : [material.region] : [];
   const hasRegion = materialRegions.filter(Boolean).length > 0;
 
   const onIndexChange = useCallback((index: number) => {
@@ -63,52 +63,52 @@ export default function MaterialCard({
     hasInteractedWithPagination.current = false;
   }, [material]);
 
-  return (
-    <ModelCard
-      model="Material"
-      item={currentMaterial}
-      {...props}
-      data-show-details={showDetails}
-      data-allow-pagination={allowCycle && craftingTree?.length > 1}
-      {...{ 'data-today': AscensionMaterial.isAscensionMaterial(material) && material.isObtainableToday(RegionStore) }}
+  if (!material) return null;
+  return <ModelCard
+    key={`${RegionStore.currentRegion}-${currentMaterial.name}`}
+    model="Material"
+    item={currentMaterial}
+    {...props}
+    data-show-details={showDetails}
+    data-allow-pagination={allowCycle && craftingTree?.length > 1}
+    {...{ 'data-today': AscensionMaterial.isAscensionMaterial(material) && material.isObtainableToday(RegionStore) }}
 
-      renderImage={() => <MaterialImage material={currentMaterial.name} />}
-      renderHeaderContent={(() => (
-        <>
-          {(showDetails || (showRegion && hasRegion) || AscensionMaterial.isAscensionMaterial(material)) && (
-            <div className="material-card__details-container">
-              {showDetails && (
-                <p className="material-card__description">
-                  {currentMaterial.description}
-                </p>
-              )}
-              {(showDetails || showRegion) && (
-                <Region
-                  region={materialRegions}
-                  className="material-card__region"
-                  tag="ul"
-                  keyPrefix={`material-region-${material.name}`}
-                />
-              )}
-              {AscensionMaterial.isAscensionMaterial(material) && <ObtainableDays material={material} />}
-            </div>
-          )}
-          {allowCycle && craftingTree?.length > 1 && (
-            <Pagination
-              materialName={material.name}
-              craftingTree={craftingTree}
-              currentIndex={currentIndex}
-              onIndexChange={onIndexChange}
-            />
-          )}
-        </>
-      ))}
+    renderImage={() => <MaterialImage material={currentMaterial.name} />}
+    renderHeaderContent={(() => (
+      <>
+        {(showDetails || (showRegion && hasRegion) || AscensionMaterial.isAscensionMaterial(material)) && (
+          <div className="material-card__details-container">
+            {showDetails && (
+              <p className="material-card__description">
+                {currentMaterial.description}
+              </p>
+            )}
+            {(showDetails || showRegion) && (
+              <Region
+                region={materialRegions}
+                className="material-card__region"
+                tag="ul"
+                keyPrefix={`material-region-${material.name}`}
+              />
+            )}
+            {AscensionMaterial.isAscensionMaterial(material) && <ObtainableDays material={material} />}
+          </div>
+        )}
+        {allowCycle && craftingTree?.length > 1 && (
+          <Pagination
+            materialName={material.name}
+            craftingTree={craftingTree}
+            currentIndex={currentIndex}
+            onIndexChange={onIndexChange}
+          />
+        )}
+      </>
+    ))}
 
-      renderContent={() => (<Relations
-        material={material}
-        showModelsUsing={showModelsUsing}
-        showModelAcquired={showModelAcquired}
-      />)}
-    />
-  );
+    renderContent={() => (<Relations
+      material={material}
+      showModelsUsing={showModelsUsing}
+      showModelAcquired={showModelAcquired}
+    />)}
+  />;
 }

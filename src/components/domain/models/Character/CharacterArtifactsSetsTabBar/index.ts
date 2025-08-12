@@ -1,2 +1,2 @@
-import './CharacterArtifactsSetsTabBar.scss';
-export { default } from './CharacterArtifactsSetsTabBar';
+import './CharacterArtifactsCombinations.scss';
+export { default } from './CharacterArtifactsCombinations';

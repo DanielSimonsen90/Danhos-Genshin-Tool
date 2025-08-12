@@ -14,7 +14,7 @@ import { ElementalCrystal } from "@/common/models/materials/MobDrop";
 import { Billet } from "@/common/models/materials/Billet";
 import { Region } from "@/components/domain";
 import { MaterialImage } from "@/components/common/media/Images";
-import { useMaterialMultiModelRelations } from "../../Material/MaterialCard/components/RelationsForModel/hooks/useMaterialRelationData";
+import { useDataStore } from "@/stores";
 
 export interface Props extends BaseModelCardProps {
   mob: Mob;
@@ -36,6 +36,8 @@ export default function MobCard({
 }: Props) {
   const { name, description, drops } = mob;
 
+  const DataStore = useDataStore();
+
   const mobType = useMemo(() => {
     if (WeeklyBoss.isWeeklyBoss(mob)) return "weekly-boss";
     if (WorldBoss.isWorldBoss(mob)) return "world-boss";
@@ -44,7 +46,6 @@ export default function MobCard({
     if (EasyMob.isEasyMob(mob)) return "easy";
     return "mob";
   }, [mob]);
-
   const dropRelations = useMemo(() => drops.filter(drop => {
     if (ArtifactSet.isArtifactSet(drop)) return false;
     if (ElementalCrystal.isElementalCrystal(drop)) {
@@ -55,10 +56,13 @@ export default function MobCard({
     if (drop.name === 'Dream Solvent') return false;
     return true;
   }), [drops]);
-  const relationsData = dropRelations.map(drop => ({
+  const relationsData = useMemo(() => dropRelations.map(drop => ({
     drop,
-    relations: useMaterialMultiModelRelations(drop.name, ['Character', 'Weapon'] as const)
-  }));
+    relations: [
+      DataStore.getCharactersUsingMaterial(drop.name),
+      DataStore.getWeaponsUsingMaterial(drop.name)
+    ] as const
+  })), [dropRelations, DataStore]);
 
   return (
     <ModelCard

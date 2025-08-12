@@ -4,18 +4,32 @@
     align-items: center;
     gap: 1ch;
   }
+  
+  &__2-piece,
+  &__4-piece {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5ch;
+    
+    &::before {
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+  }
 
   &__2-piece::before {
-    content: "2-piece: ";
-    font-weight: bold;
+    content: "2-piece:";
   }
 
   &__4-piece::before {
-    content: "4-piece: ";
-    font-weight: bold;
+    content: "4-piece:";
   }
 
   &__craftable {
     font-weight: bold;
   }
+}
+
+a:has(.artifact-descriptions) .artifact-descriptions p {
+  flex-direction: column;
 }

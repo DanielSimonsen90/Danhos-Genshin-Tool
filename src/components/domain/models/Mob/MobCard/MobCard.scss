@@ -145,6 +145,10 @@ a.mob-card {
     justify-items: center;
   }
 
+  .mob-card__name {
+    flex-direction: column;
+  }
+
   .mob-card__details {
     display: flex;
     align-items: center;

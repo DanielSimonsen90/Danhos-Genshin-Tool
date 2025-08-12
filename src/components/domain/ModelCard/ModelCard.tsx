@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { classNames } from "@/common/functions/strings";
 import { Model, ModelKeys } from "@/common/models";
 import RarityList from "../../common/media/icons/Rarity";
+import { ElementImage } from "@/components/common/media/Images";
+import { Element } from "@/common/types";
 
 // Shared properties for all model cards
 export interface BaseModelCardProps {
@@ -75,7 +77,9 @@ const ModelCard = forwardRef<HTMLDivElement, ModelCardProps>(({
         <div className={classNames('model-card__details', `${modelClassName}__details`)}>
           <NameTag className={classNames('model-card__name', `${modelClassName}__name`)} title={item.name}>
             <ModelNameContainer>
-              <span className={classNames('model-card__name-text', `${modelClassName}__name-text`)}>{item.name}</span>
+              <span className={classNames('model-card__name-text', `${modelClassName}__name-text`)}>
+                {item.name}
+              </span>
               {HeadingContent && <HeadingContent />}
               {showRarity && 'rarity' in item && <RarityList rarity={item.rarity} />}
             </ModelNameContainer>

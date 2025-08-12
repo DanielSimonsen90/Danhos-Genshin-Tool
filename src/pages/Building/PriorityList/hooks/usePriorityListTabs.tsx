@@ -1,12 +1,14 @@
 import { Dispatch, SetStateAction, useCallback } from "react";
 
 import { CharacterImage, ArtifactImage, DomainImage, MaterialImage, MobImage, WeaponImage } from "@/components/common/media/Images";
-import Tierlist, { Tier } from "@/components/common/Tierlist";
+import Tierlist, { Entry, Tier } from "@/components/common/Tierlist";
 import { useDataStore } from "@/stores";
 
 import type { PriorityLists, PriorityList } from "../PriorityListTypes";
 import { getDefaultPriorityLists, onUnsortedSearch } from "../PriorityListFunctions";
 import { PriorityListTab } from "../components";
+import { useNavigate } from "react-router/dist";
+import { Model, ModelKeys, ModelMap } from "@/common/models";
 
 type UsePriorityListTabsProps = {
   priorityLists: PriorityLists;
@@ -66,6 +68,7 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
   return Array.from(Object.entries(priorityLists)).map(([tierlistTitle, priorityList], index, array) => {
     const modelType = priorityList.model;
     const items = DataStore[`${modelType}Names`];
+    const navigate = useNavigate();
 
     return [
       tierlistTitle,
@@ -79,9 +82,14 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
         content: (
           <Tierlist key={tierlistTitle} {...{
             model: modelType,
-            items, onSearch: onUnsortedSearch,
+            items: items,
+            onSearch: onUnsortedSearch,
             defaultTiers: priorityList.tiers,
-            onTierChange: onTierChange(tierlistTitle)
+            onTierChange: onTierChange(tierlistTitle),
+            renderCustomEntryContextMenuItems: (entry: Entry<string>, tier, item) => [
+              item('divider', `${entry.item} Options`),
+              item('option', `View ${modelType}`, () => navigate(`/data/${modelType.toLowerCase()}s/${entry.item}`), '👁️')
+            ]
           }}>
             {modelName => {
               switch (modelType) {

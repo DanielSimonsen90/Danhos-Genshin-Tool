@@ -92,4 +92,8 @@ a.artifact-card {
     display: flex;
     justify-items: center;
   }
+
+  .artifact-card__name {
+    flex-direction: column;
+  }
 }
