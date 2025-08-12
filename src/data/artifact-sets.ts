@@ -1,4 +1,4 @@
-import { AbilityType, Rarity, Reaction } from "../common/types";
+import { TalentType, Rarity, Reaction } from "../common/types";
 import { ArtifactSet, Character, CharacterArtifactSet } from "../common/models";
 import * as Domains from './domains/domain-of-blessing';
 
@@ -8,7 +8,7 @@ const fiveStar = 20;
 const correctElement = 15;
 
 const isPhysicalFavored = (character: Character, artifactSet: CharacterArtifactSet) => (
-  ['Normal/Press', 'Charged/Hold', 'Plunging/Hold'] as AbilityType[]
+  ['Normal/Press', 'Charged/Hold', 'Plunging/Hold'] as TalentType[]
 ).some(abilityType => character.playstyle.talentPriorities.includes(abilityType)
   && character.playstyle.recommendedArtifactSets.includes(artifactSet)
 );

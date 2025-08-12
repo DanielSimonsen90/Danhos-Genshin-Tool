@@ -1,4 +1,4 @@
-import { ArtifactSet, Character, Domain, TalentAscensionMaterial, WeaponAscensionMaterial, Material, Mob, Model, ModelKeys, Boss, CharacterPlaystyle, CharacterArtifactSet } from '@/common/models';
+import { ArtifactSet, Character, Domain, TalentAscensionMaterial, WeaponAscensionMaterial, Material, Mob, Model, ModelKeys, Boss, CharacterArtifactSet } from '@/common/models';
 import type { DataStoreContent } from './DataStoreConstants';
 import ModelType from './ModelType';
 import { Weapon } from '@/common/models/weapon';

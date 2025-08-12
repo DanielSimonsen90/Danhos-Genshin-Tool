@@ -503,7 +503,7 @@ export const Emilie = new Character("Emilie", "Dendro", "Catalyst", ["Off-field 
   worldBossDrop: MobDrops.FragmentOfAGoldenMelody,
   mobDrop: EasyMobDrops.Gear,
 }, 'When Lumidouce Case (lamp) is on field, all party members gain 85% Pyro RES against Burning DMG.',
-  new CharacterPlaystyle("Off-field Support", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
+  new CharacterPlaystyle("Off-field Burning Support", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
     new CharacterArtifactSet(Sets.UnfinishedReverie, 4, 81.4),
     new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 11.4),
     new CharacterArtifactSet(Sets.GoldenTroupe, 4, 1.3),

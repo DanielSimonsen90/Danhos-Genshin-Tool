@@ -1,6 +1,6 @@
 import type { Reaction, GenshinRegion, Element } from "./genshin";
 
-export type AbilityType = 'Normal/Press' | 'Charged/Hold' | 'Plunging/Press' | 'Skill/Ability' | 'Burst/Ult';
+export type TalentType = 'Normal/Press' | 'Charged/Hold' | 'Plunging/Press' | 'Skill/Ability' | 'Burst/Ult';
 export type BonusAbility = (
 | 'Off-field Damage' 
 | 'Shield' | 'Heal' | 'Self-heal' | 'Bond of Life' 

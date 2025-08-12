@@ -13,9 +13,24 @@
     @extend %text-ellipsis;
   }
 
+  :is(h1:not(::after), h2, h3, .character-card__name-text) {
+    background: linear-gradient(to bottom, var(--element) 60%, var(--element--muted) 95%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    /* Fallback for browsers that don't support background-clip: text */
+    @supports not (-webkit-background-clip: text) {
+      color: var(--element);
+    }
+
+    &::after {
+      -webkit-text-fill-color: initial;
+    }
+  }
+
   .character-card__name {
     margin: 0;
-    color: var(--element);
     font-weight: bold;
     font-size: 1.25rem;
 
@@ -140,5 +155,9 @@ a.character-card {
 
   &:hover {
     background-color: var(--element--muted);
+  }
+
+  .element-image {
+    --max-size: 1.25rem;
   }
 }

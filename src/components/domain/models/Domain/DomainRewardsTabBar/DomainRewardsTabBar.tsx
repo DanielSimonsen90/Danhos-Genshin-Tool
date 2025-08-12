@@ -64,15 +64,15 @@ function ArtifactTabBar({ rewards: artifacts }: Props<'Blessing'>) {
       <ArtifactCard key={artifact.name} artifact={artifact} nameTag="b" />,
       <SearchableList key={artifact.name}
         items={DataStore.getCharactersUsingArtifact(artifact.name)}
+        sort={(a, b) => b.cSet.effectiveness - a.cSet.effectiveness}
         onSearch={(query, item) => item.character.name.toLowerCase().includes(query.toLowerCase())}
         renderItem={({ character, cSet: { effectiveness, pieces, set } }) => (
           <CharacterCard key={character.name} className="character-result" character={character} wrapInLink>
             <p>
-              <span className="character-info__name">{character.name}</span> is
-              <span className="character-info__effectiveness">{effectivenessString(effectiveness)}</span> on a
+              <span className="character-info__effectiveness">{effectiveness}</span>% of active players use a
               <span className="character-info__pieces">{pieces}-piece</span>
-              <span className="character-info__artifact-name">{artifact.name}</span> using the
-              <span className="character-info__set-name">{set.name}</span> set.
+              <span className="character-info__artifact-name">{artifact.name}</span> set on
+              <span className="character-info__name">{character.name}</span>.
             </p>
           </CharacterCard>
         )}

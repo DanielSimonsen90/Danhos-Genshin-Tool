@@ -1,11 +1,11 @@
-import { AbilityType, CharacterSetName as CharacterPlaystyleName, TalentStatName } from "@/common/types";
+import { TalentType, CharacterSetName as CharacterPlaystyleName, TalentStatName } from "@/common/types";
 import { CharacterArtifactSet } from "./CharacterArtifactSet";
 
 export class CharacterPlaystyle {
   constructor(
     public name: CharacterPlaystyleName,
     public talentStats: TalentStatName[],
-    public talentPriorities: AbilityType[],
+    public talentPriorities: TalentType[],
     public onField: boolean,
     public recommendedArtifactSets: CharacterArtifactSet[],
   ) {}

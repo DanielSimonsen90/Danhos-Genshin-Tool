@@ -1,13 +1,17 @@
 import { useMemo } from "react";
+
 import { rarityString } from "@/common/functions/strings";
 import { Character } from "@/common/models";
-import { CharacterImage, MaterialImage } from "@/components/common/media/Images";
-import CharacterPlaystyle from "../CharacterPlaystyle";
+
+import { CharacterImage } from "@/components/common/media/Images";
 import ModelCard, { BaseModelCardProps } from "@/components/domain/ModelCard";
+import { Region } from "@/components/domain";
+
+import { useDataStore } from "@/stores";
+
+import CharacterPlaystyle from "../CharacterPlaystyle";
 import { MaterialCard } from "../../Material";
 import { WeaponCard } from "../../Weapon";
-import { useDataStore } from "@/stores";
-import { Region } from "@/components/domain";
 
 export interface Props extends BaseModelCardProps {
   character: Character;

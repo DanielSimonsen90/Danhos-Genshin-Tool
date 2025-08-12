@@ -1,6 +1,7 @@
 import { ArtifactSet, Character } from "@/common/models";
 import { fromList } from "@/common/functions/strings";
 import CharacterArtifactsPlaystylesTabBar from "../CharacterArtifactsSetsTabBar";
+import { TalentImage } from "@/components/common/media/Images";
 
 type Props = {
   character: Character;
@@ -36,8 +37,11 @@ export default function CharacterPlaystyleComponent({ character, artifactSet }: 
         <div className="recommended-talent-ascension">
           <h4>Recommended Talent Ascension</h4>
           <ol className="recommended-talent-ascension__list">
-            {talentPriorities.map((priority, index) => (
-              <li key={index} className="recommended-talent-ascension__item">{priority}</li>
+            {talentPriorities.map((talent, index) => (
+              <li key={index} className="recommended-talent-ascension__item">
+                <TalentImage character={character} talent={talent} />
+                <span>{talent}</span>
+              </li>
             ))}
           </ol>
         </div>

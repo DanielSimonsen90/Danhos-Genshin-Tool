@@ -8,7 +8,8 @@
     padding-inline: .5em;
   }
 
-  p, a {
+  p,
+  a {
     color: var(--text-secondary);
   }
 
@@ -24,8 +25,20 @@
     ol {
       background-color: var(--background-secondary--muted);
       border-radius: .5em;
-      padding: 1em;
-      padding-inline-start: 2em;
+      padding: .5em;
+      font-size: 1.5rem;
+
+      li {
+        display: flex;
+        align-items: center;
+
+        counter-increment: list-item;
+
+        &::before {
+          content: counter(list-item) ".";
+          margin-inline-end: .5em;
+        }
+      }
     }
   }
 }
