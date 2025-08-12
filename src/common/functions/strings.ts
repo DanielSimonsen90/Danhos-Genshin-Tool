@@ -11,7 +11,7 @@ export function addSpacesToCamelCase<T extends string>(value: T): T {
 }
 
 export function snakeCaseFromCamelCase<T extends string>(value: T): T {
-  const transform = value.replace(/ [A-Za-z]/g, (match) => `_${match}`).replace(/ /g, '').toLowerCase();
+  const transform = value.replace(/ [A-Za-z]/g, (match) => `_${match}`).replace(/ /g, '');
   const noUnderscoreAfterDash = transform.replace(/-_/g, '-') as T;
   const result = noUnderscoreAfterDash as T;
   debugLog(`[snakeCaseFromCamelCase] ${value} -> ${result}`);
