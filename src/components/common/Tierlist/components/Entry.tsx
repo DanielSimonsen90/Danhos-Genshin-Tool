@@ -61,7 +61,6 @@ export default function Entry<T>({
     ]
   }, 'top-right');
 
-console.log('Entry props', { entry, index, tiers, unsorted });
 
 return (
   <Draggable key={entry.id} draggableId={entry.id} index={index}>
