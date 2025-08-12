@@ -15,7 +15,7 @@ export default function CharacterPlaystyleComponent({ character, artifactSet }: 
     </p>
   );
 
-  const { name, recommendedArtifactSets, talentPriorities, onField, talentStats } = character.playstyle;
+  const { name, recommendedArtifactSets, talentPriorities, talentStats } = character.playstyle;
   const [favoredAbility] = talentPriorities;
 
   return (
