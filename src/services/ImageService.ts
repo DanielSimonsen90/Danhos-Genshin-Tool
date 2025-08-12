@@ -18,12 +18,15 @@ const LOCAL_PATH = IS_DEVELOPMENT_ENVIRONMENT ? '../assets/images' : `${GITHUB_C
 export const ImageService = new class ImageService extends BaseService<string> {
   public getArtifactImage(set: keyof typeof ArtifactSetData | string, part: ArtifactPartName): string {
     return this.lastResult = set.includes('Prayers')
-      ? `${PAIMON_MOE_URL}/artifacts/${snakeCaseFromCamelCase(set).replace("'", '')}_${part === 'Feather' ? 'plume' : snakeCaseFromCamelCase(part)}.png`
-      : `${SUNDERARMOR_CDN_URL}/Gear/${snakeCaseFromCamelCase(set)}.png`;
+      ? `${PAIMON_MOE_URL}/artifacts/${snakeCaseFromCamelCase(set).replace("'", '').toLowerCase()}_${part === 'Feather' ? 'plume' : snakeCaseFromCamelCase(part).toLowerCase()}.png`
+      : `${SUNDERARMOR_CDN_URL}/Gear/${snakeCaseFromCamelCase(set).toLowerCase()}.png`;
   }
 
   public getCharacterImage(name: keyof typeof CharacterData | string): string {
-    return this.lastResult = `${PAIMON_MOE_URL}/characters/${snakeCaseFromCamelCase(name).replace(/[':"]/g, '')}.png`;
+    return this.lastResult = `${PAIMON_MOE_URL}/characters/${snakeCaseFromCamelCase(name)
+      .toLowerCase()
+      .replace(/[':"]/g, '')
+    }.png`;
   }
   public getTalentImage(character: Character, talentType: TalentType) {
     let imageName = (() => {
@@ -63,10 +66,17 @@ export const ImageService = new class ImageService extends BaseService<string> {
   }
 
   public getWeaponTypeImage(name: WeaponType): string {
-    return this.lastResult = `${SUNDERARMOR_CDN_URL}/UI/weapon_${snakeCaseFromCamelCase(name)}.png`;
+    // return this.lastResult = `${SUNDERARMOR_CDN_URL}/UI/weapon_${snakeCaseFromCamelCase(name)}.png`;
+    return this.lastResult = `${PAIMON_MOE_URL}/weapons/${snakeCaseFromCamelCase(name)
+      .replace(/[':"]/g, '')
+      .toLowerCase()
+    }.png`;
   }
   public getWeaponImage(name: string): string {
-    return this.lastResult = `${PAIMON_MOE_URL}/weapons/${snakeCaseFromCamelCase(name).replace(/[':"]/g, '')}.png`;
+    return this.lastResult = `${PAIMON_MOE_URL}/weapons/${snakeCaseFromCamelCase(name)
+      .replace(/[':"]/g, '')
+      .toLowerCase()
+    }.png`;
   }
 
   public getDomainImage(name: keyof typeof DomainsData | string): string {
@@ -82,6 +92,7 @@ export const ImageService = new class ImageService extends BaseService<string> {
     else if (name === 'Dream Solvent') return this.lastResult = `${LOCAL_PATH}/materials/drops/dream_solvent.webp`;
 
     return this.lastResult = `${PAIMON_MOE_URL}/items/${snakeCaseFromCamelCase(name)
+      .toLowerCase()
       .replace(/[':"]/g, '')
       .replace(/-/g, '_')}.png`;
   }
