@@ -45,6 +45,7 @@ export default function PriorityList() {
       minSize={100}
       initialSize={180}
       maxSize={600}
+      cacheContent={false}
     >
       {collapsed => <CreatePriorityListButton tabBarCollapsed={collapsed} onClick={() => openCreateModal()} />}
     </TabBar>
