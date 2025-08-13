@@ -62,7 +62,11 @@ export default function Tier<T>({
   return (
     <div className="tier" style={{ backgroundColor: tier.color }}>
       <header className='tier__header' onContextMenu={onContextMenu} onDoubleClick={() => setShowEditModal(true)}>
-        <h2 className={classNames('tier__title', tier.invert && 'inverted')}>{tier.title}</h2>
+        <h2 className={classNames('tier__title', tier.invert && 'inverted')}
+          title={tier.title}
+        >
+          {tier.title}
+        </h2>
       </header>
       <Droppable key={tier.id} droppableId={tier.id} direction='horizontal'>
         {provided => (
