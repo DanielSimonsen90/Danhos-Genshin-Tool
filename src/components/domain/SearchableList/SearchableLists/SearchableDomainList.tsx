@@ -32,6 +32,7 @@ export default function SearchableDomainList<TFilterKeys extends string>({
   const FavoriteStore = useFavorite('domains');
 
   return <SearchableList items={items}
+    placeholder="Search domains..."
     sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
     renderItem={domain => {
       const open = useContextMenu(item => [

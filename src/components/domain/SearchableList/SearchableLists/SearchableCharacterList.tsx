@@ -36,6 +36,7 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
   const [internalCardProps, setInteralCardProps] = useState<Pick<Props<TFilterKeys>, 'cardProps'>['cardProps']>({});
 
   return <SearchableList items={items}
+    placeholder="Search characters..."
     sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
     renderItem={character => {
       const open = useContextMenu(item => [
@@ -101,7 +102,7 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
         energyRecharge: character => character.needsER(),
         elementalMastery: character => character.needsEM(),
       },
-      onField: character => character.playstyle.onField,
+      onField: character => character.playstyle?.onField,
       bonusAbility: {
         none: character => character.bonusAbilities.length === 0,
 

@@ -5,7 +5,6 @@
 
 .material-card__models-using,
 .material-card__model-acquired {
-
   &:last-child {
     margin-bottom: 0;
   }
@@ -18,10 +17,7 @@
     }
   }
 
-  h4 {
-    margin: 0 0 0.5rem 0;
-    font-size: .9rem;
-    font-weight: bold;
-    color: var(--text-secondary);
+  .collapsible__content {
+    --max-height: auto;
   }
 }

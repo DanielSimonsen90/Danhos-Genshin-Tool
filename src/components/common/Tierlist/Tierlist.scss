@@ -1,3 +1,5 @@
+@use '../../../styles/partials' as *;
+
 .tier-list-creator {
   display: grid;
   gap: 1ch;
@@ -34,6 +36,9 @@
   }
 
   &__title {
+    @extend %text-ellipsis;
+    white-space: normal !important;
+
     text-align: center;
     margin: 0;
 

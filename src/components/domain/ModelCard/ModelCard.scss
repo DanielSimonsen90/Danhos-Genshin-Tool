@@ -3,7 +3,7 @@
 .model-card {
   display: flex;
   flex-direction: column;
-  gap: .5rem;
+  gap: 1rem;
   border-radius: .5rem;
   padding: .5em;
 
@@ -19,7 +19,7 @@
   &__name {
     --margins: 0em;
 
-    .element-image-container {
+    .image-container {
       display: flex;
       align-items: center;
     }

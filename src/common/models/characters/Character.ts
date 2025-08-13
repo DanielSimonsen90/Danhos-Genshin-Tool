@@ -16,7 +16,7 @@ export class Character<TElement extends Element = Element> {
     public region: GenshinRegion,
     public ascension: CharacterAscension<TElement>,
     public passiveTalent: PassiveTalent | undefined,
-    public playstyle: CharacterPlaystyle,
+    public playstyle: CharacterPlaystyle | undefined,
   ) {}
 
   public needsHP(): boolean { return this.playstyle.talentStats.includes('HP'); }
