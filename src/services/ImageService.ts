@@ -13,7 +13,7 @@ const PAIMON_MOE_URL = 'https://paimon.moe/images';
 // const LUSTON_PULL_CDN_URL = 'https://lustonpull.com/GENSHIN' -- Archived replaced by Sunderarmor
 const GITHUB_CONTENT_URL = `https://raw.githubusercontent.com/${DEVELOPER_GITHUB_URL.split('/').at(-1)}/${PROJECT_GITHUB_URL.split('/').at(-1)}/refs/heads/main/src`;
 const SUNDERARMOR_CDN_URL = 'https://sunderarmor.com/GENSHIN';
-const LOCAL_PATH = !IS_DEVELOPMENT_ENVIRONMENT ? '../assets/images' : `${GITHUB_CONTENT_URL}/assets/images`;
+const LOCAL_PATH = IS_DEVELOPMENT_ENVIRONMENT ? '../assets/images' : `${GITHUB_CONTENT_URL}/assets/images`;
 
 export const ImageService = new class ImageService extends BaseService<string> {
   public getArtifactImage(set: keyof typeof ArtifactSetData | string, part: ArtifactPartName): string {
