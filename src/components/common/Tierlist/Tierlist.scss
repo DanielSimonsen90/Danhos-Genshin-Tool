@@ -37,7 +37,7 @@
 
   &__title {
     @extend %text-ellipsis;
-    white-space: wrap !important;
+    white-space: normal !important;
 
     text-align: center;
     margin: 0;
