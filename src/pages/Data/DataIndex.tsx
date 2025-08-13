@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 import { getElement } from '@/data/elements';
@@ -23,6 +23,7 @@ import { DomainCard } from '@/components/domain/models/Domain';
 import { MaterialCard } from '@/components/domain/models/Material';
 import { MobCard } from '@/components/domain/models/Mob';
 import { WeaponCard } from '@/components/domain/models/Weapon';
+import useKeybind from '@/hooks/useKeybind';
 
 const DATA_PREFIX = ROUTES.data;
 const routes = [
@@ -40,11 +41,6 @@ const getModelElement = (model: ArtifactSet): Element | undefined => [
   model.twoPieceSetDescription,
   model.fourPieceSetDescription,
 ].map(getElement).find(Boolean);
-const getDomainElement = (domain: DomainOfBlessing, dataStore: DataStore, order: Order): Element | undefined => domain.getRewards(dataStore)
-  .map(getModelElement)
-  .filter(Boolean)
-  .sort((a, b) => order === 'element-ascend' ? a.localeCompare(b) : b.localeCompare(a))
-[0];
 
 export default function DataIndex() {
   const DataStore = useDataStore();
@@ -74,43 +70,31 @@ export default function DataIndex() {
   const [search, setSearch] = useState('');
   const debouncedSearch = useDebounceValue(search, 300);
   const isSearching = debouncedSearch.length > 0;
-  // Helper function to render model cards
-  const renderModelCard = (model: Model, group: string, name: string, nameTag?: 'h3') => {
-    const cardProps = { key: name, wrapInLink: true, ...(nameTag && { nameTag }) };
-    
-    switch (group) {
-      case 'characters': return <CharacterCard {...cardProps} character={model as Character} />;
-      case 'artifacts': return <ArtifactCard {...cardProps} artifact={model as ArtifactSet} />;
-      case 'domains': return <DomainCard {...cardProps} domain={model as Domain<any>} />;
-      case 'materials': return <MaterialCard {...cardProps} material={model as any} />;
-      case 'mobs': return <MobCard {...cardProps} mob={model as Mob} />;
-      case 'weapons': return <WeaponCard {...cardProps} weapon={model as Weapon} />;
-      default: return null;
-    }
-  };
 
   // Unified data structure for both default and search views
-  const displayGroups = useMemo(() => {
-    return groups.map(([group, names]) => {
-      const filteredNames = isSearching 
-        ? names.filter(name => name.toLowerCase().includes(debouncedSearch.toLowerCase()))
-        : names.slice(0, 9); // Show first 9 for default view
-      
-      return {
-        group,
-        displayName: pascalCaseFromSnakeCase(group),
-        totalCount: names.length,
-        filteredCount: filteredNames.length,
-        names: filteredNames,
-        isVisible: isSearching ? filteredNames.length > 0 : true
-      };
-    });
-  }, [groups, debouncedSearch, isSearching]);
+  const displayGroups = useMemo(() => groups.map(([group, names]) => {
+    const filteredNames = isSearching
+      ? names.filter(name => name.toLowerCase().includes(debouncedSearch.toLowerCase()))
+      : names.slice(0, 9); // Show first 9 for default view
+
+    return {
+      group,
+      displayName: pascalCaseFromSnakeCase(group),
+      totalCount: names.length,
+      filteredCount: filteredNames.length,
+      names: filteredNames,
+      isVisible: isSearching ? filteredNames.length > 0 : true
+    };
+  }), [groups, debouncedSearch, isSearching]);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  useKeybind('f', { ctrlKey: true }, () => inputRef.current?.focus());
 
   return (
     <div className="data-hub">
       <header className="data-hub__header">
         <input
+          ref={inputRef}
           type='search'
           value={search}
           onChange={e => setSearch(e.target.value)}
@@ -147,10 +131,9 @@ export default function DataIndex() {
                       const model = groupModels.get(group)?.find(m => m.name === name);
                       if (!model) return null;
 
-                      const card = renderModelCard(model, group, name, isSearching ? undefined : 'h3');
                       return (
                         <li key={name}>
-                          {card}
+                          <ModelCard model={model} group={group} name={name} nameTag={isSearching ? undefined : 'h3'} />
                         </li>
                       );
                     })}
@@ -164,3 +147,22 @@ export default function DataIndex() {
     </div>
   );
 }
+
+const ModelCard = ({ model, group, name, nameTag }: {
+  model: Model,
+  group: string,
+  name: string,
+  nameTag?: 'h3';
+}) => {
+  const cardProps = { key: name, wrapInLink: true, ...(nameTag && { nameTag }) };
+
+  switch (group) {
+    case 'characters': return <CharacterCard {...cardProps} character={model as Character} />;
+    case 'artifacts': return <ArtifactCard {...cardProps} artifact={model as ArtifactSet} />;
+    case 'domains': return <DomainCard {...cardProps} domain={model as Domain<any>} />;
+    case 'materials': return <MaterialCard {...cardProps} material={model as any} />;
+    case 'mobs': return <MobCard {...cardProps} mob={model as Mob} />;
+    case 'weapons': return <WeaponCard {...cardProps} weapon={model as Weapon} />;
+    default: return null;
+  }
+};
