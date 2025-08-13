@@ -1,7 +1,7 @@
-import { Region, RegionData, FavoritesCollection } from "./RegionStoreTypes";
+import { WorldRegion, RegionData, FavoritesCollection } from "./RegionStoreTypes";
 
 export const LOCAL_STORAGE_KEY = 'regions';
-export const DEFAULT_REGION: Region = 'Europe';
+export const DEFAULT_REGION: WorldRegion = 'Europe';
 
 export const DEFAULT_FAVORITES: FavoritesCollection = {
   characters: [],
@@ -20,4 +20,4 @@ export const DEFAULT_REGION_DATA: RegionData = {
   favorites: DEFAULT_FAVORITES,
 };
 
-export const REGIONS: Array<Region> = ['Europe', 'North America', 'Asia', 'TW, HK, MO'];
+export const REGIONS: Array<WorldRegion> = ['Europe', 'North America', 'Asia', 'TW, HK, MO'];

@@ -9,6 +9,9 @@ import Weapon from "./weapon";
 export type Model = Character | ArtifactSet | Domain<any> | Mob | Material | Weapon;
 export type ModelKeys = 'Character' | 'Artifact' | 'Domain' | 'Mob' | 'Material' | 'Weapon';
 export const ModelKeys: Array<ModelKeys> = ['Character', 'Artifact', 'Domain', 'Mob', 'Material', 'Weapon'];
+export type ModelMap = {
+  [K in ModelKeys]: ModelData<K> extends Array<infer T> ? T : never;
+};
 
 export type DomainType = 'Blessing' | 'Mastery' | 'Forgery';
 export type DomainReward = ArtifactSet | TalentAscensionMaterial | WeaponAscensionMaterial;
@@ -18,4 +21,4 @@ export type ModelData<TModelKey extends ModelKeys> =
   TModelKey extends 'Weapon' ? Weapon[] :
   TModelKey extends 'Mob' ? Mob[] :
   TModelKey extends 'Domain' ? Domain<any>[] :
-  never;
+  Array<never>;

@@ -3,7 +3,7 @@ import { PriorityLists } from "@/pages/Building/PriorityList/PriorityListTypes";
 import { StorageReturn } from "@/services/StorageService";
 import { ArtifactSet, Character, Domain, Mob, Weapon, Material, Model } from "@/common/models";
 
-export type Region = 'North America' | 'Europe' | 'Asia' | 'TW, HK, MO';
+export type WorldRegion = 'North America' | 'Europe' | 'Asia' | 'TW, HK, MO';
 export type Traveler = 'lumine' | 'aether';
 
 export type FavoriteModels = {
@@ -20,7 +20,7 @@ export type FavoritesCollection = {
 }
 
 export type RegionData = {
-  region: Region;
+  region: WorldRegion;
   traveler: Traveler | undefined;
   priorityLists?: PriorityLists;
   favorites?: FavoritesCollection;
@@ -29,7 +29,7 @@ export type RegionData = {
 };
 
 export type RegionSettings = Pick<RegionData, 'traveler' | 'region'>;
-export type RegionContextType = Record<Region, RegionData | undefined>;
+export type RegionContextType = Record<WorldRegion, RegionData | undefined>;
 
 export type FavoriteModel<T extends keyof FavoriteModels> = {
   add: (item: FavoriteModels[T]) => void;
@@ -47,13 +47,13 @@ export type FavoritesAPI = {
 
 export type RegionStore = {
   regions: RegionContextType;
-  currentRegion: Region;
+  currentRegion: WorldRegion;
   regionData: RegionData & Record<'setRegionData', RegionStore['setRegionData']>;
 
   get regionSettings(): RegionSettings;
 
   setRegionData: (update: Partial<RegionData> | ((state: RegionData) => RegionData)) => void;
-  setRegion: (region: Region) => void;
+  setRegion: (region: WorldRegion) => void;
   setTraveler: (traveler: Traveler) => void;
   setState: (state: SetStateAction<RegionStore>) => void;
 

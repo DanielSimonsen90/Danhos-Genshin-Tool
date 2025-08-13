@@ -4,6 +4,8 @@ import { Draggable } from "react-beautiful-dnd";
 import { useContextMenu } from "@/providers/ContextMenuProvider";
 
 import { Entry, RenderItem, Tier } from "../TierlistTypes";
+import { CreateMenuItem } from "@/providers/ContextMenuProvider/ContextMenuConstants";
+import { MenuItem } from "@/providers/ContextMenuProvider/ContextMenuTypes";
 
 type Props<T> = {
   entry: Entry<T>;
@@ -14,13 +16,18 @@ type Props<T> = {
   onMoveToIndex: (entry: Entry<T>, index: number) => void;
   onSendToTier: (entry: Entry<T>, tier: Tier<T>) => void;
   render: RenderItem<T>;
+  renderContextMenuItems?: (item: typeof CreateMenuItem) => Array<MenuItem>;
 };
 
-export default function Entry<T>({ entry, index, unsorted, tiers, onMoveToIndex, onSendToTier, render }: Props<T>) {
+export default function Entry<T>({ 
+  entry, index, unsorted, tiers, 
+  onMoveToIndex, onSendToTier, 
+  render, renderContextMenuItems 
+}: Props<T>) {
   const tier = useMemo(() => tiers.find(tier => tier.entries.some(item => item.id === entry.id)), [entry.id, tiers]);
   const onContextMenu = useContextMenu(item => {
     const sendToTiers = [
-      item('divider', 'Send to tiers'),
+      item('divider', 'Send To Tiers'),
       ...tiers
         .filter(tier => !tier.entries.includes(entry))
         .map(_tier => item(
@@ -45,12 +52,15 @@ export default function Entry<T>({ entry, index, unsorted, tiers, onMoveToIndex,
         item('option', 'Move to end', () => onMoveToIndex(entry, tier.entries.length - 1), '⏭️', 'ArrowDown')
       );
     }
+    const customItems = renderContextMenuItems?.(item) ?? [];
 
     return [
       ...moveItem,
       ...sendToTiers,
+      ...customItems
     ]
   }, 'top-right');
+
 
 return (
   <Draggable key={entry.id} draggableId={entry.id} index={index}>

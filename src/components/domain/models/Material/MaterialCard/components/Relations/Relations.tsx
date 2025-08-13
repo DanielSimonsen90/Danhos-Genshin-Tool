@@ -1,6 +1,12 @@
+import { useMemo } from "react";
 import TabBar from "@/components/common/TabBar";
 import { Material } from "@/common/models";
-import { useRelationsTabs } from "./useRelationsTabs";
+import { useDataStore } from "@/stores";
+import LocalSpecialty from "@/common/models/materials/LocalSpecialty";
+import Collapsible from "@/components/common/Collapsible";
+import MaterialRelationsForModel from "../RelationsForModel";
+import Region from "@/components/domain/Region";
+import { Billet } from "@/common/models/materials/Billet";
 
 export type Props = {
   material: Material,
@@ -13,21 +19,44 @@ export default function Relations({
   showModelsUsing,
   showModelAcquired
 }: Props) {
-  const { usedByTabs, acquiredFromTabs, hasUsedByTabs, hasAcquiredFromTabs } = useRelationsTabs(material);
+  const DataStore = useDataStore();
+  const modelKeys = useMemo(() => DataStore.getModelKeysUsingMaterial(material.name), [DataStore, material.name]);
+  const hasUsedByTabs = modelKeys.includes('Character') || modelKeys.includes('Weapon');
+  const hasAcquiredFromTabs = (
+    modelKeys.includes('Mob')
+    || modelKeys.includes('Domain')
+    || LocalSpecialty.isLocalSpecialty(material)
+  );
 
   if (!showModelsUsing && !showModelAcquired) return null;
   return (
     <section>
       {showModelsUsing && hasUsedByTabs && (
         <div className="material-card__models-using">
-          <h2>Used by</h2>
-          <TabBar tabs={usedByTabs} />
+          <Collapsible title="Used by" defaultOpen>
+            {modelKeys.includes('Character') && <MaterialRelationsForModel model="Character" materialName={material.name} />}
+            {modelKeys.includes('Weapon') && <MaterialRelationsForModel model="Weapon" materialName={material.name} />}
+          </Collapsible>
         </div>
       )}
       {showModelAcquired && hasAcquiredFromTabs && (
         <div className="material-card__model-acquired">
-          <h2>Acquired from</h2>
-          <TabBar tabs={acquiredFromTabs} />
+          <Collapsible title="Acquired from" defaultOpen>
+            {modelKeys.includes('Mob') && <MaterialRelationsForModel model="Mob" materialName={material.name} />}
+            {modelKeys.includes('Domain') && <MaterialRelationsForModel model="Domain" materialName={material.name} />}
+            {LocalSpecialty.isLocalSpecialty(material) && (
+              <div className="local-specialty">
+                The wilderness of <Region
+                  region={
+                    Billet.isBillet(material)
+                      ? material.regions
+                      : material.region || 'Unknown'
+                  }
+                  tag="span"
+                />.
+              </div>
+            )}
+          </Collapsible>
         </div>
       )}
     </section>

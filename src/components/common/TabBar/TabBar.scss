@@ -18,6 +18,7 @@
 
   .tab-bar__tabs {
     grid-area: tabs;
+    display: flex;
     flex-direction: column;
     border-right: 1px solid var(--background-tertiary);
     overflow: hidden auto;
@@ -70,7 +71,8 @@
 }
 
 .tab-bar__tabs {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   background-color: var(--background-secondary);
   border-radius: .25rem;
   border-bottom-left-radius: 0;
@@ -87,6 +89,8 @@
 .tab-bar__tab {
   display: flex;
   align-items: center;
+  justify-content: center;
+  
   box-shadow: none;
   border-right: 1px solid var(--background-tertiary);
   background-color: var(--background-secondary--muted);

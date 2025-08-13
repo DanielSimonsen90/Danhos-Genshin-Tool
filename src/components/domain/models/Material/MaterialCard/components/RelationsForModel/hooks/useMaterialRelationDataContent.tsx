@@ -21,7 +21,7 @@ export function useMaterialRelationDataContent<TModelKey extends ModelKeys>(
       case 'Character': return <SearchableCharacterList items={items as Array<Character>} cardProps={{ wrapInLink: true, nameTag: 'h3' }} />;
       case 'Mob': return <SearchableMobList items={items as Array<Mob>} cardProps={{ wrapInLink: true, nameTag: 'h3', showRegion: true }} />;
       case 'Domain': return <SearchableDomainList items={items as Array<Domain<any>>} cardProps={{ wrapInLink: true, nameTag: 'h3' }} />;
-      case 'Weapon': return <SearchableWeaponList items={items as Array<Weapon>} cardProps={{ wrapInLink: true, nameTag: 'h3', showStats: true }} />;
+      case 'Weapon': return <SearchableWeaponList items={items as Array<Weapon>} cardProps={{ wrapInLink: true, nameTag: 'h3' }} />;
       default: return <div className="no-data">No data available</div>;
     }
   }, [model, items]);

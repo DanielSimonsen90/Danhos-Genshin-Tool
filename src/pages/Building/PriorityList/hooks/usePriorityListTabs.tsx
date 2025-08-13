@@ -1,12 +1,13 @@
 import { Dispatch, SetStateAction, useCallback } from "react";
 
 import { CharacterImage, ArtifactImage, DomainImage, MaterialImage, MobImage, WeaponImage } from "@/components/common/media/Images";
-import Tierlist, { Tier } from "@/components/common/Tierlist";
-import { useDataStore } from "@/stores";
+import Tierlist, { Entry, Tier } from "@/components/common/Tierlist";
+import { useDataStore, useRegionData } from "@/stores";
 
 import type { PriorityLists, PriorityList } from "../PriorityListTypes";
 import { getDefaultPriorityLists, onUnsortedSearch } from "../PriorityListFunctions";
 import { PriorityListTab } from "../components";
+import { useNavigate } from "react-router/dist";
 
 type UsePriorityListTabsProps = {
   priorityLists: PriorityLists;
@@ -15,7 +16,10 @@ type UsePriorityListTabsProps = {
 };
 
 export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdateModal }: UsePriorityListTabsProps) {
-  const DataStore = useDataStore();  
+  const DataStore = useDataStore();
+  const { region } = useRegionData();
+  const navigate = useNavigate();
+
   const onTierChange = useCallback((tierlistTitle: string) => (tiers: Array<Tier<string>>) => {
     setPriorityLists(state => ({
       ...state,
@@ -62,41 +66,48 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
       return acc;
     }, {} as PriorityLists));
   }, [priorityLists, setPriorityLists]);
+  
+  return Array
+    .from(Object.entries(priorityLists))
+    .map(([tierlistTitle, priorityList], index, array) => {
+      const modelType = priorityList.model;
+      const items = DataStore[`${modelType}Names`];
 
-  return Array.from(Object.entries(priorityLists)).map(([tierlistTitle, priorityList], index, array) => {
-    const modelType = priorityList.model;
-    const items = DataStore[`${modelType}Names`];
-
-    return [
-      tierlistTitle,
-      {
-        title: <PriorityListTab title={tierlistTitle} priorityListIndex={index} isLastIndex={index === array.length - 1}
-          onEdit={() => onEdit(tierlistTitle)} 
-          onDelete={() => onDelete(tierlistTitle)} 
-          onClone={() => onClone(tierlistTitle)}
-          onMove={direction => onMove(tierlistTitle, direction)}
-        />,
-        content: (
-          <Tierlist key={tierlistTitle} {...{
-            model: modelType,
-            items, onSearch: onUnsortedSearch,
-            defaultTiers: priorityList.tiers,
-            onTierChange: onTierChange(tierlistTitle)
-          }}>
-            {modelName => {
-              switch (modelType) {
-                case 'Character': return <CharacterImage character={modelName} />;
-                case 'Artifact': return <ArtifactImage set={modelName} />;
-                case 'Domain': return <DomainImage domain={modelName} />;
-                case 'Material': return <MaterialImage material={modelName} />;
-                case 'Mob': return <MobImage mob={modelName} />;
-                case 'Weapon': return <WeaponImage weapon={modelName} />;
-                default: return `Unknown model for ${modelName}`;
-              }
-            }}
-          </Tierlist>
-        )
-      }
-    ] as const;
-  });
+      return [
+        tierlistTitle,
+        {
+          title: <PriorityListTab title={tierlistTitle} priorityListIndex={index} isLastIndex={index === array.length - 1}
+            onEdit={() => onEdit(tierlistTitle)}
+            onDelete={() => onDelete(tierlistTitle)}
+            onClone={() => onClone(tierlistTitle)}
+            onMove={direction => onMove(tierlistTitle, direction)}
+          />,
+          content: (
+            <Tierlist key={`${region}-${tierlistTitle}`} {...{
+              model: modelType,
+              items: items,
+              onSearch: onUnsortedSearch,
+              defaultTiers: priorityList.tiers,
+              onTierChange: onTierChange(tierlistTitle),
+              renderCustomEntryContextMenuItems: (entry: Entry<string>, tier, item) => [
+                item('divider', `${entry.item} Options`),
+                item('option', `View ${modelType}`, () => navigate(`/data/${modelType.toLowerCase()}s/${entry.item}`), '👁️')
+              ]
+            }}>
+              {modelName => {
+                switch (modelType) {
+                  case 'Character': return <CharacterImage character={modelName} />;
+                  case 'Artifact': return <ArtifactImage set={modelName} />;
+                  case 'Domain': return <DomainImage domain={modelName} />;
+                  case 'Material': return <MaterialImage material={modelName} />;
+                  case 'Mob': return <MobImage mob={modelName} />;
+                  case 'Weapon': return <WeaponImage weapon={modelName} />;
+                  default: return `Unknown model for ${modelName}`;
+                }
+              }}
+            </Tierlist>
+          )
+        }
+      ] as const;
+    });
 }

@@ -1,10 +1,10 @@
 import { Billet } from "@/common/models/materials/Billet";
-import { Region, WeaponType } from "@/common/types";
+import { GenshinRegion, WeaponType } from "@/common/types";
 
 function generateBillet(
   lander: string,
   philosopherBelieve: string,
-  regions: Array<Region>
+  regions: Array<GenshinRegion>
 ) {
   const generateBilletWeapon = (weapon: WeaponType) => new Billet(
     `${lander}lander ${weapon} Billet`,

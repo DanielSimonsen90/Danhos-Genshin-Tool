@@ -138,6 +138,8 @@
 
 a.weapon-card {
   .model-card__name {
+    flex-direction: column;
+    
     @extend %text-ellipsis;
 
     align-items: flex-start;

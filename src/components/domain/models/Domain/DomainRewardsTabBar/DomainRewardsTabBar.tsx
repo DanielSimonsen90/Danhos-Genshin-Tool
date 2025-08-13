@@ -1,12 +1,16 @@
-import { ArtifactSet, Character, DomainReward, DomainType, Weapon } from "@/common/models";
-import TabBar from "@/components/common/TabBar";
-import ArtifactCard from "../../Artifacts/ArtifactCard";
-import SearchableList from "@/components/domain/SearchableList";
-import { useDataStore } from "@/stores";
-import { CharacterCard } from "../../Character";
-import { effectivenessString } from "@/common/functions/strings";
-import { MaterialCard } from "../../Material";
 import { useCallback } from "react";
+
+import { ArtifactSet, Character, DomainReward, DomainType, Weapon } from "@/common/models";
+import { effectivenessString } from "@/common/functions/strings";
+
+import TabBar from "@/components/common/TabBar";
+import SearchableList from "@/components/domain/SearchableList";
+
+import { useDataStore, useRegionStore } from "@/stores";
+
+import { ArtifactCard } from "../../Artifacts";
+import { CharacterCard } from "../../Character";
+import { MaterialCard } from "../../Material";
 import { WeaponCard } from "../../Weapon";
 
 type Props<TDomainType extends DomainType> = {
@@ -29,13 +33,17 @@ export default function DomainRewardsTabBar<TDomainType extends DomainType>({ re
 
 function AscensionMaterialTabBar({ rewards, domainType }: Props<'Forgery' | 'Mastery'>) {
   const DataStore = useDataStore();
+  const RegionStore = useRegionStore();
+
   const getItems = useCallback((name: string) => (
     domainType === 'Mastery' ? DataStore.getCharactersUsingMaterial(name)
       : domainType === 'Forgery' ? DataStore.getWeaponsUsingMaterial(name)
         : undefined
   ), [DataStore]);
 
-  return <TabBar className="domain-rewards-tab-bar"
+  return <TabBar
+    key={`${RegionStore.currentRegion}-${domainType}`}
+    className="domain-rewards-tab-bar"
     tabs={create => rewards.map(reward => create(
       reward.name,
       <MaterialCard key={reward.name} material={reward} allowCycle={false} />,
@@ -43,13 +51,13 @@ function AscensionMaterialTabBar({ rewards, domainType }: Props<'Forgery' | 'Mas
         items={getItems(reward.name) as Array<Character | Weapon>}
         onSearch={(query, item) => item.name.toLowerCase().includes(query.toLowerCase())}
         renderItem={item => (
-          item instanceof Character 
+          item instanceof Character
             ? <CharacterCard key={item.name} className="character-result" character={item} wrapInLink />
             : <WeaponCard key={(item as Weapon).name} className="weapon-result" weapon={item} wrapInLink />
         )}
       />
     ))}
-    defaultTab={rewards.find(reward => reward.isObtainableToday())?.name}
+    defaultTab={rewards.find(reward => reward.isObtainableToday(RegionStore))?.name}
   />;
 }
 
@@ -62,15 +70,15 @@ function ArtifactTabBar({ rewards: artifacts }: Props<'Blessing'>) {
       <ArtifactCard key={artifact.name} artifact={artifact} nameTag="b" />,
       <SearchableList key={artifact.name}
         items={DataStore.getCharactersUsingArtifact(artifact.name)}
+        sort={(a, b) => b.cSet.effectiveness - a.cSet.effectiveness}
         onSearch={(query, item) => item.character.name.toLowerCase().includes(query.toLowerCase())}
-        renderItem={({ character, set, pieces, effectiveness }) => (
+        renderItem={({ character, cSet: { effectiveness, pieces, set } }) => (
           <CharacterCard key={character.name} className="character-result" character={character} wrapInLink>
             <p>
-              <span className="character-info__name">{character.name}</span> is
-              <span className="character-info__effectiveness">{effectivenessString(effectiveness)}</span> on a
+              <span className="character-info__effectiveness">{effectiveness}</span>% of active players use a
               <span className="character-info__pieces">{pieces}-piece</span>
-              <span className="character-info__artifact-name">{artifact.name}</span> using the
-              <span className="character-info__set-name">{set.name}</span> set.
+              <span className="character-info__artifact-name">{artifact.name}</span> set on
+              <span className="character-info__name">{character.name}</span>.
             </p>
           </CharacterCard>
         )}

@@ -16,7 +16,21 @@ export class List<T> extends Array<T> {
       return 0; // If all comparisons are equal
     });
   }
+  public mapUnique<U>(callback?: (value: T, index: number, array: T[]) => U): List<U> {
+    const seen = new Set();
+    return List.from(super.map((value, index, array) => {
+      const result = callback?.(value, index, array);
+      if (result !== undefined && !seen.has(result)) {
+        seen.add(result);
+        return result;
+      }
+    }).filter((item): item is U => item !== undefined));
+  }
 
+  public toArray(): T[] {
+    return Array.from(this);
+  }
+  
   // #region Force Array methods to return List
   public map<U>(callback: (value: T, index: number, array: T[]) => U): List<U> {
     return List.from(super.map(callback));

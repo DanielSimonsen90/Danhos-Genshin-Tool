@@ -3,7 +3,7 @@ import * as MasteryDomains from "@/data/domains/domain-of-mastery";
 
 export const Freedom = TalentAscensionMaterial.create(
   'Freedom',
-  `Freedom is the spirit of the land of the wind. The freedom to live is one of such. It is the freedom to live freely and healthiluy without concerns of one's own safety.`,
+  `Freedom is the spirit of the land of the wind. The freedom to live is one of such. It is the freedom to live freely and healthily without concerns of one's own safety.`,
   'Mondstadt',
   MasteryDomains.ForsakenRift,
   'Monday/Thursday',

@@ -1,189 +1,137 @@
-import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { ReactNode, useMemo, forwardRef, useImperativeHandle } from "react";
 import { addTabNavigation } from "@/common/functions/accessibility";
 import { classNames } from "@/common/functions/strings";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { Chevron } from "../media/icons";
 
-import { Props, Tab } from "./TabBarTypes";
-import { createTabItem } from "./TabBarFunctions";
-import useOnChange from "@/hooks/useOnChange";
+import { Props, TabBarRef } from "./TabBarTypes";
+import { 
+  useTabResize, 
+  useTabLazyLoading, 
+  useTabState, 
+  useTabData, 
+  useTabCollapse, 
+  useTabContent 
+} from "./hooks";
 
-export default function TabBar<TTabKey extends string>(props: Props<TTabKey>) {
+const TabBar = forwardRef(<TTabKey extends string>(props: Props<TTabKey>, ref: React.Ref<TabBarRef<TTabKey>>) => {
   const { collapseArea = 'content', direction = 'horizontal' } = props;
   const { placeChildrenBeforeTabs, hideCollapseChevron, resizable = false } = props;
   const { minSize = 150, maxSize = 500, initialSize = 250 } = props;
+  const { lazyLoad = true, cacheContent = true, preloadTabs = [] } = props;
 
-  // Resize functionality
-  const storage = useLocalStorage<number>();
-  const sizeStorage = props.id ? storage(`tabbar-size-${props.id}`) : null;
-  
-  const [tabsSize, setTabsSize] = useState(() => {
-    if (resizable && direction === 'vertical') {
-      return sizeStorage?.get(initialSize) ?? initialSize;
-    }
-    return initialSize;
+  // Use custom hooks for different concerns
+  const { tabs, internalTabs } = useTabData({
+    tabs: props.tabs,
+    id: props.id
   });
 
-  const [isDragging, setIsDragging] = useState(false);
-  const handleRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const resizeProps = useTabResize({
+    id: props.id,
+    resizable, direction,
+    minSize, maxSize, initialSize,
+  });
 
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsDragging(true);
-  }, []);
+  const lazyLoadingProps = useTabLazyLoading({
+    lazyLoad, cacheContent, preloadTabs,
+    tabs, defaultTab: props.defaultTab
+  });
 
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    if (!isDragging || !containerRef.current) return;
+  const tabStateProps = useTabState({
+    defaultTab: props.defaultTab, 
+    tab: props.tab, setTab: props.setTab,
+    tabs,
+    beforeTabChange: props.beforeTabChange,
+    onTabChange: props.onTabChange,
+    markTabAsRendered: lazyLoadingProps.markTabAsRendered
+  });
 
-    const rect = containerRef.current.getBoundingClientRect();
-    const newSize = e.clientX - rect.left;
-    
-    // Clamp the size within min/max bounds
-    const clampedSize = Math.max(minSize, Math.min(maxSize, newSize));
-    
-    setTabsSize(clampedSize);
-  }, [isDragging, minSize, maxSize]);
+  const collapseProps = useTabCollapse({
+    children: props.children,
+    hideCollapseChevron,
+    direction
+  });
 
-  const handleMouseUp = useCallback(() => {
-    setIsDragging(false);
-    if (sizeStorage) {
-      sizeStorage.set(tabsSize);
-    }
-  }, [sizeStorage, tabsSize]);
+  const { getKeyName } = useTabContent({ id: props.id });
 
-  useEffect(() => {
-    if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-      document.body.style.userSelect = 'none';
-      document.body.style.cursor = 'col-resize';
-    }
-
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-      document.body.style.userSelect = '';
-      document.body.style.cursor = '';
-    };
-  }, [isDragging, handleMouseMove, handleMouseUp]);
-
-  const dynamicStyles = useMemo(() => {
-    if (resizable && direction === 'vertical') {
-      return {
-        '--tabs-size': `${tabsSize}px`
-      } as React.CSSProperties;
-    }
-    return {};
-  }, [resizable, direction, tabsSize]);
-
-  const tabs = useMemo(() => {
-    const rawTabs = typeof props.tabs === 'function' ? props.tabs(createTabItem) : props.tabs;
-    return rawTabs.filter((tab): tab is readonly [TTabKey, Tab] => Boolean(tab));
-  }, [props.tabs]);
-  const internalTabs = useMemo(() => {
-    const set = tabs
-      .filter(([_, value]) => value !== undefined && value.content !== undefined)
-      .reduce((acc, [key, { title }]) => acc.set(key, title), new Map<TTabKey, ReactNode>());
-    return [...set.entries()];
-  }, [tabs, props.id]);
-
-  const [collapsed, setCollapsed] = useState(false);
-  const [activeTab, _setActiveTab] = useState<TTabKey>(
-    props.defaultTab
-    ?? tabs.find(([_, value]) => value)?.[0]
-  );
-
-  const children = useMemo(() => {
-    const resovleChild = (child: JSX.Element | ((collapsed: boolean) => JSX.Element)) => (
-      typeof child === 'function' ? child(collapsed) : child
-    );
-    return Array.isArray(props.children) ? props.children.map(resovleChild) : resovleChild(props.children);
-  }, [props.children, collapsed]);
-
-  const getKeyName = useCallback((key: any) => props.id ? `#${props.id}-${key}` : key, [props.id]);
+  // Generate tab content JSX
   const TabContent = useMemo(() => (<>
-    {tabs.map(([tab, { content }], key) => (
-      <div data-tab={tab} key={getKeyName(`content-${tab}-${key}`)} data-key={getKeyName(`content-${tab}-${key}`)}
-        className={classNames(
-          "tab-bar__content-page",
-          tab === (props.tab ?? activeTab) && 'tab-bar__content-page--active'
-        )}>
-        {typeof content === 'function' ? content() : content}
-      </div>
-    ))}
-  </>), [tabs, activeTab, props.tab]);
-  const setActiveTab = useCallback((tab: TTabKey) => {
-    if (!tab) return;
-    if (props.beforeTabChange) props.beforeTabChange(tab);
-    (props.setTab ?? _setActiveTab)(tab);
-  }, [props.beforeTabChange, props.setTab, _setActiveTab]);
+    {tabs.map(([tab, tabData], key) => {
+      const content = lazyLoadingProps.renderTabContent(tab, tabData);
+      const isActive = tab === tabStateProps.activeTab;
 
-  useEffect(function onTabChanged() {
-    if (props.onTabChange) props.onTabChange(props.tab ?? activeTab);
-  }, [activeTab, props.tab, props.onTabChange]);
-
-  useEffect(function onTabsOptionsChanged() {
-    // if active tab key is not in tabs or the value is falsy, set it to the first tab
-    if (!tabs.find(([key]) => key === (props.tab ?? activeTab))?.[1]) {
-      const newTab = props.defaultTab ?? tabs[0]?.[0] as TTabKey;
-      if (newTab && newTab !== (props.tab ?? activeTab)) {
-        setActiveTab(newTab);
+      // Only render the div if we have content or if it's the active tab
+      if (!content && !isActive) {
+        return null;
       }
-    }
-  }, [tabs, props.tab, activeTab, props.defaultTab, setActiveTab]);
 
-  // useOnChange(props.tab, tab => tab && setActiveTab(tab));
-  useEffect(function onControlledTabChanged() {
-    if (props.tab) setActiveTab(props.tab);
-  }, [props.tab]);
+      return (
+        <div data-tab={tab} key={getKeyName(`content-${tab}-${key}`)} data-key={getKeyName(`content-${tab}-${key}`)}
+          className={classNames(
+            "tab-bar__content-page",
+            isActive && 'tab-bar__content-page--active'
+          )}>
+          {content}
+        </div>
+      );
+    })}
+  </>), [tabs, tabStateProps.activeTab, lazyLoadingProps.renderTabContent, getKeyName]);
+
+  // Expose methods via ref
+  useImperativeHandle(ref, () => ({
+    clearCache: lazyLoadingProps.clearCache,
+    preloadTab: lazyLoadingProps.preloadTab,
+    getCachedTabs: lazyLoadingProps.getCachedTabs,
+    getRenderedTabs: lazyLoadingProps.getRenderedTabs,
+  }), [lazyLoadingProps]);
+  
   return tabs.filter(([_, v]) => v)[0] ? (
-    <div 
-      ref={containerRef}
+    <div
+      ref={resizeProps.containerRef}
       className={classNames(
-        "tab-bar", 
-        `tab-bar--${direction}`, 
+        "tab-bar",
+        `tab-bar--${direction}`,
         resizable && 'tab-bar--resizable',
         props.className
       )}
-      style={dynamicStyles}
+      style={resizeProps.dynamicStyles}
     >
-      <header className={classNames('tab-bar__tabs', collapsed && collapseArea === 'tabs' && 'tab-bar__tabs--collapsed')}>
-        {placeChildrenBeforeTabs && children}
+      <header className={classNames('tab-bar__tabs', collapseProps.collapsed && collapseArea === 'tabs' && 'tab-bar__tabs--collapsed')}>
+        {placeChildrenBeforeTabs && collapseProps.children}
         {internalTabs.map(([tab, title]) => title &&
           <div role="button" key={getKeyName(tab)} title={tab}
-            className={classNames("tab-bar__tab", activeTab === tab && 'tab-bar__tab--active')}
-            onClick={() => setActiveTab(tab)}
+            className={classNames("tab-bar__tab", tabStateProps.activeTab === tab && 'tab-bar__tab--active')}
+            onClick={() => tabStateProps.setActiveTab(tab)}
           >
             {title}
           </div>)}
-        {!placeChildrenBeforeTabs && children}
-        {!hideCollapseChevron && (
-          <div className="collapse-chevron" title={collapsed ? 'Expand' : 'Collapse'}>
-            <Chevron role="button" tabIndex={0} point={
-              direction === 'horizontal'
-                ? collapsed ? 'down' : 'up'
-                : collapsed ? 'left' : 'right'
-            } {...addTabNavigation(() => setCollapsed(v => !v), true)} />
+        {!placeChildrenBeforeTabs && collapseProps.children}
+        {collapseProps.showCollapseChevron && (
+          <div className="collapse-chevron" title={collapseProps.collapsed ? 'Expand' : 'Collapse'}>
+            <Chevron role="button" tabIndex={0} point={collapseProps.chevronPoint}
+              {...addTabNavigation(collapseProps.toggleCollapsed, true)} />
           </div>
         )}
       </header>
-      
+
       {/* Resize handle for vertical resizable TabBars */}
       {resizable && direction === 'vertical' && (
-        <div 
-          ref={handleRef}
+        <div
+          ref={resizeProps.handleRef}
           className={classNames(
             'tab-bar__resize-handle',
-            isDragging && 'tab-bar__resize-handle--dragging'
+            resizeProps.isDragging && 'tab-bar__resize-handle--dragging'
           )}
-          onMouseDown={handleMouseDown}
+          onMouseDown={resizeProps.handleMouseDown}
         />
       )}
-      
-      <section className={classNames('tab-bar__content', collapsed && collapseArea === 'content' && 'tab-bar__content--collapsed')}>
+
+      <section className={classNames('tab-bar__content', collapseProps.collapsed && collapseArea === 'content' && 'tab-bar__content--collapsed')}>
         {TabContent}
       </section>
     </div>
   ) : props.noTabs;
-}
+});
+
+TabBar.displayName = 'TabBar';
+
+export default TabBar;

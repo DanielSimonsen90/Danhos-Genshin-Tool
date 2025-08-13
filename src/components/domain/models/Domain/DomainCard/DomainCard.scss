@@ -24,6 +24,10 @@
     font-size: clamp(1.25rem, 2vw, 3rem);
   }
 
+  &__nav-button {
+    margin-top: auto;
+  }
+
   .domain-type {
     ul {
       display: flex;

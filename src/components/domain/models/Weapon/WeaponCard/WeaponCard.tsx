@@ -60,7 +60,7 @@ export default function WeaponCard({
       renderImage={() => <WeaponImage weapon={name} />}
       renderHeadingContent={() => (
         <div className="weapon-type">
-          <WeaponImage weapon={type} />
+          <WeaponImage weaponType={type} />
           <span className="weapon-type__value">
             {type}
           </span>

@@ -10,21 +10,28 @@ import { generateBlankTier } from "../TierlistFunctions";
 
 import TierModifyForm from "./TierModifyForm";
 import EntryComponent from "./Entry";
+import { CreateMenuItem } from "@/providers/ContextMenuProvider/ContextMenuConstants";
+import { MenuItem } from "@/providers/ContextMenuProvider/ContextMenuTypes";
 
 export type Props<T> = {
   tier: Tier<T>;
-  render: RenderItem<T>
+  render: RenderItem<T>;
+  renderCustomEntryContextMenuItems?: (entry: Entry<T>, item: typeof CreateMenuItem) => Array<MenuItem>
   updateTier: (id: string, newTier: Partial<Tier<T>>) => void;
 
   tiers: Array<Tier<T>>;
   setTiers: React.Dispatch<React.SetStateAction<Tier<T>[]>>;
   unsorted: Tier<T>;
-  onSearch: (search: string, item: T) => boolean;
   onMoveToIndex: (entry: Entry<T>, index: number) => void;
   onSendToTier: (entry: Entry<T>, tier: Tier<T>) => void;
 };
 
-export default function Tier<T>({ tier, updateTier, setTiers, render, onMoveToIndex, onSendToTier, onSearch, tiers, unsorted }: Props<T>) {
+export default function Tier<T>({ 
+  tier, updateTier, setTiers, 
+  render, renderCustomEntryContextMenuItems,
+  onMoveToIndex, onSendToTier, 
+  tiers, unsorted 
+}: Props<T>) {
   const [showEditModal, setShowEditModal] = useState(false);
   const onContext = useContextMenu(item => [
     item('divider', 'Move'),
@@ -55,13 +62,24 @@ export default function Tier<T>({ tier, updateTier, setTiers, render, onMoveToIn
   return (
     <div className="tier" style={{ backgroundColor: tier.color }}>
       <header className='tier__header' onContextMenu={onContextMenu} onDoubleClick={() => setShowEditModal(true)}>
-        <h2 className={classNames('tier__title', tier.invert && 'inverted')}>{tier.title}</h2>
+        <h2 className={classNames('tier__title', tier.invert && 'inverted')}
+          title={tier.title}
+        >
+          {tier.title}
+        </h2>
       </header>
       <Droppable key={tier.id} droppableId={tier.id} direction='horizontal'>
         {provided => (
           <div {...provided.droppableProps} ref={provided.innerRef} className='tier__items'>
             {tier.entries.map((entry, index) => (
-              <EntryComponent key={index} {...{ entry, index, onMoveToIndex, onSendToTier, render, tiers, unsorted }} />
+              <EntryComponent key={index} {...{ 
+                entry, index, 
+                onMoveToIndex, onSendToTier, 
+                render, tiers, unsorted,
+                renderContextMenuItems: renderCustomEntryContextMenuItems 
+                  ? item => renderCustomEntryContextMenuItems?.(entry, item)
+                  : undefined
+              }} />
             ))}
             {provided.placeholder}
           </div>

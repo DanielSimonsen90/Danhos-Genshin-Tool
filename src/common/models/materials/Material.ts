@@ -1,4 +1,4 @@
-import { Rarity, Region } from "@/common/types";
+import { Rarity, GenshinRegion } from "@/common/types";
 
 export abstract class Material {
   public static isMaterial(obj: any): obj is Material {
@@ -7,7 +7,7 @@ export abstract class Material {
   constructor(
     public name: string,
     public description: string,
-    public region: Region | undefined,
+    public region: GenshinRegion | undefined,
     public rarity: Rarity
   ) {}
 }

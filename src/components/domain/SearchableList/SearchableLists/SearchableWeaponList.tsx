@@ -34,6 +34,7 @@ export default function SearchableWeaponList<TFilterKeys extends string>({
   const FavoriteStore = useFavorite('weapons');
 
   return <SearchableList items={items}
+    placeholder="Search weapons..."
     sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
     renderItem={weapon => {
       const open = useContextMenu(item => [

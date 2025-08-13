@@ -1,14 +1,17 @@
 import { useMemo } from "react";
+
 import { rarityString } from "@/common/functions/strings";
 import { Character } from "@/common/models";
-import { CharacterImage, MaterialImage } from "@/components/common/media/Images";
-import CharacterSet from "../CharacterSet";
-import TabBar from "@/components/common/TabBar";
+
+import { CharacterImage, ElementImage, WeaponImage } from "@/components/common/media/Images";
 import ModelCard, { BaseModelCardProps } from "@/components/domain/ModelCard";
+import { Region } from "@/components/domain";
+
+import { useDataStore } from "@/stores";
+
+import CharacterPlaystyle from "../CharacterPlaystyle";
 import { MaterialCard } from "../../Material";
 import { WeaponCard } from "../../Weapon";
-import { useDataStore } from "@/stores";
-import { Region } from "@/components/domain";
 
 export interface Props extends BaseModelCardProps {
   character: Character;
@@ -17,7 +20,7 @@ export interface Props extends BaseModelCardProps {
 
   showPassiveTalent?: boolean;
   showAscensionSection?: boolean;
-  showCharacterSets?: boolean;
+  showCharacterPlaystyle?: boolean;
   showSignatureWeapon?: boolean;
   children?: React.ReactNode;
 }
@@ -26,25 +29,25 @@ export default function CharacterCard({
   character, score,
   showPassiveTalent,
   showAscensionSection,
-  showCharacterSets,
+  showCharacterPlaystyle,
   showSignatureWeapon,
   children,
   ...props
 }: Props) {
-  const { name, bonusAbilities, sets, rarity } = character;
+  const { name, bonusAbilities, rarity } = character;
 
   const DataStore = useDataStore();
   const signatureWeapon = DataStore.getSignatureWeaponFor(character);
   const ascensionMaterials = useMemo(() => {
     if (!showAscensionSection) return [];
     const keys: Array<keyof Character['ascension']> = [
-      'localSpecialty', 
+      'localSpecialty',
       'material',
       'mobDrop',
       'crystal',
       'worldBossDrop',
       'weeklyBossDrop',
-    ]
+    ];
     return keys.map(key => [key, character.ascension[key]] as const);
   }, [character, showAscensionSection]);
 
@@ -57,6 +60,16 @@ export default function CharacterCard({
       {...props}
 
       renderImage={() => <CharacterImage character={name} />}
+      renderHeadingContent={() => (
+        <>
+          <span className="image-container">
+            <ElementImage element={character.element} />
+          </span>
+          <span className="image-container">
+            <WeaponImage weaponType={character.weapon} />
+          </span>
+        </>
+      )}
       renderHeaderContent={() => (
         <>
           <ul className="character-details__grouped">
@@ -100,16 +113,10 @@ export default function CharacterCard({
               </ul>
             </div>
           )}
-          {showCharacterSets && (
-            <div className="character-sets">
-              <h3 className="character-sets__title">Character Sets</h3>
-              <TabBar id={`${name}-sets`}
-                tabs={create => sets.map(set => create(
-                  set.name,
-                  set.name,
-                  <CharacterSet set={set} character={character} />
-                ))}
-              />
+          {showCharacterPlaystyle && (
+            <div className="character-playstyle-wrapper">
+              <h3 className="character-playstyle-wrapper__title">Playstyle</h3>
+              <CharacterPlaystyle character={character} />
             </div>
           )}
           {showSignatureWeapon && signatureWeapon && (

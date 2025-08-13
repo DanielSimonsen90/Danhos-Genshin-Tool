@@ -1,5 +1,7 @@
 import { ReactNode } from "react";
 import { LocalStorageReturn } from "@/hooks/useLocalStorage";
+import { CreateMenuItem } from "@/providers/ContextMenuProvider/ContextMenuConstants";
+import { MenuItem } from "@/providers/ContextMenuProvider/ContextMenuTypes";
 
 export interface Entry<TItem> {
   id: string;
@@ -23,6 +25,7 @@ type BaseTierlistProps<TItem, TStorageData> = {
   defaultTiers?: Array<Tier<TItem>>;
   onTierChange?: (tiers: Array<Tier<TItem>>) => void;
   onEntryChange?: (tier: Tier<TItem>, entries: Array<Entry<TItem>>) => void;
+  renderCustomEntryContextMenuItems?: (entry: Entry<TItem>, tier: Tier<TItem>, item: typeof CreateMenuItem) => Array<MenuItem>
 } & ({
   storageKey?: string;
 } | {

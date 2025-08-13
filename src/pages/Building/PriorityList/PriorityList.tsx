@@ -1,6 +1,6 @@
 import type { SetStateAction } from "react";
 import TabBar from "@/components/common/TabBar";
-import { useDataStore, useRegionData, useRegionStore } from "@/stores";
+import { useDataStore, useRegionStore } from "@/stores";
 
 import { CreatePriorityListButton } from "./components";
 import { useModifyPriorityList, usePriorityListTabs } from "./hooks";
@@ -10,7 +10,7 @@ import { getDefaultPriorityLists } from "./PriorityListFunctions";
 export default function PriorityList() {
   const DataStore = useDataStore();
   const RegionStore = useRegionStore();
-  const { region, ...regionData } = useRegionData();  const priorityLists = regionData.priorityLists ?? getDefaultPriorityLists(DataStore);
+  const priorityLists = RegionStore.regionData.priorityLists ?? getDefaultPriorityLists(DataStore);
 
   const setPriorityLists = (newPriorityListsOrUpdater: SetStateAction<PriorityLists>) => {
     const newPriorityLists = typeof newPriorityListsOrUpdater === 'function'
@@ -30,19 +30,22 @@ export default function PriorityList() {
     priorityLists,
     setPriorityLists
   });  
-  const tabs = usePriorityListTabs({ priorityLists, setPriorityLists, openUpdateModal });  return (<>
+  const tabs = usePriorityListTabs({ priorityLists, setPriorityLists, openUpdateModal });
+  
+  return (<>
     <TabBar 
       direction="vertical" 
       collapseArea="tabs" 
       className="priority-list"
       tabs={tabs} 
       noTabs={<NoTabs />} 
-      id={`priority-list-${region}`}
+      id={`priority-list-${RegionStore.regionData.region}`}
       placeChildrenBeforeTabs
       resizable
       minSize={100}
       initialSize={180}
       maxSize={600}
+      cacheContent={false}
     >
       {collapsed => <CreatePriorityListButton tabBarCollapsed={collapsed} onClick={() => openCreateModal()} />}
     </TabBar>

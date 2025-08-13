@@ -1,0 +1,45 @@
+.character-playstyle {
+  display: grid;
+  grid-template-rows: min-content max-content auto;
+  gap: 1em;
+  max-width: 100%;
+
+  &.character-result {
+    padding-inline: .5em;
+  }
+
+  p,
+  a {
+    color: var(--text-secondary);
+  }
+
+  .playstyle-recommendations {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+
+    ol {
+      background-color: var(--background-secondary--muted);
+      border-radius: .5em;
+      padding: .5em;
+      font-size: 1.5rem;
+
+      li {
+        display: flex;
+        align-items: center;
+        gap: .5em;
+
+        counter-increment: list-item;
+
+        &::before {
+          content: counter(list-item) ".";
+          margin-inline-end: .5em;
+        }
+      }
+    }
+  }
+}
+
+li:has(> .character-playstyle) {
+  padding: .5em;
+}

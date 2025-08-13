@@ -42,7 +42,7 @@
   }
 
   &__resin {
-    flex: 1;
+    min-width: fit-content;
     display: flex;
     align-items: center;
 
@@ -143,6 +143,10 @@ a.mob-card {
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
     justify-items: center;
+  }
+
+  .mob-card__name {
+    flex-direction: column;
   }
 
   .mob-card__details {
