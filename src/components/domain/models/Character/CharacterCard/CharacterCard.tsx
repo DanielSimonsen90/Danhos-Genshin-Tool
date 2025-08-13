@@ -61,10 +61,14 @@ export default function CharacterCard({
 
       renderImage={() => <CharacterImage character={name} />}
       renderHeadingContent={() => (
-        <span className="element-image-container">
-          <ElementImage element={character.element} />
-          <WeaponImage weaponType={character.weapon} />
-        </span>
+        <>
+          <span className="image-container">
+            <ElementImage element={character.element} />
+          </span>
+          <span className="image-container">
+            <WeaponImage weaponType={character.weapon} />
+          </span>
+        </>
       )}
       renderHeaderContent={() => (
         <>

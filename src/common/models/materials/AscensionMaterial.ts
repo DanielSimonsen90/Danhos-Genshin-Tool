@@ -47,7 +47,7 @@ class AscensionMaterial extends CraftableMaterial {
     const serverTimezoneOffsets: Record<WorldRegion, number> = {
       'Asia': 8,           // GMT+8
       'Europe': 1,         // GMT+1
-      'North America': -6,  // GMT-6
+      'North America': -5,  // GMT-5
       'TW, HK, MO': undefined // unknown timezone
     };
     
