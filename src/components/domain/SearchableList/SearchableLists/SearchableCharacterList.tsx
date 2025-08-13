@@ -36,6 +36,7 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
   const [internalCardProps, setInteralCardProps] = useState<Pick<Props<TFilterKeys>, 'cardProps'>['cardProps']>({});
 
   return <SearchableList items={items}
+    placeholder="Search characters..."
     sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
     renderItem={character => {
       const open = useContextMenu(item => [

@@ -31,8 +31,8 @@ export default function SearchableMobList<TFilterKeys extends string>({
   const [hidden, setHidden] = useState(new Array<Mob>());
   const FavoriteStore = useFavorite('mobs');
 
-  return <SearchableList 
-    items={items}
+  return <SearchableList items={items}
+    placeholder="Search mobs..."
     sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
     renderItem={mob => {
       const open = useContextMenu(item => [

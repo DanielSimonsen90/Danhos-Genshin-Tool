@@ -40,9 +40,9 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
   const DataStore = useDataStore();
   const RegionStore = useRegionStore();
 
-  return <SearchableList
+  return <SearchableList items={items}
+    placeholder="Search materials..."
     key={RegionStore.currentRegion}
-    items={items}
     sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
     renderItem={material => {
       const open = useContextMenu(item => [
