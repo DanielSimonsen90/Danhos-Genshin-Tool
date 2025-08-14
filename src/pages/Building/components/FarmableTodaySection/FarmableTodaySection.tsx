@@ -22,7 +22,7 @@ export default function FarmableTodaySection() {
 
   return (
     <section className="farmable-today-section">
-      <h2>These characters & weapons are farmable today</h2>
+      <h2>These characters & weapons are farmable today ({RegionStore.getGenshinServerDayName(RegionStore.currentRegion)})</h2>
       {modelKeys.map(modelKey => (
         <Collapsible key={modelKey} className='farmable-model-collapsible' title={plural(2, modelKey)} defaultOpen>
           {
