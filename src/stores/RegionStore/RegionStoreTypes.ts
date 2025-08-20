@@ -57,8 +57,9 @@ export type RegionStore = {
   setTraveler: (traveler: Traveler) => void;
   setState: (state: SetStateAction<RegionStore>) => void;
 
-  // Unified favorites API
-  favorites: FavoritesAPI;
+  getGenshinServerDay(region: WorldRegion): number;
+  getGenshinServerDayName(region: WorldRegion): string;
 
+  favorites: FavoritesAPI;
   storageService: StorageReturn<RegionContextType>;
 };

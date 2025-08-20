@@ -1458,6 +1458,29 @@ export const ForestRegalia = new Weapon(
   'Crafting',
 );
 
+export const FracturedHalo = new Weapon(
+  'Fractured Halo',
+  {
+    value: `After an Elemental Skill or Elemental Burst is used, ATK is increased by $0 for 20s. If the equipping character creates a Shield while this effect is active, they will gain the Electrifying Edict effect for 20s: All nearby party members deal $1 more Lunar-Charged DMG.`,
+    refinements: [
+      '24%/30%/36%/42%/48%',
+      '40%/50%/60%/70%/80%',
+    ]
+  },
+  'Polearm',
+  Rarity.Legendary,
+  608,
+  'Crit DMG',
+  66.2,
+  [
+    WeaponAscensionMaterials.BlazingSacrificialHearts,
+    Drops.WeaselShell,
+    Drops.Fang,
+  ],
+  'Wish',
+  cs => cs.Ineffa
+);
+
 export const FreedomSworn = new Weapon(
   'Freedom-Sworn',
   {

@@ -1,6 +1,7 @@
 import { ROUTES } from "@/common/constants/routes";
 import HubCardList from "./components/HubCardList";
 import FarmableTodaySection from "./components/FarmableTodaySection";
+import YourCalendarSection from "./components/YourCalendarSection";
 
 const routes = [
   [ROUTES.endRoute('building_priority_list'), 'Priority list', `Make your own tierlist-based priority lists on all models like characters, artifacts and domains.`],
@@ -18,6 +19,7 @@ export default function BuildingIndex() {
 
       <HubCardList routes={routes} />
       <FarmableTodaySection />
+      <YourCalendarSection />
     </main>
   </>);
 }

@@ -159,7 +159,10 @@ a.character-card {
 
   .image-container {
     width: max-content;
-    margin-right: 1ch;
+
+    &:last-of-type {
+      margin-right: 1ch;
+    }
   }
 
   .element-image {

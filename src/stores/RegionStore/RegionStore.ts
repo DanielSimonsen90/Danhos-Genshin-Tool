@@ -11,27 +11,27 @@ export const useRegionStore = create<RegionStore>((setState, getState) => {
   const storageService = StorageService<RegionContextType>(LOCAL_STORAGE_KEY);
 
   const regions = storageService.get() ?? { [DEFAULT_REGION]: DEFAULT_REGION_DATA } as RegionContextType;
-  const getCurrentRegion = (regions: RegionContextType) => Object.keys(regions).find(region => regions[region as keyof typeof regions].selected) as keyof RegionContextType;  const getRegionData = (regions: RegionContextType) => {
+  const getCurrentRegion = (regions: RegionContextType) => Object.keys(regions).find(region => regions[region as keyof typeof regions].selected) as keyof RegionContextType; const getRegionData = (regions: RegionContextType) => {
     const currentRegion = getCurrentRegion(regions);
     const regionData = currentRegion ? regions[currentRegion as keyof typeof regions] : undefined;
-    
+
     if (!regionData) return undefined;
-    
+
     // Ensure favorites are always initialized
     const dataWithFavorites = {
       ...regionData,
       favorites: regionData.favorites ?? DEFAULT_FAVORITES,
     };
-    
+
     return Object.assign({}, dataWithFavorites, { setRegionData });
   };
-  
+
   const setRegionData = (update: Partial<RegionData> | ((state: RegionData) => RegionData)) => {
     const { regions, currentRegion } = getState();
     const resolvedRegionDataUpdate = typeof update === 'function'
       ? update(getState().regionData)
       : update;
-    resolvedRegionDataUpdate.region ??= currentRegion
+    resolvedRegionDataUpdate.region ??= currentRegion;
 
     // Define the next selected regionData
     const next = REGIONS.reduce((acc, _region) => {
@@ -69,7 +69,46 @@ export const useRegionStore = create<RegionStore>((setState, getState) => {
   };
   const setRegion = (region: WorldRegion) => setRegionData({ region });
   const setTraveler = (traveler: Traveler) => setRegionData({ traveler });
-  // Unified favorites API
+
+  const getGenshinServerDay = (region: WorldRegion): number => {
+    const now = new Date();
+
+    // Genshin Impact daily reset happens at 4am server time
+    const GENSHIN_RESET_HOUR = 4;
+
+    // Define server timezone offsets (hours from GMT)
+    // TW, HK, MO timezone is unknown, so it's excluded and falls back to user's local time
+    const serverTimezoneOffsets: Record<WorldRegion, number> = {
+      'Asia': 8,           // GMT+8
+      'Europe': 1,         // GMT+1
+      'North America': -5,  // GMT-5
+      'TW, HK, MO': undefined // unknown timezone
+    };
+
+    const timezoneOffset = serverTimezoneOffsets[region];
+
+    // If unknown region, return user's current day
+    if (timezoneOffset === undefined) return now.getDay();
+
+    // Calculate server time
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60 * 1000);
+    const serverTime = new Date(utc + (timezoneOffset * 60 * 60 * 1000));
+
+    // If it's before 4am server time, consider it the previous day
+    if (serverTime.getHours() < GENSHIN_RESET_HOUR) {
+      const previousDay = new Date(serverTime);
+      previousDay.setDate(previousDay.getDate() - 1);
+      return previousDay.getDay();
+    }
+
+    return serverTime.getDay();
+  };
+  const getGenshinServerDayName = (region: WorldRegion): string => {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const dayIndex = getGenshinServerDay(region);
+    return days[dayIndex] || 'Unknown';
+  }
+
   const favorites: FavoritesAPI = {
     getAllFavorites: (): FavoritesCollection => getState().regionData.favorites ?? DEFAULT_FAVORITES,
 
@@ -110,6 +149,7 @@ export const useRegionStore = create<RegionStore>((setState, getState) => {
       }
     })
   };
+
   return {
     regions,
     currentRegion: getCurrentRegion(regions),
@@ -121,6 +161,9 @@ export const useRegionStore = create<RegionStore>((setState, getState) => {
     setRegion,
     setTraveler,
     setState,
+
+    getGenshinServerDay,
+    getGenshinServerDayName,
 
     favorites,
 

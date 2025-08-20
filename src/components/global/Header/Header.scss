@@ -23,6 +23,25 @@
         position: relative;
 
         &.has-dropdown {
+
+          &:hover .navigation-dropdown,
+          &:focus-within .navigation-dropdown {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+          }
+
+          &:hover>a .chevron,
+          &:focus-within>a .chevron {
+            transform: rotate(180deg);
+          }
+
+          >a .chevron {
+            margin-left: 0.5rem;
+            font-size: 0.8em;
+            transition: transform 0.2s ease;
+          }
+
           .navigation-dropdown {
             position: absolute;
             top: 100%;
@@ -33,13 +52,17 @@
             border-radius: .25rem;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             z-index: 100;
+
             opacity: 0;
-            visibility: hidden;
+            pointer-events: none;
             transform: translateY(-10px);
             transition:
               opacity 0.2s ease,
-              visibility 0.2s ease,
               transform 0.2s ease;
+
+            a {
+              pointer-events: auto;
+            }
 
             ul {
               flex-direction: column;
@@ -59,9 +82,12 @@
                   border-bottom: 1px solid var(--background-tertiary);
                   white-space: nowrap;
 
-                  &:hover {
+                  &:hover,
+                  &:focus {
                     background-color: var(--background-tertiary);
                     box-shadow: none;
+                    outline: 2px solid var(--text-brand);
+                    outline-offset: -2px;
                   }
                 }
 
@@ -70,22 +96,6 @@
                 }
               }
             }
-          }
-
-          &:hover .navigation-dropdown {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-          }
-
-          >a .chevron {
-            margin-left: 0.5rem;
-            font-size: 0.8em;
-            transition: transform 0.2s ease;
-          }
-
-          &:hover>a .chevron {
-            transform: rotate(180deg);
           }
         }
       }
@@ -102,8 +112,8 @@
           box-shadow: 0 0 5px 3px #22222266;
         }
       }
-    }    
-    
+    }
+
     li:has(a[href*=skip-nav]:not(:focus)) {
       @extend %visually-hidden;
 
