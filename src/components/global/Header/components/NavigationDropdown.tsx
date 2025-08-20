@@ -15,7 +15,7 @@ export default function NavigationDropdown({ items }: Props) {
       <ul>
         {items.map(({ to, label }) => (
           <li key={to}>
-            <Link to={to}>{label}</Link>
+            <Link to={to} tabIndex={0}>{label}</Link>
           </li>
         ))}
       </ul>
