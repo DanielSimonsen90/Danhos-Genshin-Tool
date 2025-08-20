@@ -19,7 +19,7 @@ export default function YourCalendarSection() {
 
   return (
     <section className="your-calendar-section">
-      <h2>Your Calendar Week</h2>
+      <h2>Weekly Calendar</h2>
       <TabBar tabs={tabs} lazyLoad={false} />
     </section>
   );
