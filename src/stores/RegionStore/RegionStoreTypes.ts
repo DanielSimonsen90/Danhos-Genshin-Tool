@@ -2,6 +2,7 @@ import { SetStateAction } from "react";
 import { PriorityLists } from "@/pages/Building/PriorityList/PriorityListTypes";
 import { StorageReturn } from "@/services/StorageService";
 import { ArtifactSet, Character, Domain, Mob, Weapon, Material, Model } from "@/common/models";
+import CharacterPlan from "@/common/models/characters/CharacterPlan";
 
 export type WorldRegion = 'North America' | 'Europe' | 'Asia' | 'TW, HK, MO';
 export type Traveler = 'lumine' | 'aether';
@@ -24,7 +25,8 @@ export type RegionData = {
   traveler: Traveler | undefined;
   priorityLists?: PriorityLists;
   favorites?: FavoritesCollection;
-  
+  plans?: Array<CharacterPlan>;
+
   selected: boolean;
 };
 
