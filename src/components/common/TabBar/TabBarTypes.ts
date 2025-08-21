@@ -7,6 +7,7 @@ export type CollapseArea = 'tabs' | 'content';
 export type Tab = {
   title: ReactNode | JSX.Element,
   content: Functionable<JSX.Element>,
+  className?: string,
 }
 
 export type TabCreator = typeof createTabItem;
