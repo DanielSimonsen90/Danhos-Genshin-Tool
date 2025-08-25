@@ -4,6 +4,14 @@
       --size: 10rem;
     }
 
+    > section {
+      flex-direction: row;
+
+      @media (max-width: 1200px) {
+        flex-direction: column;
+      }
+    }
+
     &.material-card__name-text {
       font-size: 2rem;
     }

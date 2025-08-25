@@ -24,10 +24,6 @@
     font-size: clamp(1.25rem, 2vw, 3rem);
   }
 
-  &__nav-button {
-    margin-top: auto;
-  }
-
   .domain-type {
     ul {
       display: flex;
@@ -54,6 +50,8 @@
   }
 
   .artifact-card {
+    padding: 1em;
+
     >header {
       --image-size: 7.5rem;
       display: grid;
@@ -68,13 +66,13 @@
     }
   }
 
-  .artifact-tab-bar {
+  .domain-rewards-tab-bar {
     .tab-bar__tab {
       padding-inline: .5em;
     }
 
     .artifact-card {
-      padding-inline: .5em;
+      padding: 0 .5em;
 
       >header {
         gap: .5em;

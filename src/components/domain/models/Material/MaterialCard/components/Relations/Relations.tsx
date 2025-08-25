@@ -35,6 +35,7 @@ export default function Relations({
         <div className="material-card__models-using">
           <Collapsible title="Used by" defaultOpen>
             {modelKeys.includes('Character') && <MaterialRelationsForModel model="Character" materialName={material.name} />}
+            {modelKeys.length > 2 && <hr />}
             {modelKeys.includes('Weapon') && <MaterialRelationsForModel model="Weapon" materialName={material.name} />}
           </Collapsible>
         </div>

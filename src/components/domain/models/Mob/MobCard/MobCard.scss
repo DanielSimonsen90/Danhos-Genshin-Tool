@@ -32,13 +32,6 @@
     font-size: 1.25rem;
     margin-bottom: .5em;
     width: 100%;
-
-    &-text {
-      @extend %text-ellipsis;
-      word-break: break-word;
-      font-weight: bold;
-      color: var(--text-primary);
-    }
   }
 
   &__resin {

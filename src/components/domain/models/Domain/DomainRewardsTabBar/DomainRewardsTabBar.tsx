@@ -49,6 +49,7 @@ function AscensionMaterialTabBar({ rewards, domainType }: Props<'Forgery' | 'Mas
       <MaterialCard key={reward.name} material={reward} allowCycle={false} />,
       <SearchableList key={reward.name}
         items={getItems(reward.name) as Array<Character | Weapon>}
+        placeholder={`Search for a ${domainType === 'Forgery' ? 'weapon' : 'character'}...`}
         onSearch={(query, item) => item.name.toLowerCase().includes(query.toLowerCase())}
         renderItem={item => (
           item instanceof Character

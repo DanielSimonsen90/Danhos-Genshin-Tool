@@ -70,18 +70,18 @@ export default function UncontrolledSearchableList<TItem, FilterKeys extends str
           ))}
         </ul>
       )}
-      <p className="searchable-list__list-item searchable-list__list-item--end">
-        {props.hasSearchOrFilters && (
+      {props.hasSearchOrFilters && (
+        <p className="searchable-list__list-item searchable-list__list-item--end">
           <span>
             There are no more results to show.
           </span>
-        )}
-        {onShowMore && (
-          <button onClick={onShowMore} className="button link">
-            Show more
-          </button>
-        )}
-      </p>
+          {onShowMore && (
+            <button onClick={onShowMore} className="button link">
+              Show more
+            </button>
+          )}
+        </p>
+      )}
     </div>
   );
 }

@@ -9,14 +9,14 @@ import { classNames } from "@/common/functions/strings";
 
 import { ArtifactImage, DomainImage, MaterialImage } from "@/components/common/media/Images";
 import { ResinIcon } from "@/components/common/media/icons";
+import ModelCard, { BaseModelCardProps } from "@/components/domain/ModelCard";
+import { Region } from "@/components/domain";
+
 import { useDataStore, useRegionStore } from "@/stores";
 
-import ModelCard, { BaseModelCardProps } from "@/components/domain/ModelCard";
 import { ArtifactCard } from "../../Artifacts";
-
 import { MaterialCard } from "../../Material";
 import DomainRewardsTabBar from "../DomainRewardsTabBar";
-import { Region } from "@/components/domain";
 import LeyLineDisorderPagination from "./LeyLineDisorderPagination";
 
 export interface Props extends BaseModelCardProps {
@@ -47,7 +47,7 @@ export default function DomainCard({
   const minRewards = useMemo(() => {
     if (domain.isBlessing()) return domain.getRewards(DataStore).filter(artifact => artifact.rarity === Rarity.Legendary);
     if (domain.isForgery()) return domain.getRewards(DataStore);
-    if (domain.isMastery()) return domain.getRewards(DataStore).filter(talent => talent.isObtainableToday(RegionStore));
+    if (domain.isMastery()) return domain.getRewards(DataStore);
     return [];
   }, [rewards]);
 
