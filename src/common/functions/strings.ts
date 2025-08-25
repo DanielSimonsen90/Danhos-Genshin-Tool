@@ -54,7 +54,7 @@ export function formatSearchData(value: SearchFormData, withSet = false) {
 }
 
 export function classNames(...args: string[]) {
-  return args.filter(Boolean).join(' ') || undefined
+  return args.filter(Boolean).join(' ').trim() || undefined
 }
 
 export function fromList(list: string[] = []) {

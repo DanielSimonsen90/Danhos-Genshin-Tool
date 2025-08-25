@@ -21,6 +21,8 @@
 
       li {
         position: relative;
+        height: 100%;
+
         &.has-dropdown {
 
           &:hover .navigation-dropdown--visible,
@@ -34,11 +36,11 @@
           }
 
           >a .chevron {
+            --size: .5rem;
             margin-left: 0.5rem;
-            font-size: 0.8em;
             transition: transform 0.2s ease;
           }
-          
+
           .navigation-dropdown {
             position: absolute;
             top: 100%;
@@ -134,6 +136,24 @@
 
     .character-image {
       --size: 2rem;
+    }
+  }
+
+  @media screen and (max-width: 1000px) {
+    justify-content: start;
+    
+    .settings-container {
+      position: relative;
+      margin-left: auto;
+    }
+  }
+
+  @media screen and (max-width: 730px) {
+    align-items: center;
+    flex-direction: column;
+
+    .settings-container {
+      margin-left: unset;
     }
   }
 }
