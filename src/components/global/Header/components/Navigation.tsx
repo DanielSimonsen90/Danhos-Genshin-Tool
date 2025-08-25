@@ -1,7 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
+
 import { addTabNavigation } from "@/common/functions/accessibility";
 import { ROUTES } from "@/common/constants/routes";
 import { IS_DEVELOPMENT_ENVIRONMENT } from "@/common/constants/dev";
+import useOnChange from "@/hooks/useOnChange";
+
 import NavigationDropdown from "./NavigationDropdown";
 
 // Auto-generate sub-routes from ROUTES object
@@ -42,23 +46,40 @@ const routes = [
   return [to, label, subRoutes.length > 0 ? subRoutes : undefined] as [string, string, typeof subRoutes?];
 });
 
-export const Navigation = () => (
-  <nav>
-    <ul>
-      <li>
-        <Link to="#skip-nav" {...addTabNavigation(() => document.querySelector<HTMLElement>('.site-header + * :is(a, select, input, button)')?.focus())}>Skip nav</Link>
-      </li>
-      {routes.map(([to, label, subRoutes]) => (
-        <li key={to} className={subRoutes ? 'has-dropdown' : ''}>
-          <Link to={to}>
-            {label}
-            {subRoutes && <span className="chevron">▼</span>}
-          </Link>
-          {subRoutes && <NavigationDropdown items={subRoutes} />}
+export const Navigation = () => {
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const location = useLocation();
+
+  useOnChange(location.pathname, () => setOpenDropdown(null));
+
+  return (
+    <nav>
+      <ul>
+        <li>
+          <Link to="#skip-nav" {...addTabNavigation(() => document.querySelector<HTMLElement>('.site-header + * :is(a, select, input, button)')?.focus())}>Skip nav</Link>
         </li>
-      ))}
-    </ul>
-  </nav>
-);
+        {routes.map(([to, label, subRoutes]) => (
+          <li 
+            key={to} 
+            className={subRoutes ? 'has-dropdown' : ''}
+            onMouseEnter={() => subRoutes && setOpenDropdown(to)}
+            onMouseLeave={() => setOpenDropdown(null)}
+          >
+            <Link to={to}>
+              {label}
+              {subRoutes && <span className="chevron">▼</span>}
+            </Link>
+            {subRoutes && (
+              <NavigationDropdown 
+                items={subRoutes} 
+                isVisible={openDropdown === to}
+              />
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+};
 
 export default Navigation;

@@ -21,13 +21,10 @@
 
       li {
         position: relative;
-
         &.has-dropdown {
 
-          &:hover .navigation-dropdown,
-          &:focus-within .navigation-dropdown {
-            opacity: 1;
-            pointer-events: auto;
+          &:hover .navigation-dropdown--visible,
+          &:focus-within .navigation-dropdown--visible {
             transform: translateY(0);
           }
 
@@ -41,7 +38,7 @@
             font-size: 0.8em;
             transition: transform 0.2s ease;
           }
-
+          
           .navigation-dropdown {
             position: absolute;
             top: 100%;
@@ -53,12 +50,13 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             z-index: 100;
 
-            opacity: 0;
-            pointer-events: none;
+            display: none;
             transform: translateY(-10px);
-            transition:
-              opacity 0.2s ease,
-              transform 0.2s ease;
+            transition: transform 0.2s ease;
+
+            &--visible {
+              display: block;
+            }
 
             a {
               pointer-events: auto;

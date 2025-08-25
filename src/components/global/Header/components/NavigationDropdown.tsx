@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { classNames } from "@/common/functions/strings";
 
 type DropdownItem = {
   to: string;
@@ -7,15 +8,21 @@ type DropdownItem = {
 
 type Props = {
   items: DropdownItem[];
+  isVisible: boolean;
 };
 
-export default function NavigationDropdown({ items }: Props) {
+export default function NavigationDropdown({ items, isVisible }: Props) {
   return (
-    <div className="navigation-dropdown">
+    <div className={classNames("navigation-dropdown", isVisible && "navigation-dropdown--visible")}>
       <ul>
         {items.map(({ to, label }) => (
           <li key={to}>
-            <Link to={to} tabIndex={0}>{label}</Link>
+            <Link 
+              to={to} 
+              tabIndex={isVisible ? 0 : -1}
+            >
+              {label}
+            </Link>
           </li>
         ))}
       </ul>
