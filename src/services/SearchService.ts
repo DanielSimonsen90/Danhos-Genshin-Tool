@@ -48,6 +48,10 @@ export const SearchService = new class SearchService extends BaseService<LastRes
   public static readonly ARTIFACT_PIECES_SCORES = ARTIFACT_PIECES_SCORES;
   constructor() { super({} as LastResult); }
 
+  public get lastResult(): LastResult {
+    return super.lastResult as LastResult;
+  }
+
   public searchByArtifacts(
     set: ArtifactSet,
     artifactPartName: ArtifactPartName,
@@ -61,13 +65,13 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     const result = this.lastResult.searchArtifactSets = Characters.map(character => {
       debugLog('group', character.name);
       debugLog('group', 'setScoreOnCharacter');
-      const setScoreOnCharacter = character.playstyle.recommendedArtifactSets.reduce((acc, cSet) => {
+      const setScoreOnCharacter = character.playstyle?.recommendedArtifactSets.reduce((acc, cSet) => {
         const compatibility = cSet.set.name === set.name ? cSet.effectiveness : 0;
         debugLog('Compatibility', compatibility);
         const result = acc + compatibility;
         debugLog('Accumulated', result);
         return result;
-      }, 0);
+      }, 0) ?? 0;
       debugLog('Result', setScoreOnCharacter);
       debugLog('groupEnd');
 
@@ -98,7 +102,7 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     debugLog('group', 'searchCharacterRecommendations');
 
     const getSetFromCharacter = (character: Character) => (
-      character.playstyle.recommendedArtifactSets.find(cSet => cSet.set.name === set.name)
+      character.playstyle?.recommendedArtifactSets.find(cSet => cSet.set.name === set.name)
     );
     const isEffectiveForCharacter = (max: number) => (character: Character) => {
       const cSet = getSetFromCharacter(character);
@@ -157,6 +161,8 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     CacheStore: CacheStore,
     DataStore: DataStore,
   ): SearchResult {
+    if (!_form) throw new Error('_form not defined on SearchFormData');
+
     const cachedResult = CacheStore.findObject('searchResults', 
       data => data.id === id 
       || ([...data.form.entries()].every(([key, value]) => 'get' in _form && _form.get(key) === value)));
@@ -170,7 +176,9 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     if (!ArtifactSetNames.includes(artifactSetName)) throw new Error(`Artifact set "${artifactSetName}" not found in data.`);
     const set = ArtifactSets.find(set => set.name === artifactSetName);
     debugLog('Set found', set);
+    if (!set) throw new Error(`Artifact set "${artifactSetName}" not found in data.`);
 
+    debugLog('Starting search', { set, artifactPartName, mainStat, subStats, id, _form });
     const args = [set, artifactPartName, mainStat, subStats, DataStore] as const;
     const byCharacterRecommendation = this.searchByCharacterRecommendation(...args);
     const byArtifact = this.searchByArtifacts(...args).orderBy(...this._getOrderByFunctions(set, byCharacterRecommendation));
@@ -190,7 +198,8 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     };
     CacheStore.update('searchResults', { [id]: result });
     debugLog('Result', result);
-    return result;  }
+    return result;  
+  }
 
   private _getPartScore(
     character: Character,
@@ -201,7 +210,8 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     debugLog('group', 'getPieceScore');
     debugLog('params', { character, artifactPartName, mainStat, subStats });
 
-    const artifact = new Artifact(undefined, artifactPartName, mainStat, subStats);
+    // The 'Adventurer' artifact name is irrelevant, although the class definition requires a setName value.
+    const artifact = new Artifact('Adventurer', artifactPartName, mainStat, subStats);
     debugLog('Artifact', artifact);
 
     const partScore = ARTIFACT_PIECES_SCORES[artifactPartName];
@@ -261,8 +271,8 @@ export const SearchService = new class SearchService extends BaseService<LastRes
 
       // effectiveness, characterRecommendation, score
       (a, b) => {
-        const effectiveA = a.character.playstyle.recommendedArtifactSets.find(cSet => cSet.set.name === set.name)?.effectiveness ?? 0;
-        const effectiveB = b.character.playstyle.recommendedArtifactSets.find(cSet => cSet.set.name === set.name)?.effectiveness ?? 0;
+        const effectiveA = a.character.playstyle?.recommendedArtifactSets.find(cSet => cSet.set.name === set.name)?.effectiveness ?? 0;
+        const effectiveB = b.character.playstyle?.recommendedArtifactSets.find(cSet => cSet.set.name === set.name)?.effectiveness ?? 0;
         return effectiveB - effectiveA;
       },
       (a, b) => {

@@ -1,11 +1,10 @@
 import { useState, useCallback, useEffect, useImperativeHandle, forwardRef, useRef, EventHandler, useMemo } from "react";
 import { MultipleProps, SelectRef } from "./types";
 import { classNames } from "@/common/functions/strings";
-import useOnChange from "@/hooks/useOnChange";
 import { useClickOutsideRef } from "@/hooks/useClickOutside";
 import { addTabNavigation } from "@/common/functions/accessibility";
 
-export default forwardRef(function SelectMultiple<TValue extends string>({
+const SelectMultipleComponent = forwardRef(function SelectMultiple<TValue extends string>({
   options,
   displayValue, internalValue, max, floatable,
   ...props
@@ -53,7 +52,7 @@ export default forwardRef(function SelectMultiple<TValue extends string>({
   }, [selectedValues]);
 
   useImperativeHandle(ref, () => ({
-    ...internalRef.current,
+    ...internalRef.current ?? {} as HTMLDivElement,
     open: () => setShowOptions(true),
     close: () => setShowOptions(false),
   }), [selectedValues, showOptions]);
@@ -93,7 +92,13 @@ export default forwardRef(function SelectMultiple<TValue extends string>({
             </label>
           </li>
         ))}
-      </ul>
-    </div>
+      </ul>    </div>
   );
 });
+
+// Type the component properly to preserve generics
+const SelectMultiple = SelectMultipleComponent as <TValue extends string>(
+  props: MultipleProps<TValue> & { ref?: SelectRef }
+) => JSX.Element;
+
+export default SelectMultiple;

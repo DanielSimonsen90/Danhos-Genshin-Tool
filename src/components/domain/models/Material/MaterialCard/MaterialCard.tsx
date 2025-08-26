@@ -13,7 +13,7 @@ import { MaterialImage } from "@/components/common/media/Images";
 import AscensionMaterial from "@/common/models/materials/AscensionMaterial";
 
 export interface Props extends BaseModelCardProps {
-  material: Material;
+  material: Material | null;
   allowCycle?: boolean;
 
   showDetails?: boolean;
@@ -38,7 +38,7 @@ export default function MaterialCard({
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const currentMaterial = useMemo(() => allowCycle ? craftingTree?.[currentIndex] ?? material : material, [craftingTree, currentIndex, material]);
-  const materialRegions = material ? Billet.isBillet(material) ? material.regions : [material.region] : [];
+  const materialRegions = material ? Billet.isBillet(material) ? material.regions : [material.region!] : [];
   const hasRegion = materialRegions.filter(Boolean).length > 0;
 
   const onIndexChange = useCallback((index: number) => {
@@ -63,14 +63,14 @@ export default function MaterialCard({
     hasInteractedWithPagination.current = false;
   }, [material]);
 
-  if (!material) return null;
+  if (!material || !currentMaterial) return null;
   return <ModelCard
     key={`${RegionStore.currentRegion}-${currentMaterial.name}`}
     model="Material"
     item={currentMaterial}
     {...props}
     data-show-details={showDetails}
-    data-allow-pagination={allowCycle && craftingTree?.length > 1}
+    data-allow-pagination={allowCycle && (craftingTree?.length ?? 0) > 1}
     {...{ 'data-today': AscensionMaterial.isAscensionMaterial(material) && material.isObtainableToday(RegionStore) }}
 
     renderImage={() => <MaterialImage material={currentMaterial.name} />}
@@ -94,10 +94,10 @@ export default function MaterialCard({
             {AscensionMaterial.isAscensionMaterial(material) && <ObtainableDays material={material} />}
           </div>
         )}
-        {allowCycle && craftingTree?.length > 1 && (
+        {allowCycle && (craftingTree?.length ?? 0) > 1 && (
           <Pagination
             materialName={material.name}
-            craftingTree={craftingTree}
+            craftingTree={craftingTree!}
             currentIndex={currentIndex}
             onIndexChange={onIndexChange}
           />

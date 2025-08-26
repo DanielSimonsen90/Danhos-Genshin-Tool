@@ -9,6 +9,12 @@ type Props = {
 };
 
 export default function CharacterPlaystyleComponent({ character, artifactSet }: Props) {
+  if (!character.playstyle) return (
+    <p className="character-playstyle character-result">
+      No playstyle information available for {character.name}.
+    </p>
+  );
+  
   if (artifactSet && !character.playstyle.recommendedArtifactSets.some(cSet => cSet.set === artifactSet)) return (
     <p className="character-playstyle character-result">
       {character.name} has no set that uses {artifactSet?.name ?? 'this artifact'}, but may benefit from its stats temporarily.
@@ -29,7 +35,7 @@ export default function CharacterPlaystyleComponent({ character, artifactSet }: 
         <div className="recommended-artifact-playstyles">
           <h4>Recommended Artifact Sets</h4>
           {recommendedArtifactSets.length > 0 ? (
-            <CharacterArtifactsPlaystylesTabBar character={character} artifactSets={recommendedArtifactSets} set={artifactSet} />
+            <CharacterArtifactsPlaystylesTabBar artifactSets={recommendedArtifactSets} />
           ) : (
             <p>No recommended artifact sets yet</p>
           )}

@@ -8,7 +8,7 @@ import { ROUTES } from '@/common/constants/routes';
 export default function ArtifactPage() {
   const { artifactName } = useParams();
   const DataStore = useDataStore();
-  const artifact = useMemo(() => DataStore.findArtifactByName(artifactName), [DataStore, artifactName]);
+  const artifact = useMemo(() => artifactName ? DataStore.findArtifactByName(artifactName) : undefined, [DataStore, artifactName]);
 
   if (!artifact) {
     return (

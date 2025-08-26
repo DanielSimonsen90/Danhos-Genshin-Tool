@@ -26,5 +26,5 @@ export type MenuItem = MenuItemOption | MenuItemDivider;
 
 export type MenuItems = (
   MenuItem[]
-  | ((creator: typeof CreateMenuItem) => MenuItem[])
+  | ((creator: typeof CreateMenuItem) => (MenuItem | boolean)[])
 );

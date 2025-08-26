@@ -21,7 +21,7 @@ function generateBillet(
     [Symbol.iterator]: function* (): IterableIterator<Billet> {
       const weapons = ['sword', 'bow', 'claymore', 'catalyst', 'polearm'];
       for (const weapon of weapons) {
-        yield this[weapon];
+        yield (this as any)[weapon];
       }
     }
   };

@@ -7,7 +7,7 @@ export default function Select<TValue extends string>({
   defaultValue, displayValue, internalValue,
   ...props 
 }: Props<TValue>) {
-  const [_value, _setValue] = useState(undefined);
+  const [_value, _setValue] = useState<TValue>();
   const value = useMemo(() => props.value ?? _value, [props.value, _value]);
   const setValue = useMemo(() => props.setValue ?? _setValue, [props.setValue, _setValue]);
 

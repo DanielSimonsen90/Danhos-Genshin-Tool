@@ -26,10 +26,8 @@ export type SettingsStore = {
   get changeableSettings(): ChangeableSettings;
 
   getSetting<Key extends keyof AppSettings>(key: Key): AppSettings[Key] | undefined;
-  updateSettings(update: SetStateAction<Partial<AppSettings>>): void;
-  updateSettings(update: SetStateAction<AppSettings>, override: true): void;
+  updateSettings(update: SetStateAction<Partial<AppSettings>>, override?: boolean): void;
   saveSettings(update?: SetStateAction<Partial<AppSettings>>): void;
-  updateAndSaveSettings(update: SetStateAction<Partial<AppSettings>>): void;
-  updateAndSaveSettings(update: SetStateAction<AppSettings>, override: true): void;
+  updateAndSaveSettings(update: SetStateAction<Partial<AppSettings>>, override?: boolean): void;
   resetSettings(): void;
 }

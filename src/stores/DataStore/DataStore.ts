@@ -60,7 +60,7 @@ export const useDataStore = create<DataStore>((setState, getState) => {
   const getSignatureWeapons = () => getCachedOrCompute(CACHE_KEYS.WEAPON_SIGNATURES, () => {
     const weaponsWithSignature = getState().Weapons.filter(weapon => weapon.signatureWeaponFor);
     return weaponsWithSignature.map(weapon => {
-      const character = weapon.signatureWeaponFor(getState().CharactersData);
+      const character = weapon.signatureWeaponFor?.(getState().CharactersData);
       return { weapon, character };
     });
   });
@@ -146,7 +146,7 @@ export const useDataStore = create<DataStore>((setState, getState) => {
             worldBossDrop
           ].filter(Boolean);
 
-          return materials.some(item => item.name === materialName);
+          return materials.some(item => item?.name === materialName);
         });
       }) as Character[];
     },
@@ -243,7 +243,7 @@ export const useDataStore = create<DataStore>((setState, getState) => {
         const signatureWeaponData = getSignatureWeapons();
         if (!signatureWeaponData || signatureWeaponData.length === 0) return undefined;
 
-        return signatureWeaponData.find(weapon => weapon.character.name === character.name)?.weapon;
+        return signatureWeaponData.find(weapon => weapon.character?.name === character.name)?.weapon;
       });
     },
 

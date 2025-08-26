@@ -21,7 +21,7 @@ export const useCacheStore = create<CacheStore>()(persist((setState, getState) =
     return Object.values(item).find(callback) as Cache[TKey][TChildKey];
   };
   const set = <TKey extends CacheKeys>(key: TKey, value: Cache[TKey]): void => setState(state => ({ ...state, [key]: value }));
-  const get = <TKey extends CacheKeys>(key: TKey, defaultValue: any): Cache[TKey] | undefined => getState()[key] ?? defaultValue;
+  const get = <TKey extends CacheKeys>(key: TKey, defaultValue: any): Cache[TKey] => getState()[key] ?? defaultValue;
   const getFromItem = <TKey extends CacheKeys, TChildKey extends keyof Cache[TKey]>(
     key: TKey,
     childKey: TChildKey,

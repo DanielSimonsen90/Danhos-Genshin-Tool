@@ -4,7 +4,7 @@ import { DebugLog } from "@/common/functions/dev";
 const debugLog = DebugLog(DebugLog.DEBUGS.useActionState);
 
 export type SubmitData<TData> = TData & {
-  _form: FormData
+  _form?: FormData
 }
 
 export function useActionState<TResult extends Record<string, any>>(
@@ -42,6 +42,8 @@ export function useActionState<TResult extends Record<string, any>>(
     const data: Record<string, any> = { _form: form };
     let hasPlaceholder = false;
     Object.values(form).forEach(({ name, value }) => {
+      if (!name) return;
+      
       if (value === '<placeholder>') {
         hasPlaceholder = true;
         return;

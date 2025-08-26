@@ -35,7 +35,7 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
   
   const [internalCardProps, setInteralCardProps] = useState<Pick<Props<TFilterKeys>, 'cardProps'>['cardProps']>({});
 
-  return <SearchableList items={items}
+  return <SearchableList items={items ?? []}
     placeholder="Search characters..."
     sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
     renderItem={character => {
@@ -59,11 +59,11 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
       setHidden([]);
       navigate(`?query=${search}&filters=${JSON.stringify(filters)}`);
     }}
-    onSearch={noBaseSearch ? onSearch : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}
+    onSearch={noBaseSearch ? onSearch ?? (() => true) : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}
     onFilterChange={filter => {
       const updatedInternalFilter = Object.entries(filter).reduce((acc, [key, value]) => {
         switch (key) {
-          case 'passiveTalents': return { ...acc, showPassiveTalent: Object.keys(value).length > 0 };
+          case 'passiveTalents': return { ...acc, showPassiveTalent: Object.keys(value ?? {}).length > 0 };
           case 'hasSignatureWeapon': return { ...acc, showSignatureWeapon: value as boolean };
           default: return acc;
         }

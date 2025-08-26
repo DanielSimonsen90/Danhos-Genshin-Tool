@@ -14,7 +14,7 @@ export default function Modal({ children, onClose, open, ...props }: ModalProps)
   const onConfirm = () => {
     props.onConfirm?.();
     onClose();
-  }
+  };
 
   useEffect(() => {
     if (open) (ref.current as any)?.showModal();
@@ -23,7 +23,10 @@ export default function Modal({ children, onClose, open, ...props }: ModalProps)
 
   useEffect(() => {
     if (ref.current && onClose) ref.current.addEventListener('close', onClose);
-    return () => ref.current && onClose && ref.current.removeEventListener('close', onClose);
+    
+    return () => {
+      ref.current && onClose && ref.current.removeEventListener('close', onClose);
+    };
   }, [onClose]);
 
   return (

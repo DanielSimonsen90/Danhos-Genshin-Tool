@@ -33,7 +33,7 @@ export default function SearchableArtifactList<TFilterKeys extends string>({
   const [hidden, setHidden] = useState(new Array<ArtifactSet>());
   const FavoriteStore = useFavorite('artifacts');
 
-  return <SearchableList items={items}
+  return <SearchableList items={items ?? []}
     placeholder="Search artifacts..."
     sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
     renderItem={artifact => {
@@ -56,7 +56,7 @@ export default function SearchableArtifactList<TFilterKeys extends string>({
       setHidden([]);
       navigate(`?query=${search}&filters=${JSON.stringify(filters)}`);
     }}
-    onSearch={noBaseSearch ? onSearch : (query, item) => (item.includes(query.toLowerCase())) && (onSearch?.(query, item) ?? true)}
+    onSearch={noBaseSearch ? onSearch ?? (() => true) : (query, item) => (item.includes(query.toLowerCase())) && (onSearch?.(query, item) ?? true)}
     filterChecks={noBaseFilterChecks ? filterChecks : {
       obtainableThrough: {
         domains: artifact => artifact.domainNames.length > 0 && artifact.domainNames[0] !== "BOSS_DROP",

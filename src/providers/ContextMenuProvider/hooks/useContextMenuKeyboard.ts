@@ -17,7 +17,7 @@ export function useContextMenuKeyboard({ menuItems, closeMenu }: UseContextMenuK
       if (e.type === 'keydown') {
         const keyboardEvent = e as KeyboardEvent;
         const matchingItem = respondsToKeys.find(
-          item => item.respondsToKey.toLowerCase() === keyboardEvent.key.toLowerCase()
+          item => item.respondsToKey?.toLowerCase() === keyboardEvent.key.toLowerCase()
         );
         
         if (matchingItem) {

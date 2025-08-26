@@ -21,7 +21,7 @@ export default function ItemPage<DataKey extends DataKeys>({ itemKeys, Card }: P
   const itemKey = itemKeys.slice(0, -1) as DataKeysSingular;
   const { [`${itemKey.toLowerCase()}Name`]: name } = useParams();
   const DataStore = useDataStore();
-  const item = useMemo(() => DataStore[`find${itemKey}ByName`](name), [DataStore, name]);
+  const item = useMemo(() => name ? DataStore[`find${itemKey}ByName`](name) : undefined, [DataStore, name]);
 
   if (!item) {
     console.warn(`Item not found: ${name}`, DataStore[`${itemKey}s`]);

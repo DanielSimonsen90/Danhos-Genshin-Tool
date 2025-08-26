@@ -11,8 +11,8 @@ export default forwardRef<HTMLInputElement, Props>(function Switch({ enabled, ch
   const [internalChecked, setInternalChecked] = useState(enabled ?? props.defaultChecked ?? false);
   const internalRef = useRef<HTMLInputElement>(null);
   const className = classNames(
-    "switch", 
-    disabled && "switch--disabled", 
+    "switch",
+    disabled && "switch--disabled",
     internalChecked && "switch--enabled"
   );
 
@@ -23,7 +23,7 @@ export default forwardRef<HTMLInputElement, Props>(function Switch({ enabled, ch
   };
 
   return (
-    <div className={className} role="checkbox" tabIndex={0} 
+    <div className={className} role="checkbox" tabIndex={0}
       {...addTabNavigation(() => onChange?.(!checked))}
     >
       <div className="switch__thumb"></div>
@@ -31,12 +31,12 @@ export default forwardRef<HTMLInputElement, Props>(function Switch({ enabled, ch
         ref ? (element: HTMLInputElement) => {
           if (typeof ref === 'function') ref(element);
           else if (ref) ref.current = element;
-          internalRef.current = element;
+          (internalRef as React.MutableRefObject<HTMLInputElement | null>).current = element;
         } : undefined
-      } disabled={disabled} type="checkbox" onChange={e => onChange?.(e.target.checked)} 
-        value={checked !== undefined ? checked ? 'on' : 'off' : undefined} 
+      } disabled={disabled} type="checkbox" onChange={e => onChange?.(e.target.checked)}
+        value={checked !== undefined ? checked ? 'on' : 'off' : undefined}
         checked={checked !== undefined ? checked : undefined}
-        tabIndex={-1}   
+        tabIndex={-1}
       />
     </div>
   );

@@ -31,7 +31,7 @@ export type DataStore = typeof DataStoreContent & {
   getWeaponsUsingMaterial: (materialName: string) => Weapon[];
 
   getMobsDroppingMaterial: (materialName: string) => Mob[];
-  getDomainDroppingMaterial: (materialName: string) => Domain<any>;
+  getDomainDroppingMaterial: (materialName: string) => Domain<any> | undefined;
 
   getDomainsFromMaterial: (material: Material) => Domain<any>[];
   getBossesFromMaterial: (material: Material) => Boss[];

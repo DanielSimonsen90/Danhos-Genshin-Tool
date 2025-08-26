@@ -19,11 +19,11 @@ import { SearchResult as SearchResultComponent } from "./components";
 const debugLog = DebugLog(DebugLog.DEBUGS.searchQuery);
 
 export default function SearchQuery() {
-  const { query } = useParams();
+  const { query = '' } = useParams();
   const CacheStore = useCacheStore();
   const DataStore = useDataStore();
-  const [formData, setFormData] = useState<SearchFormData>(null);
-  const [results, setResults] = useState<SearchResult>(null);
+  const [formData, setFormData] = useState<SearchFormData | undefined>(undefined);
+  const [results, setResults] = useState<SearchResult | null>(null);
   const [retries, setRetries] = useState(0);
   const Result = useCallback(() => results ? <SearchResultComponent result={results} /> : <p>No results</p>, [results]);
 
@@ -33,7 +33,7 @@ export default function SearchQuery() {
     setFormData(formData);
     setResults(results);
 
-    if (!CacheStore.get('searchHistory', {})[query] && formData) CacheStore.update('searchHistory', { [query]: formData });
+    if (!CacheStore.get('searchHistory', {})[query] && formData) CacheStore.update('searchHistory', { [query as string]: formData });
   }, [query, retries]);
 
   if (!formData || !results) return (

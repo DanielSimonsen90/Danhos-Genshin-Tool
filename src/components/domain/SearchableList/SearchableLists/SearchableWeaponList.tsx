@@ -33,7 +33,7 @@ export default function SearchableWeaponList<TFilterKeys extends string>({
   const DataStore = useDataStore();
   const FavoriteStore = useFavorite('weapons');
 
-  return <SearchableList items={items}
+  return <SearchableList items={items ?? []}
     placeholder="Search weapons..."
     sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
     renderItem={weapon => {
@@ -55,7 +55,7 @@ export default function SearchableWeaponList<TFilterKeys extends string>({
       setHidden([]);
       navigate(`?query=${search}&filters=${JSON.stringify(filters)}`);
     }}
-    onSearch={noBaseSearch ? onSearch : (query, item) => (() => {
+    onSearch={noBaseSearch ? onSearch ?? (() => true) : (query, item) => (() => {
       const { name, description, } = item;
       const signatureCharacter = item.signatureWeaponFor?.(DataStore.CharactersData);
       const strings = [

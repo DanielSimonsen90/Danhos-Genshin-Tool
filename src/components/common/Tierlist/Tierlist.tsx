@@ -17,7 +17,7 @@ export default function Tierlist<T, TStorageData extends object>({
   onSearch, onTierChange, onEntryChange,
   ...props
 }: TierlistProps<T, TStorageData>) {
-  const storageKey = 'storageKey' in props ? props.storageKey : 'storage' in props ? props.storage.key : '';
+  const storageKey = 'storageKey' in props ? props.storageKey ?? '' : 'storage' in props ? props.storage?.key ?? '' : '';
   const onStorageLoaded = 'onStorageLoaded' in props ? props.onStorageLoaded : undefined;
   const onStorageSave = 'onStorageSave' in props ? props.onStorageSave : undefined;
   const [tiers, setTiers, resetTiers] = useStateReset(() => {
@@ -51,8 +51,8 @@ export default function Tierlist<T, TStorageData extends object>({
       tier.id === 'unsorted'
         ? { ...tier, entries: [...(tier.entries ?? []), ...newItems.map(generateEntry)] }
         : tier
-    ) : undefined).filter(Boolean);
-  }), onStorageLoaded ? null : tiers);
+    ) : undefined).filter(Boolean) as Array<Tier<T>>;
+  }), onStorageLoaded ? [] : tiers);
   const [newTier, setNewTier] = useState<FormTier<T>>(generateBlankTier(tiers));
   const [search, setSearch] = useState('');
 
@@ -143,7 +143,11 @@ export default function Tierlist<T, TStorageData extends object>({
     return [...tiers.slice(0, index), updatedTier, ...tiers.slice(index + 1)];
   });
   const onSendToTier = (entry: Entry<T>, tier: Tier<T>) => setTiers(tiers => {
-    const tierContainingItem: Tier<T> = tiers.find(tier => tier.entries.some(item => item.id === entry.id));
+    const tierContainingItem = tiers.find(tier => tier.entries.some(item => item.id === entry.id));
+    if (!tierContainingItem) {
+      console.error('Item not found in any tier', { entry, tier, tiers });
+      return tiers;
+    }
 
     // Sent to same tier
     if (tierContainingItem.id === tier.id) return tiers;
@@ -159,7 +163,7 @@ export default function Tierlist<T, TStorageData extends object>({
     ));
   });
   const onMoveToIndex = (entry: Entry<T>, index: number) => setTiers(tiers => {
-    const tierContainingItem: Tier<T> = tiers.find(tier => tier.entries.some(item => item.id === entry.id));
+    const tierContainingItem = tiers.find(tier => tier.entries.some(item => item.id === entry.id));
     if (!tierContainingItem) {
       console.error('Item not found in any tier', { entry, index, tiers });
       return tiers;
@@ -187,19 +191,24 @@ export default function Tierlist<T, TStorageData extends object>({
 
       <input type="search" placeholder={`Search for a ${model.toLowerCase()}...`}
         value={search} onChange={e => setSearch(e.target.value)}
-      />
-
+      />      
       <DragDropContext onDragEnd={onDragEnd}>
         {orderedTiers.map(tier => (
-          <TierComponent key={tier.id} {...{
-            render,
-            tier, updateTier, onMoveToIndex, onSendToTier,
-            tiers, setTiers,
-            unsorted,
-            renderCustomEntryContextMenuItems: props.renderCustomEntryContextMenuItems ?
-              (entry, item) => props.renderCustomEntryContextMenuItems(entry as Entry<T>, tier, item)
-              : undefined,
-          }} />
+          <TierComponent<T> key={tier.id}
+            {...{
+              render,
+              tier,
+              updateTier,
+              onMoveToIndex,
+              onSendToTier,
+              tiers, 
+              setTiers, 
+              unsorted
+            }}
+            renderCustomEntryContextMenuItems={props.renderCustomEntryContextMenuItems
+              ? (entry, item) => props.renderCustomEntryContextMenuItems!(entry as Entry<T>, tier, item)
+              : undefined}
+          />
         ))}
       </DragDropContext>
 

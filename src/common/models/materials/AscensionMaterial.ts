@@ -94,6 +94,6 @@ export class WeaponAscensionMaterial extends AscensionMaterial {
       current = material;
     }
 
-    return root;
+    return root as WeaponAscensionMaterial;
   }
 }

@@ -33,12 +33,12 @@ export default function ArtifactCard({
       {...props}
       renderImage={() => <ArtifactImage set={name} piece="Flower" />}
       renderHeaderContent={showSetDescriptions ? (() => <ArtifactDetails {...{ artifact, displayCraftable }} />) : undefined}
-      renderContent={() => (showCharacterSets || showDomainList) && (
+      renderContent={() => (showCharacterSets || showDomainList) ? (
         <section className="artifact-content">
           {showCharacterSets && <ArtifactSets artifact={artifact} />}
           {showDomainList && <DomainList artifactSetName={name} domainNames={artifact.domainNames} title={plural(artifact.domainNames.length, 'Found in domain', 'Found in domains')} />}
         </section>
-      )}
+      ) : null}
     />
   );
 }

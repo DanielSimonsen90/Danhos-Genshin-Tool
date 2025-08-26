@@ -53,7 +53,7 @@ export function formatSearchData(value: SearchFormData, withSet = false) {
   return result;
 }
 
-export function classNames(...args: string[]) {
+export function classNames(...args: (string | boolean | undefined | null)[]) {
   return args.filter(Boolean).join(' ').trim() || undefined
 }
 

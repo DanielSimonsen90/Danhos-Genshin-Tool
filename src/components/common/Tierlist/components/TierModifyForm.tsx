@@ -63,7 +63,7 @@ export default function TierModifyForm<T>({ tier, submitText, onTierUpdate, add 
       <div className="input-group">
         <label htmlFor="color">Color</label>
         <input ref={colorRef} type="color" name="color" 
-          defaultValue={color && color.includes('#') ? color : colorConvert(color, 'hsl', 'hex')}
+          defaultValue={color ? color.includes('#') ? color: colorConvert(color, 'hsl', 'hex') : undefined}
           onChange={e => setColor(e.target.value)} 
         />
       </div>

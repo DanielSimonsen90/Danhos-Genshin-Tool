@@ -69,14 +69,16 @@ export const useSettingsStore = create<SettingsStore>(((setState, getState) => {
         updated: Date.now() 
       } });
     },
-    saveSettings(update?: SetStateAction<AppSettings>) {
-      const resolvedSettings = update
+    saveSettings(update?: SetStateAction<Partial<AppSettings>>) {
+      const resolvedUpdate = update
         ? (typeof update === 'function'
           ? update(getState().settings)
           : update
         ) : getState().settings;
+
+      const resolvedSettings = { ...getState().settings, ...resolvedUpdate };
       storageService.set(resolvedSettings);
-      debugLog('Settings saved', resolvedSettings);
+      debugLog('Settings saved', resolvedUpdate);
 
       const newInitialSettings = { ...resolvedSettings };
       delete newInitialSettings.updated;

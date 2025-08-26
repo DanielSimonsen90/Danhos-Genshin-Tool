@@ -45,40 +45,46 @@ export default function Filter<FilterKeys extends string, TItem>(props: Props<Fi
       </select>
 
       <div ref={ref} className={classNames("select__options", 'floatable', showOptions && 'select__options--open', 'filter-options')}>
-        {Object.keys(filterChecks).map((filter: keyof typeof filterChecks, i) => (
-          typeof filterChecks[filter] === 'object'
-            ? <SelectMultiple key={i} name={filter} floatable
+        {Object.keys(filterChecks).map((filter, i) => {
+          const typedFilter = filter as keyof typeof filterChecks;
+
+          if (typeof filterChecks[typedFilter] === 'object' && filterChecks[typedFilter]) return (
+            <SelectMultiple key={i} name={filter} floatable
               ref={refs.current[i]}
               onOpen={() => closeAllMultipleSelects(i)}
 
               placeholder={pascalCaseFromCamelCase(filter)}
-              options={Object.keys(filterChecks[filter])}
+              options={Object.keys(filterChecks[typedFilter] ?? {})}
               displayValue={pascalCaseFromCamelCase}
 
-              value={Object.keys(filters[filter] ?? {})}
+              value={Object.keys(filters[typedFilter] ?? {})}
               setValue={selectedValues => setFilters(filters => ({
                 ...filters,
                 [filter]: Object.fromEntries((
                   typeof selectedValues === 'function' ?
-                    selectedValues(Object.keys(filters[filter] ?? {}).filter(Boolean)) :
+                    selectedValues(Object.keys(filters[typedFilter] ?? {}).filter(Boolean)) :
                     selectedValues
                 ).map(value => [value, true]))
               }))}
+            />
+          );
 
-            /> : <FilterOption key={i} i={i}
+          return (
+            <FilterOption key={i} i={i}
               name={filter} option={filter}
-              value={filters[filter] as boolean | undefined}
+              value={filters[typedFilter] as boolean | undefined}
               onSelect={(newValue) => {
                 const newFilters = { ...filters };
                 if (newValue === undefined) {
-                  delete newFilters[filter];
+                  delete newFilters[typedFilter];
                 } else {
-                  newFilters[filter] = newValue;
+                  newFilters[typedFilter] = newValue;
                 }
                 setFilters(newFilters);
               }}
             />
-        ))}
+          );
+        })}
         <button className="brand--light secondary" onClick={e => {
           e.preventDefault();
           e.stopPropagation();

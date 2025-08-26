@@ -33,7 +33,7 @@ export function useLocalStorage<TValue>(key?: string, load?: Dispatch<SetStateAc
 
   useEffect(() => {
     if (!key) return;
-    if (load) load(callback(key).get(defaultValue));
+    if (load) load(callback(key).get(defaultValue) as TValue);
   }, [key]);
 
   return key !== undefined ? callback(key) : callback;

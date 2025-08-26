@@ -58,7 +58,7 @@ export abstract class CraftableMaterial extends Material {
         }
 
         return acc;
-      }, undefined as T | undefined);
+      }, undefined as T | undefined) as T;
   }
 }
 export default CraftableMaterial;

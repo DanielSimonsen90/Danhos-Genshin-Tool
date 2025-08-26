@@ -37,7 +37,8 @@ export function useContextMenuState({ setExplicitPosition }: UseContextMenuState
 
       return (items, position) => {
         const resolvedMenuItems = typeof items === 'function' ? items(CreateMenuItem) : items;
-        setMenuItems(resolvedMenuItems);
+        const filteredMenuItems = resolvedMenuItems.filter(Boolean) as MenuItem[];
+        setMenuItems(filteredMenuItems);
         
         // Handle explicit position override
         if (position) {

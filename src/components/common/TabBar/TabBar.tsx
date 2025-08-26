@@ -133,7 +133,7 @@ const TabBar = forwardRef(<TTabKey extends string>(props: Props<TTabKey>, ref: R
         {TabContent}
       </section>
     </div>
-  ) : props.noTabs;
+  ) : props.noTabs ?? <></>;
 });
 
 TabBar.displayName = 'TabBar';

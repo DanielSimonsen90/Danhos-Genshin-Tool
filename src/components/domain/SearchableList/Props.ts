@@ -15,7 +15,7 @@ export type OptionalProps<TItem, FilterKeys extends string> = FilterProps<TItem,
 
   className?: string,
   ulClassName?: string
-  liClassName?: string | ((item: TItem) => string),
+  liClassName?: string | ((item: TItem) => string | undefined),
 }
 
 export type ControlledProps<TItem, FilterKeys extends string> = {

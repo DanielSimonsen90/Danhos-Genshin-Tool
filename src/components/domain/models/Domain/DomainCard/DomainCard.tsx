@@ -20,7 +20,7 @@ import DomainRewardsTabBar from "../DomainRewardsTabBar";
 import LeyLineDisorderPagination from "./LeyLineDisorderPagination";
 
 export interface Props extends BaseModelCardProps {
-  domain: Domain<any>;
+  domain: Domain<any> | null;
   showResin?: boolean;
   showDescription?: boolean;
   showLeyLineDisorder?: boolean;
@@ -60,9 +60,7 @@ export default function DomainCard({
       className={classNames('domain-card', props.className)}
 
       renderImage={() => <DomainImage domain={name} />}
-      renderHeadingContent={() => (
-        showResin && <ResinIcon cost={resinCost} />
-      )}
+      renderHeadingContent={showResin ? () => <ResinIcon cost={resinCost} /> : undefined}
       renderHeaderContent={() => (<>
         <div className="domain-type">
           <p>{type}</p>
@@ -120,7 +118,7 @@ export default function DomainCard({
               </div>
             )}
           </section>
-        ) : undefined
+        ) : null
       )}
     />
   );
