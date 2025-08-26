@@ -2,28 +2,32 @@ import { classNames } from '@/common/functions/strings';
 import { AppSettings, useSettings, useSettingsStore } from '@/stores/SettingsStore';
 import { SearchResult } from '@/services/SearchService';
 import TabBar from '@/components/common/TabBar';
-import { TabContent, Wrap, ShowAll } from './components';
+import { TabContent, Wrap, ShowAll, TabContentProps } from './components';
 
 type Props = {
   result: SearchResult;
 };
 
-export const SearchResultComponent = ({ result: {
-  id, set,
-  ...props
-} }: Props) => {
-  const settingsStore = useSettingsStore();
+export const SearchResultComponent = ({
+  result: { id, setName, ...props }
+}: Props) => {
+  const SettingsStore = useSettingsStore();
   const { wrap, preferredTabs, showAll } = useSettings('preferredTabs', 'showAll', 'wrap');
 
-  const tabBarProps = {
-    set,
+  const tabBarProps: Omit<TabContentProps, 'results'> = {
+    setName,
     showAll: showAll.get(),
     onShowMore: showAll.get() ? undefined : () => showAll.set(true),
-  }; /*satisfies Partial<TabContentProps>;*/ // Webpack doesn't understand "satisfies"
+  };
 
   function handleTabChanged(tab: 'combined' | 'characters' | 'artifacts') {
     if (preferredTabs.get().results === tab) return;
-    settingsStore.updateSettings(cur => ({ preferredTabs: { ...(cur.preferredTabs ?? {} as AppSettings['preferredTabs']), results: tab } }));
+    SettingsStore.updateSettings(cur => ({ 
+      preferredTabs: { 
+        ...(cur.preferredTabs ?? {} as AppSettings['preferredTabs']), 
+        results: tab 
+      } 
+    }));
   }
 
   return (
@@ -49,8 +53,10 @@ export const SearchResultComponent = ({ result: {
         defaultTab={preferredTabs.get().results}
         onTabChange={tab => handleTabChanged(tab as 'combined' | 'characters' | 'artifacts')}
       >
-        <ShowAll {...{ ...props }} />
-        <Wrap />
+        <div className="search-result-options">
+          <ShowAll {...{ ...props }} />
+          <Wrap />
+        </div>
       </TabBar>
     </div>
   );

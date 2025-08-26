@@ -6,11 +6,14 @@ const LOCAL_STORAGE_KEY = 'CacheStore';
 
 export const useCacheStore = create<CacheStore>()(persist((setState, getState) => {
   const clearCache = () => {
-    setState({} as Cache);
+    setState({
+      searchHistory: {},
+      searchResults: {}
+    } as Cache);
     localStorage.removeItem(LOCAL_STORAGE_KEY);
   }
 
-  const has = <TKey extends CacheKeys>(key: TKey): boolean => !!getState()[key];
+  const has = <TKey extends CacheKeys>(key: TKey): boolean => !!getState()[key] && (typeof getState()[key] !== 'object' || Object.keys(getState()[key]).length > 0);
   const findObject = <TKey extends CacheKeys, TChildKey extends keyof Cache[TKey]>(
     key: TKey,
     callback: (obj: Cache[TKey][TChildKey]) => boolean

@@ -1,5 +1,5 @@
-import { Artifact, ArtifactSet, Character, CharacterArtifactSet, CharacterPlaystyle } from '@/common/models';
-import type { ArtifactPartName, BonusAbility, MainStatName, SubStatName } from '@/common/types';
+import { Artifact, ArtifactSet, Character } from '@/common/models';
+import type { ArtifactPartName, MainStatName, SubStatName } from '@/common/types';
 import { SearchFormData } from '@/common/types/store-data';
 import { DebugLog } from '@/common/functions/dev';
 
@@ -16,15 +16,22 @@ export type SearchResult = {
   byCharacterRecommendation: SearchResultItem[];
   combined: SearchResultItem[];
 
-  set: ArtifactSet;
+  setName: ArtifactSet['name'];
   form: FormData;
   id: string;
 };
-export type SearchResultItem = {
-  character: Character;
-  score: number;
-  shouldSave: boolean;
-};
+
+export class SearchResultItem {
+  constructor(
+    character: Character,
+    public score: number,
+    public shouldSave: boolean
+  ) {
+    this.characterName = character.name;
+  }
+
+  public characterName: Character['name'];
+}
 
 type LastResult = {
   search: SearchResult;
@@ -34,14 +41,86 @@ type LastResult = {
   mainStatRarity: number;
 };
 
-const SHOULD_SAVE_THRESHOLD = 100;
+const SHOULD_SAVE_THRESHOLD = 150;
 const ARTIFACT_PIECES_SCORES: Record<ArtifactPartName, number> = {
-  Flower: 0,
-  Feather: 0,
+  Flower: 1,
+  Feather: 1,
   Sands: 2,
-  Goblet: 2,
+  Goblet: 4,
   Circlet: 3,
 };
+
+// Constants for better score balancing
+const SET_PRIORITY_MULTIPLIER = 2; // Reduced from 10 to prioritize stat synergy over set preference
+const PART_SCORE_BASE_MULTIPLIER = 15;
+
+// Main stat scoring constants
+const MAIN_STAT_SCORES = {
+  // Premium stats (perfect match for element/role)
+  ELEMENTAL_DMG_BONUS_MATCH: 80,
+  ELEMENTAL_DMG_BONUS_MISMATCH: 25,
+  
+  // Scaling stats (HP/ATK/DEF for characters who scale with them)
+  SCALING_STAT_MATCH: 50,
+  SCALING_STAT_MISMATCH: 8,
+  DEF_MISMATCH: 2, // DEF is less valuable when not needed
+  
+  // Universal and utility stats
+  CRIT_STATS: 25, // Always valuable
+  EM_MATCH: 15,
+  EM_MISMATCH: 8,
+  ER_MATCH: 15,
+  ER_MISMATCH: 12,
+  HEALING_BONUS_MATCH: 15,
+  HEALING_BONUS_MISMATCH: 3,
+  PHYSICAL_DMG_MATCH: 15,
+  PHYSICAL_DMG_MISMATCH: 0, // Usually garbage for most characters
+  UNKNOWN_STAT: 10
+} as const;
+
+// Substat scoring constants
+const SUBSTAT_SCORES = {
+  // Scaling stats
+  SCALING_STAT_MATCH: 40,
+  HP_MISMATCH: 2,
+  ATK_MISMATCH: 2,
+  DEF_MISMATCH: 1,
+  
+  // Universal stats
+  CRIT_STATS: 25,
+  
+  // Utility stats
+  EM_MATCH: 40,
+  EM_MISMATCH: 8,
+  ER_MATCH: 40,
+  ER_MISMATCH: 12
+} as const;
+
+// Priority scoring system
+const PRIORITY_SCORES = {
+  FIRST_PRIORITY: 3,
+  SECOND_PRIORITY: 2,
+  THIRD_PRIORITY: 1,
+  NO_PRIORITY: 0,
+  MAX_PRIORITY_RANK: 3 // Only top 3 sets get points
+} as const;
+
+/**
+ * Scoring System Explanation:
+ * 
+ * Set Priority Score:
+ * - 1st priority set for character: PRIORITY_SCORES.FIRST_PRIORITY × SET_PRIORITY_MULTIPLIER points
+ * - 2nd priority set for character: PRIORITY_SCORES.SECOND_PRIORITY × SET_PRIORITY_MULTIPLIER points  
+ * - 3rd priority set for character: PRIORITY_SCORES.THIRD_PRIORITY × SET_PRIORITY_MULTIPLIER points
+ * - 4th+ priority sets: PRIORITY_SCORES.NO_PRIORITY points
+ * 
+ * Part Score: 
+ * - Base part value (Flower=1, Feather=1, Sands=2, Goblet=4, Circlet=3) × PART_SCORE_BASE_MULTIPLIER
+ * - Main stat compatibility bonus (using MAIN_STAT_SCORES)
+ * - Sub stat compatibility bonuses (using SUBSTAT_SCORES)
+ * 
+ * This ensures stat synergy significantly outweighs set priority for characters who benefit from the stats.
+ */
 
 export const SearchService = new class SearchService extends BaseService<LastResult> {
   public static readonly SHOULD_SAVE_THRESHOLD = SHOULD_SAVE_THRESHOLD;
@@ -51,7 +130,6 @@ export const SearchService = new class SearchService extends BaseService<LastRes
   public get lastResult(): LastResult {
     return super.lastResult as LastResult;
   }
-
   public searchByArtifacts(
     set: ArtifactSet,
     artifactPartName: ArtifactPartName,
@@ -65,13 +143,17 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     const result = this.lastResult.searchArtifactSets = Characters.map(character => {
       debugLog('group', character.name);
       debugLog('group', 'setScoreOnCharacter');
-      const setScoreOnCharacter = character.playstyle?.recommendedArtifactSets.reduce((acc, cSet) => {
-        const compatibility = cSet.set.name === set.name ? cSet.effectiveness : 0;
+
+      const setScoreOnCharacter = character.playstyle?.recommendedArtifactSets.reduce((acc, cSet, i, arr) => {
+        const compatibility = this._getCharacterEffectiveness(character, cSet.set);
         debugLog('Compatibility', compatibility);
-        const result = acc + compatibility;
+
+        const priorityScore = cSet.set.name === set.name ? compatibility * SET_PRIORITY_MULTIPLIER : 0;
+        const result = acc + priorityScore;
         debugLog('Accumulated', result);
         return result;
       }, 0) ?? 0;
+
       debugLog('Result', setScoreOnCharacter);
       debugLog('groupEnd');
 
@@ -79,15 +161,12 @@ export const SearchService = new class SearchService extends BaseService<LastRes
       const score = Math.round(setScoreOnCharacter + pieceScore);
       debugLog('Score', score);
 
-      const result = {
-        character,
-        score,
-        shouldSave: score > SHOULD_SAVE_THRESHOLD
-      } as SearchResultItem;
+      const result = new SearchResultItem(character, score, score > SHOULD_SAVE_THRESHOLD);
       debugLog('Result', result);
       debugLog('groupEnd');
       return result;
-    }).sort((a, b) => b.score - a.score);
+    });
+
     debugLog('Result', result);
     debugLog('groupEnd');
     return result;
@@ -101,23 +180,13 @@ export const SearchService = new class SearchService extends BaseService<LastRes
   ): List<SearchResultItem> {
     debugLog('group', 'searchCharacterRecommendations');
 
-    const getSetFromCharacter = (character: Character) => (
-      character.playstyle?.recommendedArtifactSets.find(cSet => cSet.set.name === set.name)
-    );
-    const isEffectiveForCharacter = (max: number) => (character: Character) => {
-      const cSet = getSetFromCharacter(character);
-      return cSet?.effectiveness ?? 0 >= max;
-    };
-
     // Filter characters that use the artifact set
-    const charactersUsesSet = Characters.filter(getSetFromCharacter);
-
-    // Filter characters that want the artifact set (compatibility 5; first priority)
-    const charactersWantSet = charactersUsesSet.filter(isEffectiveForCharacter(5));
+    const charactersUsesSet = Characters.filter(c => c.playstyle?.recommendedArtifactSets.some(cSet => cSet.set.name === set.name));
+    const charactersWantSet = charactersUsesSet.filter(c => this._getCharacterEffectiveness(c, set) === PRIORITY_SCORES.FIRST_PRIORITY);
 
     // Filter characters that could use the artifact set (compatibility 3; second/third priority)
     const charactersCouldUseSet = charactersUsesSet
-      .filter(isEffectiveForCharacter(3))
+      .filter(c => this._getCharacterEffectiveness(c, set))
       .filter(character => !charactersWantSet.includes(character));
 
     debugLog('Character data', { set, charactersUsesSet, charactersWantSet, charactersCouldUseSet });
@@ -126,32 +195,31 @@ export const SearchService = new class SearchService extends BaseService<LastRes
       debugLog('groupEnd');
       return this.lastResult.searchCharacterRecommendations = new List();
     }
-
-    // Calculate scores
+    
     const getScores = (characters: List<Character>) => {
       debugLog('group', 'getScores');
       const result = characters.map(character => {
-        const cSet = getSetFromCharacter(character);
-        const setScore = cSet?.effectiveness ?? 0;
+        const setScore = this._getCharacterEffectiveness(character, set) * SET_PRIORITY_MULTIPLIER
+        debugLog(`Set score for ${character.name}`, setScore);        
+        
         const partScore = this._getPartScore(character, artifactPartName, mainStat, subStats);
-        const score = Math.round(setScore * partScore);
+        const score = Math.round(setScore + partScore);
         debugLog(`Score data for ${character.name}`, { setScore, partScore, score, SHOULD_SAVE_THRESHOLD });
 
-        return {
-          character,
-          score,
-          shouldSave: score > SHOULD_SAVE_THRESHOLD
-        } as SearchResultItem;
+        return new SearchResultItem(character, score, score > SHOULD_SAVE_THRESHOLD);
       });
+
       debugLog('Result', result);
       debugLog('groupEnd');
       return result;
     };
     debugLog('groupEnd');
 
-    const result = this.lastResult.searchCharacterRecommendations = new List(
-      charactersWantSet, charactersCouldUseSet
-    ).map(getScores).flatten().sort((a, b) => b.score - a.score);
+    const result = this.lastResult.searchCharacterRecommendations = new List(charactersWantSet, charactersCouldUseSet)
+      .map(getScores)
+      .flatten()
+      .sort((a, b) => b.score - a.score);
+
     debugLog('Result', result);
     debugLog('groupEnd');
     return result;
@@ -163,44 +231,83 @@ export const SearchService = new class SearchService extends BaseService<LastRes
   ): SearchResult {
     if (!_form) throw new Error('_form not defined on SearchFormData');
 
-    const cachedResult = CacheStore.findObject('searchResults', 
-      data => data.id === id 
-      || ([...data.form.entries()].every(([key, value]) => 'get' in _form && _form.get(key) === value)));
+    const cachedResult = CacheStore.findObject('searchResults',
+      data => data.id === id
+        || ([...data.form.entries()].every(([key, value]) => 'get' in _form && _form.get(key) === value)));
+
     if (cachedResult) {
       debugLog('Cached result found', cachedResult);
-      return this.lastResult.search = cachedResult;
+      // return this.lastResult.search = cachedResult;
     }
 
     const { Artifacts: ArtifactSets, ArtifactNames: ArtifactSetNames } = DataStore;
+
     // Check artifact set exists in data
     if (!ArtifactSetNames.includes(artifactSetName)) throw new Error(`Artifact set "${artifactSetName}" not found in data.`);
+
     const set = ArtifactSets.find(set => set.name === artifactSetName);
     debugLog('Set found', set);
     if (!set) throw new Error(`Artifact set "${artifactSetName}" not found in data.`);
 
     debugLog('Starting search', { set, artifactPartName, mainStat, subStats, id, _form });
     const args = [set, artifactPartName, mainStat, subStats, DataStore] as const;
-    const byCharacterRecommendation = this.searchByCharacterRecommendation(...args);
-    const byArtifact = this.searchByArtifacts(...args).orderBy(...this._getOrderByFunctions(set, byCharacterRecommendation));
+    const byCharacterRecommendation = this.searchByCharacterRecommendation(...args).sort((a, b) => b.score - a.score);
+    const byArtifact = this.searchByArtifacts(...args).orderBy(...this._getOrderByFunctions(set, byCharacterRecommendation, DataStore));
     const combined = new List(...byArtifact, ...byCharacterRecommendation).reduce((acc, item) => {
-      const existing = acc.find(e => e.character.name === item.character.name);
+      const existing = acc.find(e => e.characterName === item.characterName);
       if (existing) {
         existing.score = Math.round(existing.score + item.score);
         existing.shouldSave = existing.score > SHOULD_SAVE_THRESHOLD;
         return acc;
       }
       return acc.concat(item);
-    }, new List<SearchResultItem>()).orderBy(...this._getOrderByFunctions(set, byCharacterRecommendation));
+    }, new List<SearchResultItem>()).orderBy(...this._getOrderByFunctions(set, byCharacterRecommendation, DataStore));
 
     const result = this.lastResult.search = {
-      combined, byArtifact, byCharacterRecommendation: byCharacterRecommendation.orderBy(...this._getOrderByFunctions(set, byCharacterRecommendation)),
-      form: _form, id, set,
+      combined, byArtifact, byCharacterRecommendation: byCharacterRecommendation.orderBy(...this._getOrderByFunctions(set, byCharacterRecommendation, DataStore)),
+      form: _form, id, setName: set.name,
     };
     CacheStore.update('searchResults', { [id]: result });
     debugLog('Result', result);
-    return result;  
+    return result;
   }
+   private _getCharacterEffectiveness(character: Character, set: ArtifactSet): number {
+    // Get unique effectiveness values in descending order (highest to lowest priority)
+    // This creates a ranking system where the most popular sets get priority 1, 2, 3, etc.
+    const effectiveness = new List(...(character.playstyle?.recommendedArtifactSets ?? []))
+      .mapUnique(cSet => cSet.effectiveness)
+      .sort((a, b) => b - a); // Sort descending to get highest effectiveness first
+    
+    // Find the MAXIMUM effectiveness for this set (in case it appears multiple times)
+    const setEffectiveness = Math.max(
+      ...(character.playstyle?.recommendedArtifactSets
+        .filter(cSet => cSet.set.name === set.name)
+        .map(cSet => cSet.effectiveness) ?? [0])
+    );
+    
+    if (setEffectiveness === 0) {
+      debugLog(`No effectiveness found for ${character.name} with ${set.name}`);
+      return 0;
+    }
+    
+    const priorityIndex = effectiveness.indexOf(setEffectiveness);
+    // Convert to priority score: Top 3 sets get points, others get 0
+    // 1st priority (most popular) = PRIORITY_SCORES.FIRST_PRIORITY points
+    // 2nd priority = PRIORITY_SCORES.SECOND_PRIORITY points  
+    // 3rd priority = PRIORITY_SCORES.THIRD_PRIORITY point
+    // 4th+ priority = PRIORITY_SCORES.NO_PRIORITY points
+    const priorityScore = priorityIndex < PRIORITY_SCORES.MAX_PRIORITY_RANK ? 
+      (PRIORITY_SCORES.FIRST_PRIORITY - priorityIndex) : PRIORITY_SCORES.NO_PRIORITY;
 
+    debugLog(`Effectiveness of ${character.name} with ${set.name}`, { 
+      effectiveness, 
+      setEffectiveness, 
+      priorityIndex: priorityIndex + 1, // Show 1-based index for clarity
+      priorityScore 
+    });
+    
+    return priorityScore;
+  }
   private _getPartScore(
     character: Character,
     artifactPartName: ArtifactPartName,
@@ -212,75 +319,99 @@ export const SearchService = new class SearchService extends BaseService<LastRes
 
     // The 'Adventurer' artifact name is irrelevant, although the class definition requires a setName value.
     const artifact = new Artifact('Adventurer', artifactPartName, mainStat, subStats);
-    debugLog('Artifact', artifact);
-
-    const partScore = ARTIFACT_PIECES_SCORES[artifactPartName];
-    debugLog('Part score', partScore);
-
-    const mainStatScore = this._getMainStatRarity(artifactPartName, mainStat) * -1 / 100 + (function checkMainStatScore() {
+    debugLog('Artifact', artifact);    const partScore = ARTIFACT_PIECES_SCORES[artifactPartName] * PART_SCORE_BASE_MULTIPLIER;
+    debugLog('Part score', partScore);    const mainStatScore = (function checkMainStatScore() {
       if (artifact.isFlower() || artifact.isFeather()) return 0;
-      if (mainStat === 'Physical DMG Bonus') return character.needsPhysicalDMG() ? 10 : 0; // Garbage stat
-      if (mainStat.includes('Crit')) return 20; // Crit stats are always good
-      if (mainStat.includes('DMG Bonus')) return mainStat.includes(character.element) ? 60 : 20; // Elemental DMG Bonuses are not to be messed with
-      if (mainStat === 'Elemental Mastery') return character.needsEM() ? 10 : 5;
-      if (mainStat === 'Energy Recharge') return character.needsER() ? 10 : 10; // I never get ER artifacts, please send some
-      if (mainStat === 'Healing Bonus') return character.canHeal() ? 10 : 2; // Healing bonus is decent but rarely used
-      if (mainStat === 'HP%') return character.needsHP() ? 10 : 5; // HP% is usually okay
-      if (mainStat === 'ATK%') return character.needsATK() ? 10 : 5; // ATK% is usually okay
-      if (mainStat === 'DEF%') return character.needsDEF() ? 10 : 1; // DEF% is usually bad
+      if (mainStat === 'Physical DMG Bonus') return character.needsPhysicalDMG() ? MAIN_STAT_SCORES.PHYSICAL_DMG_MATCH : MAIN_STAT_SCORES.PHYSICAL_DMG_MISMATCH;
+      if (mainStat.includes('Crit')) return MAIN_STAT_SCORES.CRIT_STATS;
+      if (mainStat.includes('DMG Bonus')) return mainStat.includes(character.element) ? MAIN_STAT_SCORES.ELEMENTAL_DMG_BONUS_MATCH : MAIN_STAT_SCORES.ELEMENTAL_DMG_BONUS_MISMATCH;
+      if (mainStat === 'Elemental Mastery') return character.needsEM() ? MAIN_STAT_SCORES.EM_MATCH : MAIN_STAT_SCORES.EM_MISMATCH;
+      if (mainStat === 'Energy Recharge') return character.needsER() ? MAIN_STAT_SCORES.ER_MATCH : MAIN_STAT_SCORES.ER_MISMATCH;
+      if (mainStat === 'Healing Bonus') return character.canHeal() ? MAIN_STAT_SCORES.HEALING_BONUS_MATCH : MAIN_STAT_SCORES.HEALING_BONUS_MISMATCH;
+      if (mainStat === 'HP%') return character.needsHP() ? MAIN_STAT_SCORES.SCALING_STAT_MATCH : MAIN_STAT_SCORES.SCALING_STAT_MISMATCH;
+      if (mainStat === 'ATK%') return character.needsATK() ? MAIN_STAT_SCORES.SCALING_STAT_MATCH : MAIN_STAT_SCORES.SCALING_STAT_MISMATCH;
+      if (mainStat === 'DEF%') return character.needsDEF() ? MAIN_STAT_SCORES.SCALING_STAT_MATCH : MAIN_STAT_SCORES.DEF_MISMATCH;
       console.error(`Unknown main stat "${mainStat}"`);
-      return 10;
+      return MAIN_STAT_SCORES.UNKNOWN_STAT;
     })();
     debugLog('Main stat score', mainStatScore);
-
     debugLog('group', 'subStatsScore');
+
+    let matchingSubStats = 0;
     const subStatsScore = artifact.subStats.reduce((acc, stat) => {
       const result = (() => {
         if (!stat) return acc; // Skip if stat is undefined or null
-        if (stat === 'HP' || stat === 'HP%') return acc + (character.needsHP() ? 20 : 1);
-        if (stat === 'ATK' || stat === 'ATK%') return acc + (character.needsATK() ? 20 : 1);
-        if (stat === 'DEF' || stat === 'DEF%') return acc + (character.needsDEF() ? 20 : 0);
-        if (stat === 'Crit Rate' || stat === 'Crit DMG') return acc + 20;
-        if (stat === 'Elemental Mastery') return acc + (character.needsEM() ? 20 : 5);
-        if (stat === 'Energy Recharge') return acc + (character.needsER() ? 20 : 10);
-        console.error(`Unknown substat "${stat}"`);
-        return acc;
+        
+        let statValue = 0;
+        let isMatching = false;        
+        if (stat === 'HP' || stat === 'HP%') {
+          statValue = character.needsHP() ? SUBSTAT_SCORES.SCALING_STAT_MATCH : SUBSTAT_SCORES.HP_MISMATCH;
+          isMatching = character.needsHP();
+        } else if (stat === 'ATK' || stat === 'ATK%') {
+          statValue = character.needsATK() ? SUBSTAT_SCORES.SCALING_STAT_MATCH : SUBSTAT_SCORES.ATK_MISMATCH;
+          isMatching = character.needsATK();
+        } else if (stat === 'DEF' || stat === 'DEF%') {
+          statValue = character.needsDEF() ? SUBSTAT_SCORES.SCALING_STAT_MATCH : SUBSTAT_SCORES.DEF_MISMATCH;
+          isMatching = character.needsDEF();
+        } else if (stat === 'Crit Rate' || stat === 'Crit DMG') {
+          statValue = SUBSTAT_SCORES.CRIT_STATS;
+          isMatching = true; // Crit is always considered matching
+        } else if (stat === 'Elemental Mastery') {
+          statValue = character.needsEM() ? SUBSTAT_SCORES.EM_MATCH : SUBSTAT_SCORES.EM_MISMATCH;
+          isMatching = character.needsEM();
+        } else if (stat === 'Energy Recharge') {
+          statValue = character.needsER() ? SUBSTAT_SCORES.ER_MATCH : SUBSTAT_SCORES.ER_MISMATCH;
+          isMatching = character.needsER();
+        } else {
+          console.error(`Unknown sub stat "${stat}"`);
+          return acc;
+        }
+        
+        if (isMatching) matchingSubStats++;
+        return acc + statValue;
       })();
       debugLog('Substat', stat, result, acc);
       return result;
     }, 0);
+    
     debugLog('Result', subStatsScore);
     debugLog('groupEnd');
-    debugLog('Substats score', subStatsScore);
+    debugLog('Sub stats score', subStatsScore);
+    
+    const finalPartScore = partScore + mainStatScore + subStatsScore;
+    
+    debugLog('Final part score', finalPartScore);
     debugLog('groupEnd');
-    return this.lastResult.piecesScore = partScore + mainStatScore + subStatsScore;
+    return this.lastResult.piecesScore = finalPartScore;
   }
-  private _getMainStatRarity(partName: ArtifactPartName, stat: MainStatName) {
-    const result = this.lastResult.mainStatRarity = (() => {
-      if (partName === 'Flower' || partName === 'Feather') return 100;
-      if (stat === 'HP%' || stat === 'ATK%' || stat === 'DEF%') return partName !== 'Sands' ? 22 : 26;
-      if (stat === 'Elemental Mastery') return partName === 'Sands' ? 10 : 4;
-      return 10;
-    })();
-    debugLog(`Main stat rarity for ${stat} ${partName}`, result);
-    return result;
-  }
-  private _getOrderByFunctions(set: ArtifactSet, byCharacterRecommendation: List<SearchResultItem>): Array<OrderByComparator<SearchResultItem>> {
+  private _getOrderByFunctions(
+    set: ArtifactSet,
+    byCharacterRecommendation: List<SearchResultItem>,
+    DataStore: DataStore,
+  ): Array<OrderByComparator<SearchResultItem>> {
     return [
       (a, b) => b.score - a.score,
-
-      // effectiveness, characterRecommendation, score
       (a, b) => {
-        const effectiveA = a.character.playstyle?.recommendedArtifactSets.find(cSet => cSet.set.name === set.name)?.effectiveness ?? 0;
-        const effectiveB = b.character.playstyle?.recommendedArtifactSets.find(cSet => cSet.set.name === set.name)?.effectiveness ?? 0;
+        const characterA = DataStore.Characters.find(c => c.name === a.characterName);
+        const characterB = DataStore.Characters.find(c => c.name === b.characterName);
+        if (!characterA || !characterB) {
+          if (!characterA) console.warn(`Character "${a.characterName}" not found in data.`);
+          if (!characterB) console.warn(`Character "${b.characterName}" not found in data.`);
+          return 0;
+        }
+
+        const effectiveA = this._getCharacterEffectiveness(characterA, set);
+        const effectiveB = this._getCharacterEffectiveness(characterB, set);
+        
+        // Higher effectiveness should come first
         return effectiveB - effectiveA;
       },
       (a, b) => {
-        const recommendedA = byCharacterRecommendation.some(c => c.character.name === a.character.name);
-        const recommendedB = byCharacterRecommendation.some(c => c.character.name === b.character.name);
+        const recommendedA = byCharacterRecommendation.some(c => c.characterName === a.characterName);
+        const recommendedB = byCharacterRecommendation.some(c => c.characterName === b.characterName);
         return recommendedA && !recommendedB ? -1 : recommendedB && !recommendedA ? 1 : 0;
       },
-    ]
+    ];
   }
 };
 

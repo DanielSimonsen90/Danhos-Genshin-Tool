@@ -93,3 +93,7 @@ export function romanNumerals(value: number) {
     default: return value.toString();
   }
 }
+
+export function numberSeparator(value: number, separator = '.') {
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
+}

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import { rarityString } from "@/common/functions/strings";
+import { numberSeparator, rarityString } from "@/common/functions/strings";
 import { Character } from "@/common/models";
 
 import { CharacterImage, ElementImage, WeaponImage } from "@/components/common/media/Images";
@@ -88,7 +88,7 @@ export default function CharacterCard({
           {!props.wrapInLink && <Region region={character.region} className="region" />}
           {score && score > 0 && (
             <p className="character-details__score">
-              Score: <b>{score}</b>
+              Score: <b>{numberSeparator(score)}</b>
             </p>
           )}
           {showPassiveTalent && (
@@ -116,7 +116,7 @@ export default function CharacterCard({
           {showCharacterPlaystyle && (
             <div className="character-playstyle-wrapper">
               <h3 className="character-playstyle-wrapper__title">Playstyle</h3>
-              <CharacterPlaystyle character={character} />
+              <CharacterPlaystyle character={character} showRecommendedArtifactSets showRecommendedTalentAscension />
             </div>
           )}
           {showSignatureWeapon && signatureWeapon && (

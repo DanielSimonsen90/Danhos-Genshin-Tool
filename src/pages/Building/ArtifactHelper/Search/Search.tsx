@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { pascalCaseFromSnakeCase } from "@/common/functions/strings";
@@ -20,11 +20,15 @@ const debugLog = DebugLog(DebugLog.DEBUGS.searchQuery);
 
 export default function SearchQuery() {
   const { query = '' } = useParams();
+
   const CacheStore = useCacheStore();
   const DataStore = useDataStore();
+  
   const [formData, setFormData] = useState<SearchFormData | undefined>(undefined);
   const [results, setResults] = useState<SearchResult | null>(null);
   const [retries, setRetries] = useState(0);
+
+  const artifactSet = useMemo(() => formData?.artifactSetName ? DataStore.findArtifactByName(formData.artifactSetName.replace(/_/g, ' ')) : undefined, [formData, DataStore]);
   const Result = useCallback(() => results ? <SearchResultComponent result={results} /> : <p>No results</p>, [results]);
 
   useEffect(() => {
@@ -36,7 +40,7 @@ export default function SearchQuery() {
     if (!CacheStore.get('searchHistory', {})[query] && formData) CacheStore.update('searchHistory', { [query as string]: formData });
   }, [query, retries]);
 
-  if (!formData || !results) return (
+  if (!formData || !results || !artifactSet) return (
     <div className="loading">
       <p>Results failed.</p>
       <button onClick={() => setRetries(retries + 1)}>Try again?</button>
@@ -57,7 +61,7 @@ export default function SearchQuery() {
             <span className="artifact-display__substat" key={i}>{subStat}</span>
           ))}
         </p>
-        <ArtifactDetails artifact={results.set} />
+        <ArtifactDetails artifact={artifactSet} />
       </div>
       <Result />
     </>

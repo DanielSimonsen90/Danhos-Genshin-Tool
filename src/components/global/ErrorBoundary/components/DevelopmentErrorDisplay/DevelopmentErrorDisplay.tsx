@@ -1,5 +1,6 @@
 import React from 'react';
 import './DevelopmentErrorDisplay.scss';
+import { Link } from 'react-router-dom/dist';
 
 interface DevelopmentErrorDisplayProps {
   error?: Error;
@@ -35,7 +36,7 @@ export const DevelopmentErrorDisplay: React.FC<DevelopmentErrorDisplayProps> = (
       <div className="error-boundary__header">
         <h1 className="error-boundary__title">🚨 Development Error</h1>
         <div className="error-boundary__actions">
-          <button 
+          <button
             className="error-boundary__button error-boundary__button--secondary" 
             onClick={copyErrorToClipboard}
           >

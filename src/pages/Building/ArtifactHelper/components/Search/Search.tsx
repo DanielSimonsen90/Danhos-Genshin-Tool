@@ -19,14 +19,19 @@ import { useToast } from "@/providers/ToastProvider";
 import { useCacheStore } from "@/stores/CacheStore";
 import { ArtifactImage } from "@/components/common/media/Images";
 import { ROUTES } from "@/common/constants/routes";
+import { ArtifactPartName } from "@/common/types";
+import { useDataStore } from "@/stores";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchComponent);
 
 export default function Search() {
   const navigate = useNavigate();
   const { query } = useParams();
+  
+  const DataStore = useDataStore();
   const CacheStore = useCacheStore();
   const { error } = useToast();
+
   const defaultSearch = useMemo(() => {
     if (!query) return undefined;
     const currentSearch = CacheStore.findObject('searchResults', result => result.id === query);
@@ -38,7 +43,10 @@ export default function Search() {
       return acc;
     }, {} as SearchFormData);
   }, [query]);
+
   const [artifactSetName, setArtifactSetName] = useState<string | undefined>(defaultSearch?.artifactSetName);
+  const [artifactSetPiece, setArtifactSetPiece] = useState<ArtifactPartName>(defaultSearch?.artifactPartName ?? 'Flower');
+
   const [loading, onSubmit] = useActionState<SearchFormData>(data => {
     debugLog('onSubmit', data);
     if (data.subStats.filter(Boolean).length > 4) {
@@ -70,14 +78,17 @@ export default function Search() {
   return (
     <form className="search-form" onSubmit={onSubmit}>
       <div className="artifact-set-select">
-        {artifactSetName ? <ArtifactImage set={artifactSetName} piece="Flower" /> : null}
+        {artifactSetName ? <ArtifactImage set={artifactSetName} piece={artifactSetPiece} /> : null}
         <SelectArtifactSet name="artifactSetName" defaultValue={defaultSearch?.artifactSetName} required onChange={setArtifactSetName} />
       </div>
       <SelectArtifactPartName name="artifactPartName" defaultValue={defaultSearch?.artifactPartName} required
-        onChange={part => setSelectMainStat({
-          artifactPartName: part,
-          defaultValue: part === 'Flower' ? 'HP%' : part === 'Feather' ? 'ATK%' : undefined
-        })} />
+        onChange={part => {
+          setSelectMainStat({
+            artifactPartName: part,
+            defaultValue: part === 'Flower' ? 'HP%' : part === 'Feather' ? 'ATK%' : undefined
+          });
+          setArtifactSetPiece(part);
+        }} />
       <SelectMainStat />
       <SelectSubStat name="subStats" defaultValue={defaultSearch?.subStats} required floatable />
 

@@ -18,6 +18,7 @@ export class Character<TElement extends Element = Element> {
     public passiveTalent: PassiveTalent | undefined,
     public playstyle: CharacterPlaystyle | undefined,
   ) {}
+  
   public needsHP(): boolean { return this.playstyle?.talentStats.includes('HP') ?? false; }
   public needsATK(): boolean { return this.playstyle?.talentStats.includes('ATK') ?? false; }
   public needsDEF(): boolean { return this.playstyle?.talentStats.includes('DEF') ?? false; }
