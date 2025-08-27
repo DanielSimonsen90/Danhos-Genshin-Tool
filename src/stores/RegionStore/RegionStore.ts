@@ -83,7 +83,7 @@ export const useRegionStore = create<RegionStore>((setState, getState) => {
       'Asia': 8,           // GMT+8
       'Europe': 1,         // GMT+1
       'North America': -5,  // GMT-5
-      'TW, HK, MO': NaN // unknown timezone
+      'TW, HK, MO': 8      // GMT+8 (assumed, but not confirmed)
     };
 
     const timezoneOffset = serverTimezoneOffsets[region];

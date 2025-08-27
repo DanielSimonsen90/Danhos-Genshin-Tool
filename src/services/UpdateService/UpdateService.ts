@@ -51,7 +51,8 @@ export const UpdateService = new class UpdateService {
     }
 
     return 0;
-  }  public async checkForUpdates(showNoUpdateDialog = false): Promise<UpdateCheckResult> {
+  }  
+  public async checkForUpdates(showNoUpdateDialog = false): Promise<UpdateCheckResult> {
     console.log('UpdateService.checkForUpdates called', { showNoUpdateDialog, isChecking: this.isCheckingForUpdates });
     
     if (this.isCheckingForUpdates) {

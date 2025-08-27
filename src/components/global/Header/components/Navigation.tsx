@@ -35,13 +35,13 @@ const getSubRoutes = (parentRoute: string) => {
     .sort((a, b) => a.label.localeCompare(b.label));
 };
 
-const routes = ([
+const routes = [
   ['/', 'Home'],
   [`/${ROUTES.building}`, 'Building'],
   [`/${ROUTES.data}`, 'Data'],
   // [`/${ROUTES.generator}`, 'Generator'],
   IS_DEVELOPMENT_ENVIRONMENT && [`/${ROUTES.development}`, 'Development'],
-].filter(Boolean) as Array<[string, string]>)
+].filter((route): route is [string, string] => Boolean(route))
 .map(([to, label]) => {
   const subRoutes = getSubRoutes(to);
   return [to, label, subRoutes.length > 0 ? subRoutes : undefined] as [string, string, typeof subRoutes?];

@@ -100,10 +100,12 @@ export const ScoringEngine = new class ScoringEngine {
     debugLog('groupEnd');
     debugLog('Sub stats score', subStatsScore);
 
-    const finalPartScore = partScore + mainStatScore + subStatsScore;    debugLog('Final part score', finalPartScore);
+    const finalPartScore = partScore + mainStatScore + subStatsScore;
+    debugLog('Final part score', finalPartScore);
     debugLog('groupEnd');
     return finalPartScore;
-  }  private _calculateMainStatScore(character: Character, artifact: Artifact<ArtifactPartName>, mainStat: MainStatName): number {
+  }  
+  private _calculateMainStatScore(character: Character, artifact: Artifact<ArtifactPartName>, mainStat: MainStatName): number {
     if (artifact.isFlower() || artifact.isFeather()) return 0;
 
     if (mainStat === 'Physical DMG Bonus') return character.needsPhysicalDMG() ? MAIN_STAT_SCORES.PHYSICAL_DMG_MATCH : MAIN_STAT_SCORES.PHYSICAL_DMG_MISMATCH;
