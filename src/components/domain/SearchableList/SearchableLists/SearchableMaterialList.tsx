@@ -17,7 +17,7 @@ import CraftableMaterial from "@/common/models/materials/CraftableMaterial";
 import AscensionMaterial, { TalentAscensionMaterial, WeaponAscensionMaterial } from "@/common/models/materials/AscensionMaterial";
 import LocalSpecialty from "@/common/models/materials/LocalSpecialty";
 import MobDrop, { ElementalCrystal } from "@/common/models/materials/MobDrop";
-import { WeeklyBoss, WorldBoss } from "@/common/models";
+import { EasyMob, EliteMob, WeeklyBoss, WorldBoss } from "@/common/models";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<Material, TFilterKeys>>
@@ -75,8 +75,10 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
       },
       obtainableThrough: {
         domains: material => DataStore.getDomainsFromMaterial(material).length > 0,
-        worldBoss: material => material instanceof MobDrop && DataStore.getBossesFromMaterial(material).filter(WorldBoss.isWorldBoss).length > 0,
-        weeklyBoss: material => material instanceof MobDrop && DataStore.getBossesFromMaterial(material).filter(WeeklyBoss.isWeeklyBoss).length > 0,
+        easyMobs: material => material instanceof MobDrop && DataStore.getMobsDroppingMaterial(material.name).filter(EasyMob.isEasyMob).length > 0,
+        eliteMobs: material => material instanceof MobDrop && DataStore.getMobsDroppingMaterial(material.name).filter(EliteMob.isEliteMob).length > 0,
+        worldBosses: material => material instanceof MobDrop && DataStore.getBossesFromMaterial(material).filter(WorldBoss.isWorldBoss).length > 0,
+        weeklyBosses: material => material instanceof MobDrop && DataStore.getBossesFromMaterial(material).filter(WeeklyBoss.isWeeklyBoss).length > 0,
         crafting: CraftableMaterial.isCraftableMaterial,
       },
       obtainableToday: material => AscensionMaterial.isAscensionMaterial(material) ? material.isObtainableToday(RegionStore) : undefined,

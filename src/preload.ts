@@ -8,6 +8,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
   checkForUpdates: () => ipcRenderer.invoke('check-for-updates'),
   getAppVersion: () => ipcRenderer.invoke('get-app-version'),
   
+  // LocalStorage import/export functionality (full data backup/restore)
+  getAllLocalStorageData: () => ipcRenderer.invoke('get-all-localstorage-data'),
+  setAllLocalStorageData: (data: any) => ipcRenderer.invoke('set-all-localstorage-data', data),
+  
   // Listen for update download progress
   onUpdateDownloadProgress: (callback: (progress: any) => void) => {
     ipcRenderer.on('update-download-progress', (_, progress) => callback(progress));

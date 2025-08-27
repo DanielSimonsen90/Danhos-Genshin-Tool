@@ -52,5 +52,13 @@
     .searchable-list__list-item {
       display: flex;
     }
+
+    .weapon-card header {
+      align-items: start !important;
+    }
+
+    .weapon-image {
+      --size: 5rem !important;
+    }
   }
 }
