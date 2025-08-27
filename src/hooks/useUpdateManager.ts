@@ -42,7 +42,7 @@ export const useUpdateManager = () => {
     } finally {
       setIsCheckingForUpdates(false);
     }
-  }, [isCheckingForUpdates]);
+  }, [isCheckingForUpdates, toast]);
 
   useEffect(() => {
     if (window.electronAPI) window.electronAPI.getAppVersion().then(setAppVersion);
