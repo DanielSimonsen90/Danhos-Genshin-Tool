@@ -78,7 +78,7 @@ export const useSettingsStore = create<SettingsStore>(((setState, getState) => {
 
       const resolvedSettings = { ...getState().settings, ...resolvedUpdate };
       storageService.set(resolvedSettings);
-      debugLog('Settings saved', resolvedUpdate);
+      debugLog('Settings saved', resolvedSettings);
 
       const newInitialSettings = { ...resolvedSettings };
       delete newInitialSettings.updated;
