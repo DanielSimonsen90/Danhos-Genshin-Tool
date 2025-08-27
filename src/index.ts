@@ -285,7 +285,7 @@ const setupApplicationMenu = (): void => {
         { type: 'separator' },
         {
           label: 'GitHub Repository',
-          click: () => shell.openExternal('https://github.com/DanielSimonsen90/danhos-genshin-tool'),
+          click: () => shell.openExternal(PROJECT_GITHUB_URL),
         },
       ],
     },
