@@ -42,7 +42,7 @@ export function useActionState<TResult extends Record<string, any>>(
     const data: Record<string, any> = { _form: form };
     let hasPlaceholder = false;
     Object.values(form).forEach(({ name, value }) => {
-      if (!name) return;
+      if (!name || name.trim() === '') return;
       
       if (value === '<placeholder>') {
         hasPlaceholder = true;
