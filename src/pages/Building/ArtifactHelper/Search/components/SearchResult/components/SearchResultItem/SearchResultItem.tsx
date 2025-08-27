@@ -1,19 +1,26 @@
+import { useMemo } from 'react';
 import { ArtifactSet } from '@/common/models';
 import { CharacterCard, CharacterSet } from '@/components/domain/models/Character';
 import { SearchResultItem } from '@/services/SearchService';
+import { useDataStore } from '@/stores';
 
 type Props = {
   result: SearchResultItem;
-  set: ArtifactSet;
+  setName: ArtifactSet['name'];
 };
 
-export const SearchResultItemComponent = ({ result, set: artifactSet }: Props) => {
-  const { character, score } = result;
+export const SearchResultItemComponent = ({ result, setName }: Props) => {
+  const { characterName, score } = result;
+  const DataStore = useDataStore();
+  const character = useMemo(() => DataStore.Characters.find(c => c.name === characterName), [DataStore, characterName]);
+  const set = useMemo(() => DataStore.Artifacts.find(s => s.name === setName), [DataStore, setName]);
 
-  return (<>
-    <CharacterCard character={character} score={score} linkOnName />
-    <CharacterSet character={character} artifactSet={artifactSet} />
-  </>);
+  if (!character) return null;
+  return (
+    <CharacterCard character={character} score={score} wrapInLink>
+      <CharacterSet character={character} artifactSet={set} showRecommendedArtifactSets />
+    </CharacterCard>
+  )
 };
 
 export default SearchResultItemComponent;

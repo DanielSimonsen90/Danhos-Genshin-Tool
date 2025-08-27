@@ -10,7 +10,7 @@ export type CacheStore = Cache & {
     callback: (obj: Cache[TKey][TChildKey]) => boolean
   ) => Cache[TKey][TChildKey] | undefined;
   set: <TKey extends CacheKeys>(key: TKey, value: Cache[TKey]) => void;
-  get: <TKey extends CacheKeys>(key: TKey, defaultValue: any) => Cache[TKey] | undefined;
+  get: <TKey extends CacheKeys>(key: TKey, defaultValue: any) => Cache[TKey];
   getFromItem: <TKey extends CacheKeys, TChildKey extends keyof Cache[TKey]>(
     key: TKey,
     childKey: TChildKey,

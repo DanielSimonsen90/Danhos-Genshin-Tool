@@ -40,7 +40,7 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
   const DataStore = useDataStore();
   const RegionStore = useRegionStore();
 
-  return <SearchableList items={items}
+  return <SearchableList items={items ?? []}
     placeholder="Search materials..."
     key={RegionStore.currentRegion}
     sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
@@ -64,7 +64,7 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
       setHidden([]);
       navigate(`?query=${search}&filters=${JSON.stringify(filters)}`);
     }}
-    onSearch={noBaseSearch ? onSearch : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}
+    onSearch={noBaseSearch ? onSearch ?? (() => true) : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}
     filterChecks={noBaseFilterChecks ? filterChecks : {
       type: {
         crystal: ElementalCrystal.isElementalCrystal,

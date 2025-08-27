@@ -14,5 +14,5 @@ export default function RelationsForModel<TModelKey extends ModelKeys>({ model, 
     <div className="material-relations-for-model">
       {content}
     </div>
-  ) : undefined;
+  ) : <></>;
 }

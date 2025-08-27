@@ -17,7 +17,7 @@ const LOCAL_PATH = IS_DEVELOPMENT_ENVIRONMENT ? '../assets/images' : `${GITHUB_C
 
 export const ImageService = new class ImageService extends BaseService<string> {
   public getArtifactImage(set: keyof typeof ArtifactSetData | string, part: ArtifactPartName): string {
-    return this.lastResult = set.includes('Prayers')
+    return this.lastResult = set.includes('Prayers') || part !== 'Flower'
       ? `${PAIMON_MOE_URL}/artifacts/${snakeCaseFromCamelCase(set).replace("'", '').toLowerCase()}_${part === 'Feather' ? 'plume' : snakeCaseFromCamelCase(part).toLowerCase()}.png`
       : `${SUNDERARMOR_CDN_URL}/Gear/${snakeCaseFromCamelCase(set).toLowerCase()}.png`;
   }

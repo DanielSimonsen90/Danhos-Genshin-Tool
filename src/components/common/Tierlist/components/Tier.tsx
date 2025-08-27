@@ -35,8 +35,8 @@ export default function Tier<T>({
   const [showEditModal, setShowEditModal] = useState(false);
   const onContext = useContextMenu(item => [
     item('divider', 'Move'),
-    tier.position !== 0 ? item('option', 'Move up', () => updateTier(tier.id, { position: tier.position - 1 }), '⬆️') : undefined,
-    tier.position + 1 !== unsorted.position ? item('option', 'Move down', () => updateTier(tier.id, { position: tier.position + 1 }), '⬇️') : undefined,
+    tier.position !== 0 && item('option', 'Move up', () => updateTier(tier.id, { position: tier.position - 1 }), '⬆️'),
+    tier.position + 1 !== unsorted.position && item('option', 'Move down', () => updateTier(tier.id, { position: tier.position + 1 }), '⬇️'),
     item('divider', 'Add rows'),
     item('option', 'Add new above', () => setTiers(tiers => {
         const newTiers = [...tiers];

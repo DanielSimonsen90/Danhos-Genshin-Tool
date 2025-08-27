@@ -1,7 +1,7 @@
 import { createContext } from "react";
 import { MenuItemOption, ContextMenuContextType, MenuItem, MenuItemTypes, MenuItemDivider } from "./ContextMenuTypes";
 
-export const ContextMenuContext = createContext<ContextMenuContextType>(null);
+export const ContextMenuContext = createContext<ContextMenuContextType>(null as any);
 
 export function CreateMenuItem(
   type: 'option', 

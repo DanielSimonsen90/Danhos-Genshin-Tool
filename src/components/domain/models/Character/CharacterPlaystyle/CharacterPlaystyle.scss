@@ -6,6 +6,7 @@
 
   &.character-result {
     padding-inline: .5em;
+    gap: 0;
   }
 
   p,
@@ -15,6 +16,7 @@
 
   .playstyle-recommendations {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     gap: 2em;
 

@@ -3,7 +3,7 @@
 .character-artifacts-combinations {
   background-color: var(--background-secondary--muted);
   border-radius: .25rem;
-  width: 30em;
+  // width: 30em;
 
   @media screen and (max-width: 900px) {
     width: 100%;
@@ -13,7 +13,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative; // Required for absolute positioning of tooltip
+    position: relative; 
     
     a {
       display: flex;
@@ -35,8 +35,12 @@
 
     .combination-container {
       display: flex;
-      align-items: center;      
-      flex-grow: 1;
+      align-items: center;
+      margin-right: 1em;
+      
+      &:last-of-type {
+        flex-grow: 1;
+      }
 
       .piece {
         font-size: 2rem;

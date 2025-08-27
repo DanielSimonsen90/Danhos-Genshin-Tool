@@ -11,6 +11,7 @@ import { FuseV1Options, FuseVersion } from '@electron/fuses';
 import { mainConfig } from './webpack.main.config';
 import { rendererConfig } from './webpack.renderer.config';
 import { DOMAIN_NAME, DEVELOPER_GITHUB_URL } from './src/common/constants/domain';
+
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -31,10 +32,16 @@ const config: ForgeConfig = {
     },
   ],
   rebuildConfig: {},
-  makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
+  makers: [
+    new MakerSquirrel({}),
+    new MakerZIP({}, ['darwin']), 
+    new MakerRpm({}), 
+    new MakerDeb({})
+  ],
   plugins: [
-    new AutoUnpackNativesPlugin({}),    new WebpackPlugin({
-      mainConfig,      
+    new AutoUnpackNativesPlugin({}),
+    new WebpackPlugin({
+      mainConfig,
       devContentSecurityPolicy: [
         "default-src 'self'",
         "img-src 'self' https://sunderarmor.com https://lustonpull.com https://rerollcdn.com https://paimon.moe https://static.wikia.nocookie.net https://raw.githubusercontent.com",

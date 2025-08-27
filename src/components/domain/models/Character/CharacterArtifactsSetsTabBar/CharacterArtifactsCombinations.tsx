@@ -9,9 +9,7 @@ import { ArtifactImage } from "@/components/common/media/Images";
 const HOVER_TIMEOUT = 100;
 
 type Props = {
-  character: Character;
-  set: ArtifactSet;
-  artifactSets: CharacterArtifactSet[];
+  artifactSets?: CharacterArtifactSet[];
 };
 
 type GroupedSet = {
@@ -20,7 +18,7 @@ type GroupedSet = {
   isGroup: boolean;
 };
 
-export default function CharacterArtifactsCombinations({ character, set, artifactSets = [] }: Props) {
+export default function CharacterArtifactsCombinations({ artifactSets = [] }: Props) {
   const [hoveredGroupId, setHoveredGroupId] = useState<string | null>(null);
   const [hoveredSetBonus, setHoveredSetBonus] = useState<string | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);

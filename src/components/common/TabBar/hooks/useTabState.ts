@@ -19,7 +19,7 @@ export function useTabState<TTabKey extends string>({
   onTabChange,
   markTabAsRendered
 }: UseTabStateProps<TTabKey>) {
-  const [activeTab, _setActiveTab] = useState<TTabKey>(defaultTab ?? tabs.find(([_, value]) => value)?.[0]);
+  const [activeTab, _setActiveTab] = useState<TTabKey>(defaultTab ?? tabs.find(([_, value]) => value)?.[0] as TTabKey);
   const setActiveTab = useCallback((newTab: TTabKey) => {
     if (!newTab) return;
 

@@ -2,6 +2,8 @@
   border-radius: 8px;
   overflow: hidden;
   transition: all 0.3s ease;
+  display: grid;
+  grid-template-rows: auto 1fr;
 
   &__header {
     width: 100%;
@@ -60,7 +62,7 @@
       --max-height: 20rem;
       max-height: var(--max-height);
       padding-top: .5rem;
-      padding-bottom: .5rem;
+      padding-bottom: 1rem;
       overflow: auto;
     }
   }

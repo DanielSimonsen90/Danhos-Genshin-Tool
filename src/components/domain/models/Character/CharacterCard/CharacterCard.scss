@@ -65,36 +65,41 @@
     }
   }
 
-  &:has(.character-ascension, .character-sets, .character-signature-weapon) .character-card__content {
-    display: flex;
-    flex-direction: column;
-  }
+  .character-card__content {
+    flex-direction: row;
+    flex-wrap: wrap;
 
-  .character-ascension {
-    grid-area: ascension;
+    .character-ascension {
+      // grid-area: ascension;
+      width: max-content;
+      flex: 1 1 100%;
 
-    &__list {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
-      gap: 1em;
+      &__list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+        gap: 1em;
 
-      .model-card {
-        height: 100%;
-        justify-content: center;
-      }
+        .model-card {
+          height: 100%;
+          justify-content: center;
+        }
 
-      .material-image {
-        --size: 5rem;
+        .material-image {
+          --size: 5rem;
+        }
       }
     }
   }
 
   .character-playstyle-wrapper {
-    grid-area: playstyle;
+    // grid-area: playstyle;
+    flex: 1 1 48%;
   }
 
   .character-signature-weapon {
-    grid-area: signature-weapon;
+    // grid-area: signature-weapon;
+    flex: 1 1 48%;
+
     display: grid;
     grid-template-rows: auto 1fr;
 
@@ -145,13 +150,14 @@ li:has(> .character-card, > * > .character-card) {
 
 li:has(.character-card) {
   .character-card {
-      padding: .5em;
+    padding: .5em;
     border-radius: .5em;
   }
 }
 
 a.character-card {
   border: 1px solid var(--element);
+  gap: .25rem;
 
   &:hover {
     background-color: var(--element--muted);

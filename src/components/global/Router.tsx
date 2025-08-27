@@ -58,7 +58,9 @@ export const Router = () => (
           <Route path={ROUTES.endRoute('building_priority_list')} element={<PriorityList />} />
           <Route path={ROUTES.endRoute('building_artifact_helper')}>
             <Route index element={<ArtifactHelper />} />
-            <Route path={ROUTES.endRoute('building_artifact_helper_search')} element={<Search />} />
+            <Route path={ROUTES.endRoute('building_artifact_helper_search')}>
+              <Route path={ROUTES.endRoute('building_artifact_helper_search_query')} element={<Search />} />
+            </Route>
           </Route>
           {/* 
           /plan

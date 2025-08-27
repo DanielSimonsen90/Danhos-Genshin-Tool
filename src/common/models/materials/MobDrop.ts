@@ -24,7 +24,7 @@ export class MobDrop extends CraftableMaterial {
       name,
       map,
       '',
-      options?.prependName,
+      options?.prependName ?? false,
       (name, _, rarity) => 
         options?.onCreate?.(name, description[rarity as Rarities], rarity as Rarities) 
         ?? new MobDrop(name, description[rarity as Rarities], undefined, rarity)

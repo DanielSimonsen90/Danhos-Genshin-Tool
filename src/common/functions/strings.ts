@@ -53,8 +53,8 @@ export function formatSearchData(value: SearchFormData, withSet = false) {
   return result;
 }
 
-export function classNames(...args: string[]) {
-  return args.filter(Boolean).join(' ') || undefined
+export function classNames(...args: (string | boolean | undefined | null)[]) {
+  return args.filter(Boolean).join(' ').trim() || undefined
 }
 
 export function fromList(list: string[] = []) {
@@ -92,4 +92,8 @@ export function romanNumerals(value: number) {
     case 10: return 'X';
     default: return value.toString();
   }
+}
+
+export function numberSeparator(value: number, separator = '.') {
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
 }

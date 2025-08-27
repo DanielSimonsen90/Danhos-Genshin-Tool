@@ -17,7 +17,7 @@ export const DEBUGS = {
 
   // services
   baseService: false,
-  searchService: true,
+  searchService: false,
   imageService: false,
 
   // stores

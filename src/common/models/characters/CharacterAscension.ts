@@ -7,9 +7,9 @@ import LocalSpecialty from "../materials/LocalSpecialty";
 export type CharacterAscension<TElement extends Element> = {
   localSpecialty: LocalSpecialty;
   crystal: ElementalCrystalGroup<TElement>;
-  material: AscensionMaterial;
-  weeklyBossDrop: MobDrop;
-  worldBossDrop: MobDrop;
+  material: AscensionMaterial | null;
+  weeklyBossDrop: MobDrop | null;
+  worldBossDrop: MobDrop | null;
   mobDrop: MobDrop;
 };
 

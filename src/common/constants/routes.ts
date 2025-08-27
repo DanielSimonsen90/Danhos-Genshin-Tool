@@ -16,7 +16,8 @@ export const ROUTES = new class Routes {
   public building = 'building' as const;
   public building_priority_list = `${this.building}/priority-list` as const;
   public building_artifact_helper = `${this.building}/artifact-helper` as const;
-  public building_artifact_helper_search = `${this.building_artifact_helper}/search/:query` as const;
+  public building_artifact_helper_search = `${this.building_artifact_helper}/search` as const;
+  public building_artifact_helper_search_query = `${this.building_artifact_helper_search}/:query` as const;
 
   // public building_plan = `${this.building}/plan` as const;
 
@@ -31,6 +32,9 @@ export const ROUTES = new class Routes {
   public endRoute(route: keyof this) {
     const _route = this[route];
     if (!_route || typeof _route !== 'string') throw new Error(`Route ${route.toString()} not found`);
-    return _route.split('/').pop();
+    
+    const result = _route.split('/').pop();
+    if (!result) throw new Error(`Route ${route.toString()} is invalid`);
+    return result;
   }
 };

@@ -1,6 +1,8 @@
 .chevron {
-  width: 1rem;
-  height: 1rem;
+  --size: 1rem;
+  font-size: var(--size);
+  width: var(--size);
+  height: var(--size);
 
   &--up {
     transform: rotate(90deg);

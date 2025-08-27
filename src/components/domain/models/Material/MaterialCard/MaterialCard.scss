@@ -12,7 +12,7 @@
   &[data-today=true] {
     .material-card__name-text {
       text-decoration: underline;
-    } 
+    }
   }
 
   .material-image {
@@ -38,7 +38,6 @@
   &__name {
     display: flex;
     flex-direction: row;
-    // align-items: flex-start;
     align-items: center;
     gap: .25ch;
 
@@ -65,16 +64,16 @@
     overflow: auto;
   }
 
-  &__model-acquired, &__models-using {
+  &__model-acquired,
+  &__models-using {
     display: grid;
-    grid-template-rows: auto 1fr;
   }
 
-  > section {
+  >section {
     display: flex;
     flex-direction: column;
 
-    > * {
+    >* {
       flex: 1 1 auto;
     }
 
@@ -84,7 +83,7 @@
   }
 }
 
-a.material-card {  
+a.material-card {
   >header {
     display: flex;
     flex-direction: column;
@@ -93,6 +92,10 @@ a.material-card {
     .material-card__details {
       display: flex;
       justify-content: center;
+    }
+
+    .material-card__name {
+      flex-direction: column;
     }
 
     .material-card__name-text {

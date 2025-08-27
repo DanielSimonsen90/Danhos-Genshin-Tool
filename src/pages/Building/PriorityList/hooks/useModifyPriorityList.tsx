@@ -15,20 +15,20 @@ type UseModifyPriorityListProps = {
 export function useModifyPriorityList({ crud, priorityLists, setPriorityLists }: UseModifyPriorityListProps) {
   const DataStore = useDataStore();
   const { setRegionData } = useRegionData();
-  const [modifyList, setModifyList] = useState<ModifyPriorityListPayload | null>(null);
+  const [modifyList, setModifyList] = useState<ModifyPriorityListPayload | undefined>(undefined);
   const [open, setOpen] = useState(false);
 
   const onSubmit = (payload: ModifyPriorityListPayload) => {
     const { title, model, tiers, id } = payload;
     const priorityList: PriorityList = {
       model,
-      tiers: priorityLists[id]?.model === model
+      tiers: priorityLists?.[id]?.model === model
         ? tiers
         : getDefaultTiers(DataStore[`${model}Names`])
     };
 
     const shouldDeleteId = id !== title;
-    const isReplacingExisting = priorityLists[title] !== undefined;
+    const isReplacingExisting = priorityLists?.[title] !== undefined;
     const shouldReplaceExisting = isReplacingExisting && confirm(ABOUT_TO_REPLACE_EXISTING);
     if (isReplacingExisting && !shouldReplaceExisting) return;
 
@@ -40,7 +40,7 @@ export function useModifyPriorityList({ crud, priorityLists, setPriorityLists }:
           [title]: priorityList
         }
       }) as RegionData;
-      if (shouldDeleteId) delete update.priorityLists[id];
+      if (shouldDeleteId) delete update.priorityLists?.[id];
       return update;
     });
     setPriorityLists?.(state => {

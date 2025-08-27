@@ -7,8 +7,9 @@ import { ROUTES } from "@/common/constants/routes";
 export default function Cache() {
   const navigate = useNavigate();
   const { query } = useParams();
+  
   const CacheStore = useCacheStore();
-  const searchHistory = useCacheStore(store => store.get('searchHistory', {}));
+  const searchHistory = CacheStore.get('searchHistory', {}) ?? {};
   const options = Object.values(searchHistory).filter(Boolean);
   const currentSearch = query ? searchHistory?.[query] : undefined;
 
@@ -24,8 +25,8 @@ export default function Cache() {
           options={options.map(item => item.title)}
           placeholder="Previous searches"
           onChange={value => {
-            const searchId = options.find(item => item.title === value)?.id;
-            navigate(ROUTES.endRoute('building_artifact_helper_search').replace(':query', searchId));
+            const searchId = options.find(item => item.title === value)?.id ?? ':query';
+            navigate(`/${ROUTES.building_artifact_helper_search_query.replace(':query', searchId)}`);
           }}
         />
       : <p>No search history yet.</p>}

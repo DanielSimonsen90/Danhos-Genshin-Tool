@@ -17,14 +17,16 @@ export class List<T> extends Array<T> {
     });
   }
   public mapUnique<U>(callback?: (value: T, index: number, array: T[]) => U): List<U> {
-    const seen = new Set();
-    return List.from(super.map((value, index, array) => {
+    const seen = new Set<U>();
+    const results: U[] = [];
+    this.forEach((value, index, array) => {
       const result = callback?.(value, index, array);
       if (result !== undefined && !seen.has(result)) {
         seen.add(result);
-        return result;
+        results.push(result);
       }
-    }).filter((item): item is U => item !== undefined));
+    });
+    return List.from(results);
   }
 
   public toArray(): T[] {

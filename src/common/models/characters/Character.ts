@@ -18,13 +18,13 @@ export class Character<TElement extends Element = Element> {
     public passiveTalent: PassiveTalent | undefined,
     public playstyle: CharacterPlaystyle | undefined,
   ) {}
-
-  public needsHP(): boolean { return this.playstyle.talentStats.includes('HP'); }
-  public needsATK(): boolean { return this.playstyle.talentStats.includes('ATK'); }
-  public needsDEF(): boolean { return this.playstyle.talentStats.includes('DEF'); }
-  public needsER(): boolean { return this.playstyle.talentStats.includes('Energy Recharge'); }
-  public needsEM(): boolean { return this.playstyle.talentStats.includes('Elemental Mastery'); }
-  public needsPhysicalDMG(): boolean { return this.playstyle.talentStats.includes('Physical DMG Bonus'); }
+  
+  public needsHP(): boolean { return this.playstyle?.talentStats.includes('HP') ?? false; }
+  public needsATK(): boolean { return this.playstyle?.talentStats.includes('ATK') ?? false; }
+  public needsDEF(): boolean { return this.playstyle?.talentStats.includes('DEF') ?? false; }
+  public needsER(): boolean { return this.playstyle?.talentStats.includes('Energy Recharge') ?? false; }
+  public needsEM(): boolean { return this.playstyle?.talentStats.includes('Elemental Mastery') ?? false; }
+  public needsPhysicalDMG(): boolean { return this.playstyle?.talentStats.includes('Physical DMG Bonus') ?? false; }
   public canHeal(): boolean { return this.bonusAbilities.includes('Heal'); }
 }
 

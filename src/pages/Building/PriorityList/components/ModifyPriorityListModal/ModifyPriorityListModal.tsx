@@ -23,7 +23,7 @@ export const ModifyPriorityListModal = ({
   const [submitting, onSubmit] = useActionState<ModifyPriorityListPayload>(value => {
     // value.tiers = Array.from({ length: Number(value.tiers) })
     value.tiers = [];
-    value.title = value['preset-title'] === NO_PRESET ? value.title : value['preset-title'];
+    value.title = (value['preset-title'] === NO_PRESET ? value.title : value['preset-title']) as string;
     _onSubmit(value);
   });
 

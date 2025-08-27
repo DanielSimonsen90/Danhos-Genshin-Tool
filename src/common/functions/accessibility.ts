@@ -1,8 +1,11 @@
 export function addTabNavigation(onSelect: (e: React.UIEvent) => void, includeClick = false) {
-  return {
+  const props = {
     onKeyDown: (e: React.KeyboardEvent) => {
       if (e.key === 'Enter' || e.key === 'NumPadEnter' || e.key === ' ') onSelect(e);
-    },
-    [includeClick ? 'onMouseDown' : undefined]: includeClick ? onSelect : undefined
-  }
+    }
+  };
+
+  return includeClick 
+    ? { ...props, onMouseDown: onSelect }
+    : props;
 }

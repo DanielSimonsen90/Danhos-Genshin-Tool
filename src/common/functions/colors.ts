@@ -13,6 +13,7 @@ export function colorConvert(value: string, from: ColorType, to: ColorType): str
         case 'hex': return hslToHex(value);
       }
     }
+    default: return value;
   }
 }
 

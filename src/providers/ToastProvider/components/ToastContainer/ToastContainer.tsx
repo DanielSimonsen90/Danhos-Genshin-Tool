@@ -1,4 +1,3 @@
-import React from 'react';
 import { Toast } from '../../ToastTypes';
 import { ToastItem } from '../ToastItem';
 import './ToastContainer.scss';
@@ -8,16 +7,14 @@ interface ToastContainerProps {
   onClose: (id: string) => void;
 }
 
-export const ToastContainer: React.FC<ToastContainerProps> = ({ toasts, onClose }) => {
-  return (
-    <div className="toast-container">
-      {toasts.map(toast => (
-        <ToastItem
-          key={toast.id}
-          toast={toast}
-          onClose={onClose}
-        />
-      ))}
-    </div>
-  );
-};
+export const ToastContainer = ({ toasts, onClose }: ToastContainerProps) => (
+  <div className="toast-container">
+    {toasts.map(toast => (
+      <ToastItem
+        key={toast.id}
+        toast={toast}
+        onClose={onClose}
+      />
+    ))}
+  </div>
+);

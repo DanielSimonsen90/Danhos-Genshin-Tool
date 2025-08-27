@@ -25,7 +25,7 @@ export default function DomainList({ title = "Domains", domainNames, artifactSet
           ? (
             <SearchableMobList items={DataStore.getMobsDroppingMaterial(artifactSetName)} cardProps={{ wrapInLink: true, showRegion: true }} />
           )
-          : <DomainCard domain={findDomainByName(name)} showDescription showNavButton />
+          : <DomainCard domain={findDomainByName(name) ?? null} showDescription showNavButton />
       ))}
       />
     </section>

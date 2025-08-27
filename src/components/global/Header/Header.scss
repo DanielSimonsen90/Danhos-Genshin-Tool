@@ -21,13 +21,12 @@
 
       li {
         position: relative;
+        height: 100%;
 
         &.has-dropdown {
 
-          &:hover .navigation-dropdown,
-          &:focus-within .navigation-dropdown {
-            opacity: 1;
-            pointer-events: auto;
+          &:hover .navigation-dropdown--visible,
+          &:focus-within .navigation-dropdown--visible {
             transform: translateY(0);
           }
 
@@ -37,8 +36,8 @@
           }
 
           >a .chevron {
+            --size: .5rem;
             margin-left: 0.5rem;
-            font-size: 0.8em;
             transition: transform 0.2s ease;
           }
 
@@ -53,12 +52,13 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             z-index: 100;
 
-            opacity: 0;
-            pointer-events: none;
+            display: none;
             transform: translateY(-10px);
-            transition:
-              opacity 0.2s ease,
-              transform 0.2s ease;
+            transition: transform 0.2s ease;
+
+            &--visible {
+              display: block;
+            }
 
             a {
               pointer-events: auto;
@@ -136,6 +136,24 @@
 
     .character-image {
       --size: 2rem;
+    }
+  }
+
+  @media screen and (max-width: 1000px) {
+    justify-content: start;
+    
+    .settings-container {
+      position: relative;
+      margin-left: auto;
+    }
+  }
+
+  @media screen and (max-width: 730px) {
+    align-items: center;
+    flex-direction: column;
+
+    .settings-container {
+      margin-left: unset;
     }
   }
 }

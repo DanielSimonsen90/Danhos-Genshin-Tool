@@ -95,11 +95,15 @@ const TabBar = forwardRef(<TTabKey extends string>(props: Props<TTabKey>, ref: R
       )}
       style={resizeProps.dynamicStyles}
     >
-      <header className={classNames('tab-bar__tabs', collapseProps.collapsed && collapseArea === 'tabs' && 'tab-bar__tabs--collapsed')}>
+    <header className={classNames('tab-bar__tabs', collapseProps.collapsed && collapseArea === 'tabs' && 'tab-bar__tabs--collapsed')}>
         {placeChildrenBeforeTabs && collapseProps.children}
         {internalTabs.map(([tab, title]) => title &&
           <div role="button" key={getKeyName(tab)} title={tab}
-            className={classNames("tab-bar__tab", tabStateProps.activeTab === tab && 'tab-bar__tab--active')}
+            className={classNames(
+              "tab-bar__tab", 
+              tabStateProps.activeTab === tab && 'tab-bar__tab--active',
+              tabs.find(([tabKey]) => tabKey === tab)?.[1]?.className
+            )}
             onClick={() => tabStateProps.setActiveTab(tab)}
           >
             {title}
@@ -129,7 +133,7 @@ const TabBar = forwardRef(<TTabKey extends string>(props: Props<TTabKey>, ref: R
         {TabContent}
       </section>
     </div>
-  ) : props.noTabs;
+  ) : props.noTabs ?? <></>;
 });
 
 TabBar.displayName = 'TabBar';

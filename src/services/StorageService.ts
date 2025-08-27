@@ -27,7 +27,7 @@ function StorageService<TValue>(key?: string, load?: Dispatch<SetStateAction<TVa
     },
   } as StorageReturn<TValue>);
 
-  if (load) {
+  if (load && key) {
     const loaded = callback(key).get(defaultValue);
     if (loaded && JSON.stringify(loaded) !== JSON.stringify(defaultValue)) load(loaded);
   }

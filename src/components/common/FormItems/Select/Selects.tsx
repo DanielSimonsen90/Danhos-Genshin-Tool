@@ -79,13 +79,14 @@ export const SelectMainStat = ({
 
 export const SelectSubStat = (
   props: PublicMultipleProps<SubStatName>
-) => <SelectMultiple max={4}
+) => <SelectMultiple
+  max={4}
   options={[
-    'HP', 'ATK', 'DEF', 
+    'HP', 'ATK', 'DEF',
     'HP%', 'ATK%', 'DEF%',
-    'Energy Recharge', 'Elemental Mastery', 
-    'Crit DMG', 'Crit Rate', 
-  ] /*satisfies SubStatName[]*/} // Bundler errors on "satisfies" keyword
-  placeholder='Select a sub stat' 
+    'Energy Recharge', 'Elemental Mastery',
+    'Crit DMG', 'Crit Rate',
+  ] as SubStatName[]}
+  placeholder='Select a sub stat'
   {...props}
 />;

@@ -1,6 +1,5 @@
 import { ROUTES } from "@/common/constants/routes";
 import HubCardList from "./components/HubCardList";
-import FarmableTodaySection from "./components/FarmableTodaySection";
 import YourCalendarSection from "./components/YourCalendarSection";
 
 const routes = [
@@ -18,7 +17,6 @@ export default function BuildingIndex() {
       </header>
 
       <HubCardList routes={routes} />
-      <FarmableTodaySection />
       <YourCalendarSection />
     </main>
   </>);

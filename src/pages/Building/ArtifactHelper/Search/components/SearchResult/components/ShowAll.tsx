@@ -1,13 +1,14 @@
 import { Switch } from "@/components/common/FormItems";
 import { SearchResult } from "@/services";
 import { useSetting } from "@/stores";
+import { DEFAULT_SETTINGS } from "@/stores/SettingsStore/SettingsStoreConstants";
 import { useEffect, useState } from "react";
 
 type Props = Pick<SearchResult, 'combined' | 'byCharacterRecommendation' | 'byArtifact'>;
 
 export function ShowAll(props: Props) {
   const showAll = useSetting('showAll');
-  const preferredTabs = useSetting('preferredTabs').get();
+  const preferredTabs = useSetting('preferredTabs').get() ?? DEFAULT_SETTINGS.preferredTabs;
   const [resultsCount, setResultsCount] = useState(0);
 
   const total = (

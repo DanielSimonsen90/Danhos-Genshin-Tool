@@ -19,23 +19,23 @@ type Props<T> = {
   renderContextMenuItems?: (item: typeof CreateMenuItem) => Array<MenuItem>;
 };
 
-export default function Entry<T>({ 
-  entry, index, unsorted, tiers, 
-  onMoveToIndex, onSendToTier, 
-  render, renderContextMenuItems 
+export default function Entry<T>({
+  entry, index, unsorted, tiers,
+  onMoveToIndex, onSendToTier,
+  render, renderContextMenuItems
 }: Props<T>) {
-  const tier = useMemo(() => tiers.find(tier => tier.entries.some(item => item.id === entry.id)), [entry.id, tiers]);
+  const tier = useMemo(() => tiers.find(tier => tier.entries.some(item => item.id === entry.id))!, [entry.id, tiers]);
   const onContextMenu = useContextMenu(item => {
     const sendToTiers = [
       item('divider', 'Send To Tiers'),
       ...tiers
         .filter(tier => !tier.entries.includes(entry))
         .map(_tier => item(
-          'option', 
-          `Send to ${_tier.title}`, 
-          () => onSendToTier(entry, _tier), 
+          'option',
+          `Send to ${_tier.title}`,
+          () => onSendToTier(entry, _tier),
           tiers.indexOf(tier) < tiers.indexOf(_tier) ? '⬇️' : '⬆️')
-      ),
+        ),
     ];
 
     const moveItem = [];
@@ -44,7 +44,7 @@ export default function Entry<T>({
       moveItemDivider,
       item('option', 'Move to start', () => onMoveToIndex(entry, 0), '⏮️', 'ArrowUp'),
       item('option', 'Move left', () => onMoveToIndex(entry, index - 1), '⬅️', 'ArrowLeft')
-    )
+    );
     if (index !== tier.entries.length - 1) {
       if (!moveItem.length) moveItem.push(moveItemDivider);
       moveItem.push(
@@ -58,20 +58,20 @@ export default function Entry<T>({
       ...moveItem,
       ...sendToTiers,
       ...customItems
-    ]
+    ];
   }, 'top-right');
 
 
-return (
-  <Draggable key={entry.id} draggableId={entry.id} index={index}>
-    {provided => (
-      <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}
-        className="tier__item"
-        onDoubleClick={() => onSendToTier(entry, unsorted)} onContextMenu={onContextMenu}
-      >
-        {render(entry.item, index)}
-      </div>
-    )}
-  </Draggable>
-);
+  return (
+    <Draggable key={entry.id} draggableId={entry.id} index={index}>
+      {provided => (
+        <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}
+          className="tier__item"
+          onDoubleClick={() => onSendToTier(entry, unsorted)} onContextMenu={onContextMenu}
+        >
+          {render(entry.item, index)}
+        </div>
+      )}
+    </Draggable>
+  );
 }

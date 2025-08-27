@@ -11,11 +11,12 @@ export const useRegionStore = create<RegionStore>((setState, getState) => {
   const storageService = StorageService<RegionContextType>(LOCAL_STORAGE_KEY);
 
   const regions = storageService.get() ?? { [DEFAULT_REGION]: DEFAULT_REGION_DATA } as RegionContextType;
-  const getCurrentRegion = (regions: RegionContextType) => Object.keys(regions).find(region => regions[region as keyof typeof regions].selected) as keyof RegionContextType; const getRegionData = (regions: RegionContextType) => {
+  const getCurrentRegion = (regions: RegionContextType) => Object.keys(regions).find(region => regions[region as keyof typeof regions]?.selected) as keyof RegionContextType; 
+  const getRegionData = (regions: RegionContextType) => {
     const currentRegion = getCurrentRegion(regions);
     const regionData = currentRegion ? regions[currentRegion as keyof typeof regions] : undefined;
 
-    if (!regionData) return undefined;
+    if (!regionData) throw new Error(`No region data found for current region: ${currentRegion}`);
 
     // Ensure favorites are always initialized
     const dataWithFavorites = {
@@ -82,7 +83,7 @@ export const useRegionStore = create<RegionStore>((setState, getState) => {
       'Asia': 8,           // GMT+8
       'Europe': 1,         // GMT+1
       'North America': -5,  // GMT-5
-      'TW, HK, MO': undefined // unknown timezone
+      'TW, HK, MO': 8      // GMT+8 (assumed, but not confirmed)
     };
 
     const timezoneOffset = serverTimezoneOffsets[region];

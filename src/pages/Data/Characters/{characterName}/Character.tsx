@@ -6,7 +6,7 @@ export default function Character() {
     showRarity
     showPassiveTalent
     showAscensionSection
-    showCharacterPlaystyle 
+    showCharacterPlaystyle
     showSignatureWeapon
   />} />;
 }

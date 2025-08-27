@@ -85,12 +85,12 @@ export default function MobCard({
           <span className="mob-card__type">{mobType.replace('-', ' ')}</span>
         </>
       )}
-      renderHeaderContent={() => (showDetails || showRegion) && (
+      renderHeaderContent={showDetails || showRegion ? () => (
         <div className="mob-card__details">
           {showDetails && <p className="mob-card__description">{description}</p>}
           {Boss.isBoss(mob) && showRegion && <Region region={mob.region} className="mob-card__region" />}
         </div>
-      )}
+      ) : undefined}
       renderContent={() => (
         <div className="mob-card__info">
           {showDrops && drops.length > 0 && (

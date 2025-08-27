@@ -13,7 +13,7 @@ export default function UncontrolledSearchableList<TItem, FilterKeys extends str
   const filterProps = { filterChecks, filters, setFilters, filterPlaceholder, onChange: onFilterChange };
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const sortedChildren = props.sort ? children.sort(([_, a], [__, b]) => props.sort(a, b)) : children;
+  const sortedChildren = props.sort ? children.sort(([_, a], [__, b]) => props.sort?.(a, b) ?? 0) : children;
 
   useKeybind('f', { ctrlKey: true }, () => {
     if (inputRef.current) inputRef.current.focus();
@@ -29,16 +29,16 @@ export default function UncontrolledSearchableList<TItem, FilterKeys extends str
           className="searchable-list__search"
           defaultValue={defaultSearch}
         />
-        {filterChecks && <Filter {...filterProps} />}
+        {filterChecks && <Filter {...filterProps} filterChecks={filterChecks} />}
       </div>
       {Object.values(filters).some(value =>
-        typeof value === 'object'
+        typeof value === 'object' && value !== null
           ? Object.values(value).some(v => v !== undefined)
           : value !== undefined
       ) && (
           <ul className="filter-tags">
             {Object.entries(filters).map(([filterOrGroup, value], index) => (
-              typeof value === 'object'
+              typeof value === 'object' && value !== null
                 ? Object.entries(value).filter(([key, value]) => value !== undefined).map(([filter, filterValue]) => (
                   <li key={filter} className={`filter-tag ${filterValue === false ? 'filter-tag--false' : ''}`} onClick={() => {
                     const {
@@ -70,18 +70,18 @@ export default function UncontrolledSearchableList<TItem, FilterKeys extends str
           ))}
         </ul>
       )}
-      <p className="searchable-list__list-item searchable-list__list-item--end">
-        {props.hasSearchOrFilters && (
+      {props.hasSearchOrFilters && (
+        <p className="searchable-list__list-item searchable-list__list-item--end">
           <span>
             There are no more results to show.
           </span>
-        )}
-        {onShowMore && (
-          <button onClick={onShowMore} className="button link">
-            Show more
-          </button>
-        )}
-      </p>
+          {onShowMore && (
+            <button onClick={onShowMore} className="button link">
+              Show more
+            </button>
+          )}
+        </p>
+      )}
     </div>
   );
 }

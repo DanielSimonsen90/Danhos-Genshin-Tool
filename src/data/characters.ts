@@ -213,7 +213,6 @@ export const Beidou = new Character("Beidou", "Electro", "Claymore", ["Shield"],
     new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 68.0),
     new CharacterArtifactSet(Sets.ThunderingFury, 4, 5.3),
     ...AttackSets(4.0),
-    new CharacterArtifactSet(Sets.Thundersoother, 4, 4.0),
   ])
 );
 
@@ -300,13 +299,9 @@ export const Chevreuse = new Character("Chevreuse", "Pyro", "Polearm", ["Heal"],
   mobDrop: EasyMobDrops.Gear,
 }, '20% Sprinting consumption reduction.',
   new CharacterPlaystyle("Off-field Support", ["HP", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 5),
-    new CharacterArtifactSet(Sets.OceanHuedClam, 4, 4),
-    new CharacterArtifactSet(Sets.SongOfDaysPast, 4, 3),
-    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 2, 2),
-    new CharacterArtifactSet(Sets.VourukashasGlow, 2, 2),
-    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 2, 1),
-    new CharacterArtifactSet(Sets.OceanHuedClam, 2, 1),
+    new CharacterArtifactSet(Sets.SongOfDaysPast, 4, 48.5),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 22.1 ),
+    ...HPSets(8.3)
   ]),
 );
 
@@ -488,10 +483,9 @@ export const Dori = new Character("Dori", "Electro", "Claymore", [
   mobDrop: EasyMobDrops.EremiteDrop,
 }, '25% chance of refund materials used when crafting Character Talent Materials and Weapon Ascension Materials.',
   new CharacterPlaystyle("Off-field Support", ["Energy Recharge", "HP"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 28.9),
-    ...HPSets(13.6),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 13.6),
-    new CharacterArtifactSet(Sets.OceanHuedClam, 4, 6.6),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 29.4),
+    ...HPSets(13.7),
+    new CharacterArtifactSet(Sets.OceanHuedClam, 4, 6.5),
   ]),
 );
 
