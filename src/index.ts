@@ -282,54 +282,7 @@ const setupApplicationMenu = (): void => {
             if (focusedWindow) focusedWindow.webContents.toggleDevTools();
           },
         },
-        {
-          label: 'Show Update Log',
-          click: async () => {
-            const userDataPath = app.getPath('userData');
-            const logFilePath = path.join(userDataPath, 'update-log.txt');
-            const { dialog } = require('electron');
-            
-            // Check if log file exists
-            const fs = require('fs');
-            if (fs.existsSync(logFilePath)) {
-              await dialog.showMessageBox({
-                type: 'info',
-                title: 'Update Log Location',
-                message: 'Update log file location:',
-                detail: logFilePath,
-                buttons: ['Open Folder', 'OK'],
-              }).then(result => {
-                if (result.response === 0) {
-                  // Open folder containing the log file
-                  shell.showItemInFolder(logFilePath);
-                }
-              });
-            } else {
-              await dialog.showMessageBox({
-                type: 'warning',
-                title: 'Update Log Not Found',
-                message: 'No update log file found.',
-                detail: `Expected location: ${logFilePath}`,
-                buttons: ['OK'],
-              });
-            }
-          },
-        },
         { type: 'separator' },
-        {
-          label: 'About',
-          click: async () => {
-            const version = app.getVersion();
-            const { dialog } = require('electron');
-            await dialog.showMessageBox({
-              type: 'info',
-              title: 'About',
-              message: `Danho's Genshin Tool`,
-              detail: `Version: ${version}\n\nDeveloped by DanielSimonsen90`,
-              buttons: ['OK'],
-            });
-          },
-        },
         {
           label: 'GitHub Repository',
           click: () => shell.openExternal('https://github.com/DanielSimonsen90/danhos-genshin-tool'),
