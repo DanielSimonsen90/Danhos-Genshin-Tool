@@ -4,6 +4,7 @@ import { Settings } from '@/common/types/app-types';
 
 import Modal, { ModalConsumerProps } from "@/components/common/Modal";
 import { useActionState } from "@/hooks/useActionState";
+import { useUpdateManager } from "@/hooks/useUpdateManager";
 
 import { useSettingsStore } from "@/stores/SettingsStore";
 import { useRegionStore } from '@/stores/RegionStore';
@@ -17,6 +18,13 @@ const debugLog = DebugLog(DebugLog.DEBUGS.settingsModal);
 export default function SettingsModal(props: ModalConsumerProps) {
   const SettingsStore = useSettingsStore();
   const RegionStore = useRegionStore();
+  const {
+    appVersion,
+    isCheckingForUpdates,
+    checkForUpdates,
+    isElectronApp
+  } = useUpdateManager();
+
   const [submitting, onSubmit] = useActionState<Settings>(data => {
     delete data._form;
     debugLog('Settings update received', data);
@@ -44,10 +52,27 @@ export default function SettingsModal(props: ModalConsumerProps) {
         {Object.entries(Object.assign({}, SettingsStore.changeableSettings, RegionStore.regionSettings)).map(([key, value]) => (
           <SettingsOption key={key} setting={key as keyof Settings} value={value as Settings[keyof Settings]} />
         ))}
-
+        
         <Collapsible title="Manage Favorites">
           <FavoritesOverview />
         </Collapsible>
+
+        {isElectronApp && (
+          <Collapsible title="Application Updates">
+            <p><strong>Current Version:</strong> {appVersion}</p>
+            <p className='muted'>Updates are automatically checked when the application starts.</p>
+            <div className="button-panel">
+              <button
+                type="button"
+                className="brand secondary"
+                onClick={checkForUpdates}
+                disabled={isCheckingForUpdates || submitting}
+              >
+                {isCheckingForUpdates ? 'Checking...' : 'Check for Updates'}
+              </button>
+            </div>
+          </Collapsible>
+        )}
 
         <div className="button-panel">
           {SettingsStore.hasCustomSettings && <button type="reset" className="danger secondary" disabled={submitting} onClick={onReset}>Reset settings</button>}
