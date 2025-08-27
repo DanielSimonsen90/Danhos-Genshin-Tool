@@ -18,7 +18,7 @@ export const ARTIFACT_PIECES_SCORES: Record<ArtifactPartName, number> = {
 export const MAIN_STAT_SCORES = {
   // Premium stats (perfect match for element/role)
   ELEMENTAL_DMG_BONUS_MATCH: 80,
-  ELEMENTAL_DMG_BONUS_MISMATCH: 25,
+  ELEMENTAL_DMG_BONUS_MISMATCH: -100,
   
   // Scaling stats (HP/ATK/DEF for characters who scale with them)
   SCALING_STAT_MATCH: 50,

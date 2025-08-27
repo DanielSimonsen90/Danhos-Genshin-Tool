@@ -20,7 +20,6 @@ import { useCacheStore } from "@/stores/CacheStore";
 import { ArtifactImage } from "@/components/common/media/Images";
 import { ROUTES } from "@/common/constants/routes";
 import { ArtifactPartName } from "@/common/types";
-import { useDataStore } from "@/stores";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchComponent);
 
@@ -28,7 +27,6 @@ export default function Search() {
   const navigate = useNavigate();
   const { query } = useParams();
   
-  const DataStore = useDataStore();
   const CacheStore = useCacheStore();
   const { error } = useToast();
 
@@ -64,7 +62,7 @@ export default function Search() {
         timestamp: Date.now()
       }
     });
-    navigate(ROUTES.endRoute('building_artifact_helper_search').replace(':query', searchId));
+    navigate(`/${ROUTES.building_artifact_helper_search_query.replace(':query', searchId)}`);
   }, 4);
   const [SelectMainStat, setSelectMainStat] = useComponent(SelectMainStatComponent, {
     name: 'mainStat',

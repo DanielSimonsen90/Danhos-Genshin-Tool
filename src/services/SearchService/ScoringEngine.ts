@@ -103,65 +103,27 @@ export const ScoringEngine = new class ScoringEngine {
     const finalPartScore = partScore + mainStatScore + subStatsScore;    debugLog('Final part score', finalPartScore);
     debugLog('groupEnd');
     return finalPartScore;
-  }
-
-  private _calculateMainStatScore(character: Character, artifact: Artifact<ArtifactPartName>, mainStat: MainStatName): number {
+  }  private _calculateMainStatScore(character: Character, artifact: Artifact<ArtifactPartName>, mainStat: MainStatName): number {
     if (artifact.isFlower() || artifact.isFeather()) return 0;
 
-    // Utility function to create scoring logic based on character check method
-    const createMainStatScore = (
-      checkMethod: () => boolean,
-      matchScore: number,
-      mismatchScore: number
-    ) => checkMethod() ? matchScore : mismatchScore;
-
-    if (mainStat === 'Physical DMG Bonus') return createMainStatScore(
-      character.needsPhysicalDMG,
-      MAIN_STAT_SCORES.PHYSICAL_DMG_MATCH,
-      MAIN_STAT_SCORES.PHYSICAL_DMG_MISMATCH
-    );
+    if (mainStat === 'Physical DMG Bonus') return character.needsPhysicalDMG() ? MAIN_STAT_SCORES.PHYSICAL_DMG_MATCH : MAIN_STAT_SCORES.PHYSICAL_DMG_MISMATCH;
     if (mainStat.includes('Crit')) return MAIN_STAT_SCORES.CRIT_STATS;
     if (mainStat.includes('DMG Bonus')) return mainStat.includes(character.element) ? MAIN_STAT_SCORES.ELEMENTAL_DMG_BONUS_MATCH : MAIN_STAT_SCORES.ELEMENTAL_DMG_BONUS_MISMATCH;
 
-    // Handle remaining stats using the utility function
     switch (mainStat) {
-      case 'Elemental Mastery': return createMainStatScore(
-        character.needsEM,
-        MAIN_STAT_SCORES.EM_MATCH,
-        MAIN_STAT_SCORES.EM_MISMATCH
-      );
-      case 'Energy Recharge': return createMainStatScore(
-        character.needsER,
-        MAIN_STAT_SCORES.ER_MATCH,
-        MAIN_STAT_SCORES.ER_MISMATCH
-      );
-      case 'Healing Bonus': return createMainStatScore(
-        character.canHeal,
-        MAIN_STAT_SCORES.HEALING_BONUS_MATCH,
-        MAIN_STAT_SCORES.HEALING_BONUS_MISMATCH
-      );
+      case 'Elemental Mastery': return character.needsEM() ? MAIN_STAT_SCORES.EM_MATCH : MAIN_STAT_SCORES.EM_MISMATCH;
+      case 'Energy Recharge': return character.needsER() ? MAIN_STAT_SCORES.ER_MATCH : MAIN_STAT_SCORES.ER_MISMATCH;
+      case 'Healing Bonus': return character.canHeal() ? MAIN_STAT_SCORES.HEALING_BONUS_MATCH : MAIN_STAT_SCORES.HEALING_BONUS_MISMATCH;
 
-      case 'HP%': return createMainStatScore(
-        character.needsHP,
-        MAIN_STAT_SCORES.SCALING_STAT_MATCH,
-        MAIN_STAT_SCORES.SCALING_STAT_MISMATCH
-      );
-      case 'ATK%': return createMainStatScore(
-        character.needsATK,
-        MAIN_STAT_SCORES.SCALING_STAT_MATCH,
-        MAIN_STAT_SCORES.SCALING_STAT_MISMATCH
-      );
-      case 'DEF%': return createMainStatScore(
-        character.needsDEF,
-        MAIN_STAT_SCORES.SCALING_STAT_MATCH,
-        MAIN_STAT_SCORES.DEF_MISMATCH
-      );
+      case 'HP%': return character.needsHP() ? MAIN_STAT_SCORES.SCALING_STAT_MATCH : MAIN_STAT_SCORES.SCALING_STAT_MISMATCH;
+      case 'ATK%': return character.needsATK() ? MAIN_STAT_SCORES.SCALING_STAT_MATCH : MAIN_STAT_SCORES.SCALING_STAT_MISMATCH;
+      case 'DEF%': return character.needsDEF() ? MAIN_STAT_SCORES.SCALING_STAT_MATCH : MAIN_STAT_SCORES.DEF_MISMATCH;
 
       default:
         console.error(`Unknown main stat "${mainStat}"`);
         return MAIN_STAT_SCORES.UNKNOWN_STAT;
     }
-  } 
+  }
   private _calculateSubStatsScore(character: Character, artifact: Artifact<ArtifactPartName>): number {
     let matchingSubStats = 0;
 
@@ -179,19 +141,18 @@ export const ScoringEngine = new class ScoringEngine {
       debugLog('Substat', stat, result, acc);
       return result;
     }, 0);
-  }  
-  /**
+  }    /**
    * Data-driven approach to sub-stat scoring using callback utility functions.
    * Eliminates repetitive if/else blocks while keeping the logic clean and readable.
    */
-  private _getSubStatScore(character: Character, stat: SubStatName): { value: number; isMatching: boolean; } | null {    // Utility function to create scoring logic based on character check method
+  private _getSubStatScore(character: Character, stat: SubStatName): { value: number; isMatching: boolean; } | null {    // Utility function to create scoring logic based on boolean value
     const createStatScore = (
-      checkMethod: () => boolean,
+      isMatch: boolean,
       matchScore: number,
       mismatchScore: number,
       alwaysMatching = false
     ) => {
-      const isMatching = alwaysMatching || checkMethod();
+      const isMatching = alwaysMatching || isMatch;
 
       return {
         value: isMatching ? matchScore : mismatchScore, 
@@ -203,41 +164,41 @@ export const ScoringEngine = new class ScoringEngine {
     switch (stat) {
       case 'HP':
       case 'HP%': return createStatScore(
-        character.needsHP,
+        character.needsHP(),
         SUBSTAT_SCORES.SCALING_STAT_MATCH,
         SUBSTAT_SCORES.HP_MISMATCH
       );
 
       case 'ATK':
       case 'ATK%': return createStatScore(
-        character.needsATK,
+        character.needsATK(),
         SUBSTAT_SCORES.SCALING_STAT_MATCH,
         SUBSTAT_SCORES.ATK_MISMATCH
       );
 
       case 'DEF':
       case 'DEF%': return createStatScore(
-        character.needsDEF,
+        character.needsDEF(),
         SUBSTAT_SCORES.SCALING_STAT_MATCH,
         SUBSTAT_SCORES.DEF_MISMATCH
       );
 
       case 'Crit Rate':
       case 'Crit DMG': return createStatScore(
-        character.needsATK,
+        character.needsATK(),
         SUBSTAT_SCORES.CRIT_STATS,
         SUBSTAT_SCORES.CRIT_STATS,
         true
       );
 
       case 'Elemental Mastery': return createStatScore(
-        character.needsEM,
+        character.needsEM(),
         SUBSTAT_SCORES.EM_MATCH,
         SUBSTAT_SCORES.EM_MISMATCH
       );
 
       case 'Energy Recharge': return createStatScore(
-        character.needsER,
+        character.needsER(),
         SUBSTAT_SCORES.ER_MATCH,
         SUBSTAT_SCORES.ER_MISMATCH
       );      default:

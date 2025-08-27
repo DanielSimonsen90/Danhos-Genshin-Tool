@@ -86,7 +86,7 @@ export default function CharacterCard({
             ) : <span>No special traits.</span>}
           </ul>
           {!props.wrapInLink && <Region region={character.region} className="region" />}
-          {score && score > 0 && (
+          {score !== undefined && (
             <p className="character-details__score">
               Score: <b>{numberSeparator(score)}</b>
             </p>

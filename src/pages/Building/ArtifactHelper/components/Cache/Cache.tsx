@@ -26,7 +26,7 @@ export default function Cache() {
           placeholder="Previous searches"
           onChange={value => {
             const searchId = options.find(item => item.title === value)?.id ?? ':query';
-            navigate(ROUTES.endRoute('building_artifact_helper_search').replace(':query', searchId));
+            navigate(`/${ROUTES.building_artifact_helper_search_query.replace(':query', searchId)}`);
           }}
         />
       : <p>No search history yet.</p>}

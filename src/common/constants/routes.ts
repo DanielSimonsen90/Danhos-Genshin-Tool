@@ -16,7 +16,8 @@ export const ROUTES = new class Routes {
   public building = 'building' as const;
   public building_priority_list = `${this.building}/priority-list` as const;
   public building_artifact_helper = `${this.building}/artifact-helper` as const;
-  public building_artifact_helper_search = `${this.building_artifact_helper}/search/:query` as const;
+  public building_artifact_helper_search = `${this.building_artifact_helper}/search` as const;
+  public building_artifact_helper_search_query = `${this.building_artifact_helper_search}/:query` as const;
 
   // public building_plan = `${this.building}/plan` as const;
 

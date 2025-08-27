@@ -15,6 +15,7 @@ import type { CacheStore } from "@/stores/CacheStore/CacheStoreTypes";
 import type { DataStore } from "@/stores/DataStore/DataStoreTypes";
 
 import { SearchResult as SearchResultComponent } from "./components";
+import ArtifactHelper from "../ArtifactHelper";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchQuery);
 
@@ -23,7 +24,7 @@ export default function SearchQuery() {
 
   const CacheStore = useCacheStore();
   const DataStore = useDataStore();
-  
+
   const [formData, setFormData] = useState<SearchFormData | undefined>(undefined);
   const [results, setResults] = useState<SearchResult | null>(null);
   const [retries, setRetries] = useState(0);
@@ -53,6 +54,7 @@ export default function SearchQuery() {
 
   return (
     <>
+      <ArtifactHelper />
       <div className="artifact-display">
         <ArtifactImage set={artifactSetName} piece={artifactPartName} />
         <h1 className="artifact-display__mainstat">{formData.mainStat}</h1>
