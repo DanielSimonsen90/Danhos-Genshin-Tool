@@ -60,35 +60,35 @@
 
 // #region Regions
 *[data-region=Mondstadt] {
-  --region: var(--element-anemo);
-  --region--muted: var(--element-anemo--muted);
+  --region: var(--region-mondstadt);
+  --region--muted: var(--region-mondstadt--muted);
 }
 *[data-region=Liyue] {
-  --region: var(--element-geo);
-  --region--muted: var(--element-geo--muted);
+  --region: var(--region-liyue);
+  --region--muted: var(--region-liyue--muted);
 }
 *[data-region=Inazuma] {
-  --region: var(--element-electro);
-  --region--muted: var(--element-electro--muted);
+  --region: var(--region-inazuma);
+  --region--muted: var(--region-inazuma--muted);
 }
 *[data-region=Sumeru] {
-  --region: var(--element-dendro);
-  --region--muted: var(--element-dendro--muted);
+  --region: var(--region-sumeru);
+  --region--muted: var(--region-sumeru--muted);
 }
 *[data-region=Fontaine] {
-  --region: var(--element-hydro);
-  --region--muted: var(--element-hydro--muted);
+  --region: var(--region-fontaine);
+  --region--muted: var(--region-fontaine--muted);
 }
 *[data-region=Natlan] {
-  --region: var(--element-pyro);
-  --region--muted: var(--element-pyro--muted);
+  --region: var(--region-natlan);
+  --region--muted: var(--region-natlan--muted);
 }
 *[data-region=Nod-Krai] {
-  --region: var(--element-cryo);
-  --region--muted: var(--element-cryo--muted);
+  --region: var(--region-nod-krai);
+  --region--muted: var(--region-nod-krai--muted);
 }
 *[data-region=Snezhnaya] {
-  --region: var(--element-cryo);
-  --region--muted: var(--element-cryo--muted);
+  --region: var(--region-snezhnaya);
+  --region--muted: var(--region-snezhnaya--muted);
 }
 // #endregion

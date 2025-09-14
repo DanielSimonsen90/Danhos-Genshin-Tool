@@ -71,3 +71,15 @@ export const AncientWatchtower = new DomainOfForgery(
   },
   "Natlan"
 );
+
+export const LostMooncourt = new DomainOfForgery(
+  "Lost Mooncourt",
+  "In those days, three moons caressed the earth with their silver light, and the lunar people knew the secrets of the lunar phases, being able to predict the tidal ebb and flow.\nWhatever they gently touched with their fingers would surge with moonlit might.Yet in the waning days, the moonlight dimmed, and the people, defenseless and leaderless, were scattered.Legend has it that the Frostmoon Scions constructed a lunar court in the border realms, summoning lost moonlight back to them.Today, that reflected light has disappeared from this forsaken altar.Where it once flowed through these stone carvings, there is now only frozen silence.Yet secrets unveiled in that quietude, perhaps the echoes of ancient oaths, still swirl about within the labyrinth of time.",
+  {
+    1: `(Dendro/Hydro/Electro/Pyro)`,
+    2: `(Dendro/Hydro/Electro/Pyro)`,
+    3: `Bloom, Hyperbloom, Burgeon and Lunar-Bloom reactions deal more DMG. (Dendro/Hydro/Electro/Pyro)`,
+    4: `Bloom, Hyperbloom, Burgeon and Lunar-Bloom reactions deal more DMG. (Dendro/Hydro/Electro/Pyro)`,
+  },
+  'Nod-Krai'
+);
