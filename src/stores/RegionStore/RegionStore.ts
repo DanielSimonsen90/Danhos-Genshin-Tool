@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 import * as ObjectUtils from '@/common/functions/object';
+import { DebugLog } from "@/common/functions/dev";
 import StorageService from '@/services/StorageService';
 
 import { RegionData, WorldRegion, Traveler, RegionContextType, RegionStore, RegionSettings, FavoriteModels, FavoritesCollection, FavoritesAPI, FavoriteModel } from './RegionStoreTypes';
@@ -9,8 +10,28 @@ import { Model } from '@/common/models/Model';
 
 export const useRegionStore = create<RegionStore>((setState, getState) => {
   const storageService = StorageService<RegionContextType>(LOCAL_STORAGE_KEY);
+  const debugLog = DebugLog(DebugLog.DEBUGS.regionStore);
 
-  const regions = storageService.get() ?? { [DEFAULT_REGION]: DEFAULT_REGION_DATA } as RegionContextType;
+  // Get and filter regions data to remove any invalid properties
+  const context = storageService.get() ?? { [DEFAULT_REGION]: DEFAULT_REGION_DATA } as RegionContextType;
+  
+  // Define valid RegionData properties
+  const validRegionDataKeys = Object.keys(DEFAULT_REGION_DATA);
+  const regions = Object.keys(context).reduce((acc, regionKey) => {
+    const regionData = context[regionKey as keyof RegionContextType];
+
+    if (regionData) {
+      const invalidKeys = Object.keys(regionData).filter(key => !validRegionDataKeys.includes(key));
+      if (invalidKeys.length > 0) debugLog(`Filtering out invalid properties from region ${regionKey}:`, invalidKeys);
+      
+      acc[regionKey as keyof RegionContextType] = Object.keys(regionData).reduce((dataAcc, key) => {
+        if (validRegionDataKeys.includes(key)) (dataAcc as any)[key] = (regionData as any)[key];
+        return dataAcc;
+      }, {} as RegionData);
+    }
+
+    return acc;
+  }, {} as RegionContextType);
   const getCurrentRegion = (regions: RegionContextType) => Object.keys(regions).find(region => regions[region as keyof typeof regions]?.selected) as keyof RegionContextType; 
   const getRegionData = (regions: RegionContextType) => {
     const currentRegion = getCurrentRegion(regions);
@@ -26,15 +47,29 @@ export const useRegionStore = create<RegionStore>((setState, getState) => {
 
     return Object.assign({}, dataWithFavorites, { setRegionData });
   };
-
   const setRegionData = (update: Partial<RegionData> | ((state: RegionData) => RegionData)) => {
     const { regions, currentRegion } = getState();
     const resolvedRegionDataUpdate = typeof update === 'function'
       ? update(getState().regionData)
       : update;
-    resolvedRegionDataUpdate.region ??= currentRegion;
-
-    // Define the next selected regionData
+    resolvedRegionDataUpdate.region ??= currentRegion;    // Filter out invalid properties that shouldn't be in RegionData
+    const validRegionDataKeys = Object.keys(DEFAULT_REGION_DATA);
+    const invalidKeys = Object.keys(resolvedRegionDataUpdate).filter(key => !validRegionDataKeys.includes(key));
+    if (invalidKeys.length > 0) {
+      debugLog('Filtering out invalid properties from region data update:', invalidKeys);
+      debugLog('Original update:', resolvedRegionDataUpdate);
+    }
+    
+    const filteredUpdate = Object.keys(resolvedRegionDataUpdate).reduce((acc, key) => {
+      if (validRegionDataKeys.includes(key)) {
+        (acc as any)[key] = (resolvedRegionDataUpdate as any)[key];
+      }
+      return acc;
+    }, {} as Partial<RegionData>);
+    
+    if (invalidKeys.length > 0) {
+      debugLog('Filtered update:', filteredUpdate);
+    }// Define the next selected regionData
     const next = REGIONS.reduce((acc, _region) => {
       const region = _region as keyof RegionContextType;
       const storedData: RegionData = regions[region] ?? Object.assign(
@@ -42,12 +77,12 @@ export const useRegionStore = create<RegionStore>((setState, getState) => {
         { region, selected: false, favorites: DEFAULT_FAVORITES } as RegionData,
       );
 
-      if (region === resolvedRegionDataUpdate.region) acc[region] = {
+      if (region === filteredUpdate.region) acc[region] = {
         ...storedData,
-        ...resolvedRegionDataUpdate,
+        ...filteredUpdate,
         selected: true,
       };
-      else if (storedData.selected && resolvedRegionDataUpdate.region) acc[region] = { ...storedData, selected: false };
+      else if (storedData.selected && filteredUpdate.region) acc[region] = { ...storedData, selected: false };
       else if (regions[region]) acc[region] = storedData;
 
       return acc;
@@ -56,7 +91,7 @@ export const useRegionStore = create<RegionStore>((setState, getState) => {
     // If no region is selected, create the default region
     if (Object.keys(next).length === 0) next[DEFAULT_REGION] = {
       ...DEFAULT_REGION_DATA,
-      ...update,
+      ...filteredUpdate,
       selected: true,
     };
 

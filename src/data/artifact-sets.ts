@@ -18,9 +18,9 @@ const canTriggerReaction = (character: Character, reaction: Reaction) => {
   const anemoReactions: Reaction[] = ['Swirl'];
   const geoReactions: Reaction[] = ['Crystallize', 'Shatter'];
   const cryoReactions: Reaction[] = ['Melt', 'Frozen', 'Shatter', 'Superconduct'];
-  const dendroReactions: Reaction[] = ['Burning', 'Bloom', 'Burgeon', 'Hyperbloom', 'Quicken', 'Spread', 'Aggravate'];
+  const dendroReactions: Reaction[] = ['Burning', 'Bloom', 'Burgeon', 'Hyperbloom', 'Quicken', 'Spread', 'Aggravate', 'Lunar-Bloom'];
   const electroReactions: Reaction[] = ['Overloaded', 'Electro-Charged', 'Lunar-Charged', 'Superconduct', 'Quicken', 'Spread', 'Aggravate', 'Hyperbloom'];
-  const hydroReactions: Reaction[] = ['Vaporize', 'Electro-Charged', 'Lunar-Charged', 'Frozen', 'Shatter', 'Bloom', 'Burgeon', 'Hyperbloom'];
+  const hydroReactions: Reaction[] = ['Vaporize', 'Electro-Charged', 'Lunar-Charged', 'Frozen', 'Shatter', 'Bloom', 'Burgeon', 'Hyperbloom', 'Lunar-Bloom'];
   const pyroReactions: Reaction[] = ['Vaporize', 'Overloaded', 'Melt', 'Burning', 'Burgeon'];
 
   return (
@@ -570,6 +570,21 @@ export const MartialArtist = new ArtifactSet(
   }
 );
 
+export const NightOfTheSkysUnveiling = new ArtifactSet(
+  "Night Of The Sky's Unveiling",
+  "Elemental Mastery +80",
+  "When party members trigger Lunar reactions, if equipping character on field, gain Gleaming Moon: Intent for 4s: Increase CRIT Rate by 15%/30% when party's Moonsign is Nascent Gleam/Ascendant Gleam. All party members' Lunar Reaction DMG +10%. Effects from Gleaming Moon cannot stack.",
+  Rarity.Legendary,
+  [Domains.FrostladenMachinery.name],
+  false,
+  (c, set) => {
+    let value = 0;
+    if (c.playstyle?.talentStats.includes('Elemental Mastery')) value += correctElement;
+    if (set.pieces === 4 && c.playstyle?.onField) value += correctElement;
+    return value;
+  }
+);
+
 /**
  * @two ATK +18%
  * @four After using Elemental Skill, +20% Geo DMG Bonus for 10s. While shielded by Crystalize reaction, effect increased by 150%. Additional increase disappears 1s after shield is lost.
@@ -642,7 +657,7 @@ export const ObsidianCodex = new ArtifactSet(
   "After equipping character consumes 1 Nightsoul point on field, CRIT Rate +40% for 6s. Can trigger 1/s.",
   Rarity.Legendary,
   [Domains.SanctumOfRainbowSpirits.name],
-  false,
+  true,
   (c, set) => {
     let value = 0;
     if (c.bonusAbilities.includes('Nightsouls Blessing') && c.playstyle?.onField) value += correctElement;
@@ -775,7 +790,7 @@ export const ScrollOfTheHeroOfCinderCity = new ArtifactSet(
   "After equipping character triggers reaction related to their elemental type, all nearby party members gain 12% Elemental DMG Bonus for elemental types involved in said reaction for 15s. If equipping character is in Nightsoul's Blessing state when triggering effect, all nearby party members gain additional 28% Elemental DMG Bonus for elemental types involved in said reaction 20s. Can trigger off-field.",
   Rarity.Legendary,
   [Domains.SanctumOfRainbowSpirits.name],
-  false,
+  true,
   (c, set) => {
     let value = 0;
     if (c.bonusAbilities.includes('Nightsouls Blessing')) value += correctElement;
@@ -802,6 +817,25 @@ export const ShimenawasReminiscence = new ArtifactSet(
       || c.playstyle?.talentPriorities[0] === 'Charged/Hold'
       || c.playstyle?.talentPriorities[0] === 'Plunging/Press'
     )) value += correctElement;
+    return value;
+  }
+);
+
+/**
+ * @two Energy Recharge +20%
+ * @four When dealing Elemental DMG, gain "Gleaming Moon": Devotion effect for 8s: Increase all party members' EM by 60/120 when the party's Moonsight is Nascent Gleam/Ascendant Gleam. Can trigger off-field. All party members' Lunar Reaction DMG +10% for each Gleaming Moon effect that party members have. Effects from Gleaming Moon cannot stack.
+ */
+export const SilkenMoonsSerenade = new ArtifactSet(
+  "Silken Moon's Serenade",
+  "Energy Recharge +20%",
+  `When dealing Elemental DMG, gain "Gleaming Moon": Devotion effect for 8s: Increase all party members' EM by 60/120 when the party's Moonsight is Nascent Gleam/Ascendant Gleam. Can trigger off-field. All party members' Lunar Reaction DMG +10% for each Gleaming Moon effect that party members have. Effects from Gleaming Moon cannot stack.`,
+  Rarity.Legendary,
+  [Domains.FrostladenMachinery.name],
+  false,
+  (c, set) => {
+    let value = 0;
+    if (c.playstyle?.talentStats.includes('Energy Recharge')) value += correctElement;
+    if (set.pieces === 4 && c.bonusAbilities.includes('Moonsign: Ascendant Gleam')) value += correctElement;
     return value;
   }
 );

@@ -303,3 +303,40 @@ export const WeaselShell = MobDrop.create('<placeholder>', {
     rarity,
   )
 });
+
+export const FrostnightsX = MobDrop.create(`Frostnight's`, {
+  [Rarity.Epic]: `Glory`,
+  [Rarity.Rare]: `Glow`,
+  [Rarity.Uncommon]: `Glimmer`,
+}, {
+  [Rarity.Epic]: `A bone plate taken from the horned crown of a defeated Frostnight Scion.\nA warmth as glossy as moonlight envelopes it, radiating strongly even in the dead of winter nights.\nIn a sense, just like the Frostmoon Scions, this is the last thing these noble creatures stand by. The master they once served has been reduced to dust, yet their dreams still glow with golden splendor.`,
+  [Rarity.Rare]: `A chunk taken from the horned crown of a defeated Frostnight Scion.\nIn the oldest sagas of the Frostmoon Scions, the glow of these noble creatures was described as the "unsullied mercy of the divine emissary" by the philosophers of the far north.\nThough this mercy could not prevent the fall of the Golden City or save her descendants from exile, the same glow still courses through their horned crowns, waiting for al dream that may never return.`,
+  [Rarity.Uncommon]: `A fragment taken from the horned crown of a defeated Frostnight Scion.\nLegend has it that in the distant past, these noble creatures were servants to the Golden City, their eyes reflecting the holiest and brightest light of heaven. That light has long since been extinguished, but these scions that lost their master still roam beneath the frosty moon, keeping an oath that no one now remembers.`,
+});
+
+export const Mistshroud = MobDrop.create('Mistshroud', {
+  [Rarity.Epic]: `Helmet`,
+  [Rarity.Rare]: `Plate`,
+  [Rarity.Uncommon]: `Manifestation`,
+}, {
+  [Rarity.Epic]: `A helmet found in the mists of the Wild Hunt.\nPerhaps because the sullying presence from beyond this world has fed from the memories of the Ley Lines, its shape appears oddly similar to the relics of a lost kingdom.`,
+  [Rarity.Rare]: `A plate found in the mists of the Wild Hunt.\nIt was part of the armor of a Wild Hunt monster, but for some reason, it did not disappear with the mist.`,
+  [Rarity.Uncommon]: `A chunk found in the mists of the Wild Hunt.\nLike a snowflake forming from the air, it was created by the manifestation and solidification of dark power from another world.`,
+});
+
+export const RaidantBeastDrop = MobDrop.create('<placeholder>', {
+  [Rarity.Epic]: `Radiant Exoskeleton`,
+  [Rarity.Rare]: `Glowing Remains`,
+  [Rarity.Uncommon]: `Lightless Bone`,
+}, {
+  [Rarity.Epic]: `A giant piece of bone that glows coldly, taken from the exterior of a glowing beast.\nThese beasts blessed by the ancient power of the moon are able to manipulate their exoskeletons through the light that has soaked into their marrow over long years.\nEven though their bones float apart from their bodies, they can still command them at will like any other physical part.`,
+  [Rarity.Rare]: `A faintly glowing piece of bone taken from the exterior of a glowing beast.\nIt is the remains of an exoskeleton in which a vestige of the ancient power of the moon still lingers. It emanates a deep hue that still lingers long after being separated from its body, steeped as it is in the power of the moon.`,
+  [Rarity.Uncommon]: `A dull piece of bone taken from the exterior of a glowing beast.\nIt is a fragment from the exoskeleton of a monster infused with the ancient power of the moon. Along with the vanished light, it has also lost the secrets once hidden within.`,
+}, {
+  onCreate: (name, description, rarity) => new MobDrop(
+    name.replace('<placeholder>', '').trim(),
+    description,
+    undefined,
+    rarity,
+  )
+});

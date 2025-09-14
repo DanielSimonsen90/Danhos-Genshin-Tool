@@ -1,3 +1,5 @@
+// https://genshin-impact.fandom.com/wiki/Enemy/List
+
 import { EasyMob } from "@/common/models/mobs/Mob";
 import * as EasyMobDrops from "../materials/drops/easy";
 
@@ -121,5 +123,21 @@ export const Saurian = new EasyMob(
   `The Saurians that inhabit the land of Natlan.\nAccording to legend, more ancient dragons were better able to adapt to their environments, taking on different shapes and forms based on their surroundings. It is said that after losing their power, they were forced to become ever more dependent on their environments for survival, finally settling into other forms they still have as Saurians today.\nBut whether this is true or not, no one really knows.`,
   [
     EasyMobDrops.Fang,
+  ]
+);
+
+export const FatuiOprichnik = new EasyMob(
+  "Fatui Oprichnik",
+  `A soldier encased within a Fatui war machine.\nUnlike their Skirmisher cousins, soldiers of the Oprichniki are formally recruited and rigorously trained. They are deployed either to the Fatui's most critical strongholds or thrown into the deadliest frontline battles.`,
+  [
+    EasyMobDrops.Warrant
+  ]
+);
+
+export const Landcruiser = new EasyMob(
+  "Landcruiser",
+  `An autonomous machine that applies the principles of naval combat to land battles.\nLandcruisers were engineered by the Armory Palace's finest engineers to serve as "armed ships that cruise on land." They are now deployed en masse at the bleeding edge of the Fatui's conquests.`,
+  [
+    EasyMobDrops.DriveShaft
   ]
 );

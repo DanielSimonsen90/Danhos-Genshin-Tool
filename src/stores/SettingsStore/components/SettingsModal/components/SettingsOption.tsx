@@ -35,7 +35,7 @@ const titles: Record<keyof Settings, string> = {
   showAll: 'Show all search results',
   wrap: 'Wrap search results',
   preferredTabs: 'Preferred tabs',
-  
+
   // Region settings
   traveler: 'Preferred Traveler image',
   region: 'Preferred region',
@@ -48,14 +48,14 @@ const titles: Record<keyof Settings, string> = {
 
 type InputProps<Setting extends keyof Settings> = Props<Setting> & {
   onChange: (value: Settings[Setting]) => void;
-}
+};
 function InputType<Setting extends keyof Settings>({ setting, value, onChange }: InputProps<Setting>) {
   switch (setting) {
     case 'showAll': return <Switch name={setting} enabled={value as Settings['showAll']} onChange={value => onChange(value as Settings[Setting])} />;
     case 'wrap': return <Switch name={setting} enabled={value as Settings['wrap']} onChange={value => onChange(value as Settings[Setting])} />;
     case 'region': return <Select name={setting} options={Object.values(REGIONS)} value={value as WorldRegion} onChange={value => onChange(value as Settings[Setting])} />;
     case 'traveler': return (() => {
-      const [traveler, setTraveler] = useState(value as Traveler);  
+      const [traveler, setTraveler] = useState(value as Traveler);
 
       return (<>
         <CharacterImage character={traveler ?? DEFAULT_REGION_DATA['traveler']} />
@@ -67,28 +67,45 @@ function InputType<Setting extends keyof Settings>({ setting, value, onChange }:
             onChange(value as Settings[Setting]);
           }}
         />
-      </>)
+      </>);
     })();
-    case 'preferredTabs': return (<>
-      <Select
-        name={`${setting}.${'results' as keyof Settings['preferredTabs']}`}
-        options={['combined', 'artifacts', 'characters'] as Array<Settings['preferredTabs']['results']>}
-        value={(value as Settings['preferredTabs']).results}
-        onChange={value => onChange(value as any)}
-      />
-      <Select
-        name={`${setting}.${'searchOrHistory' as keyof Settings['preferredTabs']}`}
-        options={['search', 'history'] as Array<Settings['preferredTabs']['searchOrHistory']>}
-        value={(value as Settings['preferredTabs']).searchOrHistory}
-        onChange={value => onChange(value as any)}
-      />
-      <Select
-        name={`${setting}.${'craftableMaterial' as keyof Settings['preferredTabs']}`}
-        options={['common', 'rarest'] as Array<Settings['preferredTabs']['craftableMaterial']>}
-        value={(value as Settings['preferredTabs']).craftableMaterial}
-        onChange={value => onChange(value as any)}
-      />
-    </>);
+    case 'preferredTabs': return (
+      <div className="preferred-tabs-setting">
+        <div className="input-group">
+          <label htmlFor={`${setting}.${'results' as keyof Settings['preferredTabs']}`}>
+            Prefer selected tab, when using the Artifact Helper
+          </label>
+          <Select
+            name={`${setting}.${'results' as keyof Settings['preferredTabs']}`}
+            options={['combined', 'artifacts', 'characters'] as Array<Settings['preferredTabs']['results']>}
+            value={(value as Settings['preferredTabs']).results}
+            onChange={value => onChange(value as any)}
+          />
+        </div>
+        <div className="input-group">
+          <label htmlFor={`${setting}.${'searchOrHistory' as keyof Settings['preferredTabs']}`}>
+            Prefer default tab to be search or history, when viewing the Artifact Helper
+          </label>
+          <Select
+            name={`${setting}.${'searchOrHistory' as keyof Settings['preferredTabs']}`}
+            options={['search', 'history'] as Array<Settings['preferredTabs']['searchOrHistory']>}
+            value={(value as Settings['preferredTabs']).searchOrHistory}
+            onChange={value => onChange(value as any)}
+          />
+        </div>
+        <div className="input-group">
+          <label htmlFor={`${setting}.${'craftableMaterial' as keyof Settings['preferredTabs']}`}>
+            Prefer craftable materials to be of variant "common" or "rarest"
+          </label>
+          <Select
+            name={`${setting}.${'craftableMaterial' as keyof Settings['preferredTabs']}`}
+            options={['common', 'rarest'] as Array<Settings['preferredTabs']['craftableMaterial']>}
+            value={(value as Settings['preferredTabs']).craftableMaterial}
+            onChange={value => onChange(value as any)}
+          />
+        </div>
+      </div>
+    );
     default: {
       console.error(`Unknown setting: ${setting}`);
       return null;

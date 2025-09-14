@@ -17,8 +17,14 @@ const debugLog = DebugLog(DebugLog.DEBUGS.settingsStore);
 export const useSettingsStore = create<SettingsStore>(((setState, getState) => {
   const initialSettings = (() => {
     const initial = storageService.get() ?? DEFAULT_SETTINGS;
-    delete initial.updated;
-    return initial;
+    const validSettingsKeys = Object.keys(DEFAULT_SETTINGS);
+    
+    return Object.keys(initial).reduce((acc, key) => {
+      if (validSettingsKeys.includes(key) || key === 'updated') {
+        (acc as any)[key] = (initial as any)[key];
+      }
+      return acc;
+    }, {} as AppSettings);
   })();
 
   return {
@@ -37,21 +43,21 @@ export const useSettingsStore = create<SettingsStore>(((setState, getState) => {
       return memoizeService.memoize(() => {
         const settingsClone = { ...getState().settings };
         const initialSettingsClone = { ...initialSettings };
-  
+
         // Delete unimportant properties
         delete settingsClone.updated;
         delete settingsClone.newUser;
-  
+
         delete initialSettingsClone.updated;
         delete initialSettingsClone.newUser;
-  
+
         const result = JSON.stringify(settingsClone) !== JSON.stringify(initialSettingsClone);
         if (result) debugLog('SettingsStore has unsaved changes', {
           current: settingsClone,
           initial: initialSettingsClone
         });
         return result;
-      }, [getState().settings, initialSettings])
+      }, [getState().settings, initialSettings]);
     },
     get changeableSettings(): ChangeableSettings {
       return ObjectUtils.exclude(getState().settings, 'newUser', 'updated');
@@ -59,28 +65,49 @@ export const useSettingsStore = create<SettingsStore>(((setState, getState) => {
 
     getSetting<Key extends keyof AppSettings>(key: Key): AppSettings[Key] | undefined {
       return getState().settings[key];
-    },
-    updateSettings(update: SetStateAction<Partial<AppSettings>>, override?: boolean) {
+    }, updateSettings(update: SetStateAction<Partial<AppSettings>>, override?: boolean) {
       const resolvedUpdate = typeof update === 'function' ? update(getState().settings) : update;
+
+      // Filter out character filter properties that shouldn't be in settings
+      const validSettingsKeys = Object.keys(DEFAULT_SETTINGS).concat(['updated']);
+      const filteredUpdate = Object.keys(resolvedUpdate).reduce((acc, key) => {
+        if (validSettingsKeys.includes(key)) {
+          (acc as any)[key] = (resolvedUpdate as any)[key];
+        }
+        return acc;
+      }, {} as Partial<AppSettings>);
+
       debugLog('Settings update', resolvedUpdate);
-      setState({ settings: { 
-        ...(override ? {} as AppSettings : getState().settings), 
-        ...resolvedUpdate, 
-        updated: Date.now() 
-      } });
-    },
-    saveSettings(update?: SetStateAction<Partial<AppSettings>>) {
+      debugLog('Filtered settings update', filteredUpdate);
+
+      setState({
+        settings: {
+          ...(override ? {} as AppSettings : getState().settings),
+          ...filteredUpdate,
+          updated: Date.now()
+        }
+      });
+    }, saveSettings(update?: SetStateAction<Partial<AppSettings>>) {
       const resolvedUpdate = update
         ? (typeof update === 'function'
           ? update(getState().settings)
           : update
         ) : getState().settings;
 
-      const resolvedSettings = { ...getState().settings, ...resolvedUpdate };
-      storageService.set(resolvedSettings);
-      debugLog('Settings saved', resolvedSettings);
+      // Filter out character filter properties that shouldn't be in settings
+      const validSettingsKeys = Object.keys(DEFAULT_SETTINGS).concat(['updated']);
+      const filteredSettings = Object.keys({ ...getState().settings, ...resolvedUpdate }).reduce((acc, key) => {
+        if (validSettingsKeys.includes(key)) {
+          const source = (resolvedUpdate as any)[key] !== undefined ? resolvedUpdate : getState().settings;
+          (acc as any)[key] = (source as any)[key];
+        }
+        return acc;
+      }, {} as AppSettings);
 
-      const newInitialSettings = { ...resolvedSettings };
+      storageService.set(filteredSettings);
+      debugLog('Settings saved', filteredSettings);
+
+      const newInitialSettings = { ...filteredSettings };
       delete newInitialSettings.updated;
       setState({ initialSettings: newInitialSettings });
     },
@@ -92,5 +119,5 @@ export const useSettingsStore = create<SettingsStore>(((setState, getState) => {
     resetSettings() {
       this.updateAndSaveSettings(DEFAULT_SETTINGS);
     },
-  }
+  };
 }));

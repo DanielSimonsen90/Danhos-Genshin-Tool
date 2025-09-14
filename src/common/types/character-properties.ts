@@ -1,10 +1,12 @@
-import type { Reaction, GenshinRegion, Element } from "./genshin";
+import type { Reaction, GenshinRegion, Element, LunarReaction } from "./genshin";
 
 export type TalentType = 'Normal/Press' | 'Charged/Hold' | 'Plunging/Press' | 'Skill/Ability' | 'Burst/Ult';
 export type BonusAbility = (
 | 'Off-field Damage' 
 | 'Shield' | 'Heal' | 'Self-heal' | 'Bond of Life' 
-| 'Nightsouls Blessing' | `Serpent's Subtlety`  | 'Enables Lunar-Charged Reaction'
+| 'Nightsouls Blessing' | `Serpent's Subtlety`  
+| `Enables ${LunarReaction} Reaction`
+| 'Moonsign: Ascendant Gleam'
 | 'Grouping'
 | `Buff ATK: ${string}` | `Elemental based: ${string}` | `CRIT Increase: ${string}` | `Buff ATK Speed: ${string}` | `Elemental Infusion: ${string}`
 );

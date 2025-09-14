@@ -185,3 +185,23 @@ export const Fang = MobDrop.create('Fang', {
   [Rarity.Uncommon]: `A sturdy tooth that fell from a Natlan Saurian.\nWear and tear bear witness to the experiences and battles of its previous owner. Among the many Saurians of Natlan, one with such a tooth must have been considered a formidable warrior indeed.`,
   [Rarity.Common]: `A tooth that fell from a Natlan Saurian.\nIt looks like it belonged to a juvenile creature. If there was a way to determine the age of its previous owner, perhaps it would show that they had not yet roamed the world for long.`,
 });
+
+export const Warrant = MobDrop.create('Warrant', {
+  [Rarity.Rare]: `Frost-Etched`,
+  [Rarity.Uncommon]: `Immaculate`,
+  [Rarity.Common]: `Tattered`,
+}, {
+  [Rarity.Rare]: `A warrant issued to members of the Fatui Oprichniki.\nAdorned by a frost-colored crystal — a symbol of glory. One wonders what deeds its bearer must have performed to prove their loyalty and worth.`,
+  [Rarity.Uncommon]: `A warrant issued to members of the Fatui Oprichniki.\nOne wonders if the exquisite styling might hide a price paid for its owner's promotion.`,
+  [Rarity.Common]: `A warrant issued to members of the Fatui Oprichniki.\nOne wonders what resolve drove its bearer to sign up.`,
+});
+
+export const DriveShaft = MobDrop.create('Drive Shaft', {
+  [Rarity.Rare]: 'Precision',
+  [Rarity.Uncommon]: 'Reinforced',
+  [Rarity.Common]: 'Broken',
+}, {
+  [Rarity.Rare]: `The drive shaft of a Landcruisen refined by the Design Bureau.\nOn the blueprints drawn by the engineers of the north, this unassuming part was once the flawless embodiment of glory and technological advancement, its small metal body encapsulating the wisdom of countless generations.\nNow it lies in the cold dirt, waiting to be recycled once more.`,
+  [Rarity.Uncommon]: `The reinforced drive shaft of a Landcruiser.\nIt took countless reports of destruction to bring about this insignificant improvement. In a sense, the administrative system of the Royal Armory Palace is several times more complex than the machinery it builds. After all, even the most advanced Landcruisers don't take months or even years to build.`,
+  [Rarity.Common]: `The drive shaft of a Landcruiser destroyed in battle.\nEven the most precise craftsmanship cannot withstand excessive wear, just as the most lofty ideals cannot bring back those who've died in vain for someone else's cause. Moreover, mass-produced components can hardly be called precise, and mass-produced ideals can hardly be considered true ideals.`,
+});

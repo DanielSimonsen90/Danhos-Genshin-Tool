@@ -21,6 +21,58 @@ app.whenReady().then(() => installExtension(REACT_DEVELOPER_TOOLS));
 const setupIPCHandlers = (): void => {
   ipcMain.handle('check-for-updates', () => UpdateService.checkForUpdates(false));
   ipcMain.handle('get-app-version', () => app.getVersion());
+    // LocalStorage import/export IPC handlers (full data backup/restore)
+  ipcMain.handle('get-all-localstorage-data', async (event) => {
+    try {
+      const result = await event.sender.executeJavaScript(`
+        (() => {
+          const data = {};
+          for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key) {
+              try {
+                const value = localStorage.getItem(key);
+                data[key] = value ? JSON.parse(value) : value;
+              } catch (parseError) {
+                // If it's not valid JSON, store as string
+                data[key] = localStorage.getItem(key);
+              }
+            }
+          }
+          return data;
+        })()
+      `);
+      return result;
+    } catch (error) {
+      console.error('Failed to get all localStorage data:', error);
+      return null;
+    }
+  });
+  
+  ipcMain.handle('set-all-localstorage-data', async (event, data) => {
+    try {
+      await event.sender.executeJavaScript(`
+        (() => {
+          // Clear existing localStorage
+          localStorage.clear();
+          
+          // Set all new data
+          const data = ${JSON.stringify(data)};
+          for (const [key, value] of Object.entries(data)) {
+            try {
+              localStorage.setItem(key, typeof value === 'string' ? value : JSON.stringify(value));
+            } catch (error) {
+              console.error('Failed to set localStorage item:', key, error);
+            }
+          }
+        })()
+      `);
+      return true;
+    } catch (error) {
+      console.error('Failed to set all localStorage data:', error);
+      throw error;
+    }
+  });
 };
 
 // Setup application menu
@@ -176,18 +228,17 @@ const setupApplicationMenu = (): void => {
               }
             }
           },
-        },
-        { type: 'separator' },
-        {
-          label: 'Export Settings',
-          click: async () => {
+        },        { type: 'separator' },        {
+          label: 'Export Data',
+          click: async (item, focusedWindow) => {
+            if (!focusedWindow) return;
+            
             const { dialog } = require('electron');
             const fs = require('fs').promises;
-            const userDataPath = app.getPath('userData');
             
-            const result = await dialog.showSaveDialog({
-              title: 'Export Settings',
-              defaultPath: 'genshin-tool-settings.json',
+            const result = await dialog.showSaveDialog(focusedWindow, {
+              title: 'Export All Data',
+              defaultPath: 'genshin-tool-data.json',
               filters: [
                 { name: 'JSON Files', extensions: ['json'] },
                 { name: 'All Files', extensions: ['*'] }
@@ -196,37 +247,93 @@ const setupApplicationMenu = (): void => {
             
             if (!result.canceled && result.filePath) {
               try {
-                // You might need to adjust this path based on where your app stores settings
-                const settingsPath = path.join(userDataPath, 'settings.json');
-                const settingsData = await fs.readFile(settingsPath, 'utf8');
-                await fs.writeFile(result.filePath, settingsData);
+                // Get all localStorage data via IPC
+                const localStorageData = await focusedWindow.webContents.executeJavaScript(`
+                  (() => {
+                    const data = {};
+                    for (let i = 0; i < localStorage.length; i++) {
+                      const key = localStorage.key(i);
+                      if (key) {
+                        try {
+                          const value = localStorage.getItem(key);
+                          data[key] = value ? JSON.parse(value) : value;
+                        } catch (parseError) {
+                          // If it's not valid JSON, store as string
+                          data[key] = localStorage.getItem(key);
+                        }
+                      }
+                    }
+                    return data;
+                  })()
+                `);
                 
-                await dialog.showMessageBox({
+                console.log('Raw localStorage data:', localStorageData);
+                
+                if (!localStorageData || Object.keys(localStorageData).length === 0) {
+                  await dialog.showMessageBox(focusedWindow, {
+                    type: 'warning',
+                    title: 'No Data Found',
+                    message: 'No data found to export.',
+                    buttons: ['OK']
+                  });
+                  return;
+                }
+                
+                // Validate and filter the localStorage data
+                const validation = validateAndFilterLocalStorageData(localStorageData);
+                console.log('Validation result:', validation);
+                
+                if (!validation.valid) {
+                  await dialog.showMessageBox(focusedWindow, {
+                    type: 'warning',
+                    title: 'Data Validation Issue',
+                    message: 'There was an issue with your data.',
+                    detail: validation.error || 'Unknown validation error',
+                    buttons: ['OK']
+                  });
+                  return;
+                }
+                
+                // Add metadata to the export
+                const exportData = {
+                  exportedAt: new Date().toISOString(),
+                  appVersion: await focusedWindow.webContents.executeJavaScript('navigator.userAgent'),
+                  data: validation.filtered
+                };
+                
+                await fs.writeFile(result.filePath, JSON.stringify(exportData, null, 2));
+                
+                // Show success message with warnings if any
+                const hasWarnings = validation.warnings && validation.warnings.length > 0;
+                await dialog.showMessageBox(focusedWindow, {
                   type: 'info',
                   title: 'Export Successful',
-                  message: 'Settings exported successfully!',
+                  message: 'All data exported successfully!' + 
+                    (hasWarnings ? '\n\nNote: Some data was automatically corrected during export.' : ''),
+                  detail: hasWarnings ? `Warnings: ${validation.warnings?.join(', ')}` : undefined,
                   buttons: ['OK']
-                });              } catch (error) {
-                await dialog.showMessageBox({
+                });
+              } catch (error) {
+                await dialog.showMessageBox(focusedWindow, {
                   type: 'error',
                   title: 'Export Failed',
-                  message: 'Failed to export settings.',
+                  message: 'Failed to export data.',
                   detail: error instanceof Error ? error.message : 'Unknown error occurred',
                   buttons: ['OK']
                 });
               }
             }
-          },
-        },
+          },        },
         {
-          label: 'Import Settings',
-          click: async () => {
+          label: 'Import Data',
+          click: async (item, focusedWindow) => {
+            if (!focusedWindow) return;
+            
             const { dialog } = require('electron');
             const fs = require('fs').promises;
-            const userDataPath = app.getPath('userData');
             
-            const result = await dialog.showOpenDialog({
-              title: 'Import Settings',
+            const result = await dialog.showOpenDialog(focusedWindow, {
+              title: 'Import Data',
               filters: [
                 { name: 'JSON Files', extensions: ['json'] },
                 { name: 'All Files', extensions: ['*'] }
@@ -237,16 +344,70 @@ const setupApplicationMenu = (): void => {
             if (!result.canceled && result.filePaths.length > 0) {
               try {
                 const importData = await fs.readFile(result.filePaths[0], 'utf8');
-                JSON.parse(importData); // Validate JSON
+                const parsedData = JSON.parse(importData); // Validate JSON format
                 
-                const settingsPath = path.join(userDataPath, 'settings.json');
-                await fs.writeFile(settingsPath, importData);
+                console.log('Import data:', parsedData);
                 
-                const restartResult = await dialog.showMessageBox({
+                // Handle different import formats
+                let dataToImport;
+                if (parsedData.data && parsedData.exportedAt) {
+                  // New format with metadata
+                  dataToImport = parsedData.data;
+                } else {
+                  // Legacy format or direct data
+                  dataToImport = parsedData;
+                }
+                
+                // Validate and filter the imported data
+                const validation = validateAndFilterLocalStorageData(dataToImport);
+                
+                if (!validation.valid) {
+                  await dialog.showMessageBox(focusedWindow, {
+                    type: 'error',
+                    title: 'Invalid Data File',
+                    message: 'The data file contains invalid information.',
+                    detail: validation.error || 'Unknown validation error',
+                    buttons: ['OK']
+                  });
+                  return;
+                }
+                
+                // Confirm before importing
+                const confirmResult = await dialog.showMessageBox(focusedWindow, {
+                  type: 'warning',
+                  title: 'Confirm Import',
+                  message: 'This will replace all your current data with the imported data.',
+                  detail: 'Are you sure you want to continue? This action cannot be undone.',
+                  buttons: ['Import', 'Cancel'],
+                  defaultId: 1,
+                  cancelId: 1
+                });
+                
+                if (confirmResult.response !== 0) return;
+                
+                // Set all data in localStorage via IPC
+                await focusedWindow.webContents.executeJavaScript(`
+                  (() => {
+                    // Clear existing localStorage
+                    localStorage.clear();
+                    
+                    // Set all new data
+                    const data = ${JSON.stringify(validation.filtered)};
+                    for (const [key, value] of Object.entries(data)) {
+                      try {
+                        localStorage.setItem(key, typeof value === 'string' ? value : JSON.stringify(value));
+                      } catch (error) {
+                        console.error('Failed to set localStorage item:', key, error);
+                      }
+                    }
+                  })()
+                `);
+                
+                const restartResult = await dialog.showMessageBox(focusedWindow, {
                   type: 'info',
                   title: 'Import Successful',
-                  message: 'Settings imported successfully!',
-                  detail: 'The application needs to restart to apply the new settings.',
+                  message: 'Data imported successfully!',
+                  detail: 'The application needs to restart to apply the new data.',
                   buttons: ['Restart Now', 'Restart Later'],
                   defaultId: 0
                 });
@@ -256,18 +417,16 @@ const setupApplicationMenu = (): void => {
                   app.exit();
                 }
               } catch (error) {
-                await dialog.showMessageBox({
+                await dialog.showMessageBox(focusedWindow, {
                   type: 'error',
                   title: 'Import Failed',
-                  message: 'Failed to import settings.',
-                  detail: 'The file may be corrupted or in an invalid format.',
-                  buttons: ['OK']
+                  message: 'Failed to import data.',
+                  detail: error instanceof Error ? error.message : 'The file may be corrupted or in an invalid format.',                  buttons: ['OK']
                 });
               }
             }
           },
-        },
-      ],
+        },      ],
     },
     {
       label: 'Help',
@@ -379,6 +538,162 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+// LocalStorage data validation helper
+const validateAndFilterLocalStorageData = (data: any): { valid: boolean; filtered: any; error?: string; warnings?: string[] } => {
+  try {
+    console.log('Validating localStorage data:', data);
+    
+    if (!data || typeof data !== 'object') {
+      return { valid: false, filtered: {}, error: 'LocalStorage data must be an object' };
+    }
+
+    const filtered: Record<string, any> = {};
+    const warnings: string[] = [];
+
+    // Define validation rules for known localStorage keys
+    const knownKeys = {
+      'settings': {
+        required: ['showAll', 'wrap', 'preferredTabs'],
+        optional: ['updated', 'newUser'],
+        defaults: {
+          showAll: false,
+          wrap: true,
+          preferredTabs: {
+            searchOrHistory: 'search',
+            results: 'combined',
+            craftableMaterial: 'common',
+          },
+          updated: undefined,
+          newUser: true
+        }
+      },
+      'regions': {
+        required: [],
+        optional: ['Asia', 'Europe', 'North America', 'TW, HK, MO'],
+        defaults: {}
+      },
+      'cache': {
+        required: [],
+        optional: [],
+        defaults: {}
+      }
+    };
+
+    // Process each localStorage key
+    for (const [key, value] of Object.entries(data)) {
+      try {
+        if (knownKeys[key as keyof typeof knownKeys]) {
+          // Validate known keys
+          const keyConfig = knownKeys[key as keyof typeof knownKeys];
+          
+          if (key === 'settings') {
+            // Validate settings data
+            const settingsValidation = validateSettings(value);
+            if (settingsValidation.valid) {
+              filtered[key] = settingsValidation.filtered;
+            } else {
+              warnings.push(`Settings validation failed: ${settingsValidation.error}, using defaults`);
+              filtered[key] = keyConfig.defaults;
+            }
+          } else if (key === 'regions') {
+            // Validate regions data  
+            const regionsValidation = validateRegions(value);
+            if (regionsValidation.valid) {
+              filtered[key] = regionsValidation.filtered;
+            } else {
+              warnings.push(`Regions validation failed: ${regionsValidation.error}, using defaults`);
+              filtered[key] = keyConfig.defaults;
+            }
+          } else {
+            // For other known keys, store as-is but ensure it's valid JSON
+            filtered[key] = value;
+          }
+        } else {
+          // For unknown keys, store as-is if it's valid data
+          if (value !== null && value !== undefined) {
+            filtered[key] = value;
+          }
+        }
+      } catch (error) {
+        warnings.push(`Failed to process key '${key}': ${error instanceof Error ? error.message : 'Unknown error'}`);
+      }
+    }
+
+    if (warnings.length > 0) {
+      console.warn('LocalStorage validation warnings:', warnings);
+    }
+
+    console.log('LocalStorage validation successful, filtered data:', filtered);
+    return { valid: true, filtered, warnings };
+  } catch (error) {
+    console.error('LocalStorage validation error:', error);
+    return { valid: false, filtered: {}, error: error instanceof Error ? error.message : 'Unknown validation error' };
+  }
+};
+
+// Helper function to validate settings data
+const validateSettings = (data: any): { valid: boolean; filtered: any; error?: string } => {
+  if (!data || typeof data !== 'object') {
+    return { valid: false, filtered: {}, error: 'Settings must be an object' };
+  }
+
+  const defaults = {
+    showAll: false,
+    wrap: true,
+    preferredTabs: {
+      searchOrHistory: 'search' as const,
+      results: 'combined' as const,
+      craftableMaterial: 'common' as const,
+    },
+    updated: undefined,
+    newUser: true
+  };
+
+  const filtered = { ...defaults };
+
+  // Validate and fix boolean properties
+  if (typeof data.showAll === 'boolean') filtered.showAll = data.showAll;
+  if (typeof data.wrap === 'boolean') filtered.wrap = data.wrap;
+  if (typeof data.newUser === 'boolean') filtered.newUser = data.newUser;
+  if (typeof data.updated === 'number' || data.updated === undefined) filtered.updated = data.updated;
+
+  // Validate preferredTabs
+  if (data.preferredTabs && typeof data.preferredTabs === 'object') {
+    const validTabValues = {
+      searchOrHistory: ['search', 'history'],
+      results: ['combined', 'artifacts', 'characters'],
+      craftableMaterial: ['common', 'rarest']
+    };
+
+    for (const [tabKey, validValues] of Object.entries(validTabValues)) {
+      if (validValues.includes(data.preferredTabs[tabKey])) {
+        (filtered.preferredTabs as any)[tabKey] = data.preferredTabs[tabKey];
+      }
+    }
+  }
+
+  return { valid: true, filtered };
+};
+
+// Helper function to validate regions data
+const validateRegions = (data: any): { valid: boolean; filtered: any; error?: string } => {
+  if (!data || typeof data !== 'object') {
+    return { valid: false, filtered: {}, error: 'Regions must be an object' };
+  }
+
+  // For regions, we'll be more permissive since the structure can vary
+  // Just ensure it's a valid object structure
+  const filtered: Record<string, any> = {};
+  
+  for (const [regionKey, regionData] of Object.entries(data)) {
+    if (regionData && typeof regionData === 'object') {
+      filtered[regionKey] = regionData;
+    }
+  }
+
+  return { valid: true, filtered };
+};
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.

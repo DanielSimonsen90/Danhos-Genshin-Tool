@@ -18,4 +18,13 @@
   .character-image {
     --size: 5ch;
   }
+
+  .preferred-tabs-setting {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .input-group:has(.preferred-tabs-setting) {
+    align-items: start;
+  }
 }
