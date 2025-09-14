@@ -89,3 +89,18 @@ export const BlazingRuins = new DomainOfMastery(
   },
   "Natlan"
 );
+
+/**
+ * Nod-Krai
+ */
+export const LightlessCapital = new DomainOfMastery(
+  "Lightless Capital",
+  `Hundreds of years ago, Nod-Krai too experienced a golden age, where adventurers and treasure hunters gathered in droves at the prosperous city that bore the weight of humanity's arrogant dreams, its steel sinews and iron bones reflecting industrial and technological glory at the very edge of the world. Then calamity descended, and objects both living and not were dragged equally into the darkness, while past vibrance and opulence were buried by the ruthless march of time.`,
+  {
+    1: '(Hydro/Electro)',
+    2: '(Hydro/Electro)',
+    3: 'When a character triggers Electro-Charged or Lunar-Charged, a shockwave will be unleashed that deals greater DMG to opponents. (Hydro/Electro)',
+    4: 'When a character triggers Electro-Charged or Lunar-Charged, a shockwave will be unleashed that deals greater DMG to opponents. (Hydro/Electro)',
+  },
+  'Nod-Krai'
+);

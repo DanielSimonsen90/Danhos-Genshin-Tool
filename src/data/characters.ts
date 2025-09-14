@@ -7,6 +7,7 @@ import * as MobDrops from './materials/drops';
 import * as EasyMobDrops from './materials/drops/easy';
 import * as TalentAscension from "./materials/talents";
 
+// #region 2-piece spread sets
 const HPSets = (priority: CharacterArtifactSet['effectiveness']) => [
   new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 2, priority),
   new CharacterArtifactSet(Sets.VourukashasGlow, 2, priority),
@@ -28,11 +29,13 @@ const ElementalMasterySets = (priority: CharacterArtifactSet['effectiveness']) =
   new CharacterArtifactSet(Sets.GildedDreams, 2, priority),
   new CharacterArtifactSet(Sets.WanderersTroupe, 2, priority),
   new CharacterArtifactSet(Sets.FlowerOfParadiseLost, 2, priority),
+  new CharacterArtifactSet(Sets.NightOfTheSkysUnveiling, 2, priority),
 ];
 const EnergyRechargeSets = (priority: CharacterArtifactSet['effectiveness']) => [
   new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 2, priority),
   new CharacterArtifactSet(Sets.TheExile, 2, priority),
   new CharacterArtifactSet(Sets.Scholar, 2, priority),
+  new CharacterArtifactSet(Sets.SilkenMoonsSerenade, 2, priority),
 ];
 
 const ChargedAttackSets = (priority: CharacterArtifactSet['effectiveness']) => [
@@ -69,6 +72,21 @@ const HydroDMGSets = (priority: CharacterArtifactSet['effectiveness']) => [
 const PyroDMGSets = (priority: CharacterArtifactSet['effectiveness']) => [
   new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 2, priority),
 ];
+// #endregion
+
+// #region A-G
+export const Aino = new Character("Aino", "Hydro", "Claymore", [], Rarity.Epic, 'Nod-Krai', {
+  localSpecialty: LocalSpecialties.PortableBearing,
+  crystal: ElementalCrystals.Hydro,
+  material: TalentAscension.Elysium,
+  mobDrop: EasyMobDrops.DriveShaft,
+  worldBossDrop: MobDrops.PrecisionKuuvahkiStampingDie,
+  weeklyBossDrop: MobDrops.SilkenFeather 
+}, 'Shows Local Specialties in Nod-Krai on minimap.', 
+  new CharacterPlaystyle("Burst Support", ["Elemental Mastery", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
+    new CharacterArtifactSet(Sets.SilkenMoonsSerenade, 4, 100)
+  ])
+)
 
 export const Albedo = new Character("Albedo", "Geo", "Sword", [], Rarity.Legendary, 'Mondstadt', {
   localSpecialty: LocalSpecialties.Cecilia,
@@ -569,6 +587,20 @@ export const Fischl = new Character("Fischl", "Electro", "Bow", ["Off-field Dama
   ]),
 );
 
+// TODO
+// export const Flins = new Character("Flins", "Electro", "Polearm", [], Rarity.Legendary, 'Nod-Krai', {
+//   material: undefined,
+//   weeklyBossDrop: undefined,
+//   crystal: ElementalCrystals.Electro,
+//   localSpecialty: undefined,
+//   worldBossDrop: undefined,
+//   mobDrop: undefined,
+// }, 'Shows Local Specialties in Nod-Krai on minimap.', 
+//   new CharacterPlaystyle("On-field DPS", ["ATK", "Elemental Mastery"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
+//     new CharacterArtifactSet(Sets.NightOfTheSkysUnveiling, 4, 100),
+//   ])
+// );
+
 export const Freminet = new Character("Freminet", "Cryo", "Claymore", [], Rarity.Epic, 'Fontaine', {
   material: TalentAscension.Justice,
   weeklyBossDrop: MobDrops.WorldspanFern,
@@ -649,6 +681,9 @@ export const Gorou = new Character("Gorou", "Geo", "Bow", ["Shield"], Rarity.Epi
   ])
 );
 
+// #endregion
+
+// #region H-N
 export const HuTao = new Character("Hu Tao", "Pyro", "Polearm", [
   "Self-heal",
   "Elemental Infusion: After Skill/Ability, Hu Tao gains Pyro infusion"
@@ -956,6 +991,22 @@ export const LanYan = new Character("Lan Yan", "Anemo", "Catalyst", ["Shield", "
   ])
 );
 
+export const Lauma = new Character("Lauma", "Dendro", "Catalyst", [
+  "Enables Lunar-Bloom Reaction"
+], Rarity.Legendary, 'Nod-Krai', {
+  material: TalentAscension.Moonlight,
+  weeklyBossDrop: MobDrops.ErodedScaleFeather,
+  crystal: ElementalCrystals.Dendro,
+  localSpecialty: LocalSpecialties.MoonfallSilver,
+  worldBossDrop: MobDrops.LightbearingScaleFeather,
+  mobDrop: EasyMobDrops.Warrant,
+}, 'Shows Local Specialties in Nod-Krai on minimap.',
+  new CharacterPlaystyle("Off-field Lunar-Bloom Support", ['Elemental Mastery', 'Energy Recharge'], ['Burst/Ult', 'Skill/Ability', 'Normal/Press'], false, [
+    new CharacterArtifactSet(Sets.SilkenMoonsSerenade, 4, 50),
+    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 50),
+  ])
+);
+
 export const Layla = new Character("Layla", "Cryo", "Sword", [
   "Shield",
   'Off-field Damage'
@@ -1187,6 +1238,10 @@ export const Noelle = new Character("Noelle", "Geo", "Claymore", [
     new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 16.8),
   ])
 );
+
+// #endregion
+
+// #region O-U
 
 export const Ororon = new Character("Ororon", "Electro", "Bow", [
   'Off-field Damage',
@@ -1542,6 +1597,10 @@ export const TravelerCryo = new Character("Traveler (Cryo)", "Cryo", "Sword", []
   worldBossDrop: null,
   mobDrop: EasyMobDrops.Mask,
 }, undefined, undefined);
+
+// #endregion
+
+// #region V-Z
 
 export const Varesa = new Character("Varesa", "Electro", "Catalyst", ["Nightsouls Blessing"], Rarity.Legendary, 'Natlan', {
   material: TalentAscension.Conflict,

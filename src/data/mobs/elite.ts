@@ -1,3 +1,5 @@
+// https://genshin-impact.fandom.com/wiki/Enemy/List
+
 import { EliteMob } from "@/common/models/mobs/Mob";
 import * as EasyMobDrops from "../materials/drops/easy";
 import * as EliteMobDrops from "../materials/drops/elite";
@@ -227,5 +229,29 @@ export const FurnaceShellMountainWeasel = new EliteMob(
   `An ancient variant of mountain weasel that has adapted to a unique, Phlogiston-rich environment isolated from the outside world. Some researchers from the Saurian Relics Association believe that despite the appearance that it has developed a symbiotic relationship with the Source Mechanisms, said mechanisms are actually controlling it through the ample Phlogiston that permeates its body.`,
   [
     EliteMobDrops.WeaselShell,
+  ]
+);
+
+export const FrostnightScion = new EliteMob(
+  "Frostnight Scion",
+  `An elegant elemental lifeform.\nIt was born from the Frost Moon's blessings, symbolizing the pure source and the first radiance. The long years have exposed it to high concentrations of elemental energy, resulting in its present form.`,
+  [
+    EliteMobDrops.FrostnightsX
+  ]
+);
+
+export const WastelandWildHunt = new EliteMob(
+  "Wasteland Wild Hunt",
+  `A ghoul that stalks the frozen wilderness.\nAppearing when the pitch-dark mist rolls in, their emergence is said to presage worse calamities to come.`,
+  [
+    EliteMobDrops.Mistshroud
+  ]
+);
+
+export const RadiantBeast = new EliteMob(
+  "Radiant Beast",
+  `A beast that has undergone a unique evolution due to age-long immersion in the ancient moon's power.\nOnce an ordinary creature, it has been warped by the influence of kuuvahki and imbued with an otherworldly strength.`,
+  [
+    EliteMobDrops.RaidantBeastDrop
   ]
 );

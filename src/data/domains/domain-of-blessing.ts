@@ -200,3 +200,15 @@ export const DerelictMasonryDock = new DomainOfBlessing(
   },
   'Natlan',
 );
+
+export const FrostladenMachinery = new DomainOfBlessing(
+  "Frostladen Machinery",
+  "Many sacrifices were made, many obstacles overcome, and many such colossal machines were constructed and then abandoned, all for the sake of ever grander visions. Today, now that this greater goal seems so close at hand, this once-rumbling experimental outpost has come to the end of its service. Its colossal devices have fallen into slumber i leaving behind naught but cold silence.",
+  {
+    1: `(Dendro/Electro/Hydro)`,
+    2: `(Dendro/Electro/Hydro)`,
+    3: `Moonsign characters (Dendro/Electro/Hydro)`,
+    4: `Moonsign characters (Dendro/Electro/Hydro)`
+  },
+  'Nod-Krai',
+);
