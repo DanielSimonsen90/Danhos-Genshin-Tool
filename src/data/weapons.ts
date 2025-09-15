@@ -2,6 +2,7 @@ import Weapon from "@/common/models/weapon";
 import { Rarity } from "@/common/types";
 import * as WeaponAscensionMaterials from './materials/weapon-materials';
 import * as Drops from './materials/drops';
+import { WeaponAscensionMaterial } from "@/common/models";
 
 export const TheCatch = new Weapon(
   '"The Catch"',
@@ -1049,6 +1050,25 @@ export const EngulfingLightning = new Weapon(
   ],
   'Wish',
   cs => cs.RaidenShogun
+);
+
+export const EtherlightSpindlelute = new Weapon(
+  'Etherlight Spindlelute',
+  {
+    value: `For 20s after using an Elemental Skill, the equipping character's Elemental Mastery is increased by $0.`,
+    refinements: ['100/125/150/175/200']
+  },
+  'Catalyst',
+  Rarity.Epic,
+  510,
+  'Energy Recharge',
+  45.9,
+  [
+    WeaponAscensionMaterials.XOfTheFarNorthScions,
+    Drops.RaidantBeastDrop,
+    Drops.Warrant
+  ],
+  'Event'
 );
 
 export const EverlastingMoonglow = new Weapon(
@@ -2344,6 +2364,31 @@ export const MouunsMoon = new Weapon(
 // #endregion
 
 // #region N
+export const NightweaversLookingGlass = new Weapon(
+  `Nightweaver's Looking Glass`,
+  {
+    value: `When the equipping character's Elemental Skill deals Hydro or Dendro DMG, they will gain Prayer of the Far North: Elemental Mastery is increased by $0 for 4.5s. When nearby party members trigger Lunar-Bloom reactions, the equipping character gains New Moon Verse: Elemental Mastery is increased by $1 for 10s. When both Prayer of the Far North and New Moon Verse are in effect, all nearby party members' Bloom DMG is increased by $2, their Hyperbloom and Burgeon DMG is increased by $3, and their Lunar-Bloom DMG is increased by $4. This effect cannot stack. The aforementioned effects can be triggered even if the equipping character is off-field.`,
+    refinements: [
+      '60/75/90/105/120',
+      '60/75/90/105/120',
+      '120%/150%/180%/210%/240%',
+      '80%/100%/120%/140%/160%',
+      '40%/50%/60%/70%/80%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Legendary,
+  542,
+  'Elemental Mastery',
+  265,
+  [
+    WeaponAscensionMaterials.ArtfulDeviceX,
+    Drops.FrostnightsX,
+    Drops.DriveShaft
+  ],
+  'Wish',
+  cs => cs.Lauma
+);
 // #endregion
 
 // #region O
