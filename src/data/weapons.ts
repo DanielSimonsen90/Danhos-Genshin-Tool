@@ -47,6 +47,7 @@ export const UltimateOverlordsMegaMagicSword = new Weapon(
   'Event',
 );
 
+// #region A
 export const AThousandBlazingSuns = new Weapon(
   "A Thousand Blazing Suns",
   {
@@ -318,7 +319,9 @@ export const Azurelight = new Weapon(
   'Wish',
   cs => cs.Skirk,
 );
+// #endregion
 
+// #region B
 export const BalladOfTheBoundlessBlue = new Weapon(
   'Ballad of the Boundless Blue',
   {
@@ -532,7 +535,9 @@ export const BloodtaintedGreatsword = new Weapon(
   ],
   'Wish',
 );
+// #endregion
 
+// #region C
 export const CalamityOfEshu = new Weapon(
   'Calamity of Eshu',
   {
@@ -778,7 +783,9 @@ export const CrimsonMoonsSemblance = new Weapon(
   'Wish',
   cs => cs.Arlecchino
 );
+// #endregion
 
+// #region D
 export const DarkIronSword = new Weapon(
   'Dark Iron Sword',
   {
@@ -930,7 +937,9 @@ export const DragonspineSpear = new Weapon(
   ],
   'Crafting',
 );
+// #endregion
 
+// #region E
 export const EarthShaker = new Weapon(
   'Earth Shaker',
   {
@@ -1086,7 +1095,9 @@ export const EyeOfPerception = new Weapon(
   ],
   'Wish',
 );
+// #endregion
 
+// #region F
 export const FadingTwilight = new Weapon(
   'Fading Twilight',
   {
@@ -1570,7 +1581,12 @@ export const FruitfulHook = new Weapon(
   ],
   'Wish',
 );
+// #endregion
 
+// #region G
+// #endregion
+
+// #region H
 export const HakushinRing = new Weapon(
   'Hakushin Ring',
   {
@@ -1701,7 +1717,9 @@ export const HuntersPath = new Weapon(
   'Wish',
   cs => cs.Tighnari
 );
+// #endregion
 
+// #region I
 export const IbisPiercer = new Weapon(
   'Ibis Piercer',
   {
@@ -1743,7 +1761,9 @@ export const IronSting = new Weapon(
   ],
   'Crafting'
 );
+// #endregion
 
+// #region J
 export const JadefallsSplendor = new Weapon(
   `Jadefall's Splendor`,
   {
@@ -1767,7 +1787,9 @@ export const JadefallsSplendor = new Weapon(
   'Wish',
   cs => cs.Baizhu
 );
+// #endregion
 
+// #region K
 export const KagotsurubeIsshin = new Weapon(
   'Kagotsurube Isshin',
   {
@@ -1899,7 +1921,9 @@ export const KitainCrossSpear = new Weapon(
   ],
   'Crafting',
 );
+// #endregion
 
+// #region L
 export const LightOfFoliarIncision = new Weapon(
   'Light of Foliar Incision',
   {
@@ -2054,7 +2078,9 @@ export const LuxuriousSeaLord = new Weapon(
   ],
   'Event',
 );
+// #endregion
 
+// #region M
 export const MagicGuide = new Weapon(
   'Magic Guide',
   {
@@ -2315,7 +2341,12 @@ export const MouunsMoon = new Weapon(
   ],
   'Wish',
 );
+// #endregion
 
+// #region N
+// #endregion
+
+// #region O
 export const OathswornEye = new Weapon(
   'Oathsworn Eye',
   {
@@ -2357,7 +2388,9 @@ export const OtherworldlyStory = new Weapon(
   ],
   'Chest',
 );
+// #endregion
 
+// #region P
 export const PeakPatrolSong = new Weapon(
   'Peak Patrol Song',
   {
@@ -2619,7 +2652,12 @@ export const PrototypeStarglitter = new Weapon(
   ],
   'Crafting',
 );
+// #endregion
 
+// #region Q
+// #endregion
+
+// #region R
 export const Rainslasher = new Weapon(
   'Rainslasher',
   {
@@ -2897,7 +2935,9 @@ export const Rust = new Weapon(
   ],
   'Wish',
 );
+// #endregion
 
+// #region S
 export const SacrificialBow = new Weapon(
   'Sacrificial Bow',
   {
@@ -3651,8 +3691,9 @@ export const SwordOfNarzissenkreuz = new Weapon(
   ],
   'Quest',
 );
-  
+// #endregion
 
+// #region T  
 export const TalkingStick = new Weapon(
   'Talking Stick',
   {
@@ -4093,7 +4134,9 @@ export const TwinNephrite = new Weapon(
   ],
   'Chest',
 );
+// #endregion
 
+// #region U
 export const UrakuMisugiri = new Weapon(
   'Uraku Misugiri',
   {
@@ -4117,7 +4160,9 @@ export const UrakuMisugiri = new Weapon(
   'Wish',
   cs => cs.Chiori
 );
+// #endregion
 
+// #region V
 export const Verdict = new Weapon(
   'Verdict',
   {
@@ -4187,7 +4232,9 @@ export const VortexVanquisher = new Weapon(
   'Wish',
   cs => cs.Zhongli
 );
+// #endregion
 
+// #region W
 export const WanderingEvenstar = new Weapon(
   'Wandering Evenstar',
   {
@@ -4405,7 +4452,9 @@ export const WolfsGravestone = new Weapon(
   'Wish',
   cs => cs.Diluc
 );
+// #endregion
 
+// #region X
 export const XiphosMoonlight = new Weapon(
   `Xiphos' Moonlight`,
   {
@@ -4426,6 +4475,13 @@ export const XiphosMoonlight = new Weapon(
   ],
   'Wish',
 );
+// #endregion
+
+// #region Y
+// #endregion
+
+// #region Z
+// #endregion
 
 /**
  
