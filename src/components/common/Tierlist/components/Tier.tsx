@@ -72,7 +72,7 @@ export default function Tier<T>({
         {provided => (
           <div {...provided.droppableProps} ref={provided.innerRef} className='tier__items'>
             {tier.entries.map((entry, index) => (
-              <EntryComponent key={index} {...{ 
+              <EntryComponent key={entry.id} {...{ 
                 entry, index, 
                 onMoveToIndex, onSendToTier, 
                 render, tiers, unsorted,
