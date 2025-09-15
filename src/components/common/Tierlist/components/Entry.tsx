@@ -63,7 +63,7 @@ export default function Entry<T>({
 
 
   return (
-    <Draggable key={entry.id} draggableId={entry.id} index={index}>
+    <Draggable draggableId={entry.id} index={index}>
       {provided => (
         <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}
           className="tier__item"
