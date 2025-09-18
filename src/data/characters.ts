@@ -1718,6 +1718,7 @@ export const Xiao = new Character("Xiao", "Anemo", "Polearm", [
 
 export const Xilonen = new Character("Xilonen", "Geo", "Sword", [
   "Elemental based: Decrease elemental RES based on party members' elements (excl. Anemo & Dendro)",
+  "Elemental Infusion: After Skill/Ability, Xilonen gains Geo infusion for the duration of the Nightsoul meter",
   "Heal",
   "Nightsouls Blessing"
 ], Rarity.Legendary, 'Natlan', {
