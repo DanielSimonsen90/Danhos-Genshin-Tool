@@ -8,14 +8,6 @@ import CraftableMaterial from '@/common/models/materials/CraftableMaterial';
 import AscensionMaterial from '@/common/models/materials/AscensionMaterial';
 import MemoizeService from '@/services/MemoizeService';
 
-/**
- * Optimized DataStore implementation with:
- * - Caching for frequently accessed computations
- * - Improved search performance with early returns
- * - Better error handling and validation
- * - Reduced code duplication
- * - Enhanced type safety
- */
 export const useDataStore = create<DataStore>((setState, getState) => {
   const cache = new MemoizeService();
 

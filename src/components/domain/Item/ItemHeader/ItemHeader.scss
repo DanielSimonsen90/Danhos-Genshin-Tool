@@ -10,5 +10,20 @@
 
   button {
     justify-self: end;
+
+    &.favorite-button {
+      display: flex;
+      align-items: center;
+      gap: .25ch;
+
+      .favorite-star {
+        --gap: 0;
+        position: relative;
+
+        svg {
+          --size: 1.25rem;
+        }
+      }
+    }
   }
 }

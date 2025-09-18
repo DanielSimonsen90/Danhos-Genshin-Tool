@@ -174,9 +174,9 @@ export const useRegionStore = create<RegionStore>((setState, getState) => {
         setRegionData({ favorites });
       },
 
-      isFavorite: (item: FavoriteModels[TFavoriteModel]) => {
+      isFavorite: (item: FavoriteModels[TFavoriteModel] | string) => {
         const currentFavorites = getState().regionData.favorites ?? DEFAULT_FAVORITES;
-        return currentFavorites[type]?.some((model: Model) => model.name === item.name) ?? false;
+        return currentFavorites[type]?.some((model: Model) => model.name === (typeof item === 'string' ? item : item.name)) ?? false;
       },
 
       getFavorites: (): Array<FavoriteModels[TFavoriteModel]> => {

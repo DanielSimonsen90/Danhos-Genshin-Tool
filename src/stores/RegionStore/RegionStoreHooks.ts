@@ -41,7 +41,7 @@ export function useFavorites(): {
   getFavorite: <T extends keyof FavoriteModels>(type: T) => {
     add: (item: FavoriteModels[T]) => void;
     remove: (item: FavoriteModels[T]) => void;
-    isFavorite: (item: FavoriteModels[T]) => boolean;
+    isFavorite: (item: FavoriteModels[T] | string) => boolean;
     getFavorites: () => Array<FavoriteModels[T]>;
   };
 };
