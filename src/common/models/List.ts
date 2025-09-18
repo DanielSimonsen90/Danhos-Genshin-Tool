@@ -27,6 +27,21 @@ export class List<T> extends Array<T> {
     }).filter((item): item is U => item !== undefined));
   }
 
+  public group(...callbacks: Array<(value: T) => boolean>): Array<List<T>> {
+    const result = Array.from({ length: callbacks.length }, () => new List<T>());
+
+    for (const item of this) {
+      for (let i = 0; i < callbacks.length; i++) {
+        if (callbacks[i](item)) {
+          result[i].push(item);
+          break;
+        }
+      }
+    }
+
+    return result;
+  }
+
   public toArray(): T[] {
     return Array.from(this);
   }

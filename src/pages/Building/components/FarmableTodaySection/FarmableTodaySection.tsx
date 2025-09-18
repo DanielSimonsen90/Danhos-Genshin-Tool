@@ -1,24 +1,16 @@
-import { useMemo } from 'react';
 import { ModelKeys } from "@/common/models";
-import AscensionMaterial from "@/common/models/materials/AscensionMaterial";
 import Collapsible from "@/components/common/Collapsible";
 import { SearchableCharacterList, SearchableWeaponList } from "@/components/domain/SearchableList";
-import { useDataStore, useRegionStore } from "@/stores";
+import { useRegionStore } from "@/stores";
+import FarmableService from '@/services/FarmableService';
 import { plural } from '@/common/functions/strings';
 
 const modelKeys: Array<ModelKeys> = ['Character', 'Weapon'];
 
 export default function FarmableTodaySection() {
-  const DataStore = useDataStore();
   const RegionStore = useRegionStore();
-
-  const farmableCharacters = useMemo(() => DataStore.Characters.filter(character =>
-    Object.values(character.ascension)
-      .some(material => AscensionMaterial.isAscensionMaterial(material) && material.isObtainableToday(RegionStore))
-  ), [DataStore.Characters, RegionStore.currentRegion]);
-  const farmableWeapons = useMemo(() => DataStore.Weapons.filter(weapon =>
-    weapon.ascensionMaterials.some(material => AscensionMaterial.isAscensionMaterial(material) && material.isObtainableToday(RegionStore))
-  ), [DataStore.Weapons, RegionStore.currentRegion]);
+  const farmableCharacters = FarmableService.useFarmableCharacters();
+  const farmableWeapons = FarmableService.useFarmableWeapons();
 
   return (
     <section className="farmable-today-section">

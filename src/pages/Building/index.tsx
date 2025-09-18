@@ -3,7 +3,7 @@ import BuildingIndex from './BuildingIndex';
 
 export { default as PriorityList } from './PriorityList';
 export * from './ArtifactHelper';
-// export { default as Plan } from './Plan';
+export { default as Plan } from './Plan';
 
 function BuildingPage() {
   return (

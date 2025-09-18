@@ -13,6 +13,7 @@ import {
   BuildingIndex, 
   PriorityList, 
   ArtifactHelper, Search,
+  Plan,
 
   Development,
 } from '@/pages';
@@ -60,9 +61,7 @@ export const Router = () => (
             <Route index element={<ArtifactHelper />} />
             <Route path={ROUTES.endRoute('building_artifact_helper_search')} element={<Search />} />
           </Route>
-          {/* 
-          /plan
-          */}
+          <Route path={ROUTES.endRoute('building_plan')} element={<Plan />} />
         </Route>
 
         <Route path={ROUTES.generator}>

@@ -19,7 +19,9 @@ type Props<TFilterKeys extends string> = (
   & {
     noBaseSearch?: boolean;
     noBaseFilterChecks?: boolean;
-    cardProps?: Partial<Omit<CharacterCardProps, 'character'>>;
+    cardProps?: Partial<Omit<CharacterCardProps, 'character' | 'children'>> & {
+      children?: ((character: Character) => React.ReactNode) | React.ReactNode;
+    };
   }
 );
 export default function SearchableCharacterList<TFilterKeys extends string>({
@@ -32,7 +34,7 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
   const [hidden, setHidden] = useState(new Array<Character>());
   const FavoriteStore = useFavorite('characters');
   const DataStore = useDataStore();
-  
+
   const [internalCardProps, setInteralCardProps] = useState<Pick<Props<TFilterKeys>, 'cardProps'>['cardProps']>({});
 
   return <SearchableList items={items}
@@ -48,7 +50,12 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
       return hidden.includes(character) ? null : (
         <div className="context-menu-item-container" onContextMenu={open}>
           {FavoriteStore.isFavorite(character) && <FavoriteStar model={character} />}
-          <CharacterCard character={character} {...internalCardProps} {...cardProps} />
+          <CharacterCard character={character}
+            {...internalCardProps}
+            {...cardProps}
+          >
+            {typeof cardProps?.children === 'function' ? cardProps.children(character) : cardProps?.children}
+          </CharacterCard>
         </div>
       );
     }}
