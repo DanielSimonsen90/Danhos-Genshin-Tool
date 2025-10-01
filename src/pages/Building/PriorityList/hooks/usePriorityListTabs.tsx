@@ -2,12 +2,14 @@ import { Dispatch, SetStateAction, useCallback } from "react";
 
 import { CharacterImage, ArtifactImage, DomainImage, MaterialImage, MobImage, WeaponImage } from "@/components/common/media/Images";
 import Tierlist, { Entry, Tier } from "@/components/common/Tierlist";
-import { useDataStore, useRegionData } from "@/stores";
+import { FavoriteModels, useDataStore, useFavorites, useRegionData } from "@/stores";
 
 import type { PriorityLists, PriorityList } from "../PriorityListTypes";
 import { getDefaultPriorityLists, onUnsortedSearch } from "../PriorityListFunctions";
 import { PriorityListTab } from "../components";
 import { useNavigate } from "react-router/dist";
+import { ModelKeys } from "@/common/models";
+import { FavoriteStar } from "@/components/common/media/icons/Star";
 
 type UsePriorityListTabsProps = {
   priorityLists: PriorityLists;
@@ -17,6 +19,7 @@ type UsePriorityListTabsProps = {
 
 export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdateModal }: UsePriorityListTabsProps) {
   const DataStore = useDataStore();
+  const FavoriteStore = useFavorites();
   const { region } = useRegionData();
   const navigate = useNavigate();
 
@@ -66,12 +69,16 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
       return acc;
     }, {} as PriorityLists));
   }, [priorityLists, setPriorityLists]);
-  
+
   return Array
     .from(Object.entries(priorityLists))
     .map(([tierlistTitle, priorityList], index, array) => {
       const modelType = priorityList.model;
       const items = DataStore[`${modelType}Names`];
+      const favoriteModelKey = `${modelType.toLowerCase()}s` as keyof FavoriteModels;
+
+      const isFavorite = (modelName: string) => FavoriteStore.getFavorite(favoriteModelKey).isFavorite(modelName);
+      const findModel = (modelName: string) => DataStore[`find${modelType}ByName`](modelName);
 
       return [
         tierlistTitle,
@@ -91,19 +98,38 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
               onTierChange: onTierChange(tierlistTitle),
               renderCustomEntryContextMenuItems: (entry: Entry<string>, tier, item) => [
                 item('divider', `${entry.item} Options`),
-                item('option', `View ${modelType}`, () => navigate(`/data/${modelType.toLowerCase()}s/${entry.item}`), '👁️')
+                item('option', `View ${modelType}`, () => navigate(`/data/${modelType.toLowerCase()}s/${entry.item}`), '👁️'),
+                item('option', isFavorite(entry.item) ? 'Unfavorite' : 'Favorite', () => {
+                  const favorite = FavoriteStore.getFavorite(favoriteModelKey);
+                  const model = findModel(entry.item);
+                  if (!model) throw new Error(`Model "${entry.item}" not found in DataStore using modelType "${modelType}".`);
+
+                  if (!isFavorite(entry.item)) favorite.add(model);
+                  else favorite.remove(model);
+                }, ' ')
               ]
             }}>
               {modelName => {
-                switch (modelType) {
-                  case 'Character': return <CharacterImage character={modelName} />;
-                  case 'Artifact': return <ArtifactImage set={modelName} />;
-                  case 'Domain': return <DomainImage domain={modelName} />;
-                  case 'Material': return <MaterialImage material={modelName} />;
-                  case 'Mob': return <MobImage mob={modelName} />;
-                  case 'Weapon': return <WeaponImage weapon={modelName} />;
-                  default: return `Unknown model for ${modelName}`;
-                }
+                const model = findModel(modelName);
+                const favorited = isFavorite(modelName);
+                const ModelImage = () => {
+                  switch (modelType) {
+                    case 'Character': return <CharacterImage character={modelName} />;
+                    case 'Artifact': return <ArtifactImage set={modelName} />;
+                    case 'Domain': return <DomainImage domain={modelName} />;
+                    case 'Material': return <MaterialImage material={modelName} />;
+                    case 'Mob': return <MobImage mob={modelName} />;
+                    case 'Weapon': return <WeaponImage weapon={modelName} />;
+                    default: return <>Unknown model for {modelName}</>;
+                  }
+                };
+
+                return (
+                  <>
+                    {favorited && model && <FavoriteStar model={model} />}
+                    <ModelImage />
+                  </>
+                );
               }}
             </Tierlist>
           )

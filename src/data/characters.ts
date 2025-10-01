@@ -587,19 +587,21 @@ export const Fischl = new Character("Fischl", "Electro", "Bow", ["Off-field Dama
   ]),
 );
 
-// TODO
-// export const Flins = new Character("Flins", "Electro", "Polearm", [], Rarity.Legendary, 'Nod-Krai', {
-//   material: undefined,
-//   weeklyBossDrop: undefined,
-//   crystal: ElementalCrystals.Electro,
-//   localSpecialty: undefined,
-//   worldBossDrop: undefined,
-//   mobDrop: undefined,
-// }, 'Shows Local Specialties in Nod-Krai on minimap.', 
-//   new CharacterPlaystyle("On-field DPS", ["ATK", "Elemental Mastery"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
-//     new CharacterArtifactSet(Sets.NightOfTheSkysUnveiling, 4, 100),
-//   ])
-// );
+export const Flins = new Character("Flins", "Electro", "Polearm", [
+  'Enables Lunar-Charged Reaction',
+  'Elemental Infusion: After Skill/Ability, Flins gains Electro infusion'
+], Rarity.Legendary, 'Nod-Krai', {
+  material: TalentAscension.Vagrancy,
+  weeklyBossDrop: MobDrops.ChessGameQueen,
+  crystal: ElementalCrystals.Electro,
+  localSpecialty: LocalSpecialties.FrostlampFlower,
+  worldBossDrop: MobDrops.PrecisionKuuvahkiStampingDie,
+  mobDrop: MobDrops.DriveShaft,
+}, 'Shows Local Specialties in Nod-Krai on minimap.', 
+  new CharacterPlaystyle("On-field DPS", ["ATK", "Elemental Mastery"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
+    new CharacterArtifactSet(Sets.NightOfTheSkysUnveiling, 4, 100),
+  ])
+);
 
 export const Freminet = new Character("Freminet", "Cryo", "Claymore", [], Rarity.Epic, 'Fontaine', {
   material: TalentAscension.Justice,
@@ -1718,6 +1720,7 @@ export const Xiao = new Character("Xiao", "Anemo", "Polearm", [
 
 export const Xilonen = new Character("Xilonen", "Geo", "Sword", [
   "Elemental based: Decrease elemental RES based on party members' elements (excl. Anemo & Dendro)",
+  "Elemental Infusion: After Skill/Ability, Xilonen gains Geo infusion for the duration of the Nightsoul meter",
   "Heal",
   "Nightsouls Blessing"
 ], Rarity.Legendary, 'Natlan', {
