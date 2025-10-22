@@ -1177,6 +1177,21 @@ export const Navia = new Character("Navia", "Geo", "Claymore", [
   ])
 );
 
+export const Nefer = new Character("Nefer", "Dendro", "Catalyst", [
+  'Enables Lunar-Bloom Reaction'
+], Rarity.Legendary, 'Nod-Krai', {
+  material: TalentAscension.Elysium,
+  weeklyBossDrop: MobDrops.ChessGameRook,
+  crystal: ElementalCrystals.Dendro,
+  localSpecialty: LocalSpecialties.MoonfallSilver,
+  worldBossDrop: MobDrops.RadiantAntler,
+  mobDrop: EasyMobDrops.Warrant,
+}, '25% more rewards when on expeditions in Nod-Krai.', 
+  new CharacterPlaystyle('On-field Lunar-Bloom DPS', ['Elemental Mastery'], ['Skill/Ability', 'Burst/Ult', 'Normal/Press'], true, [
+    new CharacterArtifactSet(Sets.NightOfTheSkysUnveiling, 4, 100),
+  ])
+)
+
 export const Neuvillette = new Character("Neuvillette", "Hydro", "Catalyst", ["Self-heal"], Rarity.Legendary, "Fontaine", {
   material: TalentAscension.Equity,
   weeklyBossDrop: MobDrops.Everamber,
