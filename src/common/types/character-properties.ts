@@ -6,7 +6,7 @@ export type BonusAbility = (
 | 'Shield' | 'Heal' | 'Self-heal' | 'Bond of Life' 
 | 'Nightsouls Blessing' | `Serpent's Subtlety`  
 | `Enables ${LunarReaction} Reaction`
-| 'Moonsign: Ascendant Gleam'
+| 'Increases Moonsign'
 | 'Grouping'
 | `Buff ATK: ${string}` | `Elemental based: ${string}` | `CRIT Increase: ${string}` | `Buff ATK Speed: ${string}` | `Elemental Infusion: ${string}`
 );

@@ -835,7 +835,7 @@ export const SilkenMoonsSerenade = new ArtifactSet(
   (c, set) => {
     let value = 0;
     if (c.playstyle?.talentStats.includes('Energy Recharge')) value += correctElement;
-    if (set.pieces === 4 && c.bonusAbilities.includes('Moonsign: Ascendant Gleam')) value += correctElement;
+    if (set.pieces === 4 && c.bonusAbilities.includes('Increases Moonsign')) value += correctElement;
     return value;
   }
 );

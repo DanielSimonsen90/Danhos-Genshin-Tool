@@ -75,7 +75,10 @@ const PyroDMGSets = (priority: CharacterArtifactSet['effectiveness']) => [
 // #endregion
 
 // #region A-G
-export const Aino = new Character("Aino", "Hydro", "Claymore", [], Rarity.Epic, 'Nod-Krai', {
+export const Aino = new Character("Aino", "Hydro", "Claymore", [
+  'Off-field Damage',
+  'Increases Moonsign'
+], Rarity.Epic, 'Nod-Krai', {
   localSpecialty: LocalSpecialties.PortableBearing,
   crystal: ElementalCrystals.Hydro,
   material: TalentAscension.Elysium,
@@ -187,7 +190,10 @@ export const Arlecchino = new Character("Arlecchino", "Pyro", "Polearm", ["Bond 
   ])
 );
 
-export const Baizhu = new Character("Baizhu", "Dendro", "Catalyst", ["Heal"], Rarity.Legendary, 'Liyue', {
+export const Baizhu = new Character("Baizhu", "Dendro", "Catalyst", [
+  "Heal",
+  'Off-field Damage'
+], Rarity.Legendary, 'Liyue', {
   material: TalentAscension.Gold,
   weeklyBossDrop: MobDrops.WorldspanFern,
   crystal: ElementalCrystals.Dendro,
@@ -564,7 +570,7 @@ export const Faruzan = new Character("Faruzan", "Anemo", "Bow", [
   worldBossDrop: MobDrops.LightGuidingTetrahedron,
   mobDrop: EasyMobDrops.EremiteDrop,
 }, '25% more rewards when on expeditions in Sumeru.',
-  new CharacterPlaystyle("Burst Support", ["Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Charged/Hold"], false, [
+  new CharacterPlaystyle("Burst Support", ["Energy Recharge", "ATK"], ["Burst/Ult", "Skill/Ability", "Charged/Hold"], false, [
     new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 35.1),
     new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 20.8),
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 15.1),
@@ -589,7 +595,8 @@ export const Fischl = new Character("Fischl", "Electro", "Bow", ["Off-field Dama
 
 export const Flins = new Character("Flins", "Electro", "Polearm", [
   'Enables Lunar-Charged Reaction',
-  'Elemental Infusion: After Skill/Ability, Flins gains Electro infusion'
+  'Elemental Infusion: After Skill/Ability, Flins gains Electro infusion',
+  'Increases Moonsign',
 ], Rarity.Legendary, 'Nod-Krai', {
   material: TalentAscension.Vagrancy,
   weeklyBossDrop: MobDrops.ChessGameQueen,
@@ -742,6 +749,7 @@ export const Ineffa = new Character("Ineffa", "Electro", "Polearm", [
   "Enables Lunar-Charged Reaction",
   "Off-field Damage",
   "Shield",
+  'Increases Moonsign',
 ], Rarity.Legendary, 'Nod-Krai', {
   material: TalentAscension.Conflict,
   weeklyBossDrop: MobDrops.ErodedSunfire,
@@ -994,7 +1002,8 @@ export const LanYan = new Character("Lan Yan", "Anemo", "Catalyst", ["Shield", "
 );
 
 export const Lauma = new Character("Lauma", "Dendro", "Catalyst", [
-  "Enables Lunar-Bloom Reaction"
+  "Enables Lunar-Bloom Reaction",
+  'Increases Moonsign',
 ], Rarity.Legendary, 'Nod-Krai', {
   material: TalentAscension.Moonlight,
   weeklyBossDrop: MobDrops.ErodedScaleFeather,
@@ -1176,6 +1185,22 @@ export const Navia = new Character("Navia", "Geo", "Claymore", [
     new CharacterArtifactSet(Sets.GoldenTroupe, 2, 3.0),
   ])
 );
+
+export const Nefer = new Character("Nefer", "Dendro", "Catalyst", [
+  'Increases Moonsign',
+  'Enables Lunar-Bloom Reaction'
+], Rarity.Legendary, 'Nod-Krai', {
+  material: TalentAscension.Elysium,
+  weeklyBossDrop: MobDrops.ChessGameRook,
+  crystal: ElementalCrystals.Dendro,
+  localSpecialty: LocalSpecialties.MoonfallSilver,
+  worldBossDrop: MobDrops.RadiantAntler,
+  mobDrop: EasyMobDrops.Warrant,
+}, '25% more rewards when on expeditions in Nod-Krai.', 
+  new CharacterPlaystyle('On-field Lunar-Bloom DPS', ['Elemental Mastery'], ['Skill/Ability', 'Burst/Ult', 'Normal/Press'], true, [
+    new CharacterArtifactSet(Sets.NightOfTheSkysUnveiling, 4, 100),
+  ])
+)
 
 export const Neuvillette = new Character("Neuvillette", "Hydro", "Catalyst", ["Self-heal"], Rarity.Legendary, "Fontaine", {
   material: TalentAscension.Equity,
