@@ -2205,7 +2205,7 @@ export const MappaMare = new Weapon(
   [
     WeaponAscensionMaterials.XOfAerosiderite,
     Drops.BoneShard,
-    Drops.Slime,  
+    Drops.Slime,
   ],
   'Crafting',
 );
@@ -2340,6 +2340,28 @@ export const Moonpiercer = new Weapon(
     Drops.FatuiInsignia,
   ],
   'Crafting',
+);
+
+export const MoonweaversDawn = new Weapon(
+  `Moonweaver's Dawn`,
+  {
+    value: `Increases Elemental Burst DMG by $0. When the equipping character's Energy Capacity does not exceed 60/40, their Elemental Burst DMG is increased by an additional $1.`,
+    refinements: [
+      '20/25/30/35/40%',
+      '(16%/28%)/(20%/35%)/(24%/42%)/(28%/49%)/(32%/56%)',
+    ],
+  },
+  'Sword',
+  Rarity.Epic,
+  565,
+  'ATK',
+  27.6,
+  [
+    WeaponAscensionMaterials.XOfTheFarNorthScions,
+    Drops.RaidantBeastDrop,
+    Drops.DriveShaft
+  ],
+  'Wish',
 );
 
 export const MountainBracingBolt = new Weapon(
@@ -2835,6 +2857,30 @@ export const RedhornStonethresher = new Weapon(
   cs => cs.AratakiItto
 );
 
+export const ReliquaryOfTruth = new Weapon(
+  'Reliquary of Truth',
+  {
+    value: `CRIT Rate is increased by $0. When the equipping character unleashes an Elemental Skill, they gain the Secret of Lies effect: Elemental Mastery is increased by $1 for 12s. When the equipping character deals Lunar-Bloom DMG to an opponent, they gain the Moon of Truth effect: CRIT DMG is increased by $2 for 4s. When both the Secret of Lies and Moon of Truth effects are active at the same time, the results of both effects will be increased by 50%.`,
+    refinements: [
+      '8/10/12/14/16%',
+      '80/100/120/140/160',
+      '24/30/36/42/48%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Legendary,
+  542,
+  'Crit DMG',
+  88.2,
+  [
+    WeaponAscensionMaterials.OasisGardens,
+    Drops.RaidantBeastDrop,
+    Drops.FungalSpores,
+  ],
+  'Wish',
+  cs => cs.Nefer
+);
+
 export const RightfulReward = new Weapon(
   'Rightful Reward',
   {
@@ -3007,6 +3053,28 @@ export const Rust = new Weapon(
 // #endregion
 
 // #region S
+export const SacrificersStaff = new Weapon(
+  `Sacrificer's Staff`,
+  {
+    value: `For 6s after an Elemental Skill hits an opponent, ATK is increased by $0 and Energy Recharge is increased by $1. Max 3 stacks. This effect can be triggered even when the equipping character is off-field.`,
+    refinements: [
+      '8/10/12/14/16%',
+      '6/7.5/9/10.5/12%'
+    ]
+  },
+  'Polearm',
+  Rarity.Epic,
+  620,
+  'Crit Rate',
+  9.2,
+  [
+    WeaponAscensionMaterials.XOfLongNightFlint,
+    Drops.Mistshroud,
+    Drops.DriveShaft
+  ],
+  'Wish'
+);
+
 export const SacrificialBow = new Weapon(
   'Sacrificial Bow',
   {

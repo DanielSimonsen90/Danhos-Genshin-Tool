@@ -14,3 +14,10 @@ export const LightbearingScaleFeather = new MobDrop(
   'Nod-Krai',
   Rarity.Epic
 );
+
+export const RadiantAntler = new MobDrop(
+  `Radiant Antler`,
+  `A fragment of a defeated Frostnight Herra's majestic antlers. Light and razor-sharp, it requires no sharpening to help it slice through metal armor with ease.\nAccording to ancient tales, these beautiful, proud creatures were created by the first emissary.\nWhen Elysium fell, they made a pact with the mistress of the Frost Moon, vowing to use the primal light bestowed by the Frost Moon to cleanse the mortal world's defilement until the patron of old could return once more. Today, these legends' origins are long lost, and their veracity is impossible to prove. Yet the creatures that once walked with the light continue to watch over this land from the shadows, through the long frozen nights and withering black tide alike - none of which could cause their forms to vanish from this world.`,
+  'Nod-Krai',
+  Rarity.Epic
+);
