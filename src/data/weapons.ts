@@ -521,8 +521,8 @@ export const BloodsoakedRuins = new Weapon(
   {
     value: `For 3.5s after using an Elemental Burst, the equipping character's Lunar-Charged DMG dealt to opponents is increased by $0. Additionally, after triggering a Lunar-Charged reaction, the equipping character will gain Requiem of Ruin: CRIT DMG is increased by $1 for 6s. They will also regain $2 Elemental Energy. Elemental Energy can be restored this way once every 14s.`,
     refinements: [
-      '36%/48%/60%/72%/84%',
-      '28%/35%/42%/49%/56%',
+      '36/48/60/72/84%',
+      '28/35/42/49/56%',
       '12/13/14/15/16',
     ]
   },
