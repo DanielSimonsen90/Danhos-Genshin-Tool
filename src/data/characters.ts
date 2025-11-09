@@ -513,7 +513,7 @@ export const Dori = new Character("Dori", "Electro", "Claymore", [
   ]),
 );
 
-export const Emilie = new Character("Emilie", "Dendro", "Catalyst", ["Off-field Damage"], Rarity.Legendary, 'Fontaine', {
+export const Emilie = new Character("Emilie", "Dendro", "Polearm", ["Off-field Damage"], Rarity.Legendary, 'Fontaine', {
   material: TalentAscension.Order,
   weeklyBossDrop: MobDrops.SilkenFeather,
   crystal: ElementalCrystals.Dendro,
