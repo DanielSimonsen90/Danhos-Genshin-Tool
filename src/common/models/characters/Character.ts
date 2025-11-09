@@ -1,6 +1,7 @@
 import { Element, WeaponType, BonusAbility, Rarity, GenshinRegion, PassiveTalent } from '@/common/types';
 import CharacterPlaystyle from './CharacterPlaystyle';
 import CharacterAscension from './CharacterAscension';
+import { ModelKeys } from '../Model';
 
 export class Character<TElement extends Element = Element> {
   public static isCharacter(obj: any): obj is Character {
@@ -26,6 +27,10 @@ export class Character<TElement extends Element = Element> {
   public needsEM(): boolean { return this.playstyle?.talentStats.includes('Elemental Mastery') ?? false; }
   public needsPhysicalDMG(): boolean { return this.playstyle?.talentStats.includes('Physical DMG Bonus') ?? false; }
   public canHeal(): boolean { return this.bonusAbilities.includes('Heal'); }
+
+  public getModelKey(): ModelKeys {
+    return 'Character'
+  }
 }
 
 export default Character;

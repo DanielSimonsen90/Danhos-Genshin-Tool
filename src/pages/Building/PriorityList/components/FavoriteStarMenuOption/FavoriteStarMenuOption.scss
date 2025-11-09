@@ -1,0 +1,9 @@
+.favorite-star-menu-option {
+  display: flex;
+  align-items: flex-end;
+  gap: .5ch;
+  
+  .star {
+    position: initial;
+  }
+}

@@ -2,6 +2,7 @@ import { Percentage, Rarity, WeaponStatName, WeaponType } from "../types";
 import Character from "./characters/Character";
 import { WeaponAscensionMaterial } from "./materials/AscensionMaterial";
 import CraftableMaterial from "./materials/CraftableMaterial";
+import { ModelKeys } from "./Model";
 
 type WeaponDroppedBy = 'Battle Pass' | 'Chest' | 'Crafting' | 'Event' | 'Quest' | 'Starglitter Exchange' | 'Fishing' | 'Vendor' | 'Wish' | `NPC: ${string}`;
 type SecondaryStatValue<TWeaponStatName extends WeaponStatName> =
@@ -42,6 +43,10 @@ export class Weapon<TWeaponStatName extends WeaponStatName = WeaponStatName> {
   }
 
   public secondaryStatValue: SecondaryStatValue<TWeaponStatName> | undefined;
+
+  public getModelKey(): ModelKeys {
+    return 'Weapon';
+  }
 }
 
 export default Weapon;

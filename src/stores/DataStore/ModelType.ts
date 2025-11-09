@@ -61,6 +61,7 @@ export class ModelType<TModel extends Model> {
   public isMaterial(): this is ModelType<Material> {
     return Material.isMaterial(this.model);
   }
+  // #endregion Material
 }
 
 export default ModelType;

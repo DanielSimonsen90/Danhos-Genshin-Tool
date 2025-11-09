@@ -4,7 +4,7 @@ import type { DataStore } from "@/stores/DataStore/DataStoreTypes";
 import type DomainOfBlessing from "./DomainOfBlessing";
 import type DomainOfForgery from "./DomainOfForgery";
 import type DomainOfMastery from "./DomainOfMastery";
-import { DomainReward, DomainType } from "../Model";
+import { DomainReward, DomainType, ModelKeys } from "../Model";
 
 export abstract class Domain<TReward extends DomainReward> {
   public static isDomain(obj: any): obj is Domain<any> {
@@ -36,4 +36,8 @@ export abstract class Domain<TReward extends DomainReward> {
   public isBlessing(): this is DomainOfBlessing { return false; }
   public isMastery(): this is DomainOfMastery { return false; }
   public isForgery(): this is DomainOfForgery { return false; }
+
+  public getModelKey(): ModelKeys {
+    return 'Domain';
+  }
 }
