@@ -9,7 +9,7 @@ import { useLocalStorage } from '@/hooks/useLocalStorage';
 
 import { FormTier, Tier as TierComponent, TierModifyForm } from './components';
 import { Entry, Tier, TierlistProps } from './TierlistTypes';
-import { getDefaultTiers, generateBlankTier, generateEntry } from './TierlistFunctions';
+import { getDefaultTiers, generateBlankTier, generateEntry, getDefaultUnsortedTier } from './TierlistFunctions';
 import { useStateReset } from '@/hooks/useStateReset';
 
 export default function Tierlist<T, TStorageData extends object>({
@@ -29,11 +29,13 @@ export default function Tierlist<T, TStorageData extends object>({
     if (!itemsNotIncluded.length) return props.defaultTiers;
 
     const unsortedTier = props.defaultTiers.find(tier => tier.id === 'unsorted');
-    const unsortedTierIndex = props.defaultTiers.indexOf(unsortedTier!);
+    const unsortedTierIndex = unsortedTier ? props.defaultTiers.indexOf(unsortedTier) : -1;
     const result = [...props.defaultTiers];
-    result[unsortedTierIndex] = {
-      ...unsortedTier!,
-      entries: [...unsortedTier!.entries, ...itemsNotIncluded.map(generateEntry)]
+
+    if (unsortedTierIndex === -1 || !unsortedTier) result.push(getDefaultUnsortedTier(itemsNotIncluded, result.length));
+    else result[unsortedTierIndex] = {
+      ...unsortedTier,
+      entries: [...unsortedTier.entries, ...itemsNotIncluded.map(generateEntry)]
     };
 
     return result;
