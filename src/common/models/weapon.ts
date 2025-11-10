@@ -4,7 +4,7 @@ import { WeaponAscensionMaterial } from "./materials/AscensionMaterial";
 import CraftableMaterial from "./materials/CraftableMaterial";
 import { ModelKeys } from "./Model";
 
-type WeaponDroppedBy = 'Battle Pass' | 'Chest' | 'Crafting' | 'Event' | 'Quest' | 'Starglitter Exchange' | 'Fishing' | 'Vendor' | 'Wish' | `NPC: ${string}`;
+type WeaponDroppedBy = 'Battle Pass' | 'Chest' | 'Crafting' | 'Event' | 'Quest' | 'Starglitter Exchange' | 'Fishing' | 'Wish' | `NPC: ${string}`;
 type SecondaryStatValue<TWeaponStatName extends WeaponStatName> =
   TWeaponStatName extends 'Elemental Mastery'
   ? number

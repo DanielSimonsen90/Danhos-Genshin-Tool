@@ -90,6 +90,18 @@ export default function SearchableWeaponList<TFilterKeys extends string>({
         critDamage: weapon => weapon.secondaryStat === 'Crit DMG',
         physicalDamage: weapon => weapon.secondaryStat === 'Physical DMG Bonus',
       },
+      obtainableThrough: {
+        battlePass: weapon => weapon.droppedBy === 'Battle Pass',
+        chest: weapon => weapon.droppedBy === 'Chest',
+        crafting: weapon => weapon.droppedBy === 'Crafting',
+        event: weapon => weapon.droppedBy === 'Event',
+        fishing: weapon => weapon.droppedBy === 'Fishing',
+        npc: weapon => weapon.droppedBy.startsWith('NPC: '),
+        quest: weapon => weapon.droppedBy === 'Quest',
+        signatureWeapon: weapon => !!weapon.signatureWeaponFor,
+        starglitterExchange: weapon => weapon.droppedBy === 'Starglitter Exchange',
+        wish: weapon => weapon.droppedBy === 'Wish',
+      },
       ...filterChecks
     }}
     {...props}
