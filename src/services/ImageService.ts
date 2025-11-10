@@ -66,17 +66,22 @@ export const ImageService = new class ImageService extends BaseService<string> {
   }
 
   public getWeaponTypeImage(name: WeaponType): string {
-    // return this.lastResult = `${SUNDERARMOR_CDN_URL}/UI/weapon_${snakeCaseFromCamelCase(name)}.png`;
     return this.lastResult = `${PAIMON_MOE_URL}/weapons/${snakeCaseFromCamelCase(name)
       .replace(/[':"]/g, '')
       .toLowerCase()
     }.png`;
   }
-  public getWeaponImage(name: string): string {
-    return this.lastResult = `${PAIMON_MOE_URL}/weapons/${snakeCaseFromCamelCase(name)
+  public getWeaponImage(name: string): [string, string] {
+    const paimonmoe = `${PAIMON_MOE_URL}/weapons/${snakeCaseFromCamelCase(name)
       .replace(/[':"]/g, '')
       .toLowerCase()
     }.png`;
+
+    const genshingg = `${SUNDERARMOR_CDN_URL}/Weapons/${this.formatRerollCdnName(name)
+      .replace(/[:"]/g, '')
+    }.png`;
+
+    return [paimonmoe, genshingg];
   }
 
   public getDomainImage(name: keyof typeof DomainsData | string): string {
