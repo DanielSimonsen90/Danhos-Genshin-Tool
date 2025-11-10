@@ -2,7 +2,6 @@ import Weapon from "@/common/models/weapon";
 import { Rarity } from "@/common/types";
 import * as WeaponAscensionMaterials from './materials/weapon-materials';
 import * as Drops from './materials/drops';
-import { WeaponAscensionMaterial } from "@/common/models";
 
 export const TheCatch = new Weapon(
   '"The Catch"',
@@ -514,6 +513,29 @@ export const BlackcliffWarbow = new Weapon(
     Drops.Nectar
   ],
   'Starglitter Exchange'
+);
+
+export const BlackmarrowLantern = new Weapon(
+  'Blackmarrow Lantern',
+  {
+    value: `Bloom DMG is increased by $0, and Lunar-Bloom DMG is increased by $1. Moonsign: Ascendant Gleam: Lunar-Bloom DMG is increased by an additional $2.`,
+    refinements: [
+      '48/60/72/84/96%',
+      '12/15/18/21/24%',
+      '12/15/18/21/24%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Epic,
+  454,
+  'Elemental Mastery',
+  221,
+  [
+    WeaponAscensionMaterials.ArtfulDeviceX,
+    Drops.FrostnightsX,
+    Drops.Warrant
+  ],
+  'Crafting'
 );
 
 export const BloodsoakedRuins = new Weapon(
@@ -2210,6 +2232,28 @@ export const MappaMare = new Weapon(
   'Crafting',
 );
 
+export const MasterKey = new Weapon(
+  'Master Key',
+  {
+    value: `Upon causing an Elemental Reaction, increases Elemental Mastery by $0 for 12s. Moonsign: Ascendant Gleam: Elemental Mastery from this effect is further increased by $1. This effect can be triggered even if the equipping character is off-field.`,
+    refinements: [
+      '60/75/90/105/120',
+      '60/75/90/105/120',
+    ]
+  },
+  'Claymore',
+  Rarity.Epic,
+  454,
+  'Energy Recharge',
+  61.3,
+  [
+    WeaponAscensionMaterials.XOfTheFarNorthScions,
+    Drops.RaidantBeastDrop,
+    Drops.DriveShaft
+  ],
+  'Crafting'
+);
+
 export const MemoryOfDust = new Weapon(
   'Memory of Dust',
   {
@@ -2637,6 +2681,29 @@ export const ProspectorsDrill = new Weapon(
   ],
   'Wish',
 );
+
+export const ProspectorsShovel = new Weapon(
+  `Prospector's Shovel`,
+  {
+    value: `Electro-Charged DMG is increased by $0, and Lunar-Charged DMG is increased by $1. Moonsign: Ascendant Gleam: Lunar-Charged DMG is increased by an additional $2.`,
+    refinements: [
+      '48/60/72/84/96%',
+      '12/15/18/21/24%',
+      '12/15/18/21/24%',
+    ]
+  },
+  'Polearm',
+  Rarity.Epic,
+  510,
+  'ATK',
+  41.3,
+  [
+    WeaponAscensionMaterials.XOfLongNightFlint,
+    Drops.Mistshroud,
+    Drops.DriveShaft
+  ],
+  'Crafting'
+)
 
 export const PrototypeAmber = new Weapon(
   'Prototype Amber',
@@ -3249,6 +3316,28 @@ export const SequenceOfSolitude = new Weapon(
   'Event'
 );
 
+export const SerenitysCall = new Weapon(
+  "Serenity's Call",
+  {
+    value: `Upon causing an Elemental Reaction, increases Max HP by $0 for 12s. Moonsign: Ascendant Gleam: Max HP from this effect is further increased by $1. This effect can be triggered even if the equipping character is off-field.`,
+    refinements: [
+      '16/20/24/28/32%',
+      '16/20/24/28/32%',
+    ]
+  },
+  "Sword",
+  Rarity.Epic,
+  454,
+  'Energy Recharge',
+  61.3,
+  [
+    WeaponAscensionMaterials.ArtfulDeviceX,
+    Drops.FrostnightsX,
+    Drops.Warrant
+  ],
+  'Crafting'
+);
+
 export const SerpentSpine = new Weapon(
   'Serpent Spine',
   {
@@ -3489,6 +3578,28 @@ export const Slingshot = new Weapon(
     Drops.Mask
   ],
   'Wish',
+);
+
+export const SnareHook = new Weapon(
+  'Snare Hook',
+  {
+    value: `Upon causing an Elemental Reaction, increases Elemental Mastery by $0 for 12s. Moonsign: Ascendant Gleam: Elemental Mastery from this effect is further increased by $1. This effect can be triggered even if the equipping character is off-field.`,
+    refinements: [
+      '60/75/90/105/120',
+      '60/75/90/105/120',
+    ]
+  },
+  'Bow',
+  Rarity.Epic,
+  454,
+  'Energy Recharge',
+  61.3,
+  [
+    WeaponAscensionMaterials.XOfLongNightFlint,
+    Drops.Mistshroud,
+    Drops.Arrowhead
+  ],
+  'Crafting'
 );
 
 export const SnowTombedStarsilver = new Weapon(
@@ -3743,7 +3854,7 @@ export const SunnyMorningSleepIn = new Weapon(
 );
 
 export const SurfsUp = new Weapon(
-  `Surfs Up`,
+  `Surf's Up`,
   {
     value: `Max HP increased by $0. Once every 15s, for the 14s after using an Elemental Skill: Gain 4 Scorching Summer stacks. Each stack increases Normal Attack DMG by $1. For the duration of the effect, once every 1.5s, lose 1 stack after a Normal Attack hits an opponent; once every 1.5s, gain 1 stack after triggering a Vaporize reaction on an opponent. Max 4 Scorching Summer stacks.`,
     refinements: [

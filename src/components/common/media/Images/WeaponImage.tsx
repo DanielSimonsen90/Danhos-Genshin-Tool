@@ -16,5 +16,7 @@ export default function WeaponImage(props: Props) {
   const className = 'weaponType' in props ? `weapon-type-image` : 'weapon-image';
   const alt = 'weaponType' in props ? props.weaponType : props.weapon;
 
-  return <Image className={className} src={src} alt={alt} />;
+  return typeof src === 'string' 
+    ? <Image className={className} src={src} alt={alt} />
+    : <Image className={className} src={src[0]} fallbackSrc={src[1]} alt={alt} />
 }

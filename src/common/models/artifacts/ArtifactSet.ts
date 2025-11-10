@@ -2,6 +2,7 @@ import { Nullable, Rarity } from '@/common/types';
 import Character from '../characters/Character';
 import { CharacterArtifactSet } from '../characters/CharacterArtifactSet';
 import Material from '../materials/Material';
+import { ModelKeys } from '../Model';
 
 export class ArtifactSet extends Material {
   public static isArtifactSet(obj: any): obj is ArtifactSet {
@@ -39,6 +40,10 @@ export class ArtifactSet extends Material {
       this.fourPieceSetDescription,
     ];
     return keys.some(key => key.toLowerCase().includes(query));
+  }
+
+  public getModelKey(): ModelKeys {
+    return 'Artifact';
   }
 }
 

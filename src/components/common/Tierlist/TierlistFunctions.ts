@@ -14,6 +14,15 @@ export function generateBlankTier<T>(items: Array<any>) {
   } as Tier<T>);
 }
 
+export const getDefaultUnsortedTier = <T>(itemsInTier: Array<T>, tiersLength: number) => ({
+  id: 'unsorted',
+  title: 'Unsorted',
+  color: 'var(--background-secondary)',
+  entries: itemsInTier.map(generateEntry),
+  invert: false,
+  position: tiersLength
+});
+
 export function getDefaultTiers<T>(items: Array<T>) {
   const tiers = (
     ['S', 'A', 'B', 'C', 'D', 'F']
@@ -21,14 +30,7 @@ export function getDefaultTiers<T>(items: Array<T>) {
       .map((data, i) => ({ ...data, entries: [], color: getHslColor(i), position: i }) as Tier<T>)
   );
 
-  tiers.push({
-    id: 'unsorted',
-    title: 'Unsorted',
-    color: 'var(--background-secondary)',
-    entries: items.map(generateEntry),
-    invert: false,
-    position: tiers.length
-  });
+  tiers.push(getDefaultUnsortedTier(items, tiers.length));
 
   return tiers;
 }

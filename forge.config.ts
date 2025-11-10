@@ -47,7 +47,7 @@ const config: ForgeConfig = {
         "img-src 'self' https://sunderarmor.com https://lustonpull.com https://rerollcdn.com https://paimon.moe https://static.wikia.nocookie.net https://raw.githubusercontent.com",
         "script-src 'self' 'unsafe-eval'",
         "style-src 'self' 'unsafe-inline'",
-        "connect-src 'self'",
+        "connect-src 'self' https://sunderarmor.com https://paimon.moe",
         "font-src 'self'",
         "frame-src 'self'",
         "object-src 'self'",

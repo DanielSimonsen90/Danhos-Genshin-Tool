@@ -1,5 +1,6 @@
 import Material from "../materials/Material";
 import { Berserker, Instructor, TheExile, TravelingDoctor } from "../../../data/artifact-sets";
+import { ModelKeys } from "../Model";
 
 export type MobType = 'easy' | 'elite' | 'weekly-boss' | 'world-boss';
 
@@ -13,6 +14,10 @@ export abstract class Mob {
     public description: string,
     public drops: Array<Material>,
   ) {}
+
+  public getModelKey(): ModelKeys {
+    return 'Mob'
+  }
 }
 
 export default Mob;
