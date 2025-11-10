@@ -1,45 +1,61 @@
 import { Link } from "react-router-dom";
 import { ROUTES } from "@/common/constants/routes";
 import Highlight from "../Highlight";
+import { DOMAIN_NAME } from "@/common/constants/domain";
 
 export const Usage = () => (
   <section className="usage">
-    <h2>Usage</h2>
-
-    <div className="artifact-helper">
-      <h3>Artifact Helper</h3>
-      <p>
-        <span>
-          In the header, you are presented with a <Highlight selector=".search-form">form of select inputs</Highlight>.
-        </span>
-        <span>
-          Fill in your artifact's details, <Highlight selector=".search-form [type=submit]">click the search button</Highlight>, and determine whether to save your artifact piece or not.
-        </span>
-      </p>
-      <p>
-        <span>
-          Additionally, you can research characters, artifacts and domains through the <Highlight selector="a[href*=data]">data page</Highlight>.
-        </span>
-      </p>
-    </div>
+    <h2>Welcome home!</h2>
+    <p>Let's take a look at how we can manage your Genshin account together!</p>
 
     <div className="building">
       <h3>Building</h3>
       <p>
+        <span>To help build your characters, there are currently 3 pages for you to explore!</span>
+        <span>If you go directly to the <Highlight selector="a[href*=building]">building page</Highlight>, you will find the sub-page navigation list as well as the weekly calendar!</span>
+        <span>The weekly calendar will show you which characters or weapons' materials are currently available for farming.</span>
+        <span><b>Tip:</b> Mark your favorite characters as favorite to push them to the top of the list!</span>
+      </p>
+
+      <h4>Priority List</h4>
+      <p>
         <span>
-          As a new addition to the artifact helper, marking this as a 2.0 release, you can now do more than just finding your perfect artifact piece...
+          On the <Highlight selector="a[href*=building]">building page</Highlight>, you will find the <Link to={ROUTES.building_priority_list}>priority list</Link> page.
+          This page is inspired by <a href="https://tiermaker.com/create/genshin-impact-characters-13-792389">Tiermaker</a> and allows you to create multiple priority lists for any Genshin Impact model, all saved within your region. This can help you prioritize and plan your favorite characters and artifacts or even weapons!
+        </span>
+      </p>
+
+      <h4>Artifact Helper</h4>
+      <p>
+        <span>
+          The original concept of {DOMAIN_NAME} was to provide an algorithm that could help your stored artifacts to find the best character in your account.
         </span>
         <span>
-          In the new <Highlight selector="a[href*=building]">building page</Highlight>, you can navigate yourself the building hub, where you can plan out building your characters per region.
+          Today, this feature is still available on the <Link to={ROUTES.building_artifact_helper}>artifact helper page</Link> as a sub-page of the <Highlight selector="a[href*=building]">building page</Highlight>.
         </span>
       </p>
       <p>
         <span>
-          On the <Highlight selector="a[href*=building]">building page</Highlight>, you will find the <Link to={ROUTES.building_priority_list}>priority list</Link> page.
-          This page is inspired by <a href="https://tiermaker.com/create/genshin-impact-characters-13-792389">Tiermaker</a> and allows you to create multiple priority lists for characters, artifacts and domains, all saved within your region. This can help you prioritize and plan your favorite characters and artifacts.
+          Simply provide the helper engine with the artifact set, artifact piece and its stats, then hit search! Immediately, you will see a list of characters who could make use of your artifact piece.
         </span>
       </p>
     </div>
 
+    <div className="data">
+      <h3>Data</h3>
+      <p>
+        <span>
+          To easily browse through all the available models in Genshin Impact, you can visit the <Highlight selector="a[href*=data]">data page</Highlight>.
+        </span>
+        <span>
+          The data page will also provide you with detailed information about each model, where to get the item from, who might make use of the item and much more!
+        </span>
+      </p>
+      <p>
+        <span>
+          <b>Tip:</b> Use the search function OR filters to quickly find specific models or items!
+        </span>
+      </p>
+    </div>
   </section>
 );
