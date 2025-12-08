@@ -48,6 +48,30 @@ export const UltimateOverlordsMegaMagicSword = new Weapon(
 );
 
 // #region A
+export const AthameArtis = new Weapon(
+  "Athame Artis",
+  {
+    value: `CRIT DMG from Elemental Bursts is increased by $0. When an Elemental Burst hits an opponent, gain the Blade of the Daylight Hours effect: ATK is increased by $1. Nearby active party members other than the equipping character have their ATK increased by $2 for 3s.\nAdditionally, when the party possesses Hexerei: Secret Rite effects, the effects of Blade of the Daylight Hours are increased by an additional 75%. This effect can be triggered even if the equipping character is off-field.`,
+    refinements: [
+      '16/20/24/28/32%',
+      '20/25/30/35/40%',
+      '16/20/24/28/32%',
+    ]
+  },
+  'Sword',
+  Rarity.Legendary,
+  608,
+  'Crit Rate',
+  33.1,
+  [
+    WeaponAscensionMaterials.XOfDecarabiansX,
+    Drops.FrostnightsX,
+    Drops.DriveShaft
+  ],
+  'Wish',
+  cs => cs.Durin
+);
+
 export const AThousandBlazingSuns = new Weapon(
   "A Thousand Blazing Suns",
   {
@@ -2816,6 +2840,27 @@ export const PrototypeStarglitter = new Weapon(
 // #endregion
 
 // #region R
+export const RainbowSerpentsRainBow = new Weapon(
+  `Rainbow Serpent's Rain-Bow`,
+  {
+    value: `ATK is increased by 28%/35%/42%/49%/56% for 8s after the equipping character's attacks hit an opponent while the equipping character is off-field.`,
+    refinements: [
+      '28/35/42/49/56%',
+    ]
+  },
+  'Bow',
+  Rarity.Epic,
+  510,
+  'Energy Recharge',
+  45.9,
+  [
+    WeaponAscensionMaterials.NightWindsMysticX,
+    Drops.AbyssalLeaf,
+    Drops.Warrant,
+  ],
+  'Wish'
+);
+
 export const Rainslasher = new Weapon(
   'Rainslasher',
   {
@@ -4048,6 +4093,32 @@ export const TheBlackSword = new Weapon(
     Drops.Slime
   ],
   'Battle Pass',
+);
+
+export const TheDaybreakChronicles = new Weapon(
+  'The Daybreak Chronicles',
+  {
+    value: `The equipping character gains Stirring Dawn Breeze: 3s after leaving combat, Normal Attack, Elemental Skill, and Elemental Burst DMG is increased by $0. While in combat, this DMG Bonus will decrease by $1 per second until it reaches 0%. When the equipping character's Normal Attacks, Elemental Skills, or Elemental Bursts hit an opponent, the DMG Bonus for the corresponding DMG type is increased by $2 until it reaches $3. This effect can be triggered once every 0.1s for each of the attack types mentioned above. This effect can be triggered even if the equipping character is off-field.\nAdditionally, when the party possesses Hexerei: Secret Rite effects, when the equipping character's Normal Attacks, Elemental Skills, or Elemental Bursts hit an opponent, the DMG Bonus for all these DMG types is increased by $4 instead.`,
+    refinements: [
+      '60/75/90/105/120%',
+      '10/12.5/15/17.5/20%',
+      '10/12.5/15/17.5/20%',
+      '60/75/90/105/120%',
+      '20/25/30/35/40%',
+    ]
+  },
+  'Bow',
+  Rarity.Legendary,
+  674,
+  'Crit DMG',
+  44.1,
+  [
+    WeaponAscensionMaterials.XOfDandelionGladiator,
+    Drops.Horn,
+    Drops.TreasureHoarderInsignia
+  ],
+  'Wish',
+  cs => cs.Venti,
 );
 
 export const TheDockhandsAssistant = new Weapon(

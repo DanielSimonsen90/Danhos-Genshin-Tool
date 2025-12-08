@@ -21,3 +21,10 @@ export const RadiantAntler = new MobDrop(
   'Nod-Krai',
   Rarity.Epic
 );
+
+export const CyclicMilitaryKuuvahkiCore = new MobDrop(
+  `Cyclic Military Kuuvahki Core`,
+  `A kuuvahki device obtained from the energy core after defeating the Super-Heavy Landrover:\nMechanized Fortress.\nThe Fontaine Research Institute of Kinetic Energy Engineering once defined several ideal cycle patterns for elemental working substance engines. Regardless of the type, the most perfect number of cycles has consistently been four. Although most engineers from the Armory Palace and the Kuuvahki Experimental Design Bureau tend to regard kuuvahki as a working substance distinct from elemental energy, design configurations beyond the four-cycle paradigm have still been proven inefficient and impractical. In a certain sense, the "four"-cycle might be the world's peculiar preference. Although, the world may have no preference at all, and for the world, the habit of presumptuous mortals making self-satisfied conjectures could well be the strangest preference of all.`,
+  'Nod-Krai',
+  Rarity.Epic
+);
