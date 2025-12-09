@@ -84,14 +84,16 @@ export const Aino = new Character("Aino", "Hydro", "Claymore", [
   material: TalentAscension.Elysium,
   mobDrop: EasyMobDrops.DriveShaft,
   worldBossDrop: MobDrops.PrecisionKuuvahkiStampingDie,
-  weeklyBossDrop: MobDrops.SilkenFeather 
-}, 'Shows Local Specialties in Nod-Krai on minimap.', 
+  weeklyBossDrop: MobDrops.SilkenFeather
+}, 'Shows Local Specialties in Nod-Krai on minimap.',
   new CharacterPlaystyle("Burst Support", ["Elemental Mastery", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
     new CharacterArtifactSet(Sets.SilkenMoonsSerenade, 4, 100)
   ])
-)
+);
 
-export const Albedo = new Character("Albedo", "Geo", "Sword", [], Rarity.Legendary, 'Mondstadt', {
+export const Albedo = new Character("Albedo", "Geo", "Sword", [
+  `Hexerei Able: If Skill hits an opponent within 20s of use, spawn Silver Isotomas (another platform), which is indestructible and provides NA/CA/PA/Skill/Burst DMG increase by 4%/1000 DEF of Albedo for 20s for a max of 12% increase. Hexerei members receive 4% => 10% for max of 12% => 30%.`
+], Rarity.Legendary, 'Mondstadt', {
   localSpecialty: LocalSpecialties.Cecilia,
   crystal: ElementalCrystals.Geo,
   material: TalentAscension.Ballad,
@@ -324,7 +326,7 @@ export const Chevreuse = new Character("Chevreuse", "Pyro", "Polearm", ["Heal"],
 }, '20% Sprinting consumption reduction.',
   new CharacterPlaystyle("Off-field Support", ["HP", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
     new CharacterArtifactSet(Sets.SongOfDaysPast, 4, 48.5),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 22.1 ),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 22.1),
     ...HPSets(8.3)
   ]),
 );
@@ -339,7 +341,7 @@ export const Chiori = new Character("Chiori", "Geo", "Sword", [
   localSpecialty: LocalSpecialties.Dendrobium,
   worldBossDrop: MobDrops.ArtificedSpareClockworkComponent__Coppelia,
   mobDrop: EasyMobDrops.Spectral,
-}, '10% movement speed increase when not wearing default skin or wings for any party member.', 
+}, '10% movement speed increase when not wearing default skin or wings for any party member.',
   new CharacterPlaystyle("Off-field Geo DPS", ["DEF"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
     new CharacterArtifactSet(Sets.GoldenTroupe, 4, 60.1),
     new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 4, 29.2),
@@ -513,6 +515,23 @@ export const Dori = new Character("Dori", "Electro", "Claymore", [
   ]),
 );
 
+export const Durin = new Character("Durin", "Pyro", "Sword", [
+  "Off-field Damage",
+  `Elemental Based: Skill + NA = Denail of Darkness => Vape/Melt 40%. Skill + Skill = Principle of Purity => Pyro RES decrease to Burning targets after Burning/Overloaded/Pyro Swirl/Crystallize by 20% for 6s. Requires talent "Light Manifest of the Divine Calculus".`,
+  `Hexerei Able: Increases Elemental Based effects by 75%`
+], Rarity.Legendary, 'Mondstadt', {
+  material: TalentAscension.Ballad,
+  weeklyBossDrop: MobDrops.ErodedSunfire,
+  crystal: ElementalCrystals.Pyro,
+  localSpecialty: LocalSpecialties.FrostlampFlower,
+  worldBossDrop: MobDrops.CyclicMilitaryKuuvahkiCore,
+  mobDrop: EasyMobDrops.Warrant,
+}, '25% more rewards when on expeditions in Mondstadt.',
+  new CharacterPlaystyle("Off-field Pyro Support", ['ATK', 'Energy Recharge'], ['Burst/Ult', 'Skill/Ability', 'Normal/Press'], false, [
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 50),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 50),
+  ]));
+
 export const Emilie = new Character("Emilie", "Dendro", "Polearm", ["Off-field Damage"], Rarity.Legendary, 'Fontaine', {
   material: TalentAscension.Order,
   weeklyBossDrop: MobDrops.SilkenFeather,
@@ -550,7 +569,7 @@ export const Eula = new Character("Eula", "Cryo", "Claymore", [], Rarity.Legenda
   localSpecialty: LocalSpecialties.DandelionSeed,
   worldBossDrop: MobDrops.CrystallineBloom,
   mobDrop: EasyMobDrops.Mask,
-}, '10% chance of double product when crafting Character Talent Materials.', 
+}, '10% chance of double product when crafting Character Talent Materials.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ["Burst/Ult", "Normal/Press", "Skill/Ability"], true, [
     new CharacterArtifactSet(Sets.PaleFlame, 4, 70.8),
     ...PhysicalDMGSets(15.3),
@@ -577,7 +596,10 @@ export const Faruzan = new Character("Faruzan", "Anemo", "Bow", [
   ])
 );
 
-export const Fischl = new Character("Fischl", "Electro", "Bow", ["Off-field Damage"], Rarity.Epic, 'Mondstadt', {
+export const Fischl = new Character("Fischl", "Electro", "Bow", [
+  "Off-field Damage",
+  `Hexerei Able: After party member triggers: Overloaded, Fischl & active party members gain 22.5% ATK for 10s. Electro/Lunar-Charged, Fischl & active party members gain 90 EM for 10s.`
+], Rarity.Epic, 'Mondstadt', {
   material: TalentAscension.Ballad,
   weeklyBossDrop: MobDrops.SpiritLocketOfBoreas,
   crystal: ElementalCrystals.Electro,
@@ -604,7 +626,7 @@ export const Flins = new Character("Flins", "Electro", "Polearm", [
   localSpecialty: LocalSpecialties.FrostlampFlower,
   worldBossDrop: MobDrops.PrecisionKuuvahkiStampingDie,
   mobDrop: MobDrops.DriveShaft,
-}, 'Shows Local Specialties in Nod-Krai on minimap.', 
+}, 'Shows Local Specialties in Nod-Krai on minimap.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Elemental Mastery"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
     new CharacterArtifactSet(Sets.NightOfTheSkysUnveiling, 4, 100),
   ])
@@ -766,6 +788,26 @@ export const Ineffa = new Character("Ineffa", "Electro", "Polearm", [
   ])
 );
 
+export const Jahoda = new Character("Jahoda", "Anemo", "Bow", [
+  "Off-field Damage",
+  "Elemental Infusion: After Skill/Ability, Jahoda will gain elemental infusion based on the elements of affected opponents",
+  "Increases Moonsign",
+  "Heal",
+  "CRIT Increase: If C6 for Moonsign characters: +5% CRIT Rate % +40% CRIT DMG"
+], Rarity.Epic, "Nod-Krai", {
+  material: TalentAscension.Vagrancy,
+  weeklyBossDrop: MobDrops.ChessGameKnight,
+  crystal: ElementalCrystals.Anemo,
+  localSpecialty: LocalSpecialties.PortableBearing,
+  worldBossDrop: MobDrops.LightbearingScaleFeather,
+  mobDrop: EasyMobDrops.DriveShaft,
+}, '25% more rewards when on expeditions in Nod-Krai.',
+  new CharacterPlaystyle("Off-field Support", ['ATK', 'Energy Recharge'], ['Burst/Ult', "Skill/Ability", "Charged/Hold"], false, [
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 50),
+    new CharacterArtifactSet(Sets.SilkenMoonsSerenade, 4, 50),
+  ])
+);
+
 export const Jean = new Character("Jean", "Anemo", "Sword", ["Heal"], Rarity.Legendary, 'Mondstadt', {
   material: TalentAscension.Resistance,
   weeklyBossDrop: MobDrops.DvalinsPlume,
@@ -803,7 +845,7 @@ export const Kachina = new Character("Kachina", "Geo", "Polearm", [
 export const KaedeharaKazuha = new Character("Kaedehara Kazuha", "Anemo", "Sword", [
   "Off-field Damage",
   "Grouping",
-  "Elemental based: Ult can be infused with other party member elements excl. Anemo & Dendro",
+  "Elemental Based: Ult can be infused with other party member elements excl. Anemo & Dendro",
   "Elemental Infusion: If C6 activated, after Skill/Ability or Burst/Ult, Kazuha gains Anemo infusion for 5 seconds"
 ], Rarity.Legendary, 'Inazuma', {
   material: TalentAscension.Diligence,
@@ -938,14 +980,16 @@ export const Kirara = new Character("Kirara", "Dendro", "Sword", ["Shield"], Rar
   ])
 );
 
-export const Klee = new Character("Klee", "Pyro", "Catalyst", [], Rarity.Legendary, 'Mondstadt', {
+export const Klee = new Character("Klee", "Pyro", "Catalyst", [
+  `Hexerei Able: When Klee deals DMG with NA/Skill/Burst; gain 1 Boom Badge for 20s. Each badge has own timer. Max 3 stacks that deals 115/130/150% of its original DMG.`
+], Rarity.Legendary, 'Mondstadt', {
   material: TalentAscension.Freedom,
   weeklyBossDrop: MobDrops.RingOfBoreas,
   crystal: ElementalCrystals.Pyro,
   localSpecialty: LocalSpecialties.PhilanemoMushroom,
   worldBossDrop: MobDrops.EverflameSeed,
   mobDrop: EasyMobDrops.Scroll,
-}, 'Shows Local Specialties in Mondstadt on minimap.', 
+}, 'Shows Local Specialties in Mondstadt on minimap.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Elemental Mastery"], ["Normal/Press", "Skill/Ability", "Burst/Ult"], true, [
     new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 65.4),
     ...PyroDMGSets(8.5),
@@ -1118,7 +1162,10 @@ export const Mika = new Character("Mika", "Cryo", "Polearm", ["Heal"], Rarity.Ep
   ]),
 );
 
-export const Mona = new Character("Mona", "Hydro", "Catalyst", ["Off-field Damage"], Rarity.Legendary, 'Mondstadt', {
+export const Mona = new Character("Mona", "Hydro", "Catalyst", [
+  "Off-field Damage",
+  `Hexerei Able: When Mona's NA/CA hits an opponent, gain 1 Astral Glow of Mercury for 8s. Max 3 stacks. When team members deal Vape DMG, stacks are consumed. Each consumed stacks does 5% increased DMG to the Vape reaction.`
+], Rarity.Legendary, 'Mondstadt', {
   material: TalentAscension.Resistance,
   weeklyBossDrop: MobDrops.RingOfBoreas,
   crystal: ElementalCrystals.Hydro,
@@ -1150,7 +1197,7 @@ export const Mualani = new Character("Mualani", "Hydro", "Catalyst", ["Nightsoul
 );
 
 export const Nahida = new Character("Nahida", "Dendro", "Catalyst", [
-  "Elemental based: While inside ult, different parameters change based on elements within party"
+  "Elemental Based: While inside ult, different parameters change based on elements within party"
 ], Rarity.Legendary, "Sumeru", {
   material: TalentAscension.Ingenuity,
   weeklyBossDrop: MobDrops.PuppetStrings,
@@ -1196,11 +1243,11 @@ export const Nefer = new Character("Nefer", "Dendro", "Catalyst", [
   localSpecialty: LocalSpecialties.MoonfallSilver,
   worldBossDrop: MobDrops.RadiantAntler,
   mobDrop: EasyMobDrops.Warrant,
-}, '25% more rewards when on expeditions in Nod-Krai.', 
+}, '25% more rewards when on expeditions in Nod-Krai.',
   new CharacterPlaystyle('On-field Lunar-Bloom DPS', ['Elemental Mastery'], ['Skill/Ability', 'Burst/Ult', 'Normal/Press'], true, [
     new CharacterArtifactSet(Sets.NightOfTheSkysUnveiling, 4, 100),
   ])
-)
+);
 
 export const Neuvillette = new Character("Neuvillette", "Hydro", "Catalyst", ["Self-heal"], Rarity.Legendary, "Fontaine", {
   material: TalentAscension.Equity,
@@ -1322,7 +1369,9 @@ export const RaidenShogun = new Character("Raiden Shogun", "Electro", "Polearm",
   ]),
 );
 
-export const Razor = new Character("Razor", "Electro", "Claymore", [], Rarity.Epic, 'Mondstadt', {
+export const Razor = new Character("Razor", "Electro", "Claymore", [
+  `Hexerei Able: Enhanced burst DMG. The Wolf Within receives 70% of Razor's ATK bonus DMG. While Wolf Within summoned, Electro sigils from Razor's Skill claw and Thudnder overflow, Wolf Within deals 150% of Razor's ATK DMG and restores 7 energy to Razor.`
+], Rarity.Epic, 'Mondstadt', {
   material: TalentAscension.Resistance,
   weeklyBossDrop: MobDrops.DvalinsClaw,
   crystal: ElementalCrystals.Electro,
@@ -1405,7 +1454,7 @@ export const Shenhe = new Character("Shenhe", "Cryo", "Polearm", ["Off-field Dam
   localSpecialty: LocalSpecialties.Qingxin,
   worldBossDrop: MobDrops.DragonheirsFalseFin,
   mobDrop: EasyMobDrops.Nectar,
-}, '25% more rewards when on expeditions in Liyue.', 
+}, '25% more rewards when on expeditions in Liyue.',
   new CharacterPlaystyle("Off-field Support", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
     ...AttackSets(55.1),
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 20.0),
@@ -1462,7 +1511,11 @@ export const Skirk = new Character("Skirk", "Cryo", "Sword", [
   ])
 );
 
-export const Sucrose = new Character("Sucrose", "Anemo", "Catalyst", ["Grouping"], Rarity.Epic, 'Mondstadt', {
+export const Sucrose = new Character("Sucrose", "Anemo", "Catalyst", [
+  "Grouping",
+  "Off-field Damage",
+  `Hexerei Able: After creating Small Wind Spirit, party members' NA/CA/PA/Skill/Burst DMG increased by 5.71428 for 15s. After creating Large Wind Spirit, party members' NA/CA/PA/Skill/Burst DMG increased by 7.14285 for 20s. I also personally think these numbers are hilarious.`
+], Rarity.Epic, 'Mondstadt', {
   material: TalentAscension.Freedom,
   weeklyBossDrop: MobDrops.SpiritLocketOfBoreas,
   crystal: ElementalCrystals.Hydro,
@@ -1487,7 +1540,7 @@ export const TartagliaChilde = new Character("Tartaglia (Childe)", "Hydro", "Bow
   localSpecialty: LocalSpecialties.Starconch,
   worldBossDrop: MobDrops.CleansingHeart,
   mobDrop: EasyMobDrops.FatuiInsignia,
-}, 'Increase your own party members\' Normal Attack level by 1.', 
+}, 'Increase your own party members\' Normal Attack level by 1.',
   new CharacterPlaystyle("On-field DPS", ["ATK"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
     new CharacterArtifactSet(Sets.HeartOfDepth, 4, 41.8),
     ...HydroDMGSets(13.8),
@@ -1645,7 +1698,11 @@ export const Varesa = new Character("Varesa", "Electro", "Catalyst", ["Nightsoul
   ])
 );
 
-export const Venti = new Character("Venti", "Anemo", "Bow", ["Grouping"], Rarity.Legendary, 'Mondstadt', {
+export const Venti = new Character("Venti", "Anemo", "Bow", [
+  "Grouping",
+  'Elemental Infusion: If Hexereied, After Burst/Ult, Venti gains Anemo infusion',
+  'Hexerei Able: If Stormeye active during burst; character triggers Swirld, reaction DMG +50%, Stormeye deals +35%'
+], Rarity.Legendary, 'Mondstadt', {
   material: TalentAscension.Ballad,
   weeklyBossDrop: MobDrops.TailOfBoreas,
   crystal: ElementalCrystals.Anemo,
@@ -1686,7 +1743,7 @@ export const Wriothesley = new Character("Wriothesley", "Cryo", "Catalyst", [
   localSpecialty: LocalSpecialties.SubdetectionUnit,
   worldBossDrop: MobDrops.TourbillonDevice,
   mobDrop: EasyMobDrops.Gear,
-}, '10% chance of double product when crafting Weapon Ascension Materials.', 
+}, '10% chance of double product when crafting Weapon Ascension Materials.',
   new CharacterPlaystyle("On-field DPS", ["ATK"], ["Charged/Hold", "Skill/Ability", "Burst/Ult"], true, [
     new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 88.8),
     new CharacterArtifactSet(Sets.BlizzardStrayer, 4, 2.3),
@@ -1718,7 +1775,7 @@ export const Xianyun = new Character("Xianyun", "Anemo", "Catalyst", ["Heal"], R
   localSpecialty: LocalSpecialties.ClearwaterJade,
   worldBossDrop: MobDrops.CloudseamScale,
   mobDrop: EasyMobDrops.Scroll,
-}, '15% Sprinting speed increase.', 
+}, '15% Sprinting speed increase.',
   new CharacterPlaystyle("Off-field Support", ["ATK", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
     new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 51.1),
     new CharacterArtifactSet(Sets.SongOfDaysPast, 4, 20.4),
@@ -1735,7 +1792,7 @@ export const Xiao = new Character("Xiao", "Anemo", "Polearm", [
   localSpecialty: LocalSpecialties.Qingxin,
   worldBossDrop: MobDrops.JuvenileJade,
   mobDrop: EasyMobDrops.Slime,
-}, '20% Climbing consumption reduction.', 
+}, '20% Climbing consumption reduction.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ["Burst/Ult", "Normal/Press", "Skill/Ability"], true, [
     new CharacterArtifactSet(Sets.VermillionHereafter, 4, 58.1),
     ...AttackSets(14.1),
@@ -1744,7 +1801,7 @@ export const Xiao = new Character("Xiao", "Anemo", "Polearm", [
 );
 
 export const Xilonen = new Character("Xilonen", "Geo", "Sword", [
-  "Elemental based: Decrease elemental RES based on party members' elements (excl. Anemo & Dendro)",
+  "Elemental Based: Decrease elemental RES based on party members' elements (excl. Anemo & Dendro)",
   "Elemental Infusion: After Skill/Ability, Xilonen gains Geo infusion for the duration of the Nightsoul meter",
   "Heal",
   "Nightsouls Blessing"
@@ -1871,7 +1928,7 @@ export const Yoimiya = new Character("Yoimiya", "Pyro", "Bow", [
   localSpecialty: LocalSpecialties.NakuWeed,
   worldBossDrop: MobDrops.SmolderingPearl,
   mobDrop: EasyMobDrops.Scroll,
-}, '100% chance of refunding a portion of materials used when crafting decoration, ornament and landscape-type furnishings.', 
+}, '100% chance of refunding a portion of materials used when crafting decoration, ornament and landscape-type furnishings.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Elemental Mastery"], ["Charged/Hold", "Skill/Ability", "Burst/Ult"], true, [
     new CharacterArtifactSet(Sets.ShimenawasReminiscence, 4, 85.7),
     new CharacterArtifactSet(Sets.EchoesOfAnOffering, 4, 4.1),
