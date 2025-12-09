@@ -91,7 +91,9 @@ export const Aino = new Character("Aino", "Hydro", "Claymore", [
   ])
 );
 
-export const Albedo = new Character("Albedo", "Geo", "Sword", [], Rarity.Legendary, 'Mondstadt', {
+export const Albedo = new Character("Albedo", "Geo", "Sword", [
+  `Hexerei Able: If Skill hits an opponent within 20s of use, spawn Silver Isotomas (another platform), which is indestructible and provides NA/CA/PA/Skill/Burst DMG increase by 4%/1000 DEF of Albedo for 20s for a max of 12% increase. Hexerei members receive 4% => 10% for max of 12% => 30%.`
+], Rarity.Legendary, 'Mondstadt', {
   localSpecialty: LocalSpecialties.Cecilia,
   crystal: ElementalCrystals.Geo,
   material: TalentAscension.Ballad,
@@ -515,7 +517,8 @@ export const Dori = new Character("Dori", "Electro", "Claymore", [
 
 export const Durin = new Character("Durin", "Pyro", "Sword", [
   "Off-field Damage",
-  `Elemental Based: Skill + NA = Denail of Darkness => Vape/Melt 40%. Skill + Skill = Principle of Purity => Pyro RES decrease to Burning targets after Burning/Overloaded/Pyro Swirl/Crystallize by 20% for 6s. Requires talent "Light Manifest of the Divine Calculus".`
+  `Elemental Based: Skill + NA = Denail of Darkness => Vape/Melt 40%. Skill + Skill = Principle of Purity => Pyro RES decrease to Burning targets after Burning/Overloaded/Pyro Swirl/Crystallize by 20% for 6s. Requires talent "Light Manifest of the Divine Calculus".`,
+  `Hexerei Able: Increases Elemental Based effects by 75%`
 ], Rarity.Legendary, 'Mondstadt', {
   material: TalentAscension.Ballad,
   weeklyBossDrop: MobDrops.ErodedSunfire,
@@ -593,7 +596,10 @@ export const Faruzan = new Character("Faruzan", "Anemo", "Bow", [
   ])
 );
 
-export const Fischl = new Character("Fischl", "Electro", "Bow", ["Off-field Damage"], Rarity.Epic, 'Mondstadt', {
+export const Fischl = new Character("Fischl", "Electro", "Bow", [
+  "Off-field Damage",
+  `Hexerei Able: After party member triggers: Overloaded, Fischl & active party members gain 22.5% ATK for 10s. Electro/Lunar-Charged, Fischl & active party members gain 90 EM for 10s.`
+], Rarity.Epic, 'Mondstadt', {
   material: TalentAscension.Ballad,
   weeklyBossDrop: MobDrops.SpiritLocketOfBoreas,
   crystal: ElementalCrystals.Electro,
@@ -974,7 +980,9 @@ export const Kirara = new Character("Kirara", "Dendro", "Sword", ["Shield"], Rar
   ])
 );
 
-export const Klee = new Character("Klee", "Pyro", "Catalyst", [], Rarity.Legendary, 'Mondstadt', {
+export const Klee = new Character("Klee", "Pyro", "Catalyst", [
+  `Hexerei Able: When Klee deals DMG with NA/Skill/Burst; gain 1 Boom Badge for 20s. Each badge has own timer. Max 3 stacks that deals 115/130/150% of its original DMG.`
+], Rarity.Legendary, 'Mondstadt', {
   material: TalentAscension.Freedom,
   weeklyBossDrop: MobDrops.RingOfBoreas,
   crystal: ElementalCrystals.Pyro,
@@ -1154,7 +1162,10 @@ export const Mika = new Character("Mika", "Cryo", "Polearm", ["Heal"], Rarity.Ep
   ]),
 );
 
-export const Mona = new Character("Mona", "Hydro", "Catalyst", ["Off-field Damage"], Rarity.Legendary, 'Mondstadt', {
+export const Mona = new Character("Mona", "Hydro", "Catalyst", [
+  "Off-field Damage",
+  `Hexerei Able: When Mona's NA/CA hits an opponent, gain 1 Astral Glow of Mercury for 8s. Max 3 stacks. When team members deal Vape DMG, stacks are consumed. Each consumed stacks does 5% increased DMG to the Vape reaction.`
+], Rarity.Legendary, 'Mondstadt', {
   material: TalentAscension.Resistance,
   weeklyBossDrop: MobDrops.RingOfBoreas,
   crystal: ElementalCrystals.Hydro,
@@ -1358,7 +1369,9 @@ export const RaidenShogun = new Character("Raiden Shogun", "Electro", "Polearm",
   ]),
 );
 
-export const Razor = new Character("Razor", "Electro", "Claymore", [], Rarity.Epic, 'Mondstadt', {
+export const Razor = new Character("Razor", "Electro", "Claymore", [
+  `Hexerei Able: Enhanced burst DMG. The Wolf Within receives 70% of Razor's ATK bonus DMG. While Wolf Within summoned, Electro sigils from Razor's Skill claw and Thudnder overflow, Wolf Within deals 150% of Razor's ATK DMG and restores 7 energy to Razor.`
+], Rarity.Epic, 'Mondstadt', {
   material: TalentAscension.Resistance,
   weeklyBossDrop: MobDrops.DvalinsClaw,
   crystal: ElementalCrystals.Electro,
@@ -1498,7 +1511,11 @@ export const Skirk = new Character("Skirk", "Cryo", "Sword", [
   ])
 );
 
-export const Sucrose = new Character("Sucrose", "Anemo", "Catalyst", ["Grouping"], Rarity.Epic, 'Mondstadt', {
+export const Sucrose = new Character("Sucrose", "Anemo", "Catalyst", [
+  "Grouping",
+  "Off-field Damage",
+  `Hexerei Able: After creating Small Wind Spirit, party members' NA/CA/PA/Skill/Burst DMG increased by 5.71428 for 15s. After creating Large Wind Spirit, party members' NA/CA/PA/Skill/Burst DMG increased by 7.14285 for 20s. I also personally think these numbers are hilarious.`
+], Rarity.Epic, 'Mondstadt', {
   material: TalentAscension.Freedom,
   weeklyBossDrop: MobDrops.SpiritLocketOfBoreas,
   crystal: ElementalCrystals.Hydro,
@@ -1681,7 +1698,11 @@ export const Varesa = new Character("Varesa", "Electro", "Catalyst", ["Nightsoul
   ])
 );
 
-export const Venti = new Character("Venti", "Anemo", "Bow", ["Grouping"], Rarity.Legendary, 'Mondstadt', {
+export const Venti = new Character("Venti", "Anemo", "Bow", [
+  "Grouping",
+  'Elemental Infusion: If Hexereied, After Burst/Ult, Venti gains Anemo infusion',
+  'Hexerei Able: If Stormeye active during burst; character triggers Swirld, reaction DMG +50%, Stormeye deals +35%'
+], Rarity.Legendary, 'Mondstadt', {
   material: TalentAscension.Ballad,
   weeklyBossDrop: MobDrops.TailOfBoreas,
   crystal: ElementalCrystals.Anemo,

@@ -8,7 +8,8 @@ export type BonusAbility = (
 | `Enables ${LunarReaction} Reaction`
 | 'Increases Moonsign'
 | 'Grouping'
-| `Buff ATK: ${string}` | `Elemental Based: ${string}` | `CRIT Increase: ${string}` | `Buff ATK Speed: ${string}` | `Elemental Infusion: ${string}`
+| `Buff ATK: ${string}` | `Elemental Based: ${string}` | `CRIT Increase: ${string}` 
+| `Buff ATK Speed: ${string}` | `Elemental Infusion: ${string}` | `Hexerei Able: ${string}`
 );
 export type WeaponType = 'Sword' | 'Claymore' | 'Polearm' | 'Bow' | 'Catalyst';
 export type CharacterSetName = `${'On-field' | 'Off-field' | 'Burst'}${` ${Reaction | Element}` | ''} ${'DPS' | 'Support'}`;
