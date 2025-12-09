@@ -1,7 +1,7 @@
 import { WorldBoss } from "@/common/models/mobs/Boss";
-import { Adventurer, Berserker, GladiatorsFinale, Instructor, LuckyDog, PrayersOfSpringtime, PrayersOfWisdom, TheExile, TravelingDoctor, WanderersTroupe } from "@/data/artifact-sets";
+import { Adventurer, Berserker, GladiatorsFinale, Instructor, LuckyDog, PrayersOfIllumination, PrayersOfSpringtime, PrayersOfWisdom, TheExile, TravelingDoctor, WanderersTroupe } from "@/data/artifact-sets";
 import { ElementalCrystals } from "@/data/materials/drops/crystals";
-import { PrecisionKuuvahkiStampingDie, LightbearingScaleFeather, RadiantAntler } from '@/data/materials/drops/nod-krai';
+import { PrecisionKuuvahkiStampingDie, LightbearingScaleFeather, RadiantAntler, CyclicMilitaryKuuvahkiCore } from '@/data/materials/drops/nod-krai';
 
 export const KnuckleDuckle = new WorldBoss(
   `Knuckle Duckle`,
@@ -43,3 +43,17 @@ export const FrostnightHerra = new WorldBoss(
     Berserker, TheExile, PrayersOfSpringtime, LuckyDog
   ]
 );
+
+export const SuperHeavyLandroverMechanizedFortress = new WorldBoss(
+  "Super-Heavy Landrover Mechanized Fortress",
+  `Referred to internally as the "Type Drzislav," this super heavy-class mechanism was jointly developed by the Armory Palace and the Kuuvahki Experimental Design Bureau.`,
+  'Nod-Krai',
+  [
+    CyclicMilitaryKuuvahkiCore,
+    ...ElementalCrystals.Pyro.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Cryo.getCraftingTreeAsMaterials(),
+    GladiatorsFinale,
+    WanderersTroupe,
+    Berserker, Instructor, PrayersOfIllumination, Adventurer
+  ]
+)

@@ -2,14 +2,14 @@ import { Dispatch, SetStateAction, useCallback } from "react";
 import { useNavigate } from "react-router";
 
 import { CharacterImage, ArtifactImage, DomainImage, MaterialImage, MobImage, WeaponImage } from "@/components/common/media/Images";
-import { FavoriteStar } from "@/components/common/media/icons/Star";
+import Star, { FavoriteStar } from "@/components/common/media/icons/Star";
 import Tierlist, { Entry, Tier } from "@/components/common/Tierlist";
 
 import { FavoriteModels, useDataStore, useFavorites, useRegionData } from "@/stores";
 
 import type { PriorityLists, PriorityList } from "../PriorityListTypes";
 import { getDefaultPriorityLists, onUnsortedSearch } from "../PriorityListFunctions";
-import { PriorityListTab, FavoriteStarMenuOption } from "../components";
+import { PriorityListTab } from "../components";
 
 type UsePriorityListTabsProps = {
   priorityLists: PriorityLists;
@@ -99,14 +99,14 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
               renderCustomEntryContextMenuItems: (entry: Entry<string>, tier, item) => [
                 item('divider', `${entry.item} Options`),
                 item('option', `View ${modelType}`, () => navigate(`/data/${modelType.toLowerCase()}s/${entry.item}`), '👁️'),
-                item('option', <FavoriteStarMenuOption {...{ entry, modelType }} />, () => {
+                item('option', isFavorite(entry.item) ? 'Unfavorite' : 'Favorite', () => {
                   const favorite = FavoriteStore.getFavorite(favoriteModelKey);
                   const model = findModel(entry.item);
                   if (!model) throw new Error(`Model "${entry.item}" not found in DataStore using modelType "${modelType}".`);
 
                   if (!isFavorite(entry.item)) favorite.add(model);
                   else favorite.remove(model);
-                }, ' ')
+                }, <Star filled={isFavorite(entry.item)} color="var(--rarity-legendary)" />)
               ]
             }}>
               {modelName => {

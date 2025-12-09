@@ -18,7 +18,9 @@ export class Character<TElement extends Element = Element> {
     public ascension: CharacterAscension<TElement>,
     public passiveTalent: PassiveTalent | undefined,
     public playstyle: CharacterPlaystyle | undefined,
-  ) {}
+  ) {
+    this.bonusAbilities = this.bonusAbilities.sort();
+  }
   
   public needsHP(): boolean { return this.playstyle?.talentStats.includes('HP') ?? false; }
   public needsATK(): boolean { return this.playstyle?.talentStats.includes('ATK') ?? false; }
