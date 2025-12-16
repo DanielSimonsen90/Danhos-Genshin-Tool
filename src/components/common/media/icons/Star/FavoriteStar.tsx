@@ -4,18 +4,23 @@ import Star from "./Star";
 
 type Props = {
   model: Model;
+  preventClick?: boolean
 };
 
-export default function FavoriteStar({ model }: Props) {
+export default function FavoriteStar({ model, preventClick }: Props) {
   const FavoriteStore = useFavorites();
   const modelType = getModelType(model);
+  const isFavorite = FavoriteStore.getFavorite(modelType).isFavorite(model);
   
-  return <Star className="favorite-star" filled={FavoriteStore.getFavorite(modelType).isFavorite(model)} onClick={e => {
+  return <Star className="favorite-star" filled={isFavorite} onClick={e => {
+    if (preventClick) return;
+    
     e.stopPropagation();
     e.preventDefault();
 
-    if (confirm(`Are you sure you want to remove ${model.name} from favorites?`)) {
-      FavoriteStore.getFavorite(modelType).remove(model);
-    }
+    if (!isFavorite) return;
+
+    const confirmed = confirm(`Are you sure you want to remove ${model.name} from favorites?`);
+    if (confirmed) FavoriteStore.getFavorite(modelType).remove(model);
   }} />;
 }
