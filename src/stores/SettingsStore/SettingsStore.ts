@@ -65,7 +65,8 @@ export const useSettingsStore = create<SettingsStore>(((setState, getState) => {
 
     getSetting<Key extends keyof AppSettings>(key: Key): AppSettings[Key] | undefined {
       return getState().settings[key];
-    }, updateSettings(update: SetStateAction<Partial<AppSettings>>, override?: boolean) {
+    }, 
+    updateSettings(update: SetStateAction<Partial<AppSettings>>, override?: boolean) {
       const resolvedUpdate = typeof update === 'function' ? update(getState().settings) : update;
 
       // Filter out character filter properties that shouldn't be in settings
@@ -87,7 +88,8 @@ export const useSettingsStore = create<SettingsStore>(((setState, getState) => {
           updated: Date.now()
         }
       });
-    }, saveSettings(update?: SetStateAction<Partial<AppSettings>>) {
+    }, 
+    saveSettings(update?: SetStateAction<Partial<AppSettings>>) {
       const resolvedUpdate = update
         ? (typeof update === 'function'
           ? update(getState().settings)
