@@ -54,8 +54,19 @@ export default function Tier<T>({
       }), '⬇️'),
     item('divider', 'Modify'),
     item('option', 'Edit', () => setShowEditModal(true), '✏️'),
-    item('option', 'Clear', () => setTiers(tiers => tiers.map(t => t.id === tier.id ? { ...t, entries: [] } : t)), '🧹'),
-    item('option', 'Delete tier', () => setTiers(tiers => tiers.filter(t => t.id !== tier.id)), '🗑️'),
+    // item('option', 'Clear', () => setTiers(tiers => tiers.map(t => t.id === tier.id ? { ...t, entries: [] } : t)), '🧹'),
+    item('option', 'Clear', () => setTiers(tiers => tiers
+      .map(t => t.id === tier.id 
+        ? { ...t, entries: [] } 
+        : t.id === 'unsorted'
+          ? { ...t, entries: t.entries.concat(tier.entries) }
+          : t
+        )
+    ), '🧹'),
+    item('option', 'Delete tier', () => setTiers(tiers => tiers
+      .filter(t => t.id !== tier.id)
+      .map(t => t.id === 'unsorted' ? { ...t, entries: t.entries.concat(tier.entries) } : t)
+    ), '🗑️'),
   ].filter(Boolean));
   const onContextMenu = tier.id === 'unsorted' ? undefined : onContext;
 

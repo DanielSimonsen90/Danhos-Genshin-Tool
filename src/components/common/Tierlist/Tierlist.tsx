@@ -83,12 +83,9 @@ export default function Tierlist<T, TStorageData extends object>({
       entries: tier.entries.map(entry => ({ ...entry, id: undefined as any }))
     })), [props.defaultTiers]);
 
-  useOnChange(props.defaultTiers, defaultTiers => {
+  useOnChange(props.defaultTiers, () => {
     const contentEqual = isEqual(tiersWithoutIds, defaultTiersWithoutIds);
-
-    if (!contentEqual) {
-      resetTiers();
-    }
+    if (!contentEqual) resetTiers();
   });
   useOnChange(tiers, tiers => {
     const storageData = onStorageSave?.(tiers) ?? tiers;

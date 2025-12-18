@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { LocalStorageReturn } from "@/hooks/useLocalStorage";
 import { CreateMenuItem } from "@/providers/ContextMenuProvider/ContextMenuConstants";
 import { MenuItem } from "@/providers/ContextMenuProvider/ContextMenuTypes";
+import { Autocomplete } from "@/common/types";
 
 export interface Entry<TItem> {
   id: string;
@@ -9,7 +10,7 @@ export interface Entry<TItem> {
 }
 
 export interface Tier<TItem> {
-  id: string;
+  id: Autocomplete<'unsorted'>;
   title: string;
   invert: boolean;
   position: number;
