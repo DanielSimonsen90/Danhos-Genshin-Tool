@@ -1,9 +1,6 @@
 import { useState, useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
-import { getElement } from '@/data/elements';
-
-import { Element } from '@/common/types';
 import { ROUTES } from '@/common/constants/routes';
 import {
   ArtifactSet, Character, Model,
@@ -48,8 +45,8 @@ export default function DataIndex() {
     ['weapons', WeaponNames],
     ['materials', MaterialNames],
     ['mobs', MobNames],
-
   ] as const;
+
   const groupModels = new Map<string, List<Model>>([
     ['characters', Characters],
     ['artifacts', Artifacts],
@@ -67,15 +64,16 @@ export default function DataIndex() {
   const displayGroups = useMemo(() => groups.map(([group, names]) => {
     const filteredNames = isSearching
       ? names.filter(name => name.toLowerCase().includes(debouncedSearch.toLowerCase()))
-      : names.slice(0, 15); // Show first 9 for default view
+      : names;
+    const slicedNames = filteredNames.slice(0, 15);
 
     return {
       group,
       displayName: pascalCaseFromSnakeCase(group),
       totalCount: names.length,
-      filteredCount: filteredNames.length,
-      names: filteredNames,
-      isVisible: isSearching ? filteredNames.length > 0 : true
+      filteredCount: slicedNames.length,
+      names: slicedNames,
+      isVisible: isSearching ? slicedNames.length > 0 : true
     };
   }), [groups, debouncedSearch, isSearching]);
 
