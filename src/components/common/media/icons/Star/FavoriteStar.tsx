@@ -18,7 +18,10 @@ export default function FavoriteStar({ model, preventClick }: Props) {
     e.stopPropagation();
     e.preventDefault();
 
-    if (!isFavorite) return;
+    if (!isFavorite) {
+      FavoriteStore.getFavorite(modelType).add(model);
+      return;
+    }
 
     const confirmed = confirm(`Are you sure you want to remove ${model.name} from favorites?`);
     if (confirmed) FavoriteStore.getFavorite(modelType).remove(model);
