@@ -1,6 +1,6 @@
 .character-playstyle {
   display: grid;
-  grid-template-rows: min-content max-content auto;
+  grid-template-rows: min-content max-content;
   gap: 1em;
   max-width: 100%;
 
@@ -15,16 +15,25 @@
   }
 
   .playstyle-recommendations {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(25em, 1fr));
     gap: 2em;
+
+    .recommended-talent-ascension {
+      display: grid;
+      grid-template-rows: auto 1fr;
+
+      &__list {
+        display: grid;
+      }
+    }
 
     ol {
       background-color: var(--background-secondary--muted);
       border-radius: .5em;
       padding: .5em;
       font-size: 1.5rem;
+      max-height: max-content;
 
       li {
         display: flex;
