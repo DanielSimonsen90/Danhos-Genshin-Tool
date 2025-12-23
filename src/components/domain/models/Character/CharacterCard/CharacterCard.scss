@@ -30,18 +30,8 @@
   }
 
   .character-card__name {
-    margin: 0;
-    font-weight: bold;
     font-size: 1.25rem;
-
-    display: flex;
-    align-items: center;
-    gap: .5ch;
-
-    &__value {
-      @extend %text-ellipsis;
-    }
-
+    
     img {
       --max-size: 1.5rem;
       flex-shrink: 0;
@@ -92,12 +82,10 @@
   }
 
   .character-playstyle-wrapper {
-    // grid-area: playstyle;
     flex: 1 1 48%;
   }
 
   .character-signature-weapon {
-    // grid-area: signature-weapon;
     flex: 1 1 48%;
 
     display: grid;
@@ -161,6 +149,14 @@ a.character-card {
 
   &:hover {
     background-color: var(--element--muted);
+  }
+
+  > header {
+    display: flex;
+    justify-content: center;
+  }
+  .character-card__content {
+    justify-content: center;
   }
 
   .image-container {

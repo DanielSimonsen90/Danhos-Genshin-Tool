@@ -16,7 +16,6 @@ import { pascalCaseFromSnakeCase } from '@/common/functions/strings';
 import { DataStore, useDataStore } from '@/stores';
 import { useDebounceValue } from '@/hooks/useDebounceValue';
 
-// Import existing model cards
 import { CharacterCard } from '@/components/domain/models/Character';
 import { ArtifactCard } from '@/components/domain/models/Artifacts';
 import { DomainCard } from '@/components/domain/models/Domain';
@@ -34,13 +33,6 @@ const routes = [
   [ROUTES.endRoute('data_materials'), 'Materials'],
   [ROUTES.endRoute('data_mobs'), 'Mobs'],
 ].sort(([a], [b]) => a.localeCompare(b));
-
-type Order = `${'name' | 'rarity' | 'element'}-${'ascend' | 'descend'}`;
-
-const getModelElement = (model: ArtifactSet): Element | undefined => [
-  model.twoPieceSetDescription,
-  model.fourPieceSetDescription,
-].map(getElement).find(Boolean);
 
 export default function DataIndex() {
   const DataStore = useDataStore();
@@ -75,7 +67,7 @@ export default function DataIndex() {
   const displayGroups = useMemo(() => groups.map(([group, names]) => {
     const filteredNames = isSearching
       ? names.filter(name => name.toLowerCase().includes(debouncedSearch.toLowerCase()))
-      : names.slice(0, 9); // Show first 9 for default view
+      : names.slice(0, 15); // Show first 9 for default view
 
     return {
       group,

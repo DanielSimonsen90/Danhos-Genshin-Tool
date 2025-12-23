@@ -12,6 +12,7 @@ import { useDataStore } from "@/stores";
 import CharacterPlaystyle from "../CharacterPlaystyle";
 import { MaterialCard } from "../../Material";
 import { WeaponCard } from "../../Weapon";
+import Separator from "@/components/common/Separator";
 
 export interface Props extends BaseModelCardProps {
   character: Character;
@@ -65,6 +66,7 @@ export default function CharacterCard({
           <span className="image-container">
             <ElementImage element={character.element} />
           </span>
+          <Separator show={!props.wrapInLink} />
           <span className="image-container">
             <WeaponImage weaponType={character.weapon} />
           </span>

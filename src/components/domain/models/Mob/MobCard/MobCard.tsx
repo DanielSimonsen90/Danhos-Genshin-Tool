@@ -74,13 +74,16 @@ export default function MobCard({
       renderHeadingContent={() => (
         <>
           {Boss.isBoss(mob) && mob.resinCosts.length > 0 && showResin && (
-            <div className="mob-card__resin">
-              {mob.resinCosts.map(resin => <ResinIcon key={resin} cost={resin}
-                title={resin === ResinCost.Thirty
-                  ? 'Weekly bosses have a 3 time use per week where drops cost 30 resin. Once weekly limit is exceeded, weekly bosses not defeated will cost 60 resin.'
-                  : undefined}
-              />)}
-            </div>
+            <>
+              <div className="mob-card__resin">
+                {mob.resinCosts.map(resin => <ResinIcon key={resin} cost={resin}
+                  title={resin === ResinCost.Thirty
+                    ? 'Weekly bosses have a 3 time use per week where drops cost 30 resin. Once weekly limit is exceeded, weekly bosses not defeated will cost 60 resin.'
+                    : undefined}
+                />)}
+              </div>
+              <div className="separator" />
+            </>
           )}
           <span className="mob-card__type">{mobType.replace('-', ' ')}</span>
         </>

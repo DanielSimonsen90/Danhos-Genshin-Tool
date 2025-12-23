@@ -28,10 +28,9 @@
   &__name {
     display: flex;
     align-items: center;
-    gap: .25em;
+    gap: .5em;
     font-size: 1.25rem;
     margin-bottom: .5em;
-    width: 100%;
   }
 
   &__resin {
@@ -49,7 +48,7 @@
     color: var(--color); // Defined on .mob-card[data-type]
     padding: .25rem .5rem;
     border-radius: .25rem;
-    font-size: .8em;
+    font-size: .75rem;
     font-weight: normal;
     text-transform: capitalize;
     flex-shrink: 0;

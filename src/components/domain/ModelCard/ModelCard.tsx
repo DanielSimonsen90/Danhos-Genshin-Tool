@@ -1,6 +1,7 @@
 import { forwardRef, Fragment, useMemo } from "react";
 import { Link } from "react-router-dom";
 
+import Separator from '@/components/common/Separator';
 import { classNames } from "@/common/functions/strings";
 import { Model, ModelKeys } from "@/common/models";
 import RarityList from "../../common/media/icons/Rarity";
@@ -79,8 +80,18 @@ const ModelCard = forwardRef<HTMLDivElement, ModelCardProps>(({
               <span className={classNames('model-card__name-text', `${modelClassName}__name-text`)}>
                 {item.name}
               </span>
-              {HeadingContent && <HeadingContent />}
-              {showRarity && 'rarity' in item && <RarityList rarity={item.rarity} />}
+              {HeadingContent && (
+                <>
+                  <Separator show={!wrapInLink} />
+                  <HeadingContent />
+                </>
+              )}
+              {showRarity && 'rarity' in item && (
+                <>
+                  <Separator show={!wrapInLink} />
+                  <RarityList rarity={item.rarity} />
+                </>
+              )}
             </ModelNameContainer>
           </NameTag>
           {HeaderContent && <HeaderContent />}
