@@ -17,8 +17,8 @@ export default function Modal({ children, onClose, open, ...props }: ModalProps)
   };
 
   useEffect(() => {
-    if (open) (ref.current as any)?.showModal();
-    else (ref.current as any)?.close();
+    if (open) ref.current?.showModal();
+    else ref.current?.close();
   }, [open]);
 
   useEffect(() => {

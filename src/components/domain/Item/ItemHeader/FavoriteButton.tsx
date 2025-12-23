@@ -19,7 +19,7 @@ export default function FavoriteButton({ item }: Props) {
         else favorites.add(item);
       }}
     >
-      <FavoriteStar model={item} />
+      <FavoriteStar model={item} preventClick />
       <span>{favorites.isFavorite(item) ? 'Unfavorite' : 'Favorite'}</span>
     </button>
   )

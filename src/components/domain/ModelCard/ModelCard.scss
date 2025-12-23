@@ -18,23 +18,17 @@
 
   &__name {
     --margins: 0em;
+    display: flex;
+    align-items: center;
+    gap: .5em;
 
     .image-container {
       display: flex;
       align-items: center;
     }
-
-    >*:not(:last-child)::after {
-      content: '•';
-      display: inline;
-      color: var(--text-muted);
-      font-size: 1rem;
-      margin-left: .5em;
-    }
-
+    
     &-text {
-      display: flex;
-      align-items: center;
+      @extend %text-ellipsis;
       font-size: inherit;
     }
   }
@@ -69,10 +63,7 @@
     .model-card__name {
       display: flex;
       font-size: 1.25rem;
-
-      >*::after {
-        content: none;
-      }
+      gap: .25em;
 
       &-text {
         display: inline;

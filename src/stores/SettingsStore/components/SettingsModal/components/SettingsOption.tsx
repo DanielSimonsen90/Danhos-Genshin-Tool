@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Settings } from "@/common/types/app-types";
 
@@ -16,6 +16,11 @@ type Props<Setting extends keyof Settings> = {
 };
 export default function SettingsOption<Setting extends keyof Settings>(props: Props<Setting>) {
   const [value, _setValue] = useState(props.value);
+  
+  useEffect(() => {
+    _setValue(props.value);
+  }, [props.value]);
+  
   const setValue = (value: Settings[Setting]) => {
     _setValue(value);
     props.setValue?.(value);

@@ -5,12 +5,7 @@
   }
 
   &__name {
-    --margins: 0;
     font-size: 2rem;
-
-    display: flex;
-    gap: .5ch;
-    align-items: center;
   }
 
   .domain-list-section {
@@ -87,10 +82,12 @@ a.artifact-card {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 1.5em;
 
   >header {
     display: flex;
     justify-items: center;
+    gap: 0;
   }
 
   .artifact-card__name {

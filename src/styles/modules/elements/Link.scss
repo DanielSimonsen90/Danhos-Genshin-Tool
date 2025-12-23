@@ -1,4 +1,7 @@
+@use '../../partials' as *;
+
 a {
+  @extend %text-ellipsis;
   font-size: inherit;
   color: var(--text-link);
 

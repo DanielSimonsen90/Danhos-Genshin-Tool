@@ -13,7 +13,7 @@ export default function CharacterImage({ character }: Props) {
   else if (character.toLowerCase() === 'lumine') character = 'traveler';
   else if (character.toLowerCase() === 'aether') character = 'traveler_dendro';
 
-  return <Image className='character-image' src={ImageService.getCharacterImage(
+  return <Image key={character} className='character-image' src={ImageService.getCharacterImage(
     character.includes('(') ? character.split('(')[0].trim() : character
   )} alt={character} />;
 }

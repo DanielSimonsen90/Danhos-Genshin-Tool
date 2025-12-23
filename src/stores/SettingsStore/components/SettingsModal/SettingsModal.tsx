@@ -17,7 +17,8 @@ const debugLog = DebugLog(DebugLog.DEBUGS.settingsModal);
 
 export default function SettingsModal(props: ModalConsumerProps) {
   const SettingsStore = useSettingsStore();
-  const RegionStore = useRegionStore();
+  const regionData = useRegionStore(state => state.regionData);
+  const setRegionData = useRegionStore(state => state.setRegionData);
   const {
     appVersion,
     isCheckingForUpdates,
@@ -29,7 +30,7 @@ export default function SettingsModal(props: ModalConsumerProps) {
     delete data._form;
     debugLog('Settings update received', data);
     SettingsStore.updateAndSaveSettings(data);
-    RegionStore.setRegionData({
+    setRegionData({
       ...data,
       selected: true,
     });
@@ -44,12 +45,14 @@ export default function SettingsModal(props: ModalConsumerProps) {
     }
   };
 
+  const regionSettings = { region: regionData.region, traveler: regionData.traveler };
+
   return props.open ? (
     <Modal {...props} className="settings-modal">
       <h1>{DOMAIN_NAME} Settings</h1>
       <p>Here are list of settings, you can change to better your experience.</p>
       <form onSubmit={onSubmit}>
-        {Object.entries(Object.assign({}, SettingsStore.changeableSettings, RegionStore.regionSettings)).map(([key, value]) => (
+        {Object.entries(Object.assign({}, SettingsStore.changeableSettings, regionSettings)).map(([key, value]) => (
           <SettingsOption key={key} setting={key as keyof Settings} value={value as Settings[keyof Settings]} />
         ))}
         
