@@ -9,7 +9,7 @@ export const DEBUGS = {
   priorityList: true,
   searchComponent: false,
   settingsModal: false,
-  settingsContainer: false,
+  settingsContainer: true,
 
   // hooks
   useActionState: false,

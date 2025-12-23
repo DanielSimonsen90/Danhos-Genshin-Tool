@@ -4,7 +4,7 @@ import Material from "@/common/models/materials/Material";
 import CraftableMaterial from "@/common/models/materials/CraftableMaterial";
 import { classNames } from "@/common/functions/strings";
 
-import { useRegionStore, useSettingsStore } from "@/stores";
+import { useAccountStore, useSettingsStore } from "@/stores";
 import { Relations, Pagination, ObtainableDays } from "./components";
 import { Region } from "@/components/domain";
 import { Billet } from "@/common/models/materials/Billet";
@@ -28,7 +28,7 @@ export default function MaterialCard({
   showModelsUsing, showModelAcquired, showDetails, showRegion,
   ...props
 }: Props) {
-  const RegionStore = useRegionStore();
+  const RegionStore = useAccountStore();
   const view = useSettingsStore(ss => ss.getSetting('preferredTabs')?.craftableMaterial);
   const hasInteractedWithPagination = useRef(false);
 
@@ -65,7 +65,7 @@ export default function MaterialCard({
 
   if (!material || !currentMaterial) return null;
   return <ModelCard
-    key={`${RegionStore.currentRegion}-${currentMaterial.name}`}
+    key={`${RegionStore.worldRegion}-${currentMaterial.name}`}
     model="Material"
     item={currentMaterial}
     {...props}

@@ -1,4 +1,4 @@
-import { Rarity, GenshinRegion } from "@/common/types";
+import { Rarity, TeyvatRegion } from "@/common/types";
 import { ModelKeys } from "../Model";
 
 export abstract class Material {
@@ -8,7 +8,7 @@ export abstract class Material {
   constructor(
     public name: string,
     public description: string,
-    public region: GenshinRegion | undefined,
+    public region: TeyvatRegion | undefined,
     public rarity: Rarity
   ) {}
 

@@ -19,8 +19,8 @@ export type FavoritesCollection = {
   [Key in keyof FavoriteModels]: Array<FavoriteModels[Key]>;
 }
 
-export type RegionData = {
-  region: WorldRegion;
+export type AccountData = {
+  worldRegion: WorldRegion;
   traveler: Traveler | undefined;
   priorityLists?: PriorityLists;
   favorites?: FavoritesCollection;
@@ -28,8 +28,11 @@ export type RegionData = {
   selected: boolean;
 };
 
-export type RegionSettings = Pick<RegionData, 'traveler' | 'region'>;
-export type RegionContextType = Record<WorldRegion, RegionData | undefined>;
+export type AccountSettings = Pick<AccountData, 'traveler' | 'worldRegion'> & {
+  selectedAccount: string;
+  selectedAccountName: string;
+}
+export type AccountContextType = Record<string, AccountData | undefined>;
 
 export type FavoriteModel<T extends keyof FavoriteModels> = {
   add: (item: FavoriteModels[T]) => void;
@@ -38,28 +41,28 @@ export type FavoriteModel<T extends keyof FavoriteModels> = {
   getFavorites: () => Array<FavoriteModels[T]>;
 };
 
-export type FavoritesAPI = {
+export type FavoritesSlice = {
   getAllFavorites: () => FavoritesCollection;
   hasAnyFavorites: () => boolean;
   clearFavorites: () => void;
   getFavorite: <T extends keyof FavoriteModels>(type: T) => FavoriteModel<T>;
 };
 
-export type RegionStore = {
-  regions: RegionContextType;
-  currentRegion: WorldRegion;
-  regionData: RegionData & Record<'setRegionData', RegionStore['setRegionData']>;
+export type AccountStore = {
+  accounts: AccountContextType;
+  worldRegion: WorldRegion;
+  accountData: AccountData & Record<'setAccountData', AccountStore['setAccountData']>;
 
-  get regionSettings(): RegionSettings;
+  get regionSettings(): AccountSettings;
 
-  setRegionData: (update: Partial<RegionData> | ((state: RegionData) => RegionData)) => void;
-  setRegion: (region: WorldRegion) => void;
+  setAccountData: (update: Partial<AccountData> | ((state: AccountData) => AccountData)) => void;
+  setWorldRegion: (region: WorldRegion) => void;
   setTraveler: (traveler: Traveler) => void;
-  setState: (state: SetStateAction<RegionStore>) => void;
+  setState: (state: SetStateAction<AccountStore>) => void;
 
-  getGenshinServerDay(region: WorldRegion): number;
-  getGenshinServerDayName(region: WorldRegion): string;
+  getGenshinServerDay(worldRegion: WorldRegion): number;
+  getGenshinServerDayName(worldRegion: WorldRegion): string;
 
-  favorites: FavoritesAPI;
-  storageService: StorageReturn<RegionContextType>;
+  favorites: FavoritesSlice;
+  storageService: StorageReturn<AccountContextType>;
 };

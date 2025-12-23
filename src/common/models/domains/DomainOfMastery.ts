@@ -1,4 +1,4 @@
-import { GenshinRegion, ResinCost } from "@/common/types/genshin";
+import { TeyvatRegion, ResinCost } from "@/common/types/genshin";
 import { Domain } from "./Domain";
 import { TalentAscensionMaterial } from "../materials/AscensionMaterial";
 
@@ -13,7 +13,7 @@ export class DomainOfMastery extends Domain<TalentAscensionMaterial> {
     public name: string,
     public description: string,
     public leyLineDisorder: Record<number, string>,
-    public region: GenshinRegion,
+    public region: TeyvatRegion,
   ) {
     super(name, description, leyLineDisorder, ResinCost.Twenty, region);
   }

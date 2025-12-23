@@ -1,5 +1,5 @@
 import { Model } from "@/common/models";
-import { useFavorites, getModelType } from "@/stores/RegionStore";
+import { useFavorites, getModelType } from "@/stores/AccountStore";
 import Star from "./Star";
 
 type Props = {

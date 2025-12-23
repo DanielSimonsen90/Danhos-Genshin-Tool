@@ -7,18 +7,20 @@ import { useActionState } from "@/hooks/useActionState";
 import { useUpdateManager } from "@/hooks/useUpdateManager";
 
 import { useSettingsStore } from "@/stores/SettingsStore";
-import { useRegionStore } from '@/stores/RegionStore';
+import { useAccountStore } from '@/stores/AccountStore';
 
 import SettingsOption from "./components/SettingsOption";
 import Collapsible from '@/components/common/Collapsible';
 import FavoritesOverview from './components/FavoritesOverview';
+import { useMemo } from 'react';
 
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsModal);
 
 export default function SettingsModal(props: ModalConsumerProps) {
   const SettingsStore = useSettingsStore();
-  const regionData = useRegionStore(state => state.regionData);
-  const setRegionData = useRegionStore(state => state.setRegionData);
+  const accounts = useAccountStore(state => state.accounts);
+  const accountData = useAccountStore(state => state.accountData);
+  const setAccountData = useAccountStore(state => state.setAccountData);
   const {
     appVersion,
     isCheckingForUpdates,
@@ -26,11 +28,12 @@ export default function SettingsModal(props: ModalConsumerProps) {
     isElectronApp
   } = useUpdateManager();
 
+  const accountNames = useMemo(() => Object.keys(accounts), [accounts]);
   const [submitting, onSubmit] = useActionState<Settings>(data => {
     delete data._form;
     debugLog('Settings update received', data);
     SettingsStore.updateAndSaveSettings(data);
-    setRegionData({
+    setAccountData({
       ...data,
       selected: true,
     });
@@ -45,7 +48,7 @@ export default function SettingsModal(props: ModalConsumerProps) {
     }
   };
 
-  const regionSettings = { region: regionData.region, traveler: regionData.traveler };
+  const regionSettings = { region: accountData.worldRegion, traveler: accountData.traveler };
 
   return props.open ? (
     <Modal {...props} className="settings-modal">
@@ -53,7 +56,11 @@ export default function SettingsModal(props: ModalConsumerProps) {
       <p>Here are list of settings, you can change to better your experience.</p>
       <form onSubmit={onSubmit}>
         {Object.entries(Object.assign({}, SettingsStore.changeableSettings, regionSettings)).map(([key, value]) => (
-          <SettingsOption key={key} setting={key as keyof Settings} value={value as Settings[keyof Settings]} />
+          <SettingsOption key={key} 
+            setting={key as keyof Settings} 
+            value={value as Settings[keyof Settings]} 
+            accountNames={accountNames}
+          />
         ))}
         
         <Collapsible title="Manage Favorites">

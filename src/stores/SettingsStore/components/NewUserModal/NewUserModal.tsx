@@ -1,7 +1,7 @@
 import { DebugLog } from "@/common/functions/dev";
 import Modal from "@/components/common/Modal";
 import { useActionState } from "@/hooks/useActionState";
-import { useRegionStore, RegionSettings, DEFAULT_REGION_DATA } from "@/stores/RegionStore";
+import { useAccountStore, AccountSettings, DEFAULT_ACCOUNT_DATA } from "@/stores/AccountStore";
 
 import { useSettingsStore } from "../../SettingsStore";
 import SettingsOption from "../SettingsModal/components/SettingsOption";
@@ -9,12 +9,12 @@ import SettingsOption from "../SettingsModal/components/SettingsOption";
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsStore);
 
 type NewUserData = (
-  & Pick<RegionSettings, 'traveler' | 'region'>
+  & Pick<AccountSettings, 'traveler' | 'region'>
 );
 
 export const NewUserModal = () => {
   const SettingsStore = useSettingsStore();
-  const RegionStore = useRegionStore();
+  const RegionStore = useAccountStore();
   const newUser = SettingsStore.getSetting('newUser');
   const [submitting, onSubmit] = useActionState<NewUserData>(data => {
     delete data._form;
@@ -38,14 +38,14 @@ export const NewUserModal = () => {
   }
 
   return newUser ? (
-    <Modal className="new-user-modal" open={newUser} onClose={() => !submitting && _onSubmit(DEFAULT_REGION_DATA)}>
+    <Modal className="new-user-modal" open={newUser} onClose={() => !submitting && _onSubmit(DEFAULT_ACCOUNT_DATA)}>
       <form onSubmit={onSubmit}>
         <h1>You wake up from a deep sleep on a beach in Monstadt...</h1>
         <div className="intro-sentence">
           <span>You wake up as </span>
-          <SettingsOption setting="traveler" value={DEFAULT_REGION_DATA['traveler']} />
+          <SettingsOption setting="traveler" value={DEFAULT_ACCOUNT_DATA['traveler']} />
           <span> in </span>
-          <SettingsOption setting="region" value={DEFAULT_REGION_DATA['region']} />
+          <SettingsOption setting="region" value={DEFAULT_ACCOUNT_DATA['worldRegion']} />
         </div>
         <input type="submit" value="Finish" disabled={submitting} />
       </form>

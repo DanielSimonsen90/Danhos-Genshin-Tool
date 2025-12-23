@@ -5,7 +5,7 @@ import {
   SearchableMobList, SearchableWeaponList
 } from "@/components/domain/SearchableList";
 import { useDataStore } from "@/stores/DataStore";
-import { FavoritesCollection, useFavorites } from "@/stores/RegionStore";
+import { FavoritesCollection, useFavorites } from "@/stores/AccountStore";
 
 export default function FavoritesOverview() {
   const FavoriteStore = useFavorites();

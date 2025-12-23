@@ -3,7 +3,7 @@ import {
   Mob, Material, Weapon,
   Model
 } from "../../common/models";
-import { FavoriteModels } from "./RegionStoreTypes";
+import { FavoriteModels } from "./AccountStoreTypes";
 
 // Type-safe mapping of model classes to their favorite store keys
 const MODEL_TYPE_CHECKERS: Array<{

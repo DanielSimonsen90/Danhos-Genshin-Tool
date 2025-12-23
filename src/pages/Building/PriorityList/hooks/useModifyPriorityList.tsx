@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 
 import { getDefaultTiers } from "@/components/common/Tierlist";
-import { useDataStore, useRegionData, RegionData } from "@/stores";
+import { useDataStore, useAccountData, AccountData } from "@/stores";
 
 import { ModifyPriorityListModal, ModifyPriorityListModalParentProps as ModifyModalProps } from "../components";
 import { ABOUT_TO_REPLACE_EXISTING } from "../PriorityListConstants";
@@ -14,7 +14,7 @@ type UseModifyPriorityListProps = {
 };
 export function useModifyPriorityList({ crud, priorityLists, setPriorityLists }: UseModifyPriorityListProps) {
   const DataStore = useDataStore();
-  const { setRegionData } = useRegionData();
+  const { setRegionData } = useAccountData();
   const [modifyList, setModifyList] = useState<ModifyPriorityListPayload | undefined>(undefined);
   const [open, setOpen] = useState(false);
 
@@ -39,7 +39,7 @@ export function useModifyPriorityList({ crud, priorityLists, setPriorityLists }:
           ...priorityLists,
           [title]: priorityList
         }
-      }) as RegionData;
+      }) as AccountData;
       if (shouldDeleteId) delete update.priorityLists?.[id];
       return update;
     });

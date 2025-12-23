@@ -1,7 +1,7 @@
-import { Rarity, GenshinRegion } from "@/common/types";
+import { Rarity, TeyvatRegion } from "@/common/types";
 import { DomainOfForgery, DomainOfMastery } from "../domains";
 import CraftableMaterial from "./CraftableMaterial";
-import { RegionStore, WorldRegion } from "@/stores/RegionStore/RegionStoreTypes";
+import { AccountStore, WorldRegion } from "@/stores/AccountStore/AccountStoreTypes";
 
 type ObtainableDays = 'Monday/Thursday' | 'Tuesday/Friday' | 'Wednesday/Saturday';
 
@@ -13,7 +13,7 @@ class AscensionMaterial extends CraftableMaterial {
   protected constructor(
     name: string,
     description: string,
-    region: GenshinRegion,
+    region: TeyvatRegion,
     rarity: Rarity,
     public domain: DomainOfMastery | DomainOfForgery,
     public obtainableDays: ObtainableDays
@@ -21,11 +21,11 @@ class AscensionMaterial extends CraftableMaterial {
     super(name, description, region, rarity);
   }
 
-  public isObtainableToday(RegionStore: RegionStore): boolean {
+  public isObtainableToday(RegionStore: AccountStore): boolean {
     return this.getDataTodayAttr(RegionStore);
   }  
-  public getDataTodayAttr(RegionStore: RegionStore, obtainableDay?: string): boolean {
-    const region = RegionStore.currentRegion;
+  public getDataTodayAttr(RegionStore: AccountStore, obtainableDay?: string): boolean {
+    const region = RegionStore.worldRegion;
     
     // Get the current day based on Genshin Impact server time (4am server time reset)
     const today = RegionStore.getGenshinServerDay(region);
@@ -48,7 +48,7 @@ export class TalentAscensionMaterial extends AscensionMaterial {
     return obj instanceof TalentAscensionMaterial;
   }
 
-  public static create(name: string, description: string, region: GenshinRegion, domain: DomainOfMastery, obtainableDays: ObtainableDays) {
+  public static create(name: string, description: string, region: TeyvatRegion, domain: DomainOfMastery, obtainableDays: ObtainableDays) {
     return super.createCraftableMaterial(
       name,
       {
@@ -76,7 +76,7 @@ export class WeaponAscensionMaterial extends AscensionMaterial {
   public static create<TRarity extends Rarity>(
     names: Record<TRarity, string>,
     description: Record<TRarity, string>,
-    region: GenshinRegion,
+    region: TeyvatRegion,
     domain: DomainOfForgery,
     obtainableDays: ObtainableDays
   ) {

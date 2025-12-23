@@ -1,4 +1,4 @@
-import { GenshinRegion, ResinCost } from "@/common/types";
+import { TeyvatRegion, ResinCost } from "@/common/types";
 import Material from "../materials/Material";
 import Mob from "./Mob";
 
@@ -10,7 +10,7 @@ export abstract class Boss extends Mob {
   constructor(
     name: string,
     description: string,
-    public region: GenshinRegion,
+    public region: TeyvatRegion,
     drops: Array<Material>,
     resinCost?: ResinCost,
   ) {
@@ -31,7 +31,7 @@ export class WorldBoss extends Boss {
   constructor(
     name: string,
     description: string,
-    region: GenshinRegion,
+    region: TeyvatRegion,
     drops: Array<Material>,
   ) {
     super(name, description, region, drops, ResinCost.Forty);
@@ -45,7 +45,7 @@ export class WeeklyBoss extends Boss {
   constructor(
     name: string,
     description: string,
-    region: GenshinRegion,
+    region: TeyvatRegion,
     drops: Array<Material>,
   ) {
     super(name, description, region, drops);
