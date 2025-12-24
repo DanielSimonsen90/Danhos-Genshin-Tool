@@ -26,7 +26,7 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
 
       return acc;
     }, {} as AccountContextType);
-    storageService.set(legacyStorageService.get()!);
+    storageService.set(update);
     legacyStorageService.remove();
   }
 
