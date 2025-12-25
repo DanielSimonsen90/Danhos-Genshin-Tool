@@ -30,7 +30,7 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
     legacyStorageService.remove();
   }
 
-  const debugLog = DebugLog(DebugLog.DEBUGS.regionStore);
+  const debugLog = DebugLog(DebugLog.DEBUGS.accountStore);
 
   // Get and filter accounts data to remove any invalid properties
   const context = storageService.get() ?? { [DEFAULT_ACCOUNT_NAME]: DEFAULT_ACCOUNT_DATA } as AccountContextType;

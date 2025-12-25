@@ -15,23 +15,23 @@ type Props = {
 
 export default function FarmableTodaySection(props: Props) {
   const DataStore = useDataStore();
-  const RegionStore = useAccountStore();
+  const AccountStore = useAccountStore();
 
-  const title = props.title ?? `These characters & weapons are farmable today (${RegionStore.getGenshinServerDayName(RegionStore.worldRegion)})`;
-  const day = props.day ?? RegionStore.getGenshinServerDayName(RegionStore.worldRegion);
+  const title = props.title ?? `These characters & weapons are farmable today (${AccountStore.getGenshinServerDayName(AccountStore.worldRegion)})`;
+  const day = props.day ?? AccountStore.getGenshinServerDayName(AccountStore.worldRegion);
 
   const farmableCharacters = useMemo(() => DataStore.Characters.filter(character =>
     Object.values(character.ascension)
       .some(material => AscensionMaterial.isAscensionMaterial(material)
         && material.isObtainableOnDay(day)
       )
-  ), [DataStore.Characters, RegionStore.worldRegion]);
+  ), [DataStore.Characters, AccountStore.worldRegion]);
   const farmableWeapons = useMemo(() => DataStore.Weapons.filter(weapon =>
     weapon.ascensionMaterials.some(material =>
       AscensionMaterial.isAscensionMaterial(material)
       && material.isObtainableOnDay(day)
     )
-  ), [DataStore.Weapons, RegionStore.worldRegion]);
+  ), [DataStore.Weapons, AccountStore.worldRegion]);
 
   return (
     <section className="farmable-today-section">
@@ -39,10 +39,10 @@ export default function FarmableTodaySection(props: Props) {
       {modelKeys.map(modelKey => (
         <Collapsible key={modelKey} className='farmable-model-collapsible' title={plural(2, modelKey)} defaultOpen>
           {
-            modelKey === 'Character' ? <SearchableCharacterList key={`${RegionStore.worldRegion}-farmable-characters-${day}`} items={farmableCharacters} cardProps={{
+            modelKey === 'Character' ? <SearchableCharacterList key={`${AccountStore.worldRegion}-farmable-characters-${day}`} items={farmableCharacters} cardProps={{
               wrapInLink: true,
             }} />
-              : modelKey === 'Weapon' ? <SearchableWeaponList key={`${RegionStore.worldRegion}-farmable-weapons-${day}`} items={farmableWeapons} cardProps={{
+              : modelKey === 'Weapon' ? <SearchableWeaponList key={`${AccountStore.worldRegion}-farmable-weapons-${day}`} items={farmableWeapons} cardProps={{
                 wrapInLink: true,
               }} />
                 : null

@@ -14,7 +14,7 @@ type UseModifyPriorityListProps = {
 };
 export function useModifyPriorityList({ crud, priorityLists, setPriorityLists }: UseModifyPriorityListProps) {
   const DataStore = useDataStore();
-  const { setRegionData } = useAccountData();
+  const { setAccountData } = useAccountData();
   const [modifyList, setModifyList] = useState<ModifyPriorityListPayload | undefined>(undefined);
   const [open, setOpen] = useState(false);
 
@@ -32,7 +32,7 @@ export function useModifyPriorityList({ crud, priorityLists, setPriorityLists }:
     const shouldReplaceExisting = isReplacingExisting && confirm(ABOUT_TO_REPLACE_EXISTING);
     if (isReplacingExisting && !shouldReplaceExisting) return;
 
-    setRegionData(current => {
+    setAccountData(current => {
       const update = ({
         ...current,
         priorityLists: {

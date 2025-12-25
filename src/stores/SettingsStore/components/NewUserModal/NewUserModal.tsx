@@ -9,12 +9,12 @@ import SettingsOption from "../SettingsModal/components/SettingsOption";
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsStore);
 
 type NewUserData = (
-  & Pick<AccountSettings, 'traveler' | 'region'>
+  & Pick<AccountSettings, 'traveler' | 'worldRegion'>
 );
 
 export const NewUserModal = () => {
   const SettingsStore = useSettingsStore();
-  const RegionStore = useAccountStore();
+  const AccountStore = useAccountStore();
   const newUser = SettingsStore.getSetting('newUser');
   const [submitting, onSubmit] = useActionState<NewUserData>(data => {
     delete data._form;
@@ -29,7 +29,7 @@ export const NewUserModal = () => {
   function _onSubmit(data: NewUserData) {
     debugLog('NewUserModal submitted', data);
 
-    RegionStore.setRegionData({ ...data, selected: true });
+    AccountStore.setAccountData({ ...data, selected: true });
     SettingsStore.updateAndSaveSettings(state => {
       const update = { ...state };
       delete update.newUser;
@@ -43,9 +43,9 @@ export const NewUserModal = () => {
         <h1>You wake up from a deep sleep on a beach in Monstadt...</h1>
         <div className="intro-sentence">
           <span>You wake up as </span>
-          <SettingsOption setting="traveler" value={DEFAULT_ACCOUNT_DATA['traveler']} />
+          <SettingsOption setting="traveler" value={DEFAULT_ACCOUNT_DATA['traveler']} accountNames={undefined} />
           <span> in </span>
-          <SettingsOption setting="region" value={DEFAULT_ACCOUNT_DATA['worldRegion']} />
+          <SettingsOption setting="worldRegion" value={DEFAULT_ACCOUNT_DATA['worldRegion']} />
         </div>
         <input type="submit" value="Finish" disabled={submitting} />
       </form>

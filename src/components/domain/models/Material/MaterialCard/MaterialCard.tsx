@@ -28,7 +28,7 @@ export default function MaterialCard({
   showModelsUsing, showModelAcquired, showDetails, showRegion,
   ...props
 }: Props) {
-  const RegionStore = useAccountStore();
+  const AccountStore = useAccountStore();
   const view = useSettingsStore(ss => ss.getSetting('preferredTabs')?.craftableMaterial);
   const hasInteractedWithPagination = useRef(false);
 
@@ -65,13 +65,13 @@ export default function MaterialCard({
 
   if (!material || !currentMaterial) return null;
   return <ModelCard
-    key={`${RegionStore.worldRegion}-${currentMaterial.name}`}
+    key={`${AccountStore.worldRegion}-${currentMaterial.name}`}
     model="Material"
     item={currentMaterial}
     {...props}
     data-show-details={showDetails}
     data-allow-pagination={allowCycle && (craftingTree?.length ?? 0) > 1}
-    {...{ 'data-today': AscensionMaterial.isAscensionMaterial(material) && material.isObtainableToday(RegionStore) }}
+    {...{ 'data-today': AscensionMaterial.isAscensionMaterial(material) && material.isObtainableToday(AccountStore) }}
 
     renderImage={() => <MaterialImage material={currentMaterial.name} />}
     renderHeaderContent={(() => (

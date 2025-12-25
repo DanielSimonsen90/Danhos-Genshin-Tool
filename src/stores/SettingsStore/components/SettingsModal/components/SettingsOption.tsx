@@ -13,8 +13,8 @@ type Props<Setting extends keyof Settings> = {
   hideLabel?: boolean;
   value: Settings[Setting];
   setValue?: (value: Settings[Setting]) => void;
-  accountNames: Setting extends 'selectedAccount' ? Array<string> : undefined;
-}
+  // accountNames: Setting extends 'selectedAccount' ? Array<string> : undefined;
+} & (Setting extends 'selectedAccount' ? { accountNames: Array<string> } : { accountNames?: undefined });
 export default function SettingsOption<Setting extends keyof Settings>(props: Props<Setting>) {
   const [value, setValue] = useState(props.value);
   

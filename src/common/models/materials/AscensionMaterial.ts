@@ -21,14 +21,14 @@ class AscensionMaterial extends CraftableMaterial {
     super(name, description, region, rarity);
   }
 
-  public isObtainableToday(RegionStore: AccountStore): boolean {
-    return this.getDataTodayAttr(RegionStore);
+  public isObtainableToday(AccountStore: AccountStore): boolean {
+    return this.getDataTodayAttr(AccountStore);
   }  
-  public getDataTodayAttr(RegionStore: AccountStore, obtainableDay?: string): boolean {
-    const region = RegionStore.worldRegion;
+  public getDataTodayAttr(AccountStore: AccountStore, obtainableDay?: string): boolean {
+    const region = AccountStore.worldRegion;
     
     // Get the current day based on Genshin Impact server time (4am server time reset)
-    const today = RegionStore.getGenshinServerDay(region);
+    const today = AccountStore.getGenshinServerDay(region);
     const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const todayName = dayNames[today];
     if (obtainableDay && obtainableDay !== todayName) return false;

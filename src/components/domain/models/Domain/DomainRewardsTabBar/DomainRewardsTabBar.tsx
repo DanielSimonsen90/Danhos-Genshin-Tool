@@ -33,7 +33,7 @@ export default function DomainRewardsTabBar<TDomainType extends DomainType>({ re
 
 function AscensionMaterialTabBar({ rewards, domainType }: Props<'Forgery' | 'Mastery'>) {
   const DataStore = useDataStore();
-  const RegionStore = useAccountStore();
+  const AccountStore = useAccountStore();
 
   const getItems = useCallback((name: string) => (
     domainType === 'Mastery' ? DataStore.getCharactersUsingMaterial(name)
@@ -42,7 +42,7 @@ function AscensionMaterialTabBar({ rewards, domainType }: Props<'Forgery' | 'Mas
   ), [DataStore]);
 
   return <TabBar
-    key={`${RegionStore.worldRegion}-${domainType}`}
+    key={`${AccountStore.worldRegion}-${domainType}`}
     className="domain-rewards-tab-bar"
     tabs={create => rewards.map(reward => create(
       reward.name,
@@ -58,7 +58,7 @@ function AscensionMaterialTabBar({ rewards, domainType }: Props<'Forgery' | 'Mas
         )}
       />
     ))}
-    defaultTab={rewards.find(reward => reward.isObtainableToday(RegionStore))?.name}
+    defaultTab={rewards.find(reward => reward.isObtainableToday(AccountStore))?.name}
   />;
 }
 
