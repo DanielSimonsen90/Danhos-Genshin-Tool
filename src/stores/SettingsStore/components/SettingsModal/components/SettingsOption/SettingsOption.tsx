@@ -109,7 +109,7 @@ function InputType<Setting extends keyof Settings>({ setting, value, onChange, .
     );
     case 'selectedAccount': return (
       <Select
-        name="selectedAccountName"
+        name={setting}
         options={props.accountNames ?? []}
         value={value as Settings['selectedAccount']}
         onChange={value => onChange(value as Settings[Setting])}
