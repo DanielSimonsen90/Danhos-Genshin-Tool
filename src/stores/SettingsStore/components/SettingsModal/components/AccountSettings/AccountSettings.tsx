@@ -28,7 +28,8 @@ function AccountSettings() {
   const worldRegion = useAccountStore(state => state.accountData.worldRegion);
   const setSelectedAccount = useAccountStore(state => state.setSelectedAccount);
   const setTraveler = useAccountStore(state => state.setTraveler);
-  
+  const setWorldRegion = useAccountStore(state => state.setWorldRegion);
+
   // Memoize accountNames so it only changes when accounts actually change
   const accountNames = useMemo(() => Object.keys(accounts), [accounts]);
   
@@ -54,7 +55,7 @@ function AccountSettings() {
         </div>
       </header>
       <div className="sub-header">
-        <div className="input-group">
+        <div className="input-group setting-traveler">
           <CharacterImage character={traveler ?? DEFAULT_ACCOUNT_DATA.traveler!} />
           <Select name="traveler"
             options={TRAVELER_OPTIONS}
@@ -63,7 +64,7 @@ function AccountSettings() {
             onChange={setTraveler}
           />
         </div>
-        <div className="input-group">
+        <div className="input-group setting-selectedAccountName">
           <label>Account Name</label>
           <input type="text"
             name="selectedAccountName"
@@ -72,12 +73,13 @@ function AccountSettings() {
           />
         </div>
       </div>
-      <div className="world-region input-group">
+      <div className="input-group setting-worldRegion">
         <label>World Region</label>
         <Select name="worldRegion"
           options={WORLD_REGIONS}
           displayValue={displayWorldRegion}
-          defaultValue={worldRegion}
+          value={worldRegion}
+          onChange={setWorldRegion}
         />
       </div>
     </section>

@@ -5,7 +5,11 @@
     margin: .5rem 0 1rem;
   }
 
-  .select {
-    min-width: 15ch;
+  .setting-traveler {
+    gap: 1rem;
+    
+    .character-image {
+      --size: 7.5ch;
+    }
   }
 }
