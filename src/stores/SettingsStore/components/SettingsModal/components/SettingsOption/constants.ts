@@ -25,7 +25,7 @@ export const descriptions: Record<keyof Settings, string> = {
   preferredTabs: `Prefer these tabs when using specified TabBar components.`,
 
   // Region settings
-  accountCrud: `Create more accounts or delete the currrent one.`,
+  accountCrud: `Create more accounts or delete the current one.`,
   selectedAccount: `The selected in account.`,
   selectedAccountName: `The name of the selected account.`,
   traveler: `The preferred Traveler character to use in images and references.`,
