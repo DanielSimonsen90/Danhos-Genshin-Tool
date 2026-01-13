@@ -15,6 +15,7 @@ export const DEFAULT_FAVORITES: FavoritesCollection = {
 };
 
 export const DEFAULT_ACCOUNT_DATA: AccountData = {
+  id: '',
   worldRegion: DEFAULT_WORLD_REGION,
   selected: true,
   traveler: 'aether',

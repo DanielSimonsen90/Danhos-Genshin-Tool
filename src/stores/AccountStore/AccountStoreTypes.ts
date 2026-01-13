@@ -20,6 +20,7 @@ export type FavoritesCollection = {
 }
 
 export type AccountData = {
+  id: string;
   worldRegion: WorldRegion;
   traveler: Traveler | undefined;
   priorityLists?: PriorityLists;
@@ -61,7 +62,7 @@ export type AccountStore = {
   get regionSettings(): AccountSettings;
 
   setAccountName: (name: string) => void;
-  setAccountData: (update: Partial<AccountData> | ((state: AccountData) => AccountData)) => void;
+  setAccountData: (update: Partial<AccountData> | ((state: AccountData) => AccountData), accountId?: string) => void;
   setWorldRegion: (region: WorldRegion) => void;
   setTraveler: (traveler: Traveler) => void;
   setSelectedAccount: (accountName: string) => void;

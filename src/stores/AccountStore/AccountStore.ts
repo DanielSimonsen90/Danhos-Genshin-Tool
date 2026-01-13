@@ -32,8 +32,13 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
 
   const debugLog = DebugLog(DebugLog.DEBUGS.accountStore);
 
+  // Helper function to generate unique IDs
+  const generateAccountId = (): string => {
+    return `account_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  };
+
   // Get and filter accounts data to remove any invalid properties
-  const context = storageService.get() ?? { [DEFAULT_ACCOUNT_NAME]: DEFAULT_ACCOUNT_DATA } as AccountContextType;
+  const context = storageService.get() ?? { [DEFAULT_ACCOUNT_NAME]: { ...DEFAULT_ACCOUNT_DATA, id: generateAccountId() } } as AccountContextType;
 
   // Define valid AccountData properties
   const validAccountDataKeys = Object.keys(DEFAULT_ACCOUNT_DATA);
@@ -44,10 +49,17 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
       const invalidKeys = Object.keys(accountData).filter(key => !validAccountDataKeys.includes(key));
       if (invalidKeys.length > 0) debugLog(`Filtering out invalid properties from account ${accountKey}:`, invalidKeys);
 
-      acc[accountKey as keyof AccountContextType] = Object.keys(accountData).reduce((dataAcc, key) => {
+      const filteredData = Object.keys(accountData).reduce((dataAcc, key) => {
         if (validAccountDataKeys.includes(key)) (dataAcc as any)[key] = (accountData as any)[key];
         return dataAcc;
       }, {} as AccountData);
+
+      // Ensure account has an id, generate one if missing
+      if (!filteredData.id) {
+        filteredData.id = generateAccountId();
+      }
+
+      acc[accountKey as keyof AccountContextType] = filteredData;
     }
 
     return acc;
@@ -66,7 +78,7 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
 
     return Object.assign({}, dataWithFavorites, { setAccountData });
   };
-  const setAccountData = (update: Partial<AccountData> | ((state: AccountData) => AccountData)) => {
+  const setAccountData = (update: Partial<AccountData> | ((state: AccountData) => AccountData), accountId?: string) => {
     const { accounts } = getState();
     const resolvedAccountDataUpate = typeof update === 'function'
       ? update(getState().accountData)
@@ -89,17 +101,25 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
       debugLog('Filtered update:', filteredUpdate);
     }
 
-    // Define the next selected accountData
-    const currentAccountName = getSelectedAccountName(accounts);
+    // Determine which account to update: by id if provided, otherwise use selected account
+    const targetAccountId = accountId ?? getState().accountData.id;
+    const targetAccountName = Object.keys(accounts).find(
+      key => accounts[key as keyof AccountContextType]?.id === targetAccountId
+    ) as keyof AccountContextType;
+
+    if (!targetAccountName) {
+      throw new Error(`Account with id ${targetAccountId} not found`);
+    }
+
     const next = Object.keys(accounts).reduce((acc, _accountKey) => {
       const accountKey = _accountKey as keyof AccountContextType;
       const storedData: AccountData = accounts[accountKey] ?? Object.assign(
         ObjectUtils.exclude(DEFAULT_ACCOUNT_DATA, 'selected'),
-        { selected: false, favorites: DEFAULT_FAVORITES } as AccountData,
+        { id: generateAccountId(), selected: false, favorites: DEFAULT_FAVORITES } as AccountData,
       );
 
-      // Update the currently selected account with the new data
-      if (accountKey === currentAccountName) {
+      // Update the target account with the new data
+      if (accountKey === targetAccountName) {
         acc[accountKey] = {
           ...storedData,
           ...filteredUpdate,
@@ -111,9 +131,10 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
       return acc;
     }, {} as AccountContextType);
 
-    // If no region is selected, create the default region
-    if (Object.keys(next).length === 0) next[DEFAULT_WORLD_REGION] = {
+    // If no account exists, create the default account
+    if (Object.keys(next).length === 0) next[DEFAULT_ACCOUNT_NAME] = {
       ...DEFAULT_ACCOUNT_DATA,
+      id: generateAccountId(),
       ...filteredUpdate,
       selected: true,
     };
@@ -135,9 +156,10 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
     if (!currentAccountName) throw new Error('No current account selected');
 
     const data = getAccountData(accounts);
-    accounts[name] = { ...data };
+    accounts[name] = { ...data, id: data.id || generateAccountId() };
     delete accounts[currentAccountName];
 
+    storageService.set(accounts);
     setState({ accounts });
   }
   const setWorldRegion = (worldRegion: WorldRegion) => setAccountData({ worldRegion });
