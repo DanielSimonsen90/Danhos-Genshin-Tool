@@ -5,7 +5,7 @@ import { CharacterImage, ArtifactImage, DomainImage, MaterialImage, MobImage, We
 import Star, { FavoriteStar } from "@/components/common/media/icons/Star";
 import Tierlist, { Entry, Tier } from "@/components/common/Tierlist";
 
-import { FavoriteModels, useDataStore, useFavorites, useRegionData } from "@/stores";
+import { FavoriteModels, useDataStore, useFavorites, useAccountData } from "@/stores";
 
 import type { PriorityLists, PriorityList } from "../PriorityListTypes";
 import { getDefaultPriorityLists, onUnsortedSearch } from "../PriorityListFunctions";
@@ -20,7 +20,7 @@ type UsePriorityListTabsProps = {
 export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdateModal }: UsePriorityListTabsProps) {
   const DataStore = useDataStore();
   const FavoriteStore = useFavorites();
-  const { region } = useRegionData();
+  const { worldRegion: region } = useAccountData();
   const navigate = useNavigate();
 
   const onTierChange = useCallback((tierlistTitle: string) => (tiers: Array<Tier<string>>) => {

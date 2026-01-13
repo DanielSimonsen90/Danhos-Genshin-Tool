@@ -1,0 +1,132 @@
+import { Select } from "@/components/common/FormItems";
+import SettingsOption from "../SettingsOption";
+import { DEFAULT_ACCOUNT_DATA, Traveler, useAccountStore, WORLD_REGIONS } from "@/stores/AccountStore";
+import { CharacterImage } from "@/components/common/media/Images";
+import { DEFAULT_SETTINGS } from "@/stores/SettingsStore/SettingsStoreConstants";
+import { useCallback, useMemo, memo } from "react";
+import { useStateReset } from "@/hooks/useStateReset";
+
+const TRAVELER_OPTIONS: Traveler[] = ['lumine', 'aether'];
+
+const displayTravelerValue = (value: Traveler) => value.charAt(0).toUpperCase() + value.slice(1);
+
+const displayWorldRegion = (region: string) => {
+  switch (region) {
+    case 'Europe': return `🌍 ${region}`;
+    case 'North America': return `🌎 ${region}`;
+    case 'Asia': return `🌏 ${region}`;
+    case 'TW, HK, MO': return `🌏 ${region}`;
+    default: return `🌐 ${region}`;
+  }
+};
+
+function AccountSettings() {
+  // Subscribe to individual values separately to get stable references
+  const accounts = useAccountStore(state => state.accounts);
+  const selectedAccount = useAccountStore(state => state.selectedAccountName);
+  const traveler = useAccountStore(state => state.accountData.traveler);
+  const worldRegion = useAccountStore(state => state.accountData.worldRegion);
+
+  const setSelectedAccount = useAccountStore(state => state.setSelectedAccount);
+  const setTraveler = useAccountStore(state => state.setTraveler);
+  const setWorldRegion = useAccountStore(state => state.setWorldRegion);
+  const renameAccount = useAccountStore(state => state.setAccountName);
+  const addAccount = useAccountStore(state => state.addAccount);
+  const deleteAccount = useAccountStore(state => state.deleteAccount);
+
+  // Memoize accountNames so it only changes when accounts actually change
+  const accountNames = useMemo(() => Object.keys(accounts), [accounts]);
+  
+  const [accountName, setAccountName, resetAccountName] = useStateReset(selectedAccount || '');
+
+  // Memoize callbacks to prevent child re-renders
+  const handleAccountChange = useCallback((newAccountName: string) => {
+    setSelectedAccount(newAccountName);
+    resetAccountName(newAccountName);
+  }, [setSelectedAccount, resetAccountName]);
+
+  const handleAccountNameChange = useCallback((newName: string) => {
+    if (newName && newName.trim() !== '' && newName !== selectedAccount) {
+      try {
+        renameAccount(newName);
+        resetAccountName(newName);
+      } catch (error) {
+        console.error('Failed to update account name:', error);
+        // Reset to the previous name on error
+        resetAccountName(selectedAccount || '');
+      }
+    }
+  }, [renameAccount, selectedAccount, resetAccountName]);
+
+  const handleAccountAdd = useCallback(() => {
+    const existingAccountNames = Object.keys(accounts);
+    let counter = existingAccountNames.length + 1;
+    let newAccountName = `Account ${counter}`;
+    
+    // Ensure the name is unique
+    while (existingAccountNames.includes(newAccountName)) {
+      counter++;
+      newAccountName = `Account ${counter}`;
+    }
+    
+    addAccount(newAccountName);
+    setSelectedAccount(newAccountName);
+    setAccountName(newAccountName);
+  }, [accounts, addAccount, setSelectedAccount, setAccountName]);
+
+  const handleAccountDelete = useCallback(() => {
+    if (!selectedAccount) return;
+    
+    deleteAccount(selectedAccount);
+  }, [selectedAccount, deleteAccount]);
+
+  return (
+    <section className="account-settings">
+      <header>
+        <SettingsOption setting="selectedAccount"
+          accountNames={accountNames}
+          value={selectedAccount}
+          setValue={handleAccountChange}
+        />
+      </header>
+      <div className="sub-header">
+        <div className="input-group setting-traveler">
+          <CharacterImage character={traveler ?? DEFAULT_ACCOUNT_DATA.traveler!} />
+          <Select name="traveler"
+            options={TRAVELER_OPTIONS}
+            displayValue={displayTravelerValue}
+            value={traveler}
+            onChange={setTraveler}
+          />
+        </div>
+        <div className="input-group setting-selectedAccountName">
+          <label>Account Name</label>
+          <input type="text"
+            name="selectedAccountName"
+            value={accountName}
+            onChange={e => setAccountName(e.target.value)}
+            onBlur={e => handleAccountNameChange(e.target.value.trim())}
+          />
+        </div>
+      </div>
+      <div className="input-group setting-worldRegion">
+        <label>World Region</label>
+        <Select name="worldRegion"
+          options={WORLD_REGIONS}
+          displayValue={displayWorldRegion}
+          value={worldRegion}
+          onChange={setWorldRegion}
+        />
+      </div>
+      <footer>
+        <SettingsOption setting="accountCrud"
+          value={true}
+          onAdd={handleAccountAdd}
+          onDelete={handleAccountDelete}
+        />
+      </footer>
+    </section>
+  );
+}
+
+export default memo(AccountSettings);

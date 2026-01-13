@@ -1,23 +1,23 @@
 import AscensionMaterial from "@/common/models/materials/AscensionMaterial";
-import { useRegionStore } from "@/stores";
+import { useAccountStore } from "@/stores";
 
 export type Props = {
   material: AscensionMaterial;
 };
 
 export default function ObtainableDays({ material }: Props) {
-  const RegionStore = useRegionStore();
+  const AccountStore = useAccountStore();
   
   return (
     <ul className="material-card__obtainable-days">
       {material.obtainableDays.split('/').map(day => (
-        <li key={`${RegionStore.currentRegion}-${day}`} className="material-card__obtainable-days-item" data-today={material.getDataTodayAttr(RegionStore, day)}>
+        <li key={`${AccountStore.worldRegion}-${day}`} className="material-card__obtainable-days-item" data-today={material.getDataTodayAttr(AccountStore, day)}>
           <span>
             {day}
           </span>
         </li>
       ))}
-      <li key={`${RegionStore.currentRegion}-Sunday`} className="material-card__obtainable-days-item" data-today={material.getDataTodayAttr(RegionStore, 'Sunday')}>
+      <li key={`${AccountStore.worldRegion}-Sunday`} className="material-card__obtainable-days-item" data-today={material.getDataTodayAttr(AccountStore, 'Sunday')}>
         <span>
           Sunday
         </span>

@@ -29,4 +29,4 @@ export enum ResinCost {
   Sixty = 60, // Weekly bosses (after 3 times)
 }
 
-export type GenshinRegion = 'Mondstadt' | 'Liyue' | 'Inazuma' | 'Sumeru' | 'Fontaine' | 'Natlan' | 'Nod-Krai' | 'Snezhnaya' | 'Unknown';
+export type TeyvatRegion = 'Mondstadt' | 'Liyue' | 'Inazuma' | 'Sumeru' | 'Fontaine' | 'Natlan' | 'Nod-Krai' | 'Snezhnaya' | 'Unknown';

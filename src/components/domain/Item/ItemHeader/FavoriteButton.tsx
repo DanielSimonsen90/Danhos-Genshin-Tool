@@ -1,7 +1,7 @@
 import { Model } from "@/common/models";
 import { FavoriteStar } from "@/components/common/media/icons/Star";
-import { getModelType } from "@/stores/RegionStore/model-type";
-import { useFavorite } from "@/stores/RegionStore/RegionStoreHooks";
+import { getModelType } from "@/stores/AccountStore/model-type";
+import { useFavorite } from "@/stores/AccountStore/AccountStoreHooks";
 
 type Props = {
   item: Model

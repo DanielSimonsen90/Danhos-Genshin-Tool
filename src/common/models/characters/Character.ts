@@ -1,4 +1,4 @@
-import { Element, WeaponType, BonusAbility, Rarity, GenshinRegion, PassiveTalent } from '@/common/types';
+import { Element, WeaponType, BonusAbility, Rarity, TeyvatRegion, PassiveTalent } from '@/common/types';
 import CharacterPlaystyle from './CharacterPlaystyle';
 import CharacterAscension from './CharacterAscension';
 import { ModelKeys } from '../Model';
@@ -14,7 +14,7 @@ export class Character<TElement extends Element = Element> {
     public weapon: WeaponType,
     public bonusAbilities: Array<BonusAbility>,
     public rarity: Rarity,
-    public region: GenshinRegion,
+    public region: TeyvatRegion,
     public ascension: CharacterAscension<TElement>,
     public passiveTalent: PassiveTalent | undefined,
     public playstyle: CharacterPlaystyle | undefined,

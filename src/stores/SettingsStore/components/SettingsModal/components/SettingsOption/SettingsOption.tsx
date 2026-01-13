@@ -5,75 +5,117 @@ import { Settings } from "@/common/types/app-types";
 import { CharacterImage } from "@/components/common/media/Images";
 import { Select, Switch } from "@/components/common/FormItems";
 
-import { WorldRegion, Traveler } from "@/stores/RegionStore/RegionStoreTypes";
-import { DEFAULT_REGION_DATA, REGIONS } from "@/stores/RegionStore/RegionStoreConstants";
+import { WorldRegion, Traveler } from "@/stores/AccountStore/AccountStoreTypes";
+import { DEFAULT_ACCOUNT_DATA, WORLD_REGIONS } from "@/stores/AccountStore/AccountStoreConstants";
+import { classNames } from "@/common/functions/strings";
+import { descriptions, titles } from "./constants";
+import { useAccountStore } from "@/stores/AccountStore";
 
 type Props<Setting extends keyof Settings> = {
   setting: Setting;
   hideLabel?: boolean;
   value: Settings[Setting];
   setValue?: (value: Settings[Setting]) => void;
-};
+} & (
+  Setting extends 'selectedAccount' 
+  ? { accountNames: Array<string> | undefined; } 
+  : { accountNames?: undefined; }
+) & (
+  Setting extends 'accountCrud'
+  ? {
+    onAdd(): void;
+    onDelete(): void;
+  }
+  : {
+    onAdd?: undefined;
+    onDelete?: undefined;
+  }
+)
+
 export default function SettingsOption<Setting extends keyof Settings>(props: Props<Setting>) {
-  const [value, _setValue] = useState(props.value);
-  
+  const [value, setValue] = useState(props.value);
+
   useEffect(() => {
-    _setValue(props.value);
+    setValue(props.value);
   }, [props.value]);
-  
-  const setValue = (value: Settings[Setting]) => {
-    _setValue(value);
+
+  const onChange = (value: Settings[Setting]) => {
+    setValue(value);
     props.setValue?.(value);
   };
 
   return props.setting === 'updated' || props.setting === 'newUser' ? null : (
-    <div className="input-group">
-      {!props.hideLabel && <label>{titles[props.setting]}</label>}
-      <InputType {...props} value={value} onChange={setValue} />
+    <div className="settings-option">
+      <div className={classNames("input-group", `setting-${props.setting}`)}>
+        <aside>
+          {!props.hideLabel && <label>{titles[props.setting]}</label>}
+          {!props.hideLabel && descriptions[props.setting] && (
+            <p className="description muted">{descriptions[props.setting]}</p>
+          )}
+        </aside>
+        <InputType {...props as any} value={value} onChange={onChange} />
+      </div>
     </div>
   );
 }
 
 
-const titles: Record<keyof Settings, string> = {
-  // App settings
-  showAll: 'Show all search results',
-  wrap: 'Wrap search results',
-  preferredTabs: 'Preferred tabs',
-
-  // Region settings
-  traveler: 'Preferred Traveler image',
-  region: 'Preferred region',
-
-  // Internal App settings
-  updated: 'Last updated',
-  newUser: 'Internal "new user" flag',
-};
-
-
 type InputProps<Setting extends keyof Settings> = Props<Setting> & {
   onChange: (value: Settings[Setting]) => void;
 };
-function InputType<Setting extends keyof Settings>({ setting, value, onChange }: InputProps<Setting>) {
+function InputType<Setting extends keyof Settings>({ setting, value, onChange, ...props }: InputProps<Setting>) {
   switch (setting) {
     case 'showAll': return <Switch name={setting} enabled={value as Settings['showAll']} onChange={value => onChange(value as Settings[Setting])} />;
     case 'wrap': return <Switch name={setting} enabled={value as Settings['wrap']} onChange={value => onChange(value as Settings[Setting])} />;
-    case 'region': return <Select name={setting} options={Object.values(REGIONS)} value={value as WorldRegion} onChange={value => onChange(value as Settings[Setting])} />;
+
+    case 'worldRegion': return <Select name={setting} options={Object.values(WORLD_REGIONS)} value={value as WorldRegion} onChange={value => onChange(value as Settings[Setting])} />;
     case 'traveler': return (() => {
       const [traveler, setTraveler] = useState(value as Traveler);
 
-      return (<>
-        <CharacterImage character={traveler ?? DEFAULT_REGION_DATA['traveler']} />
-        <Select name={setting}
-          options={Array.of<Traveler>('lumine', 'aether')}
-          value={value as Traveler}
-          onChange={value => {
-            setTraveler(value as Traveler);
-            onChange(value as Settings[Setting]);
-          }}
-        />
-      </>);
+      return (
+        <div className="traveler-select">
+          <CharacterImage character={traveler ?? DEFAULT_ACCOUNT_DATA['traveler']} />
+          <Select name={setting}
+            options={Array.of<Traveler>('lumine', 'aether')}
+            displayValue={value => value.charAt(0).toUpperCase() + value.slice(1)}
+            value={value as Traveler}
+            onChange={value => {
+              setTraveler(value as Traveler);
+              onChange(value as Settings[Setting]);
+            }}
+          />
+        </div>
+      );
     })();
+
+    case 'accountCrud': return (() => {
+      const accountName = useAccountStore(state => state.selectedAccountName);
+      
+      return (
+        <div className="input-group button-panel" onClick={e => e.stopPropagation()}>
+          <button type="button" className='secondary danger' onClick={props.onDelete}>Delete {accountName}</button>
+          <button type="button" className='secondary success' onClick={props.onAdd}>Add new account</button>
+        </div>
+      );
+    })();
+    case 'selectedAccountName': return (
+      <>
+        <input type="text"
+          name={setting}
+          value={value as string}
+          onChange={e => onChange(e.target.value as Settings[Setting])}
+        />
+      </>
+    );
+    case 'selectedAccount': return (
+      <Select
+        name={setting}
+        options={props.accountNames ?? []}
+        value={value as Settings['selectedAccount']}
+        onChange={value => onChange(value as Settings[Setting])}
+      />
+    )
+
     case 'preferredTabs': return (
       <div className="preferred-tabs-setting">
         <div className="input-group">

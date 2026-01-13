@@ -1,11 +1,11 @@
 import { useMemo } from "react";
 import TabBar, { Tab } from "@/components/common/TabBar";
-import { useRegionStore } from "@/stores";
+import { useAccountStore } from "@/stores";
 import FarmableTodaySection from "../FarmableTodaySection";
 
 export default function YourCalendarSection() {
-  const RegionStore = useRegionStore();
-  const currentDay = useMemo(() => RegionStore.getGenshinServerDayName(RegionStore.currentRegion), [RegionStore, RegionStore.currentRegion]);
+  const AccountStore = useAccountStore();
+  const currentDay = useMemo(() => AccountStore.getGenshinServerDayName(AccountStore.worldRegion), [AccountStore, AccountStore.worldRegion]);
     const tabs = useMemo(() => {
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     return days.map(day => [

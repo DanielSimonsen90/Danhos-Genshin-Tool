@@ -1,19 +1,14 @@
-import useRegionStore from "./RegionStore";
-import { FavoriteModels } from "./RegionStoreTypes";
+import useAccountStore from "./AccountStore";
+import { FavoriteModels } from "./AccountStoreTypes";
 
-export const useRegionData = () => {
-  const { regionData, setRegionData } = useRegionStore();
+export const useAccountData = () => {
+  const { accountData: regionData, setAccountData } = useAccountStore();
   return {
     ...regionData,
-    setRegionData
+    setAccountData
   }
 }
 
-export const useRegion = () => useRegionStore().currentRegion;
-export const useTraveler = () => useRegionData().traveler;
-export const usePriorityList = () => useRegionData().priorityLists;
-
-// Backward-compatible convenience hook for typed usage (like the old useFavoriteStore)
 export function useFavorite<TFavoriteModel extends keyof FavoriteModels>(
   type: TFavoriteModel
 ): {
@@ -22,7 +17,7 @@ export function useFavorite<TFavoriteModel extends keyof FavoriteModels>(
   remove: (item: FavoriteModels[TFavoriteModel]) => void;
   isFavorite: (item: FavoriteModels[TFavoriteModel]) => boolean;
 } {
-  const store = useRegionStore();
+  const store = useAccountStore();
   const favoriteAPI = store.favorites.getFavorite(type);
   
   return {
@@ -33,9 +28,8 @@ export function useFavorite<TFavoriteModel extends keyof FavoriteModels>(
   };
 }
 
-// Favorite hook similar to the old FavoriteStore
 export function useFavorites(): {
-  getAllFavorites: () => import("./RegionStoreTypes").FavoritesCollection;
+  getAllFavorites: () => import("./AccountStoreTypes").FavoritesCollection;
   hasAnyFavorites: () => boolean;
   clearFavorites: () => void;
   getFavorite: <T extends keyof FavoriteModels>(type: T) => {
@@ -59,7 +53,7 @@ export function useFavorites<
   TModelType extends keyof FavoriteModels, 
   TModel extends FavoriteModels[TModelType]
 >(type?: TModelType) {
-  const store = useRegionStore();
+  const store = useAccountStore();
 
   return type ? {
     favorites: store.favorites.getFavorite(type).getFavorites(),
