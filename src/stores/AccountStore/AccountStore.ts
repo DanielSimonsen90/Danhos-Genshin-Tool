@@ -38,7 +38,9 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
   };
 
   // Get and filter accounts data to remove any invalid properties
-  const context = storageService.get() ?? { [DEFAULT_ACCOUNT_NAME]: { ...DEFAULT_ACCOUNT_DATA, id: generateAccountId() } } as AccountContextType;
+  const context = storageService.get() ?? { 
+    [DEFAULT_ACCOUNT_NAME]: { ...DEFAULT_ACCOUNT_DATA, id: generateAccountId() } 
+  } as AccountContextType;
 
   // Define valid AccountData properties
   const validAccountDataKeys = Object.keys(DEFAULT_ACCOUNT_DATA);
@@ -64,6 +66,7 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
 
     return acc;
   }, {} as AccountContextType);
+
   const getSelectedAccountName = (accounts: AccountContextType) => Object.keys(accounts).find(account => accounts[account as keyof typeof accounts]?.selected) ?? Object.keys(accounts).find(Boolean) as keyof AccountContextType;
   const getAccountData = (accounts: AccountContextType) => {
     const currentAccount = getSelectedAccountName(accounts);
@@ -141,9 +144,11 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
 
     storageService.set(next);
 
+    const updatedSelectedAccountName = getSelectedAccountName(next);
     setState({
       accounts: next,
-      worldRegion: next[getSelectedAccountName(next)]?.worldRegion ?? DEFAULT_WORLD_REGION,
+      selectedAccountName: updatedSelectedAccountName,
+      worldRegion: next[updatedSelectedAccountName]?.worldRegion ?? DEFAULT_WORLD_REGION,
       accountData: getAccountData(next),
     });
   };
@@ -160,7 +165,11 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
     delete accounts[currentAccountName];
 
     storageService.set(accounts);
-    setState({ accounts });
+    setState({ 
+      accounts,
+      selectedAccountName: name,
+      accountData: getAccountData(accounts),
+    });
   }
   const setWorldRegion = (worldRegion: WorldRegion) => setAccountData({ worldRegion });
   const setTraveler = (traveler: Traveler) => setAccountData({ traveler });
@@ -177,10 +186,62 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
       return acc;
     }, {} as AccountContextType);
 
+    storageService.set(updatedAccounts);
     setState({
       accounts: updatedAccounts,
       worldRegion: updatedAccounts[accountName]?.worldRegion ?? DEFAULT_WORLD_REGION,
       selectedAccountName: accountName,
+      accountData: getAccountData(updatedAccounts),
+    });
+  }
+
+  const addAccount = (accountName: string) => {
+    const { accounts } = getState();
+    if (accounts[accountName]) throw new Error(`Account ${accountName} already exists`);
+    if (!accountName || accountName.trim() === '') throw new Error('Account name cannot be empty');
+
+    const newAccountData: AccountData = {
+      ...DEFAULT_ACCOUNT_DATA,
+      id: generateAccountId(),
+      selected: false,
+      favorites: DEFAULT_FAVORITES,
+    };
+
+    const updatedAccounts = {
+      ...accounts,
+      [accountName]: newAccountData,
+    };
+
+    storageService.set(updatedAccounts);
+    setState({ accounts: updatedAccounts });
+  }
+
+  const deleteAccount = (accountName: string) => {
+    const { accounts } = getState();
+    if (!accounts[accountName]) throw new Error(`Account ${accountName} does not exist`);
+    
+    const accountKeys = Object.keys(accounts);
+    if (accountKeys.length <= 1) throw new Error('Cannot delete the last account');
+
+    const wasSelected = accounts[accountName]?.selected;
+    const updatedAccounts = { ...accounts };
+    delete updatedAccounts[accountName];
+
+    // If the deleted account was selected, select another account
+    if (wasSelected) {
+      const firstAvailableAccount = Object.keys(updatedAccounts)[0];
+      updatedAccounts[firstAvailableAccount] = {
+        ...updatedAccounts[firstAvailableAccount],
+        selected: true,
+      } as AccountData;
+    }
+
+    storageService.set(updatedAccounts);
+    const newSelectedAccount = getSelectedAccountName(updatedAccounts);
+    setState({
+      accounts: updatedAccounts,
+      selectedAccountName: newSelectedAccount,
+      worldRegion: updatedAccounts[newSelectedAccount]?.worldRegion ?? DEFAULT_WORLD_REGION,
       accountData: getAccountData(updatedAccounts),
     });
   }
@@ -289,6 +350,8 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
     setWorldRegion,
     setTraveler,
     setSelectedAccount,
+    addAccount,
+    deleteAccount,
     setState,
 
     getGenshinServerDay,

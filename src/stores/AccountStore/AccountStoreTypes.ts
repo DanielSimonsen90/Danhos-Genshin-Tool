@@ -66,6 +66,8 @@ export type AccountStore = {
   setWorldRegion: (region: WorldRegion) => void;
   setTraveler: (traveler: Traveler) => void;
   setSelectedAccount: (accountName: string) => void;
+  addAccount: (accountName: string) => void;
+  deleteAccount: (accountName: string) => void;
   setState: (state: SetStateAction<AccountStore>) => void;
 
   getGenshinServerDay(worldRegion: WorldRegion): number;

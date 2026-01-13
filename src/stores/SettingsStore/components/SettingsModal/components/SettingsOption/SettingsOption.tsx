@@ -16,9 +16,21 @@ type Props<Setting extends keyof Settings> = {
   hideLabel?: boolean;
   value: Settings[Setting];
   setValue?: (value: Settings[Setting]) => void;
-} & (Setting extends 'selectedAccount' 
-  ? { accountNames: Array<string>; } 
-    : { accountNames?: undefined; });
+} & (
+  Setting extends 'selectedAccount' 
+  ? { accountNames: Array<string> | undefined; } 
+  : { accountNames?: undefined; }
+) & (
+  Setting extends 'accountCrud'
+  ? {
+    onAdd(): void;
+    onDelete(): void;
+  }
+  : {
+    onAdd?: undefined;
+    onDelete?: undefined;
+  }
+)
 
 export default function SettingsOption<Setting extends keyof Settings>(props: Props<Setting>) {
   const [value, setValue] = useState(props.value);
@@ -80,9 +92,9 @@ function InputType<Setting extends keyof Settings>({ setting, value, onChange, .
       const accountName = useAccountStore(state => state.selectedAccountName);
       
       return (
-        <div className="input-group button-panel">
-          <button className='secondary danger'>Delete {accountName}</button>
-          <button className='secondary success'>Add new account</button>
+        <div className="input-group button-panel" onClick={e => e.stopPropagation()}>
+          <button type="button" className='secondary danger' onClick={props.onDelete}>Delete {accountName}</button>
+          <button type="button" className='secondary success' onClick={props.onAdd}>Add new account</button>
         </div>
       );
     })();

@@ -55,6 +55,7 @@
       grid-template-columns: 1fr !important;
 
       .button-panel {
+        display: flex;
         gap: .5em;
         justify-self: start;
         justify-items: start;

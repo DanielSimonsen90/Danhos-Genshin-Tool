@@ -26,9 +26,13 @@ function AccountSettings() {
   const selectedAccount = useAccountStore(state => state.selectedAccountName);
   const traveler = useAccountStore(state => state.accountData.traveler);
   const worldRegion = useAccountStore(state => state.accountData.worldRegion);
+
   const setSelectedAccount = useAccountStore(state => state.setSelectedAccount);
   const setTraveler = useAccountStore(state => state.setTraveler);
   const setWorldRegion = useAccountStore(state => state.setWorldRegion);
+  const renameAccount = useAccountStore(state => state.setAccountName);
+  const addAccount = useAccountStore(state => state.addAccount);
+  const deleteAccount = useAccountStore(state => state.deleteAccount);
 
   // Memoize accountNames so it only changes when accounts actually change
   const accountNames = useMemo(() => Object.keys(accounts), [accounts]);
@@ -40,6 +44,41 @@ function AccountSettings() {
     setSelectedAccount(newAccountName);
     resetAccountName(newAccountName);
   }, [setSelectedAccount, resetAccountName]);
+
+  const handleAccountNameChange = useCallback((newName: string) => {
+    if (newName && newName.trim() !== '' && newName !== selectedAccount) {
+      try {
+        renameAccount(newName);
+        resetAccountName(newName);
+      } catch (error) {
+        console.error('Failed to update account name:', error);
+        // Reset to the previous name on error
+        resetAccountName(selectedAccount || '');
+      }
+    }
+  }, [renameAccount, selectedAccount, resetAccountName]);
+
+  const handleAccountAdd = useCallback(() => {
+    const existingAccountNames = Object.keys(accounts);
+    let counter = existingAccountNames.length + 1;
+    let newAccountName = `Account ${counter}`;
+    
+    // Ensure the name is unique
+    while (existingAccountNames.includes(newAccountName)) {
+      counter++;
+      newAccountName = `Account ${counter}`;
+    }
+    
+    addAccount(newAccountName);
+    setSelectedAccount(newAccountName);
+    setAccountName(newAccountName);
+  }, [accounts, addAccount, setSelectedAccount, setAccountName]);
+
+  const handleAccountDelete = useCallback(() => {
+    if (!selectedAccount) return;
+    
+    deleteAccount(selectedAccount);
+  }, [selectedAccount, deleteAccount]);
 
   return (
     <section className="account-settings">
@@ -66,6 +105,7 @@ function AccountSettings() {
             name="selectedAccountName"
             value={accountName}
             onChange={e => setAccountName(e.target.value)}
+            onBlur={e => handleAccountNameChange(e.target.value.trim())}
           />
         </div>
       </div>
@@ -81,6 +121,8 @@ function AccountSettings() {
       <footer>
         <SettingsOption setting="accountCrud"
           value={true}
+          onAdd={handleAccountAdd}
+          onDelete={handleAccountDelete}
         />
       </footer>
     </section>
