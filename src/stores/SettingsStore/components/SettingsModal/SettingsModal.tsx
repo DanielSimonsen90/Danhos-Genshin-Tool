@@ -1,3 +1,6 @@
+import { useMemo } from 'react';
+
+import TabBar from '@/components/common/TabBar';
 import { DOMAIN_NAME } from '@/common/constants/domain';
 import { DebugLog } from "@/common/functions/dev";
 import { Settings } from '@/common/types/app-types';
@@ -9,18 +12,17 @@ import { useUpdateManager } from "@/hooks/useUpdateManager";
 import { useSettingsStore } from "@/stores/SettingsStore";
 import { useAccountStore } from '@/stores/AccountStore';
 
-import SettingsOption from "./components/SettingsOption";
-import Collapsible from '@/components/common/Collapsible';
-import FavoritesOverview from './components/FavoritesOverview';
-import { useMemo } from 'react';
+import { AccountSettings, FavoritesOverview, SettingsContent } from './components';
 
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsModal);
 
 export default function SettingsModal(props: ModalConsumerProps) {
   const SettingsStore = useSettingsStore();
   const accounts = useAccountStore(state => state.accounts);
+  const selectedAccountName = useAccountStore(state => state.selectedAccountName);
   const accountData = useAccountStore(state => state.accountData);
   const setAccountData = useAccountStore(state => state.setAccountData);
+  const setAccountName = useAccountStore(state => state.setAccountName);
   const {
     appVersion,
     isCheckingForUpdates,
@@ -34,9 +36,15 @@ export default function SettingsModal(props: ModalConsumerProps) {
     debugLog('Settings update received', data);
     SettingsStore.updateAndSaveSettings(data);
     setAccountData({
-      ...data,
+      traveler: data.traveler,
+      worldRegion: data.worldRegion,
       selected: true,
     });
+
+    if (data.selectedAccountName && data.selectedAccountName !== selectedAccountName) {
+      setAccountName(data.selectedAccountName);
+    }
+
     props.onClose();
   });
 
@@ -48,41 +56,52 @@ export default function SettingsModal(props: ModalConsumerProps) {
     }
   };
 
-  const regionSettings = { region: accountData.worldRegion, traveler: accountData.traveler };
+  const accountSettings = {
+    accountCrud: true,
+    selectedAccountName: Object.keys(accounts).find(name => accounts[name]?.selected),
+    worldRegion: accountData.worldRegion,
+    traveler: accountData.traveler,
+  };
 
   return props.open ? (
     <Modal {...props} className="settings-modal">
       <h1>{DOMAIN_NAME} Settings</h1>
-      <p>Here are list of settings, you can change to better your experience.</p>
       <form onSubmit={onSubmit}>
-        {Object.entries(Object.assign({}, SettingsStore.changeableSettings, regionSettings)).map(([key, value]) => (
-          <SettingsOption key={key} 
-            setting={key as keyof Settings} 
-            value={value as Settings[keyof Settings]} 
-            accountNames={accountNames}
-          />
-        ))}
-        
-        <Collapsible title="Manage Favorites">
-          <FavoritesOverview />
-        </Collapsible>
-
-        {isElectronApp && (
-          <Collapsible title="Application Updates">
-            <p><strong>Current Version:</strong> {appVersion}</p>
-            <p className='muted'>Updates are automatically checked when the application starts.</p>
-            <div className="button-panel">
-              <button
-                type="button"
-                className="brand secondary"
-                onClick={checkForUpdates}
-                disabled={isCheckingForUpdates || submitting}
-              >
-                {isCheckingForUpdates ? 'Checking...' : 'Check for Updates'}
-              </button>
-            </div>
-          </Collapsible>
-        )}
+        <TabBar direction='vertical' tabs={[
+          ['General', {
+            title: 'General',
+            content: <SettingsContent settings={SettingsStore.changeableSettings} />
+          }],
+          ['Account', {
+            title: 'Account',
+            content: <AccountSettings />
+          }],
+          ['Favorites', {
+            title: 'Favorites',
+            content: <FavoritesOverview />
+          }],
+          ['Updates', {
+            title: 'Updates',
+            content: isElectronApp ? (
+              <>
+                <p><strong>Current Version:</strong> {appVersion}</p>
+                <p className='muted'>Updates are automatically checked when the application starts.</p>
+                <div className="button-panel">
+                  <button
+                    type="button"
+                    className="brand secondary"
+                    onClick={checkForUpdates}
+                    disabled={isCheckingForUpdates || submitting}
+                  >
+                    {isCheckingForUpdates ? 'Checking...' : 'Check for Updates'}
+                  </button>
+                </div>
+              </>
+            ) : (
+              <p>Application updates are only available in the desktop application.</p>
+            )
+          }],
+        ]} />
 
         <div className="button-panel">
           {SettingsStore.hasCustomSettings && <button type="reset" className="danger secondary" disabled={submitting} onClick={onReset}>Reset settings</button>}

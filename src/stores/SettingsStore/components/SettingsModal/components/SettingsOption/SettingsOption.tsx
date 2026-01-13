@@ -7,56 +7,49 @@ import { Select, Switch } from "@/components/common/FormItems";
 
 import { WorldRegion, Traveler } from "@/stores/AccountStore/AccountStoreTypes";
 import { DEFAULT_ACCOUNT_DATA, WORLD_REGIONS } from "@/stores/AccountStore/AccountStoreConstants";
+import { classNames } from "@/common/functions/strings";
+import { descriptions, titles } from "./constants";
+import { useAccountStore } from "@/stores/AccountStore";
 
 type Props<Setting extends keyof Settings> = {
   setting: Setting;
   hideLabel?: boolean;
   value: Settings[Setting];
   setValue?: (value: Settings[Setting]) => void;
-  // accountNames: Setting extends 'selectedAccount' ? Array<string> : undefined;
-} & (Setting extends 'selectedAccount' ? { accountNames: Array<string> } : { accountNames?: undefined });
+} & (Setting extends 'selectedAccount' 
+  ? { accountNames: Array<string>; } 
+    : { accountNames?: undefined; });
 export default function SettingsOption<Setting extends keyof Settings>(props: Props<Setting>) {
   const [value, setValue] = useState(props.value);
-  
+
   useEffect(() => {
     setValue(props.value);
   }, [props.value]);
-  
+
   const onChange = (value: Settings[Setting]) => {
     setValue(value);
     props.setValue?.(value);
   };
 
   return props.setting === 'updated' || props.setting === 'newUser' ? null : (
-    <div className="input-group">
-      {!props.hideLabel && <label>{titles[props.setting]}</label>}
-      <InputType {...props as any} value={value} onChange={onChange} />
+    <div className="settings-option">
+      <div className={classNames("input-group", `setting-${props.setting}`)}>
+        <aside>
+          {!props.hideLabel && <label>{titles[props.setting]}</label>}
+          {!props.hideLabel && descriptions[props.setting] && (
+            <p className="description muted">{descriptions[props.setting]}</p>
+          )}
+        </aside>
+        <InputType {...props as any} value={value} onChange={onChange} />
+      </div>
     </div>
   );
 }
 
 
-const titles: Record<keyof Settings, string> = {
-  // App settings
-  showAll: 'Show all search results',
-  wrap: 'Wrap search results',
-  preferredTabs: 'Preferred tabs',
-
-  // Region settings
-  selectedAccount: 'Selected account',
-  selectedAccountName: 'Selected account name',
-  traveler: 'Preferred Traveler image',
-  worldRegion: 'Preferred world region',
-
-  // Internal App settings
-  updated: 'Last updated',
-  newUser: 'Internal "new user" flag',
-};
-
-
 type InputProps<Setting extends keyof Settings> = Props<Setting> & {
   onChange: (value: Settings[Setting]) => void;
-}
+};
 function InputType<Setting extends keyof Settings>({ setting, value, onChange, ...props }: InputProps<Setting>) {
   switch (setting) {
     case 'showAll': return <Switch name={setting} enabled={value as Settings['showAll']} onChange={value => onChange(value as Settings[Setting])} />;
@@ -66,31 +59,42 @@ function InputType<Setting extends keyof Settings>({ setting, value, onChange, .
     case 'traveler': return (() => {
       const [traveler, setTraveler] = useState(value as Traveler);
 
-      return (<>
-        <CharacterImage character={traveler ?? DEFAULT_ACCOUNT_DATA['traveler']} />
-        <Select name={setting}
-          options={Array.of<Traveler>('lumine', 'aether')}
-          value={value as Traveler}
-          onChange={value => {
-            setTraveler(value as Traveler);
-            onChange(value as Settings[Setting]);
-          }}
-        />
-      </>);
-    })();
-    case 'selectedAccount': {
-      const options = 'accountNames' in props && Array.isArray(props.accountNames) ? props.accountNames : [];
-
       return (
-        <Select 
-          name={setting} 
-          options={options} 
-          value={value as string} 
-          onChange={value => onChange(value as Settings[Setting])}
-        />
+        <div className="traveler-select">
+          <CharacterImage character={traveler ?? DEFAULT_ACCOUNT_DATA['traveler']} />
+          <Select name={setting}
+            options={Array.of<Traveler>('lumine', 'aether')}
+            displayValue={value => value.charAt(0).toUpperCase() + value.slice(1)}
+            value={value as Traveler}
+            onChange={value => {
+              setTraveler(value as Traveler);
+              onChange(value as Settings[Setting]);
+            }}
+          />
+        </div>
       );
-    }
-    case 'selectedAccountName': 
+    })();
+
+    case 'accountCrud': return (() => {
+      const accountName = useAccountStore(state => state.selectedAccountName);
+      
+      return (
+        <div className="input-group button-panel">
+          <button className='secondary danger'>Delete {accountName}</button>
+          <button className='secondary success'>Add new account</button>
+        </div>
+      );
+    })();
+    case 'selectedAccountName': return (
+      <div className="input-group">
+        <label htmlFor={setting}></label>
+        <input type="text"
+          name={setting}
+          value={value as string}
+          onChange={e => onChange(e.target.value as Settings[Setting])}
+        />
+      </div>
+    );
 
     case 'preferredTabs': return (
       <div className="preferred-tabs-setting">

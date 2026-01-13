@@ -4,8 +4,9 @@ import SettingsCog from "@/components/common/media/icons/SettingsCog";
 import { CharacterImage } from "@/components/common/media/Images";
 import { useAccountStore } from "@/stores/AccountStore";
 
-import SettingsOption from "../../../../stores/SettingsStore/components/SettingsModal/components/SettingsOption";
+import SettingsOption from "../../../../stores/SettingsStore/components/SettingsModal/components/SettingsOption/SettingsOption";
 import { addTabNavigation } from "@/common/functions/accessibility";
+import { Select } from "@/components/common/FormItems";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsContainer);
 
@@ -14,21 +15,27 @@ type Props = {
 };
 
 export default function SettingsContainer({ setOpenModal }: Props) {
-  const worldRegion = useAccountStore(state => state.accountData.worldRegion);
+  const accounts = useAccountStore(state => state.accounts);
+  const selectedAccountName = useAccountStore(state => state.selectedAccountName);
+  const accountData = useAccountStore(state => state.accountData)
   const traveler = useAccountStore(state => state.accountData.traveler);
-  const setWorldRegion = useAccountStore(state => state.setWorldRegion);
+  const setSelectedAccount = useAccountStore(state => state.setSelectedAccount);
 
   debugLog(
-    worldRegion
+    accountData.worldRegion
       ? 'SettingsContainer rendered'
       : 'SettingsContainer did not render',
-    { worldRegion, traveler }
+    { worldRegion: accountData.worldRegion, traveler }
   );
 
-  return worldRegion ? (
+  return accountData ? (
     <div className="settings-container">
-      <SettingsOption setting="worldRegion" value={worldRegion} setValue={setWorldRegion} hideLabel accountNames={undefined} />
-      {traveler ? <CharacterImage character={traveler} /> : null}
+      <Select name="selected-account" 
+        options={Object.keys(accounts)} 
+        value={selectedAccountName}
+        onChange={setSelectedAccount}
+      />
+      {accountData.traveler ? <CharacterImage character={accountData.traveler} /> : null}
       <SettingsCog role="button" tabIndex={0} {...addTabNavigation(() => setOpenModal(true), true)} />
     </div>
   ) : null;

@@ -4,7 +4,7 @@ import { useActionState } from "@/hooks/useActionState";
 import { useAccountStore, AccountSettings, DEFAULT_ACCOUNT_DATA } from "@/stores/AccountStore";
 
 import { useSettingsStore } from "../../SettingsStore";
-import SettingsOption from "../SettingsModal/components/SettingsOption";
+import SettingsOption from "../SettingsModal/components/SettingsOption/SettingsOption";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsStore);
 

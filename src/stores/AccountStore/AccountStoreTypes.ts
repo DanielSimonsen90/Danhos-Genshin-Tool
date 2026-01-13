@@ -29,6 +29,10 @@ export type AccountData = {
 };
 
 export type AccountSettings = Pick<AccountData, 'traveler' | 'worldRegion'> & {
+  /**
+   * Enables account management features in the settings modal
+   */
+  accountCrud: boolean;
   selectedAccount: string;
   selectedAccountName: string;
 }
@@ -50,14 +54,17 @@ export type FavoritesSlice = {
 
 export type AccountStore = {
   accounts: AccountContextType;
+  selectedAccountName: keyof AccountContextType;
   worldRegion: WorldRegion;
   accountData: AccountData & Record<'setAccountData', AccountStore['setAccountData']>;
 
   get regionSettings(): AccountSettings;
 
+  setAccountName: (name: string) => void;
   setAccountData: (update: Partial<AccountData> | ((state: AccountData) => AccountData)) => void;
   setWorldRegion: (region: WorldRegion) => void;
   setTraveler: (traveler: Traveler) => void;
+  setSelectedAccount: (accountName: string) => void;
   setState: (state: SetStateAction<AccountStore>) => void;
 
   getGenshinServerDay(worldRegion: WorldRegion): number;

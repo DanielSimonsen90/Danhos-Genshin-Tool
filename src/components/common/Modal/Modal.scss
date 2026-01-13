@@ -6,11 +6,11 @@
   color: var(--text-primary);
   border-color: var(--background-secondary--light);
 
+  padding: 0;
+
   --max-size: 90vw;
   max-width: var(--max-size);
   max-height: var(--max-size);
-
-  padding: .5em 1em;
 
   display: flex;
   justify-content: center;
@@ -29,10 +29,15 @@
     background-color: rgba(0, 0, 0, .5);
   }
 
+  &-content {
+    padding: .5em 1em;
+  }
+  
   .close {
     font-size: 1.2rem;
-    top: -.25em;
-    right: -.5em;
+    top: .25em;
+    right: .5em;
+
     height: 1.25ch;
     display: flex;
     align-items: center;

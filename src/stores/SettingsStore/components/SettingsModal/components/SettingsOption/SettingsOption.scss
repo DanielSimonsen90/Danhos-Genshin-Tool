@@ -1,0 +1,42 @@
+.settings-option + .settings-option {
+  border-top: 1px solid var(--background-secondary);
+  padding-top: 1rem;
+}
+
+.settings-option {
+  aside {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: .25rem;
+    width: 100%;
+
+    >label {
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+  }
+
+  .input-group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: end;
+
+    &.setting-preferredTabs {
+      grid-template-columns: auto;
+      grid-template-rows: auto 1fr;
+      justify-items: start;
+    }
+
+    &.button-panel {
+      grid-template-columns: auto;
+      grid-template-rows: repeat(2, 1fr);
+    }
+  }
+
+  .traveler-select {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+  }
+}

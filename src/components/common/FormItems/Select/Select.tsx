@@ -15,7 +15,7 @@ export default function Select<TValue extends string>({
     if (event.target.value === '<placeholder>') return;
     setValue(event.target.value as TValue);
     props.onChange?.(event.target.value as TValue);
-  }, [props.onChange]);
+  }, [setValue, props.onChange]);
 
   return (
     <select {...props} className={classNames('select', props.floatable && 'floatable', props.className)} value={value} onChange={handleChange} defaultValue={defaultValue}>

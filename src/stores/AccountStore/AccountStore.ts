@@ -52,9 +52,9 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
 
     return acc;
   }, {} as AccountContextType);
-  const getSelectedAccount = (accounts: AccountContextType) => Object.keys(accounts).find(account => accounts[account as keyof typeof accounts]?.selected) as keyof AccountContextType;
+  const getSelectedAccountName = (accounts: AccountContextType) => Object.keys(accounts).find(account => accounts[account as keyof typeof accounts]?.selected) ?? Object.keys(accounts).find(Boolean) as keyof AccountContextType;
   const getAccountData = (accounts: AccountContextType) => {
-    const currentAccount = getSelectedAccount(accounts);
+    const currentAccount = getSelectedAccountName(accounts);
     const accountData = currentAccount ? accounts[currentAccount as keyof typeof accounts] : undefined;
     if (!accountData) throw new Error(`No account data found for current account: ${currentAccount}`);
 
@@ -120,12 +120,46 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
 
     setState({
       accounts: next,
-      worldRegion: next[getSelectedAccount(next)]?.worldRegion ?? DEFAULT_WORLD_REGION,
+      worldRegion: next[getSelectedAccountName(next)]?.worldRegion ?? DEFAULT_WORLD_REGION,
       accountData: getAccountData(next),
     });
   };
+
+  const setAccountName = (name: string) => {
+    const { accounts } = getState();
+    if (accounts[name]) return; // Account name already exists
+
+    const currentAccountName = getSelectedAccountName(accounts);
+    if (!currentAccountName) throw new Error('No current account selected');
+
+    const data = getAccountData(accounts);
+    accounts[name] = { ...data };
+    delete accounts[currentAccountName];
+
+    setState({ accounts });
+  }
   const setWorldRegion = (worldRegion: WorldRegion) => setAccountData({ worldRegion });
   const setTraveler = (traveler: Traveler) => setAccountData({ traveler });
+  const setSelectedAccount = (accountName: string) => {
+    const { accounts } = getState();
+    if (!accounts[accountName]) throw new Error(`Account ${accountName} does not exist`);
+
+    const updatedAccounts = Object.keys(accounts).reduce((acc, key) => {
+      const accountKey = key as keyof AccountContextType;
+      acc[accountKey] = {
+        ...accounts[accountKey],
+        selected: accountKey === accountName,
+      } as AccountData;
+      return acc;
+    }, {} as AccountContextType);
+
+    setState({
+      accounts: updatedAccounts,
+      worldRegion: updatedAccounts[accountName]?.worldRegion ?? DEFAULT_WORLD_REGION,
+      selectedAccountName: accountName,
+      accountData: getAccountData(updatedAccounts),
+    });
+  }
 
   const getGenshinServerDay = (region: WorldRegion): number => {
     const now = new Date();
@@ -209,10 +243,11 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
 
   return {
     accounts,
-    worldRegion: getSelectedAccount(accounts),
+    selectedAccountName: getSelectedAccountName(accounts) ?? DEFAULT_ACCOUNT_NAME,
+    worldRegion: accounts[getSelectedAccountName(accounts)]?.worldRegion ?? DEFAULT_WORLD_REGION,
     accountData: getAccountData(accounts),
     get regionSettings(): AccountSettings {
-      const accountName = getSelectedAccount(getState().accounts);
+      const accountName = getSelectedAccountName(getState().accounts);
       const accountData = ObjectUtils.pick(getState().accountData, 'worldRegion', 'traveler');
 
       return {
@@ -221,11 +256,15 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
         selectedAccount: accountName ?? '',
         // Ability to modify account name
         selectedAccountName: accountName ?? '',
+        accountCrud: true
       };
     },
+
+    setAccountName,
     setAccountData,
     setWorldRegion,
     setTraveler,
+    setSelectedAccount,
     setState,
 
     getGenshinServerDay,

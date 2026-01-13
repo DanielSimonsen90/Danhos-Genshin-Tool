@@ -20,6 +20,6 @@ export const DEFAULT_ACCOUNT_DATA: AccountData = {
   traveler: 'aether',
   priorityLists: undefined,
   favorites: DEFAULT_FAVORITES,
-};
+} as const;
 
 export const WORLD_REGIONS: Array<WorldRegion> = ['Europe', 'North America', 'Asia', 'TW, HK, MO'];

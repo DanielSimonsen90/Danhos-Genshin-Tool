@@ -11,11 +11,10 @@ export default function FavoritesOverview() {
   const FavoriteStore = useFavorites();
 
   if (!FavoriteStore.hasAnyFavorites()) return (
-    <p>
-      <span>You have no models marked as favorite.</span>
-      <br />
-      <span>When you're on a list of models, you can right click a model and select "Favorite" to push them to the top of the list.</span>
-    </p>
+    <>
+      <p>You have no models marked as favorite.</p>
+      <p>When you're on a list of models, you can right click a model and select "Favorite" to push them to the top of the list.</p>
+    </>
   );
 
   return (
