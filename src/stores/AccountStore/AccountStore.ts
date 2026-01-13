@@ -67,11 +67,10 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
     return Object.assign({}, dataWithFavorites, { setAccountData });
   };
   const setAccountData = (update: Partial<AccountData> | ((state: AccountData) => AccountData)) => {
-    const { accounts, worldRegion } = getState();
+    const { accounts } = getState();
     const resolvedAccountDataUpate = typeof update === 'function'
       ? update(getState().accountData)
       : update;
-    resolvedAccountDataUpate.worldRegion ??= worldRegion;
     const validAccountDataKey = Object.keys(DEFAULT_ACCOUNT_DATA);
     const invalidKeys = Object.keys(resolvedAccountDataUpate).filter(key => !validAccountDataKey.includes(key));
     if (invalidKeys.length > 0) {
@@ -91,6 +90,7 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
     }
 
     // Define the next selected accountData
+    const currentAccountName = getSelectedAccountName(accounts);
     const next = Object.keys(accounts).reduce((acc, _accountKey) => {
       const accountKey = _accountKey as keyof AccountContextType;
       const storedData: AccountData = accounts[accountKey] ?? Object.assign(
@@ -98,13 +98,15 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
         { selected: false, favorites: DEFAULT_FAVORITES } as AccountData,
       );
 
-      if (accountKey === filteredUpdate.worldRegion) acc[accountKey] = {
-        ...storedData,
-        ...filteredUpdate,
-        selected: true,
-      };
-      else if (storedData.selected && filteredUpdate.worldRegion) acc[accountKey] = { ...storedData, selected: false };
-      else if (accounts[accountKey]) acc[accountKey] = storedData;
+      // Update the currently selected account with the new data
+      if (accountKey === currentAccountName) {
+        acc[accountKey] = {
+          ...storedData,
+          ...filteredUpdate,
+        };
+      } else {
+        acc[accountKey] = storedData;
+      }
 
       return acc;
     }, {} as AccountContextType);

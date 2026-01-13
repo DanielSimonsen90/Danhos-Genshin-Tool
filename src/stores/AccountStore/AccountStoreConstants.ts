@@ -1,6 +1,6 @@
 import { WorldRegion, AccountData, FavoritesCollection } from "./AccountStoreTypes";
 
-export const LOCAL_STORAGE_KEY__LEGACY = 'regions'; // TODO check
+export const LOCAL_STORAGE_KEY__LEGACY = 'regions';
 export const LOCAL_STORAGE_KEY = 'accounts';
 export const DEFAULT_WORLD_REGION: WorldRegion = 'Europe';
 export const DEFAULT_ACCOUNT_NAME = 'main';

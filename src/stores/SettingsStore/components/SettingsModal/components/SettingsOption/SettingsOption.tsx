@@ -19,6 +19,7 @@ type Props<Setting extends keyof Settings> = {
 } & (Setting extends 'selectedAccount' 
   ? { accountNames: Array<string>; } 
     : { accountNames?: undefined; });
+
 export default function SettingsOption<Setting extends keyof Settings>(props: Props<Setting>) {
   const [value, setValue] = useState(props.value);
 
@@ -86,15 +87,22 @@ function InputType<Setting extends keyof Settings>({ setting, value, onChange, .
       );
     })();
     case 'selectedAccountName': return (
-      <div className="input-group">
-        <label htmlFor={setting}></label>
+      <>
         <input type="text"
           name={setting}
           value={value as string}
           onChange={e => onChange(e.target.value as Settings[Setting])}
         />
-      </div>
+      </>
     );
+    case 'selectedAccount': return (
+      <Select
+        name="selectedAccountName"
+        options={props.accountNames ?? []}
+        value={value as Settings['selectedAccount']}
+        onChange={value => onChange(value as Settings[Setting])}
+      />
+    )
 
     case 'preferredTabs': return (
       <div className="preferred-tabs-setting">

@@ -44,15 +44,11 @@ function AccountSettings() {
   return (
     <section className="account-settings">
       <header>
-        <div className="input-group">
-          <label>Selected Account</label>
-          <Select
-            name="selectedAccountName"
-            options={accountNames}
-            value={selectedAccount}
-            onChange={handleAccountChange}
-          />
-        </div>
+        <SettingsOption setting="selectedAccount"
+          accountNames={accountNames}
+          value={selectedAccount}
+          setValue={handleAccountChange}
+        />
       </header>
       <div className="sub-header">
         <div className="input-group setting-traveler">
@@ -82,6 +78,11 @@ function AccountSettings() {
           onChange={setWorldRegion}
         />
       </div>
+      <footer>
+        <SettingsOption setting="accountCrud"
+          value={true}
+        />
+      </footer>
     </section>
   );
 }

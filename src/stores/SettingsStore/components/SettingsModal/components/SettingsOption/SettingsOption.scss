@@ -27,11 +27,6 @@
       grid-template-rows: auto 1fr;
       justify-items: start;
     }
-
-    &.button-panel {
-      grid-template-columns: auto;
-      grid-template-rows: repeat(2, 1fr);
-    }
   }
 
   .traveler-select {
