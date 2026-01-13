@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Navigation, SettingsContainer, SettingsModal } from "./components";
 
 export default function Header() {
-  const [openModal, setOpenModal] = useState(true); // TODO: Revert
+  const [openModal, setOpenModal] = useState(false);
 
   return (
     <>
