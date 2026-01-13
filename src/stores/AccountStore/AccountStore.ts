@@ -87,13 +87,13 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
       ? update(getState().accountData)
       : update;
     const validAccountDataKeys = Object.keys(DEFAULT_ACCOUNT_DATA);
-    const invalidKeys = Object.keys(resolvedAccountDataUpate).filter(key => !validAccountDataKeys.includes(key));
+    const invalidKeys = Object.keys(resolvedAccountDataUpdate).filter(key => !validAccountDataKeys.includes(key));
     if (invalidKeys.length > 0) {
       debugLog('Filtering out invalid properties from account data update:', invalidKeys);
-      debugLog('Original update:', resolvedAccountDataUpate);
+      debugLog('Original update:', resolvedAccountDataUpdate);
     }
 
-    const filteredUpdate = Object.keys(resolvedAccountDataUpate).reduce((acc, key) => {
+    const filteredUpdate = Object.keys(resolvedAccountDataUpdate).reduce((acc, key) => {
       if (validAccountDataKeys.includes(key)) {
         (acc as any)[key] = (resolvedAccountDataUpdate as any)[key];
       }
