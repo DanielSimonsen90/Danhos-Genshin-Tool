@@ -83,19 +83,19 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
   };
   const setAccountData = (update: Partial<AccountData> | ((state: AccountData) => AccountData), accountId?: string) => {
     const { accounts } = getState();
-    const resolvedAccountDataUpate = typeof update === 'function'
+    const resolvedAccountDataUpdate = typeof update === 'function'
       ? update(getState().accountData)
       : update;
     const validAccountDataKey = Object.keys(DEFAULT_ACCOUNT_DATA);
-    const invalidKeys = Object.keys(resolvedAccountDataUpate).filter(key => !validAccountDataKey.includes(key));
+    const invalidKeys = Object.keys(resolvedAccountDataUpdate).filter(key => !validAccountDataKey.includes(key));
     if (invalidKeys.length > 0) {
       debugLog('Filtering out invalid properties from account data update:', invalidKeys);
-      debugLog('Original update:', resolvedAccountDataUpate);
+      debugLog('Original update:', resolvedAccountDataUpdate);
     }
 
-    const filteredUpdate = Object.keys(resolvedAccountDataUpate).reduce((acc, key) => {
+    const filteredUpdate = Object.keys(resolvedAccountDataUpdate).reduce((acc, key) => {
       if (validAccountDataKey.includes(key)) {
-        (acc as any)[key] = (resolvedAccountDataUpate as any)[key];
+        (acc as any)[key] = (resolvedAccountDataUpdate as any)[key];
       }
       return acc;
     }, {} as Partial<AccountData>);
