@@ -20,7 +20,7 @@ export const PortableBearing = new LocalSpecialty(
 
 export const PineAmber = new LocalSpecialty(
   'Pine Amber',
-  `A gem formed from the resin of the towering ancient trees that once blanketed Nod-Krai. Over ages, the resin hardended into crystalline amber, now shining with vivid, radiant hues.`,
+  `A gem formed from the resin of the towering ancient trees that once blanketed Nod-Krai. Over ages, the resin hardened into crystalline amber, now shining with vivid, radiant hues.`,
   'Nod-Krai',
 );
 
