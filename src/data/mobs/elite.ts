@@ -1,4 +1,4 @@
-// https://genshin-impact.fandom.com/wiki/Enemy/List
+// https://genshin-impact.fandom.com/wiki/Enemy/List#Change_History
 
 import { EliteMob } from "@/common/models/mobs/Mob";
 import * as EasyMobDrops from "../materials/drops/easy";

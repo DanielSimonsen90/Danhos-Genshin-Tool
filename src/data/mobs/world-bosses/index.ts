@@ -1,3 +1,5 @@
+// https://genshin-impact.fandom.com/wiki/Enemy/List#Change_History
+
 export * from './mondstadt';
 export * from './liyue';
 export * from './inazuma';

@@ -3,6 +3,25 @@ import { Berserker, GladiatorsFinale, Instructor, TheExile, WanderersTroupe } fr
 import { Borderlander } from "@/data/materials/drops/billets";
 import { ElementalCrystals } from "@/data/materials/drops/crystals";
 import { DreamSolvent } from "@/data/materials/drops/general";
-import {  } from "@/data/materials/drops/nod-krai";
+import { MaskOfTheVirtuousDoctor, MadmansRestraint, ElixirOfTheHeretic } from "@/data/materials/drops/nod-krai";
 
-// TODO: Dottore
+export const TheDoctorDottore = new WeeklyBoss(
+  `The Doctor (Dottore)`,
+  'Description once Danho plays through it or someone sends it to him', // TODO
+  'Nod-Krai',
+  [
+    MaskOfTheVirtuousDoctor,
+    MadmansRestraint,
+    ElixirOfTheHeretic,
+    ...ElementalCrystals.Cryo.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Hydro.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Electro.getCraftingTreeAsMaterials(),
+    DreamSolvent,
+    GladiatorsFinale,
+    WanderersTroupe,
+    Berserker,
+    Instructor,
+    TheExile,
+    ...Borderlander
+  ]
+);

@@ -28,3 +28,31 @@ export const CyclicMilitaryKuuvahkiCore = new MobDrop(
   'Nod-Krai',
   Rarity.Epic
 );
+
+export const RemnantOfTheDreadwing = new MobDrop(
+  `Remnant of the Dreadwing`,
+  `A deep-black bone relic taken from the lingering corruption left behind after defeating the Whisperer of Nightmares that came invading from beyond this world.\nTheFormless beast that soared through the starless void should never have required organs this world calls "wings." Those grotesque, profane appendages may have arisen to adapt to the laws beneath the moon, or perhaps they are merely the distorted fragment of its true form that mortal eyes are able to witness.`,
+  'Nod-Krai',
+  Rarity.Epic
+);
+
+export const MaskOfTheVirtuousDoctor = new MobDrop(
+  `Mask of the Virtuous Doctor`,
+  `A mask found in the heretical testing grounds after defeating the false god that usurped the moon.\nMedicine is meant to cure the ailments of the flesh, yet mortal physicians turn a blind eye to the true causes of death. In the hands of a wise healer, the frail human body escapes the bounds of birth, aging, sickness, and death, revealing strength that defies common sense.`,
+  'Nod-Krai',
+  Rarity.Rare
+);
+
+export const MadmansRestraint = new MobDrop(
+  `Madman's Restraint`,
+  `A band found in the heretical testing grounds after defeating the false god that usurped the moon.\nHumanity defines civilization by driving out madness. Yet believing that all things, whether they exist or not, can be contained within reason may itself be another form of lunacy. The madman sees through reason's cunning, and in his world, all things are permitted.`,
+  'Nod-Krai',
+  Rarity.Rare
+);
+
+export const ElixirOfTheHeretic = new MobDrop(
+  `Elixir of the Heretic`,
+  `A vial found in the heretical testing grounds after defeating the false god that usurped the moon.\nFor centuries, self-proclaimed scholars have crawled beneath the weight of the six cardinal prohibitions, their studies little more than circular reasoning and empty words. The pursuit of truth should know no bounds — by this measure, those condemned as heretics by the world are the truest seekers of knowledge.`,
+  'Nod-Krai',
+  Rarity.Rare
+);

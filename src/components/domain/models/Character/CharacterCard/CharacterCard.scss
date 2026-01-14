@@ -152,7 +152,7 @@ a.character-card {
   }
 
   > header {
-    display: flex;
+    display: grid;
     justify-content: center;
   }
   .character-card__content {

@@ -1,7 +1,7 @@
 import { WorldBoss } from "@/common/models/mobs/Boss";
 import { Adventurer, Berserker, GladiatorsFinale, Instructor, LuckyDog, PrayersOfIllumination, PrayersOfSpringtime, PrayersOfWisdom, TheExile, TravelingDoctor, WanderersTroupe } from "@/data/artifact-sets";
 import { ElementalCrystals } from "@/data/materials/drops/crystals";
-import { PrecisionKuuvahkiStampingDie, LightbearingScaleFeather, RadiantAntler, CyclicMilitaryKuuvahkiCore } from '@/data/materials/drops/nod-krai';
+import { PrecisionKuuvahkiStampingDie, LightbearingScaleFeather, RadiantAntler, CyclicMilitaryKuuvahkiCore, RemnantOfTheDreadwing } from '@/data/materials/drops/nod-krai';
 
 export const KnuckleDuckle = new WorldBoss(
   `Knuckle Duckle`,
@@ -56,4 +56,17 @@ export const SuperHeavyLandroverMechanizedFortress = new WorldBoss(
     WanderersTroupe,
     Berserker, Instructor, PrayersOfIllumination, Adventurer
   ]
-)
+);
+
+export const LordOfTheHiddenDepths_WhisprerOfnightmares = new WorldBoss(
+  `Lord of the Hidden Depths: Whisperer of Nightmares`,
+  `An Abyssal creature that creeps through rifts in the hidden depths, quietly watching this world.\nIts eerie, faceless form is said to be nothing more than a projection, while its true body exists only as a formless mass of pure Abyssal energy.`,
+  'Nod-Krai',
+  [
+    RemnantOfTheDreadwing,
+    ...ElementalCrystals.Electro.getCraftingTreeAsMaterials(),
+    GladiatorsFinale,
+    WanderersTroupe,
+    Instructor, TheExile, PrayersOfWisdom, TravelingDoctor
+  ]
+);
