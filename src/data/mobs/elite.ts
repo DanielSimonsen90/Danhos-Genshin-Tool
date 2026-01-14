@@ -255,3 +255,11 @@ export const RadiantBeast = new EliteMob(
     EliteMobDrops.RaidantBeastDrop
   ]
 );
+
+export const FisherOfHiddenDepths = new EliteMob(
+  "Fisher of Hidden Depths",
+  `An Abyssal creature that slips through rifts in the hidden depths, crossing over from beyond this world.`,
+  [
+    EliteMobDrops.XOfTheDeepShadow
+  ]
+);
