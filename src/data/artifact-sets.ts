@@ -38,12 +38,12 @@ const canTriggerReaction = (character: Character, reaction: Reaction) => {
 
 /**
  * @two ATK +18%
- * @four After NA/CA/Skill/Burst hit opponent, gain Blessing of Pastoral Winds for 6s: ATK +25%. If equipping character completed Witch's Homework, Blessing of Pastoral Winds upgraded to Resolve of PAstoral Winds; CRIT Rate of character additional +20%. Can be triggered off-field.
+ * @four After NA/CA/Skill/Burst hit opponent, gain Blessing of Pastoral Winds for 6s: ATK +25%. If equipping character completed Witch's Homework, Blessing of Pastoral Winds upgraded to Resolve of Pastoral Winds; CRIT Rate of character additional +20%. Can be triggered off-field.
  */
 export const ADayCarvedFromRisingWinds = new ArtifactSet(
   "A Day Carved From Rising Winds",
   "ATK +18%",
-  "After NA/CA/Skill/Burst hit opponent, gain Blessing of Pastoral Winds for 6s: ATK +25%. If equipping character completed Witch's Homework, Blessing of Pastoral Winds upgraded to Resolve of PAstoral Winds; CRIT Rate of character additional +20%. Can be triggered off-field.",
+  "After NA/CA/Skill/Burst hit opponent, gain Blessing of Pastoral Winds for 6s: ATK +25%. If equipping character completed Witch's Homework, Blessing of Pastoral Winds upgraded to Resolve of Pastoral Winds; CRIT Rate of character additional +20%. Can be triggered off-field.",
   Rarity.Legendary,
   [Domains.MoonchildsTreasure.name],
   false,
