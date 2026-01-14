@@ -17,3 +17,15 @@ export const PortableBearing = new LocalSpecialty(
   `A portable bearing of a type that was mass-produced after the Fatui moved into Nod-Krai. Excessively worn units are discarded like obsolete personnel.\nA few of them have a vestige of kuuvahki left inside. As they are difficult to imitate, they are occasionally used as currency by merchants in Nasha Town.\nIt's said that people tried to forge these bearings for that reason, but went bankrupt in the end because the cost of forging them was higher than their market value.`,
   'Nod-Krai',
 );
+
+export const PineAmber = new LocalSpecialty(
+  'Pine Amber',
+  `A gem formed from the resin of the towering ancient trees that once blanketed Nod-Krai. Over ages, the resin hardended into crystalline amber, now shining with vivid, radiant hues.`,
+  'Nod-Krai',
+);
+
+export const WinterIcelea = new LocalSpecialty(
+  'Winter Icelea',
+  `A hardy plant known for withstanding relentless wind and frost, it survives even in the coldest depths of winter.`,
+  'Nod-Krai',
+);
