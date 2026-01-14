@@ -31,7 +31,7 @@ export const CyclicMilitaryKuuvahkiCore = new MobDrop(
 
 export const RemnantOfTheDreadwing = new MobDrop(
   `Remnant of the Dreadwing`,
-  `A deep-black bone relic taken from the lingering corruption left behind after defeating the Whisperer of Nightmares that came invading from beyond this world.\nTheFormless beast that soared through the starless void should never have required organs this world calls "wings." Those grotesque, profane appendages may have arisen to adapt to the laws beneath the moon, or perhaps they are merely the distorted fragment of its true form that mortal eyes are able to witness.`,
+  `A deep-black bone relic taken from the lingering corruption left behind after defeating the Whisperer of Nightmares that came invading from beyond this world.\nThe Formless beast that soared through the starless void should never have required organs this world calls "wings." Those grotesque, profane appendages may have arisen to adapt to the laws beneath the moon, or perhaps they are merely the distorted fragment of its true form that mortal eyes are able to witness.`,
   'Nod-Krai',
   Rarity.Epic
 );
