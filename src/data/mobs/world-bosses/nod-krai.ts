@@ -58,7 +58,7 @@ export const SuperHeavyLandroverMechanizedFortress = new WorldBoss(
   ]
 );
 
-export const LordOfTheHiddenDepths_WhisprerOfnightmares = new WorldBoss(
+export const LordOfTheHiddenDepths_WhispererOfNightmares = new WorldBoss(
   `Lord of the Hidden Depths: Whisperer of Nightmares`,
   `An Abyssal creature that creeps through rifts in the hidden depths, quietly watching this world.\nIts eerie, faceless form is said to be nothing more than a projection, while its true body exists only as a formless mass of pure Abyssal energy.`,
   'Nod-Krai',
