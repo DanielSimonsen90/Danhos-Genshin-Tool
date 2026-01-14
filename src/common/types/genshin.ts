@@ -1,7 +1,7 @@
 export type ArtifactPartName = 'Flower' | 'Feather' | 'Sands' | 'Goblet' | 'Circlet';
 export type Element = 'Anemo' | 'Pyro' | 'Hydro' | 'Electro' | 'Cryo' | 'Geo' | 'Dendro';
 
-export type LunarReaction = `Lunar-${'Charged' | 'Bloom' | 'Crystallize'}`;
+export type LunarReaction = 'Lunar' | `Lunar-${'Charged' | 'Bloom' | 'Crystallize'}`;
 export type Reaction =
   | 'Vaporize' | 'Overloaded' | 'Melt' | 'Burning'
   | 'Frozen' | 'Shatter' | 'Burgeon' | 'Hyperbloom' | 'Bloom'

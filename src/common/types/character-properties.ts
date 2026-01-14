@@ -71,3 +71,4 @@ export type PassiveTalent =
   | `When Lumidouce Case (lamp) is on field, all party members gain 85% Pyro RES against Burning DMG.`
   | `Once a week (reset Monday 4am EST), Low-Temperature Cooking (Skill) can produce foods after hitting a certain limit of elemental energy absorption.`
   | `Elemental Skill is increased by 1 level for all party members, if the team consists of Hydro/Cryo characters and at least 1 of each element.`
+  | `While in Nod-Krai, if a member on your team dies, Columbina will revive them and restore health based on Columbina's friendship level. Cooldown 100s. Does not work in domains.`

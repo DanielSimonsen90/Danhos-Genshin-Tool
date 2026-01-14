@@ -8,6 +8,7 @@ import * as EasyMobDrops from './materials/drops/easy';
 import * as TalentAscension from "./materials/talents";
 
 // #region 2-piece spread sets
+// TODO: Rework to automatically assign these values
 const HPSets = (priority: CharacterArtifactSet['effectiveness']) => [
   new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 2, priority),
   new CharacterArtifactSet(Sets.VourukashasGlow, 2, priority),
@@ -19,6 +20,8 @@ const AttackSets = (priority: CharacterArtifactSet['effectiveness']) => [
   new CharacterArtifactSet(Sets.VermillionHereafter, 2, priority),
   new CharacterArtifactSet(Sets.EchoesOfAnOffering, 2, priority),
   new CharacterArtifactSet(Sets.NighttimeWhispersInTheEchoingWoods, 2, priority),
+  new CharacterArtifactSet(Sets.ADayCarvedFromRisingWinds, 2, priority),
+  new CharacterArtifactSet(Sets.AubadeOfMorningstarAndMoon, 2, priority),
 ];
 const DefenseSets = (priority: CharacterArtifactSet['effectiveness']) => [
   new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 2, priority),
@@ -413,6 +416,23 @@ export const Collei = new Character("Collei", "Dendro", "Bow", [], Rarity.Epic, 
     new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 70.5),
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 6.3),
     new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 3.9),
+  ])
+);
+
+export const Columbina = new Character("Columbina", "Hydro", "Catalyst", [
+  'Increases Moonsign',
+  'Enables Lunar Reaction',
+], Rarity.Legendary, 'Nod-Krai', {
+  material: TalentAscension.Moonlight,
+  weeklyBossDrop: MobDrops.MaskOfTheVirtuousDoctor,
+  crystal: ElementalCrystals.Hydro,
+  localSpecialty: LocalSpecialties.WinterIcelea,
+  worldBossDrop: MobDrops.RadiantAntler,
+  mobDrop: EasyMobDrops.Slime,
+}, `While in Nod-Krai, if a member on your team dies, Columbina will revive them and restore health based on Columbina's friendship level. Cooldown 100s. Does not work in domains.`,
+  new CharacterPlaystyle('Off-field Lunar Support', ['HP', 'Energy Recharge'], ['Skill/Ability', 'Burst/Ult', 'Charged/Hold'], false, [
+    new CharacterArtifactSet(Sets.AubadeOfMorningstarAndMoon, 4, 50),
+    new CharacterArtifactSet(Sets.SilkenMoonsSerenade, 4, 50),
   ])
 );
 
