@@ -70,6 +70,34 @@ export default function SearchableArtifactList<TFilterKeys extends string>({
         uncommon: artifact => artifact.rarity === Rarity.Uncommon,
         common: artifact => artifact.rarity === Rarity.Common,
       },
+      talentIncrease: {
+        hp: artifact => artifact.doesStatIncrease('HP'),
+        atk: artifact => artifact.doesStatIncrease('ATK'),
+        def: artifact => artifact.doesStatIncrease('DEF'),
+        elementalMastery: artifact => artifact.doesStatIncrease('Elemental Mastery'),
+        energyRecharge: artifact => artifact.doesStatIncrease('Energy Recharge'),
+        physicalDMGBonus: artifact => artifact.doesStatIncrease('Physical DMG'),
+        healingBonus: artifact => artifact.doesStatIncrease('Healing Bonus') || artifact.doesStatIncrease('Healing Effectiveness'),
+        critRate: artifact => artifact.doesStatIncrease('Crit Rate'),
+        critDMG: artifact => artifact.doesStatIncrease('Crit DMG'),
+
+        shieldStrength: artifact => artifact.doesStatIncrease('Shield Strength'),
+        
+        chargedAttack: artifact => artifact.doesStatIncrease('Charged Attack DMG'),
+        normalAndChargedAttack: artifact => artifact.doesStatIncrease('Normal and Charged Attack DMG'),
+        
+        skill: artifact => artifact.doesStatIncrease('Elemental Skill DMG'),
+        burst: artifact => artifact.doesStatIncrease('Burst'),
+        elemental: artifact => (
+          artifact.doesStatIncrease('Anemo DMG Bonus')
+          || artifact.doesStatIncrease('Cryo DMG Bonus')
+          || artifact.doesStatIncrease('Dendro DMG Bonus')
+          || artifact.doesStatIncrease('Electro DMG Bonus')
+          || artifact.doesStatIncrease('Geo DMG Bonus')
+          || artifact.doesStatIncrease('Hydro DMG Bonus')
+          || artifact.doesStatIncrease('Pyro DMG Bonus')
+        ),
+      },
 
       ...filterChecks
     }}

@@ -1,4 +1,4 @@
-import { Rarity } from "@/common/types";
+import { Rarity, StatName, TalentStatName } from "@/common/types";
 import { Character, CharacterPlaystyle, CharacterArtifactSet } from "../common/models";
 import * as Sets from './artifact-sets';
 import ElementalCrystals from "./materials/drops/crystals";
@@ -6,75 +6,46 @@ import * as LocalSpecialties from "./materials/local-specialties";
 import * as MobDrops from './materials/drops';
 import * as EasyMobDrops from './materials/drops/easy';
 import * as TalentAscension from "./materials/talents";
+import MemoizeService from "@/services/MemoizeService";
+
+const SetMemoize = new MemoizeService();
 
 // #region 2-piece spread sets
-// TODO: Rework to automatically assign these values
-const HPSets = (priority: CharacterArtifactSet['effectiveness']) => [
-  new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 2, priority),
-  new CharacterArtifactSet(Sets.VourukashasGlow, 2, priority),
-];
-const AttackSets = (priority: CharacterArtifactSet['effectiveness']) => [
-  new CharacterArtifactSet(Sets.FragmentOfHarmonicWhimsy, 2, priority),
-  new CharacterArtifactSet(Sets.GladiatorsFinale, 2, priority),
-  new CharacterArtifactSet(Sets.ShimenawasReminiscence, 2, priority),
-  new CharacterArtifactSet(Sets.VermillionHereafter, 2, priority),
-  new CharacterArtifactSet(Sets.EchoesOfAnOffering, 2, priority),
-  new CharacterArtifactSet(Sets.NighttimeWhispersInTheEchoingWoods, 2, priority),
-  new CharacterArtifactSet(Sets.ADayCarvedFromRisingWinds, 2, priority),
-  new CharacterArtifactSet(Sets.AubadeOfMorningstarAndMoon, 2, priority),
-];
-const DefenseSets = (priority: CharacterArtifactSet['effectiveness']) => [
-  new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 2, priority),
-  new CharacterArtifactSet(Sets.DefendersWill, 2, priority),
-];
+const StatSets = (statName: string, priority: CharacterArtifactSet['effectiveness']) => SetMemoize.memoize(() => (
+  Object
+    .values(Sets)
+    .filter(set => set.doesStatIncrease(statName))
+    .map(set => new CharacterArtifactSet(set, 2, priority))
+), [statName, priority])
 
-const ElementalMasterySets = (priority: CharacterArtifactSet['effectiveness']) => [
-  new CharacterArtifactSet(Sets.GildedDreams, 2, priority),
-  new CharacterArtifactSet(Sets.WanderersTroupe, 2, priority),
-  new CharacterArtifactSet(Sets.FlowerOfParadiseLost, 2, priority),
-  new CharacterArtifactSet(Sets.NightOfTheSkysUnveiling, 2, priority),
-];
-const EnergyRechargeSets = (priority: CharacterArtifactSet['effectiveness']) => [
-  new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 2, priority),
-  new CharacterArtifactSet(Sets.TheExile, 2, priority),
-  new CharacterArtifactSet(Sets.Scholar, 2, priority),
-  new CharacterArtifactSet(Sets.SilkenMoonsSerenade, 2, priority),
-];
+const HPSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('HP', priority)
+const AttackSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('ATK', priority)
+const DefenseSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('DEF', priority)
 
-const ChargedAttackSets = (priority: CharacterArtifactSet['effectiveness']) => [
-  new CharacterArtifactSet(Sets.MarechausseeHunter, 2, priority),
-];
-const PhysicalDMGSets = (priority: CharacterArtifactSet['effectiveness']) => [
-  new CharacterArtifactSet(Sets.PaleFlame, 2, priority),
-  new CharacterArtifactSet(Sets.BloodstainedChivalry, 2, priority),
-];
-const HealingBonusSets = (priority: CharacterArtifactSet['effectiveness']) => [
-  new CharacterArtifactSet(Sets.MaidenBeloved, 2, priority),
-  new CharacterArtifactSet(Sets.OceanHuedClam, 2, priority),
-  new CharacterArtifactSet(Sets.SongOfDaysPast, 2, priority)
-];
+const ElementalMasterySets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Elemental Mastery', priority)
+const EnergyRechargeSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Energy Recharge', priority)
 
-const AnemoDMGSets = (priority: CharacterArtifactSet['effectiveness']) => [
-  new CharacterArtifactSet(Sets.ViridescentVenerer, 2, priority),
-  new CharacterArtifactSet(Sets.DesertPavilionChronicle, 2, priority),
-];
-const CryoDMGSets = (priority: CharacterArtifactSet['effectiveness']) => [
-  new CharacterArtifactSet(Sets.BlizzardStrayer, 2, priority),
-  new CharacterArtifactSet(Sets.FinaleOfTheDeepGalleries, 2, priority),
-];
-const DendroDMGSets = (priority: CharacterArtifactSet['effectiveness']) => [
-  new CharacterArtifactSet(Sets.DeepwoodMemories, 2, priority),
-];
-const GeoDMGSets = (priority: CharacterArtifactSet['effectiveness']) => [
-  new CharacterArtifactSet(Sets.ArchaicPetra, 2, priority),
-];
-const HydroDMGSets = (priority: CharacterArtifactSet['effectiveness']) => [
-  new CharacterArtifactSet(Sets.HeartOfDepth, 2, priority),
-  new CharacterArtifactSet(Sets.NymphsDream, 2, priority),
-];
-const PyroDMGSets = (priority: CharacterArtifactSet['effectiveness']) => [
-  new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 2, priority),
-];
+const PhysicalDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Physical DMG Bonus', priority)
+const HealingBonusSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Healing Bonus', priority)
+
+// Attack type sets
+const ChargedAttackSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Charged Attack', priority)
+const NormalAndChargedAttackSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Normal and Charged Attack DMG', priority)
+const BurstDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Burst', priority)
+const ElementalSkillDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Elemental Skill DMG', priority)
+
+// CRIT and other stats
+const CRITRateSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('CRIT Rate', priority)
+const ShieldStrengthSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Shield Strength', priority)
+
+// Element DMG Bonus sets
+const AnemoDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Anemo DMG Bonus', priority)
+const CryoDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Cryo DMG Bonus', priority)
+const DendroDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Dendro DMG Bonus', priority)
+const ElectroDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Electro DMG Bonus', priority)
+const GeoDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Geo DMG Bonus', priority)
+const HydroDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Hydro DMG Bonus', priority)
+const PyroDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Pyro DMG Bonus', priority)
 // #endregion
 
 // #region A-G

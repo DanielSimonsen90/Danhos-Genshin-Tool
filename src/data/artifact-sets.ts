@@ -417,12 +417,12 @@ export const GladiatorsFinale = new ArtifactSet(
 );
 
 /**
- * @two Increases Elemental Skill DMG by 20%
+ * @two Elemental Skill DMG +20%
  * @four Increase Elemental Skill DMG by 25%. Additionally, off-field, Elemental Skill DMG additional +25%. Effect cleared 2s after on-field.
  */
 export const GoldenTroupe = new ArtifactSet(
   "Golden Troupe",
-  "Increase Elemental Skill DMG by 20%",
+  "Elemental Skill DMG +20%",
   "Increase Elemental Skill DMG by 25%. Additionally, off-field, Elemental Skill DMG additional +25%. Effect cleared 2s after on-field.",
   Rarity.Legendary,
   [Domains.DenouementOfSin.name],
@@ -520,7 +520,7 @@ export const Lavawalker = new ArtifactSet(
  */
 export const LongNightsOath = new ArtifactSet(
   "Long Night's Oath",
-  "Plunging Attack DMG increased by 25%",
+  "Plunging Attack DMG +25%",
   `After Plunging/Charged/Skill hits an opponent, gain 1/2/2 stacks of "Radiance Everlasting". Plunging, Charged or Skill can each trigger effect once every 1s. Radiance Everlasting: Plunging deal 15% increased dmg for 6s. Max 5 stacks, each duration counted independently.`,
   Rarity.Legendary,
   [Domains.DerelictMasonryDock.name],

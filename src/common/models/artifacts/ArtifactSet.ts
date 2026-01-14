@@ -1,4 +1,4 @@
-import { Nullable, Rarity } from '@/common/types';
+import { Nullable, Rarity, StatName } from '@/common/types';
 import Character from '../characters/Character';
 import { CharacterArtifactSet } from '../characters/CharacterArtifactSet';
 import Material from '../materials/Material';
@@ -33,13 +33,23 @@ export class ArtifactSet extends Material {
     );
   }
 
-  public includes(query: string): boolean {
+  public includes(query: string | RegExp): boolean {
     const keys = [
       this.name,
       this.twoPieceSetDescription,
       this.fourPieceSetDescription,
     ];
-    return keys.some(key => key.toLowerCase().includes(query));
+    return keys.some(key => (
+      typeof query === 'string'
+        ? key.toLowerCase().includes(query.toLowerCase())
+        : key.match(query) !== null
+    ));
+  }
+
+  public doesStatIncrease(stat?: string) {
+    return this.includes(
+      new RegExp(`${stat ?? '\\w+'}(?:\\s+\\((?:ult|ability)\\))?(?:\\s+(?:DMG|Bonus|Effectiveness|Strength))?\\s+\\+\\d+`, 'i')
+    );
   }
 
   public getModelKey(): ModelKeys {
