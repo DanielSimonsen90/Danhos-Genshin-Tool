@@ -31,7 +31,9 @@ export function pascalCaseFromSnakeCase<T extends string>(value: T): T {
 }
 
 export function pascalCaseFromCamelCase<T extends string>(value: T): T {
-  const result = value.replace(/([A-Z])/g, (match) => ` ${match}`);
+  const result = value
+    .replace(/([a-z])([A-Z])/g, '$1 $2') // Add space between lowercase and uppercase
+    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2'); // Handle acronyms like "HTMLParser" -> "HTML Parser"
   debugLog(`[pascalCaseFromCamelCase] ${value} -> ${result}`);
   return (result[0].toUpperCase() + result.slice(1)) as T;
 }
