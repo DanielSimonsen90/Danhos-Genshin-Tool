@@ -31,7 +31,6 @@
 * Missing weapons:
   - Dawning Frost
   - Flame-Forged Insight
-  - Rainbow Serpent's Rain Bow
 
 ## Fixes
 * Confirmation box being triggered no matter if your favorited model was favorited or unfavorited. Now only triggers when unfavoriting.
@@ -42,6 +41,7 @@
 * "Skip Nav" button being multiple lines on shorter widths.
 * Missing image for Super-Heavy Landrover Mechanized Fortress
 * Festering Desire's secondary stat being "Elemental Mastery" instead of "Energy Recharge"
+* Rainbow Serpent's Rain Bow's name having an apostrophe between Rain and Bow.
 
 ## Updates
 * Character page style updates.
