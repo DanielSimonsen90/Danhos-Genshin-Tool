@@ -13,10 +13,12 @@ type Props = {
 export default function ArtifactImage({ set, piece, className }: Props) {
   const isPrayersPiece = set.includes('Prayers');
   const name = isPrayersPiece ? 'Circlet' : piece ?? 'Flower';
-  
+  const [src, fallbackSrc] = ImageService.getArtifactImage(set, name);
+
   return <Image 
     className={classNames("artifact-image", className)} 
-    src={ImageService.getArtifactImage(set, name)} 
+    src={src}
+    fallbackSrc={fallbackSrc}
     alt={`${pascalCaseFromSnakeCase(set)} ${name}`} 
   />;
 }

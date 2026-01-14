@@ -390,6 +390,23 @@ export const Collei = new Character("Collei", "Dendro", "Bow", [], Rarity.Epic, 
   ])
 );
 
+export const Columbina = new Character("Columbina", "Hydro", "Catalyst", [
+  'Increases Moonsign',
+  'Enables Lunar Reaction',
+], Rarity.Legendary, 'Nod-Krai', {
+  material: TalentAscension.Moonlight,
+  weeklyBossDrop: MobDrops.MaskOfTheVirtuousDoctor,
+  crystal: ElementalCrystals.Hydro,
+  localSpecialty: LocalSpecialties.WinterIcelea,
+  worldBossDrop: MobDrops.RadiantAntler,
+  mobDrop: EasyMobDrops.Slime,
+}, `While in Nod-Krai, if a member on your team dies, Columbina will revive them and restore health based on Columbina's friendship level. Cooldown 100s. Does not work in domains.`,
+  new CharacterPlaystyle('Off-field Lunar Support', ['HP', 'Energy Recharge'], ['Skill/Ability', 'Burst/Ult', 'Charged/Hold'], false, [
+    new CharacterArtifactSet(Sets.AubadeOfMorningstarAndMoon, 4, 50),
+    new CharacterArtifactSet(Sets.SilkenMoonsSerenade, 4, 50),
+  ])
+);
+
 export const Cyno = new Character("Cyno", "Electro", "Polearm", [], Rarity.Legendary, 'Sumeru', {
   material: TalentAscension.Admonition,
   weeklyBossDrop: MobDrops.MudraOfTheMaleficGeneral,

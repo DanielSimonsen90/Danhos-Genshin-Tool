@@ -37,6 +37,26 @@ const canTriggerReaction = (character: Character, reaction: Reaction) => {
 // #region A-G
 
 /**
+ * @two ATK +18%
+ * @four After NA/CA/Skill/Burst hit opponent, gain Blessing of Pastoral Winds for 6s: ATK +25%. If equipping character completed Witch's Homework, Blessing of Pastoral Winds upgraded to Resolve of Pastoral Winds; CRIT Rate of character additional +20%. Can be triggered off-field.
+ */
+export const ADayCarvedFromRisingWinds = new ArtifactSet(
+  "A Day Carved From Rising Winds",
+  "ATK +18%",
+  "After NA/CA/Skill/Burst hit opponent, gain Blessing of Pastoral Winds for 6s: ATK +25%. If equipping character completed Witch's Homework, Blessing of Pastoral Winds upgraded to Resolve of Pastoral Winds; CRIT Rate of character additional +20%. Can be triggered off-field.",
+  Rarity.Legendary,
+  [Domains.MoonchildsTreasure.name],
+  false,
+  (c, set) => {
+    let value = 0;
+    if (c.playstyle?.talentStats.includes('ATK')) value += correctElement;
+    if (set.pieces === 4 && !c.playstyle?.onField) value += correctElement;
+    if (c.bonusAbilities.toString().includes('Hexerei Able')) value += correctElement;
+    return value;
+  }
+);
+
+/**
  * @two Max HP +1000
  * @four Opening a chest regenerates 30% Max HP for 5s.
  */
@@ -62,6 +82,24 @@ export const ArchaicPetra = new ArtifactSet(
   [Domains.DomainOfGuyun.name],
   true,
   c => c.element === 'Geo' ? correctElement : 0
+);
+
+
+export const AubadeOfMorningstarAndMoon = new ArtifactSet(
+  "Aubade Of Morningstar And Moon",
+  "Elemental Mastery +80",
+  "When equipping character is off-field, Lunar Reaction DMG +20%. When Moonsign is at least Ascendant Gleam, Lunar Reaction DMG additionally +40%. Effect cleared after character is on field for more than 3s.",
+  Rarity.Legendary,
+  [Domains.MoonchildsTreasure.name],
+  false,
+  (c, set) => {
+    let value = 0;
+
+    if (c.playstyle?.talentStats.includes('Elemental Mastery')) value += correctElement;
+    if (set.pieces === 4 && !c.playstyle?.onField && c.bonusAbilities.includes('Increases Moonsign')) value += correctElement;
+
+    return value;
+  }
 );
 
 /**

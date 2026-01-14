@@ -2,7 +2,6 @@ import { Select } from "@/components/common/FormItems";
 import SettingsOption from "../SettingsOption";
 import { DEFAULT_ACCOUNT_DATA, Traveler, useAccountStore, WORLD_REGIONS } from "@/stores/AccountStore";
 import { CharacterImage } from "@/components/common/media/Images";
-import { DEFAULT_SETTINGS } from "@/stores/SettingsStore/SettingsStoreConstants";
 import { useCallback, useMemo, memo } from "react";
 import { useStateReset } from "@/hooks/useStateReset";
 

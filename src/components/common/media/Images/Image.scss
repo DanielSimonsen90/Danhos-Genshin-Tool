@@ -13,10 +13,12 @@ img {
   min-height: var(--min-size);
 
   object-fit: contain;
+  aspect-ratio: 1 / 1;
 }
 
 .character-image {
   --size: 6rem;
+  
   background-color: var(--rarity--muted);
   border: 1px solid var(--element);
   border-radius: 50%;
@@ -24,7 +26,6 @@ img {
 
 .artifact-image {
   --size: 7.5rem;
-  aspect-ratio: 1 / 1;
 }
 
 .domain-image {

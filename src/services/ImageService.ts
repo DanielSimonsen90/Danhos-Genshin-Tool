@@ -16,10 +16,14 @@ const SUNDERARMOR_CDN_URL = 'https://sunderarmor.com/GENSHIN';
 const LOCAL_PATH = IS_DEVELOPMENT_ENVIRONMENT ? '../assets/images' : `${GITHUB_CONTENT_URL}/assets/images`;
 
 export const ImageService = new class ImageService extends BaseService<string> {
-  public getArtifactImage(set: keyof typeof ArtifactSetData | string, part: ArtifactPartName): string {
-    return this.lastResult = set.includes('Prayers') || part !== 'Flower'
-      ? `${PAIMON_MOE_URL}/artifacts/${snakeCaseFromCamelCase(set).replace("'", '').toLowerCase()}_${part === 'Feather' ? 'plume' : snakeCaseFromCamelCase(part).toLowerCase()}.png`
-      : `${SUNDERARMOR_CDN_URL}/Gear/${snakeCaseFromCamelCase(set).toLowerCase()}.png`;
+  public getArtifactImage(set: keyof typeof ArtifactSetData | string, part: ArtifactPartName): [string, string] {
+    const paimonmoe = `${PAIMON_MOE_URL}/artifacts/${snakeCaseFromCamelCase(set).replace("'", '').toLowerCase()}_${part === 'Feather' ? 'plume' : snakeCaseFromCamelCase(part).toLowerCase()}.png`;
+    const genshingg = `${SUNDERARMOR_CDN_URL}/Gear/${snakeCaseFromCamelCase(set).toLowerCase()}.png`;
+    
+    const preferPaimon = set.includes('Prayers') || part !== 'Flower';
+    const src = preferPaimon ? paimonmoe : genshingg;
+    const fallbackSrc = preferPaimon ? genshingg : paimonmoe;
+    return [src, fallbackSrc];
   }
 
   public getCharacterImage(name: keyof typeof CharacterData | string): string {
