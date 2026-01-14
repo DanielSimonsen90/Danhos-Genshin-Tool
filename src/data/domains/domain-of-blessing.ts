@@ -215,7 +215,7 @@ export const FrostladenMachinery = new DomainOfBlessing(
 
 export const MoonchildsTreasure = new DomainOfBlessing(
   "Moonchild's Treasure",
-  `A vault that once held the sparks of an ancient civilization, now taken over by villains seeking sacred relics along wit the owls of the bedeviled skies.\nIf you repel the infesting monsters with the blessing of moonlight, you might be rewarded valuable artifacts.`,
+  `A vault that once held the sparks of an ancient civilization, now taken over by villains seeking sacred relics along with the owls of the bedeviled skies.\nIf you repel the infesting monsters with the blessing of moonlight, you might be rewarded valuable artifacts.`,
   {
     1: `(Hydro, Geo, Electro, Dendro)`,
     2: `(Hydro, Geo, Electro, Dendro)`,
