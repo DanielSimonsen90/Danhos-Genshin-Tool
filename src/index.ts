@@ -660,8 +660,6 @@ const validateSettings = (data: any): { valid: boolean; filtered: any; error?: s
       results: 'combined' as const,
       craftableMaterial: 'common' as const,
     },
-    updated: undefined,
-    newUser: true
   };
 
   const filtered = { ...defaults };

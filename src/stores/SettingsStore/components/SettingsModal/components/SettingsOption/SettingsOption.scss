@@ -1,4 +1,4 @@
-.settings-option + .settings-option {
+.settings-option+.settings-option {
   border-top: 1px solid var(--background-secondary);
   padding-top: 1rem;
 }
@@ -10,16 +10,17 @@
     align-items: start;
     gap: .25rem;
     width: 100%;
+    flex: 1;
 
     >label {
       font-size: 1.1rem;
       font-weight: bold;
+      flex: 1;
     }
   }
 
   .input-group {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
     justify-items: end;
 
     &.setting-preferredTabs {

@@ -17,20 +17,20 @@ type Props<Setting extends keyof Settings> = {
   value: Settings[Setting];
   setValue?: (value: Settings[Setting]) => void;
 } & (
-  Setting extends 'selectedAccount' 
-  ? { accountNames: Array<string> | undefined; } 
-  : { accountNames?: undefined; }
-) & (
-  Setting extends 'accountCrud'
-  ? {
-    onAdd(): void;
-    onDelete(): void;
-  }
-  : {
-    onAdd?: undefined;
-    onDelete?: undefined;
-  }
-)
+    Setting extends 'selectedAccount'
+    ? { accountNames: Array<string> | undefined; }
+    : { accountNames?: undefined; }
+  ) & (
+    Setting extends 'accountCrud'
+    ? {
+      onAdd(): void;
+      onDelete(): void;
+    }
+    : {
+      onAdd?: undefined;
+      onDelete?: undefined;
+    }
+  );
 
 export default function SettingsOption<Setting extends keyof Settings>(props: Props<Setting>) {
   const [value, setValue] = useState(props.value);
@@ -47,12 +47,14 @@ export default function SettingsOption<Setting extends keyof Settings>(props: Pr
   return props.setting === 'updated' || props.setting === 'newUser' ? null : (
     <div className="settings-option">
       <div className={classNames("input-group", `setting-${props.setting}`)}>
-        <aside>
-          {!props.hideLabel && <label>{titles[props.setting]}</label>}
-          {!props.hideLabel && descriptions[props.setting] && (
-            <p className="description muted">{descriptions[props.setting]}</p>
-          )}
-        </aside>
+        {!props.hideLabel ? (
+          <aside>
+            {<label>{titles[props.setting]}</label>}
+            {descriptions[props.setting] && (
+              <p className="description muted">{descriptions[props.setting]}</p>
+            )}
+          </aside>
+        ) : null}
         <InputType {...props as any} value={value} onChange={onChange} />
       </div>
     </div>
@@ -90,7 +92,7 @@ function InputType<Setting extends keyof Settings>({ setting, value, onChange, .
 
     case 'accountCrud': return (() => {
       const accountName = useAccountStore(state => state.selectedAccountName);
-      
+
       return (
         <div className="input-group button-panel" onClick={e => e.stopPropagation()}>
           <button type="button" className='secondary danger' onClick={props.onDelete}>Delete {accountName}</button>
@@ -114,7 +116,7 @@ function InputType<Setting extends keyof Settings>({ setting, value, onChange, .
         value={value as Settings['selectedAccount']}
         onChange={value => onChange(value as Settings[Setting])}
       />
-    )
+    );
 
     case 'preferredTabs': return (
       <div className="preferred-tabs-setting">
