@@ -351,6 +351,6 @@ export const XOfTheDeepShadow = MobDrop.create('of the Deep Shadow', {
   [Rarity.Uncommon]: `Fractured Eye`
 }, {
   [Rarity.Epic]: `The remains of a fisher from beyond this world, left after its body dissolved.\nA birdlike, hook-shaped beak used by predators from beyond this world to store the biomass they seize.`,
-  [Rarity.Rare]: `The remains fo a fisher from beyond this world, left after its body dissolved.\nA core whose functions have fully shut down, and its structure resembles no organ of any creature found on this earth.`,
+  [Rarity.Rare]: `The remains of a fisher from beyond this world, left after its body dissolved.\nA core whose functions have fully shut down, and its structure resembles no organ of any creature found on this earth.`,
   [Rarity.Uncommon]: `The remains of a fisher from beyond this world, left after its body dissolved.\nOnce its shell cracked, the malice housed within faded away as well.`
 });
