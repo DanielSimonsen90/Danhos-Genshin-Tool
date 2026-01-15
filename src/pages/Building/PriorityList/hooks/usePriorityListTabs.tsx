@@ -20,7 +20,7 @@ type UsePriorityListTabsProps = {
 export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdateModal }: UsePriorityListTabsProps) {
   const DataStore = useDataStore();
   const FavoriteStore = useFavorites();
-  const { worldRegion: region } = useAccountData();
+  const { id: accountId } = useAccountData();
   const navigate = useNavigate();
 
   const onTierChange = useCallback((tierlistTitle: string) => (tiers: Array<Tier<string>>) => {
@@ -90,7 +90,7 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
             onMove={direction => onMove(tierlistTitle, direction)}
           />,
           content: (
-            <Tierlist key={`${region}-${tierlistTitle}`} {...{
+            <Tierlist key={`${accountId}-${tierlistTitle}`} {...{
               model: modelType,
               items: items,
               onSearch: onUnsortedSearch,
