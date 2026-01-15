@@ -26,7 +26,7 @@ export const descriptions: Record<keyof Settings, string> = {
 
   // Region settings
   accountCrud: `Create more accounts or delete the current one.`,
-  selectedAccount: `The selected in account.`,
+  selectedAccount: `The selected account.`,
   selectedAccountName: `The name of the selected account.`,
   traveler: `The preferred Traveler character to use in images and references.`,
   worldRegion: `The preferred world region for account data to help determine server location for daily material updates.`,
