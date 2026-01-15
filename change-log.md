@@ -33,18 +33,25 @@
   - Flame-Forged Insight
 
 ## Fixes
+### FavoriteStar
 * Confirmation box being triggered no matter if your favorited model was favorited or unfavorited. Now only triggers when unfavoriting.
 * The favorite star alone can now also add favorites... I thought this was already implemented, but apparently not.
-* Traveler profile picture not updating when changing accounts.
-* Tierlist entries being lost when deleting or clearing a tier.
-* Styling issues including text overflow on MobCard + decreasing the size of "Boss" tags.
-* "Skip Nav" button being multiple lines on shorter widths.
+
+### Tierlist
+* Entries being lost when deleting or clearing a tier.
+* Entries being able to move without the context menu visible.
+* Search input not being focused using ctrl + f.
+* Moving an entry using searched filter moving the wrong entry
+
+### Silly mistakes
 * Missing image for Super-Heavy Landrover Mechanized Fortress
 * Festering Desire's secondary stat being "Elemental Mastery" instead of "Energy Recharge"
 * Rainbow Serpent's Rain Bow's name having an apostrophe between Rain and Bow.
-* Tierlist items being able to move without the context menu visible.
-* Search input in the tierlist not being focused using ctrl + f.
-* Moving a tierlist entry using searched filter moving the wrong item
+
+### Other fixes
+* Traveler profile picture not updating when changing accounts.
+* Styling issues including text overflow on MobCard + decreasing the size of "Boss" tags.
+* "Skip Nav" button being multiple lines on shorter widths.
 
 ## Updates
 * Character page style updates.
