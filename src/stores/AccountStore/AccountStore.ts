@@ -34,7 +34,7 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
 
   // Helper function to generate unique IDs
   const generateAccountId = (): string => {
-    return `account_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `account_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`;
   };
 
   // Get and filter accounts data to remove any invalid properties
