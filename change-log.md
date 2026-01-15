@@ -47,6 +47,8 @@
 * Missing image for Super-Heavy Landrover Mechanized Fortress
 * Festering Desire's secondary stat being "Elemental Mastery" instead of "Energy Recharge"
 * Rainbow Serpent's Rain Bow's name having an apostrophe between Rain and Bow.
+* Artifact Helper substat dropdown being hidden within its container
+  - This also affects all over tabbars that use the Select component.
 
 ### Other fixes
 * Traveler profile picture not updating when changing accounts.
