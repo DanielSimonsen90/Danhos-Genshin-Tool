@@ -56,13 +56,6 @@ export default function SettingsModal(props: ModalConsumerProps) {
     }
   };
 
-  const accountSettings = {
-    accountCrud: true,
-    selectedAccountName: Object.keys(accounts).find(name => accounts[name]?.selected),
-    worldRegion: accountData.worldRegion,
-    traveler: accountData.traveler,
-  };
-
   return props.open ? (
     <Modal {...props} className="settings-modal">
       <h1>{DOMAIN_NAME} Settings</h1>
