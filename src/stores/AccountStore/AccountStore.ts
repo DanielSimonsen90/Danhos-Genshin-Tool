@@ -19,8 +19,11 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
       const region = stored[key as any];
       if (!region) return acc;
 
+      // Deep copy the region data to prevent reference sharing
+      const regionCopy = JSON.parse(JSON.stringify(region));
+      
       acc[key] = {
-        ...ObjectUtils.exclude(region, 'region' as any),
+        ...ObjectUtils.exclude(regionCopy, 'region' as any),
         worldRegion: key as WorldRegion,
       } as any;
 
@@ -128,7 +131,8 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
           ...filteredUpdate,
         };
       } else {
-        acc[accountKey] = storedData;
+        // Deep copy to prevent reference sharing of nested objects like priorityLists
+        acc[accountKey] = JSON.parse(JSON.stringify(storedData));
       }
 
       return acc;

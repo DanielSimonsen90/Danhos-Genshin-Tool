@@ -573,6 +573,11 @@ const validateAndFilterLocalStorageData = (data: any): { valid: boolean; filtere
         optional: ['Asia', 'Europe', 'North America', 'TW, HK, MO'],
         defaults: {}
       },
+      'accounts': {
+        required: [],
+        optional: [],
+        defaults: {}
+      },
       'cache': {
         required: [],
         optional: [],
@@ -597,12 +602,21 @@ const validateAndFilterLocalStorageData = (data: any): { valid: boolean; filtere
               filtered[key] = keyConfig.defaults;
             }
           } else if (key === 'regions') {
-            // Validate regions data  
+            // Validate regions data (legacy format)
             const regionsValidation = validateRegions(value);
             if (regionsValidation.valid) {
               filtered[key] = regionsValidation.filtered;
             } else {
               warnings.push(`Regions validation failed: ${regionsValidation.error}, using defaults`);
+              filtered[key] = keyConfig.defaults;
+            }
+          } else if (key === 'accounts') {
+            // Validate accounts data (new format)
+            const accountsValidation = validateAccounts(value);
+            if (accountsValidation.valid) {
+              filtered[key] = accountsValidation.filtered;
+            } else {
+              warnings.push(`Accounts validation failed: ${accountsValidation.error}, using defaults`);
               filtered[key] = keyConfig.defaults;
             }
           } else {
@@ -690,6 +704,42 @@ const validateRegions = (data: any): { valid: boolean; filtered: any; error?: st
     if (regionData && typeof regionData === 'object') {
       filtered[regionKey] = regionData;
     }
+  }
+
+  return { valid: true, filtered };
+};
+
+// Helper function to validate accounts data
+const validateAccounts = (data: any): { valid: boolean; filtered: any; error?: string } => {
+  if (!data || typeof data !== 'object') {
+    return { valid: false, filtered: {}, error: 'Accounts must be an object' };
+  }
+
+  // Validate each account entry
+  const filtered: Record<string, any> = {};
+  
+  for (const [accountName, accountData] of Object.entries(data)) {
+    if (accountData && typeof accountData === 'object') {
+      // Ensure each account has the minimum required structure
+      const account = accountData as any;
+      
+      // Copy the account data, ensuring it has valid properties
+      filtered[accountName] = {
+        ...account,
+        // Ensure each account has an id
+        id: account.id || `account_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`,
+        // Ensure boolean selected property exists
+        selected: typeof account.selected === 'boolean' ? account.selected : false,
+      };
+    }
+  }
+
+  // Ensure at least one account is selected
+  const hasSelectedAccount = Object.values(filtered).some((account: any) => account.selected === true);
+  if (!hasSelectedAccount && Object.keys(filtered).length > 0) {
+    // Select the first account if none are selected
+    const firstAccountName = Object.keys(filtered)[0];
+    filtered[firstAccountName].selected = true;
   }
 
   return { valid: true, filtered };
