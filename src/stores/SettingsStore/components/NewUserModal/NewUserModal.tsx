@@ -43,9 +43,9 @@ export const NewUserModal = () => {
         <h1>You wake up from a deep sleep on a beach in Monstadt...</h1>
         <div className="intro-sentence">
           <span>You wake up as </span>
-          <SettingsOption setting="traveler" value={DEFAULT_ACCOUNT_DATA['traveler']} accountNames={undefined} />
+          <SettingsOption hideLabel setting="traveler" value={DEFAULT_ACCOUNT_DATA['traveler']} accountNames={undefined} />
           <span> in </span>
-          <SettingsOption setting="worldRegion" value={DEFAULT_ACCOUNT_DATA['worldRegion']} />
+          <SettingsOption hideLabel setting="worldRegion" value={DEFAULT_ACCOUNT_DATA['worldRegion']} />
         </div>
         <input type="submit" value="Finish" disabled={submitting} />
       </form>

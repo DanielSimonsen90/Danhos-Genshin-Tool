@@ -96,8 +96,11 @@ export const useSettingsStore = create<SettingsStore>(((setState, getState) => {
           : update
         ) : getState().settings;
 
-      // Filter out character filter properties that shouldn't be in settings
-      const validSettingsKeys = Object.keys(DEFAULT_SETTINGS).concat(['updated']);
+      // Filter out internal properties that shouldn't be saved to storage
+      const validSettingsKeys = Object.keys(DEFAULT_SETTINGS).filter(key => 
+        key !== 'updated' 
+        && key !== 'newUser'
+      );
       const filteredSettings = Object.keys({ ...getState().settings, ...resolvedUpdate }).reduce((acc, key) => {
         if (validSettingsKeys.includes(key)) {
           const source = (resolvedUpdate as any)[key] !== undefined ? resolvedUpdate : getState().settings;
@@ -110,7 +113,6 @@ export const useSettingsStore = create<SettingsStore>(((setState, getState) => {
       debugLog('Settings saved', filteredSettings);
 
       const newInitialSettings = { ...filteredSettings };
-      delete newInitialSettings.updated;
       setState({ initialSettings: newInitialSettings });
     },
     updateAndSaveSettings(update: SetStateAction<Partial<AppSettings>>, override?: boolean) {
