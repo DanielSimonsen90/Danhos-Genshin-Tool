@@ -1,4 +1,4 @@
-import { Rarity, StatName, TalentStatName } from "@/common/types";
+import { Rarity } from "@/common/types";
 import { Character, CharacterPlaystyle, CharacterArtifactSet } from "../common/models";
 import * as Sets from './artifact-sets';
 import ElementalCrystals from "./materials/drops/crystals";
