@@ -857,6 +857,28 @@ export const CrimsonMoonsSemblance = new Weapon(
 // #endregion
 
 // #region D
+export const DawningFrost = new Weapon(
+  'Dawning Frost',
+  {
+    value: `For 10s after a Charged Attack hits an opponent, Elemental Mastery is increased by $0. For 10s after an Elemental Skill hits an opponent, Elemental Mastery is increased by $1.`,
+    refinements: [
+      '72/90/108/126/144',
+      '48/60/72/84/96',
+    ]
+  },
+  'Catalyst',
+  Rarity.Epic,
+  510,
+  'Crit DMG',
+  55.1,
+  [
+    WeaponAscensionMaterials.ArtfulDeviceX,
+    Drops.FrostnightsX,
+    Drops.Warrant
+  ],
+  'Wish'
+);
+
 export const DarkIronSword = new Weapon(
   'Dark Iron Sword',
   {
@@ -1188,6 +1210,28 @@ export const EyeOfPerception = new Weapon(
 // #endregion
 
 // #region F
+export const FlameForgedInsight = new Weapon(
+  'Flame-Forged Insight',
+  {
+    value: `When Electro-Charged, Lunar-Charged, Bloom, Lunar-Bloom, Crystallize or Lunar-Crystallize is triggered, restore $0 Elemental Energy and increase Elemental Mastery by $1 for 15 seconds. This effect can be triggered at most once every 15s and can be triggered even when the equipping character is off-field.`,
+    refinements: [
+      '12/15/18/21/24',
+      '60/75/90/105/120',
+    ]
+  },
+  'Claymore',
+  Rarity.Epic,
+  510, 
+  'Elemental Mastery',
+  165,
+  [
+    WeaponAscensionMaterials.DeliriousXOfTheSacredLord,
+    Drops.WeaselShell,
+    Drops.FontemerAberrantPearl,
+  ],
+  'Event'
+);
+
 export const FadingTwilight = new Weapon(
   'Fading Twilight',
   {
@@ -1375,7 +1419,7 @@ export const FesteringDesire = new Weapon(
   'Sword',
   Rarity.Epic,
   510,
-  'Elemental Mastery',
+  'Energy Recharge',
   45.9,
   [
     WeaponAscensionMaterials.XOfDandelionGladiator,
@@ -2014,6 +2058,28 @@ export const KitainCrossSpear = new Weapon(
 // #endregion
 
 // #region L
+export const LightbearingMoonshard = new Weapon(
+  `Lightbearing Moonshard`,
+  {
+    value: `Increases DEF by $0. DMG inflicted by Lunar-Crystallize reactions increases by $1 for 5s after the equipping character uses an Elemental Skill.`,
+    refinements: [
+      '20%/25%/30%/35%/40%',
+      '64%/80%/96%/112%/128%',
+    ]
+  },
+  'Sword',
+  Rarity.Legendary,
+  542,
+  'Crit DMG',
+  88.2,
+  [
+    WeaponAscensionMaterials.XOfAerosiderite,
+    Drops.Mistshroud,
+    Drops.DriveShaft
+  ],
+  "Wish",
+  // cs => cs.Zibai?
+);
 export const LightOfFoliarIncision = new Weapon(
   'Light of Foliar Incision',
   {
@@ -2478,6 +2544,31 @@ export const MouunsMoon = new Weapon(
 // #endregion
 
 // #region N
+export const NocturnesCurtainCall = new Weapon(
+  `Nocturne's Curtain Call`,
+  {
+    value: `Max HP increases by $0. When triggering Lunar reactions or inflicting Lunar Reaction DMG on opponents, the equipping character will recover $1 Energy, and receive the Bountiful Sea's Sacred Wine effect for 12s: Max HP increases by an additional $2, CRIT DMG from Lunar Reaction DMG increases by $3. The Energy recovery effect can be triggered at most once every 18s, and can be triggered even when the equipping character is off-field.`,
+    refinements: [
+      '10%/12%/14%/16%/18%',
+      '14/15/16/17/18',
+      '14%/16%/18%/20%/22%',
+      '60%/80%/100%/120%/140%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Legendary,
+  542,
+  'Crit DMG',
+  88.2,
+  [
+    WeaponAscensionMaterials.XOfTheFarNorthScions,
+    Drops.XOfTheDeepShadow,
+    Drops.Warrant
+  ],
+  'Wish',
+  cs => cs.Columbina
+);
+
 export const NightweaversLookingGlass = new Weapon(
   `Nightweaver's Looking Glass`,
   {
@@ -2841,9 +2932,9 @@ export const PrototypeStarglitter = new Weapon(
 
 // #region R
 export const RainbowSerpentsRainBow = new Weapon(
-  `Rainbow Serpent's Rain-Bow`,
+  `Rainbow Serpent's Rain Bow`,
   {
-    value: `ATK is increased by 28%/35%/42%/49%/56% for 8s after the equipping character's attacks hit an opponent while the equipping character is off-field.`,
+    value: `ATK is increased by $0 for 8s after the equipping character's attacks hit an opponent while the equipping character is off-field.`,
     refinements: [
       '28/35/42/49/56%',
     ]
@@ -3602,6 +3693,7 @@ export const SkywardSpine = new Weapon(
     Drops.Scroll
   ],
   'Wish',
+  
 );
 
 export const Slingshot = new Weapon(

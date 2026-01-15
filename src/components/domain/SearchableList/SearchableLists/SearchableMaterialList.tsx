@@ -10,7 +10,7 @@ import { useContextMenu } from "@/providers/ContextMenuProvider";
 
 import { OptionalProps, UncrontrolledProps } from "@/components/domain/SearchableList/Props";
 import SearchableList from "@/components/domain/SearchableList/SearchableList";
-import { useFavorite, useDataStore, useRegionStore } from "@/stores";
+import { useFavorite, useDataStore, useAccountStore } from "@/stores";
 import { FavoriteStar } from "@/components/common/media/icons/Star";
 import Material from "@/common/models/materials/Material";
 import CraftableMaterial from "@/common/models/materials/CraftableMaterial";
@@ -38,11 +38,11 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
   const [hidden, setHidden] = useState(new Array<Material>());
   const FavoriteStore = useFavorite('materials');
   const DataStore = useDataStore();
-  const RegionStore = useRegionStore();
+  const AccountStore = useAccountStore();
 
   return <SearchableList items={items ?? []}
     placeholder="Search materials..."
-    key={RegionStore.currentRegion}
+    key={AccountStore.worldRegion}
     sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
     renderItem={material => {
       const open = useContextMenu(item => [
@@ -81,7 +81,7 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
         weeklyBosses: material => material instanceof MobDrop && DataStore.getBossesFromMaterial(material).filter(WeeklyBoss.isWeeklyBoss).length > 0,
         crafting: CraftableMaterial.isCraftableMaterial,
       },
-      obtainableToday: material => AscensionMaterial.isAscensionMaterial(material) ? material.isObtainableToday(RegionStore) : undefined,
+      obtainableToday: material => AscensionMaterial.isAscensionMaterial(material) ? material.isObtainableToday(AccountStore) : undefined,
       rarity: {
         legendary: material => material.rarity === Rarity.Legendary,
         epic: material => material.rarity === Rarity.Epic,

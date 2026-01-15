@@ -12,7 +12,7 @@ import { ResinIcon } from "@/components/common/media/icons";
 import ModelCard, { BaseModelCardProps } from "@/components/domain/ModelCard";
 import { Region } from "@/components/domain";
 
-import { useDataStore, useRegionStore } from "@/stores";
+import { useDataStore, useAccountStore } from "@/stores";
 
 import { ArtifactCard } from "../../Artifacts";
 import { MaterialCard } from "../../Material";
@@ -37,7 +37,7 @@ export default function DomainCard({
   ...props
 }: Props) {
   const DataStore = useDataStore();
-  const RegionStore = useRegionStore();
+  const AccountStore = useAccountStore();
 
   if (!domain) return null;
 
@@ -53,7 +53,7 @@ export default function DomainCard({
 
   return (
     <ModelCard
-      key={`${RegionStore.currentRegion}-${name}`}
+      key={`${AccountStore.worldRegion}-${name}`}
       model="Domain"
       item={domain}
       {...props}

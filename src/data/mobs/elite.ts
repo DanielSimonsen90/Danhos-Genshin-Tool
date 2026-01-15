@@ -1,4 +1,4 @@
-// https://genshin-impact.fandom.com/wiki/Enemy/List
+// https://genshin-impact.fandom.com/wiki/Enemy/List#Change_History
 
 import { EliteMob } from "@/common/models/mobs/Mob";
 import * as EasyMobDrops from "../materials/drops/easy";
@@ -253,5 +253,13 @@ export const RadiantBeast = new EliteMob(
   `A beast that has undergone a unique evolution due to age-long immersion in the ancient moon's power.\nOnce an ordinary creature, it has been warped by the influence of kuuvahki and imbued with an otherworldly strength.`,
   [
     EliteMobDrops.RaidantBeastDrop
+  ]
+);
+
+export const FisherOfHiddenDepths = new EliteMob(
+  "Fisher of Hidden Depths",
+  `An Abyssal creature that slips through rifts in the hidden depths, crossing over from beyond this world.`,
+  [
+    EliteMobDrops.XOfTheDeepShadow
   ]
 );

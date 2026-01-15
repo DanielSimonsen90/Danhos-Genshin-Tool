@@ -1,4 +1,4 @@
-import type { GenshinRegion, ResinCost } from "@/common/types";
+import type { TeyvatRegion, ResinCost } from "@/common/types";
 import type { DataStore } from "@/stores/DataStore/DataStoreTypes";
 
 import type DomainOfBlessing from "./DomainOfBlessing";
@@ -16,7 +16,7 @@ export abstract class Domain<TReward extends DomainReward> {
     public description: string,
     public leyLineDisorder: Record<number, string>,
     public resinCost: ResinCost,
-    public region: GenshinRegion,
+    public region: TeyvatRegion,
   ) {}
 
   public getRewards(DataStore: DataStore): TReward[] {

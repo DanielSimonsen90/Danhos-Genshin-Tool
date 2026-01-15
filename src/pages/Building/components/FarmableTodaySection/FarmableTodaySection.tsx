@@ -3,7 +3,7 @@ import { ModelKeys } from "@/common/models";
 import AscensionMaterial from "@/common/models/materials/AscensionMaterial";
 import Collapsible from "@/components/common/Collapsible";
 import { SearchableCharacterList, SearchableWeaponList } from "@/components/domain/SearchableList";
-import { useDataStore, useRegionStore } from "@/stores";
+import { useDataStore, useAccountStore } from "@/stores";
 import { plural } from '@/common/functions/strings';
 
 const modelKeys: Array<ModelKeys> = ['Character', 'Weapon'];
@@ -15,23 +15,23 @@ type Props = {
 
 export default function FarmableTodaySection(props: Props) {
   const DataStore = useDataStore();
-  const RegionStore = useRegionStore();
+  const AccountStore = useAccountStore();
 
-  const title = props.title ?? `These characters & weapons are farmable today (${RegionStore.getGenshinServerDayName(RegionStore.currentRegion)})`;
-  const day = props.day ?? RegionStore.getGenshinServerDayName(RegionStore.currentRegion);
+  const title = props.title ?? `These characters & weapons are farmable today (${AccountStore.getGenshinServerDayName(AccountStore.worldRegion)})`;
+  const day = props.day ?? AccountStore.getGenshinServerDayName(AccountStore.worldRegion);
 
   const farmableCharacters = useMemo(() => DataStore.Characters.filter(character =>
     Object.values(character.ascension)
       .some(material => AscensionMaterial.isAscensionMaterial(material)
         && material.isObtainableOnDay(day)
       )
-  ), [DataStore.Characters, RegionStore.currentRegion]);
+  ), [DataStore.Characters, AccountStore.worldRegion]);
   const farmableWeapons = useMemo(() => DataStore.Weapons.filter(weapon =>
     weapon.ascensionMaterials.some(material =>
       AscensionMaterial.isAscensionMaterial(material)
       && material.isObtainableOnDay(day)
     )
-  ), [DataStore.Weapons, RegionStore.currentRegion]);
+  ), [DataStore.Weapons, AccountStore.worldRegion]);
 
   return (
     <section className="farmable-today-section">
@@ -39,10 +39,10 @@ export default function FarmableTodaySection(props: Props) {
       {modelKeys.map(modelKey => (
         <Collapsible key={modelKey} className='farmable-model-collapsible' title={plural(2, modelKey)} defaultOpen>
           {
-            modelKey === 'Character' ? <SearchableCharacterList key={`${RegionStore.currentRegion}-farmable-characters-${day}`} items={farmableCharacters} cardProps={{
+            modelKey === 'Character' ? <SearchableCharacterList key={`${AccountStore.worldRegion}-farmable-characters-${day}`} items={farmableCharacters} cardProps={{
               wrapInLink: true,
             }} />
-              : modelKey === 'Weapon' ? <SearchableWeaponList key={`${RegionStore.currentRegion}-farmable-weapons-${day}`} items={farmableWeapons} cardProps={{
+              : modelKey === 'Weapon' ? <SearchableWeaponList key={`${AccountStore.worldRegion}-farmable-weapons-${day}`} items={farmableWeapons} cardProps={{
                 wrapInLink: true,
               }} />
                 : null

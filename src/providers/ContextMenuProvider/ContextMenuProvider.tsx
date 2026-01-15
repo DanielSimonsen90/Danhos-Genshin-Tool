@@ -5,29 +5,30 @@ import { useContextMenuPosition, useContextMenuKeyboard, useContextMenuState } f
 export default function ContextMenuProvider({ children }: PropsWithChildren) {
   const containerRef = useRef<HTMLDivElement>(null);
   
-  const positionHook = useContextMenuPosition({ containerRef });
-  const stateHook = useContextMenuState({ setExplicitPosition: positionHook.setExplicitPosition });
-  const activePositionHook = useContextMenuPosition({ visible: stateHook.visible, containerRef });
+  const position = useContextMenuPosition({ containerRef });
+  const state = useContextMenuState({ setExplicitPosition: position.setExplicitPosition });
+  const activePosition = useContextMenuPosition({ visible: state.visible, containerRef });
   
   useContextMenuKeyboard({ 
-    menuItems: stateHook.menuItems, 
-    closeMenu: stateHook.closeMenu 
+    menuItems: state.menuItems, 
+    closeMenu: state.closeMenu,
+    visible: state.visible
   });
 
-  const value = stateHook.createContextMenuHandler(containerRef);
-  const onContextMenu = (e: React.MouseEvent) => stateHook.handleContextMenu(e, activePositionHook.updatePosition);
+  const value = state.createContextMenuHandler(containerRef);
+  const onContextMenu = (e: React.MouseEvent) => state.handleContextMenu(e, activePosition.updatePosition);
 
   return (
     <ContextMenuContext.Provider value={value}>
-      <div className="context-menu-container" onContextMenu={onContextMenu} ref={containerRef} onClick={stateHook.closeMenu}>
+      <div className="context-menu-container" onContextMenu={onContextMenu} ref={containerRef} onClick={state.closeMenu}>
         {children}
-        {stateHook.visible && (
+        {state.visible && (
           <div className="context-menu" style={{
-            top: activePositionHook.coordinates.top, 
-            left: activePositionHook.coordinates.left,
-            transform: `translate(${activePositionHook.position.x === 'right' ? '-100%' : 0}, ${activePositionHook.position.y === 'bottom' ? '-100%' : 0})`,
+            top: activePosition.coordinates.top, 
+            left: activePosition.coordinates.left,
+            transform: `translate(${activePosition.position.x === 'right' ? '-100%' : 0}, ${activePosition.position.y === 'bottom' ? '-100%' : 0})`,
           }}>
-            {stateHook.menuItems.map((item, index) => (
+            {state.menuItems.map((item, index) => (
               item.type === 'divider' ? (
                 <div key={index} className="context-menu-divider" data-label={item.label}>
                   {item.label}

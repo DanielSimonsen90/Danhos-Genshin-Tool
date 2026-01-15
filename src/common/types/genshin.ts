@@ -1,7 +1,7 @@
 export type ArtifactPartName = 'Flower' | 'Feather' | 'Sands' | 'Goblet' | 'Circlet';
 export type Element = 'Anemo' | 'Pyro' | 'Hydro' | 'Electro' | 'Cryo' | 'Geo' | 'Dendro';
 
-export type LunarReaction = `Lunar-${'Charged' | 'Bloom'}`;
+export type LunarReaction = 'Lunar' | `Lunar-${'Charged' | 'Bloom' | 'Crystallize'}`;
 export type Reaction =
   | 'Vaporize' | 'Overloaded' | 'Melt' | 'Burning'
   | 'Frozen' | 'Shatter' | 'Burgeon' | 'Hyperbloom' | 'Bloom'
@@ -29,4 +29,4 @@ export enum ResinCost {
   Sixty = 60, // Weekly bosses (after 3 times)
 }
 
-export type GenshinRegion = 'Mondstadt' | 'Liyue' | 'Inazuma' | 'Sumeru' | 'Fontaine' | 'Natlan' | 'Nod-Krai' | 'Snezhnaya' | 'Unknown';
+export type TeyvatRegion = 'Mondstadt' | 'Liyue' | 'Inazuma' | 'Sumeru' | 'Fontaine' | 'Natlan' | 'Nod-Krai' | 'Snezhnaya' | 'Unknown';

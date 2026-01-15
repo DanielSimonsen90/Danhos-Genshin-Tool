@@ -1,4 +1,4 @@
-import type { Reaction, GenshinRegion, Element, LunarReaction } from "./genshin";
+import type { Reaction, TeyvatRegion, Element, LunarReaction } from "./genshin";
 
 export type TalentType = 'Normal/Press' | 'Charged/Hold' | 'Plunging/Press' | 'Skill/Ability' | 'Burst/Ult';
 export type BonusAbility = (
@@ -17,7 +17,7 @@ export type CharacterSetName = `${'On-field' | 'Off-field' | 'Burst'}${` ${React
 export type PlayerTransportationType = 'Sprinting' | 'Gliding' | 'Swimming' | 'Climbing' | 'Aquatic Stamina' | 'Underwater Sprint Speed'
 export type CraftableType = 'Potions' | 'Character Talent Materials' | 'Weapon Ascension Materials';
 export type FoodBuffType = 'Restorative' | 'Attack' | 'Defense' | 'Adventure'
-export type MapIconType = 'Ore veins used in forging' | `Local Specialties in ${GenshinRegion}` | 'Recovery Orbs (stamina & hp gained from collision increased by 25%)'
+export type MapIconType = 'Ore veins used in forging' | `Local Specialties in ${TeyvatRegion}` | 'Recovery Orbs (stamina & hp gained from collision increased by 25%)'
 
 
 export type PassiveTalent = 
@@ -56,13 +56,13 @@ export type PassiveTalent =
   
   // Expedition
   | `Shows ${MapIconType} on minimap.`
-  | `${'25'}% ${'time consumption reduction' | 'more rewards'} when on expeditions in ${GenshinRegion}.`
+  | `${'25'}% ${'time consumption reduction' | 'more rewards'} when on expeditions in ${TeyvatRegion}.`
   | 'Party members will not startle Crystalflies and certain other animals.'
   | `Party members will not startle animals who produce: Fowl, Raw or Chilled meat.`
   
   // Special
   | `Increase your own party members' Normal Attack level by 1.`
-  | `${'20'}% of double catch when fishing in ${GenshinRegion}.`
+  | `${'20'}% of double catch when fishing in ${TeyvatRegion}.`
   | `${'25'}% chance of receiving additional log when party members attack trees.`
   | `Can use Skill to interact with some harvestable items within a fixed AoE.`
   | `When in team, certain harvestable items will trigger a healing effect on the active character consisting of 2.5% of this character's Max HP.`
@@ -71,3 +71,4 @@ export type PassiveTalent =
   | `When Lumidouce Case (lamp) is on field, all party members gain 85% Pyro RES against Burning DMG.`
   | `Once a week (reset Monday 4am EST), Low-Temperature Cooking (Skill) can produce foods after hitting a certain limit of elemental energy absorption.`
   | `Elemental Skill is increased by 1 level for all party members, if the team consists of Hydro/Cryo characters and at least 1 of each element.`
+  | `While in Nod-Krai, if a member on your team dies, Columbina will revive them and restore health based on Columbina's friendship level. Cooldown 100s. Does not work in domains.`

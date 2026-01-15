@@ -1,5 +1,5 @@
 import { Material } from "./Material";
-import { Rarity, GenshinRegion } from "@/common/types";
+import { Rarity, TeyvatRegion } from "@/common/types";
 
 /**
  * Regional local specialties like Philanemo Mushroom, Cor Lapis, Sea Ganoderma and so on
@@ -12,7 +12,7 @@ export class LocalSpecialty extends Material {
   constructor(
     name: string,
     description: string,
-    region: GenshinRegion
+    region: TeyvatRegion
   ) {
     super(name, description, region, Rarity.Common)
   }

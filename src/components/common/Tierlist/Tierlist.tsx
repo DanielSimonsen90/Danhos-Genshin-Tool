@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 // @ts-ignore
 import isEqual from 'lodash/fp/isEqual';
@@ -11,6 +11,7 @@ import { FormTier, Tier as TierComponent, TierModifyForm } from './components';
 import { Entry, Tier, TierlistProps } from './TierlistTypes';
 import { getDefaultTiers, generateBlankTier, generateEntry, getDefaultUnsortedTier } from './TierlistFunctions';
 import { useStateReset } from '@/hooks/useStateReset';
+import useKeybind from '@/hooks/useKeybind';
 
 export default function Tierlist<T, TStorageData extends object>({
   model, items,
@@ -58,6 +59,8 @@ export default function Tierlist<T, TStorageData extends object>({
   const [newTier, setNewTier] = useState<FormTier<T>>(generateBlankTier(tiers));
   const [search, setSearch] = useState('');
 
+  const searchRef = useRef<HTMLInputElement>(null);
+  
   const orderedTiers = tiers
     .map(tier => {
       const entries = tier.entries.filter(entry => onSearch(search, entry.item));
@@ -93,23 +96,58 @@ export default function Tierlist<T, TStorageData extends object>({
     onTierChange?.(tiers);
   }, [onStorageSave]);
 
+  useKeybind('f', { ctrlKey: true }, e => {
+    e.preventDefault();
+    searchRef.current?.focus();
+  })
+
   const onDragEnd = (result: DropResult) => {
-    const { source, destination } = result;
+    const { source, destination, draggableId } = result;
     if (!destination) return;
 
     const sourceTier = tiers.find(tier => tier.id === source.droppableId)!;
     const destinationTier = tiers.find(tier => tier.id === destination.droppableId)!;
-    const sourceItems = [...sourceTier.entries];
-    const destinationItems = [...destinationTier.entries];
-    const [movedItem] = sourceItems.splice(source.index, 1);
-
+    
+    // Find the moved item by its ID instead of using filtered indices
+    const movedItem = sourceTier.entries.find(entry => entry.id === draggableId)!;
+    const sourceItems = sourceTier.entries.filter(entry => entry.id !== draggableId);
+    
+    // Get filtered destination items to find the correct insertion point
+    const filteredDestinationEntries = destinationTier.entries.filter(entry => onSearch(search, entry.item));
+    
     if (sourceTier.id === destinationTier.id) {
-      sourceItems.splice(destination.index, 0, movedItem);
-      setTiers(tiers => tiers.map(tier =>
-        tier.id === sourceTier.id ? { ...tier, entries: sourceItems } : tier
-      ));
+      // Moving within same tier
+      const filteredSourceEntries = sourceItems.filter(entry => onSearch(search, entry.item));
+      const targetEntry = filteredSourceEntries[destination.index];
+      
+      if (!targetEntry) {
+        // Insert at end
+        setTiers(tiers => tiers.map(tier =>
+          tier.id === sourceTier.id ? { ...tier, entries: [...sourceItems, movedItem] } : tier
+        ));
+      } else {
+        // Insert before target entry
+        const actualIndex = sourceItems.findIndex(entry => entry.id === targetEntry.id);
+        const updatedEntries = [...sourceItems];
+        updatedEntries.splice(actualIndex, 0, movedItem);
+        setTiers(tiers => tiers.map(tier =>
+          tier.id === sourceTier.id ? { ...tier, entries: updatedEntries } : tier
+        ));
+      }
     } else {
-      destinationItems.splice(destination.index, 0, movedItem);
+      // Moving between different tiers
+      const destinationItems = [...destinationTier.entries];
+      const targetEntry = filteredDestinationEntries[destination.index];
+      
+      if (!targetEntry) {
+        // Insert at end
+        destinationItems.push(movedItem);
+      } else {
+        // Insert before target entry
+        const actualIndex = destinationItems.findIndex(entry => entry.id === targetEntry.id);
+        destinationItems.splice(actualIndex, 0, movedItem);
+      }
+      
       setTiers(tiers => tiers.map(tier =>
         tier.id === sourceTier.id ? { ...tier, entries: sourceItems }
           : tier.id === destinationTier.id ? { ...tier, entries: destinationItems }
@@ -188,7 +226,7 @@ export default function Tierlist<T, TStorageData extends object>({
         setNewTier(generateBlankTier(tiers)());
       }} submitText='Add tier' />
 
-      <input type="search" placeholder={`Search for a ${model.toLowerCase()}...`}
+      <input ref={searchRef} type="search" placeholder={`Search for a ${model.toLowerCase()}...`}
         value={search} onChange={e => setSearch(e.target.value)}
       />      
       <DragDropContext onDragEnd={onDragEnd}>

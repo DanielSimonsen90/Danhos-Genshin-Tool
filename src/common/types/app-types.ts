@@ -1,4 +1,4 @@
 import { ChangeableSettings } from "@/stores/SettingsStore/SettingsStoreTypes";
-import { RegionSettings } from "@/stores/RegionStore/RegionStoreTypes";
+import { AccountSettings } from "@/stores/AccountStore/AccountStoreTypes";
 
-export type Settings = ChangeableSettings & RegionSettings;
+export type Settings = ChangeableSettings & AccountSettings;
