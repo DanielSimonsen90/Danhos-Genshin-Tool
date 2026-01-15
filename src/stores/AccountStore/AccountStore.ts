@@ -85,7 +85,8 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
     return Object.assign({}, dataWithFavorites, { setAccountData });
   };
   const setAccountData = (update: Partial<AccountData> | ((state: AccountData) => AccountData), accountId?: string) => {
-    const { accounts } = getState();
+    // Always read from storage to ensure we have the latest persisted data
+    const accounts = storageService.get() ?? getState().accounts;
     const resolvedAccountDataUpdate = typeof update === 'function'
       ? update(getState().accountData)
       : update;
@@ -158,7 +159,8 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
   };
 
   const setAccountName = (name: string) => {
-    const { accounts } = getState();
+    // Always read from storage to ensure we have the latest persisted data
+    const accounts = storageService.get() ?? getState().accounts;
     if (accounts[name]) return; // Account name already exists
 
     const currentAccountName = getSelectedAccountName(accounts);
@@ -178,7 +180,9 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
   const setWorldRegion = (worldRegion: WorldRegion) => setAccountData({ worldRegion });
   const setTraveler = (traveler: Traveler) => setAccountData({ traveler });
   const setSelectedAccount = (accountName: string) => {
-    const { accounts } = getState();
+    // Always read from storage to ensure we have the latest persisted data
+    // This prevents account data from being mixed when switching
+    const accounts = storageService.get() ?? getState().accounts;
     if (!accounts[accountName]) throw new Error(`Account ${accountName} does not exist`);
 
     const updatedAccounts = Object.keys(accounts).reduce((acc, key) => {
@@ -202,7 +206,8 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
   }
 
   const addAccount = (accountName: string) => {
-    const { accounts } = getState();
+    // Always read from storage to ensure we have the latest persisted data
+    const accounts = storageService.get() ?? getState().accounts;
     if (accounts[accountName]) throw new Error(`Account ${accountName} already exists`);
     if (!accountName || accountName.trim() === '') throw new Error('Account name cannot be empty');
 
@@ -224,7 +229,8 @@ export const useAccountStore = create<AccountStore>((setState, getState) => {
   }
 
   const deleteAccount = (accountName: string) => {
-    const { accounts } = getState();
+    // Always read from storage to ensure we have the latest persisted data
+    const accounts = storageService.get() ?? getState().accounts;
     if (!accounts[accountName]) throw new Error(`Account ${accountName} does not exist`);
     
     const accountKeys = Object.keys(accounts);

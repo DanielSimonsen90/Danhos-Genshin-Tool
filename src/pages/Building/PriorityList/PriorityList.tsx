@@ -39,7 +39,7 @@ export default function PriorityList() {
       className="priority-list"
       tabs={tabs} 
       noTabs={<NoTabs />} 
-      id={`priority-list-${AccountStore.accountData.worldRegion}`}
+      id={`priority-list-${AccountStore.accountData.id}`}
       placeChildrenBeforeTabs
       resizable
       minSize={100}

@@ -667,8 +667,6 @@ const validateSettings = (data: any): { valid: boolean; filtered: any; error?: s
   // Validate and fix boolean properties
   if (typeof data.showAll === 'boolean') filtered.showAll = data.showAll;
   if (typeof data.wrap === 'boolean') filtered.wrap = data.wrap;
-  if (typeof data.newUser === 'boolean') filtered.newUser = data.newUser;
-  if (typeof data.updated === 'number' || data.updated === undefined) filtered.updated = data.updated;
 
   // Validate preferredTabs
   if (data.preferredTabs && typeof data.preferredTabs === 'object') {
