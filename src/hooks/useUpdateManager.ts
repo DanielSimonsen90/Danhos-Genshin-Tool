@@ -33,7 +33,7 @@ export const useUpdateManager = () => {
       const result = await window.electronAPI.checkForUpdates();
       
       if (result.error) toast.error(`Update check failed: ${result.error}`);
-      else if (result.updateAvailable) toast.success(`Found update v${result.latestVersion}`);
+      else if (result.updateAvailable) toast.success(`Found update ${result.latestVersion}`);
       else toast.info('You are already on the latest version.');
       
     } catch (error) {
