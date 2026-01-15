@@ -54,7 +54,6 @@ export default function Tier<T>({
       }), '⬇️'),
     item('divider', 'Modify'),
     item('option', 'Edit', () => setShowEditModal(true), '✏️'),
-    // item('option', 'Clear', () => setTiers(tiers => tiers.map(t => t.id === tier.id ? { ...t, entries: [] } : t)), '🧹'),
     item('option', 'Clear', () => setTiers(tiers => tiers
       .map(t => t.id === tier.id 
         ? { ...t, entries: [] } 

@@ -42,6 +42,7 @@
 * Missing image for Super-Heavy Landrover Mechanized Fortress
 * Festering Desire's secondary stat being "Elemental Mastery" instead of "Energy Recharge"
 * Rainbow Serpent's Rain Bow's name having an apostrophe between Rain and Bow.
+* Tierlist items being able to move without the context menu visible.
 
 ## Updates
 * Character page style updates.

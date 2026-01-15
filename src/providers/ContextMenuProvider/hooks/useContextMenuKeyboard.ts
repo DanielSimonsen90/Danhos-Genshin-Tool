@@ -4,14 +4,17 @@ import { MenuItem, MenuItemOption } from '../ContextMenuTypes';
 interface UseContextMenuKeyboardProps {
   menuItems: MenuItem[];
   closeMenu: () => void;
+  visible: boolean;
 }
 
-export function useContextMenuKeyboard({ menuItems, closeMenu }: UseContextMenuKeyboardProps) {
+export function useContextMenuKeyboard({ menuItems, closeMenu, visible }: UseContextMenuKeyboardProps) {
   const respondsToKeys = useMemo<Array<MenuItemOption>>(() => (
     menuItems.filter(item => item.type === 'option' && item.respondsToKey) as Array<MenuItemOption>
   ), [menuItems]);
 
   useEffect(() => {
+    if (!visible) return;
+
     const hideEvents = ['click', 'contextmenu', 'keydown'];
     const onHideEvent = (e: Event) => {
       if (e.type === 'keydown') {
@@ -21,7 +24,10 @@ export function useContextMenuKeyboard({ menuItems, closeMenu }: UseContextMenuK
         );
         
         if (matchingItem) {
+          keyboardEvent.preventDefault();
+          keyboardEvent.stopPropagation();
           matchingItem.action();
+          return closeMenu();
         }
       }
 
@@ -33,7 +39,7 @@ export function useContextMenuKeyboard({ menuItems, closeMenu }: UseContextMenuK
     return () => {
       hideEvents.forEach(event => document.removeEventListener(event, onHideEvent));
     };
-  }, [respondsToKeys, closeMenu]);
+  }, [respondsToKeys, closeMenu, visible]);
 
   return {
     respondsToKeys,
