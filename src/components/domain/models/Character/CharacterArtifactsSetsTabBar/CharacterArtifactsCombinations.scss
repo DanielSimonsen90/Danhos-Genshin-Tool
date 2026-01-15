@@ -55,12 +55,13 @@
     font-size: 1.25rem;
     font-weight: bold;
   }
-  
+
   .group-tooltip {
     position: absolute;
-    top: 0;
-    left: 100%;
+    top: 100%;
+    left: 0;
     z-index: 10;
+    margin-top: .5rem;
     
     background-color: var(--background-secondary);
     border-radius: 0.375rem;
@@ -99,4 +100,8 @@
       }
     }
   }
+}
+
+.character-card:has(.group-tooltip) {
+  overflow: visible;
 }

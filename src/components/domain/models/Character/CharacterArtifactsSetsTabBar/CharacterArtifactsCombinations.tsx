@@ -84,9 +84,10 @@ export default function CharacterArtifactsCombinations({ artifactSets = [] }: Pr
         return (
           <li key={key}
             onMouseLeave={() => handleMouseLeave()}
-            style={{ position: 'relative' }}
           >
-            <Link to={`/${ROUTES.data_artifacts}/${representative.set.name}`} title={representative.set.name}>
+            <Link to={`/${ROUTES.data_artifacts}/${representative.set.name}`} 
+              title={representative.set.name}
+            >
               <div className="combination-container"
                 onMouseEnter={() => isGroup && handleMouseEnter(groupId, representative.set.twoPieceSetDescription)}
               >
@@ -109,13 +110,6 @@ export default function CharacterArtifactsCombinations({ artifactSets = [] }: Pr
             {isGroup && hoveredGroupId === groupId && hoveredSetBonus && (
               <div
                 className="group-tooltip"
-                style={{
-                  position: 'absolute',
-                  top: '100%',
-                  left: '0',
-                  marginTop: '8px',
-                  zIndex: 1000
-                }}
                 onMouseEnter={() => handleMouseEnter(groupId, hoveredSetBonus)}
                 onMouseLeave={() => setHoveredGroupId(null)}
               >

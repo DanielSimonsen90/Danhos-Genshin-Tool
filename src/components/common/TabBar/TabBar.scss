@@ -91,7 +91,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   box-shadow: none;
   border-right: 1px solid var(--background-tertiary);
   background-color: var(--background-secondary--muted);
@@ -130,10 +130,14 @@
   border: 1px solid var(--background-tertiary);
   overflow: hidden auto;
 
+  &:has(.select__options--open) {
+    overflow: visible;
+  }
+
   &--collapsed {
     display: none;
   }
-  
+
   &-page {
     grid-area: content;
 
@@ -154,19 +158,19 @@
   --tabs-size: 250px;
   position: relative;
   grid-template-columns: var(--tabs-size) 1fr;
-  
+
   &:has(.tab-bar__tabs--collapsed) {
     grid-template-columns: 2em 1fr;
   }
-  
+
   .tab-bar__tabs {
     border-right: none; // Remove border since resize handle will show it
   }
-  
+
   .tab-bar__content {
     border-left: none; // Remove border since resize handle will show it
   }
-  
+
   .tab-bar__resize-handle {
     position: absolute;
     top: 0;
@@ -179,13 +183,13 @@
     border-left: 1px solid var(--background-tertiary);
     border-right: 1px solid var(--background-tertiary);
     z-index: 10;
-    
+
     &:hover,
     &--dragging {
       background-color: var(--brand);
       border-color: var(--brand);
     }
-    
+
     &--dragging {
       user-select: none;
     }
