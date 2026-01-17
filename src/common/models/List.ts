@@ -12,7 +12,7 @@ export class List<T> extends Array<T> {
    * @param comparators Comparators to order by in sequence
    * @returns Same list ordered by the given comparators
    */
-  public orderBy(...comparators: OrderByComparator<T>[]): T[] {
+  public orderBy(...comparators: OrderByComparator<T>[]): List<T> {
     return this.sort((a, b) => {
       for (const comparator of comparators) {
         const result = comparator(a, b);
@@ -20,6 +20,17 @@ export class List<T> extends Array<T> {
       }
       return 0; // If all comparisons are equal
     });
+  }
+
+  public groupBy<K>(keyGetter: (item: T) => K): Map<K, List<T>> {
+    return this.reduce((map, item) => {
+      const key = keyGetter(item);
+      const group = map.get(key) ?? new List<T>();
+      
+      group.push(item);
+      map.set(key, group);
+      return map;
+    }, new Map<K, List<T>>());
   }
 
   /**

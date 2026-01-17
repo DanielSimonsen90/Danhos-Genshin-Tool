@@ -4,6 +4,8 @@
 * Zibai, 5* Geo Sword
 * Illuga, 4* Geo Polearm
   - Illuga, as well as Zibai, may have none or incorrect passive talent descriptions until official data is available.
+* Recommended weapons section in CharacterCard
+  - The recommended weapons are based on internal calculations and may not reflect optimal choices for the character. This is intended to be reworked later.
 * Added Teyvat regions to artifacts - including the filter in SearchableArtifactList.
 * Traveler passive talents
 

@@ -2,12 +2,19 @@
 import { create } from 'zustand';
 import { DataStore, CharacterUsingArtifactResult } from "./DataStoreTypes";
 import { DataStoreContent } from './DataStoreConstants';
-import { ArtifactSet, Boss, Character, CharacterArtifactSet, DomainOfBlessing, DomainOfForgery, DomainOfMastery, List, Material, Mob, Model, ModelKeys, TalentAscensionMaterial, Weapon, WeaponAscensionMaterial, WorldBoss } from '@/common/models';
+import {
+  ArtifactSet, Boss, Character,
+  DomainOfBlessing, DomainOfForgery, DomainOfMastery,
+  List, Material, Mob, Model,
+  ModelKeys, TalentAscensionMaterial,
+  Weapon, WeaponAscensionMaterial,
+  WorldBoss
+} from '@/common/models';
 import ModelType from './ModelType';
 import CraftableMaterial from '@/common/models/materials/CraftableMaterial';
 import AscensionMaterial from '@/common/models/materials/AscensionMaterial';
 import MemoizeService from '@/services/MemoizeService';
-import { TeyvatRegion } from '@/common/types';
+import { BonusAbility, TalentStatName, TeyvatRegion, WeaponStatName } from '@/common/types';
 
 export const useDataStore = create<DataStore>((setState, getState) => {
   const cache = new MemoizeService();
@@ -22,6 +29,7 @@ export const useDataStore = create<DataStore>((setState, getState) => {
     DOMAIN_ARTIFACTS: 'domain_artifacts_',
     MATERIAL_DROPPERS: 'material_droppers_',
     CHARACTER_MATERIALS: 'character_materials_',
+    CHARACTER_RECOMMENDED_WEAPONS: 'character_recommended_weapons_',
     WEAPON_SIGNATURES: 'weapon_signatures_',
   } as const;
 
@@ -165,7 +173,7 @@ export const useDataStore = create<DataStore>((setState, getState) => {
           .sort((a, b) => {
             const order: Array<TeyvatRegion> = ['Mondstadt', 'Liyue', 'Inazuma', 'Sumeru', 'Fontaine', 'Natlan', 'Nod-Krai', 'Snezhnaya', 'Unknown'];
             return order.indexOf(a) - order.indexOf(b);
-          })
+          });
       });
     },
 
@@ -198,7 +206,6 @@ export const useDataStore = create<DataStore>((setState, getState) => {
       return AscensionMaterial.isAscensionMaterial(material) ? material.domain : undefined;
     },
 
-    // Material usage methods with proper method binding
     getModelKeysUsingMaterial(materialName: string) {
       const material = validateAndGetMaterial(materialName);
       if (!material) return [];
@@ -215,7 +222,6 @@ export const useDataStore = create<DataStore>((setState, getState) => {
       });
     },
 
-    // Advanced material-domain relationships
     getDomainsFromMaterial(material: Material) {
       const domains = getState().Domains.filter(domain => (
         (TalentAscensionMaterial.isTalentAscensionMaterial(material) && DomainOfMastery.isDomainMastery(domain))
@@ -262,6 +268,67 @@ export const useDataStore = create<DataStore>((setState, getState) => {
         if (!signatureWeaponData || signatureWeaponData.length === 0) return undefined;
 
         return signatureWeaponData.find(weapon => weapon.character?.name === character.name)?.weapon;
+      });
+    },
+    getRecommendedWeaponsFor(character: Character) {
+      return getCachedOrCompute(`${CACHE_KEYS.CHARACTER_RECOMMENDED_WEAPONS}${character.name}`, () => {
+        const [style, reaction] = character.playstyle?.name
+          .split(' ')
+          .map(string => string.toLowerCase())
+          ?? ['', '', ''];
+        const talentStats = [...character.playstyle?.talentStats ?? []].reverse();
+        const stats = [
+          ...talentStats,
+          character.playstyle?.talentPriorities[0].toLowerCase().split('/')[0],
+          character.bonusAbilities
+        ].filter(Boolean) as string[];
+        
+        const getTalentStatName = (stat: WeaponStatName | undefined) => stat?.replace('%', '') as TalentStatName;
+        const getBonusAbilityTags = (abilities: Array<BonusAbility>) => getCachedOrCompute(JSON.stringify(abilities), () => {
+          return abilities.map(ability => {
+            switch (ability) {
+              case 'Enables Lunar Reaction':
+              case 'Enables Lunar-Bloom Reaction':
+              case 'Enables Lunar-Charged Reaction':
+              case 'Enables Lunar-Crystallize Reaction': {
+                return ability.replace('Enables ', '').replace(' Reaction', '');
+              }
+              case 'Off-field Damage': return 'Off-field';
+              case 'Increases Moonsign': return 'Moonsign';
+              case 'Nightsouls Blessing': return `Nightsoul's Blessing`;
+              default: return ability;
+            }
+          });
+        });
+        const getScore = (weapon: Weapon) => [
+          weapon.rarity * 10,
+          talentStats.reduce((acc, stat, i) => acc + (getTalentStatName(weapon.secondaryStat) === stat ? 1 : 0) + i, 0),
+          stats.map(stat => weapon.description.value.toLowerCase().match(stat)?.length ?? 0).reduce((a, b) => a + b, 0) ?? 0,
+          getBonusAbilityTags(character.bonusAbilities).filter(tag => weapon.description.value.includes(tag)).length,
+          style === 'On-field' && weapon.description.value.toLowerCase().includes('on-field')
+            ? 1
+            : style === 'Off-field' && weapon.description.value.toLowerCase().includes('off-field')
+              ? 1
+              : 0,
+          reaction && weapon.description.value.toLowerCase().includes(reaction) ? 1 : 0,
+          weapon.secondaryStat?.includes('Crit') ? 1 : 0,
+        ].reduce((acc, value) => acc + value, 0);
+
+        return getState().Weapons
+          .filter(weapon => {
+            const stat = weapon.secondaryStat 
+              ? character.playstyle?.talentStats.includes(weapon.secondaryStat.replace('%', '') as TalentStatName)
+              : false;
+            const weaponType = weapon.type === character.weapon;
+            return stat && weaponType;
+          })
+          .orderBy(
+            (a, b) => talentStats.indexOf(getTalentStatName(b.secondaryStat) ?? '') - talentStats.indexOf(getTalentStatName(a.secondaryStat) ?? ''),
+            (a, b) => getScore(b) - getScore(a),
+            (a, b) => b.rarity - a.rarity,
+            (a, b) => b.baseAttack - a.baseAttack,
+          )
+          .groupBy(weapon => weapon.rarity)
       });
     },
 

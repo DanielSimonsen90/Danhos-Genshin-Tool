@@ -8,5 +8,6 @@ export default function Character() {
     showAscensionSection
     showCharacterPlaystyle
     showSignatureWeapon
+    showRecommendedWeapons
   />} />;
 }

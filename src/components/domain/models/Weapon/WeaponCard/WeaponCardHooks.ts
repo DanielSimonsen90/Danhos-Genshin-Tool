@@ -13,8 +13,8 @@ export function useWeaponDescription({ description, name }: Weapon, showDetails?
         }
 
         const refinementHighlight = description.refinements[index];
-        if (refinementHighlight.match(/(\d%\/){1,}/g)) {
-          console.warn(`${name}'s refinement description contains multiple percentage symbols.`)
+        if (refinementHighlight.match(/(\d%\/){1,}/g) && !refinementHighlight.match(/^\(.*\)$/)) {
+          console.warn(`${name}'s refinement description contains multiple percentage symbols.`, refinementHighlight)
         }
 
         
