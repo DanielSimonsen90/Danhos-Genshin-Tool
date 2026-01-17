@@ -13,3 +13,4 @@
 * The Doctor (Dottore)'s weekly boss drops marked as "Rare" instead of "Legendary"
 * Percentage values in all refinement iterations - now goes back to % value only included at end refinement value
 * An issue with text overflowing in single lines
+* Mob drops not being aligned
