@@ -201,7 +201,7 @@ export const Barbara = new Character("Barbara", "Hydro", "Catalyst", ["Heal"], R
     new CharacterArtifactSet(Sets.MaidenBeloved, 4, 40.3),
     new CharacterArtifactSet(Sets.OceanHuedClam, 4, 26.9),
     new CharacterArtifactSet(Sets.MaidenBeloved, 2, 3.4),
-    new CharacterArtifactSet(Sets.OceanHuedClam, 2, 3.4),
+    ...HealingBonusSets(3.4),
   ]),
 );
 
@@ -254,8 +254,8 @@ export const Candace = new Character("Candace", "Hydro", "Polearm", [
   mobDrop: EasyMobDrops.EremiteDrop,
 }, '20% Climbing consumption reduction.',
   new CharacterPlaystyle("Off-field Support", ["HP", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 2, 31.9),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 2, 31.9),
+    ...HPSets(31.9),
+    ...EnergyRechargeSets(31.9),
     new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 18.4),
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 11.1),
   ])
@@ -326,7 +326,7 @@ export const Chiori = new Character("Chiori", "Geo", "Sword", [
     new CharacterArtifactSet(Sets.GoldenTroupe, 4, 61.9),
     new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 4, 27.9),
     ...DefenseSets(2.5),
-    new CharacterArtifactSet(Sets.GoldenTroupe, 2, 2.4),
+    ...ElementalSkillDMGSets(2.4),
   ])
 );
 
@@ -342,8 +342,8 @@ export const Chongyun = new Character("Chongyun", "Cryo", "Claymore", [
 }, '25% time consumption reduction when on expeditions in Liyue.',
   new CharacterPlaystyle("Burst Support", ["ATK", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
     new CharacterArtifactSet(Sets.BlizzardStrayer, 4, 36),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 2, 11.5),
-    new CharacterArtifactSet(Sets.BlizzardStrayer, 2, 11.5),
+    ...BurstDMGSets(11.5),
+    ...CryoDMGSets(11.5),
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 9.6),
   ])
 );
@@ -476,7 +476,7 @@ export const Diluc = new Character("Diluc", "Pyro", "Claymore", [
     new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 68.4),
     new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 8.6),
     ...AttackSets(8.6),
-    new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 2, 8.6),
+    ...PyroDMGSets(8.6),
   ]),
 );
 
@@ -1197,7 +1197,7 @@ export const Mualani = new Character("Mualani", "Hydro", "Catalyst", ["Nightsoul
   new CharacterPlaystyle("On-field DPS", ["HP", "Elemental Mastery"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
     new CharacterArtifactSet(Sets.ObsidianCodex, 4, 92.6),
     new CharacterArtifactSet(Sets.HeartOfDepth, 4, 0.9),
-    new CharacterArtifactSet(Sets.WanderersTroupe, 2, 0.5),
+    ...ElementalMasterySets(0.5),
     new CharacterArtifactSet(Sets.ObsidianCodex, 2, 0.5),
   ])
 );
@@ -1619,7 +1619,7 @@ export const TravelerGeo = new Character("Traveler (Geo)", "Geo", "Sword", [], R
     new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 27.7),
     new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 8.2),
     ...AttackSets(7.0),
-    new CharacterArtifactSet(Sets.ArchaicPetra, 2, 7.0),
+    ...GeoDMGSets(7.0),
   ])
 );
 
@@ -1960,7 +1960,7 @@ export const YumemizukiMizuki = new Character("Yumemizuki Mizuki", "Anemo", "Cat
 }, 'When in party, party members that consumed non reviving foods have a 30% chance of recovering additional HP. Trigger chance is increased depending on friendship level of the food consuming character.',
   new CharacterPlaystyle('On-field Swirl DPS', ['Elemental Mastery', "Energy Recharge"], ['Skill/Ability', "Burst/Ult", "Normal/Press"], true, [
     new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 75.8),
-    new CharacterArtifactSet(Sets.ViridescentVenerer, 2, 3.6),
+    ...AnemoDMGSets(3.6),
     ...ElementalMasterySets(3.4),
   ])
 );
