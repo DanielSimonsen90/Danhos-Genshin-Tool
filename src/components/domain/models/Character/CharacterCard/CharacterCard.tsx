@@ -1,7 +1,7 @@
-import { useMemo } from "react";
+import { useMemo, JSX } from "react";
 
 import { numberSeparator, rarityString } from "@/common/functions/strings";
-import { Character } from "@/common/models";
+import { Character, List, Weapon } from "@/common/models";
 
 import { CharacterImage, ElementImage, WeaponImage } from "@/components/common/media/Images";
 import ModelCard, { BaseModelCardProps } from "@/components/domain/ModelCard";
@@ -13,9 +13,10 @@ import CharacterPlaystyle from "../CharacterPlaystyle";
 import { MaterialCard } from "../../Material";
 import { WeaponCard } from "../../Weapon";
 import Separator from "@/components/common/Separator";
-import TabBar from "@/components/common/TabBar";
+import TabBar, { Tab } from "@/components/common/TabBar";
 import { SearchableWeaponList } from "@/components/domain/SearchableList";
 import RarityList from "@/components/common/media/icons/Rarity";
+import { Rarity } from "@/common/types";
 
 export interface Props extends BaseModelCardProps {
   character: Character;
@@ -45,9 +46,47 @@ export default function CharacterCard({
   const getSignatureWeaponFor = useDataStore(store => store.getSignatureWeaponFor);
   const getRecommendedWeaponsFor = useDataStore(store => store.getRecommendedWeaponsFor);
 
-  const signatureWeapon = getSignatureWeaponFor(character);
-  const recommendedWeapons = getRecommendedWeaponsFor(character);
+  const signatureWeapon = useMemo(() => getSignatureWeaponFor(character), [character, getSignatureWeaponFor]);
+  const recommendedWeapons = useMemo(() => getRecommendedWeaponsFor(character), [character, getRecommendedWeaponsFor]);
+  const weapons = useMemo(() => {
+    const result = new Map<string, Omit<Tab, 'content'> & { 
+      weapons: Array<Weapon<any>>, 
+      color: string,
+      rarity: Rarity
+    }>();
 
+    if (signatureWeapon && showSignatureWeapon) {
+      result.set('signature', {
+        title: (
+          <>
+            <ElementImage element={character.element} />
+            <p>Signature</p>
+          </>
+        ),
+        weapons: [signatureWeapon],
+        color: 'var(--element)',
+        rarity
+      });
+    }
+
+    if (showRecommendedWeapons) {
+      for (const [rarity, weapons] of recommendedWeapons.entries()) {
+        result.set(rarityString(rarity), {
+          title: (
+            <>
+              <RarityList rarity={rarity} onlyOne />
+              <p>{rarityString(rarity)}</p>
+            </>
+          ),
+          weapons,
+          color: `var(--rarity)`,
+          rarity
+        });
+      }
+    }
+
+    return List.from(result);
+  }, [character.element, recommendedWeapons, signatureWeapon, showRecommendedWeapons, showSignatureWeapon]);
   const ascensionMaterials = useMemo(() => {
     if (!showAscensionSection) return [];
     const keys: Array<keyof Character['ascension']> = [
@@ -130,34 +169,26 @@ export default function CharacterCard({
               <CharacterPlaystyle character={character} showRecommendedArtifactSets showRecommendedTalentAscension />
             </div>
           )}
-          {showSignatureWeapon && signatureWeapon && (
-            <div className="character-signature-weapon">
-              <h3>Signature Weapon</h3>
-              <WeaponCard weapon={signatureWeapon} wrapInLink showRarity showStats showSource showDetails />
-            </div>
-          )}
-          {showRecommendedWeapons && (
+          {weapons.length > 0 && (
             <div className="character-recommended-weapons">
               <h3>Recommended Weapons</h3>
-              <p className="muted">
-                <b>Disclaimer: </b>
-                These weapons are listed using internal calculations and may not reflect optimal choices for {character.name}.
-                Please use your discretion when selecting your weapon!
-              </p>
-              <TabBar tabs={tab => [...recommendedWeapons.entries()].map(([rarity, weapons]) => tab(
-                rarityString(rarity),
-                <div data-rarity={rarityString(rarity)}>
-                  <RarityList rarity={rarity} onlyOne />
-                  {rarityString(rarity)}
-                </div>,
-                <SearchableWeaponList items={weapons}
-                  cardProps={{
-                    wrapInLink: true,
-                    showDetails: true,
-                    showStats: true
-                  }}
-                />
-              ))} />
+              <TabBar tabs={weapons.mapToArray(([key, { title, weapons, color, rarity }]) => ([
+                key,
+                {
+                  title: (
+                    <div data-rarity={rarityString(rarity)} style={{ color }}>
+                      {title}
+                    </div>
+                  ),
+                  content: <SearchableWeaponList items={weapons}
+                    cardProps={{
+                      wrapInLink: true,
+                      showDetails: true,
+                      showStats: true
+                    }}
+                  />
+                }
+              ]))} />
             </div>
           )}
           {children}

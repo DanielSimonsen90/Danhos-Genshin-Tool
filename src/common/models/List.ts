@@ -3,7 +3,9 @@ export type OrderByComparator<T> = (a: T, b: T) => number;
 export class List<T> extends Array<T> {
   public static from<T>(iterable: Iterable<T>): List<T>;
   public static from<T>(rec: Record<any, T>): List<T>;
-  public static from<T>(iterable: Iterable<T> | Record<any, T>): List<T> {
+  public static from<K, V>(map: Map<K, V>): List<[K, V]>;
+  public static from<T, U>(iterable: Iterable<T> | Record<any, T>) {
+    if (iterable instanceof Map) return new List<[T, U]>(...Array.from(iterable.entries()));
     return new List<T>(...Object.values(iterable));
   }
   
@@ -67,6 +69,10 @@ export class List<T> extends Array<T> {
   public map<U>(callback: (value: T, index: number, array: T[]) => U): List<U> {
     return List.from(super.map(callback));
   }
+  public mapToArray<U>(callback: (value: T, index: number, array: T[]) => U): U[] {
+    return super.map(callback)
+  }
+
   public filter<U extends T>(callback: (value: T, index: number, array: T[]) => value is U): List<U>;
   public filter(callback: (value: T, index: number, array: T[]) => unknown): List<T>;
   public filter(callback: (value: T, index: number, array: T[]) => unknown): List<T> {

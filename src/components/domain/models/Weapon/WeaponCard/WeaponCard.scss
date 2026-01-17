@@ -34,7 +34,9 @@
       }
 
       &__value {
+        font-size: 1.25rem;
         font-weight: normal;
+        line-height: 2.5rem;
         color: var(--text-muted);
       }
     }
