@@ -2,9 +2,11 @@
 
 ## Added
 * Added Teyvat regions to artifacts - including the filter in SearchableArtifactList.
+* Traveler passive talents
 
 ## Updates
 * Updated The Doctor (Dottore)'s description since I've now played through the archon quest :D
+* Updated artifact set usage percentages of all characters
 
 ## Fixes
 * Fixed The Doctor (Dottore)'s weekly boss drops marked as "Rare" instead of "Legendary"

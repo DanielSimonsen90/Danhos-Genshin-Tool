@@ -104,7 +104,6 @@ export const Alhaitham = new Character("Alhaitham", "Dendro", "Sword", [
   ])
 );
 
-// TODO
 export const Aloy = new Character("Aloy", "Cryo", "Bow", [], Rarity.Legendary, 'Unknown', {
   localSpecialty: LocalSpecialties.CrystalMarrow,
   crystal: ElementalCrystals.Cryo,
@@ -280,7 +279,6 @@ export const Charlotte = new Character("Charlotte", "Cryo", "Catalyst", [
   ])
 );
 
-// TODO
 export const Chasca = new Character("Chasca", "Anemo", "Bow", ["Nightsouls Blessing"], Rarity.Legendary, 'Natlan', {
   material: TalentAscension.Conflict,
   weeklyBossDrop: MobDrops.SilkenFeather,
@@ -290,9 +288,9 @@ export const Chasca = new Character("Chasca", "Anemo", "Bow", ["Nightsouls Bless
   mobDrop: EasyMobDrops.Fang,
 }, '25 Phlogiston is restored when own party members defeat an opponent. This effect can be triggered once every 12s.',
   new CharacterPlaystyle("On-field DPS", ["ATK"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 90.5),
-    new CharacterArtifactSet(Sets.WanderersTroupe, 4, 2.1),
-    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 1.2),
+    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 92.4),
+    new CharacterArtifactSet(Sets.WanderersTroupe, 4, 1.5),
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 1),
   ])
 );
 
@@ -396,7 +394,7 @@ export const Collei = new Character("Collei", "Dendro", "Bow", [], Rarity.Epic, 
   ])
 );
 
-// TODO
+// TODO at later update
 export const Columbina = new Character("Columbina", "Hydro", "Catalyst", [
   'Increases Moonsign',
   'Enables Lunar Reaction',
@@ -533,7 +531,6 @@ export const Durin = new Character("Durin", "Pyro", "Sword", [
   ])
 );
 
-// TODO
 export const Emilie = new Character("Emilie", "Dendro", "Polearm", ["Off-field Damage"], Rarity.Legendary, 'Fontaine', {
   material: TalentAscension.Order,
   weeklyBossDrop: MobDrops.SilkenFeather,
@@ -543,9 +540,9 @@ export const Emilie = new Character("Emilie", "Dendro", "Polearm", ["Off-field D
   mobDrop: EasyMobDrops.Gear,
 }, 'When Lumidouce Case (lamp) is on field, all party members gain 85% Pyro RES against Burning DMG.',
   new CharacterPlaystyle("Off-field Burning Support", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.UnfinishedReverie, 4, 81.4),
-    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 11.4),
-    new CharacterArtifactSet(Sets.GoldenTroupe, 4, 1.3),
+    new CharacterArtifactSet(Sets.UnfinishedReverie, 4, 82.5),
+    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 11.2),
+    new CharacterArtifactSet(Sets.GoldenTroupe, 4, 1.2),
   ]),
 );
 
@@ -564,7 +561,6 @@ export const Escoffier = new Character('Escoffier', 'Cryo', 'Polearm', ['Off-fie
   ])
 );
 
-// TODO
 export const Eula = new Character("Eula", "Cryo", "Claymore", [], Rarity.Legendary, 'Mondstadt', {
   material: TalentAscension.Resistance,
   weeklyBossDrop: MobDrops.DragonLordsCrown,
@@ -574,10 +570,10 @@ export const Eula = new Character("Eula", "Cryo", "Claymore", [], Rarity.Legenda
   mobDrop: EasyMobDrops.Mask,
 }, '10% chance of double product when crafting Character Talent Materials.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ["Burst/Ult", "Normal/Press", "Skill/Ability"], true, [
-    new CharacterArtifactSet(Sets.PaleFlame, 4, 70.8),
-    ...PhysicalDMGSets(15.3),
-    ...AttackSets(3.6),
-    ...PhysicalDMGSets(3.6),
+    new CharacterArtifactSet(Sets.PaleFlame, 4, 71.9),
+    ...PhysicalDMGSets(15.0),
+    ...AttackSets(3.3),
+    ...PhysicalDMGSets(3.3),
   ]),
 );
 
@@ -618,7 +614,6 @@ export const Fischl = new Character("Fischl", "Electro", "Bow", [
   ]),
 );
 
-// TODO
 export const Flins = new Character("Flins", "Electro", "Polearm", [
   'Enables Lunar-Charged Reaction',
   'Elemental Infusion: After Skill/Ability, Flins gains Electro infusion',
@@ -632,7 +627,9 @@ export const Flins = new Character("Flins", "Electro", "Polearm", [
   mobDrop: MobDrops.DriveShaft,
 }, 'Shows Local Specialties in Nod-Krai on minimap.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Elemental Mastery"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.NightOfTheSkysUnveiling, 4, 100),
+    new CharacterArtifactSet(Sets.NightOfTheSkysUnveiling, 4, 94.9),
+    ...AttackSets(0.7),
+    ...ElementalMasterySets(0.7),
   ])
 );
 
@@ -984,7 +981,6 @@ export const Kirara = new Character("Kirara", "Dendro", "Sword", ["Shield"], Rar
   ])
 );
 
-// TODO
 export const Klee = new Character("Klee", "Pyro", "Catalyst", [
   `Hexerei Able: When Klee deals DMG with NA/Skill/Burst; gain 1 Boom Badge for 20s. Each badge has own timer. Max 3 stacks that deals 115/130/150% of its original DMG.`
 ], Rarity.Legendary, 'Mondstadt', {
@@ -996,10 +992,10 @@ export const Klee = new Character("Klee", "Pyro", "Catalyst", [
   mobDrop: EasyMobDrops.Scroll,
 }, 'Shows Local Specialties in Mondstadt on minimap.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Elemental Mastery"], ["Normal/Press", "Skill/Ability", "Burst/Ult"], true, [
-    new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 65.4),
-    ...PyroDMGSets(8.5),
-    ...AttackSets(8.5),
-    new CharacterArtifactSet(Sets.WanderersTroupe, 4, 6.7),
+    new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 66.1),
+    ...PyroDMGSets(9.2),
+    ...AttackSets(9.2),
+    new CharacterArtifactSet(Sets.WanderersTroupe, 4, 7.2),
   ])
 );
 
@@ -1486,7 +1482,6 @@ export const ShikanoinHeizou = new Character("Shikanoin Heizou", "Anemo", "Catal
   ])
 );
 
-// TODO
 export const Sigewinne = new Character("Sigewinne", "Hydro", "Bow", ["Heal", "Bond of Life"], Rarity.Legendary, 'Fontaine', {
   material: TalentAscension.Equity,
   weeklyBossDrop: MobDrops.LightlessEyeOfTheMaelstrom,
@@ -1496,9 +1491,9 @@ export const Sigewinne = new Character("Sigewinne", "Hydro", "Bow", ["Heal", "Bo
   mobDrop: EasyMobDrops.FontemerAberrantPearl,
 }, 'While under water and your active character\'s HP fall below 50%, the active character will be healed over 2.5s and gain Elemental and Physical resistance decrease by 10% for 10s. This can be triggered once every 20s.',
   new CharacterPlaystyle("On-field Support", ["HP"], ["Skill/Ability", "Burst/Ult", "Charged/Hold"], false, [
-    new CharacterArtifactSet(Sets.SongOfDaysPast, 4, 43.9),
-    ...HPSets(25.4),
-    new CharacterArtifactSet(Sets.OceanHuedClam, 4, 8.0),
+    new CharacterArtifactSet(Sets.SongOfDaysPast, 4, 46.3),
+    ...HPSets(23.4),
+    new CharacterArtifactSet(Sets.OceanHuedClam, 4, 7.8),
   ])
 );
 
@@ -1590,7 +1585,6 @@ export const Tighnari = new Character("Tighnari", "Dendro", "Bow", ["Off-field D
   ])
 );
 
-// TODO
 export const TravelerAnemo = new Character("Traveler (Anemo)", "Anemo", "Sword", [], Rarity.Legendary, 'Unknown', {
   material: TalentAscension.Resistance,
   weeklyBossDrop: MobDrops.DvalinsSigh,
@@ -1598,15 +1592,14 @@ export const TravelerAnemo = new Character("Traveler (Anemo)", "Anemo", "Sword",
   localSpecialty: LocalSpecialties.WindwheelAster,
   worldBossDrop: null,
   mobDrop: EasyMobDrops.Mask,
-}, undefined,
-  new CharacterPlaystyle("On-field Swirl DPS", ["Elemental Mastery", "Energy Recharge", "ATK"], ["Skill/Ability", "Normal/Press", "Burst/Ult"], true, [
-    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 38.3),
-    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 26.4),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 6.1)
+}, `CRIT Rate +10%. When Pyro/Hydro/CryoElectro attacks from nearby party member hit opponents, gain 1 stack of Blade of the Dawn BReeze. Each Elemental type grants 1 stack. AFter obtaining 2+, performing CA consumes all stacks to transform into CA: Whirlwind: Each CA deals Anemo DMG. +60% of Traveler's ATK. Every consumption, Blade Wind summoned dealing 50% of Traveler's ATK - considered CA damage. 15s CD.`,
+  new CharacterPlaystyle("On-field Swirl DPS", ["ATK", "Elemental Mastery"], ["Skill/Ability", "Normal/Press", "Burst/Ult"], true, [
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 37.9),
+    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 25.6),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 5.3)
   ])
 );
 
-// TODO
 export const TravelerGeo = new Character("Traveler (Geo)", "Geo", "Sword", [], Rarity.Legendary, 'Unknown', {
   material: TalentAscension.Prosperity,
   weeklyBossDrop: MobDrops.TailOfBoreas,
@@ -1614,16 +1607,14 @@ export const TravelerGeo = new Character("Traveler (Geo)", "Geo", "Sword", [], R
   localSpecialty: LocalSpecialties.WindwheelAster,
   worldBossDrop: null,
   mobDrop: EasyMobDrops.Mask,
-}, undefined,
+}, `DEF +20%. When members protected by shield and shield is replaced or Geo Constructs are created, Traveler receives 1 stack of Blade of Archaic Petra of 3 stacks. 1 stack/s. After 3, performing CA consumes all stacks to transform into CA: Rockfell. Each CA deals Geo DMG +120% of Traveler's ATK. After hit of opponent, +20% shield strength for party members for 15s. 15s CD,`,
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 27.7),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 8.2),
-    ...AttackSets(7.0),
-    ...GeoDMGSets(7.0),
+    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 24.1),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 9.0),
+    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 7.3),
   ])
 );
 
-// TODO
 export const TravelerElectro = new Character("Traveler (Electro)", "Electro", "Sword", [], Rarity.Legendary, 'Unknown', {
   material: TalentAscension.Transience,
   weeklyBossDrop: MobDrops.DragonLordsCrown,
@@ -1631,15 +1622,14 @@ export const TravelerElectro = new Character("Traveler (Electro)", "Electro", "S
   localSpecialty: LocalSpecialties.WindwheelAster,
   worldBossDrop: null,
   mobDrop: EasyMobDrops.Mask,
-}, undefined,
+}, `Energy Recharge +20%. When members burst/ult, Traveler receives 1 stack of Blade of Resounding Thunder of 3 stacks. After 3, performing CA consumes all stacks to transform into CA: Detonate. Each CA deals Electro DMG +100% of Traveler's ATK. 3s after hitting opponent, 1 additional lightning strike triggered, dealing Electro DMG of 200% Traveler's ATK. 1 Abundance Amulet created. DMG is considered CA DMG. 15s CD.`,
   new CharacterPlaystyle("Off-field Support", ["Energy Recharge", "ATK"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 36.1),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 16.4),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 9.7),
+    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 24.2),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 22.7),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 14.2),
   ])
 );
 
-// TODO
 export const TravelerDendro = new Character("Traveler (Dendro)", "Dendro", "Sword", [], Rarity.Legendary, 'Unknown', {
   material: TalentAscension.Admonition,
   weeklyBossDrop: MobDrops.MudraOfTheMaleficGeneral,
@@ -1647,15 +1637,14 @@ export const TravelerDendro = new Character("Traveler (Dendro)", "Dendro", "Swor
   localSpecialty: LocalSpecialties.WindwheelAster,
   worldBossDrop: null,
   mobDrop: EasyMobDrops.Mask,
-}, undefined,
+}, `Elemental Master +60. When Dendro/Bountiful Cores or Seeds of Deceit appears on field or party obtains Verdant Dew, Traveler gains 1 stack of Blade of Verdant Virids. These 2 methods each grant +1 stack/4s of 3. After 3, performing CA consumes all stacks to transform into CA: Verdessence. Each CA deals Dendro DMG +80% of Traveler's ATK. Two Vinecores created, which explode after 4/8s respectively, dealing Dendro DMG of 120% of Traveler's ATk - considered CA DMG. 15s CD.`,
   new CharacterPlaystyle("Off-field Support", ["Energy Recharge", "Elemental Mastery"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 54.1),
-    new CharacterArtifactSet(Sets.GildedDreams, 4, 7.2),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 6.1),
+    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 56.3),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 7.8),
+    new CharacterArtifactSet(Sets.GildedDreams, 4, 6.7),
   ])
 );
 
-// TODO
 export const TravelerHydro = new Character("Traveler (Hydro)", "Hydro", "Sword", [], Rarity.Legendary, 'Unknown', {
   material: TalentAscension.Equity,
   weeklyBossDrop: MobDrops.WorldspanFern,
@@ -1663,11 +1652,11 @@ export const TravelerHydro = new Character("Traveler (Hydro)", "Hydro", "Sword",
   localSpecialty: LocalSpecialties.WindwheelAster,
   worldBossDrop: null,
   mobDrop: EasyMobDrops.Mask,
-}, undefined,
+}, `HP +20%. When party members' HP change by 5%, Traveler receives 1 stack of Blade of Many Waters every 4s of 3 stacks. After 3, performing CA consumes all stacks to transform into CA: Tidebound. Each CA deals Hydro DMG +150% of Traveler's ATK. When Traveler's HP > 50%, 10% of max HP consumed to crease DMG inflicted by CA by 100% of Traveler's ATK. When HP < 50%, one instance of healing = 25% of max HP restored upon hitting an enemy. 15s CD.`,
   new CharacterPlaystyle("Off-field Support", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 29.6),
-    new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 6.9),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 6.6),
+    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 31),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 7.8),
+    new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 6.5),
   ])
 );
 export const TravelerPyro = new Character("Traveler (Pyro)", "Pyro", "Sword", ['Nightsouls Blessing'], Rarity.Legendary, 'Unknown', {
@@ -1677,7 +1666,7 @@ export const TravelerPyro = new Character("Traveler (Pyro)", "Pyro", "Sword", ['
   localSpecialty: LocalSpecialties.WindwheelAster,
   worldBossDrop: null,
   mobDrop: EasyMobDrops.Mask,
-}, undefined,
+}, `ATK +20%. When party members trigger Nightsoul burst, Traveler receives 1 stack of Blade of Sacred Flame of 2 stacks. After 3, performing CA consumes all stacks to transform into CA: Inferno. Each CA deals Nightsoul-aligned Pyro DMG +200% of Traveler's ATK. 15s CD.`,
   new CharacterPlaystyle("Off-field Support", ["Energy Recharge", "ATK"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
     new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 59.9),
     new CharacterArtifactSet(Sets.ObsidianCodex, 4, 14.4),
