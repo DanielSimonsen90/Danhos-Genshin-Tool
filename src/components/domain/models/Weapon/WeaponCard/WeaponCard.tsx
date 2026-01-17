@@ -6,6 +6,7 @@ import ModelCard, { BaseModelCardProps } from "@/components/domain/ModelCard";
 import { useCharacterData } from "@/stores";
 import { CharacterCard } from "../../Character";
 import { MaterialCard } from "../../Material";
+import { useWeaponDescription } from "./WeaponCardHooks";
 
 export interface Props extends BaseModelCardProps {
   weapon: Weapon;
@@ -35,18 +36,7 @@ export default function WeaponCard({
       : undefined
   ), [showSignatureCharacter, signatureWeaponFor, CharactersData]);
 
-  const processedDescription = useMemo(() => {
-    if (!showDetails) return '';
-
-    return description.value.replace(/\$[0-9]+/g, (match) => {
-      const index = parseInt(match.slice(1), 10);
-      if (index < 0 || index >= description.refinements.length) {
-        console.warn(`Invalid refinement index ${index} for weapon ${name}`, description.refinements);
-        return match;
-      }
-      return `<b>${description.refinements[index]}</b>`;
-    });
-  }, [showDetails, description]);
+  const processedDescription = useWeaponDescription(weapon, showDetails);
 
   return (
     <ModelCard
