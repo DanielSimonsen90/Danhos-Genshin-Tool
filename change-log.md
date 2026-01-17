@@ -1,6 +1,9 @@
 # 🎉 Danho's Genshin Tool v . 2.1.13 🎉
 
 ## Added
+* Zibai, 5* Geo Sword
+* Illuga, 4* Geo Polearm
+  - Illuga, as well as Zibai, may have none or incorrect passive talent descriptions until official data is available.
 * Added Teyvat regions to artifacts - including the filter in SearchableArtifactList.
 * Traveler passive talents
 

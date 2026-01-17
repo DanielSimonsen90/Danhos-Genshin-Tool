@@ -767,6 +767,23 @@ export const Ifa = new Character('Ifa', "Anemo", "Catalyst", [
   ])
 );
 
+export const Illuga = new Character("Illuga", "Geo", "Polearm", [
+  "Enables Lunar-Crystallize Reaction"
+], Rarity.Epic, 'Nod-Krai', {
+  material: TalentAscension.Elysium,
+  weeklyBossDrop: MobDrops.ErodedHorn,
+  crystal: ElementalCrystals.Geo,
+  localSpecialty: LocalSpecialties.PineAmber,
+  worldBossDrop: MobDrops.CyclicMilitaryKuuvahkiCore,
+  mobDrop: EasyMobDrops.DriveShaft,
+}, undefined, 
+  new CharacterPlaystyle("Off-field Lunar-Crystallize Support", ["DEF", "Elemental Mastery", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
+    new CharacterArtifactSet(Sets.SilkenMoonsSerenade, 4, 33),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 33),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 33),
+  ])
+);
+
 export const Ineffa = new Character("Ineffa", "Electro", "Polearm", [
   "Enables Lunar-Charged Reaction",
   "Off-field Damage",
@@ -1967,6 +1984,22 @@ export const YunJin = new Character("Yun Jin", "Geo", "Polearm", ["Shield"], Rar
     ...DefenseSets(20.7),
     ...EnergyRechargeSets(20.7),
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 2.6),
+  ])
+);
+
+export const Zibai = new Character("Zibai", "Geo", "Sword", [
+  'Enables Lunar-Crystallize Reaction',
+  'Increases Moonsign'
+], Rarity.Legendary, 'Liyue', {
+  material: TalentAscension.Gold,
+  weeklyBossDrop: MobDrops.RemnantOfTheDreadwing,
+  crystal: ElementalCrystals.Geo,
+  localSpecialty: LocalSpecialties.GlazeLily,
+  worldBossDrop: MobDrops.ChessGameQueen,
+  mobDrop: EasyMobDrops.Warrant,
+}, `Collects elemental energy at night`, 
+  new CharacterPlaystyle("On-field Lunar-Crystallize DPS", ["DEF"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
+    new CharacterArtifactSet(Sets.ADayCarvedFromRisingWinds, 4, 100),
   ])
 );
 

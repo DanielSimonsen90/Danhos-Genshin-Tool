@@ -2078,7 +2078,7 @@ export const LightbearingMoonshard = new Weapon(
     Drops.DriveShaft
   ],
   "Wish",
-  // cs => cs.Zibai?
+  cs => cs.Zibai
 );
 export const LightOfFoliarIncision = new Weapon(
   'Light of Foliar Incision',
@@ -2482,7 +2482,7 @@ export const MoonweaversDawn = new Weapon(
     value: `Increases Elemental Burst DMG by $0. When the equipping character's Energy Capacity does not exceed 60/40, their Elemental Burst DMG is increased by an additional $1.`,
     refinements: [
       '20/25/30/35/40%',
-      '(16%/28%)/(20%/35%)/(24%/42%)/(28%/49%)/(32%/56%)',
+      '(16/28)/(20/35)/(24/42)/(28/49)/(32%/56%)',
     ],
   },
   'Sword',
