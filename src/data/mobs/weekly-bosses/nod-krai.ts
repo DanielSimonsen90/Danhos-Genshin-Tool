@@ -7,7 +7,7 @@ import { MaskOfTheVirtuousDoctor, MadmansRestraint, ElixirOfTheHeretic } from "@
 
 export const TheDoctorDottore = new WeeklyBoss(
   `The Doctor (Dottore)`,
-  'Description once Danho plays through it or someone sends it to him', // TODO
+  `The heretic who sought godhood through the suffering of others finally met his twilight, brought down by those who stood together to defend their homeland.\nAs the moon traces its path across the night sky, its quiet light meets the resolve of those who stand here to protect their home.\nTogether, they remind us what "home" truly means.\nReflecting on this battle for the sublunary sphere may reveal something you haven't noticed before...`,
   'Nod-Krai',
   [
     MaskOfTheVirtuousDoctor,

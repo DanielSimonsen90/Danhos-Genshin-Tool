@@ -14,13 +14,14 @@ export interface Props extends BaseModelCardProps {
   showDomainList?: boolean;
 
   showDomainRewards?: boolean;
-  displayCraftable?: boolean;
+  showCraftable?: boolean;
+  showRegion?: boolean;
 }
 
 export default function ArtifactCard({
   artifact,
   showSetDescriptions, showCharacterSets, showDomainList,
-  showDomainRewards, displayCraftable,
+  showDomainRewards, showCraftable, showRegion,
   ...props
 }: Props) {
   const { name } = artifact;
@@ -32,7 +33,7 @@ export default function ArtifactCard({
       nameTag={showSetDescriptions ? 'h1' : 'h2'}
       {...props}
       renderImage={() => <ArtifactImage set={name} piece="Flower" />}
-      renderHeaderContent={showSetDescriptions ? (() => <ArtifactDetails {...{ artifact, displayCraftable }} />) : undefined}
+      renderHeaderContent={showSetDescriptions || showRegion ? (() => <ArtifactDetails showDescriptions={showSetDescriptions} {...{ artifact, showCraftable, showRegion }} />) : undefined}
       renderContent={() => (showCharacterSets || showDomainList) ? (
         <section className="artifact-content">
           {showCharacterSets && <ArtifactSets artifact={artifact} />}

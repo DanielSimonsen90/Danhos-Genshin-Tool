@@ -11,6 +11,7 @@ export default function Artifacts() {
       <SearchableArtifactList liClassName="artifacts-list-item" items={artifacts} placeholder="Search for an artifact..." cardProps={{ 
         wrapInLink: true,
         showRarity: true,
+        showRegion: true,
       }} />
     </>
   );

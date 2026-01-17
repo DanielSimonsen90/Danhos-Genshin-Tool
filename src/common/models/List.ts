@@ -7,6 +7,11 @@ export class List<T> extends Array<T> {
     return new List<T>(...Object.values(iterable));
   }
   
+  /**
+   * Order the list by multiple comparators in sequence
+   * @param comparators Comparators to order by in sequence
+   * @returns Same list ordered by the given comparators
+   */
   public orderBy(...comparators: OrderByComparator<T>[]): T[] {
     return this.sort((a, b) => {
       for (const comparator of comparators) {
@@ -16,6 +21,20 @@ export class List<T> extends Array<T> {
       return 0; // If all comparisons are equal
     });
   }
+
+  /**
+   * Filter the list to only unique values
+   * @returns New unique list
+   */
+  public unique(): List<T> {
+    return List.from([...new Set(this)]);
+  }
+
+  /**
+   * Map the list and return only unique mapped values
+   * @param callback Mapper
+   * @returns New list with unique mapped values
+   */
   public mapUnique<U>(callback?: (value: T, index: number, array: T[]) => U): List<U> {
     const seen = new Set<U>();
     const results: U[] = [];
@@ -37,6 +56,8 @@ export class List<T> extends Array<T> {
   public map<U>(callback: (value: T, index: number, array: T[]) => U): List<U> {
     return List.from(super.map(callback));
   }
+  public filter<U extends T>(callback: (value: T, index: number, array: T[]) => value is U): List<U>;
+  public filter(callback: (value: T, index: number, array: T[]) => unknown): List<T>;
   public filter(callback: (value: T, index: number, array: T[]) => unknown): List<T> {
     return List.from(super.filter(callback));
   }

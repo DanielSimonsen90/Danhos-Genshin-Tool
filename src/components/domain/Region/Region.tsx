@@ -1,9 +1,9 @@
 import { classNames } from '@/common/functions/strings';
 import { Arrayable } from '@/common/types';
-import { TeyvatRegion as RegionType } from '@/common/types/genshin';
+import { TeyvatRegion } from '@/common/types/genshin';
 
 type Props = {
-  region: Arrayable<RegionType>;
+  region: Arrayable<TeyvatRegion>;
   className?: string;
   itemClassName?: string;
   tag?: 'p' | 'span' | 'div' | 'ul' | 'li';
@@ -21,7 +21,7 @@ export default function Region({
   id,
   keyPrefix = 'region',
 }: Props) {
-  const regions = (Array.isArray(region) ? region : [region]).filter(Boolean) as RegionType[];
+  const regions = (Array.isArray(region) ? region : [region]).filter(Boolean) as TeyvatRegion[];
 
   // No regions to display
   if (regions.length === 0) return null;
@@ -30,7 +30,7 @@ export default function Region({
   if (regions.length === 1 && Tag !== 'ul') {
     return (
       <Tag
-        className={classNames('region', 'region-item', className)}
+        className={classNames('regions-container', 'region', 'region-item', className)}
         data-region={regions[0]}
         id={id}
       >
@@ -39,9 +39,10 @@ export default function Region({
     );
   }
   // Multiple regions or ul tag requested
-  const isUl = Tag === 'ul';
+  const isUl = Tag === 'ul' || regions.length > 1;
   const WrapperTag = isUl ? 'ul' : Tag;
   const wrapperClassName = classNames(
+    'regions-container',
     isUl ? 'regions' : 'region',
     className
   )

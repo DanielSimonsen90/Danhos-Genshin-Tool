@@ -11,7 +11,7 @@ import { useContextMenu } from "@/providers/ContextMenuProvider";
 
 import { OptionalProps, UncrontrolledProps } from "@/components/domain/SearchableList/Props";
 import SearchableList from "@/components/domain/SearchableList/SearchableList";
-import { useFavorite } from "@/stores";
+import { useDataStore, useFavorite } from "@/stores";
 import { FavoriteStar } from "@/components/common/media/icons/Star";
 
 type Props<TFilterKeys extends string> = (
@@ -32,6 +32,7 @@ export default function SearchableArtifactList<TFilterKeys extends string>({
   const navigate = useNavigate();
   const [hidden, setHidden] = useState(new Array<ArtifactSet>());
   const FavoriteStore = useFavorite('artifacts');
+  const getRegionsFromArtifact = useDataStore(store => store.getRegionsFromArtifact);
 
   return <SearchableList items={items ?? []}
     placeholder="Search artifacts..."
@@ -97,6 +98,17 @@ export default function SearchableArtifactList<TFilterKeys extends string>({
           || artifact.doesStatIncrease('Hydro DMG Bonus')
           || artifact.doesStatIncrease('Pyro DMG Bonus')
         ),
+      },
+      region: {
+        mondstadt: artifact => getRegionsFromArtifact(artifact.name)?.includes('Mondstadt'),
+        liyue: artifact => getRegionsFromArtifact(artifact.name)?.includes('Liyue'),
+        inazuma: artifact => getRegionsFromArtifact(artifact.name)?.includes('Inazuma'),
+        sumeru: artifact => getRegionsFromArtifact(artifact.name)?.includes('Sumeru'),
+        fontaine: artifact => getRegionsFromArtifact(artifact.name)?.includes('Fontaine'),
+        natlan: artifact => getRegionsFromArtifact(artifact.name)?.includes('Natlan'),
+        nodKrai: artifact => getRegionsFromArtifact(artifact.name)?.includes('Nod-Krai'),
+        snezhnaya: artifact => getRegionsFromArtifact(artifact.name)?.includes('Snezhnaya'),
+        // unknown: artifact => getRegionsFromArtifact(artifact.name)?.includes('Unknown'),
       },
 
       ...filterChecks
