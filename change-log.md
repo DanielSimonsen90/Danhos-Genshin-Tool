@@ -5,10 +5,11 @@
 * Traveler passive talents
 
 ## Updates
-* Updated The Doctor (Dottore)'s description since I've now played through the archon quest :D
-* Updated artifact set usage percentages of all characters
+* The Doctor (Dottore)'s description since I've now played through the archon quest :D
+* Artifact set usage percentages of all characters
+* Searchable lists in Materials needing scroll... there's no need for that.
 
 ## Fixes
-* Fixed The Doctor (Dottore)'s weekly boss drops marked as "Rare" instead of "Legendary"
-* Fixes % values in all refinement iterations - now goes back to % value only included at end refinement value
-* Fixed an issue with text overflowing in single lines
+* The Doctor (Dottore)'s weekly boss drops marked as "Rare" instead of "Legendary"
+* Percentage values in all refinement iterations - now goes back to % value only included at end refinement value
+* An issue with text overflowing in single lines
