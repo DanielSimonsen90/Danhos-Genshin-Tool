@@ -1,22 +1,4 @@
-# 🎉 Danho's Genshin Tool v . 2.1.13 🎉
-
-## Added
-* Zibai, 5* Geo Sword
-* Illuga, 4* Geo Polearm
-  - Illuga, as well as Zibai, may have none or incorrect passive talent descriptions until official data is available.
-* Recommended weapons section in CharacterCard
-  - The recommended weapons are based on internal calculations and may not reflect optimal choices for the character. This is intended to be reworked later.
-* Added Teyvat regions to artifacts - including the filter in SearchableArtifactList.
-* Traveler passive talents
-
-## Updates
-* The Doctor (Dottore)'s description since I've now played through the archon quest :D
-* Artifact set usage percentages of all characters
-* Searchable lists in Materials needing scroll... there's no need for that.
+# 🎉 Danho's Genshin Tool v . 2.1.14 🎉
 
 ## Fixes
-* The Doctor (Dottore)'s weekly boss drops marked as "Rare" instead of "Legendary"
-* Percentage values in all refinement iterations - now goes back to % value only included at end refinement value
-* An issue with text overflowing in single lines
-* Mob drops not being aligned
-* Prototype: Starglitter marked as "Sword" instead of "Polearm"
+* Recommended weapons not consistently rendering tabs as rarity hierarchy

@@ -323,9 +323,9 @@ export const useDataStore = create<DataStore>((setState, getState) => {
             return stat && weaponType;
           })
           .orderBy(
+            (a, b) => b.rarity - a.rarity,
             (a, b) => talentStats.indexOf(getTalentStatName(b.secondaryStat) ?? '') - talentStats.indexOf(getTalentStatName(a.secondaryStat) ?? ''),
             (a, b) => getScore(b) - getScore(a),
-            (a, b) => b.rarity - a.rarity,
             (a, b) => b.baseAttack - a.baseAttack,
           )
           .groupBy(weapon => weapon.rarity)
