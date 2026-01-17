@@ -2,11 +2,12 @@
 import { create } from 'zustand';
 import { DataStore, CharacterUsingArtifactResult } from "./DataStoreTypes";
 import { DataStoreContent } from './DataStoreConstants';
-import { ArtifactSet, Boss, Character, CharacterArtifactSet, DomainOfBlessing, DomainOfForgery, DomainOfMastery, Material, Mob, Model, ModelKeys, TalentAscensionMaterial, Weapon, WeaponAscensionMaterial } from '@/common/models';
+import { ArtifactSet, Boss, Character, CharacterArtifactSet, DomainOfBlessing, DomainOfForgery, DomainOfMastery, List, Material, Mob, Model, ModelKeys, TalentAscensionMaterial, Weapon, WeaponAscensionMaterial, WorldBoss } from '@/common/models';
 import ModelType from './ModelType';
 import CraftableMaterial from '@/common/models/materials/CraftableMaterial';
 import AscensionMaterial from '@/common/models/materials/AscensionMaterial';
 import MemoizeService from '@/services/MemoizeService';
+import { TeyvatRegion } from '@/common/types';
 
 export const useDataStore = create<DataStore>((setState, getState) => {
   const cache = new MemoizeService();
@@ -17,6 +18,7 @@ export const useDataStore = create<DataStore>((setState, getState) => {
     MATERIAL_WEAPONS: 'material_weapons_',
     MATERIAL_MODEL_KEYS: 'material_model_keys_',
     ARTIFACT_DOMAINS: 'artifact_domains_',
+    ARTIFACT_REGIONS: 'artifact_regions_',
     DOMAIN_ARTIFACTS: 'domain_artifacts_',
     MATERIAL_DROPPERS: 'material_droppers_',
     CHARACTER_MATERIALS: 'character_materials_',
@@ -141,6 +143,30 @@ export const useDataStore = create<DataStore>((setState, getState) => {
           return materials.some(item => item?.name === materialName);
         });
       }) as Character[];
+    },
+
+    getRegionsFromArtifact(artifactName: string) {
+      return getCachedOrCompute(`${CACHE_KEYS.ARTIFACT_REGIONS}${artifactName}`, () => {
+        const artifact = findByName(getState().Artifacts, artifactName);
+        if (!artifact) return undefined;
+
+        const registeredRegion = artifact.region;
+
+        const domains = dataStore.getDomainsFromArtifact(artifactName);
+        const domainRegions = domains?.flatMap(domain => domain.region) ?? [];
+
+        const mobs = dataStore.getMobsDroppingMaterial(artifactName);
+        const mobRegions = mobs.flatMap(mob => WorldBoss.isBoss(mob) && 'region' in mob && mob.region ? [mob.region] : []);
+
+        return List
+          .from([registeredRegion, ...domainRegions, ...mobRegions])
+          .unique()
+          .filter((region): region is TeyvatRegion => Boolean(region))
+          .sort((a, b) => {
+            const order: Array<TeyvatRegion> = ['Mondstadt', 'Liyue', 'Inazuma', 'Sumeru', 'Fontaine', 'Natlan', 'Nod-Krai', 'Snezhnaya', 'Unknown'];
+            return order.indexOf(a) - order.indexOf(b);
+          })
+      });
     },
 
     getWeaponsUsingMaterial(materialName) {

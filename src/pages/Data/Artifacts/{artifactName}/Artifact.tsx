@@ -27,7 +27,8 @@ export default function ArtifactPage() {
           className="selected-artifact"
           showRarity 
           showSetDescriptions 
-          displayCraftable 
+          showCraftable 
+          showRegion
           showCharacterSets 
           showDomainList
 
