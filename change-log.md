@@ -17,3 +17,4 @@
 * Percentage values in all refinement iterations - now goes back to % value only included at end refinement value
 * An issue with text overflowing in single lines
 * Mob drops not being aligned
+* Prototype: Starglitter marked as "Sword" instead of "Polearm"
