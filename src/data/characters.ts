@@ -1399,7 +1399,7 @@ export const Rosaria = new Character("Rosaria", "Cryo", "Polearm", ["Off-field D
   mobDrop: EasyMobDrops.FatuiInsignia,
 }, 'During Night (18:00 - 06:00), party members gain 10% increased movement speed.',
   new CharacterPlaystyle("Burst Support", ["Energy Recharge", "ATK"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 35-1),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 35.1),
     new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 21.3),
     new CharacterArtifactSet(Sets.BlizzardStrayer, 4, 12.9),
   ])
@@ -1592,7 +1592,7 @@ export const TravelerAnemo = new Character("Traveler (Anemo)", "Anemo", "Sword",
   localSpecialty: LocalSpecialties.WindwheelAster,
   worldBossDrop: null,
   mobDrop: EasyMobDrops.Mask,
-}, `CRIT Rate +10%. When Pyro/Hydro/CryoElectro attacks from nearby party member hit opponents, gain 1 stack of Blade of the Dawn BReeze. Each Elemental type grants 1 stack. AFter obtaining 2+, performing CA consumes all stacks to transform into CA: Whirlwind: Each CA deals Anemo DMG. +60% of Traveler's ATK. Every consumption, Blade Wind summoned dealing 50% of Traveler's ATK - considered CA damage. 15s CD.`,
+}, `CRIT Rate +10%. When Pyro/Hydro/CryoElectro attacks from nearby party member hit opponents, gain 1 stack of Blade of the Dawn Breeze. Each Elemental type grants 1 stack. After obtaining 2+, performing CA consumes all stacks to transform into CA: Whirlwind: Each CA deals Anemo DMG. +60% of Traveler's ATK. Every consumption, Blade Wind summoned dealing 50% of Traveler's ATK - considered CA damage. 15s CD.`,
   new CharacterPlaystyle("On-field Swirl DPS", ["ATK", "Elemental Mastery"], ["Skill/Ability", "Normal/Press", "Burst/Ult"], true, [
     new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 37.9),
     new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 25.6),
@@ -1607,7 +1607,7 @@ export const TravelerGeo = new Character("Traveler (Geo)", "Geo", "Sword", [], R
   localSpecialty: LocalSpecialties.WindwheelAster,
   worldBossDrop: null,
   mobDrop: EasyMobDrops.Mask,
-}, `DEF +20%. When members protected by shield and shield is replaced or Geo Constructs are created, Traveler receives 1 stack of Blade of Archaic Petra of 3 stacks. 1 stack/s. After 3, performing CA consumes all stacks to transform into CA: Rockfell. Each CA deals Geo DMG +120% of Traveler's ATK. After hit of opponent, +20% shield strength for party members for 15s. 15s CD,`,
+}, `DEF +20%. When members protected by shield and shield is replaced or Geo Constructs are created, Traveler receives 1 stack of Blade of Archaic Petra of 3 stacks. 1 stack/s. After 3, performing CA consumes all stacks to transform into CA: Rockfell. Each CA deals Geo DMG +120% of Traveler's ATK. After hit of opponent, +20% shield strength for party members for 15s. 15s CD.`,
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
     new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 24.1),
     new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 9.0),
@@ -1637,7 +1637,7 @@ export const TravelerDendro = new Character("Traveler (Dendro)", "Dendro", "Swor
   localSpecialty: LocalSpecialties.WindwheelAster,
   worldBossDrop: null,
   mobDrop: EasyMobDrops.Mask,
-}, `Elemental Master +60. When Dendro/Bountiful Cores or Seeds of Deceit appears on field or party obtains Verdant Dew, Traveler gains 1 stack of Blade of Verdant Virids. These 2 methods each grant +1 stack/4s of 3. After 3, performing CA consumes all stacks to transform into CA: Verdessence. Each CA deals Dendro DMG +80% of Traveler's ATK. Two Vinecores created, which explode after 4/8s respectively, dealing Dendro DMG of 120% of Traveler's ATk - considered CA DMG. 15s CD.`,
+}, `Elemental Master +60. When Dendro/Bountiful Cores or Seeds of Deceit appears on field or party obtains Verdant Dew, Traveler gains 1 stack of Blade of Verdant Virids. These 2 methods each grant +1 stack/4s of 3. After 3, performing CA consumes all stacks to transform into CA: Verdessence. Each CA deals Dendro DMG +80% of Traveler's ATK. Two Vinecores created, which explode after 4/8s respectively, dealing Dendro DMG of 120% of Traveler's ATK - considered CA DMG. 15s CD.`,
   new CharacterPlaystyle("Off-field Support", ["Energy Recharge", "Elemental Mastery"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
     new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 56.3),
     new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 7.8),
@@ -1652,7 +1652,7 @@ export const TravelerHydro = new Character("Traveler (Hydro)", "Hydro", "Sword",
   localSpecialty: LocalSpecialties.WindwheelAster,
   worldBossDrop: null,
   mobDrop: EasyMobDrops.Mask,
-}, `HP +20%. When party members' HP change by 5%, Traveler receives 1 stack of Blade of Many Waters every 4s of 3 stacks. After 3, performing CA consumes all stacks to transform into CA: Tidebound. Each CA deals Hydro DMG +150% of Traveler's ATK. When Traveler's HP > 50%, 10% of max HP consumed to crease DMG inflicted by CA by 100% of Traveler's ATK. When HP < 50%, one instance of healing = 25% of max HP restored upon hitting an enemy. 15s CD.`,
+}, `HP +20%. When party members' HP change by 5%, Traveler receives 1 stack of Blade of Many Waters every 4s of 3 stacks. After 3, performing CA consumes all stacks to transform into CA: Tidebound. Each CA deals Hydro DMG +150% of Traveler's ATK. When Traveler's HP > 50%, 10% of max HP consumed to increase DMG inflicted by CA by 100% of Traveler's ATK. When HP < 50%, one instance of healing = 25% of max HP restored upon hitting an enemy. 15s CD.`,
   new CharacterPlaystyle("Off-field Support", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
     new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 31),
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 7.8),
