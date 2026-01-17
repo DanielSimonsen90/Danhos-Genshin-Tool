@@ -40,19 +40,19 @@ export const MaskOfTheVirtuousDoctor = new MobDrop(
   `Mask of the Virtuous Doctor`,
   `A mask found in the heretical testing grounds after defeating the false god that usurped the moon.\nMedicine is meant to cure the ailments of the flesh, yet mortal physicians turn a blind eye to the true causes of death. In the hands of a wise healer, the frail human body escapes the bounds of birth, aging, sickness, and death, revealing strength that defies common sense.`,
   'Nod-Krai',
-  Rarity.Rare
+  Rarity.Legendary
 );
 
 export const MadmansRestraint = new MobDrop(
   `Madman's Restraint`,
   `A band found in the heretical testing grounds after defeating the false god that usurped the moon.\nHumanity defines civilization by driving out madness. Yet believing that all things, whether they exist or not, can be contained within reason may itself be another form of lunacy. The madman sees through reason's cunning, and in his world, all things are permitted.`,
   'Nod-Krai',
-  Rarity.Rare
+  Rarity.Legendary
 );
 
 export const ElixirOfTheHeretic = new MobDrop(
   `Elixir of the Heretic`,
   `A vial found in the heretical testing grounds after defeating the false god that usurped the moon.\nFor centuries, self-proclaimed scholars have crawled beneath the weight of the six cardinal prohibitions, their studies little more than circular reasoning and empty words. The pursuit of truth should know no bounds — by this measure, those condemned as heretics by the world are the truest seekers of knowledge.`,
   'Nod-Krai',
-  Rarity.Rare
+  Rarity.Legendary
 );
