@@ -1,8 +1,3 @@
-.material-card__relations {
-  padding: 1rem;
-  border-top: 1px solid var(--border-color);
-}
-
 .material-card__models-using,
 .material-card__model-acquired {
   &:last-child {
@@ -17,7 +12,8 @@
     }
   }
 
-  .collapsible__content {
+  .collapsible--open .collapsible__content {
     --max-height: auto;
+    height: 100%;
   }
 }

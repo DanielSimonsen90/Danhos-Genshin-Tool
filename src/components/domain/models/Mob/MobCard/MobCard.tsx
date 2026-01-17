@@ -103,8 +103,8 @@ export default function MobCard({
                 {drops.map(drop => (
                   <div className="mob-drop-container" key={`drop-${drop.name}`}>
                     {ArtifactSet.isArtifactSet(drop)
-                      ? <ArtifactCard artifact={drop} nameTag="h4" wrapInLink showRarity />
-                      : <MaterialCard material={drop} allowCycle={false} nameTag="h4" wrapInLink showRarity />
+                      ? <ArtifactCard className="mob-drop" artifact={drop} nameTag="h4" wrapInLink showRarity />
+                      : <MaterialCard className="mob-drop" material={drop} allowCycle={false} nameTag="h4" wrapInLink showRarity />
                     }
                   </div>
                 ))}

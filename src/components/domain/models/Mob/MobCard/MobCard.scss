@@ -75,31 +75,46 @@
       grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
       gap: .5em;
 
-      .mob-drop-container header {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        grid-template-rows: auto;
-        // grid-template-areas: unset;
-        align-items: center;
-        gap: 0.5em;
+      .mob-drop-container {
+        display: flex;
+        justify-content: center;
 
-        img {
-          --size: 3rem;
-        }
-
-        .model-card__details {
+        .mob-drop {
+          display: flex;
+          justify-content: center;
+          
+          height: 100%;
           width: 100%;
+          margin: auto 0;
+          padding-bottom: .5em;
         }
 
-        .model-card__name {
-          font-size: inherit;
-          text-align: left;
-          align-items: flex-start;
+        header {
+          display: grid;
+          grid-template-columns: auto 1fr;
+          grid-template-rows: auto;
+          // grid-template-areas: unset;
+          align-items: center;
+          gap: 0.5em;
 
-          &-text {
-            flex: unset;
-            width: unset;
-            justify-content: flex-start;
+          img {
+            --size: 3rem;
+          }
+
+          .model-card__details {
+            width: 100%;
+          }
+
+          .model-card__name {
+            font-size: inherit;
+            text-align: left;
+            align-items: flex-start;
+
+            &-text {
+              flex: unset;
+              width: unset;
+              justify-content: flex-start;
+            }
           }
         }
       }

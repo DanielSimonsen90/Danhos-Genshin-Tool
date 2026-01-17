@@ -1,4 +1,4 @@
-import { Rarity, StatName, TalentStatName } from "@/common/types";
+import { Rarity } from "@/common/types";
 import { Character, CharacterPlaystyle, CharacterArtifactSet } from "../common/models";
 import * as Sets from './artifact-sets';
 import ElementalCrystals from "./materials/drops/crystals";
@@ -30,9 +30,9 @@ const HealingBonusSets = (priority: CharacterArtifactSet['effectiveness']) => St
 
 // Attack type sets
 const ChargedAttackSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Charged Attack', priority)
-const NormalAndChargedAttackSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Normal and Charged Attack DMG', priority)
-const BurstDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Burst', priority)
+const PlungingAttackSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Plunging Attack DMG', priority)
 const ElementalSkillDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Elemental Skill DMG', priority)
+const BurstDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Burst', priority)
 
 // CRIT and other stats
 const CRITRateSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('CRIT Rate', priority)
@@ -61,7 +61,10 @@ export const Aino = new Character("Aino", "Hydro", "Claymore", [
   weeklyBossDrop: MobDrops.SilkenFeather
 }, 'Shows Local Specialties in Nod-Krai on minimap.',
   new CharacterPlaystyle("Burst Support", ["Elemental Mastery", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.SilkenMoonsSerenade, 4, 100)
+    new CharacterArtifactSet(Sets.SilkenMoonsSerenade, 4, 87.2),
+    ...ElementalMasterySets(2.9),
+    ...EnergyRechargeSets(2.9),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 1.9)
   ])
 );
 
@@ -76,10 +79,10 @@ export const Albedo = new Character("Albedo", "Geo", "Sword", [
   weeklyBossDrop: MobDrops.TuskOfMonocerosCaeli,
 }, '10% chance of double product when crafting Weapon Ascension Materials.',
   new CharacterPlaystyle("Off-field DPS", ["DEF"], ['Skill/Ability', "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 4, 71.2),
-    new CharacterArtifactSet(Sets.GoldenTroupe, 4, 12.5),
-    ...GeoDMGSets(3.0),
-    ...DefenseSets(3.0),
+    new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 4, 71.9),
+    new CharacterArtifactSet(Sets.GoldenTroupe, 4, 13.7),
+    ...GeoDMGSets(2.5),
+    ...DefenseSets(2.5),
   ])
 );
 
@@ -94,10 +97,10 @@ export const Alhaitham = new Character("Alhaitham", "Dendro", "Sword", [
   weeklyBossDrop: MobDrops.MirrorOfMushin,
 }, '10% chance of double product when crafting Weapon Ascension Materials.',
   new CharacterPlaystyle("On-field Dendro DPS", ["Elemental Mastery", "ATK"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.GildedDreams, 4, 72.7),
-    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 7.3),
-    ...DendroDMGSets(6.3),
-    ...ElementalMasterySets(6.3),
+    new CharacterArtifactSet(Sets.GildedDreams, 4, 74.5),
+    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 7.2),
+    ...DendroDMGSets(5.6),
+    ...ElementalMasterySets(5.6),
   ])
 );
 
@@ -110,12 +113,13 @@ export const Aloy = new Character("Aloy", "Cryo", "Bow", [], Rarity.Legendary, '
   weeklyBossDrop: MobDrops.MoltenMoment,
 }, 'Party members will not startle animals who produce: Fowl, Raw or Chilled meat.',
   new CharacterPlaystyle("Burst Support", ["ATK"], ["Burst/Ult", "Skill/Ability", "Charged/Hold"], false, [
-    new CharacterArtifactSet(Sets.BlizzardStrayer, 4, 40.9),
-    ...CryoDMGSets(12.7),
-    ...AttackSets(12.7),
-    new CharacterArtifactSet(Sets.ShimenawasReminiscence, 4, 8.2),
+    new CharacterArtifactSet(Sets.BlizzardStrayer, 4, 41.8),
+    ...CryoDMGSets(13),
+    ...AttackSets(13),
+    new CharacterArtifactSet(Sets.ShimenawasReminiscence, 4, 8.4),
   ])
 );
+
 
 export const Amber = new Character("Amber", "Pyro", "Bow", ["Off-field Damage"], Rarity.Epic, 'Mondstadt', {
   material: TalentAscension.Freedom,
@@ -126,9 +130,9 @@ export const Amber = new Character("Amber", "Pyro", "Bow", ["Off-field Damage"],
   weeklyBossDrop: MobDrops.DvalinsSigh,
 }, '20% Gliding consumption reduction.',
   new CharacterPlaystyle("Off-field DPS", ["ATK", "Energy Recharge"], ["Normal/Press", "Burst/Ult", "Skill/Ability"], false, [
-    new CharacterArtifactSet(Sets.WanderersTroupe, 4, 53.2),
-    new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 10.5),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 5.3),
+    new CharacterArtifactSet(Sets.WanderersTroupe, 4, 50.6),
+    new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 10.3),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 6.5),
   ])
 );
 
@@ -144,10 +148,10 @@ export const AratakiItto = new Character("Arataki Itto", "Geo", "Claymore", [
   mobDrop: EasyMobDrops.Slime,
 }, '25% chance of receiving additional log when party members attack trees.',
   new CharacterPlaystyle("On-field DPS", ["DEF"], ["Burst/Ult", "Normal/Press", "Skill/Ability"], true, [
-    new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 4, 91.0),
+    new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 4, 90.9),
     ...AttackSets(1.9),
     ...DefenseSets(1.9),
-    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 1.2),
+    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 1.3),
   ])
 );
 
@@ -160,9 +164,9 @@ export const Arlecchino = new Character("Arlecchino", "Pyro", "Polearm", ["Bond 
   mobDrop: EasyMobDrops.FatuiInsignia,
 }, 'Gains 40% Pyro DMG Bonus and can only be healed using Burst/Ult.',
   new CharacterPlaystyle("On-field DPS", ["ATK"], ["Normal/Press", "Skill/Ability", "Burst/Ult"], true, [
-    new CharacterArtifactSet(Sets.FragmentOfHarmonicWhimsy, 4, 69.5),
-    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 20.8),
-    ...AttackSets(2.2),
+    new CharacterArtifactSet(Sets.FragmentOfHarmonicWhimsy, 4, 75.3),
+    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 17),
+    ...AttackSets(2),
   ])
 );
 
@@ -178,10 +182,9 @@ export const Baizhu = new Character("Baizhu", "Dendro", "Catalyst", [
   mobDrop: EasyMobDrops.FungalSpores,
 }, 'When in team, certain harvestable items will trigger a healing effect on the active character consisting of 2.5% of this character\'s Max HP.',
   new CharacterPlaystyle("Off-field Support", ["HP", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 37.4),
-    new CharacterArtifactSet(Sets.VourukashasGlow, 2, 17.0),
-    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 2, 17.0),
-    new CharacterArtifactSet(Sets.OceanHuedClam, 4, 8.7),
+    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 41.8),
+    ...HPSets(15.9),
+    new CharacterArtifactSet(Sets.OceanHuedClam, 4, 8.2),
   ])
 );
 
@@ -194,10 +197,10 @@ export const Barbara = new Character("Barbara", "Hydro", "Catalyst", ["Heal"], R
   mobDrop: EasyMobDrops.Scroll,
 }, '12% chance of double product when cooking Restorative foods.',
   new CharacterPlaystyle("Off-field Support", ["HP"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.MaidenBeloved, 4, 78.1),
-    new CharacterArtifactSet(Sets.OceanHuedClam, 2, 29.0),
-    new CharacterArtifactSet(Sets.MaidenBeloved, 2, 3.5),
-    new CharacterArtifactSet(Sets.OceanHuedClam, 2, 3.5),
+    new CharacterArtifactSet(Sets.MaidenBeloved, 4, 40.3),
+    new CharacterArtifactSet(Sets.OceanHuedClam, 4, 26.9),
+    new CharacterArtifactSet(Sets.MaidenBeloved, 2, 3.4),
+    ...HealingBonusSets(3.4),
   ]),
 );
 
@@ -210,9 +213,10 @@ export const Beidou = new Character("Beidou", "Electro", "Claymore", ["Shield"],
   mobDrop: EasyMobDrops.FatuiInsignia,
 }, '20% Swimming consumption reduction.',
   new CharacterPlaystyle("Off-field DPS", ["Energy Recharge", "ATK"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 68.0),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 67.7),
     new CharacterArtifactSet(Sets.ThunderingFury, 4, 5.3),
-    ...AttackSets(4.0),
+    ...AttackSets(3.6),
+    ...ElectroDMGSets(3.6)
   ])
 );
 
@@ -229,10 +233,10 @@ export const Bennett = new Character("Bennett", "Pyro", "Sword", [
   mobDrop: EasyMobDrops.TreasureHoarderInsignia,
 }, '25% time consumption reduction when on expeditions in Mondstadt.',
   new CharacterPlaystyle("Burst Support", ["Energy Recharge", "HP"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 91.6),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 1.2),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 2, 0.9),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 2, 0.9),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 91.9),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 1.1),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 2, 0.8),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 2, 0.8),
   ]),
 );
 
@@ -249,10 +253,10 @@ export const Candace = new Character("Candace", "Hydro", "Polearm", [
   mobDrop: EasyMobDrops.EremiteDrop,
 }, '20% Climbing consumption reduction.',
   new CharacterPlaystyle("Off-field Support", ["HP", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 2, 30.9),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 2, 30.9),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 16.8),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 11.2),
+    ...HPSets(31.9),
+    ...EnergyRechargeSets(31.9),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 18.4),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 11.1),
   ])
 );
 
@@ -268,10 +272,10 @@ export const Charlotte = new Character("Charlotte", "Cryo", "Catalyst", [
   mobDrop: EasyMobDrops.Gear,
 }, 'Can take photos using Skill after "Special Analysis Zoom Lens" item is activated.',
   new CharacterPlaystyle("Off-field Support", ["Energy Recharge", "ATK"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    ...AttackSets(36.5),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 2, 36.5),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 12.3),
-    new CharacterArtifactSet(Sets.SongOfDaysPast, 4, 8.7),
+    ...AttackSets(37.3),
+    ...EnergyRechargeSets(37.3),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 12.8),
+    new CharacterArtifactSet(Sets.SongOfDaysPast, 4, 8.6),
   ])
 );
 
@@ -284,9 +288,9 @@ export const Chasca = new Character("Chasca", "Anemo", "Bow", ["Nightsouls Bless
   mobDrop: EasyMobDrops.Fang,
 }, '25 Phlogiston is restored when own party members defeat an opponent. This effect can be triggered once every 12s.',
   new CharacterPlaystyle("On-field DPS", ["ATK"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 90.5),
-    new CharacterArtifactSet(Sets.WanderersTroupe, 4, 2.1),
-    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 1.2),
+    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 92.4),
+    new CharacterArtifactSet(Sets.WanderersTroupe, 4, 1.5),
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 1),
   ])
 );
 
@@ -299,9 +303,9 @@ export const Chevreuse = new Character("Chevreuse", "Pyro", "Polearm", ["Heal"],
   mobDrop: EasyMobDrops.Gear,
 }, '20% Sprinting consumption reduction.',
   new CharacterPlaystyle("Off-field Support", ["HP", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.SongOfDaysPast, 4, 48.5),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 22.1),
-    ...HPSets(8.3)
+    new CharacterArtifactSet(Sets.SongOfDaysPast, 4, 49.4),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 23.4),
+    ...HPSets(7.3)
   ]),
 );
 
@@ -317,10 +321,10 @@ export const Chiori = new Character("Chiori", "Geo", "Sword", [
   mobDrop: EasyMobDrops.Spectral,
 }, '10% movement speed increase when not wearing default skin or wings for any party member.',
   new CharacterPlaystyle("Off-field Geo DPS", ["DEF"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.GoldenTroupe, 4, 60.1),
-    new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 4, 29.2),
+    new CharacterArtifactSet(Sets.GoldenTroupe, 4, 61.9),
+    new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 4, 27.9),
     ...DefenseSets(2.5),
-    new CharacterArtifactSet(Sets.GoldenTroupe, 2, 2.5),
+    ...ElementalSkillDMGSets(2.4),
   ])
 );
 
@@ -335,10 +339,10 @@ export const Chongyun = new Character("Chongyun", "Cryo", "Claymore", [
   mobDrop: EasyMobDrops.Mask,
 }, '25% time consumption reduction when on expeditions in Liyue.',
   new CharacterPlaystyle("Burst Support", ["ATK", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.BlizzardStrayer, 4, 33.4),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 2, 11.5),
-    new CharacterArtifactSet(Sets.BlizzardStrayer, 2, 11.5),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 9.8),
+    new CharacterArtifactSet(Sets.BlizzardStrayer, 4, 36),
+    ...BurstDMGSets(11.5),
+    ...CryoDMGSets(11.5),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 9.6),
   ])
 );
 
@@ -354,8 +358,8 @@ export const Citlali = new Character("Citlali", "Cryo", "Catalyst", [
   mobDrop: EasyMobDrops.Fang,
 }, 'Triggering Nightsoul Burst within an area with Phlogiston Mechanics in Natlan restores 20 Phlogiston.',
   new CharacterPlaystyle("Off-field Support", ["Elemental Mastery", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 83.7),
-    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 8.6),
+    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 85.5),
+    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 8.4),
     new CharacterArtifactSet(Sets.GildedDreams, 4, 1.7),
   ])
 );
@@ -369,9 +373,9 @@ export const Clorinde = new Character("Clorinde", "Electro", "Sword", ["Bond of 
   mobDrop: EasyMobDrops.FontemerAberrantPearl,
 }, 'Shows Local Specialties in Fontaine on minimap.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.FragmentOfHarmonicWhimsy, 4, 74.4),
-    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 10.5),
-    new CharacterArtifactSet(Sets.ThunderingFury, 4, 5.2),
+    new CharacterArtifactSet(Sets.FragmentOfHarmonicWhimsy, 4, 77.3),
+    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 9.7),
+    new CharacterArtifactSet(Sets.ThunderingFury, 4, 4.6),
   ])
 );
 
@@ -384,12 +388,13 @@ export const Collei = new Character("Collei", "Dendro", "Bow", [], Rarity.Epic, 
   mobDrop: EasyMobDrops.Arrowhead,
 }, '20% Gliding consumption reduction.',
   new CharacterPlaystyle("Off-field Support", ["Energy Recharge", "Elemental Mastery"], ["Burst/Ult", "Skill/Ability", "Charged/Hold"], false, [
-    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 70.5),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 6.3),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 3.9),
+    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 71.1),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 6.5),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 3.4),
   ])
 );
 
+// TODO at later update
 export const Columbina = new Character("Columbina", "Hydro", "Catalyst", [
   'Increases Moonsign',
   'Enables Lunar Reaction',
@@ -402,8 +407,8 @@ export const Columbina = new Character("Columbina", "Hydro", "Catalyst", [
   mobDrop: EasyMobDrops.Slime,
 }, `While in Nod-Krai, if a member on your team dies, Columbina will revive them and restore health based on Columbina's friendship level. Cooldown 100s. Does not work in domains.`,
   new CharacterPlaystyle('Off-field Lunar Support', ['HP', 'Energy Recharge'], ['Skill/Ability', 'Burst/Ult', 'Charged/Hold'], false, [
-    new CharacterArtifactSet(Sets.AubadeOfMorningstarAndMoon, 4, 50),
-    new CharacterArtifactSet(Sets.SilkenMoonsSerenade, 4, 50),
+    new CharacterArtifactSet(Sets.AubadeOfMorningstarAndMoon, 4, 100),
+    // new CharacterArtifactSet(Sets.SilkenMoonsSerenade, 4, 50),
   ])
 );
 
@@ -416,9 +421,9 @@ export const Cyno = new Character("Cyno", "Electro", "Polearm", [], Rarity.Legen
   mobDrop: EasyMobDrops.Scroll,
 }, '25% more rewards when on expeditions in Sumeru.',
   new CharacterPlaystyle("On-field DPS", ["Energy Recharge", "Elemental Mastery"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.GildedDreams, 4, 56.3),
-    new CharacterArtifactSet(Sets.ThunderingFury, 4, 19.9),
-    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 6.3),
+    new CharacterArtifactSet(Sets.GildedDreams, 4, 57.8),
+    new CharacterArtifactSet(Sets.ThunderingFury, 4, 19.1),
+    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 6.6),
   ])
 );
 
@@ -434,9 +439,9 @@ export const Dahlia = new Character("Dahlia", "Hydro", "Sword", [
   mobDrop: EasyMobDrops.Arrowhead
 }, 'During Day (06:00 - 18:00), party members gain 10% increased movement speed.',
   new CharacterPlaystyle("Burst Support", ["HP", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 74.5),
-    ...HPSets(6.6),
-    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 5.8),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 71.3),
+    ...HPSets(6.2),
+    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 5.7),
   ])
 );
 
@@ -449,9 +454,9 @@ export const Dehya = new Character("Dehya", "Pyro", "Claymore", ["Self-heal", "O
   mobDrop: EasyMobDrops.EremiteDrop,
 }, 'During Day (06:00 - 18:00), party members gain 10% increased movement speed.',
   new CharacterPlaystyle("On-field DPS", ["HP", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.VourukashasGlow, 4, 31.1),
+    new CharacterArtifactSet(Sets.VourukashasGlow, 4, 32.2),
     new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 20.2),
-    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 13.2),
+    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 13.6),
   ])
 );
 
@@ -466,10 +471,10 @@ export const Diluc = new Character("Diluc", "Pyro", "Claymore", [
   mobDrop: EasyMobDrops.FatuiInsignia,
 }, '15% chance of refunding ore when crafting Claymore weapons.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Elemental Mastery"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 70.6),
-    ...AttackSets(8.3),
-    new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 2, 8.3),
-    new CharacterArtifactSet(Sets.GladiatorsFinale, 2, 7.5),
+    new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 68.4),
+    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 8.6),
+    ...AttackSets(8.6),
+    ...PyroDMGSets(8.6),
   ]),
 );
 
@@ -482,9 +487,9 @@ export const Diona = new Character("Diona", "Cryo", "Bow", ["Shield"], Rarity.Ep
   mobDrop: EasyMobDrops.Arrowhead,
 }, '12% chance of double product when cooking Restorative foods.',
   new CharacterPlaystyle("Off-field Support", ["HP", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Charged/Hold"], false, [
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 38.3),
-    new CharacterArtifactSet(Sets.MaidenBeloved, 4, 14.6),
-    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 11.4),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 38.8),
+    new CharacterArtifactSet(Sets.MaidenBeloved, 4, 14.1),
+    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 10.7),
   ]),
 );
 
@@ -500,9 +505,10 @@ export const Dori = new Character("Dori", "Electro", "Claymore", [
   mobDrop: EasyMobDrops.EremiteDrop,
 }, '25% chance of refund materials used when crafting Character Talent Materials and Weapon Ascension Materials.',
   new CharacterPlaystyle("Off-field Support", ["Energy Recharge", "HP"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 29.4),
-    ...HPSets(13.7),
-    new CharacterArtifactSet(Sets.OceanHuedClam, 4, 6.5),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 36.8),
+    ...HPSets(13.4),
+    ...EnergyRechargeSets(13.4),
+    new CharacterArtifactSet(Sets.OceanHuedClam, 4, 7.3),
   ]),
 );
 
@@ -519,9 +525,11 @@ export const Durin = new Character("Durin", "Pyro", "Sword", [
   mobDrop: EasyMobDrops.Warrant,
 }, '25% more rewards when on expeditions in Mondstadt.',
   new CharacterPlaystyle("Off-field Pyro Support", ['ATK', 'Energy Recharge'], ['Burst/Ult', 'Skill/Ability', 'Normal/Press'], false, [
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 50),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 50),
-  ]));
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 48.6),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 29.3),
+    new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 2.7),
+  ])
+);
 
 export const Emilie = new Character("Emilie", "Dendro", "Polearm", ["Off-field Damage"], Rarity.Legendary, 'Fontaine', {
   material: TalentAscension.Order,
@@ -532,9 +540,9 @@ export const Emilie = new Character("Emilie", "Dendro", "Polearm", ["Off-field D
   mobDrop: EasyMobDrops.Gear,
 }, 'When Lumidouce Case (lamp) is on field, all party members gain 85% Pyro RES against Burning DMG.',
   new CharacterPlaystyle("Off-field Burning Support", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.UnfinishedReverie, 4, 81.4),
-    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 11.4),
-    new CharacterArtifactSet(Sets.GoldenTroupe, 4, 1.3),
+    new CharacterArtifactSet(Sets.UnfinishedReverie, 4, 82.5),
+    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 11.2),
+    new CharacterArtifactSet(Sets.GoldenTroupe, 4, 1.2),
   ]),
 );
 
@@ -547,9 +555,9 @@ export const Escoffier = new Character('Escoffier', 'Cryo', 'Polearm', ['Off-fie
   mobDrop: EasyMobDrops.Gear,
 }, 'Once a week (reset Monday 4am EST), Low-Temperature Cooking (Skill) can produce foods after hitting a certain limit of elemental energy absorption.',
   new CharacterPlaystyle("Off-field Support", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.GoldenTroupe, 4, 92.9),
-    ...HPSets(1.2),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 0.6),
+    new CharacterArtifactSet(Sets.GoldenTroupe, 4, 91.7),
+    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 1.8),
+    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 0.6),
   ])
 );
 
@@ -562,10 +570,10 @@ export const Eula = new Character("Eula", "Cryo", "Claymore", [], Rarity.Legenda
   mobDrop: EasyMobDrops.Mask,
 }, '10% chance of double product when crafting Character Talent Materials.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ["Burst/Ult", "Normal/Press", "Skill/Ability"], true, [
-    new CharacterArtifactSet(Sets.PaleFlame, 4, 70.8),
-    ...PhysicalDMGSets(15.3),
-    ...AttackSets(3.6),
-    ...PhysicalDMGSets(3.6),
+    new CharacterArtifactSet(Sets.PaleFlame, 4, 71.9),
+    ...PhysicalDMGSets(15.0),
+    ...AttackSets(3.3),
+    ...PhysicalDMGSets(3.3),
   ]),
 );
 
@@ -581,9 +589,9 @@ export const Faruzan = new Character("Faruzan", "Anemo", "Bow", [
   mobDrop: EasyMobDrops.EremiteDrop,
 }, '25% more rewards when on expeditions in Sumeru.',
   new CharacterPlaystyle("Burst Support", ["Energy Recharge", "ATK"], ["Burst/Ult", "Skill/Ability", "Charged/Hold"], false, [
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 35.1),
-    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 20.8),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 15.1),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 36.9),
+    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 22.8),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 13.7),
   ])
 );
 
@@ -599,10 +607,10 @@ export const Fischl = new Character("Fischl", "Electro", "Bow", [
   mobDrop: EasyMobDrops.Arrowhead,
 }, '25% time consumption reduction when on expeditions in Mondstadt.',
   new CharacterPlaystyle("Off-field DPS", ["ATK", "Elemental Mastery"], ["Skill/Ability", "Burst/Ult", "Charged/Hold"], false, [
-    new CharacterArtifactSet(Sets.GoldenTroupe, 4, 68.4),
-    new CharacterArtifactSet(Sets.ThunderingFury, 2, 5.8),
-    ...AttackSets(3.8),
-    new CharacterArtifactSet(Sets.ThunderingFury, 2, 3.8),
+    new CharacterArtifactSet(Sets.GoldenTroupe, 4, 73.1),
+    new CharacterArtifactSet(Sets.ThunderingFury, 4, 4.7),
+    ...AttackSets(2.8),
+    ...ElectroDMGSets(2.8)
   ]),
 );
 
@@ -619,7 +627,9 @@ export const Flins = new Character("Flins", "Electro", "Polearm", [
   mobDrop: MobDrops.DriveShaft,
 }, 'Shows Local Specialties in Nod-Krai on minimap.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Elemental Mastery"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.NightOfTheSkysUnveiling, 4, 100),
+    new CharacterArtifactSet(Sets.NightOfTheSkysUnveiling, 4, 94.9),
+    ...AttackSets(0.7),
+    ...ElementalMasterySets(0.7),
   ])
 );
 
@@ -632,10 +642,9 @@ export const Freminet = new Character("Freminet", "Cryo", "Claymore", [], Rarity
   mobDrop: EasyMobDrops.FontemerAberrantPearl,
 }, '35% Aquatic Stamina consumption reduction.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ["Skill/Ability", "Normal/Press", "Burst/Ult"], true, [
-    new CharacterArtifactSet(Sets.PaleFlame, 4, 47.9),
-    new CharacterArtifactSet(Sets.BlizzardStrayer, 4, 9.2),
-    new CharacterArtifactSet(Sets.PaleFlame, 2, 6.2),
-    ...PhysicalDMGSets(6.2),
+    new CharacterArtifactSet(Sets.PaleFlame, 4, 47.5),
+    new CharacterArtifactSet(Sets.BlizzardStrayer, 4, 9.9),
+    ...PhysicalDMGSets(5.9),
   ])
 );
 
@@ -651,9 +660,9 @@ export const Furina = new Character("Furina", "Hydro", "Sword", [
   mobDrop: EasyMobDrops.Nectar,
 }, '30% Xenochromatic Fontemer Aberrant ability cooldown reduction.',
   new CharacterPlaystyle("Off-field DPS", ["HP", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.GoldenTroupe, 4, 94.1),
-    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 0.5),
-    new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 0.5),
+    new CharacterArtifactSet(Sets.GoldenTroupe, 4, 93.6),
+    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 1.3),
+    new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 0.6),
   ]),
 );
 
@@ -666,9 +675,9 @@ export const Gaming = new Character("Gaming", "Pyro", "Claymore", ["Self-heal"],
   mobDrop: EasyMobDrops.Slime,
 }, 'During Day (06:00 - 18:00), party members gain 10% increased movement speed.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Plunging/Press"], true, [
-    new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 63.0),
-    new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 18.1),
-    new CharacterArtifactSet(Sets.LongNightsOath, 4, 3.6),
+    new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 63.6),
+    new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 16.5),
+    new CharacterArtifactSet(Sets.LongNightsOath, 4, 6.1),
   ]),
 );
 
@@ -681,9 +690,9 @@ export const Ganyu = new Character("Ganyu", "Cryo", "Bow", ["Off-field Damage"],
   mobDrop: EasyMobDrops.Nectar,
 }, '15% chance of refunding ore when crafting Bow weapons.',
   new CharacterPlaystyle("On-field DPS", ["ATK"], ["Charged/Hold", "Burst/Ult", "Skill/Ability"], true, [
-    new CharacterArtifactSet(Sets.WanderersTroupe, 4, 74.7),
-    new CharacterArtifactSet(Sets.BlizzardStrayer, 4, 15.2),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 1.9),
+    new CharacterArtifactSet(Sets.WanderersTroupe, 4, 74.8),
+    new CharacterArtifactSet(Sets.BlizzardStrayer, 4, 15.7),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 1.6),
   ]),
 );
 
@@ -696,10 +705,10 @@ export const Gorou = new Character("Gorou", "Geo", "Bow", ["Shield"], Rarity.Epi
   mobDrop: EasyMobDrops.Spectral,
 }, 'Shows Local Specialties in Inazuma on minimap.',
   new CharacterPlaystyle("Off-field Geo Support", ["DEF", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Charged/Hold"], false, [
-    new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 4, 57.3),
-    ...EnergyRechargeSets(17.2),
-    ...DefenseSets(17.2),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 12.2),
+    new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 4, 57.7),
+    ...EnergyRechargeSets(16.6),
+    ...DefenseSets(16.6),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 11.7),
   ])
 );
 
@@ -719,8 +728,8 @@ export const HuTao = new Character("Hu Tao", "Pyro", "Polearm", [
 }, '18% chance of receiving additional "Suspicious" dish of same food type when cooking.',
   new CharacterPlaystyle("On-field DPS", ["HP", "Elemental Mastery", "ATK"], ["Skill/Ability", "Normal/Press", "Burst/Ult"], true, [
     new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 80.0),
-    new CharacterArtifactSet(Sets.ShimenawasReminiscence, 4, 10.0),
-    new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 2.2),
+    new CharacterArtifactSet(Sets.ShimenawasReminiscence, 4, 9.0),
+    new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 2.7),
   ]),
 );
 
@@ -733,10 +742,10 @@ export const Iansan = new Character("Iansan", "Electro", "Polearm", ["Nightsouls
   mobDrop: EasyMobDrops.Whistle,
 }, 'Gain 10 Phlogiston when Phlogison levels drop below 50%. This effect can be triggered once every 10s.',
   new CharacterPlaystyle("Burst Support", ["ATK", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 88.3),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 7.8),
-    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 2, 0.4),
-    new CharacterArtifactSet(Sets.ObsidianCodex, 2, 0.4),
+    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 87.2),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 8.5),
+    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 2, 0.6),
+    new CharacterArtifactSet(Sets.ObsidianCodex, 2, 0.6),
   ])
 );
 
@@ -752,9 +761,26 @@ export const Ifa = new Character('Ifa', "Anemo", "Catalyst", [
   mobDrop: EasyMobDrops.Fang,
 }, 'When current character or indwelt saurian has less than 40% HP, they are healed by 40% of their HP with that consumes 10 Phlogiston. This effect can be triggered once every 10s.',
   new CharacterPlaystyle('On-field DPS', ['Elemental Mastery', "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 61.0),
-    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 7.9),
-    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 19.6),
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 52.0),
+    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 27.3),
+    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 8.7),
+  ])
+);
+
+export const Illuga = new Character("Illuga", "Geo", "Polearm", [
+  "Enables Lunar-Crystallize Reaction"
+], Rarity.Epic, 'Nod-Krai', {
+  material: TalentAscension.Elysium,
+  weeklyBossDrop: MobDrops.ErodedHorn,
+  crystal: ElementalCrystals.Geo,
+  localSpecialty: LocalSpecialties.PineAmber,
+  worldBossDrop: MobDrops.CyclicMilitaryKuuvahkiCore,
+  mobDrop: EasyMobDrops.DriveShaft,
+}, undefined, 
+  new CharacterPlaystyle("Off-field Lunar-Crystallize Support", ["DEF", "Elemental Mastery", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
+    new CharacterArtifactSet(Sets.SilkenMoonsSerenade, 4, 33),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 33),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 33),
   ])
 );
 
@@ -772,10 +798,10 @@ export const Ineffa = new Character("Ineffa", "Electro", "Polearm", [
   mobDrop: EasyMobDrops.Whistle,
 }, 'When using food, there is a 30% chance of gaining seasoning ingredient.',
   new CharacterPlaystyle("Off-field Lunar-Charged Support", ['ATK', 'Elemental Mastery'], ['Skill/Ability', "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.GildedDreams, 4, 48.6),
-    ...AttackSets(23.2),
-    ...ElementalMasterySets(23.2),
-    ...ElementalMasterySets(4.3),
+    new CharacterArtifactSet(Sets.GildedDreams, 4, 59.1),
+    new CharacterArtifactSet(Sets.SilkenMoonsSerenade, 4, 14.8),
+    ...AttackSets(9.4),
+    ...ElementalMasterySets(9.4),
   ])
 );
 
@@ -794,8 +820,9 @@ export const Jahoda = new Character("Jahoda", "Anemo", "Bow", [
   mobDrop: EasyMobDrops.DriveShaft,
 }, '25% more rewards when on expeditions in Nod-Krai.',
   new CharacterPlaystyle("Off-field Support", ['ATK', 'Energy Recharge'], ['Burst/Ult', "Skill/Ability", "Charged/Hold"], false, [
-    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 50),
-    new CharacterArtifactSet(Sets.SilkenMoonsSerenade, 4, 50),
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 65.5),
+    new CharacterArtifactSet(Sets.SilkenMoonsSerenade, 4, 25.4),
+    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 1),
   ])
 );
 
@@ -808,8 +835,8 @@ export const Jean = new Character("Jean", "Anemo", "Sword", ["Heal"], Rarity.Leg
   mobDrop: EasyMobDrops.Mask,
 }, '12% chance of double product when cooking Restorative foods.',
   new CharacterPlaystyle("Off-field Support", ["ATK", "Elemental Mastery"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 71.8),
-    new CharacterArtifactSet(Sets.ViridescentVenerer, 2, 6.5),
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 72.7),
+    ...AnemoDMGSets(6.5),
     ...AttackSets(6.5),
     ...AttackSets(2.5),
   ])
@@ -827,9 +854,9 @@ export const Kachina = new Character("Kachina", "Geo", "Polearm", [
   mobDrop: EasyMobDrops.Whistle,
 }, 'Shows Local Specialties in Natlan on minimap.',
   new CharacterPlaystyle("Off-field DPS", ["DEF"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 85.2),
-    new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 4, 3.2),
-    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 2.8),
+    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 84.7),
+    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 2.7),
+    new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 4, 2.6),
   ])
 );
 
@@ -847,11 +874,11 @@ export const KaedeharaKazuha = new Character("Kaedehara Kazuha", "Anemo", "Sword
   mobDrop: EasyMobDrops.TreasureHoarderInsignia,
 }, '20% Sprinting consumption reduction.',
   new CharacterPlaystyle("Off-field Swirl Support", ["Elemental Mastery", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Plunging/Press"], false, [
-    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 95.2),
-    new CharacterArtifactSet(Sets.ViridescentVenerer, 2, 1.2),
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 95.3),
+    ...AnemoDMGSets(1.2),
     ...ElementalMasterySets(1.2),
     ...AttackSets(0.6),
-    ...ElementalMasterySets(0.6),
+    ...AnemoDMGSets(0.6),
   ])
 );
 
@@ -867,10 +894,10 @@ export const Kaeya = new Character("Kaeya", "Cryo", "Sword", [
   mobDrop: EasyMobDrops.TreasureHoarderInsignia,
 }, '20% Sprinting consumption reduction.',
   new CharacterPlaystyle("Off-field Cryo DPS", ["ATK", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.BlizzardStrayer, 4, 34.1),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 30.7),
-    new CharacterArtifactSet(Sets.BlizzardStrayer, 2, 6.5),
-    ...AttackSets(6.5),
+    new CharacterArtifactSet(Sets.BlizzardStrayer, 4, 36.6),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 29),
+    ...CryoDMGSets(6.9),
+    ...AttackSets(6.9),
   ])
 );
 
@@ -886,10 +913,10 @@ export const KamisatoAyaka = new Character("Kamisato Ayaka", "Cryo", "Sword", [
   mobDrop: EasyMobDrops.Handguard,
 }, '10% chance of double product when crafting Weapon Ascension Materials.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ["Burst/Ult", "Normal/Press", "Skill/Ability"], true, [
-    new CharacterArtifactSet(Sets.BlizzardStrayer, 4, 86.6),
-    new CharacterArtifactSet(Sets.BlizzardStrayer, 2, 3.4),
-    ...AttackSets(3.4),
-    new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 2.2),
+    new CharacterArtifactSet(Sets.BlizzardStrayer, 4, 87.1),
+    ...CryoDMGSets(3.2),
+    ...AttackSets(3.2),
+    new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 2.0),
   ])
 );
 
@@ -902,8 +929,8 @@ export const KamisatoAyato = new Character("Kamisato Ayato", "Hydro", "Sword", [
   mobDrop: EasyMobDrops.Handguard,
 }, '18% chance of receiving additional "Suspicious" dish of same food type when cooking.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.EchoesOfAnOffering, 4, 44.6),
-    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 23.5),
+    new CharacterArtifactSet(Sets.EchoesOfAnOffering, 4, 44.7),
+    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 24),
     new CharacterArtifactSet(Sets.HeartOfDepth, 4, 15.7),
   ])
 );
@@ -917,9 +944,9 @@ export const Kaveh = new Character("Kaveh", "Dendro", "Claymore", ["Self-heal"],
   mobDrop: EasyMobDrops.FungalSpores,
 }, '100% chance of refunding a portion of materials used when crafting building, courtyard and landscape-type furnishings.',
   new CharacterPlaystyle("On-field DPS", ["Elemental Mastery", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.FlowerOfParadiseLost, 4, 41.1),
-    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 22.5),
-    new CharacterArtifactSet(Sets.GildedDreams, 4, 12.2),
+    new CharacterArtifactSet(Sets.FlowerOfParadiseLost, 4, 41.6),
+    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 22.6),
+    new CharacterArtifactSet(Sets.GildedDreams, 4, 11.9),
   ])
 );
 
@@ -934,10 +961,10 @@ export const Keqing = new Character("Keqing", "Electro", "Sword", [
   mobDrop: EasyMobDrops.Nectar,
 }, '25% time consumption reduction when on expeditions in Liyue.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Elemental Mastery"], ["Burst/Ult", "Normal/Press", "Skill/Ability"], true, [
-    new CharacterArtifactSet(Sets.ThunderingFury, 4, 52.4),
-    new CharacterArtifactSet(Sets.ThunderingFury, 2, 11.8),
-    ...AttackSets(11.8),
-    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 7.7)
+    new CharacterArtifactSet(Sets.ThunderingFury, 4, 52.3),
+    ...ElectroDMGSets(11.7),
+    ...AttackSets(11.7),
+    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 9.1)
   ]),
 );
 
@@ -950,9 +977,9 @@ export const Kinich = new Character("Kinich", "Dendro", "Claymore", ["Off-field 
   mobDrop: EasyMobDrops.Fang,
 }, 'Shows Local Specialties in Natlan on minimap.',
   new CharacterPlaystyle("On-field Burning DPS", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 90.3),
-    new CharacterArtifactSet(Sets.UnfinishedReverie, 4, 1.3),
-    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 1.0),
+    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 92),
+    new CharacterArtifactSet(Sets.UnfinishedReverie, 4, 1.1),
+    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 0.8),
   ]),
 );
 
@@ -965,9 +992,9 @@ export const Kirara = new Character("Kirara", "Dendro", "Sword", ["Shield"], Rar
   mobDrop: EasyMobDrops.Spectral,
 }, 'Party members will not startle animals who produce: Fowl, Raw or Chilled meat.',
   new CharacterPlaystyle("Off-field Support", ["HP"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    ...HPSets(43.7),
-    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 24.8),
-    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 8.5),
+    ...HPSets(42.5),
+    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 26.5),
+    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 8.7),
   ])
 );
 
@@ -982,10 +1009,10 @@ export const Klee = new Character("Klee", "Pyro", "Catalyst", [
   mobDrop: EasyMobDrops.Scroll,
 }, 'Shows Local Specialties in Mondstadt on minimap.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Elemental Mastery"], ["Normal/Press", "Skill/Ability", "Burst/Ult"], true, [
-    new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 65.4),
-    ...PyroDMGSets(8.5),
-    ...AttackSets(8.5),
-    new CharacterArtifactSet(Sets.WanderersTroupe, 4, 6.7),
+    new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 66.1),
+    ...PyroDMGSets(9.2),
+    ...AttackSets(9.2),
+    new CharacterArtifactSet(Sets.WanderersTroupe, 4, 7.2),
   ])
 );
 
@@ -998,10 +1025,10 @@ export const KujouSara = new Character("Kujou Sara", "Electro", "Bow", ["Off-fie
   mobDrop: EasyMobDrops.Mask,
 }, '25% time consumption reduction when on expeditions in Inazuma.',
   new CharacterPlaystyle("Burst Support", ["ATK"], ["Skill/Ability", "Burst/Ult", "Charged/Hold"], false, [
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 82.8),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 6.2),
-    ...AttackSets(1.3),
-    ...EnergyRechargeSets(1.3),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 81.7),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 6.6),
+    ...AttackSets(1.5),
+    ...EnergyRechargeSets(1.5),
   ])
 );
 
@@ -1014,9 +1041,9 @@ export const KukiShinobu = new Character("Kuki Shinobu", "Electro", "Sword", ["H
   mobDrop: EasyMobDrops.Spectral,
 }, '25% more rewards when on expeditions in Inazuma.',
   new CharacterPlaystyle("Off-field Support", ["Elemental Mastery", "HP"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.GildedDreams, 4, 46.0),
-    new CharacterArtifactSet(Sets.FlowerOfParadiseLost, 4, 20.4),
-    ...ElementalMasterySets(3),
+    new CharacterArtifactSet(Sets.GildedDreams, 4, 46.9),
+    new CharacterArtifactSet(Sets.FlowerOfParadiseLost, 4, 20.6),
+    ...ElementalMasterySets(14.1),
   ])
 );
 
@@ -1029,10 +1056,10 @@ export const LanYan = new Character("Lan Yan", "Anemo", "Catalyst", ["Shield", "
   mobDrop: EasyMobDrops.Nectar,
 }, 'Party members will not startle Crystalflies and certain other animals.',
   new CharacterPlaystyle("Off-field Support", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 85.3),
-    new CharacterArtifactSet(Sets.ViridescentVenerer, 2, 3.2),
-    ...ElementalMasterySets(3.2),
-    ...ElementalMasterySets(2.6)
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 83.9),
+    ...ElementalMasterySets(2.3),
+    ...AttackSets(2.3),
+    ...AttackSets(1.9),
   ])
 );
 
@@ -1048,8 +1075,9 @@ export const Lauma = new Character("Lauma", "Dendro", "Catalyst", [
   mobDrop: EasyMobDrops.Warrant,
 }, 'Shows Local Specialties in Nod-Krai on minimap.',
   new CharacterPlaystyle("Off-field Lunar-Bloom Support", ['Elemental Mastery', 'Energy Recharge'], ['Burst/Ult', 'Skill/Ability', 'Normal/Press'], false, [
-    new CharacterArtifactSet(Sets.SilkenMoonsSerenade, 4, 50),
-    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 50),
+    new CharacterArtifactSet(Sets.SilkenMoonsSerenade, 4, 73.8),
+    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 17.8),
+    new CharacterArtifactSet(Sets.GildedDreams, 4, 1.7),
   ])
 );
 
@@ -1065,9 +1093,9 @@ export const Layla = new Character("Layla", "Cryo", "Sword", [
   mobDrop: EasyMobDrops.Scroll,
 }, '10% chance of double product when crafting Character Talent Materials.',
   new CharacterPlaystyle("Off-field Support", ["HP"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 69.0),
-    ...HPSets(10.9),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 3.1),
+    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 68.8),
+    ...HPSets(10.1),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 3.0),
   ]),
 );
 
@@ -1080,9 +1108,9 @@ export const Lisa = new Character("Lisa", "Electro", "Catalyst", ["Off-field Dam
   mobDrop: EasyMobDrops.Slime,
 }, '20% chance of refund materials used when crafting Potions.',
   new CharacterPlaystyle("Off-field DPS", ["ATK", "Elemental Mastery", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.ThunderingFury, 4, 28.5),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 23.4),
-    new CharacterArtifactSet(Sets.GildedDreams, 4, 9.4),
+    new CharacterArtifactSet(Sets.ThunderingFury, 4, 26.5),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 25.2),
+    new CharacterArtifactSet(Sets.GildedDreams, 4, 10.4),
   ]),
 );
 
@@ -1097,9 +1125,9 @@ export const Lynette = new Character("Lynette", "Anemo", "Sword", [
   mobDrop: EasyMobDrops.Gear,
 }, 'Shows Recovery Orbs (stamina & hp gained from collision increased by 25%) on minimap.',
   new CharacterPlaystyle("Off-field Support", ["ATK", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 60.9),
-    new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 13.8),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 3.3),
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 60),
+    new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 16.8),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 2.9),
   ])
 );
 
@@ -1112,10 +1140,10 @@ export const Lyney = new Character("Lyney", "Pyro", "Bow", ['Self-heal'], Rarity
   mobDrop: EasyMobDrops.FatuiInsignia,
 }, 'Shows Local Specialties in Fontaine on minimap.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ['Charged/Hold', "Skill/Ability", "Burst/Ult"], true, [
-    new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 74.6),
-    new CharacterArtifactSet(Sets.WanderersTroupe, 4, 8.0),
-    ...PyroDMGSets(2.0),
-    ...ChargedAttackSets(2.0),
+    new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 76.9),
+    new CharacterArtifactSet(Sets.WanderersTroupe, 4, 7.5),
+    ...PyroDMGSets(1.8),
+    ...ChargedAttackSets(1.8),
   ])
 );
 
@@ -1131,9 +1159,9 @@ export const Mavuika = new Character("Mavuika", "Pyro", "Claymore", [
   mobDrop: EasyMobDrops.Whistle,
 }, '20% Nightsoul Transmission cooldown reduction.',
   new CharacterPlaystyle("On-field DPS", ["ATK", 'Elemental Mastery'], ["Burst/Ult", "Skill/Ability", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 91.0),
-    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 2.6),
-    new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 1.3),
+    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 93.8),
+    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 2.2),
+    new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 0.6),
   ]),
 );
 
@@ -1146,10 +1174,10 @@ export const Mika = new Character("Mika", "Cryo", "Polearm", ["Heal"], Rarity.Ep
   mobDrop: EasyMobDrops.FatuiInsignia,
 }, 'Shows Local Specialties in Mondstadt on minimap.',
   new CharacterPlaystyle("Burst Support", ["Energy Recharge", "HP"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 57.0),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 56.7),
     ...HPSets(8.9),
     ...EnergyRechargeSets(8.9),
-    new CharacterArtifactSet(Sets.OceanHuedClam, 4, 3.4),
+    new CharacterArtifactSet(Sets.OceanHuedClam, 4, 3.3),
   ]),
 );
 
@@ -1165,9 +1193,9 @@ export const Mona = new Character("Mona", "Hydro", "Catalyst", [
   mobDrop: EasyMobDrops.Nectar,
 }, '25% chance of refund materials used when crafting Weapon Ascension Materials.',
   new CharacterPlaystyle("Burst Support", ["ATK", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 40.8),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 28.8),
-    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 8.2),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 45.4),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 26.3),
+    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 7.2),
   ])
 );
 
@@ -1180,9 +1208,9 @@ export const Mualani = new Character("Mualani", "Hydro", "Catalyst", ["Nightsoul
   mobDrop: EasyMobDrops.Whistle,
 }, 'Shows Local Specialties in Natlan on minimap.',
   new CharacterPlaystyle("On-field DPS", ["HP", "Elemental Mastery"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 90.5),
-    new CharacterArtifactSet(Sets.HeartOfDepth, 4, 1.2),
-    new CharacterArtifactSet(Sets.HeartOfDepth, 2, 0.5),
+    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 92.6),
+    new CharacterArtifactSet(Sets.HeartOfDepth, 4, 0.9),
+    ...ElementalMasterySets(0.5),
     new CharacterArtifactSet(Sets.ObsidianCodex, 2, 0.5),
   ])
 );
@@ -1198,10 +1226,10 @@ export const Nahida = new Character("Nahida", "Dendro", "Catalyst", [
   mobDrop: EasyMobDrops.FungalSpores,
 }, 'Can use Skill to interact with some harvestable items within a fixed AoE.',
   new CharacterPlaystyle("Off-field Support", ["Elemental Mastery", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 85.8),
-    new CharacterArtifactSet(Sets.GildedDreams, 4, 4.1),
-    new CharacterArtifactSet(Sets.DeepwoodMemories, 2, 2.7),
-    ...ElementalMasterySets(2.7)
+    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 87.2),
+    new CharacterArtifactSet(Sets.GildedDreams, 4, 3.6),
+    ...DendroDMGSets(2.2),
+    ...ElementalMasterySets(2.2)
   ])
 );
 
@@ -1217,10 +1245,10 @@ export const Navia = new Character("Navia", "Geo", "Claymore", [
   mobDrop: EasyMobDrops.FontemerAberrantPearl,
 }, '25% more rewards when on expeditions in Fontaine.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.NighttimeWhispersInTheEchoingWoods, 4, 74.1),
+    new CharacterArtifactSet(Sets.NighttimeWhispersInTheEchoingWoods, 4, 76.4),
     new CharacterArtifactSet(Sets.GoldenTroupe, 4, 5.7),
-    ...AttackSets(3.0),
-    new CharacterArtifactSet(Sets.GoldenTroupe, 2, 3.0),
+    ...ElementalSkillDMGSets(2.7),
+    ...AttackSets(2.7),
   ])
 );
 
@@ -1236,7 +1264,9 @@ export const Nefer = new Character("Nefer", "Dendro", "Catalyst", [
   mobDrop: EasyMobDrops.Warrant,
 }, '25% more rewards when on expeditions in Nod-Krai.',
   new CharacterPlaystyle('On-field Lunar-Bloom DPS', ['Elemental Mastery'], ['Skill/Ability', 'Burst/Ult', 'Normal/Press'], true, [
-    new CharacterArtifactSet(Sets.NightOfTheSkysUnveiling, 4, 100),
+    new CharacterArtifactSet(Sets.NightOfTheSkysUnveiling, 4, 95.6),
+    ...ElementalMasterySets(1.1),
+    new CharacterArtifactSet(Sets.WanderersTroupe, 4, 0.5)
   ])
 );
 
@@ -1249,9 +1279,9 @@ export const Neuvillette = new Character("Neuvillette", "Hydro", "Catalyst", ["S
   mobDrop: EasyMobDrops.FontemerAberrantPearl,
 }, '15% Underwater Sprint Speed consumption reduction.',
   new CharacterPlaystyle("On-field DPS", ["HP", "Energy Recharge"], ["Charged/Hold", "Burst/Ult", "Skill/Ability"], true, [
-    new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 94.9),
-    new CharacterArtifactSet(Sets.WanderersTroupe, 4, 1.1),
-    new CharacterArtifactSet(Sets.HeartOfDepth, 4, 0.6),
+    new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 95.6),
+    new CharacterArtifactSet(Sets.WanderersTroupe, 4, 1.0),
+    new CharacterArtifactSet(Sets.HeartOfDepth, 4, 0.5),
   ])
 );
 
@@ -1264,9 +1294,9 @@ export const Nilou = new Character("Nilou", "Hydro", "Sword", [], Rarity.Legenda
   mobDrop: EasyMobDrops.FungalSpores,
 }, '12% chance of double product when cooking Adventure foods.',
   new CharacterPlaystyle("On-field DPS", ["HP", "Elemental Mastery"], ["Skill/Ability", "Skill/Ability", "Normal/Press"], false, [
-    ...HPSets(60.7),
-    ...ElementalMasterySets(8.5),
-    ...HPSets(8.5),
+    ...HPSets(64.5),
+    ...ElementalMasterySets(7.4),
+    ...HPSets(7.4),
   ])
 );
 
@@ -1279,10 +1309,10 @@ export const Ningguang = new Character("Ningguang", "Geo", "Catalyst", ["Shield"
   mobDrop: EasyMobDrops.FatuiInsignia,
 }, 'Shows Ore veins used in forging on minimap.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ["Normal/Press", "Burst/Ult", "Skill/Ability"], true, [
-    ...AttackSets(31.2),
-    new CharacterArtifactSet(Sets.ArchaicPetra, 2, 31.2),
-    ...AttackSets(16.1),
-    new CharacterArtifactSet(Sets.NighttimeWhispersInTheEchoingWoods, 4, 7.8),
+    ...AttackSets(30.4),
+    ...GeoDMGSets(30.4),
+    ...AttackSets(17.4),
+    new CharacterArtifactSet(Sets.NighttimeWhispersInTheEchoingWoods, 4, 8.8),
   ])
 );
 
@@ -1298,9 +1328,9 @@ export const Noelle = new Character("Noelle", "Geo", "Claymore", [
   mobDrop: EasyMobDrops.Mask,
 }, '12% chance of double product when cooking Defense foods.',
   new CharacterPlaystyle("On-field DPS", ["DEF"], ["Burst/Ult", "Normal/Press", "Skill/Ability"], true, [
-    new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 4, 39.0),
-    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 23.7),
-    new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 16.8),
+    new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 4, 38),
+    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 24.3),
+    new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 17.5),
   ])
 );
 
@@ -1320,9 +1350,10 @@ export const Ororon = new Character("Ororon", "Electro", "Bow", [
   mobDrop: EasyMobDrops.Fang,
 }, '15% Gliding speed increase.',
   new CharacterPlaystyle("Burst Support", ["Energy Recharge", "ATK"], ["Burst/Ult", "Skill/Ability", "Charged/Hold"], false, [
-    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 91.7),
-    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 1.9),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 0.9),
+    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 90.3),
+    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 1.7),
+    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 2, 1.1),
+    new CharacterArtifactSet(Sets.ObsidianCodex, 2, 1.1),
   ])
 );
 
@@ -1335,11 +1366,10 @@ export const Qiqi = new Character("Qiqi", "Cryo", "Sword", ["Heal"], Rarity.Lege
   mobDrop: EasyMobDrops.Scroll,
 }, 'Shows Local Specialties in Liyue on minimap.',
   new CharacterPlaystyle("Off-field Support", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 5),
-    new CharacterArtifactSet(Sets.OceanHuedClam, 4, 47.4),
-    new CharacterArtifactSet(Sets.MaidenBeloved, 4, 14.1),
-    ...HealingBonusSets(3.7),
-    ...AttackSets(3.7),
+    new CharacterArtifactSet(Sets.OceanHuedClam, 4, 47.7),
+    new CharacterArtifactSet(Sets.MaidenBeloved, 4, 14.0),
+    ...HealingBonusSets(3.5),
+    ...AttackSets(3.5),
   ])
 );
 
@@ -1354,9 +1384,9 @@ export const RaidenShogun = new Character("Raiden Shogun", "Electro", "Polearm",
   mobDrop: EasyMobDrops.Handguard,
 }, '50% mora cost reduction when ascending Sword and Polearm weapons.',
   new CharacterPlaystyle("On-field DPS", ["Energy Recharge", "ATK"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 93.4),
-    new CharacterArtifactSet(Sets.GildedDreams, 4, 1.2),
-    new CharacterArtifactSet(Sets.FlowerOfParadiseLost, 4, 0.6),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 92.6),
+    new CharacterArtifactSet(Sets.GildedDreams, 4, 1.4),
+    new CharacterArtifactSet(Sets.FlowerOfParadiseLost, 4, 0.8),
   ]),
 );
 
@@ -1371,9 +1401,9 @@ export const Razor = new Character("Razor", "Electro", "Claymore", [
   mobDrop: EasyMobDrops.Mask,
 }, '20% Sprinting consumption reduction.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ["Normal/Press", "Burst/Ult", "Skill/Ability"], true, [
-    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 49.7),
-    new CharacterArtifactSet(Sets.PaleFlame, 4, 13.1),
-    ...PhysicalDMGSets(6.9),
+    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 53.6),
+    new CharacterArtifactSet(Sets.PaleFlame, 4, 10.3),
+    ...PhysicalDMGSets(5),
   ])
 );
 
@@ -1386,9 +1416,9 @@ export const Rosaria = new Character("Rosaria", "Cryo", "Polearm", ["Off-field D
   mobDrop: EasyMobDrops.FatuiInsignia,
 }, 'During Night (18:00 - 06:00), party members gain 10% increased movement speed.',
   new CharacterPlaystyle("Burst Support", ["Energy Recharge", "ATK"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 34.8),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 23.1),
-    new CharacterArtifactSet(Sets.BlizzardStrayer, 4, 12.1),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 35.1),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 21.3),
+    new CharacterArtifactSet(Sets.BlizzardStrayer, 4, 12.9),
   ])
 );
 
@@ -1401,9 +1431,9 @@ export const SangonomiyaKokomi = new Character("Sangonomiya Kokomi", "Hydro", "C
   mobDrop: EasyMobDrops.Spectral,
 }, '20% Swimming consumption reduction.',
   new CharacterPlaystyle("Off-field Support", ["HP", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.OceanHuedClam, 4, 69.3),
-    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 15.1),
-    new CharacterArtifactSet(Sets.MaidenBeloved, 4, 2.4),
+    new CharacterArtifactSet(Sets.OceanHuedClam, 4, 68),
+    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 13.6),
+    new CharacterArtifactSet(Sets.FlowerOfParadiseLost, 4, 3.1),
   ]),
 );
 
@@ -1416,10 +1446,10 @@ export const Sayu = new Character("Sayu", "Anemo", "Claymore", ["Heal"], Rarity.
   mobDrop: EasyMobDrops.Nectar,
 }, 'Party members will not startle Crystalflies and certain other animals.',
   new CharacterPlaystyle("Off-field Support", ["ATK", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 60.1),
-    ...AttackSets(4.0),
-    ...ElementalMasterySets(4.0),
-    new CharacterArtifactSet(Sets.MaidenBeloved, 4, 3.3),
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 60.5),
+    ...AttackSets(4.8),
+    ...ElementalMasterySets(4.8),
+    new CharacterArtifactSet(Sets.MaidenBeloved, 4, 3.1),
   ])
 );
 
@@ -1432,9 +1462,9 @@ export const Sethos = new Character("Sethos", "Electro", "Bow", [], Rarity.Epic,
   mobDrop: EasyMobDrops.EremiteDrop,
 }, 'Shows Local Specialties in Sumeru on minimap.',
   new CharacterPlaystyle("On-field DPS", ["Elemental Mastery", "Energy Recharge"], ["Charged/Hold", "Burst/Ult", "Skill/Ability"], true, [
-    new CharacterArtifactSet(Sets.WanderersTroupe, 4, 80.7),
-    new CharacterArtifactSet(Sets.GildedDreams, 4, 7.3),
-    ...ElementalMasterySets(2.9)
+    new CharacterArtifactSet(Sets.WanderersTroupe, 4, 79.3),
+    new CharacterArtifactSet(Sets.GildedDreams, 4, 7.5),
+    ...ElementalMasterySets(2.7)
   ])
 );
 
@@ -1447,10 +1477,10 @@ export const Shenhe = new Character("Shenhe", "Cryo", "Polearm", ["Off-field Dam
   mobDrop: EasyMobDrops.Nectar,
 }, '25% more rewards when on expeditions in Liyue.',
   new CharacterPlaystyle("Off-field Support", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    ...AttackSets(55.1),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 20.0),
-    ...AttackSets(2.8),
-    ...EnergyRechargeSets(2.8),
+    ...AttackSets(55.5),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 20.3),
+    ...AttackSets(2.7),
+    ...EnergyRechargeSets(2.7),
   ])
 );
 
@@ -1464,8 +1494,8 @@ export const ShikanoinHeizou = new Character("Shikanoin Heizou", "Anemo", "Catal
 }, '20% Sprinting consumption reduction.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Elemental Mastery"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
     new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 42.7),
-    ...AttackSets(15.9),
-    ...AnemoDMGSets(15.9),
+    ...AttackSets(15.8),
+    ...AnemoDMGSets(15.8),
   ])
 );
 
@@ -1478,9 +1508,9 @@ export const Sigewinne = new Character("Sigewinne", "Hydro", "Bow", ["Heal", "Bo
   mobDrop: EasyMobDrops.FontemerAberrantPearl,
 }, 'While under water and your active character\'s HP fall below 50%, the active character will be healed over 2.5s and gain Elemental and Physical resistance decrease by 10% for 10s. This can be triggered once every 20s.',
   new CharacterPlaystyle("On-field Support", ["HP"], ["Skill/Ability", "Burst/Ult", "Charged/Hold"], false, [
-    new CharacterArtifactSet(Sets.SongOfDaysPast, 4, 43.9),
-    ...HPSets(25.4),
-    new CharacterArtifactSet(Sets.OceanHuedClam, 4, 8.0),
+    new CharacterArtifactSet(Sets.SongOfDaysPast, 4, 46.3),
+    ...HPSets(23.4),
+    new CharacterArtifactSet(Sets.OceanHuedClam, 4, 7.8),
   ])
 );
 
@@ -1496,9 +1526,9 @@ export const Skirk = new Character("Skirk", "Cryo", "Sword", [
   mobDrop: EasyMobDrops.Gear,
 }, 'Elemental Skill is increased by 1 level for all party members, if the team consists of Hydro/Cryo characters and at least 1 of each element.',
   new CharacterPlaystyle("On-field Frozen DPS", ["ATK"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.FinaleOfTheDeepGalleries, 4, 78.3),
-    new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 11.6),
-    new CharacterArtifactSet(Sets.BlizzardStrayer, 4, 2.7),
+    new CharacterArtifactSet(Sets.FinaleOfTheDeepGalleries, 4, 87.1),
+    new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 7.5),
+    new CharacterArtifactSet(Sets.BlizzardStrayer, 4, 1.3),
   ])
 );
 
@@ -1515,10 +1545,11 @@ export const Sucrose = new Character("Sucrose", "Anemo", "Catalyst", [
   mobDrop: EasyMobDrops.Nectar,
 }, '10% chance of double product when crafting Character Talent Materials and Weapon Ascension Materials.',
   new CharacterPlaystyle("Off-field Support", ["Elemental Mastery", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 84.4),
-    ...AnemoDMGSets(2.9),
-    ...ElementalMasterySets(2.9),
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 88.1),
+    ...AnemoDMGSets(2.2),
     ...ElementalMasterySets(2.2),
+    ...ElementalMasterySets(1.4),
+    ...EnergyRechargeSets(1.4),
   ])
 );
 
@@ -1533,10 +1564,10 @@ export const TartagliaChilde = new Character("Tartaglia (Childe)", "Hydro", "Bow
   mobDrop: EasyMobDrops.FatuiInsignia,
 }, 'Increase your own party members\' Normal Attack level by 1.',
   new CharacterPlaystyle("On-field DPS", ["ATK"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.HeartOfDepth, 4, 41.8),
-    ...HydroDMGSets(13.8),
-    ...AttackSets(13.8),
-    new CharacterArtifactSet(Sets.NymphsDream, 4, 13.0),
+    new CharacterArtifactSet(Sets.HeartOfDepth, 4, 42.7),
+    new CharacterArtifactSet(Sets.NymphsDream, 4, 14.3),
+    ...HydroDMGSets(13.5),
+    ...AttackSets(13.5),
   ]),
 );
 
@@ -1549,10 +1580,10 @@ export const Thoma = new Character("Thoma", "Pyro", "Polearm", ["Shield"], Rarit
   mobDrop: EasyMobDrops.TreasureHoarderInsignia,
 }, '20% of double catch when fishing in Inazuma.',
   new CharacterPlaystyle("Burst Support", ["HP", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    ...HPSets(35.0),
-    ...EnergyRechargeSets(35.0),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 15.2),
-    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 9.0),
+    ...HPSets(35.6),
+    ...EnergyRechargeSets(35.6),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 16.1),
+    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 9.9),
   ]),
 );
 
@@ -1565,9 +1596,9 @@ export const Tighnari = new Character("Tighnari", "Dendro", "Bow", ["Off-field D
   mobDrop: EasyMobDrops.FungalSpores,
 }, 'Shows Local Specialties in Sumeru on minimap.',
   new CharacterPlaystyle("Off-field DPS", ["Elemental Mastery", "ATK"], ["Charged/Hold", "Burst/Ult", "Skill/Ability"], false, [
-    new CharacterArtifactSet(Sets.WanderersTroupe, 4, 63.5),
-    new CharacterArtifactSet(Sets.GildedDreams, 4, 16.3),
-    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 8.6),
+    new CharacterArtifactSet(Sets.WanderersTroupe, 4, 65.4),
+    new CharacterArtifactSet(Sets.GildedDreams, 4, 15.3),
+    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 8.3),
   ])
 );
 
@@ -1578,11 +1609,11 @@ export const TravelerAnemo = new Character("Traveler (Anemo)", "Anemo", "Sword",
   localSpecialty: LocalSpecialties.WindwheelAster,
   worldBossDrop: null,
   mobDrop: EasyMobDrops.Mask,
-}, undefined,
-  new CharacterPlaystyle("On-field Swirl DPS", ["Elemental Mastery", "Energy Recharge", "ATK"], ["Skill/Ability", "Normal/Press", "Burst/Ult"], true, [
-    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 38.3),
-    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 26.4),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 6.1)
+}, `CRIT Rate +10%. When Pyro/Hydro/CryoElectro attacks from nearby party member hit opponents, gain 1 stack of Blade of the Dawn Breeze. Each Elemental type grants 1 stack. After obtaining 2+, performing CA consumes all stacks to transform into CA: Whirlwind: Each CA deals Anemo DMG. +60% of Traveler's ATK. Every consumption, Blade Wind summoned dealing 50% of Traveler's ATK - considered CA damage. 15s CD.`,
+  new CharacterPlaystyle("On-field Swirl DPS", ["ATK", "Elemental Mastery"], ["Skill/Ability", "Normal/Press", "Burst/Ult"], true, [
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 37.9),
+    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 25.6),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 5.3)
   ])
 );
 
@@ -1593,12 +1624,11 @@ export const TravelerGeo = new Character("Traveler (Geo)", "Geo", "Sword", [], R
   localSpecialty: LocalSpecialties.WindwheelAster,
   worldBossDrop: null,
   mobDrop: EasyMobDrops.Mask,
-}, undefined,
+}, `DEF +20%. When members protected by shield and shield is replaced or Geo Constructs are created, Traveler receives 1 stack of Blade of Archaic Petra of 3 stacks. 1 stack/s. After 3, performing CA consumes all stacks to transform into CA: Rockfell. Each CA deals Geo DMG +120% of Traveler's ATK. After hit of opponent, +20% shield strength for party members for 15s. 15s CD.`,
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 27.7),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 8.2),
-    ...AttackSets(7.0),
-    new CharacterArtifactSet(Sets.ArchaicPetra, 2, 7.0),
+    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 24.1),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 9.0),
+    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 7.3),
   ])
 );
 
@@ -1609,11 +1639,11 @@ export const TravelerElectro = new Character("Traveler (Electro)", "Electro", "S
   localSpecialty: LocalSpecialties.WindwheelAster,
   worldBossDrop: null,
   mobDrop: EasyMobDrops.Mask,
-}, undefined,
+}, `Energy Recharge +20%. When members burst/ult, Traveler receives 1 stack of Blade of Resounding Thunder of 3 stacks. After 3, performing CA consumes all stacks to transform into CA: Detonate. Each CA deals Electro DMG +100% of Traveler's ATK. 3s after hitting opponent, 1 additional lightning strike triggered, dealing Electro DMG of 200% Traveler's ATK. 1 Abundance Amulet created. DMG is considered CA DMG. 15s CD.`,
   new CharacterPlaystyle("Off-field Support", ["Energy Recharge", "ATK"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 36.1),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 16.4),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 9.7),
+    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 24.2),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 22.7),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 14.2),
   ])
 );
 
@@ -1624,11 +1654,11 @@ export const TravelerDendro = new Character("Traveler (Dendro)", "Dendro", "Swor
   localSpecialty: LocalSpecialties.WindwheelAster,
   worldBossDrop: null,
   mobDrop: EasyMobDrops.Mask,
-}, undefined,
+}, `Elemental Master +60. When Dendro/Bountiful Cores or Seeds of Deceit appears on field or party obtains Verdant Dew, Traveler gains 1 stack of Blade of Verdant Virids. These 2 methods each grant +1 stack/4s of 3. After 3, performing CA consumes all stacks to transform into CA: Verdessence. Each CA deals Dendro DMG +80% of Traveler's ATK. Two Vinecores created, which explode after 4/8s respectively, dealing Dendro DMG of 120% of Traveler's ATK - considered CA DMG. 15s CD.`,
   new CharacterPlaystyle("Off-field Support", ["Energy Recharge", "Elemental Mastery"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 54.1),
-    new CharacterArtifactSet(Sets.GildedDreams, 4, 7.2),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 6.1),
+    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 56.3),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 7.8),
+    new CharacterArtifactSet(Sets.GildedDreams, 4, 6.7),
   ])
 );
 
@@ -1639,11 +1669,11 @@ export const TravelerHydro = new Character("Traveler (Hydro)", "Hydro", "Sword",
   localSpecialty: LocalSpecialties.WindwheelAster,
   worldBossDrop: null,
   mobDrop: EasyMobDrops.Mask,
-}, undefined,
+}, `HP +20%. When party members' HP change by 5%, Traveler receives 1 stack of Blade of Many Waters every 4s of 3 stacks. After 3, performing CA consumes all stacks to transform into CA: Tidebound. Each CA deals Hydro DMG +150% of Traveler's ATK. When Traveler's HP > 50%, 10% of max HP consumed to increase DMG inflicted by CA by 100% of Traveler's ATK. When HP < 50%, one instance of healing = 25% of max HP restored upon hitting an enemy. 15s CD.`,
   new CharacterPlaystyle("Off-field Support", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 29.6),
-    new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 6.9),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 6.6),
+    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 31),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 7.8),
+    new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 6.5),
   ])
 );
 export const TravelerPyro = new Character("Traveler (Pyro)", "Pyro", "Sword", ['Nightsouls Blessing'], Rarity.Legendary, 'Unknown', {
@@ -1653,11 +1683,11 @@ export const TravelerPyro = new Character("Traveler (Pyro)", "Pyro", "Sword", ['
   localSpecialty: LocalSpecialties.WindwheelAster,
   worldBossDrop: null,
   mobDrop: EasyMobDrops.Mask,
-}, undefined,
+}, `ATK +20%. When party members trigger Nightsoul burst, Traveler receives 1 stack of Blade of Sacred Flame of 2 stacks. After 3, performing CA consumes all stacks to transform into CA: Inferno. Each CA deals Nightsoul-aligned Pyro DMG +200% of Traveler's ATK. 15s CD.`,
   new CharacterPlaystyle("Off-field Support", ["Energy Recharge", "ATK"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 57.5),
-    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 14.5),
-    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 6.1),
+    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 59.9),
+    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 14.4),
+    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 4.7),
   ])
 );
 export const TravelerCryo = new Character("Traveler (Cryo)", "Cryo", "Sword", [], Rarity.Legendary, 'Unknown', {
@@ -1682,10 +1712,10 @@ export const Varesa = new Character("Varesa", "Electro", "Catalyst", ["Nightsoul
   mobDrop: EasyMobDrops.Fang,
 }, 'Sprint speed increased but sprint consumption is also increased outside of combat. Additionally, party members will restore 20 Phlogiston when consuming food. This effect can be triggered once every 10s.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ["Plunging/Press", "Burst/Ult", "Skill/Ability"], true, [
-    new CharacterArtifactSet(Sets.LongNightsOath, 4, 72.2),
-    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 21.1),
-    new CharacterArtifactSet(Sets.LongNightsOath, 2, 2.1),
-    new CharacterArtifactSet(Sets.ObsidianCodex, 2, 2.1),
+    new CharacterArtifactSet(Sets.LongNightsOath, 4, 77.3),
+    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 16.5),
+    ...PlungingAttackSets(1.9),
+    new CharacterArtifactSet(Sets.ObsidianCodex, 2, 1.9),
   ])
 );
 
@@ -1702,11 +1732,10 @@ export const Venti = new Character("Venti", "Anemo", "Bow", [
   mobDrop: EasyMobDrops.Slime,
 }, '20% Gliding consumption reduction.',
   new CharacterPlaystyle("Off-field Swirl Support", ["Elemental Mastery", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Charged/Hold"], false, [
-    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 88.9),
-    ...AnemoDMGSets(2.0),
-    ...ElementalMasterySets(2.0),
-    ...AttackSets(1.6),
-    ...AnemoDMGSets(1.6),
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 77),
+    ...AnemoDMGSets(4.6),
+    ...AttackSets(4.6),
+    new CharacterArtifactSet(Sets.DesertPavilionChronicle, 4, 3.5)
   ])
 );
 
@@ -1719,9 +1748,9 @@ export const WandererScaramouche = new Character("Wanderer (Scaramouche)", "Anem
   mobDrop: EasyMobDrops.Handguard,
 }, '50% mora cost reduction when ascending Bow and Catalyst weapons.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ["Normal/Press", "Skill/Ability", "Burst/Ult"], true, [
-    new CharacterArtifactSet(Sets.DesertPavilionChronicle, 4, 71.9),
-    new CharacterArtifactSet(Sets.ShimenawasReminiscence, 4, 5.5),
-    new CharacterArtifactSet(Sets.EchoesOfAnOffering, 4, 3.4),
+    new CharacterArtifactSet(Sets.DesertPavilionChronicle, 4, 73.6),
+    new CharacterArtifactSet(Sets.ShimenawasReminiscence, 4, 5.3),
+    new CharacterArtifactSet(Sets.EchoesOfAnOffering, 4, 3.3),
   ])
 );
 
@@ -1754,8 +1783,8 @@ export const Xiangling = new Character("Xiangling", "Pyro", "Polearm", ["Off-fie
   new CharacterPlaystyle("Off-field DPS", ["Energy Recharge", "ATK"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
     new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 83.3),
     new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 5.1),
-    new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 2, 1.8),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 2, 1.8),
+    ...PyroDMGSets(1.7),
+    ...EnergyRechargeSets(1.7),
   ]),
 );
 
@@ -1768,9 +1797,9 @@ export const Xianyun = new Character("Xianyun", "Anemo", "Catalyst", ["Heal"], R
   mobDrop: EasyMobDrops.Scroll,
 }, '15% Sprinting speed increase.',
   new CharacterPlaystyle("Off-field Support", ["ATK", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 51.1),
-    new CharacterArtifactSet(Sets.SongOfDaysPast, 4, 20.4),
-    ...AttackSets(8.6),
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 53),
+    new CharacterArtifactSet(Sets.SongOfDaysPast, 4, 19.9),
+    ...AttackSets(8.4),
   ])
 );
 
@@ -1785,9 +1814,10 @@ export const Xiao = new Character("Xiao", "Anemo", "Polearm", [
   mobDrop: EasyMobDrops.Slime,
 }, '20% Climbing consumption reduction.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ["Burst/Ult", "Normal/Press", "Skill/Ability"], true, [
-    new CharacterArtifactSet(Sets.VermillionHereafter, 4, 58.1),
-    ...AttackSets(14.1),
-    ...AnemoDMGSets(14.1)
+    new CharacterArtifactSet(Sets.VermillionHereafter, 4, 58.0),
+    ...AttackSets(13.5),
+    ...AnemoDMGSets(13.5),
+    new CharacterArtifactSet(Sets.LongNightsOath, 4, 4.6)
   ]),
 );
 
@@ -1805,9 +1835,9 @@ export const Xilonen = new Character("Xilonen", "Geo", "Sword", [
   mobDrop: EasyMobDrops.Whistle,
 }, 'Triggering Nightsoul Transmission restores 15 Phlogiston.',
   new CharacterPlaystyle("Off-field Support", ["DEF", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 94.6),
-    new CharacterArtifactSet(Sets.ArchaicPetra, 4, 3.2),
-    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 0.4),
+    new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 93.3),
+    new CharacterArtifactSet(Sets.ArchaicPetra, 4, 4.4),
+    new CharacterArtifactSet(Sets.ObsidianCodex, 4, 0.3),
   ])
 );
 
@@ -1823,10 +1853,10 @@ export const Xingqiu = new Character("Xingqiu", "Hydro", "Sword", [
   mobDrop: EasyMobDrops.Mask,
 }, '25% chance of refund materials used when crafting Character Talent Materials.',
   new CharacterPlaystyle("Burst DPS", ["Energy Recharge", "ATK"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 67.0),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 2, 8.9),
-    ...HydroDMGSets(8.9),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 5.0),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 68.8),
+    ...BurstDMGSets(7.8),
+    ...HydroDMGSets(7.8),
+    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 5.2),
   ]),
 );
 
@@ -1839,10 +1869,9 @@ export const Xinyan = new Character("Xinyan", "Pyro", "Claymore", [], Rarity.Epi
   mobDrop: EasyMobDrops.TreasureHoarderInsignia,
 }, '12% chance of double product when cooking Defense foods.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], true, [
-    ...PhysicalDMGSets(23.7),
-    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 19.3),
-    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 5.6),
-    new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 2, 2),
+    ...PhysicalDMGSets(23.1),
+    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 20.5),
+    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 5.9),
   ]),
 );
 
@@ -1855,10 +1884,10 @@ export const YaeMiko = new Character("Yae Miko", "Electro", "Catalyst", ["Off-fi
   mobDrop: EasyMobDrops.Handguard,
 }, '25% chance to get 1 regional Character Talent Materials when crafting Character Talent Materials.',
   new CharacterPlaystyle("Off-field DPS", ["ATK", "Elemental Mastery"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.GildedDreams, 4, 29.6),
-    new CharacterArtifactSet(Sets.GoldenTroupe, 4, 26.7),
-    ...AttackSets(6.6),
-    new CharacterArtifactSet(Sets.ThunderingFury, 2, 6.6),
+    new CharacterArtifactSet(Sets.GildedDreams, 4, 29.8),
+    new CharacterArtifactSet(Sets.GoldenTroupe, 4, 29.0),
+    ...AttackSets(6.3),
+    ...ElectroDMGSets(6.3),
   ])
 );
 
@@ -1871,10 +1900,10 @@ export const Yanfei = new Character("Yanfei", "Pyro", "Catalyst", [], Rarity.Epi
   mobDrop: EasyMobDrops.TreasureHoarderInsignia,
 }, 'Shows Local Specialties in Liyue on minimap.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ["Charged/Hold", "Burst/Ult", "Skill/Ability"], true, [
-    new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 40.2),
-    new CharacterArtifactSet(Sets.WanderersTroupe, 4, 34.8),
-    ...AttackSets(3.4),
-    new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 2, 3.4),
+    new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 39.7),
+    new CharacterArtifactSet(Sets.WanderersTroupe, 4, 35.7),
+    ...AttackSets(3.3),
+    ...PyroDMGSets(3.3),
   ])
 );
 
@@ -1887,9 +1916,9 @@ export const Yaoyao = new Character("Yaoyao", "Dendro", "Polearm", ["Heal", "Off
   mobDrop: EasyMobDrops.Slime,
 }, 'Party members will not startle Crystalflies and certain other animals.',
   new CharacterPlaystyle("Off-field Support", ["HP", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 57.9),
-    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 7.6),
-    new CharacterArtifactSet(Sets.MaidenBeloved, 4, 5.7),
+    new CharacterArtifactSet(Sets.DeepwoodMemories, 4, 60.1),
+    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 7.5),
+    new CharacterArtifactSet(Sets.MaidenBeloved, 4, 5.4),
   ])
 );
 
@@ -1902,11 +1931,11 @@ export const Yelan = new Character("Yelan", "Hydro", "Bow", ["Off-field Damage"]
   mobDrop: EasyMobDrops.FatuiInsignia,
 }, '25% more rewards when on expeditions in Liyue.',
   new CharacterPlaystyle("Off-field DPS", ["HP", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Charged/Hold"], false, [
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 85.0),
-    ...HydroDMGSets(2.9),
-    ...HPSets(2.9),
-    ...HydroDMGSets(2.0),
-    ...EnergyRechargeSets(2.0),
+    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 86.5),
+    ...HydroDMGSets(2.5),
+    ...HPSets(2.5),
+    ...HydroDMGSets(1.7),
+    ...EnergyRechargeSets(1.7),
   ])
 );
 
@@ -1923,7 +1952,7 @@ export const Yoimiya = new Character("Yoimiya", "Pyro", "Bow", [
   new CharacterPlaystyle("On-field DPS", ["ATK", "Elemental Mastery"], ["Charged/Hold", "Skill/Ability", "Burst/Ult"], true, [
     new CharacterArtifactSet(Sets.ShimenawasReminiscence, 4, 85.7),
     new CharacterArtifactSet(Sets.EchoesOfAnOffering, 4, 4.1),
-    new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 2.1),
+    new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 2.0),
   ])
 );
 
@@ -1936,10 +1965,9 @@ export const YumemizukiMizuki = new Character("Yumemizuki Mizuki", "Anemo", "Cat
   mobDrop: EasyMobDrops.Handguard,
 }, 'When in party, party members that consumed non reviving foods have a 30% chance of recovering additional HP. Trigger chance is increased depending on friendship level of the food consuming character.',
   new CharacterPlaystyle('On-field Swirl DPS', ['Elemental Mastery', "Energy Recharge"], ['Skill/Ability', "Burst/Ult", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 82.3),
-    new CharacterArtifactSet(Sets.ViridescentVenerer, 2, 3.2),
-    ...ElementalMasterySets(3.2),
-    ...ElementalMasterySets(2.6)
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 75.8),
+    ...AnemoDMGSets(3.6),
+    ...ElementalMasterySets(3.4),
   ])
 );
 
@@ -1952,10 +1980,26 @@ export const YunJin = new Character("Yun Jin", "Geo", "Polearm", ["Shield"], Rar
   mobDrop: EasyMobDrops.Mask,
 }, '12% chance of double product when cooking Adventure foods.',
   new CharacterPlaystyle("Off-field Support", ["DEF", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 4, 66.1),
-    new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 2, 21.6),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 2, 21.6),
+    new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 4, 66),
+    ...DefenseSets(20.7),
+    ...EnergyRechargeSets(20.7),
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 2.6),
+  ])
+);
+
+export const Zibai = new Character("Zibai", "Geo", "Sword", [
+  'Enables Lunar-Crystallize Reaction',
+  'Increases Moonsign'
+], Rarity.Legendary, 'Liyue', {
+  material: TalentAscension.Gold,
+  weeklyBossDrop: MobDrops.RemnantOfTheDreadwing,
+  crystal: ElementalCrystals.Geo,
+  localSpecialty: LocalSpecialties.GlazeLily,
+  worldBossDrop: MobDrops.ChessGameQueen,
+  mobDrop: EasyMobDrops.Warrant,
+}, `Collects elemental energy at night`, 
+  new CharacterPlaystyle("On-field Lunar-Crystallize DPS", ["DEF"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
+    new CharacterArtifactSet(Sets.ADayCarvedFromRisingWinds, 4, 100),
   ])
 );
 
@@ -1968,8 +2012,8 @@ export const Zhongli = new Character("Zhongli", "Geo", "Polearm", ["Shield"], Ra
   mobDrop: EasyMobDrops.Slime,
 }, '15% chance of refunding ore when crafting Polearm weapons.',
   new CharacterPlaystyle("Off-field Support", ["HP"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 76.3),
-    ...HPSets(4.8),
-    new CharacterArtifactSet(Sets.ArchaicPetra, 4, 4.3),
+    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 76.8),
+    ...HPSets(4.7),
+    new CharacterArtifactSet(Sets.ArchaicPetra, 4, 4.2),
   ]),
 );

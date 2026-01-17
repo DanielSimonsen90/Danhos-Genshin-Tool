@@ -2,6 +2,7 @@ import { ArtifactSet, Character, Domain, TalentAscensionMaterial, WeaponAscensio
 import type { DataStoreContent } from './DataStoreConstants';
 import ModelType from './ModelType';
 import { Weapon } from '@/common/models/weapon';
+import { Rarity, TeyvatRegion } from '@/common/types';
 
 export type CharacterUsingArtifactResult = {
   character: Character;
@@ -14,6 +15,7 @@ export type DataStoreModelCollections = Extract<
   'Characters' | 'Artifacts' | 'Domains'
 >;
 export type DataStore = typeof DataStoreContent & {
+  // Find models by name
   findCharacterByName: (name: string) => Character | undefined;
   findArtifactByName: (name: string) => ArtifactSet | undefined;
   findDomainByName: (name: string) => Domain<any> | undefined;
@@ -21,23 +23,30 @@ export type DataStore = typeof DataStoreContent & {
   findMaterialByName: (name: string) => Material | undefined;
   findWeaponByName: (name: string) => Weapon | undefined;
 
+  // Get linked models from other models
   getDomainsFromArtifact: (artifactName: string) => Domain<any>[] | undefined;
   getArtifactsFromDomain: (domainName: string) => ArtifactSet[] | undefined;
   getTalentAscensionMaterialsFromDomain: (domainName: string) => TalentAscensionMaterial[] | undefined;
   getWeaponAscensionMaterialsFromDomain: (domainName: string) => WeaponAscensionMaterial[] | undefined;
+  getRegionsFromArtifact: (artifactName: string) => TeyvatRegion[] | undefined;
 
+  // Get models using a material
   getModelKeysUsingMaterial: (materialName: string) => ModelKeys[];
   getCharactersUsingMaterial: (materialName: string) => Character[];
   getWeaponsUsingMaterial: (materialName: string) => Weapon[];
 
+  // Get models dropping material
   getMobsDroppingMaterial: (materialName: string) => Mob[];
   getDomainDroppingMaterial: (materialName: string) => Domain<any> | undefined;
 
+  // Get models from material
   getDomainsFromMaterial: (material: Material) => Domain<any>[];
   getBossesFromMaterial: (material: Material) => Boss[];
 
+  // Get models that make use of other models
   getCharactersUsingArtifact: (artifactName: string) => CharacterUsingArtifactResult[];
   getSignatureWeaponFor(character: Character): Weapon | undefined;
+  getRecommendedWeaponsFor(character: Character): Map<Rarity, Array<Weapon<any>>>;
 
   getModelType: <TModel extends Model>(model: TModel) => ModelType<TModel>;
 

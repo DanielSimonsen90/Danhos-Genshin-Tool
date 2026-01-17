@@ -608,6 +608,10 @@ export const MartialArtist = new ArtifactSet(
   }
 );
 
+/**
+ * @two Elemental Mastery +80
+ * @four When party members trigger Lunar reactions, if equipping character on field, gain Gleaming Moon: Intent for 4s: Increase CRIT Rate by 15%/30% when party's Moonsign is Nascent Gleam/Ascendant Gleam. All party members' Lunar Reaction DMG +10%. Effects from Gleaming Moon cannot stack.
+ */
 export const NightOfTheSkysUnveiling = new ArtifactSet(
   "Night Of The Sky's Unveiling",
   "Elemental Mastery +80",

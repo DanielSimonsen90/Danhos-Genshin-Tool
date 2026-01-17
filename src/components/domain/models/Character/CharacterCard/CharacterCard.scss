@@ -95,6 +95,30 @@
       --size: 10rem;
     }
   }
+
+  .character-recommended-weapons {
+    flex: 1 1 100%;
+    
+    .tab-bar__tab > div {
+      display: flex;
+      gap: 1ch;
+      align-items: center;
+
+      font-size: 1.25rem;
+      line-height: 2.5rem;
+      margin: 0;
+
+      color: var(--rarity);
+    }
+
+    .searchable-list__list {
+      --min: 20em;
+    }
+
+    .weapon-image {
+      --size: 10rem;
+    }
+  }
 }
 
 .character-details {

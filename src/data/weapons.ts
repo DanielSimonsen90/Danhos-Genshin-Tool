@@ -1608,8 +1608,8 @@ export const FracturedHalo = new Weapon(
   {
     value: `After an Elemental Skill or Elemental Burst is used, ATK is increased by $0 for 20s. If the equipping character creates a Shield while this effect is active, they will gain the Electrifying Edict effect for 20s: All nearby party members deal $1 more Lunar-Charged DMG.`,
     refinements: [
-      '24%/30%/36%/42%/48%',
-      '40%/50%/60%/70%/80%',
+      '24/30/36/42/48%',
+      '40/50/60/70/80%',
     ]
   },
   'Polearm',
@@ -2063,8 +2063,8 @@ export const LightbearingMoonshard = new Weapon(
   {
     value: `Increases DEF by $0. DMG inflicted by Lunar-Crystallize reactions increases by $1 for 5s after the equipping character uses an Elemental Skill.`,
     refinements: [
-      '20%/25%/30%/35%/40%',
-      '64%/80%/96%/112%/128%',
+      '20/25/30/35/40%',
+      '64/80/96/112/128%',
     ]
   },
   'Sword',
@@ -2078,7 +2078,7 @@ export const LightbearingMoonshard = new Weapon(
     Drops.DriveShaft
   ],
   "Wish",
-  // cs => cs.Zibai?
+  cs => cs.Zibai
 );
 export const LightOfFoliarIncision = new Weapon(
   'Light of Foliar Incision',
@@ -2482,7 +2482,7 @@ export const MoonweaversDawn = new Weapon(
     value: `Increases Elemental Burst DMG by $0. When the equipping character's Energy Capacity does not exceed 60/40, their Elemental Burst DMG is increased by an additional $1.`,
     refinements: [
       '20/25/30/35/40%',
-      '(16%/28%)/(20%/35%)/(24%/42%)/(28%/49%)/(32%/56%)',
+      '(16/28)/(20/35)/(24/42)/(28/49)/(32%/56%)',
     ],
   },
   'Sword',
@@ -2549,10 +2549,10 @@ export const NocturnesCurtainCall = new Weapon(
   {
     value: `Max HP increases by $0. When triggering Lunar reactions or inflicting Lunar Reaction DMG on opponents, the equipping character will recover $1 Energy, and receive the Bountiful Sea's Sacred Wine effect for 12s: Max HP increases by an additional $2, CRIT DMG from Lunar Reaction DMG increases by $3. The Energy recovery effect can be triggered at most once every 18s, and can be triggered even when the equipping character is off-field.`,
     refinements: [
-      '10%/12%/14%/16%/18%',
+      '10/12/14/16/18%',
       '14/15/16/17/18',
-      '14%/16%/18%/20%/22%',
-      '60%/80%/100%/120%/140%',
+      '14/16/18/20/22%',
+      '60/80/100/120/140%',
     ]
   },
   'Catalyst',
@@ -2576,9 +2576,9 @@ export const NightweaversLookingGlass = new Weapon(
     refinements: [
       '60/75/90/105/120',
       '60/75/90/105/120',
-      '120%/150%/180%/210%/240%',
-      '80%/100%/120%/140%/160%',
-      '40%/50%/60%/70%/80%',
+      '120/150/180/210/240%',
+      '80/100/120/140/160%',
+      '40/50/60/70/80%',
     ]
   },
   'Catalyst',
@@ -2913,7 +2913,7 @@ export const PrototypeStarglitter = new Weapon(
       '8/10/12/14/16%',
     ]
   },
-  'Sword',
+  'Polearm',
   Rarity.Epic,
   510,
   'Energy Recharge',
@@ -4016,7 +4016,7 @@ export const SurfsUp = new Weapon(
 export const SwordOfDescension = new Weapon(
   'Sword of Descension',
   {
-    value: `Effective only on the following platform: "PlayStation™Network"\nHitting opponents with Normal and Charged Attacks grants a 50% chance to deal 200% ATK as DMG in a small AoE. This effect can only occur once every 10s. Additionally, if the Traveler equips the Sword of Descension, their ATK is increased by 66.`,
+    value: `Effective only on the following platform: "PlayStation™ Network"\nHitting opponents with Normal and Charged Attacks grants a 50% chance to deal 200% ATK as DMG in a small AoE. This effect can only occur once every 10s. Additionally, if the Traveler equips the Sword of Descension, their ATK is increased by 66.`,
     refinements: []
   },
   'Sword',
