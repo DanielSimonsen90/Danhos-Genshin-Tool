@@ -30,15 +30,21 @@ export class Character<TElement extends Element = Element> {
   public needsPhysicalDMG(): boolean { return this.playstyle?.talentStats.includes('Physical DMG Bonus') ?? false; }
   
   public canHeal(): boolean { return this.bonusAbilities.includes('Heal'); }
-  public can(bonusAbility: BonusAbilitySimple): boolean { return this.bonusAbilities.includes(bonusAbility as BonusAbility); }
+  public can(...bonusAbilities: Array<BonusAbilitySimple>): boolean { 
+    return this.bonusAbilities.some(ability => 
+      bonusAbilities.some(bonusAbility => 
+        bonusAbility.toString().includes(ability)
+      )
+    ); 
+  }
   public canTrigger(...reactions: Reaction[]) {
-    const anemoReactions: Reaction[] = ['Swirl'];
-    const geoReactions: Reaction[] = ['Crystallize', 'Shatter', 'Lunar-Crystallize'];
-    const cryoReactions: Reaction[] = ['Melt', 'Frozen', 'Shatter', 'Superconduct'];
-    const dendroReactions: Reaction[] = ['Burning', 'Bloom', 'Burgeon', 'Hyperbloom', 'Quicken', 'Spread', 'Aggravate', 'Lunar-Bloom'];
-    const electroReactions: Reaction[] = ['Overloaded', 'Electro-Charged', 'Lunar-Charged', 'Superconduct', 'Quicken', 'Spread', 'Aggravate', 'Hyperbloom'];
-    const hydroReactions: Reaction[] = ['Vaporize', 'Electro-Charged', 'Lunar-Charged', 'Frozen', 'Shatter', 'Bloom', 'Burgeon', 'Hyperbloom', 'Lunar-Bloom', 'Lunar-Crystallize'];
-    const pyroReactions: Reaction[] = ['Vaporize', 'Overloaded', 'Melt', 'Burning', 'Burgeon'];
+    const anemoReactions: Reaction[] = ['Anemo Reaction', 'Swirl'];
+    const geoReactions: Reaction[] = ['Geo Reaction', 'Crystallize', 'Shatter', 'Lunar-Crystallize'];
+    const cryoReactions: Reaction[] = ['Cryo Reaction', 'Melt', 'Frozen', 'Shatter', 'Superconduct'];
+    const dendroReactions: Reaction[] = ['Dendro Reaction', 'Burning', 'Bloom', 'Burgeon', 'Hyperbloom', 'Quicken', 'Spread', 'Aggravate', 'Lunar-Bloom'];
+    const electroReactions: Reaction[] = ['Electro Reaction', 'Overloaded', 'Electro-Charged', 'Lunar-Charged', 'Superconduct', 'Quicken', 'Spread', 'Aggravate', 'Hyperbloom'];
+    const hydroReactions: Reaction[] = ['Hydro Reaction', 'Vaporize', 'Electro-Charged', 'Lunar-Charged', 'Frozen', 'Shatter', 'Bloom', 'Burgeon', 'Hyperbloom', 'Lunar-Bloom', 'Lunar-Crystallize'];
+    const pyroReactions: Reaction[] = ['Pyro Reaction', 'Vaporize', 'Overloaded', 'Melt', 'Burning', 'Burgeon'];
 
     return (
       (this.element === 'Anemo' && anemoReactions.some(reaction => reactions.includes(reaction)))

@@ -11,6 +11,8 @@ export class CharacterPlaystyle {
   ) {}
 
   public prioritizesTalents(...talentTypes: TalentType[]): boolean {
+    const clone = [...this.talentPriorities];
+    clone.pop(); // Least important - usually first is mandatory, second is good and third is unnecessary
     return talentTypes.some(talentType => this.talentPriorities.includes(talentType));
   }
 
