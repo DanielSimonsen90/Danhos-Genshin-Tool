@@ -1,16 +1,26 @@
 import type { Reaction, TeyvatRegion, Element, LunarReaction } from "./genshin";
 
 export type TalentType = 'Normal/Press' | 'Charged/Hold' | 'Plunging/Press' | 'Skill/Ability' | 'Burst/Ult';
-export type BonusAbility = (
-| 'Off-field Damage' 
-| 'Shield' | 'Heal' | 'Self-heal' | 'Bond of Life' 
-| 'Nightsouls Blessing' | `Serpent's Subtlety`  
-| `Enables ${LunarReaction} Reaction`
-| 'Increases Moonsign'
-| 'Grouping'
-| `Buff ATK: ${string}` | `Elemental Based: ${string}` | `CRIT Increase: ${string}` 
-| `Buff ATK Speed: ${string}` | `Elemental Infusion: ${string}` | `Hexerei Able: ${string}`
+export type BonusAbilityBase = (
+  | 'Off-field Damage' 
+  | 'Shield' | 'Heal' | 'Self-heal' | 'Bond of Life' 
+  | 'Nightsouls Blessing' | `Serpent's Subtlety`  
+  | `Enables ${LunarReaction} Reaction`
+  | 'Increases Moonsign'
+  | 'Grouping'
 );
+export type BonusAbilitySimple = (
+  | BonusAbilityBase
+  | 'Buff ATK' | 'Elemental Based' | 'CRIT Increase'
+  | 'Buff ATK Speed' | 'Elemental Infusion' | 'Hexerei Able'
+);
+export type BonusAbility = (
+  BonusAbilityBase
+  | `Buff ATK: ${string}` | `Elemental Based: ${string}` | `CRIT Increase: ${string}` 
+  | `Buff ATK Speed: ${string}` | `Elemental Infusion: ${string}` | `Hexerei Able: ${string}`
+);
+
+
 export type WeaponType = 'Sword' | 'Claymore' | 'Polearm' | 'Bow' | 'Catalyst';
 export type CharacterSetName = `${'On-field' | 'Off-field' | 'Burst'}${` ${Reaction | Element}` | ''} ${'DPS' | 'Support'}`;
 

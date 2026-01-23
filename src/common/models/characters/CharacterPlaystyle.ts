@@ -9,6 +9,14 @@ export class CharacterPlaystyle {
     public onField: boolean,
     public recommendedArtifactSets: CharacterArtifactSet[],
   ) {}
+
+  public prioritizesTalents(...talentTypes: TalentType[]): boolean {
+    return talentTypes.some(talentType => this.talentPriorities.includes(talentType));
+  }
+
+  public needsStat(talentStat: TalentStatName): boolean {
+    return this.talentStats.includes(talentStat);
+  }
 }
 
 export default CharacterPlaystyle;
