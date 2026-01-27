@@ -2685,14 +2685,14 @@ export const KingsSquire = new Weapon(
     Drops.Arrowhead,
   ],
   'Crafting',
-  ({ playstyle, score, character }) => {
+  ({ playstyle, score }) => {
     if (playstyle.prioritizesTalents('Skill/Ability', 'Burst/Ult')) {
       score += MODIFIERS.TALENT;
 
       if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
     }
     if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
-    
+
     return score;
   },
 );
@@ -2890,7 +2890,7 @@ export const LostPrayerToTheSacredWinds = new Weapon(
   'Wish',
   ({ playstyle, score }) => {
     if (playstyle.onField) score += MODIFIERS.FIELD;
-    
+
     return score;
   },
 );
@@ -3103,7 +3103,7 @@ export const MasterKey = new Weapon(
 
       if (!playstyle.onField) score += MODIFIERS.FIELD;
     }
-    
+
     return score;
   },
 );
@@ -3190,7 +3190,7 @@ export const MissiveWindspear = new Weapon(
   ({ playstyle, score }) => {
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
     if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
-    
+
     return score;
   },
 );
@@ -3271,7 +3271,7 @@ export const Moonpiercer = new Weapon(
     if (character.canTrigger(
       'Burning',
       'Quicken',
-      'Aggravate',  
+      'Aggravate',
       'Spread',
       'Bloom',
       'Hyperbloom',
@@ -3470,6 +3470,15 @@ export const OathswornEye = new Weapon(
     Drops.Spectral
   ],
   'Event',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('Energy Recharge')) {
+      score += MODIFIERS.STAT;
+
+      if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+    }
+
+    return score;
+  },
 );
 
 export const OtherworldlyStory = new Weapon(
@@ -3491,6 +3500,15 @@ export const OtherworldlyStory = new Weapon(
     Drops.Mask
   ],
   'Chest',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('HP')) {
+      score += MODIFIERS.STAT;
+
+      if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.STAT;
+    }
+
+    return score;
+  },
 );
 // #endregion
 
@@ -3517,6 +3535,15 @@ export const PeakPatrolSong = new Weapon(
     Drops.Fang,
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('DEF')) {
+      score += MODIFIERS.STAT * 2; // Increases DEF and scales off DEF
+
+      if (playstyle.prioritizesTalents('Normal/Press', 'Plunging/Press')) score += MODIFIERS.TALENT;
+    }
+
+    return score;
+  },
   cs => cs.Xilonen
 );
 
@@ -3540,6 +3567,12 @@ export const PolarStar = new Weapon(
     Drops.Spectral
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Skill/Ability', 'Burst/Ult')) score += MODIFIERS.TALENT;
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+
+    return score;
+  },
   cs => cs.TartagliaChilde
 );
 
@@ -3563,12 +3596,24 @@ export const PortablePowerSaw = new Weapon(
     Drops.Gear
   ],
   'Wish',
+  ({ playstyle, score, character }) => {
+    if (character.can('Heal', 'Self-heal')) {
+      score += MODIFIERS.BONUS_ABILITY;
+
+      if (playstyle.prioritizesTalents('Skill/Ability', 'Burst/Ult')) score += MODIFIERS.TALENT;
+      if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
+      if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.STAT;
+      if (!playstyle.onField) score += MODIFIERS.FIELD;
+    }
+
+    return score;
+  },
 );
 
 export const Predator = new Weapon(
   'Predator',
   {
-    value: `Effective only on the following platform: "PlayStation™Network"\nDealing Cryo DMG to opponents increases this character's Normal and Charged Attack DMG by 10% for 6s. This effect can have a maximum of 2 stacks. Additionally, when Aloy equips Predator, ATK is increased by 66.`,
+    value: `Effective only on the following platform: "PlayStation™ Network"\nDealing Cryo DMG to opponents increases this character's Normal and Charged Attack DMG by 10% for 6s. This effect can have a maximum of 2 stacks. Additionally, when Aloy equips Predator, ATK is increased by 66.`,
     refinements: []
   },
   'Bow',
@@ -3582,6 +3627,21 @@ export const Predator = new Weapon(
     Drops.Arrowhead
   ],
   'Event',
+  ({ playstyle, score, character }) => {
+    if (character.canTrigger('Cryo Reaction')) {
+      score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+
+      if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) score += MODIFIERS.TALENT;
+    }
+    if (character.name === 'Aloy') {
+      score += MODIFIERS.BONUS_ABILITY;
+
+      if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    }
+
+    return score;
+  },
+  cs => cs.Aloy,
 );
 
 export const PrimordialJadeCutter = new Weapon(
@@ -3604,6 +3664,11 @@ export const PrimordialJadeCutter = new Weapon(
     Drops.TreasureHoarderInsignia
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('HP')) score += MODIFIERS.STAT * 2; // Increases HP and scales off HP      
+
+    return score;
+  },
 );
 
 export const PrimordialJadeWingedSpear = new Weapon(
@@ -3626,6 +3691,11 @@ export const PrimordialJadeWingedSpear = new Weapon(
     Drops.FatuiInsignia
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+
+    return score;
+  },
   cs => cs.Xiao,
 );
 
@@ -3649,6 +3719,17 @@ export const ProspectorsDrill = new Weapon(
     Drops.Gear
   ],
   'Wish',
+  ({ playstyle, score, character }) => {
+    if (character.can('Heal', 'Self-heal')) {
+      score += MODIFIERS.BONUS_ABILITY;
+
+      if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+      if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
+      if (!playstyle.onField) score += MODIFIERS.FIELD;
+    }
+
+    return score;
+  },
 );
 
 export const ProspectorsShovel = new Weapon(
@@ -3671,7 +3752,13 @@ export const ProspectorsShovel = new Weapon(
     Drops.Mistshroud,
     Drops.DriveShaft
   ],
-  'Crafting'
+  'Crafting',
+  ({ score, character }) => {
+    if (character.canTrigger('Electro-Charged', 'Lunar-Charged')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    if (character.can('Increases Moonsign')) score += MODIFIERS.BONUS_ABILITY;
+
+    return score;
+  },
 );
 
 export const PrototypeAmber = new Weapon(
@@ -3694,6 +3781,12 @@ export const PrototypeAmber = new Weapon(
     Drops.Arrowhead
   ],
   'Crafting',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.STAT;
+    if (playstyle.needsStat('HP')) score += MODIFIERS.STAT;
+
+    return score;
+  },
 );
 
 export const PrototypeArchaic = new Weapon(
@@ -3715,6 +3808,12 @@ export const PrototypeArchaic = new Weapon(
     Drops.Mask,
   ],
   'Crafting',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) score += MODIFIERS.TALENT;
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+
+    return score;
+  },
 );
 
 export const PrototypeCrescent = new Weapon(
@@ -3736,6 +3835,16 @@ export const PrototypeCrescent = new Weapon(
     Drops.TreasureHoarderInsignia
   ],
   'Crafting',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Charged/Hold')) {
+      score += MODIFIERS.TALENT;
+
+      if (playstyle.onField) score += MODIFIERS.FIELD; // SPD increase, you wanna be on field
+    }
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+
+    return score;
+  },
 );
 
 export const PrototypeRancour = new Weapon(
@@ -3757,6 +3866,13 @@ export const PrototypeRancour = new Weapon(
     Drops.FatuiInsignia
   ],
   'Crafting',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (playstyle.needsStat('DEF')) score += MODIFIERS.STAT;
+    if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) score += MODIFIERS.TALENT;
+
+    return score;
+  }
 );
 
 export const PrototypeStarglitter = new Weapon(
@@ -3778,6 +3894,11 @@ export const PrototypeStarglitter = new Weapon(
     Drops.Mask
   ],
   'Crafting',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) score += MODIFIERS.TALENT;
+
+    return score;
+  },
 );
 // #endregion
 
@@ -3803,7 +3924,14 @@ export const RainbowSerpentsRainBow = new Weapon(
     Drops.AbyssalLeaf,
     Drops.Warrant,
   ],
-  'Wish'
+  'Wish',
+  ({ playstyle, score, character }) => {
+    if (character.can('Off-field Damage') && playstyle.needsStat('ATK')) {
+      score += MODIFIERS.BONUS_ABILITY + MODIFIERS.STAT;
+    }
+
+    return score;
+  },
 );
 
 export const Rainslasher = new Weapon(
@@ -3825,6 +3953,11 @@ export const Rainslasher = new Weapon(
     Drops.Scroll
   ],
   'Wish',
+  ({ score, character }) => {
+    if (character.canTrigger('Hydro Reaction', 'Electro Reaction')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+
+    return score;
+  }
 );
 
 export const RangeGauge = new Weapon(
@@ -3847,6 +3980,17 @@ export const RangeGauge = new Weapon(
     Drops.FontemerAberrantPearl
   ],
   'Wish',
+  ({ playstyle, score, character }) => {
+    if (character.can('Heal', 'Self-heal')) {
+      score += MODIFIERS.BONUS_ABILITY;
+
+      if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+      if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
+      if (!playstyle.onField) score += MODIFIERS.FIELD;
+    }
+
+    return score;
+  },
 );
 
 export const RavenBow = new Weapon(
@@ -3868,6 +4012,11 @@ export const RavenBow = new Weapon(
     Drops.Arrowhead
   ],
   'Wish',
+  ({ score, character }) => {
+    if (character.canTrigger('Hydro Reaction', 'Pyro Reaction')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+
+    return score;
+  },
 );
 
 export const RecurveBow = new Weapon(
@@ -3889,6 +4038,11 @@ export const RecurveBow = new Weapon(
     Drops.Scroll
   ],
   'Chest',
+  ({ playstyle, score }) => {
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  },
 );
 
 export const RedhornStonethresher = new Weapon(
@@ -3911,6 +4065,12 @@ export const RedhornStonethresher = new Weapon(
     Drops.Handguard
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('DEF')) score += MODIFIERS.STAT * 2; // Increases DEF and scales off DEF
+    if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) score += MODIFIERS.TALENT;
+
+    return score;
+  },
   cs => cs.AratakiItto
 );
 
@@ -3935,6 +4095,16 @@ export const ReliquaryOfTruth = new Weapon(
     Drops.FungalSpores,
   ],
   'Wish',
+  ({ playstyle, score, character }) => {
+    if (playstyle.prioritizesTalents('Skill/Ability')) {
+      score += MODIFIERS.TALENT;
+
+      if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
+      if (character.canTrigger('Lunar-Bloom')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    }
+
+    return score;
+  },
   cs => cs.Nefer
 );
 
@@ -3957,6 +4127,16 @@ export const RightfulReward = new Weapon(
     Drops.Gear
   ],
   'Crafting',
+  ({ playstyle, score, character }) => {
+    if (character.can('Heal', 'Self-heal')) {
+      score += MODIFIERS.BONUS_ABILITY;
+
+      if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.STAT;
+      if (!playstyle.onField) score += MODIFIERS.FIELD;
+    }
+
+    return score;
+  },
 );
 
 export const RingOfYaxche = new Weapon(
@@ -3979,6 +4159,16 @@ export const RingOfYaxche = new Weapon(
     Drops.Mask,
   ],
   'Crafting',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Skill/Ability')) {
+      score += MODIFIERS.TALENT;
+
+      if (playstyle.needsStat('HP')) score += MODIFIERS.STAT;
+      if (playstyle.prioritizesTalents('Normal/Press')) score += MODIFIERS.TALENT;
+    }
+
+    return score;
+  },
 );
 
 export const RoyalBow = new Weapon(
@@ -4000,6 +4190,11 @@ export const RoyalBow = new Weapon(
     Drops.Slime
   ],
   'Starglitter Exchange',
+  ({ playstyle, score }) => {
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  },
 );
 
 export const RoyalGreatsword = new Weapon(
@@ -4021,6 +4216,11 @@ export const RoyalGreatsword = new Weapon(
     Drops.Slime
   ],
   'Starglitter Exchange',
+  ({ playstyle, score }) => {
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  },
 );
 
 export const RoyalGrimoire = new Weapon(
@@ -4042,6 +4242,11 @@ export const RoyalGrimoire = new Weapon(
     Drops.FatuiInsignia
   ],
   'Starglitter Exchange',
+  ({ playstyle, score }) => {
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  },
 );
 
 export const RoyalLongsword = new Weapon(
@@ -4063,6 +4268,11 @@ export const RoyalLongsword = new Weapon(
     Drops.Arrowhead
   ],
   'Starglitter Exchange',
+  ({ playstyle, score }) => {
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  },
 );
 
 export const RoyalSpear = new Weapon(
@@ -4084,6 +4294,11 @@ export const RoyalSpear = new Weapon(
     Drops.FatuiInsignia
   ],
   'Starglitter Exchange',
+  ({ playstyle, score }) => {
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  },
 );
 
 export const Rust = new Weapon(
@@ -4106,6 +4321,12 @@ export const Rust = new Weapon(
     Drops.Mask
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Normal/Press')) score += MODIFIERS.TALENT;
+    if (playstyle.prioritizesTalents('Charged/Hold')) score -= MODIFIERS.TALENT;
+
+    return score;
+  },
 );
 // #endregion
 
@@ -4129,7 +4350,18 @@ export const SacrificersStaff = new Weapon(
     Drops.Mistshroud,
     Drops.DriveShaft
   ],
-  'Wish'
+  'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Skill/Ability')) {
+      score += MODIFIERS.TALENT;
+
+      if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+      if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.STAT;
+      if (!playstyle.onField) score += MODIFIERS.FIELD;
+    }
+
+    return score;
+  },
 );
 
 export const SacrificialBow = new Weapon(
@@ -4152,6 +4384,12 @@ export const SacrificialBow = new Weapon(
     Drops.Slime
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+    if (!playstyle.onField) score += MODIFIERS.FIELD; // Biased because this weapon is goated for off-field skill usage
+
+    return score;
+  },
 );
 
 export const SacrificialFragments = new Weapon(
@@ -4174,6 +4412,12 @@ export const SacrificialFragments = new Weapon(
     Drops.TreasureHoarderInsignia
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+    if (!playstyle.onField) score += MODIFIERS.FIELD; // Biased because this weapon is goated for off-field skill usage
+
+    return score;
+  },
 );
 
 export const SacrificialGreatsword = new Weapon(
@@ -4196,6 +4440,12 @@ export const SacrificialGreatsword = new Weapon(
     Drops.Arrowhead
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+    if (!playstyle.onField) score += MODIFIERS.FIELD; // Biased because this weapon is goated for off-field skill usage 
+
+    return score;
+  },
 );
 
 export const SacrificialJade = new Weapon(
@@ -4218,6 +4468,13 @@ export const SacrificialJade = new Weapon(
     Drops.Scroll
   ],
   'Battle Pass',
+  ({ playstyle, score }) => {
+    if (!playstyle.onField) score += MODIFIERS.FIELD;
+    if (playstyle.needsStat('HP')) score += MODIFIERS.STAT * 2; // Extreme amount of HP increase
+    if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
+
+    return score;
+  },
 );
 
 export const SacrificialSword = new Weapon(
@@ -4240,6 +4497,12 @@ export const SacrificialSword = new Weapon(
     Drops.Scroll
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+    if (!playstyle.onField) score += MODIFIERS.FIELD; // Biased because this weapon is goated for off-field skill usage
+
+    return score;
+  },
 );
 
 export const SapwoodBlade = new Weapon(
@@ -4261,6 +4524,24 @@ export const SapwoodBlade = new Weapon(
     Drops.EremiteDrop,
   ],
   'Crafting',
+  ({ playstyle, score, character }) => {
+    if (character.canTrigger(
+      'Burning',
+      'Quicken',
+      'Aggravate',
+      'Spread',
+      'Bloom',
+      'Hyperbloom',
+      'Burgeon',
+    )) {
+      score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+
+      if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
+      if (!playstyle.onField) score += MODIFIERS.FIELD;
+    }
+
+    return score;
+  },
 );
 
 export const ScionOfTheBlazingSun = new Weapon(
@@ -4283,6 +4564,16 @@ export const ScionOfTheBlazingSun = new Weapon(
     Drops.FungalSpores
   ],
   'Battle Pass',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Charged/Hold')) {
+      score += MODIFIERS.TALENT;
+
+      if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+      if (!playstyle.onField) score += MODIFIERS.FIELD; // Occurance rare, might as well be off-field
+    }
+
+    return score;
+  },
 );
 
 export const SequenceOfSolitude = new Weapon(
@@ -4303,7 +4594,13 @@ export const SequenceOfSolitude = new Weapon(
     Drops.WeaselShell,
     Drops.Gear
   ],
-  'Event'
+  'Event',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('HP')) score += MODIFIERS.STAT;
+    if (!playstyle.onField) score += MODIFIERS.FIELD; // Occurance rare, might as well be off-field
+
+    return score;
+  },
 );
 
 export const SerenitysCall = new Weapon(
@@ -4325,7 +4622,19 @@ export const SerenitysCall = new Weapon(
     Drops.FrostnightsX,
     Drops.Warrant
   ],
-  'Crafting'
+  'Crafting',
+  ({ playstyle, score, character }) => {
+    if (playstyle.needsStat('HP')) score += MODIFIERS.STAT;
+    if (character.can('Increases Moonsign')) {
+      score += MODIFIERS.BONUS_ABILITY;
+
+      if (playstyle.needsStat('HP')) score += MODIFIERS.STAT;
+    }
+
+    if (!playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  },
 );
 
 export const SerpentSpine = new Weapon(
@@ -4347,7 +4656,12 @@ export const SerpentSpine = new Weapon(
     Drops.BoneShard,
     Drops.Nectar
   ],
-  'Battle Pass'
+  'Battle Pass',
+  ({ playstyle, score }) => {
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  },
 );
 
 export const SharpshootersOath = new Weapon(
@@ -4369,6 +4683,7 @@ export const SharpshootersOath = new Weapon(
     Drops.Slime
   ],
   'Wish',
+  ({ score }) => score,
 );
 
 export const SilvershowerHeartstrings = new Weapon(
@@ -4391,6 +4706,19 @@ export const SilvershowerHeartstrings = new Weapon(
     Drops.FontemerAberrantPearl
   ],
   'Wish',
+  ({ playstyle, score, character }) => {
+    if (playstyle.needsStat('HP')) score += MODIFIERS.STAT;
+    const nonStackScoreValue = Number(`${score}`);
+    if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+    if (character.can('Bond of Life')) score += MODIFIERS.BONUS_ABILITY;
+    if (character.can('Heal', 'Self-heal')) score += MODIFIERS.BONUS_ABILITY;
+
+    if (score > nonStackScoreValue && !playstyle.onField) {
+      score += MODIFIERS.FIELD;
+    }
+
+    return score;
+  },
   cs => cs.Sigewinne
 );
 
@@ -4413,6 +4741,12 @@ export const SkyriderGreatsword = new Weapon(
     Drops.TreasureHoarderInsignia
   ],
   'Chest',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) score += MODIFIERS.TALENT;
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+
+    return score;
+  },
 );
 
 export const SkyriderSword = new Weapon(
@@ -4434,6 +4768,16 @@ export const SkyriderSword = new Weapon(
     Drops.FatuiInsignia
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Burst/Ult')) {
+      score += MODIFIERS.TALENT;
+
+      if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+      if (playstyle.onField) score += MODIFIERS.FIELD;
+    }
+
+    return score;
+  },
 );
 
 export const SkywardAtlas = new Weapon(
@@ -4456,6 +4800,13 @@ export const SkywardAtlas = new Weapon(
     Drops.Arrowhead
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) score += MODIFIERS.TALENT;
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  },
 );
 
 export const SkywardBlade = new Weapon(
@@ -4478,6 +4829,12 @@ export const SkywardBlade = new Weapon(
     Drops.Slime
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) score += MODIFIERS.TALENT;
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  },
 );
 
 export const SkywardHarp = new Weapon(
@@ -4501,6 +4858,11 @@ export const SkywardHarp = new Weapon(
     Drops.Arrowhead
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) score += MODIFIERS.TALENT;
+
+    return score;
+  },
 );
 
 export const SkywardPride = new Weapon(
@@ -4523,6 +4885,12 @@ export const SkywardPride = new Weapon(
     Drops.Slime
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) score += MODIFIERS.TALENT;
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  },
 );
 
 export const SkywardSpine = new Weapon(
@@ -4547,7 +4915,13 @@ export const SkywardSpine = new Weapon(
     Drops.Scroll
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) score += MODIFIERS.TALENT;
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (playstyle.onField) score += MODIFIERS.FIELD;
 
+    return score;
+  },
 );
 
 export const Slingshot = new Weapon(
@@ -4569,6 +4943,12 @@ export const Slingshot = new Weapon(
     Drops.Mask
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) score += MODIFIERS.TALENT;
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  },
 );
 
 export const SnareHook = new Weapon(
@@ -4590,7 +4970,18 @@ export const SnareHook = new Weapon(
     Drops.Mistshroud,
     Drops.Arrowhead
   ],
-  'Crafting'
+  'Crafting',
+  ({ playstyle, score, character }) => {
+    if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
+    if (character.can('Increases Moonsign')) {
+      score += MODIFIERS.BONUS_ABILITY;
+
+      if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
+      if (!playstyle.onField) score += MODIFIERS.FIELD;
+    }
+
+    return score;
+  },
 );
 
 export const SnowTombedStarsilver = new Weapon(
@@ -4614,6 +5005,14 @@ export const SnowTombedStarsilver = new Weapon(
     Drops.Slime
   ],
   'Crafting',
+  ({ playstyle, score, character }) => {
+    if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) score += MODIFIERS.TALENT;
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (character.canTrigger('Cryo Reaction')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  },
 );
 
 export const SolarPearl = new Weapon(
@@ -4636,6 +5035,13 @@ export const SolarPearl = new Weapon(
     Drops.Nectar
   ],
   'Battle Pass',
+  ({ playstyle, score, character }) => {
+    if (playstyle.prioritizesTalents('Skill/Ability', 'Burst/Ult')) score += MODIFIERS.TALENT;
+    if (playstyle.prioritizesTalents('Normal/Press')) score += MODIFIERS.TALENT;
+    if (character.can('Off-field Damage')) score += MODIFIERS.BONUS_ABILITY;
+
+    return score;
+  },
 );
 
 export const SongOfBrokenPines = new Weapon(
@@ -4659,6 +5065,17 @@ export const SongOfBrokenPines = new Weapon(
     Drops.Mask
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) {
+      score += MODIFIERS.TALENT;
+
+      if (playstyle.onField) score += MODIFIERS.FIELD;
+      if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    }
+    
+    return score;
+  },
   cs => cs.Eula,
 );
 
@@ -4681,6 +5098,11 @@ export const SongOfStillness = new Weapon(
     Drops.Arrowhead,
   ],
   'Crafting',
+  ({ playstyle, score }) => {
+    if (!playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  },
 );
 
 export const SplendorOfTranquilWaters = new Weapon(
@@ -4703,6 +5125,19 @@ export const SplendorOfTranquilWaters = new Weapon(
     Drops.FontemerAberrantPearl
   ],
   'Wish',
+  ({ playstyle, score, character }) => {
+    if (playstyle.needsStat('HP')) score += MODIFIERS.STAT;
+    if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+    if (character.can('Off-field Damage')) score += MODIFIERS.BONUS_ABILITY;
+    if (character.can('Heal')) {
+      score += MODIFIERS.BONUS_ABILITY;
+
+      if (playstyle.needsStat('HP')) score += MODIFIERS.STAT;
+    }
+    if (!playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  },
   cs => cs.Furina
 );
 
@@ -4727,6 +5162,12 @@ export const StaffOfHoma = new Weapon(
     Drops.Slime
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('HP')) score += MODIFIERS.STAT;
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+
+    return score;
+  },
   cs => cs.HuTao
 );
 
@@ -4750,6 +5191,15 @@ export const StaffOfTheScarletSands = new Weapon(
     Drops.FungalSpores
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('ATK')) {
+      score += MODIFIERS.STAT;
+
+      if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
+    }
+
+    return score;
+  },
   cs => cs.Cyno
 );
 
@@ -4773,6 +5223,19 @@ export const StarcallersWatch = new Weapon(
     Drops.Whistle
   ],
   'Wish',
+  ({ playstyle, score, character }) => {
+    if (playstyle.needsStat('Elemental Mastery')) {
+      score += MODIFIERS.STAT;
+
+      if (character.can('Shield')) {
+        score += MODIFIERS.BONUS_ABILITY;
+
+        if (!playstyle.onField) score += MODIFIERS.FIELD;
+      }
+    }
+
+    return score;
+  },
   cs => cs.Citlali
 );
 
@@ -4795,6 +5258,16 @@ export const SturdyBone = new Weapon(
     Drops.Whistle
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.onField) {
+      score += MODIFIERS.FIELD;
+
+      if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+      if (playstyle.prioritizesTalents('Normal/Press')) score += MODIFIERS.TALENT;
+    }
+
+    return score;
+  },
 );
 
 export const SummitShaper = new Weapon(
@@ -4817,6 +5290,15 @@ export const SummitShaper = new Weapon(
     Drops.Mask
   ],
   'Wish',
+  ({ playstyle, score, character }) => {
+    if (character.can('Shield')) {
+      score += MODIFIERS.BONUS_ABILITY;
+
+      if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    }
+
+    return score;
+  },
   cs => cs.Qiqi
 );
 
@@ -4841,6 +5323,18 @@ export const SunnyMorningSleepIn = new Weapon(
     Drops.Spectral
   ],
   'Wish',
+  ({ playstyle, score, character }) => {
+    if (playstyle.needsStat('Elemental Mastery')) {
+      score += MODIFIERS.STAT;
+
+      if (character.canTrigger('Swirl')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+      if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+      if (playstyle.prioritizesTalents('Burst/Ult')) score += MODIFIERS.TALENT;
+    }
+
+
+    return score;
+  },
   cs => cs.YumemizukiMizuki
 );
 
@@ -4864,6 +5358,16 @@ export const SurfsUp = new Weapon(
     Drops.Fang
   ],
   'Wish',
+  ({ playstyle, score, character }) => {
+    if (playstyle.needsStat('HP')) score += MODIFIERS.STAT;
+    if (playstyle.prioritizesTalents('Normal/Press')) {
+      score += MODIFIERS.TALENT;
+
+      if (character.canTrigger('Vaporize')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    }
+
+    return score;
+  },
   cs => cs.Mualani
 );
 
@@ -4884,6 +5388,13 @@ export const SwordOfDescension = new Weapon(
     Drops.TreasureHoarderInsignia
   ],
   'Event',
+  ({ playstyle, score, character }) => {
+    if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) score += MODIFIERS.TALENT;
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (character.name.includes('Traveler')) score += MODIFIERS.BONUS_ABILITY;
+
+    return score;
+  },
 );
 
 export const SymphonistOfScents = new Weapon(
@@ -4907,6 +5418,22 @@ export const SymphonistOfScents = new Weapon(
     Drops.FontemerAberrantPearl
   ],
   'Wish',
+  ({ playstyle, score, character }) => {
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (!playstyle.onField) {
+      score += MODIFIERS.FIELD;
+
+      if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    }
+    if (character.can('Heal')) {
+      score += MODIFIERS.BONUS_ABILITY;
+
+      if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+      if (!playstyle.onField) score += MODIFIERS.FIELD;
+    }
+
+    return score;
+  },
   cs => cs.Escoffier
 );
 
@@ -4929,6 +5456,12 @@ export const SwordOfNarzissenkreuz = new Weapon(
     Drops.FontemerAberrantPearl
   ],
   'Quest',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (!playstyle.onField) score += MODIFIERS.FIELD; // Occurs rarely
+
+    return score;
+  },
 );
 // #endregion
 
@@ -4953,6 +5486,12 @@ export const TalkingStick = new Weapon(
     Drops.Slime,
   ],
   'Battle Pass',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (!playstyle.onField) score += MODIFIERS.FIELD; // Occurs rarely
+
+    return score;
+  },
 );
 
 export const TamayurateiNoOhanashi = new Weapon(
@@ -4974,6 +5513,13 @@ export const TamayurateiNoOhanashi = new Weapon(
     Drops.Handguard,
   ],
   'Event',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  },
 );
 
 export const TheAlleyFlash = new Weapon(
@@ -4994,7 +5540,8 @@ export const TheAlleyFlash = new Weapon(
     Drops.Horn,
     Drops.Scroll
   ],
-  'Wish'
+  'Wish',
+  ({ score }) => score,
 );
 
 export const TheBell = new Weapon(
@@ -5017,6 +5564,12 @@ export const TheBell = new Weapon(
     Drops.Nectar
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('HP')) score += MODIFIERS.STAT;
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  },
 );
 
 export const TheBlackSword = new Weapon(
@@ -5039,6 +5592,13 @@ export const TheBlackSword = new Weapon(
     Drops.Slime
   ],
   'Battle Pass',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) score += MODIFIERS.TALENT;
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  },
 );
 
 export const TheDaybreakChronicles = new Weapon(
@@ -5064,6 +5624,18 @@ export const TheDaybreakChronicles = new Weapon(
     Drops.TreasureHoarderInsignia
   ],
   'Wish',
+  ({ playstyle, score, character }) => {
+    if (!playstyle.onField) {
+      score += MODIFIERS.FIELD;
+
+      if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+      if (playstyle.prioritizesTalents('Burst/Ult')) score += MODIFIERS.TALENT;
+      if (playstyle.prioritizesTalents('Normal/Press')) score += MODIFIERS.TALENT;
+      if (character.can('Hexerei Able')) score += MODIFIERS.BONUS_ABILITY + (MODIFIERS.TALENT * 3)
+    }
+
+    return score;
+  },
   cs => cs.Venti,
 );
 
@@ -5087,6 +5659,15 @@ export const TheDockhandsAssistant = new Weapon(
     Drops.FontemerAberrantPearl
   ],
   'Wish',
+  ({ playstyle, score, character }) => {
+    if (character.can('Heal', 'Self-heal')) {
+      if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
+      if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.STAT;
+      if (!playstyle.onField) score += MODIFIERS.FIELD;
+    }
+
+    return score;
+  },
 );
 
 export const TheFirstGreatMagic = new Weapon(
@@ -5110,6 +5691,13 @@ export const TheFirstGreatMagic = new Weapon(
     Drops.FontemerAberrantPearl
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Charged/Hold')) score += MODIFIERS.TALENT;
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+    
+    return score;
+  },
   cs => cs.Lyney
 );
 
@@ -5132,6 +5720,15 @@ export const TheFlute = new Weapon(
     Drops.Slime
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) {
+      score += MODIFIERS.TALENT;
+
+      if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    }
+
+    return score;
+  },
 );
 
 export const TheStringless = new Weapon(
@@ -5153,6 +5750,13 @@ export const TheStringless = new Weapon(
     Drops.Arrowhead
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Skill/Ability', 'Burst/Ult')) {
+      score += MODIFIERS.TALENT * 2; // big buff
+    }
+
+    return score;
+  },
 );
 
 export const TheUnforged = new Weapon(
@@ -5175,6 +5779,17 @@ export const TheUnforged = new Weapon(
     Drops.TreasureHoarderInsignia
   ],
   'Wish',
+  ({ playstyle, score, character }) => {
+    if (character.can('Shield')) {
+      score += MODIFIERS.BONUS_ABILITY;
+
+      if (playstyle.onField) score += MODIFIERS.FIELD;
+      if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    }
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+
+    return score;
+  },
   cs => cs.Xinyan
 );
 
@@ -5198,6 +5813,15 @@ export const TheViridescentHunt = new Weapon(
     Drops.Arrowhead
   ],
   'Battle Pass',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) {
+      score += MODIFIERS.TALENT;
+
+      if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    }
+    
+    return score;
+  },
 );
 
 export const TheWidsith = new Weapon(
@@ -5221,6 +5845,16 @@ export const TheWidsith = new Weapon(
     Drops.Mask
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.onField) {
+      score += MODIFIERS.FIELD;
+
+      if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+      if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
+    }
+    
+    return score;
+  }
 );
 
 export const ThrillingTalesOfDragonSlayers = new Weapon(
@@ -5242,6 +5876,11 @@ export const ThrillingTalesOfDragonSlayers = new Weapon(
     Drops.Scroll
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (!playstyle.onField) score += MODIFIERS.FIELD;
+    
+    return score;
+  }
 );
 
 export const ThunderingPulse = new Weapon(
@@ -5264,6 +5903,13 @@ export const ThunderingPulse = new Weapon(
     Drops.Arrowhead
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (playstyle.prioritizesTalents('Normal/Press')) score += MODIFIERS.TALENT;
+    if (playstyle.needsStat('Energy Recharge')) score -= MODIFIERS.STAT;
+    
+    return score;
+  },
   cs => cs.Yoimiya
 );
 
@@ -5286,6 +5932,12 @@ export const TidalShadow = new Weapon(
     Drops.Gear
   ],
   'Crafting',
+  ({ playstyle, score, character }) => {
+    if (character.can('Self-heal')) score += MODIFIERS.BONUS_ABILITY;
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    
+    return score;
+  }
 );
 
 export const TomeOfTheEternalFlow = new Weapon(
@@ -5309,6 +5961,13 @@ export const TomeOfTheEternalFlow = new Weapon(
     Drops.Gear
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('HP')) score += MODIFIERS.STAT;
+    if (playstyle.prioritizesTalents('Charged/Hold')) score += MODIFIERS.TALENT;
+    if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.STAT;
+
+    return score;
+  },
   cs => cs.Neuvillette
 );
 
@@ -5331,6 +5990,11 @@ export const ToukabouShigure = new Weapon(
     Drops.Handguard
   ],
   'Event',
+  ({ playstyle, score }) => {
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  },
 );
 
 export const TravelersHandySword = new Weapon(
@@ -5352,6 +6016,12 @@ export const TravelersHandySword = new Weapon(
     Drops.Scroll
   ],
   'Chest',
+  ({ playstyle, score }) => {
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+    if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.STAT;
+
+    return score;
+  },
 );
 
 export const TulaytullahsRemembrance = new Weapon(
@@ -5376,6 +6046,12 @@ export const TulaytullahsRemembrance = new Weapon(
     Drops.FungalSpores
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.onField) score += MODIFIERS.FIELD; // SPD increase
+    if (playstyle.prioritizesTalents('Normal/Press')) score += MODIFIERS.TALENT * 2; // double buff
+    
+    return score;
+  },
   cs => cs.WandererScaramouche
 );
 
@@ -5398,6 +6074,12 @@ export const TwinNephrite = new Weapon(
     Drops.FatuiInsignia
   ],
   'Chest',
+  ({ playstyle, score }) => {
+    if (playstyle.onField) score += MODIFIERS.FIELD; // SPD increase
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    
+    return score;
+  },
 );
 // #endregion
 
@@ -5423,6 +6105,13 @@ export const UrakuMisugiri = new Weapon(
     Drops.Handguard
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Normal/Press')) score += MODIFIERS.TALENT;
+    if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+    if (playstyle.needsStat('DEF')) score += MODIFIERS.STAT;
+
+    return score;
+  },
   cs => cs.Chiori
 );
 // #endregion
@@ -5448,6 +6137,16 @@ export const Verdict = new Weapon(
     Drops.Gear
   ],
   'Wish',
+  ({ playstyle, score, character }) => {
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (character.canTrigger('Crystallize')) {
+      score += MODIFIERS.BONUS_ABILITY;
+
+      if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+    }
+
+    return score;
+  },
   cs => cs.Navia
 );
 
@@ -5472,6 +6171,12 @@ export const VividNotions = new Weapon(
     Drops.Fang
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (playstyle.prioritizesTalents('Plunging/Press')) score += MODIFIERS.TALENT * 2; // double buff
+    
+    return score;
+  },
   cs => cs.Varesa
 );
 
@@ -5495,6 +6200,16 @@ export const VortexVanquisher = new Weapon(
     Drops.TreasureHoarderInsignia
   ],
   'Wish',
+  ({ playstyle, score, character }) => {
+    if (character.can('Shield')) {
+      score += MODIFIERS.BONUS_ABILITY;
+
+      if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    }
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    
+    return score;
+  },
   cs => cs.Zhongli
 );
 // #endregion
@@ -5519,6 +6234,13 @@ export const WanderingEvenstar = new Weapon(
     Drops.FungalSpores
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (!playstyle.onField) score += MODIFIERS.FIELD;
+    
+    return score;
+  },
 );
 
 export const WavebreakersFin = new Weapon(
@@ -5541,6 +6263,11 @@ export const WavebreakersFin = new Weapon(
     Drops.Handguard
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Burst/Ult')) score += MODIFIERS.TALENT;
+
+    return score;
+  },
 );
 
 export const WaveridingWhirl = new Weapon(
@@ -5564,6 +6291,11 @@ export const WaveridingWhirl = new Weapon(
     Drops.Fang
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('HP')) score += MODIFIERS.STAT * 2; // big buff
+    
+    return score;
+  },
 );
 
 export const WhiteIronGreatsword = new Weapon(
@@ -5585,6 +6317,11 @@ export const WhiteIronGreatsword = new Weapon(
     Drops.Slime
   ],
   'Chest',
+  ({ playstyle, score }) => {
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  },
 );
 
 export const WhiteTassel = new Weapon(
@@ -5606,6 +6343,11 @@ export const WhiteTassel = new Weapon(
     Drops.FatuiInsignia
   ],
   'Chest',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Normal/Press')) score += MODIFIERS.TALENT;
+
+    return score;
+  },
 );
 
 export const Whiteblind = new Weapon(
@@ -5627,6 +6369,13 @@ export const Whiteblind = new Weapon(
     Drops.TreasureHoarderInsignia
   ],
   'Crafting',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (playstyle.needsStat('DEF')) score += MODIFIERS.STAT;
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+    
+    return score;
+  },
 );
 
 export const WindblumeOde = new Weapon(
@@ -5648,6 +6397,12 @@ export const WindblumeOde = new Weapon(
     Drops.Nectar
   ],
   'Event',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+
+    return score;
+  },
 );
 
 export const WineAndSong = new Weapon(
@@ -5670,6 +6425,13 @@ export const WineAndSong = new Weapon(
     Drops.TreasureHoarderInsignia
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Normal/Press')) score += MODIFIERS.TALENT;
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+    
+    return score;
+  },
 );
 
 export const WolfFang = new Weapon(
@@ -5683,7 +6445,7 @@ export const WolfFang = new Weapon(
     ]
   },
   'Sword',
-  Rarity.Rare,
+  Rarity.Rare, // TODO: Epic?
   510,
   'Crit Rate',
   27.6,
@@ -5693,6 +6455,12 @@ export const WolfFang = new Weapon(
     Drops.Mask
   ],
   'Battle Pass',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT * 2; // CRIT increase
+    if (playstyle.prioritizesTalents('Burst/Ult')) score += MODIFIERS.TALENT * 2; // CRIT increase
+    
+    return score;
+  },
 );
 
 export const WolfsGravestone = new Weapon(
@@ -5715,6 +6483,11 @@ export const WolfsGravestone = new Weapon(
     Drops.Scroll
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    
+    return score;
+  },
   cs => cs.Diluc
 );
 // #endregion
@@ -5739,6 +6512,12 @@ export const XiphosMoonlight = new Weapon(
     Drops.EremiteDrop
   ],
   'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.STAT;
+    if (!playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  }
 );
 // #endregion
 

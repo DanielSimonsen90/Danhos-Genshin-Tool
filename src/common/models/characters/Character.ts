@@ -22,11 +22,17 @@ export class Character<TElement extends Element = Element> {
     this.bonusAbilities = this.bonusAbilities.sort();
   }
   
+  /** @depricated - use playstyle.needsStat('HP') */
   public needsHP(): boolean { return this.playstyle?.talentStats.includes('HP') ?? false; }
+  /** @depricated - use playstyle.needsStat('ATK') */
   public needsATK(): boolean { return this.playstyle?.talentStats.includes('ATK') ?? false; }
+  /** @depricated - use playstyle.needsStat('DEF') */
   public needsDEF(): boolean { return this.playstyle?.talentStats.includes('DEF') ?? false; }
+  /** @depricated - use playstyle.needsStat('Energy Recharge') */
   public needsER(): boolean { return this.playstyle?.talentStats.includes('Energy Recharge') ?? false; }
+  /** @depricated - use playstyle.needsStat('Elemental Mastery') */
   public needsEM(): boolean { return this.playstyle?.talentStats.includes('Elemental Mastery') ?? false; }
+  /** @depricated - use playstyle.needsStat('Physical DMG Bonus') */
   public needsPhysicalDMG(): boolean { return this.playstyle?.talentStats.includes('Physical DMG Bonus') ?? false; }
   
   public canHeal(): boolean { return this.bonusAbilities.includes('Heal'); }
