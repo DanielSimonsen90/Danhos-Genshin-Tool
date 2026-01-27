@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { ArtifactSet } from '@/common/models';
 import { CharacterCard, CharacterSet } from '@/components/domain/models/Character';
-import { SearchResultItem } from '@/services/SearchService';
+import { SearchResultItem } from '@/services/SearchService/artifact';
 import { useDataStore } from '@/stores';
 
 type Props = {

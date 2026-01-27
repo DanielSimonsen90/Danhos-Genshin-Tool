@@ -8,7 +8,7 @@ import { SearchFormData } from "@/common/types";
 import { ArtifactImage } from "@/components/common/media/Images";
 import { ArtifactDetails } from "@/components/domain/models/Artifacts";
 
-import { SearchResult, SearchService } from "@/services";
+import { SearchResult, ArtifactSearchService } from "@/services";
 
 import { useCacheStore, useDataStore } from "@/stores";
 import type { CacheStore } from "@/stores/CacheStore/CacheStoreTypes";
@@ -76,7 +76,7 @@ function getSearchResultsFromQuery(query: string, CacheStore: CacheStore, DataSt
   if (!formData) return { formData, results: null };
 
   const { artifactSetName } = formData;
-  const results = SearchService.search({
+  const results = ArtifactSearchService.search({
     ...formData,
     artifactSetName: pascalCaseFromSnakeCase(artifactSetName),
   }, CacheStore, DataStore);

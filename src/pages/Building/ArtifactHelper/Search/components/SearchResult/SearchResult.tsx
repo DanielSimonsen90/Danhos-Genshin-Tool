@@ -1,6 +1,6 @@
 import { classNames } from '@/common/functions/strings';
 import { AppSettings, useSettings, useSettingsStore } from '@/stores/SettingsStore';
-import { SearchResult } from '@/services/SearchService';
+import { SearchResult } from '@/services/SearchService/artifact';
 import TabBar from '@/components/common/TabBar';
 import { TabContent, Wrap, ShowAll, TabContentProps } from './components';
 
