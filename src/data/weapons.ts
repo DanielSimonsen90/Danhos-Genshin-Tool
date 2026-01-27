@@ -5073,7 +5073,7 @@ export const SongOfBrokenPines = new Weapon(
       if (playstyle.onField) score += MODIFIERS.FIELD;
       if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
     }
-    
+
     return score;
   },
   cs => cs.Eula,
@@ -5631,7 +5631,7 @@ export const TheDaybreakChronicles = new Weapon(
       if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
       if (playstyle.prioritizesTalents('Burst/Ult')) score += MODIFIERS.TALENT;
       if (playstyle.prioritizesTalents('Normal/Press')) score += MODIFIERS.TALENT;
-      if (character.can('Hexerei Able')) score += MODIFIERS.BONUS_ABILITY + (MODIFIERS.TALENT * 3)
+      if (character.can('Hexerei Able')) score += MODIFIERS.BONUS_ABILITY + (MODIFIERS.TALENT * 3);
     }
 
     return score;
@@ -5695,7 +5695,7 @@ export const TheFirstGreatMagic = new Weapon(
     if (playstyle.prioritizesTalents('Charged/Hold')) score += MODIFIERS.TALENT;
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
     if (playstyle.onField) score += MODIFIERS.FIELD;
-    
+
     return score;
   },
   cs => cs.Lyney
@@ -5819,7 +5819,7 @@ export const TheViridescentHunt = new Weapon(
 
       if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
     }
-    
+
     return score;
   },
 );
@@ -5852,7 +5852,7 @@ export const TheWidsith = new Weapon(
       if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
       if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
     }
-    
+
     return score;
   }
 );
@@ -5878,7 +5878,7 @@ export const ThrillingTalesOfDragonSlayers = new Weapon(
   'Wish',
   ({ playstyle, score }) => {
     if (!playstyle.onField) score += MODIFIERS.FIELD;
-    
+
     return score;
   }
 );
@@ -5907,7 +5907,7 @@ export const ThunderingPulse = new Weapon(
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
     if (playstyle.prioritizesTalents('Normal/Press')) score += MODIFIERS.TALENT;
     if (playstyle.needsStat('Energy Recharge')) score -= MODIFIERS.STAT;
-    
+
     return score;
   },
   cs => cs.Yoimiya
@@ -5935,7 +5935,7 @@ export const TidalShadow = new Weapon(
   ({ playstyle, score, character }) => {
     if (character.can('Self-heal')) score += MODIFIERS.BONUS_ABILITY;
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
-    
+
     return score;
   }
 );
@@ -6049,7 +6049,7 @@ export const TulaytullahsRemembrance = new Weapon(
   ({ playstyle, score }) => {
     if (playstyle.onField) score += MODIFIERS.FIELD; // SPD increase
     if (playstyle.prioritizesTalents('Normal/Press')) score += MODIFIERS.TALENT * 2; // double buff
-    
+
     return score;
   },
   cs => cs.WandererScaramouche
@@ -6077,7 +6077,7 @@ export const TwinNephrite = new Weapon(
   ({ playstyle, score }) => {
     if (playstyle.onField) score += MODIFIERS.FIELD; // SPD increase
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
-    
+
     return score;
   },
 );
@@ -6174,7 +6174,7 @@ export const VividNotions = new Weapon(
   ({ playstyle, score }) => {
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
     if (playstyle.prioritizesTalents('Plunging/Press')) score += MODIFIERS.TALENT * 2; // double buff
-    
+
     return score;
   },
   cs => cs.Varesa
@@ -6207,7 +6207,7 @@ export const VortexVanquisher = new Weapon(
       if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
     }
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
-    
+
     return score;
   },
   cs => cs.Zhongli
@@ -6238,7 +6238,7 @@ export const WanderingEvenstar = new Weapon(
     if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
     if (!playstyle.onField) score += MODIFIERS.FIELD;
-    
+
     return score;
   },
 );
@@ -6293,7 +6293,7 @@ export const WaveridingWhirl = new Weapon(
   'Wish',
   ({ playstyle, score }) => {
     if (playstyle.needsStat('HP')) score += MODIFIERS.STAT * 2; // big buff
-    
+
     return score;
   },
 );
@@ -6373,7 +6373,7 @@ export const Whiteblind = new Weapon(
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
     if (playstyle.needsStat('DEF')) score += MODIFIERS.STAT;
     if (playstyle.onField) score += MODIFIERS.FIELD;
-    
+
     return score;
   },
 );
@@ -6429,7 +6429,7 @@ export const WineAndSong = new Weapon(
     if (playstyle.prioritizesTalents('Normal/Press')) score += MODIFIERS.TALENT;
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
     if (playstyle.onField) score += MODIFIERS.FIELD;
-    
+
     return score;
   },
 );
@@ -6458,7 +6458,7 @@ export const WolfFang = new Weapon(
   ({ playstyle, score }) => {
     if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT * 2; // CRIT increase
     if (playstyle.prioritizesTalents('Burst/Ult')) score += MODIFIERS.TALENT * 2; // CRIT increase
-    
+
     return score;
   },
 );
@@ -6485,7 +6485,7 @@ export const WolfsGravestone = new Weapon(
   'Wish',
   ({ playstyle, score }) => {
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
-    
+
     return score;
   },
   cs => cs.Diluc
