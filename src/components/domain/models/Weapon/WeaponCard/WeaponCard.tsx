@@ -16,6 +16,7 @@ export interface Props extends BaseModelCardProps {
   showSource?: boolean;
   showAscensionSection?: boolean;
   showSignatureCharacter?: boolean;
+  hideWeaponType?: boolean;
 }
 
 export default function WeaponCard({
@@ -25,9 +26,10 @@ export default function WeaponCard({
   showSource,
   showAscensionSection,
   showSignatureCharacter,
+  hideWeaponType,
   ...props
 }: Props) {
-  const { name, description, type, rarity, baseAttack, secondaryStat, secondaryStatValue, ascensionMaterials, droppedBy, signatureWeaponFor } = weapon;
+  const { name, type, rarity, baseAttack, secondaryStat, secondaryStatValue, ascensionMaterials, droppedBy, signatureWeaponFor } = weapon;
   const { CharactersData } = useCharacterData();
 
   const signatureCharacter = useMemo(() => (
@@ -48,7 +50,7 @@ export default function WeaponCard({
       {...props}
 
       renderImage={() => <WeaponImage weapon={name} />}
-      renderHeadingContent={() => (
+      renderHeadingContent={hideWeaponType ? undefined : () => (
         <div className="weapon-type">
           <WeaponImage weaponType={type} />
           <span className="weapon-type__value">

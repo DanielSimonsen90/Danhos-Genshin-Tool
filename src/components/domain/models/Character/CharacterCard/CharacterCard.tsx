@@ -184,7 +184,9 @@ export default function CharacterCard({
                     cardProps={{
                       wrapInLink: true,
                       showDetails: true,
-                      showStats: true
+                      showStats: true,
+                      showSource: true,
+                      hideWeaponType: true,
                     }}
                   />
                 }
