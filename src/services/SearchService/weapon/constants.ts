@@ -1,0 +1,6 @@
+export const WEAPON_VARIABLE_SCORES = {
+  SIGNATURE: 25, // Signature weapon is almost always a good choice
+  DESIRED_STAT_MATCH_MULTIPLIER: 5,
+  DESIRED_STAT_CRITS_MULTIPLIER: 2,
+  BASE_ATTACK_REDUCER: 10,
+}
