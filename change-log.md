@@ -5,3 +5,4 @@
 * Nod-Krai filter not being in SearchableMobList
 * Sigewinne's bonus talents not showing off-field damage
 * Toukabou Shigure marked as Legendary, when it should be Epic
+* Fungal Nucleus rarities being incorrect

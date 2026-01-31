@@ -113,13 +113,13 @@ export const EremiteDrop = MobDrop.create("<placeholder>", {
 });
 
 export const FungalNucleus = MobDrop.create('Fungal Nucleus', {
-  [Rarity.Epic]: 'Robust',
-  [Rarity.Rare]: 'Dormant',
-  [Rarity.Uncommon]: 'Inactivated',
+  [Rarity.Rare]: 'Robust',
+  [Rarity.Uncommon]: 'Dormant',
+  [Rarity.Common]: 'Inactivated',
 }, {
-  [Rarity.Epic]: `Body tissue left behind by a Fungus that has been exposed to intense elemental stimulation.\nIt is generally believed that the Fungi evolved into more mobile forms to better disperse their spores.\nA poet once depicted a shared dream of the Fungi in which their spores covered every inch of the mountains and oceans. The world had never been more tranquil.\nThen the Fungi turned into fish, birds, beasts, men, and gods, relying on rainfall, land, and their own kind who had returned to the earth.`,
-  [Rarity.Rare]: `Body tissue left behind by a Fungus that has been exposed to intense elemental stimulation.\nThere was once a protracted debate among Amurta researchers on whether the Fungi should be categorized as plants or animals.\nIn the end, they reached an agreement and closed the case for good — the Fungi shall be its own category, neither plant nor animal.`,
-  [Rarity.Uncommon]: `Body tissue left behind by a Fungus that has been exposed to intense elemental stimulation.\nIts soothing texture makes it shockingly good for stress relief.\nHowever, frequent usage can also easily lead to the Fungi multiplying, and thus the material is not suitable for any commercial use.`,
+  [Rarity.Rare]: `Body tissue left behind by a Fungus that has been exposed to intense elemental stimulation.\nIt is generally believed that the Fungi evolved into more mobile forms to better disperse their spores.\nA poet once depicted a shared dream of the Fungi in which their spores covered every inch of the mountains and oceans. The world had never been more tranquil.\nThen the Fungi turned into fish, birds, beasts, men, and gods, relying on rainfall, land, and their own kind who had returned to the earth.`,
+  [Rarity.Uncommon]: `Body tissue left behind by a Fungus that has been exposed to intense elemental stimulation.\nThere was once a protracted debate among Amurta researchers on whether the Fungi should be categorized as plants or animals.\nIn the end, they reached an agreement and closed the case for good — the Fungi shall be its own category, neither plant nor animal.`,
+  [Rarity.Common]: `Body tissue left behind by a Fungus that has been exposed to intense elemental stimulation.\nIts soothing texture makes it shockingly good for stress relief.\nHowever, frequent usage can also easily lead to the Fungi multiplying, and thus the material is not suitable for any commercial use.`,
 });
 
 export const FungalSpores = MobDrop.create('<placeholder>', {
