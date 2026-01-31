@@ -2,3 +2,4 @@
 
 ## Fixes
 * Recommended weapons not consistently rendering tabs as rarity hierarchy
+* Nod-Krai filter not being in SearchableMobList
