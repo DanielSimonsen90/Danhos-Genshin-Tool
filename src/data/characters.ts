@@ -1499,7 +1499,11 @@ export const ShikanoinHeizou = new Character("Shikanoin Heizou", "Anemo", "Catal
   ])
 );
 
-export const Sigewinne = new Character("Sigewinne", "Hydro", "Bow", ["Heal", "Bond of Life"], Rarity.Legendary, 'Fontaine', {
+export const Sigewinne = new Character("Sigewinne", "Hydro", "Bow", [
+  "Heal", 
+  "Bond of Life",
+  "Off-field Damage",
+], Rarity.Legendary, 'Fontaine', {
   material: TalentAscension.Equity,
   weeklyBossDrop: MobDrops.LightlessEyeOfTheMaelstrom,
   crystal: ElementalCrystals.Hydro,
