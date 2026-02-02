@@ -6450,7 +6450,7 @@ export const WolfFang = new Weapon(
     ]
   },
   'Sword',
-  Rarity.Rare, // TODO: Epic?
+  Rarity.Epic,
   510,
   'Crit Rate',
   27.6,
