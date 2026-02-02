@@ -32,6 +32,7 @@ export const useDataStore = create<DataStore>((setState, getState) => {
     CHARACTER_MATERIALS: 'character_materials_',
     CHARACTER_RECOMMENDED_WEAPONS: 'character_recommended_weapons_',
     WEAPON_SIGNATURES: 'weapon_signatures_',
+    WEAPON_RECOMMENDED_CHARACTERS: 'weapon_recommended_characters_',
   } as const;
 
   const clearCache = () => cache.clear();
@@ -263,6 +264,11 @@ export const useDataStore = create<DataStore>((setState, getState) => {
         } as CharacterUsingArtifactResult;
       });
     },
+    getRecommendedCharactersForWeapon(weapon: Weapon) {
+      return getCachedOrCompute(`${CACHE_KEYS.WEAPON_RECOMMENDED_CHARACTERS}${weapon.name}`, () => {
+        return WeaponSearchService.searchFromWeapon(weapon, getState())
+      });
+    },
     getSignatureWeaponFor(character: Character) {
       return getCachedOrCompute(`${CACHE_KEYS.WEAPON_SIGNATURES}${character.name}`, () => {
         const signatureWeaponData = getSignatureWeapons();
@@ -271,9 +277,9 @@ export const useDataStore = create<DataStore>((setState, getState) => {
         return signatureWeaponData.find(weapon => weapon.character?.name === character.name)?.weapon;
       });
     },
-    getRecommendedWeaponsFor(character: Character) {
+    getRecommendedWeaponsForCharacter(character: Character) {
       return getCachedOrCompute(`${CACHE_KEYS.CHARACTER_RECOMMENDED_WEAPONS}${character.name}`, () => {
-        return WeaponSearchService.search(character, getState());
+        return WeaponSearchService.searchFromCharacter(character, getState());
       });
     },
 

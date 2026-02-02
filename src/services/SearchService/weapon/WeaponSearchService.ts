@@ -1,34 +1,33 @@
-import BaseService from "@/services/BaseService";
-import { LastResult } from "./types";
-import { Character, Weapon } from "@/common/models";
+import { LastResult, RecommendedCharacterForWeapon, RecommendedWeaponForCharacter } from "./types";
+import { Character, List, Weapon } from "@/common/models";
 import { DataStore } from "@/stores";
-import { WEAPON_VARIABLE_SCORES } from "./constants";
+import { WEAPON_SCORE_THRESHOLD, WEAPON_VARIABLE_SCORES } from "./constants";
 import { TalentStatName, WeaponStatName } from "@/common/types/stat-types";
+import { Rarity } from "@/common/types/genshin";
+import BaseSearchService from "../base/BaseSearchService";
 
-export const WeaponSearchService = new class WeaponSearchService extends BaseService<LastResult> {
-  constructor() {
-    super({} as LastResult);
-  }
-
-  public get lastResult(): LastResult {
-    return super.lastResult as LastResult;
-  }
-
-  public search(
+export const WeaponSearchService = new class WeaponSearchService extends BaseSearchService<LastResult> {
+  public searchFromCharacter(
     character: Character,
     DataStore: DataStore,
-  ) {
+  ): Map<Rarity, List<RecommendedWeaponForCharacter>> {
     return DataStore.Weapons
       .filter(weapon => character.weapon === weapon.type)
-      .orderBy(
-        (a, b) => b.rarity - a.rarity,
-        (a, b) => {
-          const aScore = this.getWeaponScore(a, character, DataStore);
-          const bScore = this.getWeaponScore(b, character, DataStore);
-          return bScore - aScore;
+      .map(weapon => {
+        const score = this.getWeaponScore(weapon, character, DataStore);
+        const included = score >= WEAPON_SCORE_THRESHOLD;
+
+        return {
+          weapon,
+          score,
+          included,
         }
+      })
+      .orderBy(
+        (a, b) => b.weapon.rarity - a.weapon.rarity,
+        (a, b) => b.score - a.score,
       )
-      .groupBy(weapon => weapon.rarity)
+      .groupBy(result => result.weapon.rarity);
   }
 
   private getWeaponScore(weapon: Weapon, character: Character, DataStore: DataStore): number {
@@ -38,10 +37,12 @@ export const WeaponSearchService = new class WeaponSearchService extends BaseSer
       WeaponSearchService.getWeaponMatchScore,
     ];
 
-    return scoreModifiers.reduce(
+    const combinedScore = scoreModifiers.reduce(
       (score, modifyScore) => score + modifyScore(weapon, character, DataStore),
       0
     );
+
+    return Math.round(combinedScore);
   }
 
   private static getScoreForSignatureWeaponMatch(weapon: Weapon, character: Character, DataStore: DataStore): number {
@@ -69,5 +70,38 @@ export const WeaponSearchService = new class WeaponSearchService extends BaseSer
       playstyle: character.playstyle,
       score: 0,
     });
+  }
+
+  public searchFromWeapon(
+    weapon: Weapon,
+    DataStore: DataStore,
+  ): Map<Rarity, List<RecommendedCharacterForWeapon>> {
+    const signatureCharacter = weapon.signatureWeaponFor?.(DataStore.CharactersData);
+    
+    return DataStore.Characters
+      .filter(character => character.weapon === weapon.type)
+      .map(character => {
+        const score = this.getWeaponScore(weapon, character, DataStore);
+        const included = score >= WEAPON_SCORE_THRESHOLD;
+
+        return {
+          character,
+          score,
+          included,
+        }
+      })
+      .orderBy(
+        (a, b) => b.character.rarity - a.character.rarity,
+        (a, b) => b.score - a.score,
+        (a, b) => {
+          const isASignature = signatureCharacter?.name === a.character.name;
+          const isBSignature = signatureCharacter?.name === b.character.name;
+
+          if (isASignature && !isBSignature) return -1;
+          if (!isASignature && isBSignature) return 1;
+          return 0;
+        }
+      )
+      .groupBy(result => result.character.rarity);
   }
 };

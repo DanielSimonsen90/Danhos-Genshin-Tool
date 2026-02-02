@@ -150,8 +150,7 @@ export const AThousandFloatingDreams = new Weapon(
   'Wish',
   ({ playstyle, score, character }) => {
     if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
-    if (character.can('Off-field Damage')) score += MODIFIERS.BONUS_ABILITY;
-    if (playstyle.onField) score += MODIFIERS.FIELD;
+    if (character.can('Off-field Damage') || playstyle.onField) score += MODIFIERS.BONUS_ABILITY;
 
     return score;
   },
@@ -552,7 +551,11 @@ export const BlackTassel = new Weapon(
     Drops.Arrowhead,
   ],
   'Wish',
-  ({ score }) => score);
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('HP')) score += MODIFIERS.STAT * 2  ; // Only because of how much HP it gives
+    
+    return score;
+  });
 
 export const BlackcliffAgate = new Weapon(
   'Blackcliff Agate',
@@ -1274,7 +1277,8 @@ export const DodocoTales = new Weapon(
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
 
     return score;
-  }
+  },
+  cs => cs.Klee
 );
 
 export const DragonsBane = new Weapon(
@@ -3645,6 +3649,7 @@ export const Predator = new Weapon(
 );
 
 export const PrimordialJadeCutter = new Weapon(
+
   'Primordial Jade Cutter',
   {
     value: `HP increased by $0. Additionally, provides an ATK bonus based on $1 of the weilder's Max HP.`,

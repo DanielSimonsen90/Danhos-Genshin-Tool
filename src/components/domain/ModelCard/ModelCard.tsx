@@ -1,51 +1,10 @@
-import { forwardRef, Fragment, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { forwardRef, useMemo } from "react";
 
 import Separator from '@/components/common/Separator';
 import { classNames } from "@/common/functions/strings";
-import { Model, ModelKeys } from "@/common/models";
 import RarityList from "../../common/media/icons/Rarity";
-
-// Shared properties for all model cards
-export interface BaseModelCardProps {
-  wrapInLink?: boolean;
-  linkOnName?: boolean;
-  nameTag?: Extract<React.ElementType, 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'b'>;
-  showRarity?: boolean;
-  className?: string;
-}
-
-export interface ModelCardProps<TModel extends Model = Model> extends BaseModelCardProps {
-  // Required model-based configuration
-  model: ModelKeys;
-  item: TModel;
-
-  // Required render props for core card structure
-  renderImage: () => JSX.Element;
-  renderHeaderContent?: () => JSX.Element;
-  renderHeadingContent?: () => JSX.Element;
-  renderContent: () => JSX.Element | null;
-}
-
-function GetCardContainer(
-  wrapInLink: boolean | undefined,
-  route: string,
-) {
-  return forwardRef<HTMLElement, any>((props, ref) => {
-    return wrapInLink
-      ? <Link to={route} {...props} className={classNames("clickable", props.className)} ref={ref} />
-      : <div {...props} ref={ref} />;
-  });
-}
-
-function GetModelNameContainer(
-  linkOnName: boolean | undefined,
-  route: string,
-) {
-  return (props: any) => linkOnName
-    ? <Link to={route} {...props} className={classNames("model-card__name-text", props.className)} />
-    : <Fragment {...props} />;
-}
+import { ModelCardProps } from "./types";
+import { GetCardContainer, GetModelNameContainer } from "./functions";
 
 const ModelCard = forwardRef<HTMLDivElement, ModelCardProps>(({
   model, item,

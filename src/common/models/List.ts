@@ -78,6 +78,8 @@ export class List<T> extends Array<T> {
   public filter(callback: (value: T, index: number, array: T[]) => unknown): List<T> {
     return List.from(super.filter(callback));
   }
+
+  /** @deprecated - why not use orderBy? */
   public sort(compareFn?: (a: T, b: T) => number): this {
     return List.from(super.sort(compareFn)) as this;
   }
