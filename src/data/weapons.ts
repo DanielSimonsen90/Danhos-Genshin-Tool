@@ -887,9 +887,11 @@ export const ChainBreaker = new Weapon(
     Drops.Fang,
   ],
   'Crafting',
-  ({ playstyle, score }) => {
-    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
-    if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
+  ({ playstyle, score, character }) => {
+    if (character.region === 'Natlan') {
+      if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+      if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
+    }
 
     return score;
   }
