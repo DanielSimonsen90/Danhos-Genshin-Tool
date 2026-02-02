@@ -1663,7 +1663,7 @@ export const TravelerDendro = new Character("Traveler (Dendro)", "Dendro", "Swor
   ])
 );
 
-export const TravelerHydro = new Character("Traveler (Hydro)", "Hydro", "Sword", [], Rarity.Legendary, 'Unknown', {
+export const TravelerHydro = new Character("Traveler (Hydro)", "Hydro", "Sword", ['Self-heal'], Rarity.Legendary, 'Unknown', {
   material: TalentAscension.Equity,
   weeklyBossDrop: MobDrops.WorldspanFern,
   crystal: ElementalCrystals.Hydro,

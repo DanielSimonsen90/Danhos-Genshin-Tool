@@ -184,10 +184,7 @@ export default function WeaponCard({
                         const recommendationScore = recommendationCharacter
                           ? recommendationCharacter[recommendedIndex].score
                           : 0;
-                        const scoreColor = WeaponSearchService.getScoreColor({
-                          scores: [0, recommendedIndex + 1, items.length],
-                          colors: ['#CFCFCF', '#FFDF7F'],
-                        })
+                        const scoreColor = WeaponSearchService.getScoreColor(recommendationScore)
                         
                         return (
                           <p style={{ color: scoreColor }}>

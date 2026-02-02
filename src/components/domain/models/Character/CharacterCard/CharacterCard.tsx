@@ -204,10 +204,7 @@ export default function CharacterCard({
                         const weaponResult = items.find(r => r.weapon.name === props.weapon.name);
                         if (!weaponResult) return null;
                         
-                        const scoreColor = WeaponSearchService.getScoreColor({
-                          scores: [0, weaponResult.score, 100],
-                          colors: ['#CFCFCF', '#FFDF7F'], 
-                        })
+                        const scoreColor = WeaponSearchService.getScoreColor(weaponResult.score)
                         
                         return (
                           <p style={{ color: scoreColor }}>

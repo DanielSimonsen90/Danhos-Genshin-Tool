@@ -2409,10 +2409,8 @@ export const HarbingerOfDawn = new Weapon(
   ],
   'Wish',
   ({ playstyle, score, character }) => {
-    if (character.can('Heal', 'Self-heal')) {
-      score += MODIFIERS.BONUS_ABILITY;
-
-      if (playstyle.onField) score += MODIFIERS.FIELD;
+    if (character.can('Heal', 'Self-heal') && playstyle.onField) {
+      score += MODIFIERS.BONUS_ABILITY + MODIFIERS.FIELD;
     }
 
     return score;
@@ -5134,7 +5132,7 @@ export const SplendorOfTranquilWaters = new Weapon(
     if (playstyle.needsStat('HP')) score += MODIFIERS.STAT;
     if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
     if (character.can('Off-field Damage')) score += MODIFIERS.BONUS_ABILITY;
-    if (character.can('Heal')) {
+  if (character.can('Heal') || character.can('Self-heal')) {
       score += MODIFIERS.BONUS_ABILITY;
 
       if (playstyle.needsStat('HP')) score += MODIFIERS.STAT;
