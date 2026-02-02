@@ -206,7 +206,7 @@ export default function CharacterCard({
                         
                         const scoreColor = WeaponSearchService.getScoreColor({
                           scores: [0, weaponResult.score, 100],
-                          colors: ['#FFDF7F', '#CFCFCF'], 
+                          colors: ['#CFCFCF', '#FFDF7F'], 
                         })
                         
                         return (

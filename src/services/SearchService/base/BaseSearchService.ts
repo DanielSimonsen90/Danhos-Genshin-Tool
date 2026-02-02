@@ -24,9 +24,8 @@ export default abstract class BaseSearchService<TResult> extends BaseService<TRe
     const [min, current, max] = scores;
     const [colorLow, colorHigh] = colors;
 
-    if (min === max) return colorHigh;
+    if (min + 1 === max) return colorHigh;
 
-    // normalizedScore: 0 = min (colorLow), 1 = max (colorHigh)
     const normalizedScore = clamp((current - min) / (max - min), 0, 1);
 
     const rgbMin = hexToRgb(colorLow);

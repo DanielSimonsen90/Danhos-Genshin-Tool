@@ -186,7 +186,7 @@ export default function WeaponCard({
                           : 0;
                         const scoreColor = WeaponSearchService.getScoreColor({
                           scores: [0, recommendedIndex + 1, items.length],
-                          colors: ['#FFDF7F', '#CFCFCF'],
+                          colors: ['#CFCFCF', '#FFDF7F'],
                         })
                         
                         return (
