@@ -1,5 +1,8 @@
 # 🎉 Danho's Genshin Tool v . 2.1.14 🎉
 
+## Updates
+* Added "Off-field Damage" tag to Columbina
+
 ## Fixes
 * Recommended weapons not consistently rendering tabs as rarity hierarchy
 * Nod-Krai filter not being in SearchableMobList

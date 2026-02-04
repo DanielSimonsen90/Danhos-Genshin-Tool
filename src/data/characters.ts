@@ -398,6 +398,7 @@ export const Collei = new Character("Collei", "Dendro", "Bow", [], Rarity.Epic, 
 export const Columbina = new Character("Columbina", "Hydro", "Catalyst", [
   'Increases Moonsign',
   'Enables Lunar Reaction',
+  'Off-field Damage',
 ], Rarity.Legendary, 'Nod-Krai', {
   material: TalentAscension.Moonlight,
   weeklyBossDrop: MobDrops.MaskOfTheVirtuousDoctor,
