@@ -14,3 +14,5 @@
 * Sigewinne's bonus talents not showing off-field damage
 * Toukabou Shigure marked as Legendary, when it should be Epic
 * Fungal Nucleus rarities being incorrect
+* An issue where null materials would show empty space without card styles
+* Character ascension material cards not following 3/6 column layout

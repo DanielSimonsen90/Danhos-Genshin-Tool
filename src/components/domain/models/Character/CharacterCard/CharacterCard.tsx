@@ -1,6 +1,6 @@
 import { useMemo, JSX } from "react";
 
-import { numberSeparator, rarityString } from "@/common/functions/strings";
+import { addSpacesToCamelCase, numberSeparator, pascalCaseFromCamelCase, rarityString } from "@/common/functions/strings";
 import { Character, List, Weapon } from "@/common/models";
 
 import { CharacterImage, ElementImage, WeaponImage } from "@/components/common/media/Images";
@@ -171,7 +171,7 @@ export default function CharacterCard({
               <ul className="character-ascension__list">
                 {ascensionMaterials.map(([key, item]) => (
                   <li key={key} className="character-ascension__item">
-                    <MaterialCard material={item} allowCycle={false} wrapInLink nameTag="h4" />
+                    <MaterialCard material={item} allowCycle={false} wrapInLink nameTag="h4" noMaterialFallback={`No ${addSpacesToCamelCase(pascalCaseFromCamelCase(key))}`} />
                   </li>
                 ))}
               </ul>
