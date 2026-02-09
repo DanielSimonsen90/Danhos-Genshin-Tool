@@ -1995,7 +1995,8 @@ export const YunJin = new Character("Yun Jin", "Geo", "Polearm", ["Shield"], Rar
 
 export const Zibai = new Character("Zibai", "Geo", "Sword", [
   'Enables Lunar-Crystallize Reaction',
-  'Increases Moonsign'
+  'Increases Moonsign',
+  `Elemental Infusion: After Skill/Ability, Zibai gains Geo infusion during the duration.`
 ], Rarity.Legendary, 'Liyue', {
   material: TalentAscension.Gold,
   weeklyBossDrop: MobDrops.RemnantOfTheDreadwing,
@@ -2005,7 +2006,7 @@ export const Zibai = new Character("Zibai", "Geo", "Sword", [
   mobDrop: EasyMobDrops.Warrant,
 }, `Collects elemental energy at night`, 
   new CharacterPlaystyle("On-field Lunar-Crystallize DPS", ["DEF"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.ADayCarvedFromRisingWinds, 4, 100),
+    new CharacterArtifactSet(Sets.NightOfTheSkysUnveiling, 4, 100),
   ])
 );
 

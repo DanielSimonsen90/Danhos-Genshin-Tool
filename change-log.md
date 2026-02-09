@@ -6,6 +6,8 @@
 
 ## Updates
 * Added "Off-field Damage" tag to Columbina
+* Added "Off-field Damage" tag to Zibai
+* Added Night of the Sky's Unveiling to Zibai's recommended artifact sets because apparently people prefer that over the new one that I swear was made for her?
 
 ## Fixes
 * Recommended weapons not consistently rendering tabs as rarity hierarchy
