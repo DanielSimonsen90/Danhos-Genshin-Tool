@@ -1,4 +1,4 @@
-# 🎉 Danho's Genshin Tool v . 2.1.14 🎉
+# 🎉 Danho's Genshin Tool v . 2.2.0 🎉
 
 ## Reworked Recommended Weapons
 * Moves signature weapon into the tabbar
