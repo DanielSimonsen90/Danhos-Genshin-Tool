@@ -141,6 +141,12 @@
 .weapon-recommended-characters {
   flex: 1 1 100%;
 
+  > h3 {
+    display: flex;
+    align-items: center;
+    gap: .5ch;
+  }
+
   .tab-bar__tab > div {
     display: flex;
     gap: 1ch;

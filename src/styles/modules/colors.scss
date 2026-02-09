@@ -24,8 +24,11 @@ body {
   --text-link: #{colors.$text-link};
   
   --text-success: #{colors.$text-success};
+  --text-success--muted: #{colors.$text-success--muted};
   --text-warning: #{colors.$text-warning};
+  --text-warning--muted: #{colors.$text-warning--muted};
   --text-danger: #{colors.$text-danger};
+  --text-danger--muted: #{colors.$text-danger--muted};
 
   --brand--light: #{colors.$brand--light};
   --brand: #{colors.$brand};

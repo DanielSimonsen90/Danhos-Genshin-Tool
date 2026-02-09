@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useCallback } from "react";
 import { useNavigate } from "react-router";
 
 import { CharacterImage, ArtifactImage, DomainImage, MaterialImage, MobImage, WeaponImage } from "@/components/common/media/Images";
-import Star, { FavoriteStar } from "@/components/common/media/icons/Star";
+import { Star, FavoriteStar } from "@/components/common/media/icons";
 import Tierlist, { Entry, Tier } from "@/components/common/Tierlist";
 
 import { FavoriteModels, useDataStore, useFavorites, useAccountData } from "@/stores";

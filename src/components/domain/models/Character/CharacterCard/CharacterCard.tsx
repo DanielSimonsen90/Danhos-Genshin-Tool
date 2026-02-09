@@ -19,6 +19,7 @@ import RarityList from "@/components/common/media/icons/Rarity";
 import { Functionable, Rarity } from "@/common/types";
 import { RecommendedWeaponForCharacter } from "@/services/SearchService/weapon/types";
 import { WeaponSearchService } from "@/services/SearchService";
+import { Badge } from "@/components/common/media/icons";
 
 type ChildrenProps = {
   character: Character;
@@ -184,7 +185,10 @@ export default function CharacterCard({
           )}
           {weapons.length > 0 && (
             <div className="character-recommended-weapons">
-              <h3>Recommended Weapons</h3>
+              <h3>
+                <Badge variant="beta" />
+                Recommended Weapons
+              </h3>
               <TabBar tabs={weapons.mapToArray(([key, { title, items, color, rarity }]) => ([
                 key,
                 {

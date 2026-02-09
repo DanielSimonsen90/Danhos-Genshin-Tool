@@ -13,6 +13,7 @@ import RarityList from "@/components/common/media/icons/Rarity";
 import SearchableCharacterList from "@/components/domain/SearchableList/SearchableLists/SearchableCharacterList";
 import { RecommendedCharacterForWeapon } from "@/services/SearchService/weapon/types";
 import { WeaponSearchService } from "@/services/SearchService";
+import { Badge } from "@/components/common/media/icons";
 
 export interface Props extends BaseModelCardProps {
   weapon: Weapon;
@@ -164,7 +165,10 @@ export default function WeaponCard({
           )}
           {characters.length > 0 && (
             <div className="weapon-recommended-characters">
-              <h3>Recommended Characters</h3>
+              <h3>
+                <Badge variant="beta" />
+                Recommended Characters
+              </h3>
               <TabBar tabs={characters.mapToArray(([key, { title, items, color, rarity }]) => ([
                 key,
                 {
