@@ -1,16 +1,26 @@
 import type { Reaction, TeyvatRegion, Element, LunarReaction } from "./genshin";
 
 export type TalentType = 'Normal/Press' | 'Charged/Hold' | 'Plunging/Press' | 'Skill/Ability' | 'Burst/Ult';
-export type BonusAbility = (
-| 'Off-field Damage' 
-| 'Shield' | 'Heal' | 'Self-heal' | 'Bond of Life' 
-| 'Nightsouls Blessing' | `Serpent's Subtlety`  
-| `Enables ${LunarReaction} Reaction`
-| 'Increases Moonsign'
-| 'Grouping'
-| `Buff ATK: ${string}` | `Elemental Based: ${string}` | `CRIT Increase: ${string}` 
-| `Buff ATK Speed: ${string}` | `Elemental Infusion: ${string}` | `Hexerei Able: ${string}`
+export type BonusAbilityBase = (
+  | 'Off-field Damage' 
+  | 'Shield' | 'Heal' | 'Self-heal' | 'Bond of Life' 
+  | 'Nightsouls Blessing' | `Serpent's Subtlety`  
+  | `Enables ${LunarReaction} Reaction`
+  | 'Increases Moonsign'
+  | 'Grouping'
 );
+export type BonusAbilitySimple = (
+  | BonusAbilityBase
+  | 'Buff ATK' | 'Elemental Based' | 'CRIT Increase'
+  | 'Buff ATK Speed' | 'Elemental Infusion' | 'Hexerei Able'
+);
+export type BonusAbility = (
+  BonusAbilityBase
+  | `Buff ATK: ${string}` | `Elemental Based: ${string}` | `CRIT Increase: ${string}` 
+  | `Buff ATK Speed: ${string}` | `Elemental Infusion: ${string}` | `Hexerei Able: ${string}`
+);
+
+
 export type WeaponType = 'Sword' | 'Claymore' | 'Polearm' | 'Bow' | 'Catalyst';
 export type CharacterSetName = `${'On-field' | 'Off-field' | 'Burst'}${` ${Reaction | Element}` | ''} ${'DPS' | 'Support'}`;
 
@@ -20,7 +30,8 @@ export type FoodBuffType = 'Restorative' | 'Attack' | 'Defense' | 'Adventure'
 export type MapIconType = 'Ore veins used in forging' | `Local Specialties in ${TeyvatRegion}` | 'Recovery Orbs (stamina & hp gained from collision increased by 25%)'
 
 
-export type PassiveTalent = 
+export type PassiveTalent = (
+
   // Movement
   | `${'15' | '20' | '35'}% ${PlayerTransportationType} consumption reduction.`
   | `${'15'}% ${PlayerTransportationType} speed increase.`
@@ -81,3 +92,6 @@ export type PassiveTalent =
   | `Elemental Skill is increased by 1 level for all party members, if the team consists of Hydro/Cryo characters and at least 1 of each element.`
   | `While in Nod-Krai, if a member on your team dies, Columbina will revive them and restore health based on Columbina's friendship level. Cooldown 100s. Does not work in domains.`
   | `Collects elemental energy at night`
+);
+
+export type TriggerableReactionFilter = 'all' | 'playstyle-based';

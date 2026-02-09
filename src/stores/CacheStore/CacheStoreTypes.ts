@@ -1,5 +1,5 @@
 import { SearchFormData } from "@/common/types/store-data";
-import { SearchResult } from "@/services/SearchService";
+import { SearchResult } from "@/services/SearchService/artifact";
 
 export type CacheStore = Cache & {
   clearCache: () => void;

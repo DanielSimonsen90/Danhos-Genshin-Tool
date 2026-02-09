@@ -127,8 +127,6 @@ export const ScoringEngine = new class ScoringEngine {
     }
   }
   private _calculateSubStatsScore(character: Character, artifact: Artifact<ArtifactPartName>): number {
-    let matchingSubStats = 0;
-
     return artifact.subStats.reduce((acc: number, stat: SubStatName | undefined) => {
       if (!stat) return acc; // Skip if stat is undefined or null
 
@@ -138,7 +136,6 @@ export const ScoringEngine = new class ScoringEngine {
         return acc;
       }
 
-      if (scoreData.isMatching) matchingSubStats++;
       const result = acc + scoreData.value;
       debugLog('Substat', stat, result, acc);
       return result;

@@ -1217,6 +1217,7 @@ export const Mualani = new Character("Mualani", "Hydro", "Catalyst", ["Nightsoul
 );
 
 export const Nahida = new Character("Nahida", "Dendro", "Catalyst", [
+  "Off-field Damage",
   "Elemental Based: While inside ult, different parameters change based on elements within party"
 ], Rarity.Legendary, "Sumeru", {
   material: TalentAscension.Ingenuity,
@@ -1667,7 +1668,7 @@ export const TravelerDendro = new Character("Traveler (Dendro)", "Dendro", "Swor
   ])
 );
 
-export const TravelerHydro = new Character("Traveler (Hydro)", "Hydro", "Sword", [], Rarity.Legendary, 'Unknown', {
+export const TravelerHydro = new Character("Traveler (Hydro)", "Hydro", "Sword", ['Self-heal'], Rarity.Legendary, 'Unknown', {
   material: TalentAscension.Equity,
   weeklyBossDrop: MobDrops.WorldspanFern,
   crystal: ElementalCrystals.Hydro,

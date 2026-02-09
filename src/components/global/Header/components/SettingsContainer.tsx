@@ -1,10 +1,9 @@
 import { DebugLog } from "@/common/functions/dev";
 
-import SettingsCog from "@/components/common/media/icons/SettingsCog";
+import { SettingsCog } from "@/components/common/media/icons";
 import { CharacterImage } from "@/components/common/media/Images";
 import { useAccountStore } from "@/stores/AccountStore";
 
-import SettingsOption from "../../../../stores/SettingsStore/components/SettingsModal/components/SettingsOption/SettingsOption";
 import { addTabNavigation } from "@/common/functions/accessibility";
 import { Select } from "@/components/common/FormItems";
 
@@ -17,7 +16,7 @@ type Props = {
 export default function SettingsContainer({ setOpenModal }: Props) {
   const accounts = useAccountStore(state => state.accounts);
   const selectedAccountName = useAccountStore(state => state.selectedAccountName);
-  const accountData = useAccountStore(state => state.accountData)
+  const accountData = useAccountStore(state => state.accountData);
   const traveler = useAccountStore(state => state.accountData.traveler);
   const setSelectedAccount = useAccountStore(state => state.setSelectedAccount);
 
@@ -30,8 +29,8 @@ export default function SettingsContainer({ setOpenModal }: Props) {
 
   return accountData ? (
     <div className="settings-container">
-      <Select name="selected-account" 
-        options={Object.keys(accounts)} 
+      <Select name="selected-account"
+        options={Object.keys(accounts)}
         value={selectedAccountName}
         onChange={setSelectedAccount}
       />

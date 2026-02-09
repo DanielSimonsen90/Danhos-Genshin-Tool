@@ -9,5 +9,6 @@ export default function Weapon() {
     showSource
     showAscensionSection
     showSignatureCharacter
+    showRecommendedCharacters
   />} />;
 }

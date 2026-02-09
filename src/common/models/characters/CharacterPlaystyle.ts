@@ -9,6 +9,16 @@ export class CharacterPlaystyle {
     public onField: boolean,
     public recommendedArtifactSets: CharacterArtifactSet[],
   ) {}
+
+  public prioritizesTalents(...talentTypes: TalentType[]): boolean {
+    const clone = [...this.talentPriorities];
+    clone.pop(); // Least important - usually first is mandatory, second is good and third is unnecessary
+    return talentTypes.some(talentType => this.talentPriorities.includes(talentType));
+  }
+
+  public needsStat(talentStat: TalentStatName): boolean {
+    return this.talentStats.includes(talentStat);
+  }
 }
 
 export default CharacterPlaystyle;

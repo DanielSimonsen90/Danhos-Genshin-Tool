@@ -91,4 +91,8 @@
   --region: var(--region-snezhnaya);
   --region--muted: var(--region-snezhnaya--muted);
 }
+*[data-region=Unknown] {
+  --region: var(--region-abyss);
+  --region--muted: var(--region-abyss--muted);
+}
 // #endregion

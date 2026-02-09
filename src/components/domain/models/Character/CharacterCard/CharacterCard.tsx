@@ -1,10 +1,10 @@
-import { useMemo } from "react";
+import { useMemo, JSX } from "react";
 
 import { numberSeparator, rarityString } from "@/common/functions/strings";
-import { Character } from "@/common/models";
+import { Character, List, Weapon } from "@/common/models";
 
 import { CharacterImage, ElementImage, WeaponImage } from "@/components/common/media/Images";
-import ModelCard, { BaseModelCardProps } from "@/components/domain/ModelCard";
+import ModelCard, { BaseModelCardProps, ModelRarityTabGroup } from "@/components/domain/ModelCard";
 import { Region } from "@/components/domain";
 
 import { useDataStore } from "@/stores";
@@ -13,9 +13,17 @@ import CharacterPlaystyle from "../CharacterPlaystyle";
 import { MaterialCard } from "../../Material";
 import { WeaponCard } from "../../Weapon";
 import Separator from "@/components/common/Separator";
-import TabBar from "@/components/common/TabBar";
+import TabBar, { Tab } from "@/components/common/TabBar";
 import { SearchableWeaponList } from "@/components/domain/SearchableList";
 import RarityList from "@/components/common/media/icons/Rarity";
+import { Functionable, Rarity } from "@/common/types";
+import { RecommendedWeaponForCharacter } from "@/services/SearchService/weapon/types";
+import { WeaponSearchService } from "@/services/SearchService";
+import { Badge } from "@/components/common/media/icons";
+
+type ChildrenProps = {
+  character: Character;
+};
 
 export interface Props extends BaseModelCardProps {
   character: Character;
@@ -27,7 +35,7 @@ export interface Props extends BaseModelCardProps {
   showCharacterPlaystyle?: boolean;
   showRecommendedWeapons?: boolean;
   showSignatureWeapon?: boolean;
-  children?: React.ReactNode;
+  children?: Functionable<React.ReactNode, [props: ChildrenProps]>;
 }
 
 export default function CharacterCard({
@@ -43,11 +51,53 @@ export default function CharacterCard({
   const { name, bonusAbilities, rarity } = character;
 
   const getSignatureWeaponFor = useDataStore(store => store.getSignatureWeaponFor);
-  const getRecommendedWeaponsFor = useDataStore(store => store.getRecommendedWeaponsFor);
+  const getRecommendedWeaponsFor = useDataStore(store => store.getRecommendedWeaponsForCharacter);
 
-  const signatureWeapon = getSignatureWeaponFor(character);
-  const recommendedWeapons = getRecommendedWeaponsFor(character);
+  const signatureWeapon = useMemo(() => getSignatureWeaponFor(character), [character, getSignatureWeaponFor]);
+  const recommendedWeapons = useMemo(() => showRecommendedWeapons ? getRecommendedWeaponsFor(character) : undefined, [character, getRecommendedWeaponsFor, showRecommendedWeapons]);
+  const weapons = useMemo(() => {
+    if (!recommendedWeapons) return List.from([]);
+    
+    const result: ModelRarityTabGroup<RecommendedWeaponForCharacter> = new Map();
+    
+    if (signatureWeapon && showSignatureWeapon) {
+      const signatureWeaponResult = recommendedWeapons
+        .get(signatureWeapon.rarity)
+        ?.find(w => w.weapon.name === signatureWeapon.name);
 
+      if (signatureWeaponResult) {
+        result.set('signature', {
+          title: (
+            <>
+              <ElementImage element={character.element} />
+              <p>Signature</p>
+            </>
+          ),
+          items: [signatureWeaponResult],
+          color: 'var(--element)',
+          rarity: signatureWeapon.rarity
+        });
+      }
+    }
+
+    if (showRecommendedWeapons) {
+      for (const [rarity, weapons] of recommendedWeapons.entries()) {
+        result.set(rarityString(rarity), {
+          title: (
+            <>
+              <RarityList rarity={rarity} onlyOne />
+              <p>{rarityString(rarity)}</p>
+            </>
+          ),
+          items: weapons,
+          color: `var(--rarity)`,
+          rarity
+        });
+      }
+    }
+
+    return List.from(result);
+  }, [character.element, recommendedWeapons, signatureWeapon, showRecommendedWeapons, showSignatureWeapon]);
   const ascensionMaterials = useMemo(() => {
     if (!showAscensionSection) return [];
     const keys: Array<keyof Character['ascension']> = [
@@ -60,6 +110,9 @@ export default function CharacterCard({
     ];
     return keys.map(key => [key, character.ascension[key]] as const);
   }, [character, showAscensionSection]);
+  const resolvedChildren = useMemo(() => (
+    typeof children === 'function' ? children({ character }) : children
+  ), [children, character]);
 
   return (
     <ModelCard
@@ -130,37 +183,46 @@ export default function CharacterCard({
               <CharacterPlaystyle character={character} showRecommendedArtifactSets showRecommendedTalentAscension />
             </div>
           )}
-          {showSignatureWeapon && signatureWeapon && (
-            <div className="character-signature-weapon">
-              <h3>Signature Weapon</h3>
-              <WeaponCard weapon={signatureWeapon} wrapInLink showRarity showStats showSource showDetails />
-            </div>
-          )}
-          {showRecommendedWeapons && (
+          {weapons.length > 0 && (
             <div className="character-recommended-weapons">
-              <h3>Recommended Weapons</h3>
-              <p className="muted">
-                <b>Disclaimer: </b>
-                These weapons are listed using internal calculations and may not reflect optimal choices for {character.name}.
-                Please use your discretion when selecting your weapon!
-              </p>
-              <TabBar tabs={tab => [...recommendedWeapons.entries()].map(([rarity, weapons]) => tab(
-                rarityString(rarity),
-                <div data-rarity={rarityString(rarity)}>
-                  <RarityList rarity={rarity} onlyOne />
-                  {rarityString(rarity)}
-                </div>,
-                <SearchableWeaponList items={weapons}
-                  cardProps={{
-                    wrapInLink: true,
-                    showDetails: true,
-                    showStats: true
-                  }}
-                />
-              ))} />
+              <h3>
+                <Badge variant="beta" />
+                Recommended Weapons
+              </h3>
+              <TabBar tabs={weapons.mapToArray(([key, { title, items, color, rarity }]) => ([
+                key,
+                {
+                  title: (
+                    <div data-rarity={rarityString(rarity)} style={{ color }}>
+                      {title}
+                    </div>
+                  ),
+                  content: <SearchableWeaponList items={items.map(result => result.weapon)}
+                    cardProps={{
+                      wrapInLink: true,
+                      showDetails: true,
+                      showStats: true,
+                      showSource: true,
+                      hideWeaponType: true,
+                      children: (props) => {
+                        const weaponResult = items.find(r => r.weapon.name === props.weapon.name);
+                        if (!weaponResult) return null;
+                        
+                        const scoreColor = WeaponSearchService.getScoreColor(weaponResult.score)
+                        
+                        return (
+                          <p style={{ color: scoreColor }}>
+                            Recommended Score: <b>{weaponResult.score}</b>
+                          </p>
+                        );
+                      }
+                    }}
+                  />
+                }
+              ] as const))} />
             </div>
           )}
-          {children}
+          {resolvedChildren}
         </section>
       )}
     />

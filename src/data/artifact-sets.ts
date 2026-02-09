@@ -14,24 +14,11 @@ const isPhysicalFavored = (character: Character, artifactSet: CharacterArtifactS
 );
 
 // Bloom, Hyperbloom & Burgeon
+/**
+ * @deprecated Use character.canTrigger instead
+ */
 const canTriggerReaction = (character: Character, reaction: Reaction) => {
-  const anemoReactions: Reaction[] = ['Swirl'];
-  const geoReactions: Reaction[] = ['Crystallize', 'Shatter'];
-  const cryoReactions: Reaction[] = ['Melt', 'Frozen', 'Shatter', 'Superconduct'];
-  const dendroReactions: Reaction[] = ['Burning', 'Bloom', 'Burgeon', 'Hyperbloom', 'Quicken', 'Spread', 'Aggravate', 'Lunar-Bloom'];
-  const electroReactions: Reaction[] = ['Overloaded', 'Electro-Charged', 'Lunar-Charged', 'Superconduct', 'Quicken', 'Spread', 'Aggravate', 'Hyperbloom'];
-  const hydroReactions: Reaction[] = ['Vaporize', 'Electro-Charged', 'Lunar-Charged', 'Frozen', 'Shatter', 'Bloom', 'Burgeon', 'Hyperbloom', 'Lunar-Bloom'];
-  const pyroReactions: Reaction[] = ['Vaporize', 'Overloaded', 'Melt', 'Burning', 'Burgeon'];
-
-  return (
-    (character.element === 'Anemo' && anemoReactions.includes(reaction))
-    || (character.element === 'Geo' && geoReactions.includes(reaction))
-    || (character.element === 'Cryo' && cryoReactions.includes(reaction))
-    || (character.element === 'Dendro' && dendroReactions.includes(reaction))
-    || (character.element === 'Electro' && electroReactions.includes(reaction))
-    || (character.element === 'Hydro' && hydroReactions.includes(reaction))
-    || (character.element === 'Pyro' && pyroReactions.includes(reaction))
-  );
+  return character.canTrigger('playstyle-based', reaction);
 };
 
 // #region A-G

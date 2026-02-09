@@ -1,5 +1,6 @@
 import { Percentage, Rarity, WeaponStatName, WeaponType } from "../types";
 import Character from "./characters/Character";
+import CharacterPlaystyle from "./characters/CharacterPlaystyle";
 import { WeaponAscensionMaterial } from "./materials/AscensionMaterial";
 import CraftableMaterial from "./materials/CraftableMaterial";
 import { ModelKeys } from "./Model";
@@ -9,6 +10,12 @@ type SecondaryStatValue<TWeaponStatName extends WeaponStatName> =
   TWeaponStatName extends 'Elemental Mastery'
   ? number
   : Percentage<number>;
+
+type MatchScoreProps = {
+  playstyle: CharacterPlaystyle;
+  score: number;
+  character: Character;
+}
 
 export class Weapon<TWeaponStatName extends WeaponStatName = WeaponStatName> {
   public static isWeapon(obj: any): obj is Weapon {
@@ -32,6 +39,7 @@ export class Weapon<TWeaponStatName extends WeaponStatName = WeaponStatName> {
       materialB: CraftableMaterial,
     ],
     public droppedBy: WeaponDroppedBy,
+    public getMatchScore: (props: MatchScoreProps) => number,
     public signatureWeaponFor?: (data: typeof import('@/data/characters')) => Character | undefined
   ) {
     this.secondaryStatValue = (
