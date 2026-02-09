@@ -379,7 +379,7 @@ export const AshGravenDrinkingHorn = new Weapon(
 export const AstralVulturesCrimsonPlumage = new Weapon(
   `Astral Vulture's Crimson Plumage`,
   {
-    value: `For 12s after triggering a Swirld reaction, ATK increases by $0. In addition, when 1/2 or more characters in the party are of a different Elemental Type from the equipping character, the DMG dealt by the equipping character is increased by $1 and Elemental Burst DMG is increased by $2.`,
+    value: `For 12s after triggering a Swirl reaction, ATK increases by $0. In addition, when 1/2 or more characters in the party are of a different Elemental Type from the equipping character, the DMG dealt by the equipping character is increased by $1 and Elemental Burst DMG is increased by $2.`,
     refinements: [
       '24/30/36/42/48%',
       '(20/40%)/(25/60%)/(30/72%)/(35/84%)/(40/96%)',
@@ -2136,6 +2136,7 @@ export const FracturedHalo = new Weapon(
 
       if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
       if (character.can('Shield')) score += MODIFIERS.BONUS_ABILITY;
+      if (character.canTrigger('playstyle-based', 'Lunar-Charged')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
     }
 
     return score;
