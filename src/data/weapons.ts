@@ -5990,7 +5990,7 @@ export const ToukabouShigure = new Weapon(
     ]
   },
   'Sword',
-  Rarity.Legendary,
+  Rarity.Epic,
   510,
   'Elemental Mastery',
   165,
