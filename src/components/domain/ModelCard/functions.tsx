@@ -19,5 +19,5 @@ export function GetModelNameContainer(
 ) {
   return (props: any) => linkOnName
     ? <Link to={route} {...props} className={classNames("model-card__name-text", props.className)} />
-    : <Fragment {...props} />;
+    : <Fragment children={props.children} />;
 }
