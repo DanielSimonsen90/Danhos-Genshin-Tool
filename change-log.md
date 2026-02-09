@@ -18,3 +18,4 @@
 * Fungal Nucleus rarities being incorrect
 * An issue where null materials would show empty space without card styles
 * Character ascension material cards not following 3/6 column layout
+* Rare and below artifacts being included in most used

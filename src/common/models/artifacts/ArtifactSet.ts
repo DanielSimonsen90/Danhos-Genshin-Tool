@@ -47,7 +47,7 @@ export class ArtifactSet extends Material {
   }
 
   public doesStatIncrease(stat?: string) {
-    return this.includes(
+    return this.rarity > Rarity.Rare && this.includes(
       new RegExp(`${stat ?? '\\w+'}(?:\\s+\\((?:ult|ability)\\))?(?:\\s+(?:DMG|Bonus|Effectiveness|Strength))?\\s+\\+\\d+`, 'i')
     );
   }
