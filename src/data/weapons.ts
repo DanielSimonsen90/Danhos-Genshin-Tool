@@ -9,7 +9,7 @@ const MODIFIERS = {
   STAT: 20,
   CAN_TRIGGER_ELEMENT: 30,
   BONUS_ABILITY: 40
-};
+} as const;
 
 export const TheCatch = new Weapon(
   '"The Catch"',
@@ -92,7 +92,6 @@ export const AthameArtis = new Weapon(
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT * 2; // Self ATK buff + party ATK buff
     if (character.can('Hexerei Able')) score += MODIFIERS.BONUS_ABILITY;
     if (!playstyle.onField) score += MODIFIERS.FIELD;
-
     return score;
   },
   cs => cs.Durin
@@ -399,7 +398,7 @@ export const AstralVulturesCrimsonPlumage = new Weapon(
   ],
   'Wish',
   ({ playstyle, score, character }) => {
-    if (character.canTrigger('Swirl')) {
+    if (character.canTrigger('playstyle-based', 'Swirl')) {
       score += MODIFIERS.CAN_TRIGGER_ELEMENT;
 
       if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
@@ -709,12 +708,12 @@ export const BlackmarrowLantern = new Weapon(
   ],
   'Crafting',
   ({ score, character }) => {
-    if (character.canTrigger('Bloom')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
-    if (character.canTrigger('Lunar-Bloom')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    if (character.canTrigger('playstyle-based', 'Bloom')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    if (character.canTrigger('playstyle-based', 'Lunar-Bloom')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
     if (character.can('Increases Moonsign')) {
       score += MODIFIERS.BONUS_ABILITY;
 
-      if (character.canTrigger('Lunar-Bloom')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+      if (character.canTrigger('playstyle-based', 'Lunar-Bloom')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
     }
 
     return score;
@@ -745,7 +744,7 @@ export const BloodsoakedRuins = new Weapon(
   ({ playstyle, score, character }) => {
     if (
       playstyle.prioritizesTalents('Burst/Ult')
-      && character.canTrigger('Lunar-Charged')
+      && character.canTrigger('playstyle-based', 'Lunar-Charged')
     ) {
       score += MODIFIERS.TALENT + MODIFIERS.CAN_TRIGGER_ELEMENT;
     }
@@ -1147,7 +1146,7 @@ export const DarkIronSword = new Weapon(
   ],
   'NPC: Chen the Sharp',
   ({ playstyle, score, character }) => {
-    if (character.canTrigger(
+    if (character.canTrigger('playstyle-based', 
       'Overloaded',
       'Superconduct',
       'Electro-Charged',
@@ -1357,8 +1356,13 @@ export const EarthShaker = new Weapon(
     Drops.Whistle,
   ],
   'Crafting',
-  ({ playstyle, score }) => {
+  ({ playstyle, score, character }) => {
     if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+    if (character.canTrigger('playstyle-based', 'Pyro Reaction')) {
+      score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+
+      if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+    }
 
     return score;
   }
@@ -1415,7 +1419,7 @@ export const EmeraldOrb = new Weapon(
   ],
   'Wish',
   ({ playstyle, score, character }) => {
-    if (character.canTrigger(
+    if (character.canTrigger('playstyle-based', 
       'Vaporize',
       'Electro-Charged',
       'Frozen',
@@ -1601,7 +1605,7 @@ export const FlameForgedInsight = new Weapon(
   ],
   'Event',
   ({ playstyle, score, character }) => {
-    if (character.canTrigger(
+    if (character.canTrigger('playstyle-based', 
       'Electro-Charged',
       'Lunar-Charged',
       'Bloom',
@@ -1666,7 +1670,7 @@ export const FangOfTheMountainKing = new Weapon(
   'Wish',
   ({ playstyle, score, character }) => {
     if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
-    if (character.canTrigger('Burning', 'Burgeon')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    if (character.canTrigger('playstyle-based', 'Burning', 'Burgeon')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
 
     return score;
   },
@@ -2087,7 +2091,7 @@ export const ForestRegalia = new Weapon(
   ],
   'Crafting',
   ({ playstyle, score, character }) => {
-    if (character.canTrigger(
+    if (character.canTrigger('playstyle-based', 
       'Burning',
       'Quicken',
       'Aggravate',
@@ -2291,7 +2295,7 @@ export const HakushinRing = new Weapon(
   ],
   'Crafting',
   ({ score, character }) => {
-    if (character.canTrigger('Electro Reaction')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    if (character.canTrigger('playstyle-based', 'Electro Reaction')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
 
     return score;
   }
@@ -2753,7 +2757,7 @@ export const LightbearingMoonshard = new Weapon(
   "Wish",
   ({ playstyle, score, character }) => {
     if (playstyle.needsStat('DEF')) score += MODIFIERS.STAT;
-    if (character.canTrigger('Lunar-Crystallize')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    if (character.canTrigger('playstyle-based', 'Lunar-Crystallize')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
 
     return score;
   },
@@ -2811,7 +2815,7 @@ export const LionsRoar = new Weapon(
   ],
   'Wish',
   ({ score, character }) => {
-    if (character.canTrigger('Pyro Reaction', 'Electro Reaction')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    if (character.canTrigger('playstyle-based', 'Pyro Reaction', 'Electro Reaction')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
 
     return score;
   }
@@ -2922,7 +2926,7 @@ export const LumidouceElegy = new Weapon(
   'Wish',
   ({ playstyle, score, character }) => {
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
-    if (character.canTrigger('Burning') || character.element === 'Dendro') {
+    if (character.canTrigger('playstyle-based', 'Burning') || character.element === 'Dendro') {
       score += MODIFIERS.CAN_TRIGGER_ELEMENT;
 
       if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.STAT;
@@ -2987,7 +2991,7 @@ export const MagicGuide = new Weapon(
   ],
   'Wish',
   ({ score, character }) => {
-    if (character.canTrigger('Hydro Reaction', 'Electro Reaction')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    if (character.canTrigger('playstyle-based', 'Hydro Reaction', 'Electro Reaction')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
 
     return score;
   },
@@ -3272,7 +3276,7 @@ export const Moonpiercer = new Weapon(
   ],
   'Crafting',
   ({ playstyle, score, character }) => {
-    if (character.canTrigger(
+    if (character.canTrigger('playstyle-based', 
       'Burning',
       'Quicken',
       'Aggravate',
@@ -3398,7 +3402,7 @@ export const NocturnesCurtainCall = new Weapon(
   'Wish',
   ({ playstyle, score, character }) => {
     if (playstyle.needsStat('HP')) score += MODIFIERS.STAT;
-    if (character.canTrigger('Lunar')) {
+    if (character.canTrigger('playstyle-based', 'Lunar')) {
       score += MODIFIERS.CAN_TRIGGER_ELEMENT;
 
       if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.STAT;
@@ -3435,11 +3439,11 @@ export const NightweaversLookingGlass = new Weapon(
   ],
   'Wish',
   ({ playstyle, score, character }) => {
-    if (character.canTrigger('Hydro Reaction', 'Dendro Reaction')) {
+    if (character.canTrigger('playstyle-based', 'Hydro Reaction', 'Dendro Reaction')) {
       score += MODIFIERS.CAN_TRIGGER_ELEMENT;
 
       if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
-      if (character.canTrigger('Lunar-Bloom')) {
+      if (character.canTrigger('playstyle-based', 'Lunar-Bloom')) {
         score += MODIFIERS.CAN_TRIGGER_ELEMENT;
 
         if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
@@ -3632,7 +3636,7 @@ export const Predator = new Weapon(
   ],
   'Event',
   ({ playstyle, score, character }) => {
-    if (character.canTrigger('Cryo Reaction')) {
+    if (character.canTrigger('playstyle-based', 'Cryo Reaction')) {
       score += MODIFIERS.CAN_TRIGGER_ELEMENT;
 
       if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) score += MODIFIERS.TALENT;
@@ -3759,7 +3763,7 @@ export const ProspectorsShovel = new Weapon(
   ],
   'Crafting',
   ({ score, character }) => {
-    if (character.canTrigger('Electro-Charged', 'Lunar-Charged')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    if (character.canTrigger('playstyle-based', 'Electro-Charged', 'Lunar-Charged')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
     if (character.can('Increases Moonsign')) score += MODIFIERS.BONUS_ABILITY;
 
     return score;
@@ -3959,7 +3963,7 @@ export const Rainslasher = new Weapon(
   ],
   'Wish',
   ({ score, character }) => {
-    if (character.canTrigger('Hydro Reaction', 'Electro Reaction')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    if (character.canTrigger('playstyle-based', 'Hydro Reaction', 'Electro Reaction')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
 
     return score;
   }
@@ -4018,7 +4022,7 @@ export const RavenBow = new Weapon(
   ],
   'Wish',
   ({ score, character }) => {
-    if (character.canTrigger('Hydro Reaction', 'Pyro Reaction')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    if (character.canTrigger('playstyle-based', 'Hydro Reaction', 'Pyro Reaction')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
 
     return score;
   },
@@ -4105,7 +4109,7 @@ export const ReliquaryOfTruth = new Weapon(
       score += MODIFIERS.TALENT;
 
       if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
-      if (character.canTrigger('Lunar-Bloom')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+      if (character.canTrigger('playstyle-based', 'Lunar-Bloom')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
     }
 
     return score;
@@ -4530,7 +4534,7 @@ export const SapwoodBlade = new Weapon(
   ],
   'Crafting',
   ({ playstyle, score, character }) => {
-    if (character.canTrigger(
+    if (character.canTrigger('playstyle-based', 
       'Burning',
       'Quicken',
       'Aggravate',
@@ -5013,7 +5017,7 @@ export const SnowTombedStarsilver = new Weapon(
   ({ playstyle, score, character }) => {
     if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) score += MODIFIERS.TALENT;
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
-    if (character.canTrigger('Cryo Reaction')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    if (character.canTrigger('playstyle-based', 'Cryo Reaction')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
     if (playstyle.onField) score += MODIFIERS.FIELD;
 
     return score;
@@ -5134,7 +5138,7 @@ export const SplendorOfTranquilWaters = new Weapon(
     if (playstyle.needsStat('HP')) score += MODIFIERS.STAT;
     if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
     if (character.can('Off-field Damage')) score += MODIFIERS.BONUS_ABILITY;
-  if (character.can('Heal') || character.can('Self-heal')) {
+    if (character.can('Heal') || character.can('Self-heal')) {
       score += MODIFIERS.BONUS_ABILITY;
 
       if (playstyle.needsStat('HP')) score += MODIFIERS.STAT;
@@ -5332,7 +5336,7 @@ export const SunnyMorningSleepIn = new Weapon(
     if (playstyle.needsStat('Elemental Mastery')) {
       score += MODIFIERS.STAT;
 
-      if (character.canTrigger('Swirl')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+      if (character.canTrigger('playstyle-based', 'Swirl')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
       if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
       if (playstyle.prioritizesTalents('Burst/Ult')) score += MODIFIERS.TALENT;
     }
@@ -5368,7 +5372,7 @@ export const SurfsUp = new Weapon(
     if (playstyle.prioritizesTalents('Normal/Press')) {
       score += MODIFIERS.TALENT;
 
-      if (character.canTrigger('Vaporize')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+      if (character.canTrigger('playstyle-based', 'Vaporize')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
     }
 
     return score;
@@ -6144,7 +6148,7 @@ export const Verdict = new Weapon(
   'Wish',
   ({ playstyle, score, character }) => {
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
-    if (character.canTrigger('Crystallize')) {
+    if (character.canTrigger('playstyle-based', 'Crystallize')) {
       score += MODIFIERS.BONUS_ABILITY;
 
       if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;

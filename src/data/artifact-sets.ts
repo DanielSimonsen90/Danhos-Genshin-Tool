@@ -18,7 +18,7 @@ const isPhysicalFavored = (character: Character, artifactSet: CharacterArtifactS
  * @deprecated Use character.canTrigger instead
  */
 const canTriggerReaction = (character: Character, reaction: Reaction) => {
-  return character.canTrigger(reaction); // TODO: Replace calls to this function with internal character function
+  return character.canTrigger('playstyle-based', reaction);
 };
 
 // #region A-G

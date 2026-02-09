@@ -30,7 +30,8 @@ export type FoodBuffType = 'Restorative' | 'Attack' | 'Defense' | 'Adventure'
 export type MapIconType = 'Ore veins used in forging' | `Local Specialties in ${TeyvatRegion}` | 'Recovery Orbs (stamina & hp gained from collision increased by 25%)'
 
 
-export type PassiveTalent = 
+export type PassiveTalent = (
+
   // Movement
   | `${'15' | '20' | '35'}% ${PlayerTransportationType} consumption reduction.`
   | `${'15'}% ${PlayerTransportationType} speed increase.`
@@ -91,3 +92,6 @@ export type PassiveTalent =
   | `Elemental Skill is increased by 1 level for all party members, if the team consists of Hydro/Cryo characters and at least 1 of each element.`
   | `While in Nod-Krai, if a member on your team dies, Columbina will revive them and restore health based on Columbina's friendship level. Cooldown 100s. Does not work in domains.`
   | `Collects elemental energy at night`
+);
+
+export type TriggerableReactionFilter = 'all' | 'playstyle-based';

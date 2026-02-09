@@ -1,7 +1,8 @@
-import { Element, WeaponType, BonusAbility, Rarity, TeyvatRegion, PassiveTalent, BonusAbilitySimple, Reaction } from '@/common/types';
+import { Element, WeaponType, BonusAbility, Rarity, TeyvatRegion, PassiveTalent, BonusAbilitySimple, Reaction, TriggerableReactionFilter } from '@/common/types';
 import CharacterPlaystyle from './CharacterPlaystyle';
 import CharacterAscension from './CharacterAscension';
 import { ModelKeys } from '../Model';
+import { ELementalReactionMemoizeService, ElementalReactions, TriggerableReactions } from '@/common/constants/genshin';
 
 export class Character<TElement extends Element = Element> {
   public static isCharacter(obj: any): obj is Character {
@@ -37,30 +38,44 @@ export class Character<TElement extends Element = Element> {
   
   public canHeal(): boolean { return this.bonusAbilities.includes('Heal'); }
   public can(...bonusAbilities: Array<BonusAbilitySimple>): boolean { 
-    return this.bonusAbilities.some(ability => 
-      bonusAbilities.some(bonusAbility => 
+    return bonusAbilities.some(ability => 
+      this.bonusAbilities.some(bonusAbility => 
         bonusAbility.toString().includes(ability)
       )
     ); 
   }
-  public canTrigger(...reactions: Reaction[]) {
-    const anemoReactions: Reaction[] = ['Anemo Reaction', 'Swirl'];
-    const geoReactions: Reaction[] = ['Geo Reaction', 'Crystallize', 'Shatter', 'Lunar-Crystallize'];
-    const cryoReactions: Reaction[] = ['Cryo Reaction', 'Melt', 'Frozen', 'Shatter', 'Superconduct'];
-    const dendroReactions: Reaction[] = ['Dendro Reaction', 'Burning', 'Bloom', 'Burgeon', 'Hyperbloom', 'Quicken', 'Spread', 'Aggravate', 'Lunar-Bloom'];
-    const electroReactions: Reaction[] = ['Electro Reaction', 'Overloaded', 'Electro-Charged', 'Lunar-Charged', 'Superconduct', 'Quicken', 'Spread', 'Aggravate', 'Hyperbloom'];
-    const hydroReactions: Reaction[] = ['Hydro Reaction', 'Vaporize', 'Electro-Charged', 'Lunar-Charged', 'Frozen', 'Shatter', 'Bloom', 'Burgeon', 'Hyperbloom', 'Lunar-Bloom', 'Lunar-Crystallize'];
-    const pyroReactions: Reaction[] = ['Pyro Reaction', 'Vaporize', 'Overloaded', 'Melt', 'Burning', 'Burgeon'];
 
-    return (
-      (this.element === 'Anemo' && anemoReactions.some(reaction => reactions.includes(reaction)))
-      || (this.element === 'Geo' && geoReactions.some(reaction => reactions.includes(reaction)))
-      || (this.element === 'Cryo' && cryoReactions.some(reaction => reactions.includes(reaction)))
-      || (this.element === 'Dendro' && dendroReactions.some(reaction => reactions.includes(reaction)))
-      || (this.element === 'Electro' && electroReactions.some(reaction => reactions.includes(reaction)))
-      || (this.element === 'Hydro' && hydroReactions.some(reaction => reactions.includes(reaction)))
-      || (this.element === 'Pyro' && pyroReactions.some(reaction => reactions.includes(reaction)))
-    );
+  public canTrigger(filter: TriggerableReactionFilter, ...reactions: Reaction[]) {
+    const triggerableReactions = this.getTriggerableReactions(filter);
+    return reactions.some(reaction => triggerableReactions.includes(reaction));
+  }
+
+  public getTriggerableReactions(filter: TriggerableReactionFilter) {
+    const triggerableReactions = ELementalReactionMemoizeService.memoize(() => (
+      Object
+      .entries(TriggerableReactions)
+      .filter(([_, elements]) => elements.includes(this.element))
+      .map(([reaction]) => reaction as Reaction)
+    ), [this.element, filter]);
+
+    if (filter === 'all' || !this.playstyle) return triggerableReactions;
+
+    const isReactionLimited = ElementalReactions.some(reaction => (
+      this.playstyle?.name.includes(reaction)
+    ));
+
+    if (this.name === 'Kinich') console.log({ 
+      isReactionLimited, 
+      result: triggerableReactions.filter(reaction => (
+        this.playstyle?.name.includes(reaction)
+      ))
+    });
+
+    if (isReactionLimited) return triggerableReactions.filter(reaction => (
+      this.playstyle?.name.includes(reaction)
+    ));
+
+    return triggerableReactions;
   }
 
   public getModelKey(): ModelKeys {
