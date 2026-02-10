@@ -32,5 +32,5 @@ export const TriggerableReactions: Record<Reaction, Array<Element>> = {
   'Vaporize': ['Hydro', 'Pyro'],
 };
 
-export const ElementalReactions = Array.from(new Set(Object.values(TriggerableReactions).flat()));
-export const ELementalReactionMemoizeService = new MemoizeService();
+export const ElementalReactions = Object.keys(TriggerableReactions) as Reaction[];
+export const ElementalReactionMemoizeService = new MemoizeService();

@@ -182,13 +182,10 @@ export default function WeaponCard({
                       wrapInLink: true,
                       children: ({ character }) => {
                         const recommendationCharacter = getRecommendedCharactersForWeapon(weapon).get(character.rarity)
-                        const recommendedIndex = recommendationCharacter
-                          ? recommendationCharacter.findIndex(c => c.character.name === character.name)
-                          : -1;
                         const recommendationScore = recommendationCharacter
-                          ? recommendationCharacter[recommendedIndex].score
-                          : 0;
-                        const scoreColor = WeaponSearchService.getScoreColor(recommendationScore)
+                          ? recommendationCharacter.find(c => c.character.name === character.name)?.score
+                          : undefined;
+                        const scoreColor = WeaponSearchService.getScoreColor(recommendationScore ?? 0);
                         
                         return (
                           <p style={{ color: scoreColor }}>

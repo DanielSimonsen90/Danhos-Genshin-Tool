@@ -2,7 +2,7 @@ import { Element, WeaponType, BonusAbility, Rarity, TeyvatRegion, PassiveTalent,
 import CharacterPlaystyle from './CharacterPlaystyle';
 import CharacterAscension from './CharacterAscension';
 import { ModelKeys } from '../Model';
-import { ELementalReactionMemoizeService, ElementalReactions, TriggerableReactions } from '@/common/constants/genshin';
+import { ElementalReactionMemoizeService, ElementalReactions, TriggerableReactions } from '@/common/constants/genshin';
 
 export class Character<TElement extends Element = Element> {
   public static isCharacter(obj: any): obj is Character {
@@ -23,20 +23,19 @@ export class Character<TElement extends Element = Element> {
     this.bonusAbilities = this.bonusAbilities.sort();
   }
   
-  /** @depricated - use playstyle.needsStat('HP') */
+  /** @deprecated - use playstyle.needsStat('HP') */
   public needsHP(): boolean { return this.playstyle?.talentStats.includes('HP') ?? false; }
-  /** @depricated - use playstyle.needsStat('ATK') */
+  /** @deprecated - use playstyle.needsStat('ATK') */
   public needsATK(): boolean { return this.playstyle?.talentStats.includes('ATK') ?? false; }
-  /** @depricated - use playstyle.needsStat('DEF') */
+  /** @deprecated - use playstyle.needsStat('DEF') */
   public needsDEF(): boolean { return this.playstyle?.talentStats.includes('DEF') ?? false; }
-  /** @depricated - use playstyle.needsStat('Energy Recharge') */
+  /** @deprecated - use playstyle.needsStat('Energy Recharge') */
   public needsER(): boolean { return this.playstyle?.talentStats.includes('Energy Recharge') ?? false; }
-  /** @depricated - use playstyle.needsStat('Elemental Mastery') */
+  /** @deprecated - use playstyle.needsStat('Elemental Mastery') */
   public needsEM(): boolean { return this.playstyle?.talentStats.includes('Elemental Mastery') ?? false; }
-  /** @depricated - use playstyle.needsStat('Physical DMG Bonus') */
+  /** @deprecated - use playstyle.needsStat('Physical DMG Bonus') */
   public needsPhysicalDMG(): boolean { return this.playstyle?.talentStats.includes('Physical DMG Bonus') ?? false; }
   
-  public canHeal(): boolean { return this.bonusAbilities.includes('Heal'); }
   public can(...bonusAbilities: Array<BonusAbilitySimple>): boolean { 
     return bonusAbilities.some(ability => 
       this.bonusAbilities.some(bonusAbility => 
@@ -51,7 +50,7 @@ export class Character<TElement extends Element = Element> {
   }
 
   public getTriggerableReactions(filter: TriggerableReactionFilter) {
-    const triggerableReactions = ELementalReactionMemoizeService.memoize(() => (
+    const triggerableReactions = ElementalReactionMemoizeService.memoize(() => (
       Object
       .entries(TriggerableReactions)
       .filter(([_, elements]) => elements.includes(this.element))
