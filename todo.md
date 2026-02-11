@@ -1,7 +1,10 @@
 ```ts
-type BaseStore<TState extends Record<string, StateProxy>> = {
-  persistenceKey: string; // Save to localStorage
-  toJSON(): string | undefined;
+type BaseStore<TState extends Record<string, StateProxy>, TPersistedState> = {
+  persist?: {
+    key: string;
+    toJSON(): TPersistedState;
+    version: number;
+  }
 }
 
 type AccountStore = {
