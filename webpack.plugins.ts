@@ -16,6 +16,9 @@ const copyPlugins = new CopyWebpackPlugin({
 export const plugins = [
   new ForkTsCheckerWebpackPlugin({
     logger: 'webpack-infrastructure',
+    typescript: {
+      configFile: path.resolve(__dirname, 'tsconfig.json'),
+    }
   }),
   copyPlugins
 ] as any[];

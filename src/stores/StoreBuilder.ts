@@ -1,11 +1,13 @@
-import { Functionable } from "@/common/types";
 import { useSyncExternalStore } from "react";
+import { Functionable } from "@/common/types";
+import MemoizeService from "@/services/MemoizeService";
 
 type Subscriber = () => void;
 
 type PersistenceConfig<TState> = {
   key: string;
-  toJSON(state: TState): string;
+  stringify?: (state: TState) => string;
+  parse?: (stored: string) => TState;
   version: number;
 };
 
@@ -16,13 +18,14 @@ export default class StoreBuilder<AccumState = {}, AccumApi = {}> {
   protected api: AccumApi = {} as AccumApi;
   protected subscribers = new Set<Subscriber>();
   protected persist?: PersistenceConfig<any>;
+  protected memoService = new MemoizeService();
 
   constructor(initialState?: AccumState) {
     this.state = initialState || ({} as AccumState);
   }
 
   // #region Lifecycle
-  public setState(partial: Functionable<Partial<AccumState>>) {
+  protected setState(partial: Functionable<Partial<AccumState>>) {
     const update = typeof partial === "function"
       ? (partial as (state: AccumState) => Partial<AccumState>)(this.state)
       : partial;
@@ -30,22 +33,26 @@ export default class StoreBuilder<AccumState = {}, AccumApi = {}> {
     this.subscribers.forEach(subscriber => subscriber());
 
     if (this.persist) {
+      const { key, stringify = JSON.stringify } = this.persist;
+
       try {
-        localStorage.setItem(this.persist.key, this.persist.toJSON(this.state));
+        localStorage.setItem(key, stringify(this.state));
       } catch { }
     }
   };
 
-  public getState() {
+  protected getState() {
     return this.state;
   }
 
   protected onInit() {
     if (this.persist) {
+      const { key, parse = JSON.parse } = this.persist;
+      
       try {
-        const stored = localStorage.getItem(this.persist.key);
+        const stored = localStorage.getItem(key);
         if (stored) {
-          const parsed = JSON.parse(stored);
+          const parsed = parse(stored);
           this.state = { ...this.state, ...parsed };
         }
       } catch { }
@@ -60,10 +67,10 @@ export default class StoreBuilder<AccumState = {}, AccumApi = {}> {
   };
 
   public getSnapshot() {
-    return { ...this.state, ...this.api };
+    return this.memoService.memoize(() => ({ ...this.state, ...this.api }), [this.state, this.api]);
   }
 
-  public inject<OtherState, OtherApi>(
+  protected inject<OtherState, OtherApi>(
     injectedStore: Store<OtherState, OtherApi> | StoreBuilder<OtherState, OtherApi>,
     callback: (this: AccumState & AccumApi, injected: OtherState & OtherApi, self: AccumState & AccumApi) => void
   ) {
@@ -83,11 +90,10 @@ export default class StoreBuilder<AccumState = {}, AccumApi = {}> {
 
   // #region Builder API
   public addState<TState>(
-    callback: (set: (partial: Functionable<Partial<AccumState & TState>>) => void) => TState
+    state: TState
   ): StoreBuilder<AccumState & TState, AccumApi> {
-    const newState = callback(this.setState.bind(this));
-    this.state = { ...this.state, ...newState };
-    return this as any;
+    this.state = { ...this.state, ...state };
+    return this as any as StoreBuilder<AccumState & TState, AccumApi>;
   }
 
   public addApi<TApi>(
@@ -101,7 +107,7 @@ export default class StoreBuilder<AccumState = {}, AccumApi = {}> {
       this.setState.bind(this)
     );
     this.api = { ...this.api, ...newApi };
-    return this as any;
+    return this as any as StoreBuilder<AccumState, AccumApi & TApi>
   }
 
   public addSlice<TSliceState, TSliceApi>(
@@ -109,7 +115,7 @@ export default class StoreBuilder<AccumState = {}, AccumApi = {}> {
   ): StoreBuilder<AccumState & TSliceState, AccumApi & TSliceApi> {
     this.state = { ...this.state, ...slice.getState() };
     this.api = { ...this.api, ...slice };
-    return this as StoreBuilder<AccumState & TSliceState, AccumApi & TSliceApi>;
+    return this as any as StoreBuilder<AccumState & TSliceState, AccumApi & TSliceApi>;
   }
 
   public addPersistence(config: PersistenceConfig<AccumState>): this {
@@ -125,6 +131,21 @@ export default class StoreBuilder<AccumState = {}, AccumApi = {}> {
     return this;
   }
 
+  private useStore(): AccumState & AccumApi;
+  private useStore<TSelected>(selector: (store: AccumState & AccumApi) => TSelected): TSelected;
+  private useStore<TSelected>(selector?: (store: AccumState & AccumApi) => TSelected) {
+    const store = useSyncExternalStore(
+      this.subscribe.bind(this),
+      this.getSnapshot.bind(this)
+    );
+
+    return (
+      selector
+        ? selector(store)
+        : store
+    );
+  }
+
   public buildStore() {
     this.onInit();
     
@@ -132,7 +153,7 @@ export default class StoreBuilder<AccumState = {}, AccumApi = {}> {
       getState: this.getState.bind(this),
       setState: this.setState.bind(this),
       subscribe: this.subscribe.bind(this),
-      useStore: () => useSyncExternalStore(this.subscribe, this.getSnapshot.bind(this)),
+      useStore: this.useStore.bind(this),
       getStore: () => this,
       ...this.api,
     };
