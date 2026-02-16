@@ -55,7 +55,7 @@ export default function WeaponCard({
       (signatureCharacter && showSignatureCharacter)
       || showRecommendedCharacters
     ) 
-      ? getRecommendedCharactersForWeapon(weapon)
+      ? getRecommendedCharactersForWeapon(name)
       : undefined;
 
     if (signatureCharacter && showSignatureCharacter) {
@@ -80,7 +80,7 @@ export default function WeaponCard({
     }
 
     if (showRecommendedCharacters) {
-      const recommendedCharacters = getRecommendedCharactersForWeapon(weapon);
+      const recommendedCharacters = getRecommendedCharactersForWeapon(name);
 
       for (const [rarity, characters] of recommendedCharacters.entries()) {
         result.set(rarityString(rarity), {
@@ -181,7 +181,7 @@ export default function WeaponCard({
                     cardProps={{
                       wrapInLink: true,
                       children: ({ character }) => {
-                        const recommendationCharacter = getRecommendedCharactersForWeapon(weapon).get(character.rarity)
+                        const recommendationCharacter = getRecommendedCharactersForWeapon(name).get(character.rarity)
                         const recommendationScore = recommendationCharacter
                           ? recommendationCharacter.find(c => c.character.name === character.name)?.score
                           : undefined;

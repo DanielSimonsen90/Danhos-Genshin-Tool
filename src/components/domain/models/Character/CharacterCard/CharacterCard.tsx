@@ -7,7 +7,7 @@ import { CharacterImage, ElementImage, WeaponImage } from "@/components/common/m
 import ModelCard, { BaseModelCardProps, ModelRarityTabGroup } from "@/components/domain/ModelCard";
 import { Region } from "@/components/domain";
 
-import { useDataStore } from "@/stores";
+import { useDataStore, useWeaponData } from "@/stores";
 
 import CharacterPlaystyle from "../CharacterPlaystyle";
 import { MaterialCard } from "../../Material";
@@ -50,11 +50,10 @@ export default function CharacterCard({
 }: Props) {
   const { name, bonusAbilities, rarity } = character;
 
-  const getSignatureWeaponFor = useDataStore(store => store.getSignatureWeaponFor);
-  const getRecommendedWeaponsFor = useDataStore(store => store.getRecommendedWeaponsForCharacter);
+  const WeaponsStore = useWeaponData();
 
-  const signatureWeapon = useMemo(() => getSignatureWeaponFor(character), [character, getSignatureWeaponFor]);
-  const recommendedWeapons = useMemo(() => showRecommendedWeapons ? getRecommendedWeaponsFor(character) : undefined, [character, getRecommendedWeaponsFor, showRecommendedWeapons]);
+  const signatureWeapon = useMemo(() => WeaponsStore.getSignatureWeaponFor(name), [name, WeaponsStore]);
+  const recommendedWeapons = useMemo(() => showRecommendedWeapons ? WeaponsStore.getRecommendedWeaponsForCharacter(name) : undefined, [name, WeaponsStore, showRecommendedWeapons]);
   const weapons = useMemo(() => {
     if (!recommendedWeapons) return List.from([]);
     

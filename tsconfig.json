@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es2021",
     "allowJs": true,
     "module": "commonjs",
     "jsx": "react-jsx",

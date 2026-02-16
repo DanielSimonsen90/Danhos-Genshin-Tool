@@ -141,7 +141,7 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
           && !character.passiveTalent?.toLowerCase().includes('time')
         ),
       },
-      hasSignatureWeapon: character => !!DataStore.getSignatureWeaponFor(character),
+      hasSignatureWeapon: character => !!DataStore.getSignatureWeaponFor(character.name),
       region: {
         mondstadt: character => character.region === "Mondstadt",
         liyue: character => character.region === "Liyue",

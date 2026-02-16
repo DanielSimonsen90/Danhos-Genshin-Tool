@@ -1,6 +1,6 @@
 import type { SetStateAction } from "react";
 import TabBar from "@/components/common/TabBar";
-import { useDataStore, useAccountStore } from "@/stores";
+import { useAccountStore } from "@/stores";
 
 import { CreatePriorityListButton } from "./components";
 import { useModifyPriorityList, usePriorityListTabs } from "./hooks";
@@ -8,9 +8,8 @@ import { PriorityList, PriorityLists } from "./PriorityListTypes";
 import { getDefaultPriorityLists } from "./PriorityListFunctions";
 
 export default function PriorityList() {
-  const DataStore = useDataStore();
   const AccountStore = useAccountStore();
-  const priorityLists = AccountStore.accountData.priorityLists ?? getDefaultPriorityLists(DataStore);
+  const priorityLists = AccountStore.accountData.priorityLists ?? getDefaultPriorityLists();
 
   const setPriorityLists = (newPriorityListsOrUpdater: SetStateAction<PriorityLists>) => {
     const newPriorityLists = typeof newPriorityListsOrUpdater === 'function'

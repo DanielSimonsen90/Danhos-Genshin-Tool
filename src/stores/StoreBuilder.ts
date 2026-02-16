@@ -74,8 +74,8 @@ export default class StoreBuilder<AccumState = {}, AccumApi = {}> {
     injectedStore: Store<OtherState, OtherApi> | StoreBuilder<OtherState, OtherApi>,
     callback: (this: AccumState & AccumApi, injected: OtherState & OtherApi, self: AccumState & AccumApi) => void
   ) {
-    const injectedSnapshot = "getStore" in injectedStore 
-      ? injectedStore.getStore().getSnapshot() 
+    const injectedSnapshot = "getBuilder" in injectedStore 
+      ? injectedStore.getBuilder().getSnapshot() 
       : injectedStore.getSnapshot();
 
     injectedStore.subscribe(() => {
@@ -98,13 +98,20 @@ export default class StoreBuilder<AccumState = {}, AccumApi = {}> {
 
   public addApi<TApi>(
     callback: (
-      get: () => AccumState, 
-      set: (partial: Functionable<Partial<AccumState>>) => void
+      props: {
+        get: () => AccumState, 
+        set: (partial: Functionable<Partial<AccumState>>) => void,
+        api: AccumApi,
+        builder: StoreBuilder<AccumState, AccumApi>
+      }
     ) => TApi
   ): StoreBuilder<AccumState, AccumApi & TApi> {
-    const newApi = callback(
-      this.getState.bind(this), 
-      this.setState.bind(this)
+    const newApi = callback({
+      get: this.getState.bind(this), 
+      set: this.setState.bind(this),
+      api: this.api,
+      builder: this,
+    }
     );
     this.api = { ...this.api, ...newApi };
     return this as any as StoreBuilder<AccumState, AccumApi & TApi>
@@ -154,7 +161,7 @@ export default class StoreBuilder<AccumState = {}, AccumApi = {}> {
       setState: this.setState.bind(this),
       subscribe: this.subscribe.bind(this),
       useStore: this.useStore.bind(this),
-      getStore: () => this,
+      getBuilder: () => this,
       ...this.api,
     };
   }

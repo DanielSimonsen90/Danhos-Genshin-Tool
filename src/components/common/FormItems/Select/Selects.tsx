@@ -2,14 +2,15 @@ import { addSpacesToCamelCase, snakeCaseFromCamelCase } from "@/common/functions
 import type { ArtifactPartName, MainStatMap, MainStatName, SubStatName } from "@/common/types";
 
 import { useArtifactData, useCharacterData } from "@/stores/DataStore";
-import { DataStore } from "@/stores/DataStore/DataStoreTypes";
+import type { DataStoreState } from "@/stores/DataStore";
 
 import type { PublicProps, PublicMultipleProps } from "./types";
 import Select from "./Select";
 import SelectMultiple from "./SelectMultiple";
 
+
 export const SelectArtifactSet = (
-  props: PublicProps<DataStore['ArtifactNames'][0]>
+  props: PublicProps<DataStoreState['ArtifactNames'][0]>
 ) => {
   const { ArtifactNames: ArtifactSetNames } = useArtifactData();
 
@@ -23,7 +24,7 @@ export const SelectArtifactSet = (
 }
 
 export const SelectCharacter = (
-  props: PublicProps<DataStore['CharacterNames'][0]>
+  props: PublicProps<DataStoreState['CharacterNames'][0]>
 ) => {
   const { CharacterNames } = useCharacterData();
 

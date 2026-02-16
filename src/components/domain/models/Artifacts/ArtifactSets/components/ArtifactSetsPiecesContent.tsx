@@ -1,6 +1,6 @@
-import { CharacterUsingArtifactResult } from "@/stores";
 import SearchableList from "@/components/domain/SearchableList";
 import { CharacterCard } from "@/components/domain/models/Character";
+import { CharacterUsingArtifactResult } from "@/stores/DataStore/DataStoreTypes";
 
 type ArtifactSetsPiecesContentProps = {
   results: CharacterUsingArtifactResult[];

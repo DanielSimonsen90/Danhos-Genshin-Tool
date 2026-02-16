@@ -40,9 +40,9 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
     if (!confirm(`Are you sure you want to delete the tab "${tab}"?`)) return;
 
     let { [tab]: _, ...newPriorityList } = priorityLists;
-    if (!Object.keys(newPriorityList).length) newPriorityList = getDefaultPriorityLists(DataStore);
+    if (!Object.keys(newPriorityList).length) newPriorityList = getDefaultPriorityLists();
     setPriorityLists(newPriorityList);
-  }, [priorityLists, DataStore, setPriorityLists]);
+  }, [priorityLists, setPriorityLists]);
   const onClone = useCallback((tab: string) => {
     const priorityList = priorityLists?.[tab];
     if (!priorityList) return;

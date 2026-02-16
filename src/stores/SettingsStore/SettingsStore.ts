@@ -19,7 +19,7 @@ const SettingsStore = new StoreBuilder()
     initialSettings: DEFAULT_SETTINGS,
     hideNotice: false,
   })
-  .addApi((get, set) => {
+  .addApi(({ get, set }) => {
     const setHideNotice = (hide: boolean) => set({ hideNotice: hide });
     const computedHasCustomSettings = () => {
       return memoService.memoize(() => (
@@ -70,7 +70,7 @@ const SettingsStore = new StoreBuilder()
       }
     };
   })
-  .addApi((get, set) => {
+  .addApi(({ get, set }) => {
     function getSetting<TKey extends keyof AppSettings>(key: TKey) {
       return get().settings[key];
     }
@@ -116,23 +116,23 @@ const SettingsStore = new StoreBuilder()
       const filteredSettings = Object.keys({ ...get().settings, resolvedUpdate }).reduce((acc, key) => {
         if (validSettingsKeys.includes(key)) {
           const source = (
-            (resolvedUpdate as any)[key] !== undefined 
-            ? resolvedUpdate 
-            : get().settings
+            (resolvedUpdate as any)[key] !== undefined
+              ? resolvedUpdate
+              : get().settings
           );
           (acc as any)[key] = source;
         }
 
-        return acc
-      }, {} as AppSettings)
+        return acc;
+      }, {} as AppSettings);
 
       debugLog('Settings saved', filteredSettings);
 
       const newInitialSettings = { ...filteredSettings };
-      set({ 
+      set({
         initialSettings: newInitialSettings,
         settings: newInitialSettings
-      })
+      });
     }
 
     function updateAndSaveSettings(update: SetStateAction<Partial<AppSettings>>): void;
@@ -143,7 +143,7 @@ const SettingsStore = new StoreBuilder()
       updateSettings(resolvedUpdate, override);
       saveSettings(resolvedUpdate);
     }
-    
+
     function resetSettings() {
       updateAndSaveSettings(DEFAULT_SETTINGS);
     }

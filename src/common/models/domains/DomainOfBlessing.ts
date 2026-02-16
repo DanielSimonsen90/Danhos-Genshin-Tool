@@ -1,11 +1,11 @@
 import { TeyvatRegion, ResinCost } from "@/common/types/genshin";
-import ArtifactSet from "../artifacts/ArtifactSet";
 import { Domain } from "./Domain";
+import { DomainType } from "../Model";
 
 /**
  * Domain for artifacts
  */
-export class DomainOfBlessing extends Domain<ArtifactSet> {
+export class DomainOfBlessing extends Domain {
   public static isDomainBlessing(obj: any): obj is DomainOfBlessing {
     return obj instanceof DomainOfBlessing;
   }
@@ -18,7 +18,9 @@ export class DomainOfBlessing extends Domain<ArtifactSet> {
     super(name, description, leyLineDisorder, ResinCost.Twenty, region);
   }
 
-  public isBlessing(): this is DomainOfBlessing { return true; }
+  public getDomainType(): DomainType {
+    return 'Blessing';
+  }
 }
 
 export default DomainOfBlessing;

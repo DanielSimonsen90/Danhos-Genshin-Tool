@@ -12,7 +12,6 @@ import { SearchResult, ArtifactSearchService } from "@/services";
 
 import { useCacheStore, useDataStore } from "@/stores";
 import type { CacheStore } from "@/stores/CacheStore/CacheStoreTypes";
-import type { DataStore } from "@/stores/DataStore/DataStoreTypes";
 
 import { SearchResult as SearchResultComponent } from "./components";
 import ArtifactHelper from "../ArtifactHelper";
@@ -33,7 +32,7 @@ export default function SearchQuery() {
   const Result = useCallback(() => results ? <SearchResultComponent result={results} /> : <p>No results</p>, [results]);
 
   useEffect(() => {
-    const { formData, results } = getSearchResultsFromQuery(query, CacheStore, DataStore);
+    const { formData, results } = getSearchResultsFromQuery(query, CacheStore);
 
     setFormData(formData);
     setResults(results);
@@ -70,7 +69,7 @@ export default function SearchQuery() {
   );
 }
 
-function getSearchResultsFromQuery(query: string, CacheStore: CacheStore, DataStore: DataStore) {
+function getSearchResultsFromQuery(query: string, CacheStore: CacheStore) {
   const formData = CacheStore.getFromItem('searchHistory', query, '{}');
   debugLog('getSearchResultsFromQuery cached', { query, formData });
   if (!formData) return { formData, results: null };
@@ -79,7 +78,7 @@ function getSearchResultsFromQuery(query: string, CacheStore: CacheStore, DataSt
   const results = ArtifactSearchService.search({
     ...formData,
     artifactSetName: pascalCaseFromSnakeCase(artifactSetName),
-  }, CacheStore, DataStore);
+  }, CacheStore);
 
   debugLog('getSearchResultsFromQuery result', { query, results });
   return { formData, results };

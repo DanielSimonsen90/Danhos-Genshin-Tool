@@ -9,7 +9,7 @@ export type Traveler = 'lumine' | 'aether';
 export type FavoriteModels = {
   characters: Character;
   artifacts: ArtifactSet;
-  domains: Domain<any>;
+  domains: Domain;
   mobs: Mob;
   materials: Material;
   weapons: Weapon;

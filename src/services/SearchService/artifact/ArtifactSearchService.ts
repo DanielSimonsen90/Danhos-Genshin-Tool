@@ -4,7 +4,6 @@ import { SearchFormData } from '@/common/types/store-data';
 import { DebugLog } from '@/common/functions/dev';
 
 import { CacheStore } from '@/stores/CacheStore/CacheStoreTypes';
-import { DataStore } from '@/stores/DataStore/DataStoreTypes';
 
 import { List, OrderByComparator } from '@/common/models/List';
 
@@ -16,6 +15,7 @@ import {
 import { SearchResult, SearchResultItem, LastResult } from './types';
 import { ScoringEngine } from './ScoringEngine';
 import BaseSearchService from '../base/BaseSearchService';
+import DataStore from '@/stores/DataStore/DataStore';
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchService);
 
@@ -33,8 +33,9 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
     artifactPartName: ArtifactPartName,
     mainStat: MainStatName,
     subStats: SubStatName[],
-    { Characters }: DataStore,
   ): List<SearchResultItem> {
+    const { Characters } = DataStore.getState();
+
     debugLog('group', 'searchArtifactSets');
     debugLog('params', { set, artifactPartName, mainStat, subStats });
 
@@ -74,10 +75,10 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
     artifactPartName: ArtifactPartName,
     mainStat: MainStatName,
     subStats: SubStatName[],
-    { Characters }: DataStore,
   ): List<SearchResultItem> {
     debugLog('group', 'searchCharacterRecommendations');
-    
+    const { Characters } = DataStore.getState();
+
     // Filter characters that use the artifact set
     const charactersUsesSet = Characters.filter(c => c.playstyle?.recommendedArtifactSets.some(cSet => cSet.set.name === set.name));
     const charactersWantSet = charactersUsesSet.filter(c => ScoringEngine.getCharacterEffectiveness(c, set) === PRIORITY_SCORES.FIRST_PRIORITY);
@@ -126,7 +127,6 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
   public search(
     { artifactPartName, artifactSetName, mainStat, subStats, id, _form }: SearchFormData,
     CacheStore: CacheStore,
-    DataStore: DataStore,
   ): SearchResult {
     if (!_form) throw new Error('_form not defined on SearchFormData');
 
@@ -139,7 +139,7 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
       return this.lastResult.search = cachedResult;
     }
 
-    const { Artifacts: ArtifactSets, ArtifactNames: ArtifactSetNames } = DataStore;
+    const { Artifacts: ArtifactSets, ArtifactNames: ArtifactSetNames } = DataStore.getState();
 
     // Check artifact set exists in data
     if (!ArtifactSetNames.includes(artifactSetName)) throw new Error(`Artifact set "${artifactSetName}" not found in data.`);
@@ -149,9 +149,9 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
     if (!set) throw new Error(`Artifact set "${artifactSetName}" not found in data.`);
 
     debugLog('Starting search', { set, artifactPartName, mainStat, subStats, id, _form });
-    const args = [set, artifactPartName, mainStat, subStats, DataStore] as const;
-    const byCharacterRecommendation = this.searchByCharacterRecommendation(...args).sort((a, b) => b.score - a.score);
-    const byArtifact = this.searchByArtifacts(...args).orderBy(...this._getOrderByFunctions(set, byCharacterRecommendation, DataStore));
+    const args = [set, artifactPartName, mainStat, subStats] as const;
+    const byCharacterRecommendation = this.searchByCharacterRecommendation(...args).orderBy((a, b) => b.score - a.score);
+    const byArtifact = this.searchByArtifacts(...args).orderBy(...this._getOrderByFunctions(set, byCharacterRecommendation));
     const combined = new List(...byArtifact, ...byCharacterRecommendation).reduce((acc, item) => {
       const existing = acc.find(e => e.characterName === item.characterName);
       if (existing) {
@@ -160,10 +160,10 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
         return acc;
       }
       return acc.concat(item);
-    }, new List<SearchResultItem>()).orderBy(...this._getOrderByFunctions(set, byCharacterRecommendation, DataStore));
+    }, new List<SearchResultItem>()).orderBy(...this._getOrderByFunctions(set, byCharacterRecommendation));
 
     const result = this.lastResult.search = {
-      combined, byArtifact, byCharacterRecommendation: byCharacterRecommendation.orderBy(...this._getOrderByFunctions(set, byCharacterRecommendation, DataStore)),
+      combined, byArtifact, byCharacterRecommendation: byCharacterRecommendation.orderBy(...this._getOrderByFunctions(set, byCharacterRecommendation)),
       form: _form, id, setName: set.name,
     };
     CacheStore.update('searchResults', { [id]: result });
@@ -174,13 +174,14 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
   private _getOrderByFunctions(
     set: ArtifactSet,
     byCharacterRecommendation: List<SearchResultItem>,
-    DataStore: DataStore,
   ): Array<OrderByComparator<SearchResultItem>> {
+    const { Characters } = DataStore.getState();
+    
     return [
       (a, b) => b.score - a.score,
       (a, b) => {
-        const characterA = DataStore.Characters.find(c => c.name === a.characterName);
-        const characterB = DataStore.Characters.find(c => c.name === b.characterName);
+        const characterA = Characters.find(c => c.name === a.characterName);
+        const characterB = Characters.find(c => c.name === b.characterName);
         if (!characterA || !characterB) {
           if (!characterA) console.warn(`Character "${a.characterName}" not found in data.`);
           if (!characterB) console.warn(`Character "${b.characterName}" not found in data.`);
