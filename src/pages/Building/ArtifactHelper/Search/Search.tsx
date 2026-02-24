@@ -11,7 +11,7 @@ import { ArtifactDetails } from "@/components/domain/models/Artifacts";
 import { SearchResult, ArtifactSearchService } from "@/services";
 
 import { useCacheStore, useDataStore } from "@/stores";
-import type { CacheStore } from "@/stores/CacheStore/CacheStoreTypes";
+import type { CacheStoreType } from "@/stores";
 
 import { SearchResult as SearchResultComponent } from "./components";
 import ArtifactHelper from "../ArtifactHelper";
@@ -69,7 +69,7 @@ export default function SearchQuery() {
   );
 }
 
-function getSearchResultsFromQuery(query: string, CacheStore: CacheStore) {
+function getSearchResultsFromQuery(query: string, CacheStore: CacheStoreType) {
   const formData = CacheStore.getFromItem('searchHistory', query, '{}');
   debugLog('getSearchResultsFromQuery cached', { query, formData });
   if (!formData) return { formData, results: null };

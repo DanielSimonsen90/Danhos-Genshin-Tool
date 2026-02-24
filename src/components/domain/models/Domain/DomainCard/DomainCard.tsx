@@ -41,7 +41,7 @@ export default function DomainCard({
 
   if (!domain) return null;
 
-  const { name, description, leyLineDisorder: leylineDisorder, resinCost, region } = domain;
+  const { name, description, leyLineDisorder, resinCost, region } = domain;
   const rewards = DataStore.getRewardsFromDomain(name);
   const type = domain.getDomainType();
   const minRewards = useMemo(() => {
@@ -92,7 +92,7 @@ export default function DomainCard({
           <section>
             {showLeyLineDisorder && <LeyLineDisorderPagination
               domainName={name}
-              leyLineDisorder={leylineDisorder}
+              leyLineDisorder={leyLineDisorder}
             />}
             {showDetailedRewards && rewards && (
               <div className="rewards-list-container">

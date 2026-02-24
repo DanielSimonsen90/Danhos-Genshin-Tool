@@ -13,6 +13,7 @@ import { AppSettings } from './SettingsStoreTypes';
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsStore);
 const memoService = new MemoizeService();
 
+// TODO: Split into slices
 const SettingsStore = new StoreBuilder()
   .addState({
     settings: DEFAULT_SETTINGS,
@@ -174,4 +175,5 @@ const SettingsStore = new StoreBuilder()
   .buildStore();
 
 export default SettingsStore;
+export type SettingsStoreType = ReturnType<typeof SettingsStore.getAccumulatedStore>;
 export const useSettingsStore = SettingsStore.useStore;

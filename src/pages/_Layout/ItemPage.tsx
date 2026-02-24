@@ -1,19 +1,19 @@
 import { useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 
-import { useDataStore, DataStoreState } from "@/stores";
+import { useDataStore, DataStoreType } from "@/stores";
 import { ItemHeader } from "@/components/domain/Item";
 import { ROUTES } from "@/common/constants/routes";
 
 type DataKeys = keyof Pick<
-  DataStoreState,
+  DataStoreType,
   'Characters' | 'Artifacts' | 'Domains' | 'Mobs' | 'Materials' | 'Weapons'
 >;
 type DataKeysSingular = DataKeys extends `${infer T}s` ? T : never;
 
 type Props<DataKey extends DataKeys> = {
   itemKeys: DataKey;
-  Card: React.FC<{ item: DataStoreState[DataKey][number] }>;
+  Card: React.FC<{ item: DataStoreType[DataKey][number] }>;
 };
 
 export default function ItemPage<DataKey extends DataKeys>({ itemKeys, Card }: Props<DataKey>) {
@@ -36,7 +36,7 @@ export default function ItemPage<DataKey extends DataKeys>({ itemKeys, Card }: P
     <>
       <ItemHeader item={item} itemName={itemKey.toLowerCase()} />
       <main>
-        <Card item={item as DataStoreState[DataKey][number]} />
+        <Card item={item as DataStoreType[DataKey][number]} />
       </main>
     </>
   );

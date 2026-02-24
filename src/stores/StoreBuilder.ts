@@ -162,6 +162,7 @@ export default class StoreBuilder<AccumState = {}, AccumApi = {}> {
       subscribe: this.subscribe.bind(this),
       useStore: this.useStore.bind(this),
       getBuilder: () => this,
+      getAccumulatedStore: () => ({ ...this.state, ...this.api }),
       ...this.api,
     };
   }

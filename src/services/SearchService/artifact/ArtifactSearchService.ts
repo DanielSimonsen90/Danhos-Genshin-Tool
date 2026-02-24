@@ -3,8 +3,6 @@ import type { ArtifactPartName, MainStatName, SubStatName } from '@/common/types
 import { SearchFormData } from '@/common/types/store-data';
 import { DebugLog } from '@/common/functions/dev';
 
-import { CacheStore } from '@/stores/CacheStore/CacheStoreTypes';
-
 import { List, OrderByComparator } from '@/common/models/List';
 
 import { 
@@ -16,6 +14,7 @@ import { SearchResult, SearchResultItem, LastResult } from './types';
 import { ScoringEngine } from './ScoringEngine';
 import BaseSearchService from '../base/BaseSearchService';
 import DataStore from '@/stores/DataStore/DataStore';
+import { CacheStoreType } from '@/stores';
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchService);
 
@@ -126,7 +125,7 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
 
   public search(
     { artifactPartName, artifactSetName, mainStat, subStats, id, _form }: SearchFormData,
-    CacheStore: CacheStore,
+    CacheStore: CacheStoreType,
   ): SearchResult {
     if (!_form) throw new Error('_form not defined on SearchFormData');
 

@@ -4,19 +4,19 @@ import { Domain } from "@/common/models/domains/Domain";
 import { List } from "@/common/models/List";
 import SearchableList from "@/components/domain/SearchableList";
 import { FilterProps } from "@/components/domain/SearchableList/Props";
-import { DataStoreState, useDataStore } from "@/stores";
+import { DataStoreType, useDataStore } from "@/stores";
 
 
 type Props<
-  DataKey extends keyof Pick<DataStoreState, 'Characters' | 'Artifacts' | 'Domains'>,
+  DataKey extends keyof Pick<DataStoreType, 'Characters' | 'Artifacts' | 'Domains'>,
   FilterKeys extends string
-> = FilterProps<DataStoreState[DataKey][number], FilterKeys> & {
+> = FilterProps<DataStoreType[DataKey][number], FilterKeys> & {
   itemsKey: DataKey;
-  Card: React.FC<{ item: DataStoreState[DataKey][number] }>;
+  Card: React.FC<{ item: DataStoreType[DataKey][number] }>;
 }
 
 export default function ItemsPage<
-  DataKey extends keyof Pick<DataStoreState, 'Characters' | 'Artifacts' | 'Domains'>,
+  DataKey extends keyof Pick<DataStoreType, 'Characters' | 'Artifacts' | 'Domains'>,
   FilterKeys extends string
 >({ Card, itemsKey, filterChecks }: Props<DataKey, FilterKeys>) {
   const { [itemsKey]: items } = useDataStore();

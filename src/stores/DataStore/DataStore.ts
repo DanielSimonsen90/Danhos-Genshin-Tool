@@ -17,5 +17,5 @@ const DataStore = new StoreBuilder()
   .buildStore();
 
 export default DataStore;
-export type DataStoreState = ReturnType<typeof DataStore.getState>;
+export type DataStoreType = ReturnType<typeof DataStore.getAccumulatedStore>;
 export const useDataStore = DataStore.useStore;
