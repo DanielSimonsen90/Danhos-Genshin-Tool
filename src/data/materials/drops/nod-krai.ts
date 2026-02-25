@@ -36,6 +36,14 @@ export const RemnantOfTheDreadwing = new MobDrop(
   Rarity.Epic
 );
 
+export const PrismaticSeveredTail = new MobDrop(
+  `Prismatic Severed Tail`,
+  `A crystallized tail vertebra left behind by a defeated Radiant Moongecko in its attempt to escape.\n
+  By all logic, a lizard that has evolved to such formidable strength should no longer face the threat of natural predators. Yet it still retains the instinct to shed its tail in a bid for survival. Perhaps in an age when moonlight blanketed the land, even more terrifying predators once prowled this place.`,
+  'Nod-Krai',
+  Rarity.Epic
+);
+
 export const MaskOfTheVirtuousDoctor = new MobDrop(
   `Mask of the Virtuous Doctor`,
   `A mask found in the heretical testing grounds after defeating the false god that usurped the moon.\nMedicine is meant to cure the ailments of the flesh, yet mortal physicians turn a blind eye to the true causes of death. In the hands of a wise healer, the frail human body escapes the bounds of birth, aging, sickness, and death, revealing strength that defies common sense.`,

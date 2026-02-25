@@ -1,7 +1,7 @@
 import { WorldBoss } from "@/common/models/mobs/Boss";
 import { Adventurer, Berserker, GladiatorsFinale, Instructor, LuckyDog, PrayersOfIllumination, PrayersOfSpringtime, PrayersOfWisdom, TheExile, TravelingDoctor, WanderersTroupe } from "@/data/artifact-sets";
 import { ElementalCrystals } from "@/data/materials/drops/crystals";
-import { PrecisionKuuvahkiStampingDie, LightbearingScaleFeather, RadiantAntler, CyclicMilitaryKuuvahkiCore, RemnantOfTheDreadwing } from '@/data/materials/drops/nod-krai';
+import { PrecisionKuuvahkiStampingDie, LightbearingScaleFeather, RadiantAntler, CyclicMilitaryKuuvahkiCore, RemnantOfTheDreadwing, PrismaticSeveredTail } from '@/data/materials/drops/nod-krai';
 
 export const KnuckleDuckle = new WorldBoss(
   `Knuckle Duckle`,
@@ -68,5 +68,19 @@ export const LordOfTheHiddenDepths_WhispererOfNightmares = new WorldBoss(
     GladiatorsFinale,
     WanderersTroupe,
     Instructor, TheExile, PrayersOfWisdom, TravelingDoctor
+  ]
+);
+
+export const RadiantMoongecko = new WorldBoss(
+  `Radiant Moongecko`,
+  `An ancient monster drawn to moonlight, this gecko dwells deep within layers of rock.\nThough the memory of true moonlight has faded, instinct remains, compelling them, on nights of the full moon, to feed on rock and soil suffused with lunar radiance to preserve their bloodline.
+`,
+  'Nod-Krai',
+  [
+    PrismaticSeveredTail,
+    ...ElementalCrystals.Geo.getCraftingTreeAsMaterials(),
+    GladiatorsFinale,
+    WanderersTroupe,
+    Instructor, TheExile, TravelingDoctor
   ]
 );

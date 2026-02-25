@@ -1725,6 +1725,22 @@ export const Varesa = new Character("Varesa", "Electro", "Catalyst", ["Nightsoul
   ])
 );
 
+export const Varka = new Character("Varka", "Anemo", "Claymore", [
+  "Hexerei Able: Enhances special skill Four Winds' Ascension; when Varka hits an opponent with Normal Attack(s) in Sturm und Drang, the cooldown of Four Winds' Ascension will be reduced by 1s.",
+  "Elemental Infusion: After Skill/Ability, Varka gains Anemo infusion as well as majority of the elements of his team, meaning he will dual-wield Anemo and aforementioned element.",
+], Rarity.Legendary, 'Mondstadt', {
+  material: TalentAscension.Freedom,
+  weeklyBossDrop: MobDrops.ChessGameRook,
+  crystal: ElementalCrystals.Anemo,
+  localSpecialty: LocalSpecialties.Wolfhook,
+  worldBossDrop: MobDrops.PrismaticSeveredTail,
+  mobDrop: EasyMobDrops.DriveShaft,
+}, `For every party member from Mondstadt, the Hold version of Varka's Elemental Skill "Windbound Execution"'s cooldown is decreased by 5%.`, 
+  new CharacterPlaystyle("On-field Swirl DPS", ["ATK", "Elemental Mastery"], ["Skill/Ability", "Normal/Press", "Burst/Ult"], true, [
+    new CharacterArtifactSet(Sets.ADayCarvedFromRisingWinds, 4, 100)
+  ])
+);
+
 export const Venti = new Character("Venti", "Anemo", "Bow", [
   "Grouping",
   'Elemental Infusion: If Hexereied, After Burst/Ult, Venti gains Anemo infusion',

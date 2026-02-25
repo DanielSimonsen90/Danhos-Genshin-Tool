@@ -2273,6 +2273,41 @@ export const FruitfulHook = new Weapon(
 // #endregion
 
 // #region G
+export const GestoftheMightyWolf = new Weapon(
+  'Gest of the Mighty Wolf',
+  {
+    value: `Increase ATK SPD by 10%. Every time the equipping character's Normal Attack(s) hit opponent(s), when they cast their Elemental Skill, or when they begin their Charged Attack(s), gain 1/2/2 stacks of Four Winds' Hymn respectively: DMG dealt is increased by $0 for 4s. Max 4 stacks. This effect can be triggered once every 0.01s.\nAdditionally, when the party has the "Hexerei: Secret Rite" effect, each stack of Four Winds' Hymn also increases the equipping character's CRIT DMG by $1.`,
+    refinements: [
+      '7.5/9.5/11.5/13.5/15.5%',
+      '7.5/9.5/11.5/13.5/15.5%',
+    ]
+  },
+  'Claymore',
+  Rarity.Legendary,
+  608,
+  'Crit Rate',
+  33.1,
+  [
+    WeaponAscensionMaterials.BorealWolfsXTooth,
+    Drops.XOfTheDeepShadow,
+    Drops.FatuiInsignia
+  ],
+  'Wish',
+  ({ playstyle, score, character }) => {
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+    if (playstyle.prioritizesTalents('Normal/Press')) {
+      score += MODIFIERS.TALENT;
+
+      if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+      if (playstyle.prioritizesTalents('Charged/Hold')) score += MODIFIERS.TALENT;
+
+      if (character.can('Hexerei Able')) score += MODIFIERS.BONUS_ABILITY;
+    }
+
+    return score;
+  },
+  cs => cs.Varka
+);
 // #endregion
 
 // #region H
