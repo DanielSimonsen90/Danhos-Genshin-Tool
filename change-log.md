@@ -1,5 +1,11 @@
 # 🎉 Danho's Genshin Tool v . 2.2.0 🎉
 
+## Genshin Impact v. 6.4
+* Added Varka, 5-star Anemo Claymore character
+* Added Gest of the Mighty Wolf, Varka's signature weapon
+* Added Radiant Moongecko, Nod-Krai world boss
+* Added Prismatic Severed Tail, drop of Radiant Moongecko, ascension item for Varka
+
 ## Reworked Recommended Weapons
 * Moves signature weapon into the tabbar
 * More accurately recommends weapons based on internal calculation score (functions like Artifact Helper)
@@ -19,3 +25,5 @@
 * An issue where null materials would show empty space without card styles
 * Character ascension material cards not following 3/6 column layout
 * Rare and below artifacts being included in most used
+* Added missing mob icons
+  - There's an issue with receiving some images from external sources (newer artifacts and talents), which will be fixed next update.
