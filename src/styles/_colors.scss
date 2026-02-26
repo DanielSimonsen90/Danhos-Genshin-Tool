@@ -23,9 +23,11 @@ $text-muted: #999;
 $text-link: #7b85fd;
 
 $text-success: hsl(146, 67%, 37%);
-// $text-warning: hsl(54, 100%, 40%);
+$text-success--muted: rgba(113, 194, 168, $muted-alpha);
 $text-warning: hsl(47, 55%, 41%);
+$text-warning--muted: rgba(248, 178, 48, $muted-alpha);
 $text-danger: hsl(0, 80%, 65%);
+$text-danger--muted: rgba(239, 121, 57, $muted-alpha);
 
 $brand--muted: rgba(39, 147, 177, $muted-alpha);
 $brand: rgb(39, 147, 177);

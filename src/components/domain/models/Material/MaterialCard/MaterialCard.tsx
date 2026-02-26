@@ -2,7 +2,6 @@ import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 
 import Material from "@/common/models/materials/Material";
 import CraftableMaterial from "@/common/models/materials/CraftableMaterial";
-import { classNames } from "@/common/functions/strings";
 
 import { useAccountStore, useSettingsStore } from "@/stores";
 import { Relations, Pagination, ObtainableDays } from "./components";
@@ -20,6 +19,7 @@ export interface Props extends BaseModelCardProps {
   showRegion?: boolean;
   showModelsUsing?: boolean;
   showModelAcquired?: boolean;
+  noMaterialFallback?: React.ReactNode;
 }
 
 export default function MaterialCard({
@@ -63,7 +63,12 @@ export default function MaterialCard({
     hasInteractedWithPagination.current = false;
   }, [material]);
 
-  if (!material || !currentMaterial) return null;
+  if (!material || !currentMaterial) return (
+    <a onClick={e => e.preventDefault()} className="model-card material-card material-card--empty">
+      {props.noMaterialFallback ?? 'N/A'}
+    </a>
+  );
+
   return <ModelCard
     key={`${AccountStore.worldRegion}-${currentMaterial.name}`}
     model="Material"

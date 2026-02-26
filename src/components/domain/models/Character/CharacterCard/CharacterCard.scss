@@ -60,13 +60,12 @@
     flex-wrap: wrap;
 
     .character-ascension {
-      // grid-area: ascension;
       width: max-content;
       flex: 1 1 100%;
 
       &__list {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(12em, 1fr));
+        grid-template-columns: repeat(3, minmax(12em, 1fr));
         gap: 1em;
 
         .model-card {
@@ -76,6 +75,10 @@
 
         .material-image {
           --size: 5rem;
+        }
+
+        @media (min-width: 1440px) {
+          grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
         }
       }
     }
@@ -99,6 +102,12 @@
   .character-recommended-weapons {
     flex: 1 1 100%;
     
+    > h3 {
+      display: flex;
+      align-items: center;
+      gap: .5ch;
+    }
+
     .tab-bar__tab > div {
       display: flex;
       gap: 1ch;

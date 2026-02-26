@@ -96,11 +96,11 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
         // '1 star': character => character.rarity === Rarity.Common,
       },
       needs: {
-        hp: character => character.needsHP(),
-        atk: character => character.needsATK(),
-        def: character => character.needsDEF(),
-        energyRecharge: character => character.needsER(),
-        elementalMastery: character => character.needsEM(),
+        hp: character => character.playstyle?.needsStat('HP'),
+        atk: character => character.playstyle?.needsStat('ATK'),
+        def: character => character.playstyle?.needsStat('DEF'),
+        energyRecharge: character => character.playstyle?.needsStat('Energy Recharge'),
+        elementalMastery: character => character.playstyle?.needsStat('Elemental Mastery'),
       },
       onField: character => character.playstyle?.onField,
       bonusAbility: {

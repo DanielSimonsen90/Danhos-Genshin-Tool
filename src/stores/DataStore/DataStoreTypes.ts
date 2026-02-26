@@ -1,8 +1,9 @@
-import { ArtifactSet, Character, Domain, TalentAscensionMaterial, WeaponAscensionMaterial, Material, Mob, Model, ModelKeys, Boss, CharacterArtifactSet } from '@/common/models';
+import { ArtifactSet, Character, Domain, TalentAscensionMaterial, WeaponAscensionMaterial, Material, Mob, Model, ModelKeys, Boss, CharacterArtifactSet, List } from '@/common/models';
 import type { DataStoreContent } from './DataStoreConstants';
 import ModelType from './ModelType';
 import { Weapon } from '@/common/models/weapon';
 import { Rarity, TeyvatRegion } from '@/common/types';
+import { RecommendedCharacterForWeapon, RecommendedWeaponForCharacter } from '@/services/SearchService/weapon/types';
 
 export type CharacterUsingArtifactResult = {
   character: Character;
@@ -46,7 +47,8 @@ export type DataStore = typeof DataStoreContent & {
   // Get models that make use of other models
   getCharactersUsingArtifact: (artifactName: string) => CharacterUsingArtifactResult[];
   getSignatureWeaponFor(character: Character): Weapon | undefined;
-  getRecommendedWeaponsFor(character: Character): Map<Rarity, Array<Weapon<any>>>;
+  getRecommendedCharactersForWeapon: (weapon: Weapon) => Map<Rarity, List<RecommendedCharacterForWeapon>>;
+  getRecommendedWeaponsForCharacter(character: Character): Map<Rarity, List<RecommendedWeaponForCharacter>>;
 
   getModelType: <TModel extends Model>(model: TModel) => ModelType<TModel>;
 

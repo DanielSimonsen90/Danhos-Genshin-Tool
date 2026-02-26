@@ -1,11 +1,11 @@
 import { Rarity } from "@/common/types";
-import Star from "../Star";
+import { Star } from "../Star";
 import { classNames, rarityString } from "@/common/functions/strings";
 
 type Props = {
   rarity: Rarity;
   onlyOne?: boolean;
-}
+};
 
 export default function RarityList({ rarity, onlyOne }: Props) {
   return (

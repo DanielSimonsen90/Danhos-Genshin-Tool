@@ -36,7 +36,11 @@ export const Roadmap = () => (
             ]
           },
         ]} />
-        <FeatureIdea title="Character Plan" version={2.2} features={[
+        <FeatureIdea completed title="Weapon Recommendations" version={2.2} features={[
+          'Calculate best weapon choices for each character based on character needs and weapon effects & stats',
+          'Calculate best character choices for each weapon based on weapon effects and stats',
+        ]} />
+        <FeatureIdea title="Character Plan" version={2.3} features={[
           'Implement "forum-like" system',
           {
             'Filter by': [
@@ -59,7 +63,7 @@ export const Roadmap = () => (
             ]
           }
         ]} />
-        <FeatureIdea title="Generator" version={2.3} features={[
+        <FeatureIdea title="Generator" version={2.4} features={[
           "Generate random teams",
           "Generate teams based on selected characters",
           "Generate your own character"

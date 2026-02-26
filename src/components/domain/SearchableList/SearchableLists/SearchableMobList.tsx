@@ -70,6 +70,7 @@ export default function SearchableMobList<TFilterKeys extends string>({
         sumeru: mob => Boss.isBoss(mob) && mob.region === "Sumeru",
         fontaine: mob => Boss.isBoss(mob) && mob.region === "Fontaine",
         natlan: mob => Boss.isBoss(mob) && mob.region === "Natlan",
+        nodKrai: mob => Boss.isBoss(mob) && mob.region === "Nod-Krai",
         snezhnaya: mob => Boss.isBoss(mob) && mob.region === "Snezhnaya",
         unknown: mob => Boss.isBoss(mob) && mob.region === "Unknown",
       },

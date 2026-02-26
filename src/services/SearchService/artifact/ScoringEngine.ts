@@ -108,18 +108,18 @@ export const ScoringEngine = new class ScoringEngine {
   private _calculateMainStatScore(character: Character, artifact: Artifact<ArtifactPartName>, mainStat: MainStatName): number {
     if (artifact.isFlower() || artifact.isFeather()) return 0;
 
-    if (mainStat === 'Physical DMG Bonus') return character.needsPhysicalDMG() ? MAIN_STAT_SCORES.PHYSICAL_DMG_MATCH : MAIN_STAT_SCORES.PHYSICAL_DMG_MISMATCH;
+    if (mainStat === 'Physical DMG Bonus') return character.playstyle?.needsStat('Physical DMG Bonus') ? MAIN_STAT_SCORES.PHYSICAL_DMG_MATCH : MAIN_STAT_SCORES.PHYSICAL_DMG_MISMATCH;
     if (mainStat.includes('Crit')) return MAIN_STAT_SCORES.CRIT_STATS;
     if (mainStat.includes('DMG Bonus')) return mainStat.includes(character.element) ? MAIN_STAT_SCORES.ELEMENTAL_DMG_BONUS_MATCH : MAIN_STAT_SCORES.ELEMENTAL_DMG_BONUS_MISMATCH;
 
     switch (mainStat) {
-      case 'Elemental Mastery': return character.needsEM() ? MAIN_STAT_SCORES.EM_MATCH : MAIN_STAT_SCORES.EM_MISMATCH;
-      case 'Energy Recharge': return character.needsER() ? MAIN_STAT_SCORES.ER_MATCH : MAIN_STAT_SCORES.ER_MISMATCH;
-      case 'Healing Bonus': return character.canHeal() ? MAIN_STAT_SCORES.HEALING_BONUS_MATCH : MAIN_STAT_SCORES.HEALING_BONUS_MISMATCH;
+      case 'Elemental Mastery': return character.playstyle?.needsStat('Elemental Mastery') ? MAIN_STAT_SCORES.EM_MATCH : MAIN_STAT_SCORES.EM_MISMATCH;
+      case 'Energy Recharge': return character.playstyle?.needsStat('Energy Recharge') ? MAIN_STAT_SCORES.ER_MATCH : MAIN_STAT_SCORES.ER_MISMATCH;
+      case 'Healing Bonus': return character.can('Heal') ? MAIN_STAT_SCORES.HEALING_BONUS_MATCH : MAIN_STAT_SCORES.HEALING_BONUS_MISMATCH;
 
-      case 'HP%': return character.needsHP() ? MAIN_STAT_SCORES.SCALING_STAT_MATCH : MAIN_STAT_SCORES.SCALING_STAT_MISMATCH;
-      case 'ATK%': return character.needsATK() ? MAIN_STAT_SCORES.SCALING_STAT_MATCH : MAIN_STAT_SCORES.SCALING_STAT_MISMATCH;
-      case 'DEF%': return character.needsDEF() ? MAIN_STAT_SCORES.SCALING_STAT_MATCH : MAIN_STAT_SCORES.DEF_MISMATCH;
+      case 'HP%': return character.playstyle?.needsStat('HP') ? MAIN_STAT_SCORES.SCALING_STAT_MATCH : MAIN_STAT_SCORES.SCALING_STAT_MISMATCH;
+      case 'ATK%': return character.playstyle?.needsStat('ATK') ? MAIN_STAT_SCORES.SCALING_STAT_MATCH : MAIN_STAT_SCORES.SCALING_STAT_MISMATCH;
+      case 'DEF%': return character.playstyle?.needsStat('DEF') ? MAIN_STAT_SCORES.SCALING_STAT_MATCH : MAIN_STAT_SCORES.DEF_MISMATCH;
 
       default:
         console.error(`Unknown main stat "${mainStat}"`);
@@ -127,8 +127,6 @@ export const ScoringEngine = new class ScoringEngine {
     }
   }
   private _calculateSubStatsScore(character: Character, artifact: Artifact<ArtifactPartName>): number {
-    let matchingSubStats = 0;
-
     return artifact.subStats.reduce((acc: number, stat: SubStatName | undefined) => {
       if (!stat) return acc; // Skip if stat is undefined or null
 
@@ -138,7 +136,6 @@ export const ScoringEngine = new class ScoringEngine {
         return acc;
       }
 
-      if (scoreData.isMatching) matchingSubStats++;
       const result = acc + scoreData.value;
       debugLog('Substat', stat, result, acc);
       return result;
@@ -149,12 +146,11 @@ export const ScoringEngine = new class ScoringEngine {
    */
   private _getSubStatScore(character: Character, stat: SubStatName): { value: number; isMatching: boolean; } | null {    // Utility function to create scoring logic based on boolean value
     const createStatScore = (
-      isMatch: boolean,
+      isMatch: boolean | undefined,
       matchScore: number,
       mismatchScore: number,
-      alwaysMatching = false
     ) => {
-      const isMatching = alwaysMatching || isMatch;
+      const isMatching = isMatch ?? false;
 
       return {
         value: isMatching ? matchScore : mismatchScore, 
@@ -166,45 +162,45 @@ export const ScoringEngine = new class ScoringEngine {
     switch (stat) {
       case 'HP':
       case 'HP%': return createStatScore(
-        character.needsHP(),
+        character.playstyle?.needsStat('HP'),
         SUBSTAT_SCORES.SCALING_STAT_MATCH,
         SUBSTAT_SCORES.HP_MISMATCH
       );
 
       case 'ATK':
       case 'ATK%': return createStatScore(
-        character.needsATK(),
+        character.playstyle?.needsStat('ATK'),
         SUBSTAT_SCORES.SCALING_STAT_MATCH,
         SUBSTAT_SCORES.ATK_MISMATCH
       );
 
       case 'DEF':
       case 'DEF%': return createStatScore(
-        character.needsDEF(),
+        character.playstyle?.needsStat('DEF'),
         SUBSTAT_SCORES.SCALING_STAT_MATCH,
         SUBSTAT_SCORES.DEF_MISMATCH
       );
 
       case 'Crit Rate':
       case 'Crit DMG': return createStatScore(
-        character.needsATK(),
+        character.playstyle?.onField || character.can('Off-field Damage'),
         SUBSTAT_SCORES.CRIT_STATS,
         SUBSTAT_SCORES.CRIT_STATS,
-        true
       );
 
       case 'Elemental Mastery': return createStatScore(
-        character.needsEM(),
+        character.playstyle?.needsStat('Elemental Mastery'),
         SUBSTAT_SCORES.EM_MATCH,
         SUBSTAT_SCORES.EM_MISMATCH
       );
 
       case 'Energy Recharge': return createStatScore(
-        character.needsER(),
+        character.playstyle?.needsStat('Energy Recharge'),
         SUBSTAT_SCORES.ER_MATCH,
         SUBSTAT_SCORES.ER_MISMATCH
-      );      default:
-        return null;
+      );      
+
+      default: return null;
     }
   }
 }

@@ -3,7 +3,8 @@ export type Element = 'Anemo' | 'Pyro' | 'Hydro' | 'Electro' | 'Cryo' | 'Geo' | 
 
 export type LunarReaction = 'Lunar' | `Lunar-${'Charged' | 'Bloom' | 'Crystallize'}`;
 export type Reaction =
-  | 'Vaporize' | 'Overloaded' | 'Melt' | 'Burning'
+  | `${Element} Reaction`
+  | 'Vaporize' | 'Overloaded' | 'Melt' | 'Burning' 
   | 'Frozen' | 'Shatter' | 'Burgeon' | 'Hyperbloom' | 'Bloom'
   | 'Electro-Charged' | 'Superconduct' | 'Quicken' | 'Aggravate' | 'Spread'
   | 'Swirl' | 'Crystallize'

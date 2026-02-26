@@ -61,6 +61,14 @@
     display: grid;
   }
 
+  &--empty {
+    color: var(--text-primary);
+
+    display: grid;
+    font-weight: bold;
+    place-items: center;
+  }
+
   >section {
     display: flex;
     flex-direction: column;

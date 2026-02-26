@@ -1,2 +1,2 @@
 export * from './ImageService';
-export * from './SearchService';
+export * from './SearchService/artifact';

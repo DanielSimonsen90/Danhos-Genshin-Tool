@@ -1,0 +1,19 @@
+.badge {
+  display: inline-block;
+  padding: .25em .5em;
+  font-size: .5em;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 2rem;
+  margin: auto 0;
+
+  &--beta {
+    background-color: var(--brand--muted);
+    color: var(--brand);
+    border: 2px solid var(--brand);
+    
+    background-clip: initial;
+    -webkit-text-fill-color: initial;
+  }
+}

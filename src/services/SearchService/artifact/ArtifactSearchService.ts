@@ -6,7 +6,6 @@ import { DebugLog } from '@/common/functions/dev';
 import { CacheStore } from '@/stores/CacheStore/CacheStoreTypes';
 import { DataStore } from '@/stores/DataStore/DataStoreTypes';
 
-import BaseService from '../BaseService';
 import { List, OrderByComparator } from '@/common/models/List';
 
 import { 
@@ -16,10 +15,11 @@ import {
 } from './constants';
 import { SearchResult, SearchResultItem, LastResult } from './types';
 import { ScoringEngine } from './ScoringEngine';
+import BaseSearchService from '../base/BaseSearchService';
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchService);
 
-export const SearchService = new class SearchService extends BaseService<LastResult> {
+export const ArtifactSearchService = new class ArtifactSearchService extends BaseSearchService<LastResult> {
   constructor() { 
     super({} as LastResult);
   }
@@ -28,7 +28,7 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     return super.lastResult as LastResult;
   }
 
-  public searchByArtifacts(
+  private searchByArtifacts(
     set: ArtifactSet,
     artifactPartName: ArtifactPartName,
     mainStat: MainStatName,
@@ -69,7 +69,7 @@ export const SearchService = new class SearchService extends BaseService<LastRes
     return result;
   }
 
-  public searchByCharacterRecommendation(
+  private searchByCharacterRecommendation(
     set: ArtifactSet,
     artifactPartName: ArtifactPartName,
     mainStat: MainStatName,
@@ -201,4 +201,4 @@ export const SearchService = new class SearchService extends BaseService<LastRes
   }
 }
 
-export default SearchService;
+export default ArtifactSearchService;
