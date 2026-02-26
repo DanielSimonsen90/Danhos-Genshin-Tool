@@ -1,4 +1,4 @@
-import StoreBuilder from "@/stores/StoreBuilder";
+import StoreBuilder from "@/stores/_baseStore/StoreBuilder";
 import artifactsSlice from "../models/artifacts.slice";
 import artifactDomainSlice from "./artifact-domain.slice";
 import type { TeyvatRegion } from '@/common/types/genshin';

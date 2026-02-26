@@ -1,5 +1,5 @@
 import MemoizeService from "@/services/MemoizeService";
-import StoreBuilder from "@/stores/StoreBuilder";
+import StoreBuilder from "@/stores/_baseStore/StoreBuilder";
 
 export default new StoreBuilder()
   .addApi(() => {

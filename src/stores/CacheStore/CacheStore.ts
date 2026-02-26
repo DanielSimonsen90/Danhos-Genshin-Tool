@@ -1,4 +1,4 @@
-import StoreBuilder from "../StoreBuilder";
+import StoreBuilder from "../_baseStore/StoreBuilder";
 import { DEFAULT_STATE } from "./CacheStoreConstants";
 import { CacheState } from "./CacheStoreTypes";
 import slices from "./slices";

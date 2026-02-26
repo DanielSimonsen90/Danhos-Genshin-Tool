@@ -1,4 +1,4 @@
-import StoreBuilder from "@/stores/StoreBuilder";
+import StoreBuilder from "@/stores/_baseStore/StoreBuilder";
 import artifactsSlice from "./artifacts.slice";
 import charactersSlice from "./characters.slice";
 import domainsSlice from "./domains.slice";

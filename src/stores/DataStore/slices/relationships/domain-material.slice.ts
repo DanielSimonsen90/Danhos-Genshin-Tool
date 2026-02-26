@@ -1,4 +1,4 @@
-import StoreBuilder from "@/stores/StoreBuilder";
+import StoreBuilder from "@/stores/_baseStore/StoreBuilder";
 import domainsSlice from "../models/domains.slice";
 import materialsSlice from "../models/materials.slice";
 import { sortByRarityDesc } from "../../DataStoreFunctions";

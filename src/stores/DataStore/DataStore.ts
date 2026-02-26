@@ -1,5 +1,5 @@
 import { Model } from "@/common/models";
-import StoreBuilder from "../StoreBuilder";
+import StoreBuilder from "../_baseStore/StoreBuilder";
 import ModelType from "./ModelType";
 import dataStoreSlice from './slices';  
 

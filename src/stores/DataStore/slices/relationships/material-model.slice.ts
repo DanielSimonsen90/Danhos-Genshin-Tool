@@ -1,5 +1,5 @@
 import { ModelKeys } from "@/common/models";
-import StoreBuilder from "@/stores/StoreBuilder";
+import StoreBuilder from "@/stores/_baseStore/StoreBuilder";
 import artifactMaterialSlice from "./artifact-material.slice";
 import characterMaterialSlice from "./character-material.slice";
 import domainMaterialSlice from "./domain-material.slice";

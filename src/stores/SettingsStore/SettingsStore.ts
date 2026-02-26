@@ -5,7 +5,7 @@ import { DebugLog } from '@/common/functions/dev';
 
 import MemoizeService from '@/services/MemoizeService';
 
-import StoreBuilder from '../StoreBuilder';
+import StoreBuilder from '../_baseStore/StoreBuilder';
 
 import { DEFAULT_SETTINGS, LOCAL_STORAGE_KEY } from './SettingsStoreConstants';
 import { AppSettings } from './SettingsStoreTypes';

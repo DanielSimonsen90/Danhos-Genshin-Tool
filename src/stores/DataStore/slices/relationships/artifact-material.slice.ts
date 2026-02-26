@@ -1,4 +1,4 @@
-import StoreBuilder from "@/stores/StoreBuilder";
+import StoreBuilder from "@/stores/_baseStore/StoreBuilder";
 import artifactsSlice from "../models/artifacts.slice";
 import materialsSlice from "../models/materials.slice";
 import { Material } from "@/common/models/materials/Material";

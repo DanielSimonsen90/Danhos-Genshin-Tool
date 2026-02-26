@@ -1,4 +1,4 @@
-import StoreBuilder from "@/stores/StoreBuilder";
+import StoreBuilder from "@/stores/_baseStore/StoreBuilder";
 import { CacheState, CacheKeys } from "../CacheStoreTypes";
 
 export default new StoreBuilder<CacheState>()

@@ -1,4 +1,4 @@
-import StoreBuilder from "@/stores/StoreBuilder";
+import StoreBuilder from "@/stores/_baseStore/StoreBuilder";
 import * as CharactersData from '@/data/characters';
 import { List } from "@/common/models";
 import { findByName } from "../../DataStoreFunctions";

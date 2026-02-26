@@ -1,4 +1,4 @@
-import StoreBuilder from "@/stores/StoreBuilder";
+import StoreBuilder from "@/stores/_baseStore/StoreBuilder";
 import charactersSlice from "../models/characters.slice";
 import weaponsSlice from "../models/weapons.slice";
 import memoSlice from "../memo.slice";
