@@ -9,7 +9,7 @@ import { getDefaultPriorityLists } from "./PriorityListFunctions";
 
 export default function PriorityList() {
   const AccountStore = useAccountStore();
-  const priorityLists = AccountStore.accountData.priorityLists ?? getDefaultPriorityLists();
+  const priorityLists = AccountStore.selectedAccount.priorityLists ?? getDefaultPriorityLists();
 
   const setPriorityLists = (newPriorityListsOrUpdater: SetStateAction<PriorityLists>) => {
     const newPriorityLists = typeof newPriorityListsOrUpdater === 'function'
@@ -38,7 +38,7 @@ export default function PriorityList() {
       className="priority-list"
       tabs={tabs} 
       noTabs={<NoTabs />} 
-      id={`priority-list-${AccountStore.accountData.id}`}
+      id={`priority-list-${AccountStore.selectedAccount.id}`}
       placeChildrenBeforeTabs
       resizable
       minSize={100}

@@ -1,5 +1,6 @@
 import StoreBuilder from "@/stores/_baseStore/StoreBuilder";
 import { AccountData } from "..";
+import { getGenshinServerDay, getGenshinServerDayName } from "../AccountStoreFunctions";
 import accountsSlice from "./accounts.slice";
 
 export default new StoreBuilder()
@@ -27,6 +28,8 @@ export default new StoreBuilder()
       },
       get selectedAccount() {
         return getSelectedAccount('data');
-      }
+      },
+      getGenshinServerDay,
+      getGenshinServerDayName
     }
   })

@@ -23,8 +23,8 @@ function AccountSettings() {
   // Subscribe to individual values separately to get stable references
   const accounts = useAccountStore(state => state.accounts);
   const selectedAccount = useAccountStore(state => state.selectedAccountName);
-  const traveler = useAccountStore(state => state.accountData.traveler);
-  const worldRegion = useAccountStore(state => state.accountData.worldRegion);
+  const traveler = useAccountStore(state => state.accountData?.traveler);
+  const worldRegion = useAccountStore(state => state.accountData?.worldRegion);
 
   const setSelectedAccount = useAccountStore(state => state.setSelectedAccount);
   const setTraveler = useAccountStore(state => state.setTraveler);

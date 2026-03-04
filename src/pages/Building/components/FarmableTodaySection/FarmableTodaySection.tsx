@@ -17,21 +17,21 @@ export default function FarmableTodaySection(props: Props) {
   const DataStore = useDataStore();
   const AccountStore = useAccountStore();
 
-  const title = props.title ?? `These characters & weapons are farmable today (${AccountStore.getGenshinServerDayName(AccountStore.worldRegion)})`;
-  const day = props.day ?? AccountStore.getGenshinServerDayName(AccountStore.worldRegion);
+  const title = props.title ?? `These characters & weapons are farmable today (${AccountStore.getGenshinServerDayName(AccountStore.selectedAccount.worldRegion)})`;
+  const day = props.day ?? AccountStore.getGenshinServerDayName(AccountStore.selectedAccount.worldRegion);
 
   const farmableCharacters = useMemo(() => DataStore.Characters.filter(character =>
     Object.values(character.ascension)
       .some(material => AscensionMaterial.isAscensionMaterial(material)
         && material.isObtainableOnDay(day)
       )
-  ), [DataStore.Characters, AccountStore.worldRegion]);
+  ), [DataStore.Characters, AccountStore.selectedAccount.worldRegion]);
   const farmableWeapons = useMemo(() => DataStore.Weapons.filter(weapon =>
     weapon.ascensionMaterials.some(material =>
       AscensionMaterial.isAscensionMaterial(material)
       && material.isObtainableOnDay(day)
     )
-  ), [DataStore.Weapons, AccountStore.worldRegion]);
+  ), [DataStore.Weapons, AccountStore.selectedAccount.worldRegion]);
 
   return (
     <section className="farmable-today-section">

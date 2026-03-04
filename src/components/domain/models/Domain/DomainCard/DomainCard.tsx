@@ -45,7 +45,7 @@ export default function DomainCard({
   const rewards = DataStore.getRewardsFromDomain(name);
   const type = domain.getDomainType();
   const minRewards = useMemo(() => {
-    if (domain.getDomainType() === 'Blessing') return rewards.filter(reward => (
+    if (domain.getDomainType() === 'Blessing') return (rewards as Array<ArtifactSet>).filter(reward => (
       reward instanceof ArtifactSet && reward.rarity === Rarity.Legendary
     ));
     return rewards;

@@ -2,7 +2,8 @@ import { LOCAL_STORAGE_KEY } from "@/stores/SettingsStore/SettingsStoreConstants
 import loggerSlice from "@/stores/_baseStore/slices/logger.slice";
 import memoSlice from "@/stores/_baseStore/slices/memo.slice";
 import StoreBuilder from "@/stores/_baseStore/StoreBuilder";
-import { AccountContextType, AccountData, DEFAULT_ACCOUNT_DATA, DEFAULT_ACCOUNT_NAME } from "..";
+import { DEFAULT_ACCOUNT_DATA, DEFAULT_ACCOUNT_NAME } from "../AccountStoreConstants";
+import { AccountContextType, AccountData } from "../AccountStoreTypes";
 
 export default new StoreBuilder({
   [DEFAULT_ACCOUNT_NAME]: DEFAULT_ACCOUNT_DATA

@@ -1,7 +1,7 @@
 import { Model } from "@/common/models";
 import models from "@/stores/DataStore/slices/models";
 import StoreBuilder from "@/stores/_baseStore/StoreBuilder";
-import { FavoriteModel, FavoriteModels, FavoritesCollection } from "..";
+import { FavoriteModels, FavoritesCollection } from "..";
 import { DEFAULT_FAVORITES } from "../AccountStoreConstants";
 import accountGetSlice from "./account.get.slice";
 import accountSetSlice from "./account.set.slice";
@@ -29,9 +29,9 @@ export default new StoreBuilder(DEFAULT_FAVORITES)
 
     function getFavorite<TFavoriteModel extends keyof FavoriteModels>(
       type: TFavoriteModel
-    ): FavoriteModel<TFavoriteModel> {
+    ) {
       return {
-        add(item) {
+        add(item: FavoriteModels[TFavoriteModel]) {
           const currentFavorites = getAllFavorites();
 
           setFavorites({
@@ -43,14 +43,14 @@ export default new StoreBuilder(DEFAULT_FAVORITES)
           });
         },
 
-        remove(item) {
+        remove(item: FavoriteModels[TFavoriteModel]) {
           const currentFavorites = getAllFavorites();
           setFavorites({
             ...currentFavorites,
             [type]: (currentFavorites[type] as Model[]).filter((model: Model) => model.name !== item.name)
           });
         },
-        isFavorite(item) {
+        isFavorite(item: FavoriteModels[TFavoriteModel] | string) {
           const currentFavorites = getAllFavorites();
           return currentFavorites[type].some(model => model.name === (typeof item === 'string' ? item : item.name)) ?? false;
         },

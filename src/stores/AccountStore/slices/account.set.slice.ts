@@ -87,9 +87,21 @@ export default new StoreBuilder()
       set(accounts);
     }
 
+    function setAccountDataProperty<T extends keyof AccountData>(property: T, value: AccountData[T]) {
+      const currentAccount = api.selectedAccount;
+      if (!currentAccount) throw new Error('No selected account to set data on');
+
+      setAccountData({
+        ...currentAccount,
+        [property]: value
+      })
+    }
+
     return {
       setAccountData,
       setAccountName,
-      setSelectedAccount
+      setSelectedAccount,
+      setWorldRegion: (region: AccountData['worldRegion']) => setAccountDataProperty('worldRegion', region),
+      setTraveler: (traveler: AccountData['traveler']) => setAccountDataProperty('traveler', traveler),
     }
   })
