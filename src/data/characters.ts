@@ -1100,6 +1100,24 @@ export const Layla = new Character("Layla", "Cryo", "Sword", [
   ]),
 );
 
+export const Linnea = new Character("Linnea", "Geo", "Bow", [
+  "Enables Lunar-Crystallize Reaction",
+  "Increases Moonsign",
+  "Off-field Damage",
+  "Heal",
+], Rarity.Legendary, 'Nod-Krai', {
+  material: TalentAscension.Vagrancy,
+  weeklyBossDrop: MobDrops.ElixirOfTheHeretic,
+  crystal: ElementalCrystals.Geo,
+  localSpecialty: LocalSpecialties.EtherwingMoth,
+  worldBossDrop: MobDrops.PlumeOfTheFallenWatcher,
+  mobDrop: EasyMobDrops.Warrant,
+}, 'Outside of combat, when Linnea takes an aimed shot, different effects occur depending on target. Specific animals: Arrow transforms into "Net". Ores: Dispatches Lumi who will strike and collect ores.',
+  new CharacterPlaystyle("Off-field Support", ["DEF"], ["Skill/Ability", "Burst/Ult", "Charged/Hold"], false, [
+    new CharacterArtifactSet(Sets.AubadeOfMorningstarAndMoon, 4, 100),
+  ])
+)
+
 export const Lisa = new Character("Lisa", "Electro", "Catalyst", ["Off-field Damage"], Rarity.Epic, 'Mondstadt', {
   material: TalentAscension.Ballad,
   weeklyBossDrop: MobDrops.DvalinsClaw,
@@ -2040,3 +2058,5 @@ export const Zhongli = new Character("Zhongli", "Geo", "Polearm", ["Shield"], Ra
     new CharacterArtifactSet(Sets.ArchaicPetra, 4, 4.2),
   ]),
 );
+
+// #endregion

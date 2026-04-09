@@ -2308,6 +2308,43 @@ export const GestoftheMightyWolf = new Weapon(
   },
   cs => cs.Varka
 );
+
+export const GoldenFrostboundOath = new Weapon(
+  'Golden Frostbound Oath',
+  {
+    value: `Increase DEF by $0. When the equipping character's Elemental Skill or Lunar-Crystallize attacks hit opponents, gain the Frost Fae's Favor effect for 6s: Geo DMG inflicted by the equipping character increases by $1, Lunar-Crystallize Reaction DMG increases by $2. While this effect is active, if there are Moondrifts near the equipping character, all other nearby party members will gain the Frost Fae's Mischief effect: Geo DMG dealt increases by $3 and Lunar-Crystallize Reaction DMG increases by $4. This effect can be triggered even when the equipping character is off-field.`,
+    refinements: [
+      '16%/20%/24%/28%/32%',
+      '40%/50%/60%/70%/80%',
+      '40%/50%/60%/70%/80%',
+      '20%/25%/30%/35%/40%',
+      '20%/25%/30%/35%/40%',
+    ]
+  },
+  'Bow',
+  Rarity.Legendary,
+  542,
+  'Crit DMG',
+  88.2,
+  [
+    WeaponAscensionMaterials.XOfLongNightFlint,
+    Drops.FadedFlamingHilt,
+    Drops.Warrant
+  ],
+  'Wish',
+  ({ playstyle, score, character }) => {
+    if (playstyle.needsStat('DEF')) score += MODIFIERS.STAT;
+    if (playstyle.prioritizesTalents('Skill/Ability') || character.canTrigger('playstyle-based', 'Lunar-Crystallize')) {
+      if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+      if (character.canTrigger('playstyle-based', 'Lunar-Crystallize')) score += MODIFIERS.CAN_TRIGGER_ELEMENT * 2; // Double effects
+
+      if (character.element === 'Geo') score += MODIFIERS.BONUS_ABILITY * 2; // Double effects
+    }
+
+    return score;
+  },
+  cs => cs.Linnea
+);
 // #endregion
 
 // #region H
