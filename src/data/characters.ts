@@ -394,7 +394,6 @@ export const Collei = new Character("Collei", "Dendro", "Bow", [], Rarity.Epic, 
   ])
 );
 
-// TODO at later update
 export const Columbina = new Character("Columbina", "Hydro", "Catalyst", [
   'Increases Moonsign',
   'Enables Lunar Reaction',
@@ -408,8 +407,9 @@ export const Columbina = new Character("Columbina", "Hydro", "Catalyst", [
   mobDrop: EasyMobDrops.Slime,
 }, `While in Nod-Krai, if a member on your team dies, Columbina will revive them and restore health based on Columbina's friendship level. Cooldown 100s. Does not work in domains.`,
   new CharacterPlaystyle('Off-field Lunar Support', ['HP', 'Energy Recharge'], ['Skill/Ability', 'Burst/Ult', 'Charged/Hold'], false, [
-    new CharacterArtifactSet(Sets.AubadeOfMorningstarAndMoon, 4, 100),
-    // new CharacterArtifactSet(Sets.SilkenMoonsSerenade, 4, 50),
+    new CharacterArtifactSet(Sets.AubadeOfMorningstarAndMoon, 4, 72.8),
+    new CharacterArtifactSet(Sets.SilkenMoonsSerenade, 4, 20),
+    new CharacterArtifactSet(Sets.NightOfTheSkysUnveiling, 4, 1.7),
   ])
 );
 
@@ -779,9 +779,10 @@ export const Illuga = new Character("Illuga", "Geo", "Polearm", [
   mobDrop: EasyMobDrops.DriveShaft,
 }, undefined, 
   new CharacterPlaystyle("Off-field Lunar-Crystallize Support", ["DEF", "Elemental Mastery", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
-    new CharacterArtifactSet(Sets.SilkenMoonsSerenade, 4, 33),
-    new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 33),
-    new CharacterArtifactSet(Sets.NoblesseOblige, 4, 33),
+    new CharacterArtifactSet(Sets.SilkenMoonsSerenade, 4, 81.5),
+    ...ElementalMasterySets(3.4),
+    ...ElementalMasterySets(2.4),
+    new CharacterArtifactSet(Sets.NightOfTheSkysUnveiling, 4, 2.4),
   ])
 );
 
@@ -1099,6 +1100,24 @@ export const Layla = new Character("Layla", "Cryo", "Sword", [
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 3.0),
   ]),
 );
+
+export const Linnea = new Character("Linnea", "Geo", "Bow", [
+  "Enables Lunar-Crystallize Reaction",
+  "Increases Moonsign",
+  "Off-field Damage",
+  "Heal",
+], Rarity.Legendary, 'Nod-Krai', {
+  material: TalentAscension.Vagrancy,
+  weeklyBossDrop: MobDrops.ElixirOfTheHeretic,
+  crystal: ElementalCrystals.Geo,
+  localSpecialty: LocalSpecialties.EtherwingMoth,
+  worldBossDrop: MobDrops.PlumeOfTheFallenWatcher,
+  mobDrop: EasyMobDrops.Warrant,
+}, 'Outside of combat, when Linnea takes an aimed shot, different effects occur depending on target. Specific animals: Arrow transforms into "Net". Ores: Dispatches Lumi who will strike and collect ores.',
+  new CharacterPlaystyle("Off-field Support", ["DEF"], ["Skill/Ability", "Burst/Ult", "Charged/Hold"], false, [
+    new CharacterArtifactSet(Sets.AubadeOfMorningstarAndMoon, 4, 100),
+  ])
+)
 
 export const Lisa = new Character("Lisa", "Electro", "Catalyst", ["Off-field Damage"], Rarity.Epic, 'Mondstadt', {
   material: TalentAscension.Ballad,
@@ -1737,7 +1756,9 @@ export const Varka = new Character("Varka", "Anemo", "Claymore", [
   mobDrop: EasyMobDrops.DriveShaft,
 }, `For every party member from Mondstadt, the Hold version of Varka's Elemental Skill "Windbound Execution"'s cooldown is decreased by 5%.`, 
   new CharacterPlaystyle("On-field Swirl DPS", ["ATK", "Elemental Mastery"], ["Skill/Ability", "Normal/Press", "Burst/Ult"], true, [
-    new CharacterArtifactSet(Sets.ADayCarvedFromRisingWinds, 4, 100)
+    new CharacterArtifactSet(Sets.ADayCarvedFromRisingWinds, 4, 90.9),
+    new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 2.4),
+    ...AttackSets(1.7),
   ])
 );
 
@@ -2022,7 +2043,9 @@ export const Zibai = new Character("Zibai", "Geo", "Sword", [
   mobDrop: EasyMobDrops.Warrant,
 }, `Collects elemental energy at night`, 
   new CharacterPlaystyle("On-field Lunar-Crystallize DPS", ["DEF"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.NightOfTheSkysUnveiling, 4, 100),
+    new CharacterArtifactSet(Sets.NightOfTheSkysUnveiling, 4, 96.7),
+    ...ElementalMasterySets(0.4),
+    new CharacterArtifactSet(Sets.HuskOfOpulentDreams, 4, 0.4),
   ])
 );
 
@@ -2040,3 +2063,5 @@ export const Zhongli = new Character("Zhongli", "Geo", "Polearm", ["Shield"], Ra
     new CharacterArtifactSet(Sets.ArchaicPetra, 4, 4.2),
   ]),
 );
+
+// #endregion

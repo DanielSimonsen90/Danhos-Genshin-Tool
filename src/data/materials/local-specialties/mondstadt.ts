@@ -47,3 +47,9 @@ export const Wolfhook = new LocalSpecialty(
   `A berry with thorns that often gets attached to a wolf's pelt. When you look at it, you can almost hear the echoing cries of the wolves in the woods.`,
   'Mondstadt',
 );
+
+export const EtherwingMoth = new LocalSpecialty(
+  'Etherwing Moth',
+  `a singular entity bathed in a divine, golden, radiance, drifting through uncanny interstices as if a moth in flight.`,
+  'Mondstadt',
+);

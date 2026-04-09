@@ -1,29 +1,20 @@
-# 🎉 Danho's Genshin Tool v . 2.2.0 🎉
+# 🎉 Danho's Genshin Tool v . 2.2.1 🎉
 
-## Genshin Impact v. 6.4
-* Added Varka, 5-star Anemo Claymore character
-* Added Gest of the Mighty Wolf, Varka's signature weapon
-* Added Radiant Moongecko, Nod-Krai world boss
-* Added Prismatic Severed Tail, drop of Radiant Moongecko, ascension item for Varka
 
-## Reworked Recommended Weapons
-* Moves signature weapon into the tabbar
-* More accurately recommends weapons based on internal calculation score (functions like Artifact Helper)
+## Genshin Impact v. 6.5
+* Added Linnea, 5-star Geo Bow character
+* Added Golden Frostbound Oath, Linnea's signature weapon
+* Added Watcher: Fallen Vigil, Mondstadt World Boss
+* Added Domain Keeper, new Elite mob
+* Added Etherwing Moth, new Mondstadt local specialty
+* Added Plume of the Fallen Watcher, dropped by Watcher: Fallen Vigil
+* Added Faded Flaming Hilt + variations, dropped by Domain Keeper
 
 ## Updates
-* Added "Off-field Damage" tag to Columbina
-* Added "Off-field Damage" tag to Zibai
-* Added Night of the Sky's Unveiling to Zibai's recommended artifact sets because apparently people prefer that over the new one that I swear was made for her?
+* Updated artifact set usage rates for:
+  - Varka
+  - Columbina
+  - Zibai
+  - Illuga
 
 ## Fixes
-* Recommended weapons not consistently rendering tabs as rarity hierarchy
-* Wolf-Fang being marked as "Rare" instead of "Epic"
-* Nod-Krai filter not being in SearchableMobList
-* Sigewinne's bonus talents not showing off-field damage
-* Toukabou Shigure marked as Legendary, when it should be Epic
-* Fungal Nucleus rarities being incorrect
-* An issue where null materials would show empty space without card styles
-* Character ascension material cards not following 3/6 column layout
-* Rare and below artifacts being included in most used
-* Added missing mob icons
-  - There's an issue with receiving some images from external sources (newer artifacts and talents), which will be fixed next update.

@@ -263,3 +263,11 @@ export const FisherOfHiddenDepths = new EliteMob(
     EliteMobDrops.XOfTheDeepShadow
   ]
 );
+
+export const DomainKeeper = new EliteMob(
+  "Domain Keeper",
+  `A shadow construct born of a flow from the mighty primodial being. It stands as the guardian of the Pillar Hall of the heavens.`,
+  [
+    EliteMobDrops.FadedFlamingHilt,
+  ]
+);
