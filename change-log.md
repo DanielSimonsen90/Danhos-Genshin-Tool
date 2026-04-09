@@ -11,6 +11,10 @@
 * Added Faded Flaming Hilt + variations, dropped by Domain Keeper
 
 ## Updates
-
+* Updated artifact set usage rates for:
+  - Varka
+  - Columbina
+  - Zibai
+  - Illuga
 
 ## Fixes
