@@ -328,7 +328,7 @@ export const Mistshroud = MobDrop.create('Mistshroud', {
   prependName: true,
 });
 
-export const RaidantBeastDrop = MobDrop.create('<placeholder>', {
+export const LightlessBone = MobDrop.create('<placeholder>', {
   [Rarity.Epic]: `Radiant Exoskeleton`,
   [Rarity.Rare]: `Glowing Remains`,
   [Rarity.Uncommon]: `Lightless Bone`,

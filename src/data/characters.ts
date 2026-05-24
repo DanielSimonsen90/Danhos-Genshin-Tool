@@ -1306,6 +1306,25 @@ export const Neuvillette = new Character("Neuvillette", "Hydro", "Catalyst", ["S
   ])
 );
 
+export const Nicole = new Character("Nicole", "Pyro", "Catalyst", [
+  "Shield",
+  "Buff ATK: After using skill, team gets ATK increase",
+  "Elemental Based: Provides elemental damage based on the active character's element when using burst/ult.",
+  "Off-field Damage",
+  "Hexerei Able: Increases DMG dealt by Hexerei characters' coordinated attack by 300% of Nicole's ATK."
+], Rarity.Legendary, 'Unknown', {
+  material: TalentAscension.Elysium,
+  weeklyBossDrop: MobDrops.CounterfeitResin,
+  crystal: ElementalCrystals.Pyro,
+  localSpecialty: LocalSpecialties.PineAmber,
+  worldBossDrop: MobDrops.RemnantOfTheDreadwing,
+  mobDrop: EasyMobDrops.Warrant,
+}, 'When in Teyvat and out of combat with the current region\'s Treasure Compass unlocked, Nicole\'s Charged Attack summons a Seelie to show the way like a Treasure Compass would', 
+  new CharacterPlaystyle("Off-field Pyro Reaction Support", ["ATK"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
+    new CharacterArtifactSet(Sets.CelestialGift, 4, 100),
+  ])
+);
+
 export const Nilou = new Character("Nilou", "Hydro", "Sword", [], Rarity.Legendary, "Sumeru", {
   material: TalentAscension.Praxis,
   weeklyBossDrop: MobDrops.TearsOfTheCalamitousGod,
@@ -1375,6 +1394,23 @@ export const Ororon = new Character("Ororon", "Electro", "Bow", [
     new CharacterArtifactSet(Sets.ObsidianCodex, 4, 1.7),
     new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 2, 1.1),
     new CharacterArtifactSet(Sets.ObsidianCodex, 2, 1.1),
+  ])
+);
+
+export const Prune = new Character("Prune", "Anemo", "Catalyst", [
+  "Elemental Infusion: After triggering Swirl using Elemental Skill, Prune adapts to the element involved in the Swirl reaction",
+  "Off-field Damage",
+  `Hexerei Able: When Hexerei character is affected by Prune's "Tolling Rally effect" triggers an Elemental Reaction on an opponent, Prune's ATK +60% for 5s. If reaction is Swirl, +30% additionally for 5s`
+], Rarity.Epic, 'Mondstadt', {
+  material: TalentAscension.Resistance,
+  weeklyBossDrop: MobDrops.MaskOfTheVirtuousDoctor,
+  crystal: ElementalCrystals.Anemo,
+  localSpecialty: LocalSpecialties.WinterIcelea,
+  worldBossDrop: MobDrops.RadiantAntler,
+  mobDrop: EasyMobDrops.TreasureHoarderInsignia,
+}, '10% chance to get 1 regional Character Talent Materials when crafting Character Talent Materials.', 
+  new CharacterPlaystyle("Off-field Support", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
+    new CharacterArtifactSet(Sets.CelestialGift, 4, 100),
   ])
 );
 

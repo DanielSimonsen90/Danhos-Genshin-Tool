@@ -51,7 +51,7 @@ export type PassiveTalent = (
 
   // Materials
   | `${'10' | '20' | '25'}% chance of ${`refund materials used` | `double product`} when crafting ${CraftableType}${` and ${CraftableType}` |''}.`
-  | `${'25'}% chance to get 1 regional ${CraftableType} when crafting ${CraftableType}.`
+  | `${'10' | '25'}% chance to get 1 regional ${CraftableType} when crafting ${CraftableType}.`
   
   // Refund
   | `${'50'}% mora cost reduction when ascending ${WeaponType} and ${WeaponType} weapons.`
@@ -94,6 +94,7 @@ export type PassiveTalent = (
   | `Collects elemental energy at night`
   | `For every party member from Mondstadt, the Hold version of Varka's Elemental Skill "Windbound Execution"'s cooldown is decreased by 5%.`
   | `Outside of combat, when Linnea takes an aimed shot, different effects occur depending on target. Specific animals: Arrow transforms into "Net". Ores: Dispatches Lumi who will strike and collect ores.`
+  | `When in Teyvat and out of combat with the current region's Treasure Compass unlocked, Nicole's Charged Attack summons a Seelie to show the way like a Treasure Compass would`
 );
 
 export type TriggerableReactionFilter = 'all' | 'playstyle-based';

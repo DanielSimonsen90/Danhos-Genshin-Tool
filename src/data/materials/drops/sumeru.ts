@@ -89,3 +89,25 @@ export const Everamber = new MobDrop(
   'Sumeru',
   Rarity.Legendary
 );
+
+// Irminsul Dottore
+export const CounterfeitResin = new MobDrop(
+  "Counterfeit Resin",
+  `A resin recovered from the shattered depths of the Ley Lines after the defeat of the heretic hidden within Irminsul.\nOnce a crystal meant to bear the many beautiful memories that make up this world, it is now filled instead with delusions and malice that do not belong here.`,
+  'Sumeru',
+  Rarity.Legendary
+);
+
+export const TwistedWitheredBranch = new MobDrop(
+  "Twisted Withered Branch",
+  `A withered branch recovered from the shattered depths of the Ley Lines after the defeat of the heretic hidden within Irminsul.\nA twisted bough grown from a giant tree meant to remain buried deep beneath the earth. Even cut off from its source, it still holds a strange and malevolent power.`,
+  'Sumeru',
+  Rarity.Legendary
+);
+
+export const ProfanedSprout = new MobDrop(
+  "Profaned Sprout",
+  `A sprig recovered from the shattered depths of the Ley Lines after the defeat of the heretic hidden within Irminsul.\nWhat should have been a bud of hope has now become a beacon of profanation. Through its spreading veins, the sinful tree continues to climb toward the sky.`,
+  'Sumeru',
+  Rarity.Legendary
+);
