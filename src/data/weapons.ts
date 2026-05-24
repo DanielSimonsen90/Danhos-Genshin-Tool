@@ -66,6 +66,43 @@ export const UltimateOverlordsMegaMagicSword = new Weapon(
 );
 
 // #region A
+export const AngelosHeptades = new Weapon(
+  "Angelos' Heptades",
+  {
+    value: `ATK is increased by $0. After the equipping character creates a Shield, they gain "Pathfinder's Light" for 20s: Increases your active party member's DMG by $1 for every 1,000 ATK the equipping character has, up to a maximum of $2. Additionally, when the equipping character creates a Shield, they will also gain "Guide's Contentment": Restores $3 Elemental Energy to the equipping character. The aforementioned effect can trigger once every 14s, and can also be triggered when any type of chest is opened outside of combat. The equipping character may trigger this effect even when they are an off-field.\nHexerei: Secret Rite: When your own Hexerei character is off-field in the party, they will also gain 50% of the DMG increase from Pathfinder's Light.`,
+    refinements: [
+      '12/15/18/21/24%',
+      '10/13/16/19/22%',
+      '26/34/42/50/58%',
+      '14/15/16/17/18',
+    ]
+  },
+  'Catalyst',
+  Rarity.Legendary,
+  741,
+  'ATK',
+  16.5,
+  [
+    WeaponAscensionMaterials.ArtfulDeviceX,
+    Drops.FadedFlamingHilt,
+    Drops.DriveShaft,
+  ],
+  'Wish',
+  ({ playstyle, score, character }) => {
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (character.can('Shield')) {
+      score += MODIFIERS.BONUS_ABILITY;
+
+      if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+      if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.STAT;
+      if (!playstyle.onField) score += MODIFIERS.FIELD;
+    }
+    
+    return score;
+  },
+  cs => cs.Nicole
+);
+
 export const AthameArtis = new Weapon(
   "Athame Artis",
   {
@@ -1253,6 +1290,36 @@ export const DialoguesOfTheDesertSages = new Weapon(
   }
 );
 
+export const DisasterAndRemorse = new Weapon(
+  'Disaster and Remorse',
+  {
+    value: `After the equipping character uses an Elemental Skill, they gain "Path of Conflict" for 17s, as well as "Unforgivable" and "Irreparable" for 3s each. This effect can trigger once every 18s.\nUnforgivable: Increases the equipping character's Normal Attack and Charged Attack DMG by $0.\nIrreparable: Increases the equipping character's Elemental Skill and Elemental Burst DMG by $1.\nWhile Path of Conflict is in effect, when the equipping character hits an opponent with a Normal Attack or Charged Attack, Irreparable's duration will be increased by 1s. When the equipping character hits an opponent with their Elemental Skill or Elemental Burst, Unforgivable's duration will be increased by 1s. Each of the above effects can be triggered once every 0.1s. When Path of Conflict ends or the equipping character leaves the field, both Unforgivable and Irreparable will be removed.\nHexerei: Secret Rite: The above DMG boosts are increased by 75%.`,
+    refinements: [
+      '40%/50%/60%/70%/80%',
+      '40%/50%/60%/70%/80%',
+    ],
+  },
+  'Polearm',
+  Rarity.Legendary,
+  674,
+  'Crit Rate',
+  22.1,
+  [
+    WeaponAscensionMaterials.XOfDecarabiansX,
+    Drops.LightlessBone,
+    Drops.Nectar,
+  ],
+  'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) score += MODIFIERS.TALENT;
+    if (playstyle.prioritizesTalents('Skill/Ability', 'Burst/Ult')) score += MODIFIERS.TALENT;
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+    
+    return score;
+  },
+  // cs => cs.???
+);
+
 export const DodocoTales = new Weapon(
   'Dodoco Tales',
   {
@@ -1509,7 +1576,7 @@ export const EtherlightSpindlelute = new Weapon(
   45.9,
   [
     WeaponAscensionMaterials.XOfTheFarNorthScions,
-    Drops.RaidantBeastDrop,
+    Drops.LightlessBone,
     Drops.Warrant
   ],
   'Event',
@@ -3173,7 +3240,7 @@ export const MasterKey = new Weapon(
   61.3,
   [
     WeaponAscensionMaterials.XOfTheFarNorthScions,
-    Drops.RaidantBeastDrop,
+    Drops.LightlessBone,
     Drops.DriveShaft
   ],
   'Crafting',
@@ -3384,7 +3451,7 @@ export const MoonweaversDawn = new Weapon(
   27.6,
   [
     WeaponAscensionMaterials.XOfTheFarNorthScions,
-    Drops.RaidantBeastDrop,
+    Drops.LightlessBone,
     Drops.DriveShaft
   ],
   'Wish',
@@ -4173,7 +4240,7 @@ export const ReliquaryOfTruth = new Weapon(
   88.2,
   [
     WeaponAscensionMaterials.OasisGardens,
-    Drops.RaidantBeastDrop,
+    Drops.LightlessBone,
     Drops.FungalSpores,
   ],
   'Wish',
