@@ -55,6 +55,17 @@ export const PeakOfVindagnyr = new DomainOfBlessing(
   },
   'Mondstadt'
 );
+export const ThornyCrownOfTheMountainWind = new DomainOfBlessing(
+  "Thorny Crown of the Mountain Wind",
+  "In the ages when the thousand winds could still brush against the Temple of Space, the ancient people of Elysium believed that the city-state, eternally sealed within its coffin, would ultimately overcome the destruction wrought by external corruption, flourishing unceasingly like a sacred forest.\nYet, all things in this world wax and wane. the dream of Elysium shall never return. What remains in thew wind is naught but poetry and blooming flowers.",
+  {
+    1: `(Anemo/Cryo/Pyro)`,
+    2: `(Anemo/Cryo/Pyro)`,
+    3: `When your active character's Normal or Charged Atack hits an opponent, the DMG dealt by their Charged Attack and Elemental Skill increases. (Anemo/Cryo/Pyro)`,
+    4: `When your active character's Normal or Charged Atack hits an opponent, the DMG dealt by their Charged Attack and Elemental Skill increases. (Anemo/Cryo/Pyro)`,
+  },
+  'Mondstadt',
+);
 export const ClearPoolAndMountaincavern = new DomainOfBlessing(
   "Clear Pool and Mountain Cavern",
   "Mt. Aocang is a place of secret wonders. What at first merely seems like beautiful scenery in fact conceals a stone cave that connects to the heavens and breathes out clouds. Nonetheless, this is not how the saying \"where the clouds emerge\" was derived.",

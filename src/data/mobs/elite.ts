@@ -252,7 +252,7 @@ export const RadiantBeast = new EliteMob(
   "Radiant Beast",
   `A beast that has undergone a unique evolution due to age-long immersion in the ancient moon's power.\nOnce an ordinary creature, it has been warped by the influence of kuuvahki and imbued with an otherworldly strength.`,
   [
-    EliteMobDrops.RaidantBeastDrop
+    EliteMobDrops.LightlessBone
   ]
 );
 

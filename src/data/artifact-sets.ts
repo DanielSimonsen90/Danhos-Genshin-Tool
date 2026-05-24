@@ -4,7 +4,6 @@ import * as Domains from './domains/domain-of-blessing';
 
 const threeStar = 5;
 const fourStar = 10;
-const fiveStar = 20;
 const correctElement = 15;
 
 const isPhysicalFavored = (character: Character, artifactSet: CharacterArtifactSet) => (
@@ -157,6 +156,23 @@ export const BraveHeart = new ArtifactSet(
   c => c.playstyle?.talentStats.includes('ATK') ? correctElement : 0
 );
 
+export const CelestialGift = new ArtifactSet(
+  "Celestial Gift",
+  "Energy Recharge +20%",
+  `If the equipping character has completed Witch's Homework, after skill used, gain "Light's Guidance" for 20s: All nearby party members gain 20% Elemental DMG Bonus corresponding to equipping character's elemental type. Can be triggered off-field. Does not stack with same artifact name. When Hexerei: Secret Rite effect, Elemental DMG bonus increased to 40% to equipping character AND active character. If both share same element, bonus will not stack.`,
+  Rarity.Legendary,
+  [
+    Domains.ThornyCrownOfTheMountainWind.name
+  ],
+  false,
+  (c, set) => {
+    let value = 0;
+    if (c.playstyle?.talentStats.includes('Energy Recharge')) value += correctElement;
+    if (set.pieces === 4 && c.can('Hexerei Able')) value += correctElement;
+    return value;
+  },
+)
+
 /**
  * @two Pyro DMG Bonus +15%
  * @four Overloaded & Burning DMG +40%. Vaporize & Melt DMG +15%. Using Skill (ability) increases 2-Piece Set effects by 50% (Pyro DMG Bonus +30%) for 10s. Max 3 stacks
@@ -235,6 +251,23 @@ export const DesertPavilionChronicle = new ArtifactSet(
   }
 );
 
+export const DisenchantmentInDeepShadow = new ArtifactSet(
+  "Disenchantment In Deep Shadow",
+  "ATK +18%",
+  "Superconduct reaction DMG +80%. When equipping character attacks opponents affected by Suprtconduct, attack's CRIT Rate +16%.",
+  Rarity.Legendary,
+  [Domains.ThornyCrownOfTheMountainWind.name],
+  false,
+  (c, set) => {
+    let value = 0;
+
+    if (c.playstyle?.talentStats.includes('ATK')) value += correctElement;
+    if (set.pieces === 4 && c.canTrigger('all', 'Superconduct')) value += correctElement;
+
+    return value;
+  },
+);
+
 /**
  * @two ATK +18%
  * @four When Normal Attack hit opponents, 36% chance to trigger "Valley Rite": Normal Attack DMG +70% Of ATK. Effect is dispelled .05s after Normal Attack deals DMG. If "Valley Rite" was not triggered, odds Of triggering +20%. Effect can trigger once every .2s.
@@ -283,13 +316,7 @@ export const FinaleOfTheDeepGalleries = new ArtifactSet(
   "When equipping character has 0 elemental energy, Normal Attack DMG is increased by 60% and Burst DMG increased by 60%. After equipping character deals Normal Attack DMG, aforementioned burst effect will stop applying for 6s. Likewise for Burst DMG to Normal Attack DMG. Can trigger off-field.",
   Rarity.Legendary,
   [Domains.DerelictMasonryDock.name],
-  false,
-  // (c, set) => c.playstyle?.map(cSet => {
-  //   let value = 0;
-  //   if (c.element === 'Cryo') value += correctElement;
-  //   if (cSet.talentPriority === 'Burst/Ult' || cSet.talentStats.includes('Energy Recharge') && set.pieces === 4) value += correctElement;
-  //   return value;
-  // }).sort().shift()
+  true,
   (c, set) => {
     let value = 0;
     if (c.element === 'Cryo') value += correctElement;
@@ -511,7 +538,7 @@ export const LongNightsOath = new ArtifactSet(
   `After Plunging/Charged/Skill hits an opponent, gain 1/2/2 stacks of "Radiance Everlasting". Plunging, Charged or Skill can each trigger effect once every 1s. Radiance Everlasting: Plunging deal 15% increased dmg for 6s. Max 5 stacks, each duration counted independently.`,
   Rarity.Legendary,
   [Domains.DerelictMasonryDock.name],
-  false,
+  true,
   (c, set) => {
     let value = 0;
     const isPlungingSet = c.playstyle?.talentPriorities[0] === 'Plunging/Press' && c.playstyle?.recommendedArtifactSets.includes(set);
