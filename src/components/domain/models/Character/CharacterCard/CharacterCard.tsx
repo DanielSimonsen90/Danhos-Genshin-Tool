@@ -189,7 +189,7 @@ export default function CharacterCard({
                 <Badge variant="beta" />
                 Recommended Weapons
               </h3>
-              <TabBar tabs={weapons.mapToArray(([key, { title, items, color, rarity }]) => ([
+              <TabBar cacheContent tabs={weapons.mapToArray(([key, { title, items, color, rarity }]) => ([
                 key,
                 {
                   title: (

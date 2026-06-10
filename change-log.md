@@ -11,3 +11,4 @@
 ## Fixes
 * Added "ATK Bonus" bonus ability to Kujou Sara
 * Added "Shield" bonus ability to Yanfei
+* Fixed sub-model filtering not working in model pages i.e. weapons not being filtered within a character page when using the recommended weapons filter
