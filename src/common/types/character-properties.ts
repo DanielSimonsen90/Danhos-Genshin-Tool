@@ -15,9 +15,8 @@ export type BonusAbilitySimple = (
   | 'Buff ATK Speed' | 'Elemental Infusion' | 'Hexerei Able'
 );
 export type BonusAbility = (
-  BonusAbilityBase
-  | `Buff ATK: ${string}` | `Elemental Based: ${string}` | `CRIT Increase: ${string}` 
-  | `Buff ATK Speed: ${string}` | `Elemental Infusion: ${string}` | `Hexerei Able: ${string}`
+  | BonusAbilityBase
+  | `${Exclude<BonusAbilitySimple, BonusAbilityBase>}: ${string}`
 );
 
 

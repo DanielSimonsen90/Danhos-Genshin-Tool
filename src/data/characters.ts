@@ -1174,6 +1174,21 @@ export const Lisa = new Character("Lisa", "Electro", "Catalyst", ["Off-field Dam
   ]),
 );
 
+export const Lohen = new Character("Lohen", "Cryo", "Polearm", [
+  "Elemental Infusion: When pressing skill",
+], Rarity.Legendary, 'Mondstadt', {
+  material: TalentAscension.Resistance,
+  weeklyBossDrop: MobDrops.ChessGameKnight,
+  crystal: ElementalCrystals.Cryo,
+  localSpecialty: LocalSpecialties.EtherwingMoth,
+  worldBossDrop: MobDrops.PrismaticSeveredTail,
+  mobDrop: EasyMobDrops.Arrowhead,
+}, 'TODO', 
+  new CharacterPlaystyle("On-field Cryo DPS", [], [], true, [
+    
+  ])
+);
+
 export const Lynette = new Character("Lynette", "Anemo", "Sword", [
   "Elemental Infusion: If C6 activated, after Skill/Ability, Lynette gains Anemo infusion for 6 seconds",
 ], Rarity.Epic, 'Fontaine', {
