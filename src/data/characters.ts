@@ -1054,7 +1054,10 @@ export const Klee = new Character("Klee", "Pyro", "Catalyst", [
   ])
 );
 
-export const KujouSara = new Character("Kujou Sara", "Electro", "Bow", ["Off-field Damage",], Rarity.Epic, 'Inazuma', {
+export const KujouSara = new Character("Kujou Sara", "Electro", "Bow", [
+  "Off-field Damage",
+  "Buff ATK: When using skill, based on own ATK."
+], Rarity.Epic, 'Inazuma', {
   material: TalentAscension.Elegance,
   weeklyBossDrop: MobDrops.AshenHeart,
   crystal: ElementalCrystals.Electro,
@@ -2068,7 +2071,9 @@ export const YaeMiko = new Character("Yae Miko", "Electro", "Catalyst", ["Off-fi
   ])
 );
 
-export const Yanfei = new Character("Yanfei", "Pyro", "Catalyst", [], Rarity.Epic, 'Liyue', {
+export const Yanfei = new Character("Yanfei", "Pyro", "Catalyst", [
+  'Shield'
+], Rarity.Epic, 'Liyue', {
   material: TalentAscension.Gold,
   weeklyBossDrop: MobDrops.BloodjadeBranch,
   crystal: ElementalCrystals.Pyro,
