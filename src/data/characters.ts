@@ -16,36 +16,36 @@ const StatSets = (statName: string, priority: CharacterArtifactSet['effectivenes
     .values(Sets)
     .filter(set => set.doesStatIncrease(statName))
     .map(set => new CharacterArtifactSet(set, 2, priority))
-), [statName, priority])
+), [statName, priority]);
 
-const HPSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('HP', priority)
-const AttackSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('ATK', priority)
-const DefenseSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('DEF', priority)
+const HPSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('HP', priority);
+const AttackSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('ATK', priority);
+const DefenseSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('DEF', priority);
 
-const ElementalMasterySets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Elemental Mastery', priority)
-const EnergyRechargeSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Energy Recharge', priority)
+const ElementalMasterySets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Elemental Mastery', priority);
+const EnergyRechargeSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Energy Recharge', priority);
 
-const PhysicalDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Physical DMG Bonus', priority)
-const HealingBonusSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Healing Bonus', priority)
+const PhysicalDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Physical DMG Bonus', priority);
+const HealingBonusSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Healing Bonus', priority);
 
 // Attack type sets
-const ChargedAttackSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Charged Attack', priority)
-const PlungingAttackSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Plunging Attack DMG', priority)
-const ElementalSkillDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Elemental Skill DMG', priority)
-const BurstDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Burst', priority)
+const ChargedAttackSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Charged Attack', priority);
+const PlungingAttackSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Plunging Attack DMG', priority);
+const ElementalSkillDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Elemental Skill DMG', priority);
+const BurstDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Burst', priority);
 
 // CRIT and other stats
-const CRITRateSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('CRIT Rate', priority)
-const ShieldStrengthSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Shield Strength', priority)
+const CRITRateSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('CRIT Rate', priority);
+const ShieldStrengthSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Shield Strength', priority);
 
 // Element DMG Bonus sets
-const AnemoDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Anemo DMG Bonus', priority)
-const CryoDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Cryo DMG Bonus', priority)
-const DendroDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Dendro DMG Bonus', priority)
-const ElectroDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Electro DMG Bonus', priority)
-const GeoDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Geo DMG Bonus', priority)
-const HydroDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Hydro DMG Bonus', priority)
-const PyroDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Pyro DMG Bonus', priority)
+const AnemoDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Anemo DMG Bonus', priority);
+const CryoDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Cryo DMG Bonus', priority);
+const DendroDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Dendro DMG Bonus', priority);
+const ElectroDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Electro DMG Bonus', priority);
+const GeoDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Geo DMG Bonus', priority);
+const HydroDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Hydro DMG Bonus', priority);
+const PyroDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Pyro DMG Bonus', priority);
 // #endregion
 
 // #region A
@@ -270,7 +270,8 @@ export const Candace = new Character("Candace", "Hydro", "Polearm", [
 
 export const Charlotte = new Character("Charlotte", "Cryo", "Catalyst", [
   "Heal",
-  "Bond of Life"
+  "Bond of Life",
+  'Pneuma',
 ], Rarity.Epic, 'Fontaine', {
   material: TalentAscension.Justice,
   weeklyBossDrop: MobDrops.LightlessSilkString,
@@ -302,7 +303,10 @@ export const Chasca = new Character("Chasca", "Anemo", "Bow", ["Nightsouls Bless
   ])
 );
 
-export const Chevreuse = new Character("Chevreuse", "Pyro", "Polearm", ["Heal"], Rarity.Epic, 'Fontaine', {
+export const Chevreuse = new Character("Chevreuse", "Pyro", "Polearm", [
+  "Heal",
+  'Ousia',
+], Rarity.Epic, 'Fontaine', {
   material: TalentAscension.Order,
   weeklyBossDrop: MobDrops.LightlessEyeOfTheMaelstrom,
   crystal: ElementalCrystals.Pyro,
@@ -372,7 +376,11 @@ export const Citlali = new Character("Citlali", "Cryo", "Catalyst", [
   ])
 );
 
-export const Clorinde = new Character("Clorinde", "Electro", "Sword", ["Bond of Life"], Rarity.Legendary, 'Fontaine', {
+export const Clorinde = new Character("Clorinde", "Electro", "Sword", [
+  "Bond of Life",
+  'Elemental Infusion: After Skill/Ability, Clorinde receives Electro infusion',
+  'Ousia',
+], Rarity.Legendary, 'Fontaine', {
   material: TalentAscension.Justice,
   weeklyBossDrop: MobDrops.Everamber,
   crystal: ElementalCrystals.Electro,
@@ -548,7 +556,10 @@ export const Durin = new Character("Durin", "Pyro", "Sword", [
 
 // #region E
 
-export const Emilie = new Character("Emilie", "Dendro", "Polearm", ["Off-field Damage"], Rarity.Legendary, 'Fontaine', {
+export const Emilie = new Character("Emilie", "Dendro", "Polearm", [
+  "Off-field Damage",
+  'Pneuma'
+], Rarity.Legendary, 'Fontaine', {
   material: TalentAscension.Order,
   weeklyBossDrop: MobDrops.SilkenFeather,
   crystal: ElementalCrystals.Dendro,
@@ -563,7 +574,11 @@ export const Emilie = new Character("Emilie", "Dendro", "Polearm", ["Off-field D
   ]),
 );
 
-export const Escoffier = new Character('Escoffier', 'Cryo', 'Polearm', ['Off-field Damage', 'Heal'], Rarity.Legendary, 'Fontaine', {
+export const Escoffier = new Character('Escoffier', 'Cryo', 'Polearm', [
+  'Off-field Damage', 
+  'Heal',
+  'Ousia',
+], Rarity.Legendary, 'Fontaine', {
   material: TalentAscension.Justice,
   weeklyBossDrop: MobDrops.ErodedHorn,
   crystal: ElementalCrystals.Cryo,
@@ -654,7 +669,7 @@ export const Flins = new Character("Flins", "Electro", "Polearm", [
   ])
 );
 
-export const Freminet = new Character("Freminet", "Cryo", "Claymore", [], Rarity.Epic, 'Fontaine', {
+export const Freminet = new Character("Freminet", "Cryo", "Claymore", ['Pneuma'], Rarity.Epic, 'Fontaine', {
   material: TalentAscension.Justice,
   weeklyBossDrop: MobDrops.WorldspanFern,
   crystal: ElementalCrystals.Cryo,
@@ -671,7 +686,9 @@ export const Freminet = new Character("Freminet", "Cryo", "Claymore", [], Rarity
 
 export const Furina = new Character("Furina", "Hydro", "Sword", [
   "Heal",
-  "Off-field Damage"
+  "Off-field Damage",
+  'Pneuma',
+  'Ousia',
 ], Rarity.Legendary, 'Fontaine', {
   material: TalentAscension.Justice,
   weeklyBossDrop: MobDrops.LightlessMass,
@@ -805,7 +822,7 @@ export const Illuga = new Character("Illuga", "Geo", "Polearm", [
   localSpecialty: LocalSpecialties.PineAmber,
   worldBossDrop: MobDrops.CyclicMilitaryKuuvahkiCore,
   mobDrop: EasyMobDrops.DriveShaft,
-}, undefined, 
+}, 'During Night (18:00 - 06:00), party members gain 10% increased movement speed.',
   new CharacterPlaystyle("Off-field Lunar-Crystallize Support", ["DEF", "Elemental Mastery", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
     new CharacterArtifactSet(Sets.SilkenMoonsSerenade, 4, 81.5),
     ...ElementalMasterySets(3.4),
@@ -1160,7 +1177,7 @@ export const Linnea = new Character("Linnea", "Geo", "Bow", [
   new CharacterPlaystyle("Off-field Support", ["DEF"], ["Skill/Ability", "Burst/Ult", "Charged/Hold"], false, [
     new CharacterArtifactSet(Sets.AubadeOfMorningstarAndMoon, 4, 100),
   ])
-)
+);
 
 export const Lisa = new Character("Lisa", "Electro", "Catalyst", ["Off-field Damage"], Rarity.Epic, 'Mondstadt', {
   material: TalentAscension.Ballad,
@@ -1186,13 +1203,14 @@ export const Lohen = new Character("Lohen", "Cryo", "Polearm", [
   localSpecialty: LocalSpecialties.EtherwingMoth,
   worldBossDrop: MobDrops.PrismaticSeveredTail,
   mobDrop: EasyMobDrops.Arrowhead,
-}, 'When Lohen uses skill, he levels it up by 1 for 8 seconds', 
+}, 'When Lohen uses skill, he levels it up by 1 for 8 seconds',
   new CharacterPlaystyle("On-field Cryo DPS", ["ATK"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
     new CharacterArtifactSet(Sets.ADayCarvedFromRisingWinds, 4, 100),
   ])
 );
 
 export const Lynette = new Character("Lynette", "Anemo", "Sword", [
+  'Ousia',
   "Elemental Infusion: If C6 activated, after Skill/Ability, Lynette gains Anemo infusion for 6 seconds",
 ], Rarity.Epic, 'Fontaine', {
   material: TalentAscension.Order,
@@ -1209,7 +1227,10 @@ export const Lynette = new Character("Lynette", "Anemo", "Sword", [
   ])
 );
 
-export const Lyney = new Character("Lyney", "Pyro", "Bow", ['Self-heal'], Rarity.Legendary, "Fontaine", {
+export const Lyney = new Character("Lyney", "Pyro", "Bow", [
+  'Self-heal',
+  'Pneuma'
+], Rarity.Legendary, "Fontaine", {
   material: TalentAscension.Equity,
   weeklyBossDrop: MobDrops.PrimordialGreenbloom,
   crystal: ElementalCrystals.Pyro,
@@ -1322,6 +1343,7 @@ export const Nahida = new Character("Nahida", "Dendro", "Catalyst", [
 
 export const Navia = new Character("Navia", "Geo", "Claymore", [
   "Off-field Damage",
+  'Ousia',
   "Elemental Infusion: After Skill/Ability, Navia gains Geo infusion"
 ], Rarity.Legendary, "Fontaine", {
   material: TalentAscension.Equity,
@@ -1357,7 +1379,10 @@ export const Nefer = new Character("Nefer", "Dendro", "Catalyst", [
   ])
 );
 
-export const Neuvillette = new Character("Neuvillette", "Hydro", "Catalyst", ["Self-heal"], Rarity.Legendary, "Fontaine", {
+export const Neuvillette = new Character("Neuvillette", "Hydro", "Catalyst", [
+  "Self-heal",
+  'Pneuma',
+], Rarity.Legendary, "Fontaine", {
   material: TalentAscension.Equity,
   weeklyBossDrop: MobDrops.Everamber,
   crystal: ElementalCrystals.Hydro,
@@ -1385,7 +1410,7 @@ export const Nicole = new Character("Nicole", "Pyro", "Catalyst", [
   localSpecialty: LocalSpecialties.PineAmber,
   worldBossDrop: MobDrops.RemnantOfTheDreadwing,
   mobDrop: EasyMobDrops.Warrant,
-}, 'When in Teyvat and out of combat with the current region\'s Treasure Compass unlocked, Nicole\'s Charged Attack summons a Seelie to show the way like a Treasure Compass would', 
+}, 'When in Teyvat and out of combat with the current region\'s Treasure Compass unlocked, Nicole\'s Charged Attack summons a Seelie to show the way like a Treasure Compass would',
   new CharacterPlaystyle("Off-field Pyro Reaction Support", ["ATK"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
     new CharacterArtifactSet(Sets.CelestialGift, 4, 100),
   ])
@@ -1478,7 +1503,7 @@ export const Prune = new Character("Prune", "Anemo", "Catalyst", [
   localSpecialty: LocalSpecialties.WinterIcelea,
   worldBossDrop: MobDrops.RadiantAntler,
   mobDrop: EasyMobDrops.TreasureHoarderInsignia,
-}, '10% chance to get 1 regional Character Talent Materials when crafting Character Talent Materials.', 
+}, '10% chance to get 1 regional Character Talent Materials when crafting Character Talent Materials.',
   new CharacterPlaystyle("Off-field Support", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
     new CharacterArtifactSet(Sets.CelestialGift, 4, 100),
   ])
@@ -1639,7 +1664,8 @@ export const ShikanoinHeizou = new Character("Shikanoin Heizou", "Anemo", "Catal
 );
 
 export const Sigewinne = new Character("Sigewinne", "Hydro", "Bow", [
-  "Heal", 
+  "Heal",
+  'Ousia',
   "Bond of Life",
   "Off-field Damage",
 ], Rarity.Legendary, 'Fontaine', {
@@ -1809,7 +1835,7 @@ export const TravelerDendro = new Character("Traveler (Dendro)", "Dendro", "Swor
   ])
 );
 
-export const TravelerHydro = new Character("Traveler (Hydro)", "Hydro", "Sword", ['Self-heal'], Rarity.Legendary, 'Unknown', {
+export const TravelerHydro = new Character("Traveler (Hydro)", "Hydro", "Sword", ['Self-heal', 'Pneuma'], Rarity.Legendary, 'Unknown', {
   material: TalentAscension.Equity,
   weeklyBossDrop: MobDrops.WorldspanFern,
   crystal: ElementalCrystals.Hydro,
@@ -1879,7 +1905,7 @@ export const Varka = new Character("Varka", "Anemo", "Claymore", [
   localSpecialty: LocalSpecialties.Wolfhook,
   worldBossDrop: MobDrops.PrismaticSeveredTail,
   mobDrop: EasyMobDrops.DriveShaft,
-}, `For every party member from Mondstadt, the Hold version of Varka's Elemental Skill "Windbound Execution"'s cooldown is decreased by 5%.`, 
+}, `For every party member from Mondstadt, the Hold version of Varka's Elemental Skill "Windbound Execution"'s cooldown is decreased by 5%.`,
   new CharacterPlaystyle("On-field Swirl DPS", ["ATK", "Elemental Mastery"], ["Skill/Ability", "Normal/Press", "Burst/Ult"], true, [
     new CharacterArtifactSet(Sets.ADayCarvedFromRisingWinds, 4, 90.9),
     new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 2.4),
@@ -1928,6 +1954,7 @@ export const WandererScaramouche = new Character("Wanderer (Scaramouche)", "Anem
 
 export const Wriothesley = new Character("Wriothesley", "Cryo", "Catalyst", [
   'Self-heal',
+  'Ousia',
 ], Rarity.Legendary, 'Fontaine', {
   material: TalentAscension.Order,
   weeklyBossDrop: MobDrops.PrimordialGreenbloom,
@@ -2184,7 +2211,7 @@ export const Zibai = new Character("Zibai", "Geo", "Sword", [
   localSpecialty: LocalSpecialties.GlazeLily,
   worldBossDrop: MobDrops.ChessGameQueen,
   mobDrop: EasyMobDrops.Warrant,
-}, `Collects elemental energy at night`, 
+}, `Collects elemental energy at night`,
   new CharacterPlaystyle("On-field Lunar-Crystallize DPS", ["DEF"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
     new CharacterArtifactSet(Sets.NightOfTheSkysUnveiling, 4, 96.7),
     ...ElementalMasterySets(0.4),

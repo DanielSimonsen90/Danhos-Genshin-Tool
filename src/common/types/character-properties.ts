@@ -5,7 +5,7 @@ export type BonusAbilityBase = (
   | 'Off-field Damage' 
   | 'Shield' | 'Heal' | 'Self-heal' | 'Bond of Life' 
   | 'Nightsouls Blessing' | `Serpent's Subtlety`  
-  | `Enables ${LunarReaction} Reaction`
+  | 'Pneuma' | 'Ousia' | `Enables ${LunarReaction} Reaction`
   | 'Increases Moonsign'
   | 'Grouping'
 );

@@ -7,6 +7,7 @@
 
 ## Updates
 * Linked Lohen to his signature weapon
+* Added Pneuma and Ousia bonus abilities
 
 ## Fixes
 * Added "ATK Bonus" bonus ability to Kujou Sara
