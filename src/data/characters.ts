@@ -1186,9 +1186,9 @@ export const Lohen = new Character("Lohen", "Cryo", "Polearm", [
   localSpecialty: LocalSpecialties.EtherwingMoth,
   worldBossDrop: MobDrops.PrismaticSeveredTail,
   mobDrop: EasyMobDrops.Arrowhead,
-}, 'TODO', 
-  new CharacterPlaystyle("On-field Cryo DPS", [], [], true, [
-    
+}, 'When Lohen uses skill, he levels it up by 1 for 8 seconds', 
+  new CharacterPlaystyle("On-field Cryo DPS", ["ATK"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
+    new CharacterArtifactSet(Sets.ADayCarvedFromRisingWinds, 4, 100),
   ])
 );
 
