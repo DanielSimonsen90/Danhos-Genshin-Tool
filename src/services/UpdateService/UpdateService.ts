@@ -1,29 +1,33 @@
-import { BrowserWindow, dialog, shell, app } from 'electron';
+import { BrowserWindow, dialog, shell, app, autoUpdater } from 'electron';
 import { PROJECT_GITHUB_URL } from '@/common/constants/domain';
 import { IS_DEVELOPMENT_ENVIRONMENT } from '@/common/constants/dev';
 import { IgnoredVersionService } from './IgnoredVersionService';
-import { GitHubRelease, RepoInfo, UpdateAvailableResponseOptions, UpdateErrorResponseOptions, UpdateCheckResult } from './types';
+import {
+  RepoInfo,
+  UpdateFoundResponseOptions,
+  UpdateReadyResponseOptions,
+  UpdateErrorResponseOptions,
+  UpdateCheckResult,
+  UpdateDownloadProgress,
+} from './types';
 
 /**
- * Service for checking and managing application updates using GitHub releases API.
- * Provides functionality to check for updates, ignore specific versions, and direct users to download new releases.
+ * Service for checking and managing application updates via Electron autoUpdater.
+ * Provides in-app update checks, background download notifications, and install prompts.
  */
 export const UpdateService = new class UpdateService {
   public readonly CHECK_FOR_UPDATE_DELAY_MS = 3000; // Delay before checking for updates after app launch
+  private readonly UPDATE_CHECK_TIMEOUT_MS = 30000;
 
   private mainWindow: BrowserWindow | null = null;
   private isCheckingForUpdates = false;
+  private isAutoUpdaterConfigured = false;
+  private hasRegisteredAutoUpdaterEvents = false;
+
   public setMainWindow(window: BrowserWindow) {
     this.mainWindow = window;
   }
 
-  private _findWindowsInstaller(assets: GitHubRelease['assets']) {
-    return assets.find(asset =>
-      asset.name.includes('Setup.exe') ||
-      asset.name.includes('.exe') ||
-      asset.name.includes('windows')
-    );
-  }
   private _getRepoInfo(): RepoInfo {
     // Extract owner and repo from PROJECT_GITHUB_URL
     const url = PROJECT_GITHUB_URL.replace('https://github.com/', '');
@@ -31,27 +35,67 @@ export const UpdateService = new class UpdateService {
     return { owner, repo };
   }
 
-  /**
-   * Compare two semantic version strings.
-   * @param current The current version
-   * @param latest The latest version to compare against
-   * @returns -1 if current < latest, 1 if current > latest, 0 if equal
-   */
-  private _compareVersions(current: string, latest: string): number {
-    // Remove 'v' prefix if present
-    const [currentClean, latestClean] = [current, latest].map(v => v.replace(/^v/, ''));
-    const [currentParts, latestParts] = [currentClean, latestClean].map(v => v.split('.').map(Number));
+  private _getUpdateFeedUrl(): string {
+    const { owner, repo } = this._getRepoInfo();
+    return `https://update.electronjs.org/${owner}/${repo}/${process.platform}-${process.arch}/${app.getVersion()}`;
+  }
 
-    for (let i = 0; i < Math.max(currentParts.length, latestParts.length); i++) {
-      const currentPart = currentParts[i] || 0;
-      const latestPart = latestParts[i] || 0;
+  private _emitUpdateDownloadProgress(progress: UpdateDownloadProgress): void {
+    if (!this.mainWindow || this.mainWindow.isDestroyed()) return;
+    this.mainWindow.webContents.send('update-download-progress', progress);
+  }
 
-      if (currentPart < latestPart) return -1;
-      if (currentPart > latestPart) return 1;
-    }
+  private _configureAutoUpdater(): void {
+    if (this.isAutoUpdaterConfigured) return;
 
-    return 0;
-  }  
+    autoUpdater.setFeedURL({ url: this._getUpdateFeedUrl() });
+    this.isAutoUpdaterConfigured = true;
+  }
+
+  private _registerAutoUpdaterEvents(): void {
+    if (this.hasRegisteredAutoUpdaterEvents) return;
+
+    autoUpdater.on('update-downloaded', async (_event, _releaseNotes, releaseName) => {
+      const latestVersion = releaseName || 'latest version';
+
+      if (IgnoredVersionService.isVersionIgnored(latestVersion)) return;
+
+      this._emitUpdateDownloadProgress({
+        stage: 'downloaded',
+        latestVersion,
+      });
+
+      const response = await this._showDialog({
+        type: 'info',
+        title: 'Update Ready',
+        message: `Update ${latestVersion} is ready to install.`,
+        detail: 'Restart now to install the update?',
+        buttons: [
+          'Restart and install',
+          'Install later',
+          'Ignore this update'
+        ],
+        defaultId: 0,
+        cancelId: 1,
+      });
+
+      if (response === null) return;
+
+      switch (response) {
+        case UpdateReadyResponseOptions.InstallNow:
+          autoUpdater.quitAndInstall();
+          return;
+        case UpdateReadyResponseOptions.InstallLater:
+          return;
+        case UpdateReadyResponseOptions.IgnoreThisUpdate:
+          IgnoredVersionService.ignoreVersion(latestVersion);
+          return;
+      }
+    });
+
+    this.hasRegisteredAutoUpdaterEvents = true;
+  }
+
   public async checkForUpdates(showNoUpdateDialog = false): Promise<UpdateCheckResult> {
     console.log('UpdateService.checkForUpdates called', { showNoUpdateDialog, isChecking: this.isCheckingForUpdates });
     
@@ -81,37 +125,92 @@ export const UpdateService = new class UpdateService {
       return result;
     }
 
+    if (process.platform !== 'win32' && process.platform !== 'darwin') {
+      this.isCheckingForUpdates = false;
+      return {
+        updateAvailable: false,
+        currentVersion,
+        error: 'Auto-updates are only supported on Windows and macOS builds'
+      };
+    }
+
     try {
-      const { owner, repo } = this._getRepoInfo();
-      const apiUrl = `https://api.github.com/repos/${owner}/${repo}/releases/latest`;
+      this._configureAutoUpdater();
+      this._registerAutoUpdaterEvents();
 
-      const response = await fetch(apiUrl);
-      if (!response.ok) throw new Error(`GitHub API returned ${response.status}: ${response.statusText}`);
+      const updateResult = await new Promise<UpdateCheckResult>((resolve) => {
+        let settled = false;
 
-      const latestRelease: GitHubRelease = await response.json();
-
-      // Compare versions
-      const versionComparison = this._compareVersions(currentVersion, latestRelease.tag_name);
-
-      if (versionComparison < 0) {
-        const isVersionIgnored = IgnoredVersionService.isVersionIgnored(latestRelease.tag_name);
-        if (isVersionIgnored && showNoUpdateDialog) this._showNoUpdateDialog();
-        else if (!isVersionIgnored) this._showUpdateAvailableDialog(latestRelease);
-
-        return {
-          updateAvailable: !isVersionIgnored,
-          currentVersion,
-          latestVersion: latestRelease.tag_name
+        const resolveOnce = (result: UpdateCheckResult) => {
+          if (settled) return;
+          settled = true;
+          clearTimeout(timeout);
+          autoUpdater.removeListener('update-available', onUpdateAvailable);
+          autoUpdater.removeListener('update-not-available', onUpdateNotAvailable);
+          autoUpdater.removeListener('error', onError);
+          resolve(result);
         };
-      } else {
-        // No update available
-        if (showNoUpdateDialog) this._showNoUpdateDialog();
-        return {
-          updateAvailable: false,
-          currentVersion,
-          latestVersion: latestRelease.tag_name
+
+        const onUpdateAvailable = async (_event: unknown, _releaseNotes: string, releaseName: string) => {
+          const latestVersion = releaseName || 'latest version';
+          const isVersionIgnored = IgnoredVersionService.isVersionIgnored(latestVersion);
+
+          this._emitUpdateDownloadProgress({
+            stage: 'downloading',
+            latestVersion,
+          });
+
+          if (isVersionIgnored) {
+            if (showNoUpdateDialog) await this._showNoUpdateDialog();
+            resolveOnce({
+              updateAvailable: false,
+              currentVersion,
+              latestVersion,
+            });
+            return;
+          }
+
+          await this._showUpdateAvailableDialog(latestVersion);
+          resolveOnce({
+            updateAvailable: true,
+            currentVersion,
+            latestVersion,
+          });
         };
-      }
+
+        const onUpdateNotAvailable = async () => {
+          if (showNoUpdateDialog) await this._showNoUpdateDialog();
+          resolveOnce({
+            updateAvailable: false,
+            currentVersion,
+          });
+        };
+
+        const onError = (error: Error) => {
+          if (showNoUpdateDialog) this._showUpdateErrorDialog();
+          resolveOnce({
+            updateAvailable: false,
+            currentVersion,
+            error: error.message || 'Unknown update error'
+          });
+        };
+
+        const timeout = setTimeout(() => {
+          resolveOnce({
+            updateAvailable: false,
+            currentVersion,
+            error: 'Update check timed out'
+          });
+        }, this.UPDATE_CHECK_TIMEOUT_MS);
+
+        autoUpdater.once('update-available', onUpdateAvailable);
+        autoUpdater.once('update-not-available', onUpdateNotAvailable);
+        autoUpdater.once('error', onError);
+
+        autoUpdater.checkForUpdates();
+      });
+
+      return updateResult;
     } catch (error) {
       if (showNoUpdateDialog) this._showUpdateErrorDialog();
       return {
@@ -129,33 +228,30 @@ export const UpdateService = new class UpdateService {
     const response = await dialog.showMessageBox(this.mainWindow, options);
     return response.response;
   }
-  private async _showUpdateAvailableDialog(release: GitHubRelease) {
-    const windowsInstaller = this._findWindowsInstaller(release.assets);
-
+  private async _showUpdateAvailableDialog(latestVersion: string) {
     const response = await this._showDialog({
       type: 'info',
       title: 'Update Available!',
-      message: `A new version, ${release.tag_name}, is available!`,
-      detail: `${release.name}\n\nWould you like to download and install the update?`,
+      message: `A new version, ${latestVersion}, is available!`,
+      detail: 'The update is now downloading in the background. You will be prompted to install once ready.',
       buttons: [
-        `Update to ${release.tag_name}`,
+        'OK',
         'View release page',
-        'Update later',
         'Ignore this update'
       ],
       defaultId: 0,
-      cancelId: 2,
+      cancelId: 0,
     });
 
     if (response === null) return;
 
     switch (response) {
-      case UpdateAvailableResponseOptions.UpdateNow: return windowsInstaller
-        ? await shell.openExternal(windowsInstaller.browser_download_url)
-        : await shell.openExternal(release.html_url);
-      case UpdateAvailableResponseOptions.ViewReleasePage: return await shell.openExternal(release.html_url);
-      case UpdateAvailableResponseOptions.UpdateLater: return;
-      case UpdateAvailableResponseOptions.IgnoreThisUpdate: return IgnoredVersionService.ignoreVersion(release.tag_name);
+      case UpdateFoundResponseOptions.OK:
+        return;
+      case UpdateFoundResponseOptions.ViewReleasePage:
+        return await shell.openExternal(`${PROJECT_GITHUB_URL}/releases`);
+      case UpdateFoundResponseOptions.IgnoreThisUpdate:
+        return IgnoredVersionService.ignoreVersion(latestVersion);
     }
   }
   private async _showNoUpdateDialog() {

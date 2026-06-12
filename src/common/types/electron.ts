@@ -1,4 +1,4 @@
-import { UpdateCheckResult } from '@/services/UpdateService/types';
+import { UpdateCheckResult, UpdateDownloadProgress } from '@/services/UpdateService/types';
 
 export interface ElectronAPI {
   checkForUpdates: () => Promise<UpdateCheckResult>;
@@ -9,7 +9,7 @@ export interface ElectronAPI {
   setAllLocalStorageData: (data: Record<string, any>) => Promise<void>;
   
   // Update download progress listener
-  onUpdateDownloadProgress: (callback: (progress: any) => void) => void;
+  onUpdateDownloadProgress: (callback: (progress: UpdateDownloadProgress) => void) => void;
   removeUpdateDownloadProgressListener: () => void;
 }
 

@@ -75,3 +75,17 @@ To publish the app to Github for others to download through releases, you can us
 npm run publish
 ```
 After the script has finished, the release should be published as a draft, which you can edit [here](https://github.com/DanielSimonsen90/Danhos-Genshin-Tool/releases) to finalize description for official release.
+
+### Troubleshooting: publish hangs at "Packaging for x64 on win32, copying files"
+If packaging appears stuck while copying files, check these points:
+
+1. Use an LTS Node version (Node 20 or Node 22). Very new Node versions can cause Electron Forge issues.
+2. Remove old artifacts by running:
+  ```bash
+  npm run clean:out
+  ```
+3. Retry packaging or publishing:
+  ```bash
+  npm run package
+  npm run publish
+  ```

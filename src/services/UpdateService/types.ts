@@ -16,10 +16,22 @@ export interface RepoInfo {
   repo: string;
 }
 
-export enum UpdateAvailableResponseOptions {
-  UpdateNow,
+export type UpdateDownloadStage = 'downloading' | 'downloaded';
+
+export interface UpdateDownloadProgress {
+  stage: UpdateDownloadStage;
+  latestVersion: string;
+}
+
+export enum UpdateFoundResponseOptions {
+  OK,
   ViewReleasePage,
-  UpdateLater,
+  IgnoreThisUpdate
+}
+
+export enum UpdateReadyResponseOptions {
+  InstallNow,
+  InstallLater,
   IgnoreThisUpdate
 }
 
