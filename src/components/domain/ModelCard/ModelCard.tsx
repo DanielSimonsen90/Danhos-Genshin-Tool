@@ -32,7 +32,7 @@ const ModelCard = forwardRef<HTMLDivElement, ModelCardProps>(({
   return (
     <Container {...props} className={className} ref={ref}>
       <header>
-        <Image />
+        {Image()}
         <div className={classNames('model-card__details', `${modelClassName}__details`)}>
           <NameTag className={classNames('model-card__name', `${modelClassName}__name`)} title={item.name}>
             <ModelNameContainer>
@@ -42,7 +42,7 @@ const ModelCard = forwardRef<HTMLDivElement, ModelCardProps>(({
               {HeadingContent && (
                 <>
                   <Separator show={!wrapInLink} />
-                  <HeadingContent />
+                  {HeadingContent()}
                 </>
               )}
               {showRarity && 'rarity' in item && (
@@ -53,10 +53,10 @@ const ModelCard = forwardRef<HTMLDivElement, ModelCardProps>(({
               )}
             </ModelNameContainer>
           </NameTag>
-          {HeaderContent && <HeaderContent />}
+          {HeaderContent && HeaderContent()}
         </div>
       </header>
-      <Content />
+      {Content()}
     </Container>
   );
 });

@@ -1317,7 +1317,7 @@ export const DisasterAndRemorse = new Weapon(
     
     return score;
   },
-  // cs => cs.???
+  cs => cs.Lohen
 );
 
 export const DodocoTales = new Weapon(
