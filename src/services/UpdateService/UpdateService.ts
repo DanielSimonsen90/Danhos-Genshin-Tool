@@ -155,11 +155,6 @@ export const UpdateService = new class UpdateService {
           const latestVersion = releaseName || 'latest version';
           const isVersionIgnored = IgnoredVersionService.isVersionIgnored(latestVersion);
 
-          this._emitUpdateDownloadProgress({
-            stage: 'downloading',
-            latestVersion,
-          });
-
           if (isVersionIgnored) {
             if (showNoUpdateDialog) await this._showNoUpdateDialog();
             resolveOnce({
@@ -169,6 +164,11 @@ export const UpdateService = new class UpdateService {
             });
             return;
           }
+
+          this._emitUpdateDownloadProgress({
+            stage: 'downloading',
+            latestVersion,
+          });
 
           await this._showUpdateAvailableDialog(latestVersion);
           resolveOnce({
