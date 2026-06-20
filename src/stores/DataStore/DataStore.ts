@@ -4,6 +4,7 @@ import { ModelType } from "./ModelType";
 import dataStoreSlice from './slices';  
 
 const DataStore = new StoreBuilder()
+  .setStoreName('DataStore')
   .addSlice(dataStoreSlice)
   .addApi(() => {
     function getModelType<TModel extends Model>(model: TModel) {

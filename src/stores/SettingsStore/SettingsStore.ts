@@ -4,6 +4,7 @@ import { LOCAL_STORAGE_KEY } from './SettingsStoreConstants';
 import slices from './slices';
 
 const SettingsStore = new StoreBuilder()
+  .setStoreName('SettingsStore')
   .addSlice(slices)
   .addPersistence({
     key: LOCAL_STORAGE_KEY,

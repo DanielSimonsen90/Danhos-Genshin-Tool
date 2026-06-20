@@ -1,5 +1,5 @@
 import { app, BrowserWindow, session, ipcMain, Menu, shell } from 'electron';
-import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
+import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer';
 import path from 'path';
 import UpdateService from './services/UpdateService';
 import { PROJECT_GITHUB_URL } from './common/constants/domain';
@@ -15,7 +15,27 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-app.whenReady().then(() => installExtension(REACT_DEVELOPER_TOOLS));
+app.whenReady().then(() => {
+  // Install DevTools extensions in development mode only
+  if (process.env.NODE_ENV !== 'production') {
+    installExtension([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS], {
+      loadExtensionOptions: { allowFileAccess: true },
+      forceDownload: false, // Use cached version if available
+    })
+      .then((names) => console.log(`Added Extensions: ${names.join(', ')}`))
+      .catch((err) => {
+        console.log('DevTools installation error (non-critical):', err.message);
+        // Try installing them one by one as fallback
+        installExtension(REACT_DEVELOPER_TOOLS, { forceDownload: false })
+          .then(() => console.log('React DevTools installed'))
+          .catch(() => console.log('React DevTools already installed or unavailable'));
+        
+        installExtension(REDUX_DEVTOOLS, { forceDownload: false })
+          .then(() => console.log('Redux DevTools installed'))
+          .catch(() => console.log('Redux DevTools already installed or unavailable'));
+      });
+  }
+});
 
 // Setup IPC handlers for update functionality
 const setupIPCHandlers = (): void => {

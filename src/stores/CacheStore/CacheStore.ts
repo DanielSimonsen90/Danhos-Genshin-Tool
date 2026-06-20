@@ -3,6 +3,7 @@ import { DEFAULT_STATE } from "./CacheStoreConstants";
 import slices from "./slices";
 
 export const CacheStore = new StoreBuilder(DEFAULT_STATE)
+  .setStoreName('CacheStore')
   .addSlice(slices)
   .addPersistence({
     key: 'CacheStore',
