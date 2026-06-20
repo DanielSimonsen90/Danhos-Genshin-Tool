@@ -1,6 +1,7 @@
 import StoreBuilder from "@/stores/_baseStore/StoreBuilder";
 import { AccountContextType, AccountData, DEFAULT_ACCOUNT_DATA, DEFAULT_ACCOUNT_NAME } from "..";
 import accountsSlice from "./accounts.slice";
+import { generateAccountId } from "../AccountStoreFunctions";
 
 export default new StoreBuilder()
   .addSlice(accountsSlice)
@@ -13,6 +14,7 @@ export default new StoreBuilder()
       const nextData: AccountData = {
         ...DEFAULT_ACCOUNT_DATA,
         ...data,
+        id: generateAccountId(),
       }
 
       const next = {

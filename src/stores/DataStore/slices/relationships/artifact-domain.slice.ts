@@ -17,10 +17,11 @@ export default new StoreBuilder()
           const artifact = api.findArtifactByName(artifactName);
           if (!artifact) return new List<Domain>();
 
-        return get().Domains.filter(domain => (
-          artifact.domainNames.includes(domain.name)
-        ));
-      }, [get().Artifacts, get().Domains]);
+          return get().Domains.filter(domain => (
+            artifact.domainNames.includes(domain.name)
+          ));
+        }, [get().Artifacts, get().Domains]
+      );
     }
     function getArtifactsFromDomain(domainName: string) {
       return api.memoize(
@@ -29,16 +30,17 @@ export default new StoreBuilder()
           const domain = api.findDomainByName(domainName);
           if (!domain) return [];
 
-        return sortByRarityDesc(
-          get().Artifacts.filter(artifact => (
-            artifact.domainNames.includes(domain.name)
-          )
-        ));
-      }, [get().Artifacts, get().Domains]);
+          return sortByRarityDesc(
+            get().Artifacts.filter(artifact => (
+              artifact.domainNames.includes(domain.name)
+            ))
+          );
+        }, [get().Artifacts, get().Domains]
+      );
     }
 
     return {
       getDomainsFromArtifact,
       getArtifactsFromDomain,
-    }
-  })
+    };
+  });
