@@ -1,6 +1,6 @@
 import { Model } from "@/common/models";
-import StoreBuilder from "../_baseStore/StoreBuilder";
-import ModelType from "./ModelType";
+import StoreBuilder, { type InferStoreType } from "../_baseStore/StoreBuilder";
+import { ModelType } from "./ModelType";
 import dataStoreSlice from './slices';  
 
 const DataStore = new StoreBuilder()
@@ -17,5 +17,5 @@ const DataStore = new StoreBuilder()
   .buildStore();
 
 export default DataStore;
-export type DataStoreType = ReturnType<typeof DataStore.getAccumulatedStore>;
+export type DataStoreType = InferStoreType<typeof DataStore>;
 export const useDataStore = DataStore.useStore;

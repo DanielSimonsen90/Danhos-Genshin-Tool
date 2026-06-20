@@ -1,14 +1,6 @@
 import { useSyncExternalStore } from "react";
 import { Functionable } from "@/common/types";
 
-type AnyApiFactory = (props: {
-  get: () => unknown;
-  set: (partial: unknown) => void;
-  api: unknown;
-  builder: unknown;
-}) => unknown;
-type AnyPersistenceConfig = PersistenceConfig<unknown>;
-
 type Subscriber = () => void;
 
 type PersistenceConfig<TState> = {
@@ -17,12 +9,35 @@ type PersistenceConfig<TState> = {
   parse?: (stored: string) => TState;
 };
 
+type BuilderFacade<TState extends object, TApi extends object> = {
+  buildStore: () => Store<TState, TApi>;
+};
+
 type ApiFactory<TState extends object, TApi, TCurrentApi extends object = object> = (props: {
   get: () => TState;
   set: (partial: Functionable<Partial<TState>, [current: TState]>) => void;
   api: TCurrentApi;
-  builder: StoreBuilder<TState, TCurrentApi>;
+  builder: BuilderFacade<TState, TCurrentApi>;
 }) => TApi;
+
+type UntypedApiFactory = (props: {
+  get: () => object;
+  set: (partial: Functionable<Partial<object>, [current: object]>) => void;
+  api: object;
+  builder: BuilderFacade<object, object>;
+}) => object;
+
+type InternalPersistenceConfig = {
+  key: string;
+  stringify?: (state: object) => string;
+  parse?: (stored: string) => object;
+};
+
+type BuilderConfig = {
+  initialState: object;
+  apiFactories: UntypedApiFactory[];
+  persistConfig?: InternalPersistenceConfig;
+};
 
 type Store<TState extends object, TApi extends object> = {
   getState: () => TState;
@@ -34,38 +49,69 @@ type Store<TState extends object, TApi extends object> = {
   };
 } & TApi;
 
+export type InferStoreSnapshot<TStore extends { getState: () => object }> = ReturnType<TStore["getState"]>;
+export type InferStoreType<TStore extends { getState: () => object }> = (
+  InferStoreSnapshot<TStore>
+  & Omit<TStore, "getState" | "setState" | "subscribe" | "useStore">
+);
+
 export default class StoreBuilder<
   TAccumState extends object = object,
   TAccumApi extends object = object
 > {
-  private initialState = {} as TAccumState;
-  private apiFactories: Array<AnyApiFactory> = [];
-  private persistConfig?: AnyPersistenceConfig;
+  private readonly config: BuilderConfig;
   private built = false;
   private builtStore?: Store<TAccumState, TAccumApi>;
 
-  constructor(initialState?: TAccumState) {
-    this.initialState = initialState ?? this.initialState;
+  constructor(initialState?: TAccumState, config?: BuilderConfig) {
+    this.config = config ?? {
+      initialState: initialState ?? {},
+      apiFactories: [],
+      persistConfig: undefined,
+    };
+  }
+
+  private createBuilder<TNextState extends object, TNextApi extends object>(
+    nextConfig: BuilderConfig
+  ): StoreBuilder<TNextState, TNextApi> {
+    return new StoreBuilder<TNextState, TNextApi>(undefined, nextConfig);
   }
 
   // #region Builder API (Configuration Phase)
 
-  public addState<TState>(
+  public addState<TState extends object>(
     state: TState
   ): StoreBuilder<TAccumState & TState, TAccumApi> {
     if (this.built) throw new Error("Cannot modify builder after buildStore() is called");
 
-    this.initialState = { ...this.initialState, ...state };
-    return this as unknown as StoreBuilder<TAccumState & TState, TAccumApi>;
+    const nextConfig: BuilderConfig = {
+      ...this.config,
+      initialState: { ...this.config.initialState, ...state },
+    };
+
+    return this.createBuilder<TAccumState & TState, TAccumApi>(nextConfig);
   }
 
-  public addApi<TApi>(
+  public addApi<TApi extends object>(
     factory: ApiFactory<TAccumState, TApi, TAccumApi>
   ): StoreBuilder<TAccumState, TAccumApi & TApi> {
     if (this.built) throw new Error("Cannot modify builder after buildStore() is called");
 
-    this.apiFactories.push(factory as unknown as AnyApiFactory);
-    return this as unknown as StoreBuilder<TAccumState, TAccumApi & TApi>;
+    const wrappedFactory: UntypedApiFactory = (props) => {
+      return factory({
+        get: props.get as () => TAccumState,
+        set: props.set as (partial: Functionable<Partial<TAccumState>, [current: TAccumState]>) => void,
+        api: props.api as TAccumApi,
+        builder: props.builder as BuilderFacade<TAccumState, TAccumApi>,
+      }) as object;
+    };
+
+    const nextConfig: BuilderConfig = {
+      ...this.config,
+      apiFactories: [...this.config.apiFactories, wrappedFactory],
+    };
+
+    return this.createBuilder<TAccumState, TAccumApi & TApi>(nextConfig);
   }
 
   public addSlice<TSliceState extends object, TSliceApi extends object>(
@@ -73,29 +119,39 @@ export default class StoreBuilder<
   ): StoreBuilder<TAccumState & TSliceState, TAccumApi & TSliceApi> {
     if (this.built) throw new Error("Cannot modify builder after buildStore() is called");
 
-    this.initialState = { ...this.initialState, ...slice.initialState };
-    this.apiFactories.push(...slice.apiFactories);
+    const sliceConfig = slice.config;
 
-    if (slice.persistConfig) {
-      if (this.persistConfig) {
-        this.persistConfig = {
-          key: this.persistConfig.key || slice.persistConfig.key,
-          stringify: this.persistConfig.stringify || slice.persistConfig.stringify,
-          parse: this.persistConfig.parse || slice.persistConfig.parse,
+    let persistConfig = this.config.persistConfig;
+    if (sliceConfig.persistConfig) {
+      if (persistConfig) {
+        persistConfig = {
+          key: persistConfig.key || sliceConfig.persistConfig.key,
+          stringify: persistConfig.stringify || sliceConfig.persistConfig.stringify,
+          parse: persistConfig.parse || sliceConfig.persistConfig.parse,
         };
       } else {
-        this.persistConfig = slice.persistConfig;
+        persistConfig = sliceConfig.persistConfig;
       }
     }
 
-    return this as unknown as StoreBuilder<TAccumState & TSliceState, TAccumApi & TSliceApi>;
+    const nextConfig: BuilderConfig = {
+      initialState: { ...this.config.initialState, ...sliceConfig.initialState },
+      apiFactories: [...this.config.apiFactories, ...sliceConfig.apiFactories],
+      persistConfig,
+    };
+
+    return this.createBuilder<TAccumState & TSliceState, TAccumApi & TSliceApi>(nextConfig);
   }
 
-  public addPersistence(config: PersistenceConfig<TAccumState>): this {
+  public addPersistence(config: PersistenceConfig<TAccumState>): StoreBuilder<TAccumState, TAccumApi> {
     if (this.built) throw new Error("Cannot modify builder after buildStore() is called");
 
-    this.persistConfig = { ...this.persistConfig, ...config } as AnyPersistenceConfig;
-    return this;
+    const nextConfig: BuilderConfig = {
+      ...this.config,
+      persistConfig: { ...this.config.persistConfig, ...config } as InternalPersistenceConfig,
+    };
+
+    return this.createBuilder<TAccumState, TAccumApi>(nextConfig);
   }
 
   // #endregion
@@ -114,11 +170,11 @@ export default class StoreBuilder<
     this.built = true;
 
     const subscribers = new Set<Subscriber>();
-    let state = { ...this.initialState };
+    let state = { ...this.config.initialState } as TAccumState;
     let cachedSnapshot: TAccumState & TAccumApi;
 
-    if (this.persistConfig) {
-      const { key, parse = JSON.parse } = this.persistConfig;
+    if (this.config.persistConfig) {
+      const { key, parse = JSON.parse } = this.config.persistConfig;
       try {
         const stored = localStorage.getItem(key);
         if (stored) {
@@ -142,8 +198,8 @@ export default class StoreBuilder<
 
       subscribers.forEach(subscriber => subscriber());
 
-      if (this.persistConfig) {
-        const { key, stringify = JSON.stringify } = this.persistConfig;
+      if (this.config.persistConfig) {
+        const { key, stringify = JSON.stringify } = this.config.persistConfig;
         try {
           localStorage.setItem(key, stringify(state));
         } catch (error) {
@@ -158,15 +214,15 @@ export default class StoreBuilder<
     };
 
     try {
-      for (const factory of this.apiFactories) {
+      for (const factory of this.config.apiFactories) {
         const factoryResult = factory({
-          get: getState,
-          set: setState as unknown as (partial: unknown) => void,
-          api,
-          builder: this as unknown as StoreBuilder<TAccumState, TAccumApi>,
+          get: getState as () => object,
+          set: setState as (partial: Functionable<Partial<object>, [current: object]>) => void,
+          api: api as object,
+          builder: this as BuilderFacade<object, object>,
         });
 
-        api = { ...api, ...(factoryResult as object) } as TAccumApi;
+        api = { ...api, ...factoryResult } as TAccumApi;
       }
     } catch (error) {
       console.error("Error building store API:", error);

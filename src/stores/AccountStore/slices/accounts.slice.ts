@@ -1,8 +1,7 @@
 import loggerSlice from "@/stores/_baseStore/slices/logger.slice";
 import memoSlice from "@/stores/_baseStore/slices/memo.slice";
 import StoreBuilder from "@/stores/_baseStore/StoreBuilder";
-import { LOCAL_STORAGE_KEY } from "../AccountStoreConstants";
-import { DEFAULT_ACCOUNT_DATA, DEFAULT_ACCOUNT_NAME } from "../AccountStoreConstants";
+import { DEFAULT_ACCOUNT_DATA, DEFAULT_ACCOUNT_NAME, LOCAL_STORAGE_KEY } from "../AccountStoreConstants";
 import { AccountContextType, AccountData } from "../AccountStoreTypes";
 
 export default new StoreBuilder({
@@ -12,7 +11,6 @@ export default new StoreBuilder({
 })
   .addPersistence({
     key: LOCAL_STORAGE_KEY,
-    version: 1,
     stringify: (state) => JSON.stringify(state.accounts),
     parse: (raw) => ({ accounts: JSON.parse(raw) }),
   })
