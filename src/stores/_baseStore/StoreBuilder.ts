@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { createStore, StoreApi } from "zustand/vanilla";
 import { useStore as useZustandStore } from "zustand";
-import { devtools } from "zustand/middleware";
+import { devtools, persist, createJSONStorage } from "zustand/middleware";
 import { Functionable } from "@/common/types";
 
 type Subscriber = () => void;
@@ -190,30 +190,56 @@ export default class StoreBuilder<
 
     this.built = true;
 
-    // Initialize state from config and persistence
-    let initialState = { ...this.config.initialState } as TAccumState;
+    // Initialize state from config
+    const initialState = { ...this.config.initialState } as TAccumState;
 
-    if (this.config.persistConfig) {
-      const { key, parse = JSON.parse } = this.config.persistConfig;
-      try {
-        const stored = localStorage.getItem(key);
-        if (stored) {
-          const parsed = parse(stored) as unknown;
-          if (parsed && typeof parsed === "object") {
-            initialState = { ...initialState, ...(parsed as Partial<TAccumState>) };
-          }
-        }
-      } catch (error) {
-        console.error("Failed to load persisted data:", error);
-      }
-    }
-
-    // Create Zustand vanilla store with DevTools (only manages state, not API)
+    // Create Zustand vanilla store with middleware (only manages state, not API)
     const storeName = this.config.storeName || 'UnnamedStore';
     let vanillaStore: StoreApi<TAccumState>;
 
-    if (process.env.NODE_ENV === 'development') {
-      // Use DevTools middleware in development
+    // Build middleware stack based on configuration
+    const isDev = process.env.NODE_ENV === 'development';
+    const hasPersist = !!this.config.persistConfig;
+
+    if (hasPersist && isDev) {
+      // Both persist and devtools
+      const { key, stringify, parse } = this.config.persistConfig!;
+      vanillaStore = createStore<TAccumState>()(
+        persist(
+          devtools(
+            () => initialState,
+            {
+              name: storeName,
+              enabled: true,
+              anonymousActionType: 'action',
+              trace: false,
+              traceLimit: 25,
+            }
+          ),
+          {
+            name: key,
+            storage: createJSONStorage(() => localStorage),
+            ...(stringify && { serialize: (state: { state: TAccumState }) => stringify(state.state) }),
+            ...(parse && { deserialize: (str: string) => ({ state: parse(str) }) }),
+          }
+        )
+      );
+    } else if (hasPersist) {
+      // Only persist (production)
+      const { key, stringify, parse } = this.config.persistConfig!;
+      vanillaStore = createStore<TAccumState>()(
+        persist(
+          () => initialState,
+          {
+            name: key,
+            storage: createJSONStorage(() => localStorage),
+            ...(stringify && { serialize: (state: { state: TAccumState }) => stringify(state.state) }),
+            ...(parse && { deserialize: (str: string) => ({ state: parse(str) }) }),
+          }
+        )
+      );
+    } else if (isDev) {
+      // Only devtools (development, no persist)
       vanillaStore = createStore<TAccumState>()(
         devtools(
           () => initialState,
@@ -227,7 +253,7 @@ export default class StoreBuilder<
         )
       );
     } else {
-      // No DevTools in production
+      // No middleware (production, no persist)
       vanillaStore = createStore<TAccumState>()(
         () => initialState
       );
@@ -246,17 +272,6 @@ export default class StoreBuilder<
         : partial;
 
       vanillaStore.setState(update as any);
-
-      // Handle persistence
-      if (this.config.persistConfig) {
-        const { key, stringify = JSON.stringify } = this.config.persistConfig;
-        try {
-          const newState = getState();
-          localStorage.setItem(key, stringify(newState));
-        } catch (error) {
-          console.error("Failed to persist data:", error);
-        }
-      }
     };
 
     const subscribe = (subscriber: Subscriber) => {
