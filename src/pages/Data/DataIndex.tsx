@@ -10,7 +10,7 @@ import {
 } from '@/common/models';
 import { pascalCaseFromSnakeCase } from '@/common/functions/strings';
 
-import { DataStore, useDataStore } from '@/stores';
+import { useDataStore } from '@/stores';
 import { useDebounceValue } from '@/hooks/useDebounceValue';
 
 import { CharacterCard } from '@/components/domain/models/Character';
@@ -149,7 +149,7 @@ const ModelCard = ({ model, group, name, nameTag }: {
   switch (group) {
     case 'characters': return <CharacterCard {...cardProps} character={model as Character} />;
     case 'artifacts': return <ArtifactCard {...cardProps} artifact={model as ArtifactSet} />;
-    case 'domains': return <DomainCard {...cardProps} domain={model as Domain<any>} />;
+    case 'domains': return <DomainCard {...cardProps} domain={model as Domain} />;
     case 'materials': return <MaterialCard {...cardProps} material={model as any} />;
     case 'mobs': return <MobCard {...cardProps} mob={model as Mob} />;
     case 'weapons': return <WeaponCard {...cardProps} weapon={model as Weapon} />;

@@ -33,16 +33,21 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
   noBaseFilterChecks, noBaseSearch, cardProps,
   ...props
 }: Props<TFilterKeys>) {
+  const { worldRegion, isObtainableToday } = useAccountStore(store => ({
+    worldRegion: store.selectedAccount.worldRegion,
+    isObtainableToday: (material: Material) => AscensionMaterial.isAscensionMaterial(material) ? material.isObtainableToday(store) : undefined
+  }));
+  const DataStore = useDataStore();
+  const FavoriteStore = useFavorite('materials');
+
   const { query, filters } = useParams();
   const navigate = useNavigate();
+  
   const [hidden, setHidden] = useState(new Array<Material>());
-  const FavoriteStore = useFavorite('materials');
-  const DataStore = useDataStore();
-  const AccountStore = useAccountStore();
 
   return <SearchableList items={items ?? []}
     placeholder="Search materials..."
-    key={AccountStore.worldRegion}
+    key={worldRegion}
     sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
     renderItem={material => {
       const open = useContextMenu(item => [
@@ -74,14 +79,14 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
         weaponAscension: WeaponAscensionMaterial.isWeaponAscensionMaterial,
       },
       obtainableThrough: {
-        domains: material => DataStore.getDomainsFromMaterial(material).length > 0,
+        domains: material => DataStore.getDomainsFromMaterial(material.name).length > 0,
         easyMobs: material => material instanceof MobDrop && DataStore.getMobsDroppingMaterial(material.name).filter(EasyMob.isEasyMob).length > 0,
         eliteMobs: material => material instanceof MobDrop && DataStore.getMobsDroppingMaterial(material.name).filter(EliteMob.isEliteMob).length > 0,
-        worldBosses: material => material instanceof MobDrop && DataStore.getBossesFromMaterial(material).filter(WorldBoss.isWorldBoss).length > 0,
-        weeklyBosses: material => material instanceof MobDrop && DataStore.getBossesFromMaterial(material).filter(WeeklyBoss.isWeeklyBoss).length > 0,
+        worldBosses: material => material instanceof MobDrop && DataStore.getBossesFromMaterial(material.name).filter(WorldBoss.isWorldBoss).length > 0,
+        weeklyBosses: material => material instanceof MobDrop && DataStore.getBossesFromMaterial(material.name).filter(WeeklyBoss.isWeeklyBoss).length > 0,
         crafting: CraftableMaterial.isCraftableMaterial,
       },
-      obtainableToday: material => AscensionMaterial.isAscensionMaterial(material) ? material.isObtainableToday(AccountStore) : undefined,
+      obtainableToday: isObtainableToday,
       rarity: {
         legendary: material => material.rarity === Rarity.Legendary,
         epic: material => material.rarity === Rarity.Epic,

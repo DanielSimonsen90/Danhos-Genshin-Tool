@@ -9,7 +9,7 @@ export type Traveler = 'lumine' | 'aether';
 export type FavoriteModels = {
   characters: Character;
   artifacts: ArtifactSet;
-  domains: Domain<any>;
+  domains: Domain;
   mobs: Mob;
   materials: Material;
   weapons: Weapon;
@@ -38,41 +38,3 @@ export type AccountSettings = Pick<AccountData, 'traveler' | 'worldRegion'> & {
   selectedAccountName: string;
 }
 export type AccountContextType = Record<string, AccountData | undefined>;
-
-export type FavoriteModel<T extends keyof FavoriteModels> = {
-  add: (item: FavoriteModels[T]) => void;
-  remove: (item: FavoriteModels[T]) => void;
-  isFavorite: (item: FavoriteModels[T]) => boolean;
-  getFavorites: () => Array<FavoriteModels[T]>;
-};
-
-export type FavoritesSlice = {
-  getAllFavorites: () => FavoritesCollection;
-  hasAnyFavorites: () => boolean;
-  clearFavorites: () => void;
-  getFavorite: <T extends keyof FavoriteModels>(type: T) => FavoriteModel<T>;
-};
-
-export type AccountStore = {
-  accounts: AccountContextType;
-  selectedAccountName: keyof AccountContextType;
-  worldRegion: WorldRegion;
-  accountData: AccountData & Record<'setAccountData', AccountStore['setAccountData']>;
-
-  get regionSettings(): AccountSettings;
-
-  setAccountName: (name: string) => void;
-  setAccountData: (update: Partial<AccountData> | ((state: AccountData) => AccountData), accountId?: string) => void;
-  setWorldRegion: (region: WorldRegion) => void;
-  setTraveler: (traveler: Traveler) => void;
-  setSelectedAccount: (accountName: string) => void;
-  addAccount: (accountName: string) => void;
-  deleteAccount: (accountName: string) => void;
-  setState: (state: SetStateAction<AccountStore>) => void;
-
-  getGenshinServerDay(worldRegion: WorldRegion): number;
-  getGenshinServerDayName(worldRegion: WorldRegion): string;
-
-  favorites: FavoritesSlice;
-  storageService: StorageReturn<AccountContextType>;
-};

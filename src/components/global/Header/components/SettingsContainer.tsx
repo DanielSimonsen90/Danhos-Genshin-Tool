@@ -14,27 +14,28 @@ type Props = {
 };
 
 export default function SettingsContainer({ setOpenModal }: Props) {
-  const accounts = useAccountStore(state => state.accounts);
-  const selectedAccountName = useAccountStore(state => state.selectedAccountName);
-  const accountData = useAccountStore(state => state.accountData);
-  const traveler = useAccountStore(state => state.accountData.traveler);
-  const setSelectedAccount = useAccountStore(state => state.setSelectedAccount);
+  const { accounts, selectedAccountName, selectedAccount, setSelectedAccount } = useAccountStore();
+  const { traveler } = selectedAccount;
+
+  const handleAccountChange = (accountName: string) => {
+    setSelectedAccount(accountName);
+  };
 
   debugLog(
-    accountData.worldRegion
+    selectedAccount.worldRegion
       ? 'SettingsContainer rendered'
       : 'SettingsContainer did not render',
-    { worldRegion: accountData.worldRegion, traveler }
+    { worldRegion: selectedAccount.worldRegion, traveler }
   );
-
-  return accountData ? (
+  
+  return selectedAccount ? (
     <div className="settings-container">
       <Select name="selected-account"
         options={Object.keys(accounts)}
         value={selectedAccountName}
-        onChange={setSelectedAccount}
+        onChange={handleAccountChange}
       />
-      {accountData.traveler ? <CharacterImage character={accountData.traveler} /> : null}
+      {selectedAccount.traveler ? <CharacterImage character={selectedAccount.traveler} /> : null}
       <SettingsCog role="button" tabIndex={0} {...addTabNavigation(() => setOpenModal(true), true)} />
     </div>
   ) : null;

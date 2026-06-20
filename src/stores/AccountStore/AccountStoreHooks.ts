@@ -1,10 +1,11 @@
-import useAccountStore from "./AccountStore";
+import { FavoritesCollection } from ".";
+import { useAccountStore } from "./AccountStore";
 import { FavoriteModels } from "./AccountStoreTypes";
 
 export const useAccountData = () => {
-  const { accountData: regionData, setAccountData } = useAccountStore();
+  const { selectedAccount, setAccountData } = useAccountStore();
   return {
-    ...regionData,
+    ...selectedAccount,
     setAccountData
   }
 }
@@ -18,7 +19,7 @@ export function useFavorite<TFavoriteModel extends keyof FavoriteModels>(
   isFavorite: (item: FavoriteModels[TFavoriteModel]) => boolean;
 } {
   const store = useAccountStore();
-  const favoriteAPI = store.favorites.getFavorite(type);
+  const favoriteAPI = store.getFavorite(type);
   
   return {
     favorites: favoriteAPI.getFavorites(),
@@ -29,7 +30,7 @@ export function useFavorite<TFavoriteModel extends keyof FavoriteModels>(
 }
 
 export function useFavorites(): {
-  getAllFavorites: () => import("./AccountStoreTypes").FavoritesCollection;
+  getAllFavorites: () => FavoritesCollection;
   hasAnyFavorites: () => boolean;
   clearFavorites: () => void;
   getFavorite: <T extends keyof FavoriteModels>(type: T) => {
@@ -56,14 +57,14 @@ export function useFavorites<
   const store = useAccountStore();
 
   return type ? {
-    favorites: store.favorites.getFavorite(type).getFavorites(),
-    add: (item: TModel) => store.favorites.getFavorite(type).add(item as any),
-    remove: (item: TModel) => store.favorites.getFavorite(type).remove(item as any),
-    isFavorite: (item: TModel) => store.favorites.getFavorite(type).isFavorite(item as any),
+    favorites: store.getFavorite(type).getFavorites(),
+    add: (item: TModel) => store.getFavorite(type).add(item as any),
+    remove: (item: TModel) => store.getFavorite(type).remove(item as any),
+    isFavorite: (item: TModel) => store.getFavorite(type).isFavorite(item as any),
   } : {
-    getAllFavorites: store.favorites.getAllFavorites,
-    hasAnyFavorites: store.favorites.hasAnyFavorites,
-    clearFavorites: store.favorites.clearFavorites,
-    getFavorite: store.favorites.getFavorite,
+    getAllFavorites: store.getAllFavorites,
+    hasAnyFavorites: store.hasAnyFavorites,
+    clearFavorites: store.clearFavorites,
+    getFavorite: store.getFavorite,
   };
 }

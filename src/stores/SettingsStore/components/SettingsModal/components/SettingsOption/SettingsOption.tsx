@@ -44,7 +44,7 @@ export default function SettingsOption<Setting extends keyof Settings>(props: Pr
     props.setValue?.(value);
   };
 
-  return props.setting === 'updated' || props.setting === 'newUser' ? null : (
+  return (
     <div className="settings-option">
       <div className={classNames("input-group", `setting-${props.setting}`)}>
         {!props.hideLabel ? (

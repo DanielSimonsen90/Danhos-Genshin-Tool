@@ -13,8 +13,8 @@ import { OptionalProps, UncrontrolledProps } from "@/components/domain/Searchabl
 import { FavoriteStar } from "@/components/common/media/icons/Star";
 
 type Props<TFilterKeys extends string> = (
-  & Partial<UncrontrolledProps<Domain<any>, TFilterKeys>>
-  & OptionalProps<Domain<any>, TFilterKeys>
+  & Partial<UncrontrolledProps<Domain, TFilterKeys>>
+  & OptionalProps<Domain, TFilterKeys>
   & {
     noBaseSearch?: boolean;
     noBaseFilterChecks?: boolean;
@@ -28,7 +28,7 @@ export default function SearchableDomainList<TFilterKeys extends string>({
 }: Props<TFilterKeys>) {
   const { query, filters } = useParams();
   const navigate = useNavigate();
-  const [hidden, setHidden] = useState(new Array<Domain<any>>());
+  const [hidden, setHidden] = useState(new Array<Domain>());
   const FavoriteStore = useFavorite('domains');
 
   return <SearchableList items={items ?? []}
@@ -57,9 +57,9 @@ export default function SearchableDomainList<TFilterKeys extends string>({
     onSearch={noBaseSearch ? onSearch ?? (() => true) : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}
     filterChecks={noBaseFilterChecks ? filterChecks : {
       type: {
-        artifacts: domain => domain.isBlessing(),
-        talents: domain => domain.isMastery(),
-        weapons: domain => domain.isForgery(),
+        artifacts: domain => domain.getDomainType() === 'Blessing',
+        talents: domain => domain.getDomainType() === 'Mastery',
+        weapons: domain => domain.getDomainType() === 'Forgery',
       },
       region: {
         mondstadt: domain => domain.region === "Mondstadt",

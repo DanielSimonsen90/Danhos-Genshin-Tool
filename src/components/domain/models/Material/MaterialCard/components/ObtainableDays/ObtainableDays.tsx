@@ -6,18 +6,21 @@ export type Props = {
 };
 
 export default function ObtainableDays({ material }: Props) {
-  const AccountStore = useAccountStore();
+  const { worldRegion, getDataTodayAttr } = useAccountStore(store => ({
+    worldRegion: store.selectedAccount.worldRegion,
+    getDataTodayAttr: (day: string) => material.getDataTodayAttr(store, day)
+  }));
   
   return (
     <ul className="material-card__obtainable-days">
       {material.obtainableDays.split('/').map(day => (
-        <li key={`${AccountStore.worldRegion}-${day}`} className="material-card__obtainable-days-item" data-today={material.getDataTodayAttr(AccountStore, day)}>
+        <li key={`${worldRegion}-${day}`} className="material-card__obtainable-days-item" data-today={getDataTodayAttr(day)}>
           <span>
             {day}
           </span>
         </li>
       ))}
-      <li key={`${AccountStore.worldRegion}-Sunday`} className="material-card__obtainable-days-item" data-today={material.getDataTodayAttr(AccountStore, 'Sunday')}>
+      <li key={`${worldRegion}-Sunday`} className="material-card__obtainable-days-item" data-today={getDataTodayAttr('Sunday')}>
         <span>
           Sunday
         </span>

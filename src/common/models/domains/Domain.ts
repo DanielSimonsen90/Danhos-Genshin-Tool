@@ -1,13 +1,9 @@
 import type { TeyvatRegion, ResinCost } from "@/common/types";
-import type { DataStore } from "@/stores/DataStore/DataStoreTypes";
+import { DomainType, ModelKeys } from "../Model";
 
-import type DomainOfBlessing from "./DomainOfBlessing";
-import type DomainOfForgery from "./DomainOfForgery";
-import type DomainOfMastery from "./DomainOfMastery";
-import { DomainReward, DomainType, ModelKeys } from "../Model";
 
-export abstract class Domain<TReward extends DomainReward> {
-  public static isDomain(obj: any): obj is Domain<any> {
+export abstract class Domain {
+  public static isDomain(obj: any): obj is Domain {
     return obj instanceof Domain;
   }
 
@@ -19,23 +15,7 @@ export abstract class Domain<TReward extends DomainReward> {
     public region: TeyvatRegion,
   ) {}
 
-  public getRewards(DataStore: DataStore): TReward[] {
-    if (this.isBlessing()) return DataStore.getArtifactsFromDomain(this.name) as any as TReward[];
-    if (this.isMastery()) return DataStore.getTalentAscensionMaterialsFromDomain(this.name) as any as TReward[];
-    if (this.isForgery()) return DataStore.getWeaponAscensionMaterialsFromDomain(this.name) as any as TReward[];
-    console.error('Domain.getRewards() not implemented for', this);
-    return [];
-  }
-  public getDomainType(): DomainType {
-    if (this.isBlessing()) return 'Blessing';
-    if (this.isMastery()) return 'Mastery';
-    if (this.isForgery()) return 'Forgery';
-    throw new Error(`getDomainType() not implemented for ${this.name}`);
-  }
-
-  public isBlessing(): this is DomainOfBlessing { return false; }
-  public isMastery(): this is DomainOfMastery { return false; }
-  public isForgery(): this is DomainOfForgery { return false; }
+  public abstract getDomainType(): DomainType;
 
   public getModelKey(): ModelKeys {
     return 'Domain';

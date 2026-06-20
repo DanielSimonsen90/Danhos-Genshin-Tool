@@ -1,20 +1,19 @@
 import { LastResult, RecommendedCharacterForWeapon, RecommendedWeaponForCharacter } from "./types";
 import { Character, List, Weapon } from "@/common/models";
-import { DataStore } from "@/stores";
 import { WEAPON_SCORE_THRESHOLD, WEAPON_VARIABLE_SCORES } from "./constants";
 import { TalentStatName, WeaponStatName } from "@/common/types/stat-types";
 import { Rarity } from "@/common/types/genshin";
 import BaseSearchService from "../base/BaseSearchService";
+import characterWeaponSlice from "@/stores/DataStore/slices/relationships/character-weapon.slice";
 
 export const WeaponSearchService = new class WeaponSearchService extends BaseSearchService<LastResult> {
-  public searchFromCharacter(
-    character: Character,
-    DataStore: DataStore,
-  ): Map<Rarity, List<RecommendedWeaponForCharacter>> {
-    return DataStore.Weapons
+  public searchFromCharacter(character: Character): Map<Rarity, List<RecommendedWeaponForCharacter>> {
+    const DataStore = characterWeaponSlice.buildStore();
+    
+    return DataStore.getState().Weapons
       .filter(weapon => character.weapon === weapon.type)
       .map(weapon => {
-        const score = this.getWeaponScore(weapon, character, DataStore);
+        const score = this.getWeaponScore(weapon, character);
         const included = score >= WEAPON_SCORE_THRESHOLD;
 
         return {
@@ -30,7 +29,7 @@ export const WeaponSearchService = new class WeaponSearchService extends BaseSea
       .groupBy(result => result.weapon.rarity);
   }
 
-  private getWeaponScore(weapon: Weapon, character: Character, DataStore: DataStore): number {
+  private getWeaponScore(weapon: Weapon, character: Character): number {
     const scoreModifiers = [
       WeaponSearchService.getBasicWeaponMatchScore,
       WeaponSearchService.getScoreForSignatureWeaponMatch,
@@ -38,18 +37,19 @@ export const WeaponSearchService = new class WeaponSearchService extends BaseSea
     ];
 
     const combinedScore = scoreModifiers.reduce(
-      (score, modifyScore) => score + modifyScore(weapon, character, DataStore),
+      (score, modifyScore) => score + modifyScore(weapon, character),
       0
     );
 
     return Math.round(combinedScore);
   }
 
-  private static getScoreForSignatureWeaponMatch(weapon: Weapon, character: Character, DataStore: DataStore): number {
-    const isSignature = DataStore.getSignatureWeaponFor(character)?.name === weapon.name;
+  private static getScoreForSignatureWeaponMatch(weapon: Weapon, character: Character): number {
+    const DataStore = characterWeaponSlice.buildStore();
+    const isSignature = DataStore.getSignatureWeaponFor(character.name)?.name === weapon.name;
     return isSignature ? WEAPON_VARIABLE_SCORES.SIGNATURE : 0;
   }
-  private static getBasicWeaponMatchScore(weapon: Weapon, character: Character, DataStore: DataStore): number {
+  private static getBasicWeaponMatchScore(weapon: Weapon, character: Character): number {
     const talentStats = [...character.playstyle?.talentStats ?? []].reverse();
     const getTalentStatName = (stat: WeaponStatName | undefined) => stat?.replace('%', '') as TalentStatName;
     const secondaryStatScore = weapon.secondaryStat
@@ -62,7 +62,7 @@ export const WeaponSearchService = new class WeaponSearchService extends BaseSea
 
     return secondaryStatScore + baseAttackScore;
   }
-  private static getWeaponMatchScore(weapon: Weapon, character: Character, DataStore: DataStore): number {
+  private static getWeaponMatchScore(weapon: Weapon, character: Character): number {
     if (!character.playstyle) return 0;
 
     return weapon.getMatchScore({
@@ -72,16 +72,14 @@ export const WeaponSearchService = new class WeaponSearchService extends BaseSea
     });
   }
 
-  public searchFromWeapon(
-    weapon: Weapon,
-    DataStore: DataStore,
-  ): Map<Rarity, List<RecommendedCharacterForWeapon>> {
-    const signatureCharacter = weapon.signatureWeaponFor?.(DataStore.CharactersData);
+  public searchFromWeapon(weapon: Weapon): Map<Rarity, List<RecommendedCharacterForWeapon>> {
+    const DataStore = characterWeaponSlice.buildStore();
+    const signatureCharacter = weapon.signatureWeaponFor?.(DataStore.getState().CharactersData);
     
-    return DataStore.Characters
+    return DataStore.getState().Characters
       .filter(character => character.weapon === weapon.type)
       .map(character => {
-        const score = this.getWeaponScore(weapon, character, DataStore);
+        const score = this.getWeaponScore(weapon, character);
         const included = score >= WEAPON_SCORE_THRESHOLD;
 
         return {

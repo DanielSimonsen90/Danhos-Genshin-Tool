@@ -2,7 +2,7 @@ import { Select } from "@/components/common/FormItems";
 import SettingsOption from "../SettingsOption";
 import { DEFAULT_ACCOUNT_DATA, Traveler, useAccountStore, WORLD_REGIONS } from "@/stores/AccountStore";
 import { CharacterImage } from "@/components/common/media/Images";
-import { useCallback, useMemo, memo } from "react";
+import { useCallback, useMemo } from "react";
 import { useStateReset } from "@/hooks/useStateReset";
 
 const TRAVELER_OPTIONS: Traveler[] = ['lumine', 'aether'];
@@ -19,43 +19,38 @@ const displayWorldRegion = (region: string) => {
   }
 };
 
-function AccountSettings() {
+export default function AccountSettings() {
   // Subscribe to individual values separately to get stable references
-  const accounts = useAccountStore(state => state.accounts);
-  const selectedAccount = useAccountStore(state => state.selectedAccountName);
-  const traveler = useAccountStore(state => state.accountData.traveler);
-  const worldRegion = useAccountStore(state => state.accountData.worldRegion);
+  const { 
+    accounts, selectedAccountName,
+    setSelectedAccount, setTraveler, setWorldRegion,
+    setAccountName: renameAccount,
+    addAccount, deleteAccount,
+  } = useAccountStore();
+  const { 
+    traveler, 
+    worldRegion
+  } = useAccountStore(state => state.selectedAccount);
 
-  const setSelectedAccount = useAccountStore(state => state.setSelectedAccount);
-  const setTraveler = useAccountStore(state => state.setTraveler);
-  const setWorldRegion = useAccountStore(state => state.setWorldRegion);
-  const renameAccount = useAccountStore(state => state.setAccountName);
-  const addAccount = useAccountStore(state => state.addAccount);
-  const deleteAccount = useAccountStore(state => state.deleteAccount);
-
-  // Memoize accountNames so it only changes when accounts actually change
   const accountNames = useMemo(() => Object.keys(accounts), [accounts]);
-  
-  const [accountName, setAccountName, resetAccountName] = useStateReset(selectedAccount || '');
+  const [accountName, setAccountName, resetAccountName] = useStateReset(selectedAccountName);
 
-  // Memoize callbacks to prevent child re-renders
   const handleAccountChange = useCallback((newAccountName: string) => {
     setSelectedAccount(newAccountName);
     resetAccountName(newAccountName);
   }, [setSelectedAccount, resetAccountName]);
 
   const handleAccountNameChange = useCallback((newName: string) => {
-    if (newName && newName.trim() !== '' && newName !== selectedAccount) {
+    if (newName?.trim() && newName !== selectedAccountName) {
       try {
         renameAccount(newName);
         resetAccountName(newName);
       } catch (error) {
         console.error('Failed to update account name:', error);
-        // Reset to the previous name on error
-        resetAccountName(selectedAccount || '');
+        resetAccountName(selectedAccountName || '');
       }
     }
-  }, [renameAccount, selectedAccount, resetAccountName]);
+  }, [renameAccount, selectedAccountName, resetAccountName]);
 
   const handleAccountAdd = useCallback(() => {
     const existingAccountNames = Object.keys(accounts);
@@ -74,17 +69,17 @@ function AccountSettings() {
   }, [accounts, addAccount, setSelectedAccount, setAccountName]);
 
   const handleAccountDelete = useCallback(() => {
-    if (!selectedAccount) return;
+    if (!selectedAccountName) return;
     
-    deleteAccount(selectedAccount);
-  }, [selectedAccount, deleteAccount]);
+    deleteAccount(selectedAccountName);
+  }, [selectedAccountName, deleteAccount]);
 
   return (
     <section className="account-settings">
       <header>
         <SettingsOption setting="selectedAccount"
           accountNames={accountNames}
-          value={selectedAccount}
+          value={selectedAccountName}
           setValue={handleAccountChange}
         />
       </header>
@@ -127,5 +122,3 @@ function AccountSettings() {
     </section>
   );
 }
-
-export default memo(AccountSettings);

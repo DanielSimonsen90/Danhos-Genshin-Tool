@@ -1,6 +1,6 @@
 import type { SetStateAction } from "react";
 import TabBar from "@/components/common/TabBar";
-import { useDataStore, useAccountStore } from "@/stores";
+import { useAccountStore } from "@/stores";
 
 import { CreatePriorityListButton } from "./components";
 import { useModifyPriorityList, usePriorityListTabs } from "./hooks";
@@ -8,16 +8,18 @@ import { PriorityList, PriorityLists } from "./PriorityListTypes";
 import { getDefaultPriorityLists } from "./PriorityListFunctions";
 
 export default function PriorityList() {
-  const DataStore = useDataStore();
-  const AccountStore = useAccountStore();
-  const priorityLists = AccountStore.accountData.priorityLists ?? getDefaultPriorityLists(DataStore);
+  const { priorityLists, setPriorityLists: setAccountData, selectedAccountId } = useAccountStore(store => ({
+    priorityLists: store.selectedAccount.priorityLists ?? getDefaultPriorityLists(),
+    setPriorityLists: store.setAccountData,
+    selectedAccountId: store.selectedAccount.id
+  }));
 
   const setPriorityLists = (newPriorityListsOrUpdater: SetStateAction<PriorityLists>) => {
     const newPriorityLists = typeof newPriorityListsOrUpdater === 'function'
       ? newPriorityListsOrUpdater(priorityLists)
       : newPriorityListsOrUpdater;
     
-    AccountStore.setAccountData({ priorityLists: newPriorityLists });
+    setAccountData({ priorityLists: newPriorityLists });
   };
 
   const [CreateModal, openCreateModal] = useModifyPriorityList({
@@ -39,7 +41,7 @@ export default function PriorityList() {
       className="priority-list"
       tabs={tabs} 
       noTabs={<NoTabs />} 
-      id={`priority-list-${AccountStore.accountData.id}`}
+      id={`priority-list-${selectedAccountId}`}
       placeChildrenBeforeTabs
       resizable
       minSize={100}
