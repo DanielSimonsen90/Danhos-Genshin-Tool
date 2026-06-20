@@ -8,15 +8,18 @@ import { PriorityList, PriorityLists } from "./PriorityListTypes";
 import { getDefaultPriorityLists } from "./PriorityListFunctions";
 
 export default function PriorityList() {
-  const AccountStore = useAccountStore();
-  const priorityLists = AccountStore.selectedAccount.priorityLists ?? getDefaultPriorityLists();
+  const { priorityLists, setPriorityLists: setAccountData, selectedAccountId } = useAccountStore(store => ({
+    priorityLists: store.selectedAccount.priorityLists ?? getDefaultPriorityLists(),
+    setPriorityLists: store.setAccountData,
+    selectedAccountId: store.selectedAccount.id
+  }));
 
   const setPriorityLists = (newPriorityListsOrUpdater: SetStateAction<PriorityLists>) => {
     const newPriorityLists = typeof newPriorityListsOrUpdater === 'function'
       ? newPriorityListsOrUpdater(priorityLists)
       : newPriorityListsOrUpdater;
     
-    AccountStore.setAccountData({ priorityLists: newPriorityLists });
+    setAccountData({ priorityLists: newPriorityLists });
   };
 
   const [CreateModal, openCreateModal] = useModifyPriorityList({
@@ -38,7 +41,7 @@ export default function PriorityList() {
       className="priority-list"
       tabs={tabs} 
       noTabs={<NoTabs />} 
-      id={`priority-list-${AccountStore.selectedAccount.id}`}
+      id={`priority-list-${selectedAccountId}`}
       placeChildrenBeforeTabs
       resizable
       minSize={100}

@@ -28,8 +28,10 @@ export default function MaterialCard({
   showModelsUsing, showModelAcquired, showDetails, showRegion,
   ...props
 }: Props) {
-  const AccountStore = useAccountStore();
-  const worldRegion = useAccountStore(store => store.selectedAccount.worldRegion);
+  const { worldRegion, isObtainableToday } = useAccountStore(store => ({
+    worldRegion: store.selectedAccount.worldRegion,
+    isObtainableToday: (mat: Material) => AscensionMaterial.isAscensionMaterial(mat) && mat.isObtainableToday(store)
+  }));
   const view = useSettingsStore(ss => ss.getSetting('preferredTabs')?.craftableMaterial);
   const hasInteractedWithPagination = useRef(false);
 
@@ -77,7 +79,7 @@ export default function MaterialCard({
     {...props}
     data-show-details={showDetails}
     data-allow-pagination={allowCycle && (craftingTree?.length ?? 0) > 1}
-    {...{ 'data-today': AscensionMaterial.isAscensionMaterial(material) && material.isObtainableToday(AccountStore) }}
+    {...{ 'data-today': isObtainableToday(material) }}
 
     renderImage={() => <MaterialImage material={currentMaterial.name} />}
     renderHeaderContent={(() => (

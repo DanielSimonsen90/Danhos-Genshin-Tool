@@ -12,20 +12,17 @@ export default function <T extends Record<string, (...args: any[]) => any>>(
         memoize: <T>(
           getKeys: (keys: typeof cacheKeys) => string,
           initializer: () => T,
-          ...dependencies: any[]
+          ...dependencies: unknown[]
         ) => {
           const key = getKeys(cacheKeys);
           return memoService.memoize(initializer, key, ...dependencies);
         },
         clearCache: (getKeys?: (keys: typeof cacheKeys) => string) => {
-          if (getKeys) {
-            const key = getKeys(cacheKeys);
-            const foundKey = memoService.findCacheKey(key);
-            if (foundKey) memoService.unmemoize(foundKey);
-          } else {
-            memoService.clear();
-          }
+          if (!getKeys) return memoService.clear();
+
+          const key = getKeys(cacheKeys);
+          memoService.clearByPrefix(key);
         }
-      }
-    })
+      };
+    });
 }

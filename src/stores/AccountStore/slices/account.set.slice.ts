@@ -57,35 +57,50 @@ export default new StoreBuilder()
             ...data,
             ...filteredUpdate,
           }
+        } else {
+          acc[accountKey] = data;
         }
 
         return acc;
       }, {} as AccountContextType);
 
       api.debugLog(`Updating account data`, next)
-      api.clearCache(keys => keys.accounts());
       set({ accounts: next });
     }
     function setAccountName(name: string) {
       const { accounts } = get();
       if (accounts[name]) return;
 
-      accounts[name] = api.selectedAccount;
-      delete accounts[api.selectedAccountName];
+      const currentAccountName = api.selectedAccountName;
+      const nextAccounts = Object.entries(accounts).reduce((acc, [key, data]) => {
+        if (key === currentAccountName) {
+          acc[name] = data;
+        } else {
+          acc[key] = data;
+        }
+        return acc;
+      }, {} as AccountContextType);
       
-      api.clearCache(keys => keys.accounts());
-      set({ accounts });
+      set({ accounts: nextAccounts });
     }
     function setSelectedAccount(accountName: string) {
       const { accounts } = get();
       const nextAccount = accounts[accountName];
       if (!nextAccount) throw new Error(`Unknown account name: ${accountName} - ${Object.keys(accounts).join(', ')}`);
 
-      api.selectedAccount.selected = false;
+      const nextAccounts = Object.entries(accounts).reduce((acc, [key, data]) => {
+        if (!data) {
+          acc[key] = data;
+        } else {
+          acc[key] = {
+            ...data,
+            selected: key === accountName
+          };
+        }
+        return acc;
+      }, {} as AccountContextType);
 
-      api.clearCache(keys => keys.accounts());
-      nextAccount.selected = true;
-      set({ accounts });
+      set({ accounts: nextAccounts });
     }
 
     function setAccountDataProperty<T extends keyof AccountData>(property: T, value: AccountData[T]) {

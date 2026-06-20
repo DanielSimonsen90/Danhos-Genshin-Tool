@@ -33,7 +33,10 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
   noBaseFilterChecks, noBaseSearch, cardProps,
   ...props
 }: Props<TFilterKeys>) {
-  const AccountStore = useAccountStore();
+  const { worldRegion, isObtainableToday } = useAccountStore(store => ({
+    worldRegion: store.selectedAccount.worldRegion,
+    isObtainableToday: (material: Material) => AscensionMaterial.isAscensionMaterial(material) ? material.isObtainableToday(store) : undefined
+  }));
   const DataStore = useDataStore();
   const FavoriteStore = useFavorite('materials');
 
@@ -44,7 +47,7 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
 
   return <SearchableList items={items ?? []}
     placeholder="Search materials..."
-    key={AccountStore.selectedAccount.worldRegion}
+    key={worldRegion}
     sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
     renderItem={material => {
       const open = useContextMenu(item => [
@@ -83,7 +86,7 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
         weeklyBosses: material => material instanceof MobDrop && DataStore.getBossesFromMaterial(material.name).filter(WeeklyBoss.isWeeklyBoss).length > 0,
         crafting: CraftableMaterial.isCraftableMaterial,
       },
-      obtainableToday: material => AscensionMaterial.isAscensionMaterial(material) ? material.isObtainableToday(AccountStore) : undefined,
+      obtainableToday: isObtainableToday,
       rarity: {
         legendary: material => material.rarity === Rarity.Legendary,
         epic: material => material.rarity === Rarity.Epic,

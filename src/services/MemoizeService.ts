@@ -24,6 +24,17 @@ export default class MemoizeService {
 
     return undefined
   }
+
+  public clearByPrefix(prefix: string): number {
+    let cleared = 0;
+    for (const key of Array.from(this.cache.keys())) {
+      if (key.startsWith(`["${prefix}"`)) {
+        this.cache.delete(key);
+        cleared++;
+      }
+    }
+    return cleared;
+  }
   
   public memoize<T>(fn: () => T, ...dependencies: Array<any>): T {
     const key = this.getKey(dependencies);

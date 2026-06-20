@@ -25,31 +25,15 @@ export default new StoreBuilder({
       () => Object.keys(DEFAULT_ACCOUNT_DATA)
     );
 
-    const getAccounts = () => api.memoize(
-      keys => keys.accounts(),
-      () => Object.keys(get().accounts).reduce((acc, accountKey) => {
-        const account = get().accounts[accountKey];
-        if (!account) {
-          console.warn(`Account with key "${accountKey}" has no data and will be skipped.`);
-          return acc;
-        }
-
-        const invalidKeys = Object
-          .keys(account)
-          .filter(key => !validAccountDataKeys.includes(key));
-        
-        if (invalidKeys.length) api.debugLog(`Filtering out invalid properties from account ${accountKey}`, invalidKeys);
-
-        const filteredData = Object.keys(account).reduce((acc, key) => {
-          if (validAccountDataKeys.includes(key)) (acc as any)[key] = account[key as keyof AccountData];
-          return acc;
-        }, {} as AccountData)
-
-        acc[accountKey as keyof AccountContextType] = filteredData;
-        return acc;
-      }, {} as AccountContextType),
-      JSON.stringify(get().accounts)
-    );
+    const getAccounts = () => {
+      // Simple memoization - return cached if accounts reference hasn't changed
+      const rawAccounts = get().accounts;
+      return api.memoize(
+        keys => keys.accounts(),
+        () => rawAccounts,
+        rawAccounts  // Use object reference as dependency instead of stringified version
+      );
+    };
 
     return {
       get accounts() {

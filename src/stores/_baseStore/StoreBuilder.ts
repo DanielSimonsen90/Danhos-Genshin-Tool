@@ -1,4 +1,4 @@
-import { useSyncExternalStore } from "react";
+import { useSyncExternalStore, useRef } from "react";
 import { Functionable } from "@/common/types";
 
 type Subscriber = () => void;
@@ -47,6 +47,7 @@ type Store<TState extends object, TApi extends object> = {
     (): TState & TApi;
     <TSelected>(selector: (store: TState & TApi) => TSelected): TSelected;
   };
+  useStoreActions?: () => TApi;
 } & TApi;
 
 export type InferStoreSnapshot<TStore extends { getState: () => object }> = ReturnType<TStore["getState"]>;
@@ -178,7 +179,10 @@ export default class StoreBuilder<
       try {
         const stored = localStorage.getItem(key);
         if (stored) {
-          state = parse(stored) as TAccumState;
+          const parsed = parse(stored) as unknown;
+          if (parsed && typeof parsed === "object") {
+            state = { ...state, ...(parsed as Partial<TAccumState>) };
+          }
         }
       } catch (error) {
         console.error("Failed to load persisted data:", error);
@@ -187,7 +191,7 @@ export default class StoreBuilder<
 
     const getState = () => state;
 
-    let api = {} as TAccumApi;
+    const api = {} as TAccumApi;
     const setState = (partial: Functionable<Partial<TAccumState>, [current: TAccumState]>) => {
       const update = typeof partial === "function"
         ? (partial as (current: TAccumState) => Partial<TAccumState>)(state)
@@ -222,7 +226,8 @@ export default class StoreBuilder<
           builder: this as BuilderFacade<object, object>,
         });
 
-        api = { ...api, ...factoryResult } as TAccumApi;
+        // Preserve getters when merging API
+        Object.defineProperties(api, Object.getOwnPropertyDescriptors(factoryResult));
       }
     } catch (error) {
       console.error("Error building store API:", error);
@@ -230,13 +235,73 @@ export default class StoreBuilder<
     }
 
     cachedSnapshot = { ...state, ...api };
-    const getSnapshot = () => cachedSnapshot;
+
+    function shallowEqual(objA: any, objB: any): boolean {
+      if (Object.is(objA, objB)) return true;
+      
+      if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
+        return false;
+      }
+      
+      const keysA = Object.keys(objA);
+      const keysB = Object.keys(objB);
+      
+      if (keysA.length !== keysB.length) return false;
+      
+      for (let i = 0; i < keysA.length; i++) {
+        if (!Object.prototype.hasOwnProperty.call(objB, keysA[i]) || !Object.is(objA[keysA[i]], objB[keysA[i]])) {
+          return false;
+        }
+      }
+      
+      return true;
+    }
 
     function useStore(): TAccumState & TAccumApi;
     function useStore<TSelected>(selector: (store: TAccumState & TAccumApi) => TSelected): TSelected;
     function useStore<TSelected>(selector?: (store: TAccumState & TAccumApi) => TSelected): TSelected | (TAccumState & TAccumApi) {
-      const store = useSyncExternalStore(subscribe, getSnapshot);
-      return selector ? selector(store) : store;
+      // Cache selector result to avoid creating new objects in getSnapshot
+      const cachedSelectorResult = useRef<{ value: TSelected; snapshot: typeof cachedSnapshot } | null>(null);
+      
+      // Initialize cache if needed
+      if (selector && (!cachedSelectorResult.current || cachedSelectorResult.current.snapshot !== cachedSnapshot)) {
+        cachedSelectorResult.current = {
+          value: selector(cachedSnapshot),
+          snapshot: cachedSnapshot
+        };
+      }
+      
+      const store = useSyncExternalStore(
+        (callback) => {
+          if (selector) {
+            // Selector-based subscription with shallow equality check
+            let previousValue = cachedSelectorResult.current?.value ?? selector(cachedSnapshot);
+            
+            const wrappedCallback = () => {
+              const nextValue = selector(cachedSnapshot);
+              const areEqual = shallowEqual(previousValue, nextValue);
+              
+              if (!areEqual) {
+                previousValue = nextValue;
+                cachedSelectorResult.current = { value: nextValue, snapshot: cachedSnapshot };
+                callback();
+              }
+            };
+            
+            return subscribe(wrappedCallback);
+          }
+          
+          // Full store subscription (no selector)
+          return subscribe(callback);
+        },
+        () => selector ? cachedSelectorResult.current!.value : cachedSnapshot
+      );
+      
+      return store;
+    }
+
+    function useStoreActions(): TAccumApi {
+      return api;
     }
 
     const builtStore = {
@@ -244,6 +309,7 @@ export default class StoreBuilder<
       setState,
       subscribe,
       useStore,
+      useStoreActions,
       ...api,
     } as Store<TAccumState, TAccumApi>;
 

@@ -20,7 +20,6 @@ export default new StoreBuilder()
         [name]: nextData
       }
 
-      api.clearCache(keys => keys.accounts());
       set({ accounts: next });
     }
     function deleteAccount(name: string) {
@@ -43,7 +42,6 @@ export default new StoreBuilder()
         }
       }
 
-      api.clearCache(keys => keys.accounts());
       set({ accounts: next });  
     }
 

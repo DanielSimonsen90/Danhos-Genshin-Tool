@@ -24,7 +24,7 @@ export default function YourCalendarSection() {
   return (
     <section className="your-calendar-section" data-current-day={currentDay}>
       <h2>Weekly Calendar</h2>
-      <TabBar tabs={tabs} lazyLoad={false} defaultTab={currentDay} />
+      <TabBar tabs={tabs} defaultTab={currentDay} />
     </section>
   );
 }
