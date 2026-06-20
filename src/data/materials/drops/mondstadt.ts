@@ -88,3 +88,10 @@ export const ChessGameQueen = new MobDrop(
   'Mondstadt',
   Rarity.Legendary
 );
+
+export const PlumeOfTheFallenWatcher = new MobDrop(
+  "Plume of the Fallen Watcher",
+  `A fallen feather gathered from a corner of the mortal realm after defeating a Fallen Watcher.\nCompared to the true divine envoys, these feathered watchers bear a closer resemblance to the "angels" of common lore. Perhaps this is because their own creator failed to grasp the divine design of the Winged One above, and can only clumsily imitate the shadow cast by that ideal.`,
+  'Mondstadt',
+  Rarity.Epic
+);

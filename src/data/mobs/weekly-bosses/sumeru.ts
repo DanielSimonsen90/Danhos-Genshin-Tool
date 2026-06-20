@@ -3,7 +3,7 @@ import { Berserker, GladiatorsFinale, Instructor, TheExile, WanderersTroupe } fr
 import { Midlander } from "@/data/materials/drops/billets";
 import { ElementalCrystals } from "@/data/materials/drops/crystals";
 import { DreamSolvent } from "@/data/materials/drops/general";
-import { DakasBell, Everamber, MirrorOfMushin, PrimordialGreenbloom, PuppetStrings, WorldspanFern } from "@/data/materials/drops/sumeru";
+import { CounterfeitResin, DakasBell, Everamber, MirrorOfMushin, PrimordialGreenbloom, ProfanedSprout, PuppetStrings, TwistedWitheredBranch, WorldspanFern } from "@/data/materials/drops/sumeru";
 
 export const ScaramoucheBalladeer = new WeeklyBoss(
   "The Balladeer, Joururi Workshop",
@@ -35,6 +35,25 @@ export const Apep = new WeeklyBoss(
     PrimordialGreenbloom,
     Everamber,
     ...ElementalCrystals.Dendro.getCraftingTreeAsMaterials(),
+    DreamSolvent,
+    GladiatorsFinale,
+    WanderersTroupe,
+    Berserker,
+    Instructor,
+    TheExile,
+    ...Midlander
+  ]
+);
+
+export const DottoreIrminsul = new WeeklyBoss(
+  "Il Dottore (Irminsul)",
+  `Irminsul, that tree that once sustained memory, is now doomed to be turned by the fires of calamity into nothing but ash and dust. And if the roots of the mortal world are to be spared further corruption, then the self-proclaimed "enlightened" heretic must be confronted one last time...`,
+  'Sumeru',
+  [
+    CounterfeitResin, TwistedWitheredBranch, ProfanedSprout,
+    ...ElementalCrystals.Cryo.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Pyro.getCraftingTreeAsMaterials(),
+    ...ElementalCrystals.Electro.getCraftingTreeAsMaterials(),
     DreamSolvent,
     GladiatorsFinale,
     WanderersTroupe,

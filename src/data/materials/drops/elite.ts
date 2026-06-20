@@ -328,7 +328,7 @@ export const Mistshroud = MobDrop.create('Mistshroud', {
   prependName: true,
 });
 
-export const RaidantBeastDrop = MobDrop.create('<placeholder>', {
+export const LightlessBone = MobDrop.create('<placeholder>', {
   [Rarity.Epic]: `Radiant Exoskeleton`,
   [Rarity.Rare]: `Glowing Remains`,
   [Rarity.Uncommon]: `Lightless Bone`,
@@ -353,4 +353,14 @@ export const XOfTheDeepShadow = MobDrop.create('of the Deep Shadow', {
   [Rarity.Epic]: `The remains of a fisher from beyond this world, left after its body dissolved.\nA birdlike, hook-shaped beak used by predators from beyond this world to store the biomass they seize.`,
   [Rarity.Rare]: `The remains of a fisher from beyond this world, left after its body dissolved.\nA core whose functions have fully shut down, and its structure resembles no organ of any creature found on this earth.`,
   [Rarity.Uncommon]: `The remains of a fisher from beyond this world, left after its body dissolved.\nOnce its shell cracked, the malice housed within faded away as well.`
+});
+
+export const FadedFlamingHilt = MobDrop.create('Flaming Hilt', {
+  [Rarity.Epic]: `Jeweled`,
+  [Rarity.Rare]: `Fractured`,
+  [Rarity.Uncommon]: `Faded`,
+}, {
+  [Rarity.Epic]: `The hilt remains of a flaming sword once wielded by a Domain Keeper.\nA sword of blazing fire was once the symbol of admonition.\nEmpowered by the authority of "Space," it proclaimed the absolute and infallible will of the divine.`,
+  [Rarity.Rare]: `The hilt remains of a flaming sword once wielded by a Domain Keeper.\nA sword of blazing fire was once the symbol of judgment.\nEmpowered by the authority of "Space," it barred the path against trespass and profanity.`,
+  [Rarity.Uncommon]: `The hilt remains of a flaming sword once wielded by a Domain Keeper.\nA sword of blazing fire was once the symbol of protection.\nEmpowered by the authority of "Space," it sealed the boundary between eternity and ephemera.`,
 });

@@ -1,7 +1,7 @@
 import { WorldBoss } from "@/common/models/mobs/Boss";
 
 import { ElementalCrystals } from '@/data/materials/drops/crystals';
-import { HurricaneSeed, HoarfrostCore, LightningPrism, CrystallineBloom } from "@/data/materials/drops/mondstadt";
+import { HurricaneSeed, HoarfrostCore, LightningPrism, CrystallineBloom, PlumeOfTheFallenWatcher } from "@/data/materials/drops/mondstadt";
 import { 
   GladiatorsFinale, WanderersTroupe, 
   Berserker, Instructor, TheExile, PrayersOfSpringtime, PrayersOfWisdom,
@@ -69,5 +69,20 @@ export const CryoHypostasis = new WorldBoss(
     TheExile,
     PrayersOfSpringtime,
     LuckyDog,
+  ]
+);
+
+export const WatcherFallenVigil = new WorldBoss(
+  'Watcher: Fallen Vigil',
+  `A shadow construct born from the overflow of the mighty primordial being, a Watcher who once dwelt in the highest heavens, yet was cast down into the mortal realm for daring to open its eye.\nThe Watcher does not know why its master departed. Only the eternal punishment remains, trapped within a stagnant interstice of time...`,
+  'Mondstadt',
+  [
+    PlumeOfTheFallenWatcher,
+    ...ElementalCrystals.Geo.getCraftingTreeAsMaterials(),
+    GladiatorsFinale,
+    WanderersTroupe,
+    Instructor,
+    TheExile,
+    TravelingDoctor,
   ]
 );

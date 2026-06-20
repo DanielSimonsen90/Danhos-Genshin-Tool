@@ -66,6 +66,43 @@ export const UltimateOverlordsMegaMagicSword = new Weapon(
 );
 
 // #region A
+export const AngelosHeptades = new Weapon(
+  "Angelos' Heptades",
+  {
+    value: `ATK is increased by $0. After the equipping character creates a Shield, they gain "Pathfinder's Light" for 20s: Increases your active party member's DMG by $1 for every 1,000 ATK the equipping character has, up to a maximum of $2. Additionally, when the equipping character creates a Shield, they will also gain "Guide's Contentment": Restores $3 Elemental Energy to the equipping character. The aforementioned effect can trigger once every 14s, and can also be triggered when any type of chest is opened outside of combat. The equipping character may trigger this effect even when they are an off-field.\nHexerei: Secret Rite: When your own Hexerei character is off-field in the party, they will also gain 50% of the DMG increase from Pathfinder's Light.`,
+    refinements: [
+      '12/15/18/21/24%',
+      '10/13/16/19/22%',
+      '26/34/42/50/58%',
+      '14/15/16/17/18',
+    ]
+  },
+  'Catalyst',
+  Rarity.Legendary,
+  741,
+  'ATK',
+  16.5,
+  [
+    WeaponAscensionMaterials.ArtfulDeviceX,
+    Drops.FadedFlamingHilt,
+    Drops.DriveShaft,
+  ],
+  'Wish',
+  ({ playstyle, score, character }) => {
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (character.can('Shield')) {
+      score += MODIFIERS.BONUS_ABILITY;
+
+      if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+      if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.STAT;
+      if (!playstyle.onField) score += MODIFIERS.FIELD;
+    }
+    
+    return score;
+  },
+  cs => cs.Nicole
+);
+
 export const AthameArtis = new Weapon(
   "Athame Artis",
   {
@@ -1253,6 +1290,36 @@ export const DialoguesOfTheDesertSages = new Weapon(
   }
 );
 
+export const DisasterAndRemorse = new Weapon(
+  'Disaster and Remorse',
+  {
+    value: `After the equipping character uses an Elemental Skill, they gain "Path of Conflict" for 17s, as well as "Unforgivable" and "Irreparable" for 3s each. This effect can trigger once every 18s.\nUnforgivable: Increases the equipping character's Normal Attack and Charged Attack DMG by $0.\nIrreparable: Increases the equipping character's Elemental Skill and Elemental Burst DMG by $1.\nWhile Path of Conflict is in effect, when the equipping character hits an opponent with a Normal Attack or Charged Attack, Irreparable's duration will be increased by 1s. When the equipping character hits an opponent with their Elemental Skill or Elemental Burst, Unforgivable's duration will be increased by 1s. Each of the above effects can be triggered once every 0.1s. When Path of Conflict ends or the equipping character leaves the field, both Unforgivable and Irreparable will be removed.\nHexerei: Secret Rite: The above DMG boosts are increased by 75%.`,
+    refinements: [
+      '40%/50%/60%/70%/80%',
+      '40%/50%/60%/70%/80%',
+    ],
+  },
+  'Polearm',
+  Rarity.Legendary,
+  674,
+  'Crit Rate',
+  22.1,
+  [
+    WeaponAscensionMaterials.XOfDecarabiansX,
+    Drops.LightlessBone,
+    Drops.Nectar,
+  ],
+  'Wish',
+  ({ playstyle, score }) => {
+    if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) score += MODIFIERS.TALENT;
+    if (playstyle.prioritizesTalents('Skill/Ability', 'Burst/Ult')) score += MODIFIERS.TALENT;
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+    
+    return score;
+  },
+  cs => cs.Lohen
+);
+
 export const DodocoTales = new Weapon(
   'Dodoco Tales',
   {
@@ -1509,7 +1576,7 @@ export const EtherlightSpindlelute = new Weapon(
   45.9,
   [
     WeaponAscensionMaterials.XOfTheFarNorthScions,
-    Drops.RaidantBeastDrop,
+    Drops.LightlessBone,
     Drops.Warrant
   ],
   'Event',
@@ -2273,6 +2340,78 @@ export const FruitfulHook = new Weapon(
 // #endregion
 
 // #region G
+export const GestoftheMightyWolf = new Weapon(
+  'Gest of the Mighty Wolf',
+  {
+    value: `Increase ATK SPD by 10%. Every time the equipping character's Normal Attack(s) hit opponent(s), when they cast their Elemental Skill, or when they begin their Charged Attack(s), gain 1/2/2 stacks of Four Winds' Hymn respectively: DMG dealt is increased by $0 for 4s. Max 4 stacks. This effect can be triggered once every 0.01s.\nAdditionally, when the party has the "Hexerei: Secret Rite" effect, each stack of Four Winds' Hymn also increases the equipping character's CRIT DMG by $1.`,
+    refinements: [
+      '7.5/9.5/11.5/13.5/15.5%',
+      '7.5/9.5/11.5/13.5/15.5%',
+    ]
+  },
+  'Claymore',
+  Rarity.Legendary,
+  608,
+  'Crit Rate',
+  33.1,
+  [
+    WeaponAscensionMaterials.BorealWolfsXTooth,
+    Drops.XOfTheDeepShadow,
+    Drops.FatuiInsignia
+  ],
+  'Wish',
+  ({ playstyle, score, character }) => {
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+    if (playstyle.prioritizesTalents('Normal/Press')) {
+      score += MODIFIERS.TALENT;
+
+      if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+      if (playstyle.prioritizesTalents('Charged/Hold')) score += MODIFIERS.TALENT;
+
+      if (character.can('Hexerei Able')) score += MODIFIERS.BONUS_ABILITY;
+    }
+
+    return score;
+  },
+  cs => cs.Varka
+);
+
+export const GoldenFrostboundOath = new Weapon(
+  'Golden Frostbound Oath',
+  {
+    value: `Increase DEF by $0. When the equipping character's Elemental Skill or Lunar-Crystallize attacks hit opponents, gain the Frost Fae's Favor effect for 6s: Geo DMG inflicted by the equipping character increases by $1, Lunar-Crystallize Reaction DMG increases by $2. While this effect is active, if there are Moondrifts near the equipping character, all other nearby party members will gain the Frost Fae's Mischief effect: Geo DMG dealt increases by $3 and Lunar-Crystallize Reaction DMG increases by $4. This effect can be triggered even when the equipping character is off-field.`,
+    refinements: [
+      '16%/20%/24%/28%/32%',
+      '40%/50%/60%/70%/80%',
+      '40%/50%/60%/70%/80%',
+      '20%/25%/30%/35%/40%',
+      '20%/25%/30%/35%/40%',
+    ]
+  },
+  'Bow',
+  Rarity.Legendary,
+  542,
+  'Crit DMG',
+  88.2,
+  [
+    WeaponAscensionMaterials.XOfLongNightFlint,
+    Drops.FadedFlamingHilt,
+    Drops.Warrant
+  ],
+  'Wish',
+  ({ playstyle, score, character }) => {
+    if (playstyle.needsStat('DEF')) score += MODIFIERS.STAT;
+    if (playstyle.prioritizesTalents('Skill/Ability') || character.canTrigger('playstyle-based', 'Lunar-Crystallize')) {
+      if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+      if (character.canTrigger('playstyle-based', 'Lunar-Crystallize')) score += MODIFIERS.CAN_TRIGGER_ELEMENT * 2; // Double effects
+
+      if (character.element === 'Geo') score += MODIFIERS.BONUS_ABILITY * 2; // Double effects
+    }
+
+    return score;
+  },
+  cs => cs.Linnea
+);
 // #endregion
 
 // #region H
@@ -3101,7 +3240,7 @@ export const MasterKey = new Weapon(
   61.3,
   [
     WeaponAscensionMaterials.XOfTheFarNorthScions,
-    Drops.RaidantBeastDrop,
+    Drops.LightlessBone,
     Drops.DriveShaft
   ],
   'Crafting',
@@ -3312,7 +3451,7 @@ export const MoonweaversDawn = new Weapon(
   27.6,
   [
     WeaponAscensionMaterials.XOfTheFarNorthScions,
-    Drops.RaidantBeastDrop,
+    Drops.LightlessBone,
     Drops.DriveShaft
   ],
   'Wish',
@@ -4101,7 +4240,7 @@ export const ReliquaryOfTruth = new Weapon(
   88.2,
   [
     WeaponAscensionMaterials.OasisGardens,
-    Drops.RaidantBeastDrop,
+    Drops.LightlessBone,
     Drops.FungalSpores,
   ],
   'Wish',

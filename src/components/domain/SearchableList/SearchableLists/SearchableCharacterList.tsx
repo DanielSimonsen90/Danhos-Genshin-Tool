@@ -117,6 +117,8 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
         hexerei: character => character.bonusAbilities.some(ability => ability.startsWith('Hexerei Able: ')),
         nightsoulsBlessing: character => character.bonusAbilities.includes('Nightsouls Blessing'),
         offFieldDamage: character => character.bonusAbilities.includes('Off-field Damage'),
+        ousia: character => character.bonusAbilities.includes('Ousia'),
+        pneuma: character => character.bonusAbilities.includes('Pneuma'),
         selfHeal: character => character.bonusAbilities.includes('Self-heal'),
         serpentSubtlety: character => character.bonusAbilities.includes(`Serpent's Subtlety`),
         shield: character => character.bonusAbilities.includes('Shield'),

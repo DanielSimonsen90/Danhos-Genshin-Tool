@@ -252,7 +252,7 @@ export const RadiantBeast = new EliteMob(
   "Radiant Beast",
   `A beast that has undergone a unique evolution due to age-long immersion in the ancient moon's power.\nOnce an ordinary creature, it has been warped by the influence of kuuvahki and imbued with an otherworldly strength.`,
   [
-    EliteMobDrops.RaidantBeastDrop
+    EliteMobDrops.LightlessBone
   ]
 );
 
@@ -261,5 +261,13 @@ export const FisherOfHiddenDepths = new EliteMob(
   `An Abyssal creature that slips through rifts in the hidden depths, crossing over from beyond this world.`,
   [
     EliteMobDrops.XOfTheDeepShadow
+  ]
+);
+
+export const DomainKeeper = new EliteMob(
+  "Domain Keeper",
+  `A shadow construct born of a flow from the mighty primodial being. It stands as the guardian of the Pillar Hall of the heavens.`,
+  [
+    EliteMobDrops.FadedFlamingHilt,
   ]
 );
