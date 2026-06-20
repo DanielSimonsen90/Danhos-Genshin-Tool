@@ -5,6 +5,6 @@
 
 
 ## Updates
-
+* Added "Off-field Damage" to Lauma
 
 ## Fixes

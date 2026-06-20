@@ -575,7 +575,7 @@ export const Emilie = new Character("Emilie", "Dendro", "Polearm", [
 );
 
 export const Escoffier = new Character('Escoffier', 'Cryo', 'Polearm', [
-  'Off-field Damage', 
+  'Off-field Damage',
   'Heal',
   'Ousia',
 ], Rarity.Legendary, 'Fontaine', {
@@ -1127,6 +1127,7 @@ export const LanYan = new Character("Lan Yan", "Anemo", "Catalyst", ["Shield", "
 
 export const Lauma = new Character("Lauma", "Dendro", "Catalyst", [
   "Enables Lunar-Bloom Reaction",
+  "Off-field Damage",
   'Increases Moonsign',
 ], Rarity.Legendary, 'Nod-Krai', {
   material: TalentAscension.Moonlight,
