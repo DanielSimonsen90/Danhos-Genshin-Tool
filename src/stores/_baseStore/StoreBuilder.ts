@@ -1,6 +1,13 @@
 import { useSyncExternalStore } from "react";
 import { Functionable } from "@/common/types";
-import MemoizeService from "@/services/MemoizeService";
+
+type AnyApiFactory = (props: {
+  get: () => unknown;
+  set: (partial: unknown) => void;
+  api: unknown;
+  builder: unknown;
+}) => unknown;
+type AnyPersistenceConfig = PersistenceConfig<unknown>;
 
 type Subscriber = () => void;
 
@@ -8,181 +15,185 @@ type PersistenceConfig<TState> = {
   key: string;
   stringify?: (state: TState) => string;
   parse?: (stored: string) => TState;
-  version: number;
 };
 
-type Store<State, Api> = ReturnType<StoreBuilder<State, Api>['buildStore']>
+type ApiFactory<TState extends object, TApi, TCurrentApi extends object = object> = (props: {
+  get: () => TState;
+  set: (partial: Functionable<Partial<TState>, [current: TState]>) => void;
+  api: TCurrentApi;
+  builder: StoreBuilder<TState, TCurrentApi>;
+}) => TApi;
 
-export default class StoreBuilder<AccumState = {}, AccumApi = {}> {
-  protected state: AccumState = {} as AccumState;
-  protected api: AccumApi = {} as AccumApi;
-  protected subscribers = new Set<Subscriber>();
-  protected persist?: PersistenceConfig<any>;
-  protected memoService = new MemoizeService();
-
-  constructor(initialState?: AccumState) {
-    this.state = initialState || ({} as AccumState);
-  }
-
-  // #region Lifecycle
-  protected setState(partial: Functionable<Partial<AccumState>>) {
-    const update = typeof partial === "function"
-      ? (partial as (state: AccumState) => Partial<AccumState>)(this.state)
-      : partial;
-    this.state = { ...this.state, ...update };
-    this.subscribers.forEach(subscriber => subscriber());
-
-    console.log(this)
-    if (this.persist) {
-      const { key, stringify = JSON.stringify } = this.persist;
-
-      try {
-        localStorage.setItem(key, stringify(this.state));
-      } catch (error) {
-        console.error(`Failed to persist data`, {error, update, store: this})
-      }
-    }
+type Store<TState extends object, TApi extends object> = {
+  getState: () => TState;
+  setState: (partial: Functionable<Partial<TState>, [current: TState]>) => void;
+  subscribe: (subscriber: Subscriber) => () => void;
+  useStore: {
+    (): TState & TApi;
+    <TSelected>(selector: (store: TState & TApi) => TSelected): TSelected;
   };
+} & TApi;
 
-  protected getState() {
-    return this.state;
+export default class StoreBuilder<
+  TAccumState extends object = object,
+  TAccumApi extends object = object
+> {
+  private initialState = {} as TAccumState;
+  private apiFactories: Array<AnyApiFactory> = [];
+  private persistConfig?: AnyPersistenceConfig;
+  private built = false;
+  private builtStore?: Store<TAccumState, TAccumApi>;
+
+  constructor(initialState?: TAccumState) {
+    this.initialState = initialState ?? this.initialState;
   }
 
-  protected onInit() {
-    if (this.persist) {
-      const { key, parse = JSON.parse } = this.persist;
-      
-      try {
-        const stored = localStorage.getItem(key);
-        if (stored) {
-          const parsed = parse(stored);
-          this.state = { ...this.state, ...parsed };
-        }
-      } catch (error) {
-        console.error(`Failed to initialize persisted data`, {error, store: this});
-      }
-    }
-  }
-  // #endregion
+  // #region Builder API (Configuration Phase)
 
-  // #region Injection
-  public subscribe(subscriber: Subscriber) {
-    this.subscribers.add(subscriber);
-    return () => this.subscribers.delete(subscriber);
-  };
-
-  public getSnapshot() {
-    return this.memoService.memoize(() => ({ ...this.state, ...this.api }), [this.state, this.api]);
-  }
-
-  protected inject<OtherState, OtherApi>(
-    injectedStore: Store<OtherState, OtherApi> | StoreBuilder<OtherState, OtherApi>,
-    callback: (this: AccumState & AccumApi, injected: OtherState & OtherApi, self: AccumState & AccumApi) => void
-  ) {
-    const injectedSnapshot = "getBuilder" in injectedStore 
-      ? injectedStore.getBuilder().getSnapshot() 
-      : injectedStore.getSnapshot();
-
-    injectedStore.subscribe(() => {
-      callback.call(
-        this.getSnapshot(), 
-        injectedSnapshot,
-        this.getSnapshot()
-      );
-    })
-  }
-  // #endregion
-
-  // #region Builder API
   public addState<TState>(
     state: TState
-  ): StoreBuilder<AccumState & TState, AccumApi> {
-    this.state = { ...this.state, ...state };
-    return this as any as StoreBuilder<AccumState & TState, AccumApi>;
+  ): StoreBuilder<TAccumState & TState, TAccumApi> {
+    if (this.built) throw new Error("Cannot modify builder after buildStore() is called");
+
+    this.initialState = { ...this.initialState, ...state };
+    return this as unknown as StoreBuilder<TAccumState & TState, TAccumApi>;
   }
 
   public addApi<TApi>(
-    callback: (
-      props: {
-        get: () => AccumState, 
-        set: (partial: Functionable<Partial<AccumState>>) => void,
-        api: AccumApi,
-        builder: StoreBuilder<AccumState, AccumApi>
-      }
-    ) => TApi
-  ): StoreBuilder<AccumState, AccumApi & TApi> {
-    const newApi = callback({
-      get: this.getState.bind(this), 
-      set: this.setState.bind(this),
-      api: this.api,
-      builder: this,
-    });
+    factory: ApiFactory<TAccumState, TApi, TAccumApi>
+  ): StoreBuilder<TAccumState, TAccumApi & TApi> {
+    if (this.built) throw new Error("Cannot modify builder after buildStore() is called");
 
-    this.api = { ...this.api, ...newApi };
-
-    return this as any as StoreBuilder<AccumState, AccumApi & TApi>
+    this.apiFactories.push(factory as unknown as AnyApiFactory);
+    return this as unknown as StoreBuilder<TAccumState, TAccumApi & TApi>;
   }
 
-  public addSlice<TSliceState, TSliceApi>(
+  public addSlice<TSliceState extends object, TSliceApi extends object>(
     slice: StoreBuilder<TSliceState, TSliceApi>,
-  ): StoreBuilder<AccumState & TSliceState, AccumApi & TSliceApi> {
-    this.state = { ...this.state, ...slice.getState() };
-    this.api = { ...this.api, ...slice.api };
+  ): StoreBuilder<TAccumState & TSliceState, TAccumApi & TSliceApi> {
+    if (this.built) throw new Error("Cannot modify builder after buildStore() is called");
 
-    if (slice.persist) {
-      this.persist = {
-        ...(this.persist ?? {}),
-        ...slice.persist,
+    this.initialState = { ...this.initialState, ...slice.initialState };
+    this.apiFactories.push(...slice.apiFactories);
+
+    if (slice.persistConfig) {
+      if (this.persistConfig) {
+        this.persistConfig = {
+          key: this.persistConfig.key || slice.persistConfig.key,
+          stringify: this.persistConfig.stringify || slice.persistConfig.stringify,
+          parse: this.persistConfig.parse || slice.persistConfig.parse,
+        };
+      } else {
+        this.persistConfig = slice.persistConfig;
       }
     }
 
-    if (slice.subscribers.size) {
-      slice.subscribers.forEach(subscriber => this.subscribe(subscriber));
+    return this as unknown as StoreBuilder<TAccumState & TSliceState, TAccumApi & TSliceApi>;
+  }
+
+  public addPersistence(config: PersistenceConfig<TAccumState>): this {
+    if (this.built) throw new Error("Cannot modify builder after buildStore() is called");
+
+    this.persistConfig = { ...this.persistConfig, ...config } as AnyPersistenceConfig;
+    return this;
+  }
+
+  // #endregion
+
+  // #region Build Phase (Execution)
+
+  public buildStore(): Store<TAccumState, TAccumApi> {
+    if (this.built) {
+      if (!this.builtStore) {
+        throw new Error("Store has already been built but no built store was cached");
+      }
+
+      return this.builtStore;
     }
 
-    return this as any as StoreBuilder<AccumState & TSliceState, AccumApi & TSliceApi>;
-  }
+    this.built = true;
 
-  public addPersistence(config: PersistenceConfig<AccumState>): this {
-    this.persist = { ...this.persist, ...config };
-    return this;
-  }
+    const subscribers = new Set<Subscriber>();
+    let state = { ...this.initialState };
+    let cachedSnapshot: TAccumState & TAccumApi;
 
-  public addInjection<OtherState, OtherApi>(
-    injectedStore: Store<OtherState, OtherApi> | StoreBuilder<OtherState, OtherApi>,
-    callback: (this: AccumState & AccumApi, injected: OtherState & OtherApi, self: AccumState & AccumApi) => void
-  ): this {
-    this.inject(injectedStore, callback);
-    return this;
-  }
+    if (this.persistConfig) {
+      const { key, parse = JSON.parse } = this.persistConfig;
+      try {
+        const stored = localStorage.getItem(key);
+        if (stored) {
+          state = parse(stored) as TAccumState;
+        }
+      } catch (error) {
+        console.error("Failed to load persisted data:", error);
+      }
+    }
 
-  private useStore(): AccumState & AccumApi;
-  private useStore<TSelected>(selector: (store: AccumState & AccumApi) => TSelected): TSelected;
-  private useStore<TSelected>(selector?: (store: AccumState & AccumApi) => TSelected) {
-    const store = useSyncExternalStore(
-      this.subscribe.bind(this),
-      this.getSnapshot.bind(this)
-    );
+    const getState = () => state;
 
-    return (
-      selector
-        ? selector(store)
-        : store
-    );
-  }
+    let api = {} as TAccumApi;
+    const setState = (partial: Functionable<Partial<TAccumState>, [current: TAccumState]>) => {
+      const update = typeof partial === "function"
+        ? (partial as (current: TAccumState) => Partial<TAccumState>)(state)
+        : partial;
 
-  public buildStore() {
-    this.onInit();
-    
-    return {
-      getState: this.getState.bind(this),
-      setState: this.setState.bind(this),
-      subscribe: this.subscribe.bind(this),
-      useStore: this.useStore.bind(this),
-      getBuilder: () => this,
-      getAccumulatedStore: () => ({ ...this.state, ...this.api }),
-      ...this.api,
+      state = { ...state, ...update };
+      cachedSnapshot = { ...state, ...api };
+
+      subscribers.forEach(subscriber => subscriber());
+
+      if (this.persistConfig) {
+        const { key, stringify = JSON.stringify } = this.persistConfig;
+        try {
+          localStorage.setItem(key, stringify(state));
+        } catch (error) {
+          console.error("Failed to persist data:", error);
+        }
+      }
     };
+
+    const subscribe = (subscriber: Subscriber) => {
+      subscribers.add(subscriber);
+      return () => subscribers.delete(subscriber);
+    };
+
+    try {
+      for (const factory of this.apiFactories) {
+        const factoryResult = factory({
+          get: getState,
+          set: setState as unknown as (partial: unknown) => void,
+          api,
+          builder: this as unknown as StoreBuilder<TAccumState, TAccumApi>,
+        });
+
+        api = { ...api, ...(factoryResult as object) } as TAccumApi;
+      }
+    } catch (error) {
+      console.error("Error building store API:", error);
+      throw error;
+    }
+
+    cachedSnapshot = { ...state, ...api };
+    const getSnapshot = () => cachedSnapshot;
+
+    function useStore(): TAccumState & TAccumApi;
+    function useStore<TSelected>(selector: (store: TAccumState & TAccumApi) => TSelected): TSelected;
+    function useStore<TSelected>(selector?: (store: TAccumState & TAccumApi) => TSelected): TSelected | (TAccumState & TAccumApi) {
+      const store = useSyncExternalStore(subscribe, getSnapshot);
+      return selector ? selector(store) : store;
+    }
+
+    const builtStore = {
+      getState,
+      setState,
+      subscribe,
+      useStore,
+      ...api,
+    } as Store<TAccumState, TAccumApi>;
+
+    this.builtStore = builtStore;
+    return builtStore;
   }
+
   // #endregion
 }
