@@ -32,12 +32,15 @@ export default class StoreBuilder<AccumState = {}, AccumApi = {}> {
     this.state = { ...this.state, ...update };
     this.subscribers.forEach(subscriber => subscriber());
 
+    console.log(this)
     if (this.persist) {
       const { key, stringify = JSON.stringify } = this.persist;
 
       try {
         localStorage.setItem(key, stringify(this.state));
-      } catch { }
+      } catch (error) {
+        console.error(`Failed to persist data`, {error, update, store: this})
+      }
     }
   };
 
@@ -55,7 +58,9 @@ export default class StoreBuilder<AccumState = {}, AccumApi = {}> {
           const parsed = parse(stored);
           this.state = { ...this.state, ...parsed };
         }
-      } catch { }
+      } catch (error) {
+        console.error(`Failed to initialize persisted data`, {error, store: this});
+      }
     }
   }
   // #endregion
@@ -111,9 +116,10 @@ export default class StoreBuilder<AccumState = {}, AccumApi = {}> {
       set: this.setState.bind(this),
       api: this.api,
       builder: this,
-    }
-    );
+    });
+
     this.api = { ...this.api, ...newApi };
+
     return this as any as StoreBuilder<AccumState, AccumApi & TApi>
   }
 
@@ -121,7 +127,19 @@ export default class StoreBuilder<AccumState = {}, AccumApi = {}> {
     slice: StoreBuilder<TSliceState, TSliceApi>,
   ): StoreBuilder<AccumState & TSliceState, AccumApi & TSliceApi> {
     this.state = { ...this.state, ...slice.getState() };
-    this.api = { ...this.api, ...slice };
+    this.api = { ...this.api, ...slice.api };
+
+    if (slice.persist) {
+      this.persist = {
+        ...(this.persist ?? {}),
+        ...slice.persist,
+      }
+    }
+
+    if (slice.subscribers.size) {
+      slice.subscribers.forEach(subscriber => this.subscribe(subscriber));
+    }
+
     return this as any as StoreBuilder<AccumState & TSliceState, AccumApi & TSliceApi>;
   }
 

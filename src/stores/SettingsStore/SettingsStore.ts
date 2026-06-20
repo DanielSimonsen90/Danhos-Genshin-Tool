@@ -81,7 +81,7 @@ const SettingsStore = new StoreBuilder()
     function updateSettings(update: SetStateAction<Partial<AppSettings>> | SetStateAction<AppSettings>, override?: boolean) {
       const resolvedUpdate = ObjectUtils.resolveFunctionable(update, [get().settings]);
 
-      // Filter out character fiter properties that shouldn't be in settings
+      // Filter out character filter properties that shouldn't be in settings
       const validSettingsKeys = ObjectUtils.keysOf(DEFAULT_SETTINGS).concat(['updated']);
       const filteredUpdate = ObjectUtils.keysOf(resolvedUpdate).reduce((acc, key) => {
         if (validSettingsKeys.includes(key)) {
@@ -91,7 +91,7 @@ const SettingsStore = new StoreBuilder()
         return acc;
       }, {} as Partial<AppSettings>);
 
-      debugLog('Settingsd update', resolvedUpdate);
+      debugLog('Settings update', resolvedUpdate);
       debugLog('Filtered settings update', filteredUpdate);
 
       set({

@@ -29,6 +29,7 @@ export default function MaterialCard({
   ...props
 }: Props) {
   const AccountStore = useAccountStore();
+  const worldRegion = useAccountStore(store => store.selectedAccount.worldRegion);
   const view = useSettingsStore(ss => ss.getSetting('preferredTabs')?.craftableMaterial);
   const hasInteractedWithPagination = useRef(false);
 
@@ -70,7 +71,7 @@ export default function MaterialCard({
   );
 
   return <ModelCard
-    key={`${AccountStore.worldRegion}-${currentMaterial.name}`}
+    key={`${worldRegion}-${currentMaterial.name}`}
     model="Material"
     item={currentMaterial}
     {...props}

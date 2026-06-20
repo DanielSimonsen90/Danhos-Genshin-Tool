@@ -1,29 +1,30 @@
 import StoreBuilder from "@/stores/_baseStore/StoreBuilder";
-import { AccountContextType, AccountData, DEFAULT_ACCOUNT_DATA } from "..";
+import { AccountContextType, AccountData, DEFAULT_ACCOUNT_DATA, DEFAULT_ACCOUNT_NAME } from "..";
 import accountsSlice from "./accounts.slice";
 
 export default new StoreBuilder()
   .addSlice(accountsSlice)
-  .addApi(({ get, set }) => {
-    function addAccount(name: string) {
-      const accounts = get();
-      if (accounts[name]) throw new Error(`Account ${name} already exists`);
+  .addApi(({ get, api, set }) => {
+    function addAccount(name: string, data?: Partial<AccountData>) {
+      const { accounts } = get();
+      if (accounts[name] && name !== DEFAULT_ACCOUNT_NAME) throw new Error(`Account ${name} already exists`);
       if (!name?.trim()) throw new Error('Account name cannot be empty');
 
-      const data: AccountData = {
+      const nextData: AccountData = {
         ...DEFAULT_ACCOUNT_DATA,
-        selected: false,
+        ...data,
       }
 
       const next = {
         ...accounts,
-        [name]: data
+        [name]: nextData
       }
 
-      set(next);
+      api.clearCache(keys => keys.accounts());
+      set({ accounts: next });
     }
     function deleteAccount(name: string) {
-      const accounts = get();
+      const { accounts } = get();
       if (!accounts[name]) throw new Error(`Account ${name} already exists`);
 
       const accountKeys = Object.keys(accounts);
@@ -42,7 +43,8 @@ export default new StoreBuilder()
         }
       }
 
-      set(next);
+      api.clearCache(keys => keys.accounts());
+      set({ accounts: next });  
     }
 
     return {

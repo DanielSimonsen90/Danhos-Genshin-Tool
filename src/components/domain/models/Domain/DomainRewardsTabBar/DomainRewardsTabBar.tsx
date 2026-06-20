@@ -42,7 +42,7 @@ function AscensionMaterialTabBar({ rewards, domainType }: Props<'Forgery' | 'Mas
   ), [DataStore]);
 
   return <TabBar
-    key={`${AccountStore.worldRegion}-${domainType}`}
+    key={`${AccountStore.selectedAccount.worldRegion}-${domainType}`}
     className="domain-rewards-tab-bar"
     tabs={create => rewards.map(reward => create(
       reward.name,

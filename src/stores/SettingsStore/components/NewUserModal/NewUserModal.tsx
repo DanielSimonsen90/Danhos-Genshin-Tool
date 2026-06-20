@@ -1,7 +1,7 @@
 import { DebugLog } from "@/common/functions/dev";
 import Modal from "@/components/common/Modal";
 import { useActionState } from "@/hooks/useActionState";
-import { useAccountStore, AccountSettings, DEFAULT_ACCOUNT_DATA } from "@/stores/AccountStore";
+import { useAccountStore, AccountSettings, DEFAULT_ACCOUNT_DATA, DEFAULT_ACCOUNT_NAME } from "@/stores/AccountStore";
 
 import { useSettingsStore } from "../../SettingsStore";
 import SettingsOption from "../SettingsModal/components/SettingsOption/SettingsOption";
@@ -29,7 +29,7 @@ export const NewUserModal = () => {
   function _onSubmit(data: NewUserData) {
     debugLog('NewUserModal submitted', data);
 
-    AccountStore.setAccountData({ ...data, selected: true });
+    AccountStore.addAccount(DEFAULT_ACCOUNT_NAME, { ...data, selected: true });
     SettingsStore.updateAndSaveSettings(state => {
       const update = { ...state };
       delete update.newUser;
@@ -40,7 +40,7 @@ export const NewUserModal = () => {
   return newUser ? (
     <Modal className="new-user-modal" open={newUser} onClose={() => !submitting && _onSubmit(DEFAULT_ACCOUNT_DATA)}>
       <form onSubmit={onSubmit}>
-        <h1>You wake up from a deep sleep on a beach in Monstadt...</h1>
+        <h1>You wake up from a deep sleep on a beach in Mondstadt...</h1>
         <div className="intro-sentence">
           <span>You wake up as </span>
           <SettingsOption hideLabel setting="traveler" value={DEFAULT_ACCOUNT_DATA['traveler']} accountNames={undefined} />

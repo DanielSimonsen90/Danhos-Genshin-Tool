@@ -1,31 +1,36 @@
-import { LOCAL_STORAGE_KEY } from "@/stores/SettingsStore/SettingsStoreConstants";
 import loggerSlice from "@/stores/_baseStore/slices/logger.slice";
 import memoSlice from "@/stores/_baseStore/slices/memo.slice";
 import StoreBuilder from "@/stores/_baseStore/StoreBuilder";
+import { LOCAL_STORAGE_KEY } from "../AccountStoreConstants";
 import { DEFAULT_ACCOUNT_DATA, DEFAULT_ACCOUNT_NAME } from "../AccountStoreConstants";
 import { AccountContextType, AccountData } from "../AccountStoreTypes";
 
 export default new StoreBuilder({
-  [DEFAULT_ACCOUNT_NAME]: DEFAULT_ACCOUNT_DATA
-} as AccountContextType)
+  accounts: {
+    [DEFAULT_ACCOUNT_NAME]: DEFAULT_ACCOUNT_DATA
+  } as AccountContextType
+})
   .addPersistence({
     key: LOCAL_STORAGE_KEY,
     version: 1,
+    stringify: (state) => JSON.stringify(state.accounts),
+    parse: (raw) => ({ accounts: JSON.parse(raw) }),
   })
   .addSlice(loggerSlice('accountStore'))
   .addSlice(memoSlice({
     validAccountKeys: () => 'valid_account_keys',
     accounts: () => 'accounts',
   }))
-  .addApi(({ get, set, api }) => {
+  .addApi(({ get, api }) => {
     const validAccountDataKeys = api.memoize(
       keys => keys.validAccountKeys(),
       () => Object.keys(DEFAULT_ACCOUNT_DATA)
     );
-    const accounts = api.memoize(
+
+    const getAccounts = () => api.memoize(
       keys => keys.accounts(),
-      () => Object.keys(get()).reduce((acc, accountKey) => {
-        const account = get()[accountKey];
+      () => Object.keys(get().accounts).reduce((acc, accountKey) => {
+        const account = get().accounts[accountKey];
         if (!account) {
           console.warn(`Account with key "${accountKey}" has no data and will be skipped.`);
           return acc;
@@ -44,11 +49,14 @@ export default new StoreBuilder({
 
         acc[accountKey as keyof AccountContextType] = filteredData;
         return acc;
-      }, {} as AccountContextType)
+      }, {} as AccountContextType),
+      JSON.stringify(get().accounts)
     );
 
     return {
-      accounts,
+      get accounts() {
+        return getAccounts();
+      },
       validAccountDataKeys
     }
   })

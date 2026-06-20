@@ -20,7 +20,6 @@ export default function SettingsModal(props: ModalConsumerProps) {
   const SettingsStore = useSettingsStore();
   const accounts = useAccountStore(state => state.accounts);
   const selectedAccountName = useAccountStore(state => state.selectedAccountName);
-  const accountData = useAccountStore(state => state.accountData);
   const setAccountData = useAccountStore(state => state.setAccountData);
   const setAccountName = useAccountStore(state => state.setAccountName);
   const {

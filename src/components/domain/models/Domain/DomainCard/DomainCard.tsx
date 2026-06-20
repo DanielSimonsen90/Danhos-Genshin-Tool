@@ -37,7 +37,7 @@ export default function DomainCard({
   ...props
 }: Props) {
   const DataStore = useDataStore();
-  const AccountStore = useAccountStore();
+  const worldRegion = useAccountStore(store => store.selectedAccount.worldRegion);
 
   if (!domain) return null;
 
@@ -53,7 +53,7 @@ export default function DomainCard({
 
   return (
     <ModelCard
-      key={`${AccountStore.worldRegion}-${name}`}
+      key={`${worldRegion}-${name}`}
       model="Domain"
       item={domain}
       {...props}

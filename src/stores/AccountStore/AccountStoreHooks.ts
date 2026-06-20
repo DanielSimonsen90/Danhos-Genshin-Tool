@@ -3,9 +3,9 @@ import { useAccountStore } from "./AccountStore";
 import { FavoriteModels } from "./AccountStoreTypes";
 
 export const useAccountData = () => {
-  const { accountData: regionData, setAccountData } = useAccountStore();
+  const { selectedAccount, setAccountData } = useAccountStore();
   return {
-    ...regionData,
+    ...selectedAccount,
     setAccountData
   }
 }

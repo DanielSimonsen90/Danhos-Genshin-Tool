@@ -37,7 +37,7 @@ export default new StoreBuilder()
       }
 
       const targetAccountKey = Object
-        .entries(get())
+        .entries(get().accounts)
         .find(([_, data]) => data?.id === filteredUpdate.id)
         ?.[0]
 
@@ -46,7 +46,7 @@ export default new StoreBuilder()
         throw new Error(`Target account key could not be determined`)
       }
 
-      const next = Object.entries(get()).reduce((acc, [_accountKey, data]) => {
+      const next = Object.entries(get().accounts).reduce((acc, [_accountKey, data]) => {
         const accountKey = _accountKey as keyof AccountContextType;
         
         if (accountKey === targetAccountKey) {
@@ -62,29 +62,30 @@ export default new StoreBuilder()
         return acc;
       }, {} as AccountContextType);
 
-      set(next);
+      api.debugLog(`Updating account data`, next)
+      api.clearCache(keys => keys.accounts());
+      set({ accounts: next });
     }
     function setAccountName(name: string) {
-      const accounts = get();
+      const { accounts } = get();
       if (accounts[name]) return;
 
-      const currentAccountName = api.selectedAccountName;
-      const data = api.selectedAccount;
-
-      accounts[name] = data;
-      delete accounts[currentAccountName];
+      accounts[name] = api.selectedAccount;
+      delete accounts[api.selectedAccountName];
       
-      set(accounts);
+      api.clearCache(keys => keys.accounts());
+      set({ accounts });
     }
     function setSelectedAccount(accountName: string) {
-      const accounts = get();
+      const { accounts } = get();
       const nextAccount = accounts[accountName];
       if (!nextAccount) throw new Error(`Unknown account name: ${accountName} - ${Object.keys(accounts).join(', ')}`);
 
       api.selectedAccount.selected = false;
 
+      api.clearCache(keys => keys.accounts());
       nextAccount.selected = true;
-      set(accounts);
+      set({ accounts });
     }
 
     function setAccountDataProperty<T extends keyof AccountData>(property: T, value: AccountData[T]) {

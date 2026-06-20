@@ -10,7 +10,7 @@ export default new StoreBuilder()
     function getSelectedAccount(desire: 'data'): AccountData;
     function getSelectedAccount(desire: 'name' | 'data' = 'data') {
       const account = Object
-        .entries(get())
+        .entries(get().accounts)
         .find(([accountName, account]) => account?.selected);
 
       if (!account) return undefined;

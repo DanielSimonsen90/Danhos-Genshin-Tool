@@ -6,8 +6,8 @@ import accountsSlice from "./accounts.slice";
 import favoritesSlice from "./favorites.slice";
 
 export default new StoreBuilder()
+  .addSlice(accountsSlice)
   .addSlice(accountCrudSlice)
   .addSlice(accountGetSlice)
   .addSlice(accountSetSlice)
-  .addSlice(accountsSlice)
   .addSlice(favoritesSlice);

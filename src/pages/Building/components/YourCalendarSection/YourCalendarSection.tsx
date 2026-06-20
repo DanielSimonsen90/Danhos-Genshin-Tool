@@ -4,8 +4,11 @@ import { useAccountStore } from "@/stores";
 import FarmableTodaySection from "../FarmableTodaySection";
 
 export default function YourCalendarSection() {
-  const AccountStore = useAccountStore();
-  const currentDay = useMemo(() => AccountStore.getGenshinServerDayName(AccountStore.selectedAccount.worldRegion), [AccountStore, AccountStore.worldRegion]);
+  const {worldRegion, getGenshinServerDayName} = useAccountStore(store => ({
+    getGenshinServerDayName: store.getGenshinServerDayName,
+    worldRegion: store.selectedAccount.worldRegion
+  }));
+  const currentDay = useMemo(() => getGenshinServerDayName(worldRegion), [worldRegion]);
     const tabs = useMemo(() => {
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     return days.map(day => [
