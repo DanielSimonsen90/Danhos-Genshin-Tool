@@ -8,6 +8,3 @@ export const AccountStore = new StoreBuilder()
 
 export type AccountStoreType = InferStoreType<typeof AccountStore>;
 export const useAccountStore = AccountStore.useStore;
-
-// @ts-ignore 
-window.AccountStore = AccountStore;

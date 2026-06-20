@@ -24,7 +24,7 @@ export default new StoreBuilder()
     }
     function deleteAccount(name: string) {
       const { accounts } = get();
-      if (!accounts[name]) throw new Error(`Account ${name} already exists`);
+      if (!accounts[name]) throw new Error(`Account ${name} does not exist`);
 
       const accountKeys = Object.keys(accounts);
       if (accountKeys.length <= 1) throw new Error('Cannot delete last account')
@@ -34,7 +34,7 @@ export default new StoreBuilder()
       delete next[name];
 
       if (currentWasDeleted) {
-        const [fallbackAccountName, fallbackAccountData] = Object.entries(accounts).find(Boolean)!;
+        const [fallbackAccountName, fallbackAccountData] = Object.entries(next).find(Boolean)!;
         next[fallbackAccountName as keyof AccountContextType] = {
           ...DEFAULT_ACCOUNT_DATA,
           ...fallbackAccountData,

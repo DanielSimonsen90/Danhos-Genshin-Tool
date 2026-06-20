@@ -2,7 +2,7 @@ import { Select } from "@/components/common/FormItems";
 import SettingsOption from "../SettingsOption";
 import { DEFAULT_ACCOUNT_DATA, Traveler, useAccountStore, WORLD_REGIONS } from "@/stores/AccountStore";
 import { CharacterImage } from "@/components/common/media/Images";
-import { useCallback, useMemo, memo } from "react";
+import { useCallback, useMemo } from "react";
 import { useStateReset } from "@/hooks/useStateReset";
 
 const TRAVELER_OPTIONS: Traveler[] = ['lumine', 'aether'];
@@ -19,7 +19,7 @@ const displayWorldRegion = (region: string) => {
   }
 };
 
-function AccountSettings() {
+export default function AccountSettings() {
   // Subscribe to individual values separately to get stable references
   const { 
     accounts, selectedAccountName,
@@ -31,10 +31,6 @@ function AccountSettings() {
     traveler, 
     worldRegion
   } = useAccountStore(state => state.selectedAccount);
-
-  console.log({
-    accounts, selectedAccountName, traveler
-  })
 
   const accountNames = useMemo(() => Object.keys(accounts), [accounts]);
   const [accountName, setAccountName, resetAccountName] = useStateReset(selectedAccountName);
@@ -126,5 +122,3 @@ function AccountSettings() {
     </section>
   );
 }
-
-export default AccountSettings;

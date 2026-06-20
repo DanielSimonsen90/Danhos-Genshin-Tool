@@ -45,13 +45,8 @@ export default new StoreBuilder()
     }
 
     function clearCache(key?: (cacheKeys: typeof CACHE_KEYS) => string) {
-      if (key) {
-        const cacheKey = key(CACHE_KEYS);
-        const foundKey = memoService.findCacheKey(cacheKey);
-        if (foundKey) memoService.unmemoize(foundKey);
-      } else {
-        memoService.clear();
-      }
+      if (key) memoService.clearByPrefix(key(CACHE_KEYS));
+      else memoService.clear();
     }
 
     return {

@@ -1,7 +1,8 @@
 import StoreBuilder, { type InferStoreType } from '../_baseStore/StoreBuilder';
 import ObjectUtils from '@/common/functions/object';
-import { LOCAL_STORAGE_KEY } from './SettingsStoreConstants';
+import { DEFAULT_SETTINGS, LOCAL_STORAGE_KEY } from './SettingsStoreConstants';
 import slices from './slices';
+import { AppSettings } from './SettingsStoreTypes';
 
 const SettingsStore = new StoreBuilder()
   .setStoreName('SettingsStore')
@@ -11,6 +12,21 @@ const SettingsStore = new StoreBuilder()
     stringify: ({ settings }) => JSON.stringify({
       settings: ObjectUtils.exclude(settings, 'updated', 'newUser'),
     }),
+    parse: (raw) => {
+      const parsed = JSON.parse(raw);
+      const persisted = parsed?.settings;
+      
+      const settings: AppSettings = {
+        ...DEFAULT_SETTINGS,
+        ...(persisted && typeof persisted === 'object' ? persisted : {}),
+      };
+
+      return { 
+        settings,
+        initialSettings: { ...settings },
+        hideNotice: true
+      };
+    },
   })
   .buildStore();
 

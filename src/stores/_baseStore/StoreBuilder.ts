@@ -54,8 +54,8 @@ type Store<TState extends object, TApi extends object> = {
   useStoreActions?: () => TApi;
 } & TApi;
 
-export type InferStoreSnapshot<TStore extends { getState: () => object }> = ReturnType<TStore["getState"]>;
-export type InferStoreType<TStore extends { getState: () => object }> = (
+export type InferStoreSnapshot<TStore extends { getState: () => object; }> = ReturnType<TStore["getState"]>;
+export type InferStoreType<TStore extends { getState: () => object; }> = (
   InferStoreSnapshot<TStore>
   & Omit<TStore, "getState" | "setState" | "subscribe" | "useStore">
 );
@@ -76,18 +76,18 @@ export default class StoreBuilder<
       storeName: undefined,
     };
   }
-  
+
   /**
    * Set the store name for DevTools
    */
   public setStoreName(name: string): StoreBuilder<TAccumState, TAccumApi> {
     if (this.built) throw new Error("Cannot modify builder after buildStore() is called");
-    
+
     const nextConfig: BuilderConfig = {
       ...this.config,
       storeName: name,
     };
-    
+
     return this.createBuilder<TAccumState, TAccumApi>(nextConfig);
   }
 
@@ -192,7 +192,7 @@ export default class StoreBuilder<
 
     // Initialize state from config and persistence
     let initialState = { ...this.config.initialState } as TAccumState;
-    
+
     if (this.config.persistConfig) {
       const { key, parse = JSON.parse } = this.config.persistConfig;
       try {
@@ -211,13 +211,13 @@ export default class StoreBuilder<
     // Create Zustand vanilla store with DevTools (only manages state, not API)
     const storeName = this.config.storeName || 'UnnamedStore';
     let vanillaStore: StoreApi<TAccumState>;
-    
+
     if (process.env.NODE_ENV === 'development') {
       // Use DevTools middleware in development
       vanillaStore = createStore<TAccumState>()(
         devtools(
           () => initialState,
-          { 
+          {
             name: storeName,
             enabled: true,
             anonymousActionType: 'action',
@@ -232,10 +232,10 @@ export default class StoreBuilder<
         () => initialState
       );
     }
-    
+
     // Build the API separately (not part of Zustand state)
     const api = this.buildApi(vanillaStore);
-    
+
     // Create wrapper functions for Builder API compatibility
     const getState = () => vanillaStore.getState();
 
@@ -266,59 +266,57 @@ export default class StoreBuilder<
     // Shallow equality helper
     function shallowEqual(objA: any, objB: any): boolean {
       if (Object.is(objA, objB)) return true;
-      
+
       if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
         return false;
       }
-      
+
       const keysA = Object.keys(objA);
       const keysB = Object.keys(objB);
-      
+
       if (keysA.length !== keysB.length) return false;
-      
+
       for (let i = 0; i < keysA.length; i++) {
         if (!Object.prototype.hasOwnProperty.call(objB, keysA[i]) || !Object.is(objA[keysA[i]], objB[keysA[i]])) {
           return false;
         }
       }
-      
+
       return true;
     }
 
     // Create useStore hook with selector support
     // Cache the full store snapshot to avoid creating new objects on every render
-    let cachedFullStore: { snapshot: TAccumState & TAccumApi; state: TAccumState } | null = null;
-    
+    let cachedFullStore: { snapshot: TAccumState & TAccumApi; state: TAccumState; } | null = null;
+
     function useStore(): TAccumState & TAccumApi;
     function useStore<TSelected>(selector: (store: TAccumState & TAccumApi) => TSelected): TSelected;
     function useStore<TSelected>(selector?: (store: TAccumState & TAccumApi) => TSelected): TSelected | (TAccumState & TAccumApi) {
-      if (selector) {
-        // Use Zustand's useStore with selector and shallow equality
-        const cachedSelectorResult = useRef<{ value: TSelected; state: TAccumState } | null>(null);
-        
-        return useZustandStore(vanillaStore, (state) => {
-          // Check if we can use cached result
-          if (cachedSelectorResult.current && cachedSelectorResult.current.state === state) {
-            return cachedSelectorResult.current.value;
-          }
-          
-          // Combine state with API for selector
-          const stateWithApi = { ...state, ...api } as TAccumState & TAccumApi;
-          
-          // Compute new value
-          const value = selector(stateWithApi);
-          
-          // Check shallow equality with previous value
-          if (cachedSelectorResult.current && shallowEqual(cachedSelectorResult.current.value, value)) {
-            return cachedSelectorResult.current.value;
-          }
-          
-          // Cache and return new value
-          cachedSelectorResult.current = { value, state };
-          return value;
-        });
-      }
-      
+      // Use Zustand's useStore with selector and shallow equality
+      const cachedSelectorResult = useRef<{ value: TSelected; state: TAccumState; } | null>(null);
+
+      if (selector) return useZustandStore(vanillaStore, (state) => {
+        // Check if we can use cached result
+        if (cachedSelectorResult.current && cachedSelectorResult.current.state === state) {
+          return cachedSelectorResult.current.value;
+        }
+
+        // Combine state with API for selector
+        const stateWithApi = { ...state, ...api } as TAccumState & TAccumApi;
+
+        // Compute new value
+        const value = selector(stateWithApi);
+
+        // Check shallow equality with previous value
+        if (cachedSelectorResult.current && shallowEqual(cachedSelectorResult.current.value, value)) {
+          return cachedSelectorResult.current.value;
+        }
+
+        // Cache and return new value
+        cachedSelectorResult.current = { value, state };
+        return value;
+      });
+
       // No selector - return full store (state + API)
       // Cache to avoid creating new objects on every render
       return useZustandStore(vanillaStore, (state) => {
@@ -326,7 +324,7 @@ export default class StoreBuilder<
         if (cachedFullStore && cachedFullStore.state === state) {
           return cachedFullStore.snapshot;
         }
-        
+
         // Create new snapshot
         const snapshot = { ...state, ...api } as TAccumState & TAccumApi;
         cachedFullStore = { snapshot, state };
@@ -350,13 +348,13 @@ export default class StoreBuilder<
     this.builtStore = builtStore;
     return builtStore;
   }
-  
+
   /**
    * Build the API methods separately from the Zustand state
    */
   private buildApi(vanillaStore: StoreApi<TAccumState>): TAccumApi {
     const api = {} as TAccumApi;
-    
+
     // Create setState wrapper
     const setState = (partial: Functionable<Partial<TAccumState>, [current: TAccumState]>) => {
       if (typeof partial === "function") {
@@ -365,10 +363,10 @@ export default class StoreBuilder<
         vanillaStore.setState(partial as any);
       }
     };
-    
+
     // Create getState wrapper
     const getState = () => vanillaStore.getState();
-    
+
     // Build API from factories
     try {
       for (const factory of this.config.apiFactories) {
@@ -386,7 +384,7 @@ export default class StoreBuilder<
       console.error("Error building store API:", error);
       throw error;
     }
-    
+
     return api;
   }
 

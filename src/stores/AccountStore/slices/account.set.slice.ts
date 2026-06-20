@@ -17,8 +17,8 @@ export default new StoreBuilder()
       const validAccountDataKeys = Object.keys(DEFAULT_ACCOUNT_DATA);
       const invalidKeys = Object
         .keys(resolvedUpdate)
-        .filter(key => !validAccountDataKeys.includes(key))
-      
+        .filter(key => !validAccountDataKeys.includes(key));
+
       if (invalidKeys.length) {
         api.debugLog('Filtering out invalid properties from account data update:', invalidKeys);
         api.debugLog('Original update:', resolvedUpdate);
@@ -26,37 +26,37 @@ export default new StoreBuilder()
 
       const filteredUpdate = Object.keys(resolvedUpdate).reduce((acc, key) => {
         if (validAccountDataKeys.includes(key)) {
-          (acc as any)[key] = (resolvedUpdate as any)[key]
+          (acc as any)[key] = (resolvedUpdate as any)[key];
         }
 
         return acc;
-      }, {} as Partial<AccountData>)
+      }, {} as Partial<AccountData>);
 
       if (invalidKeys.length) {
-        api.debugLog('Filtered update', filteredUpdate)
+        api.debugLog('Filtered update', filteredUpdate);
       }
 
-      const targetAccountKey = Object
-        .entries(get().accounts)
-        .find(([_, data]) => data?.id === filteredUpdate.id)
+      const targetAccountKey = filteredUpdate.id
+        ? Object
+          .entries(get().accounts)
+          .find(([_, data]) => data?.id === filteredUpdate.id)
         ?.[0]
+        : api.selectedAccountName;
 
       if (!targetAccountKey) {
-        console.error(filteredUpdate)
-        throw new Error(`Target account key could not be determined`)
+        console.error(filteredUpdate);
+        throw new Error(`Target account key could not be determined`);
       }
 
       const next = Object.entries(get().accounts).reduce((acc, [_accountKey, data]) => {
         const accountKey = _accountKey as keyof AccountContextType;
-        
+
         if (accountKey === targetAccountKey) {
-          // TODO: Test prioritylist account switching
-          // If bugged, un- and serialize existing data
           acc[accountKey] = {
             ...DEFAULT_ACCOUNT_DATA,
             ...data,
             ...filteredUpdate,
-          }
+          };
         } else {
           acc[accountKey] = data;
         }
@@ -64,7 +64,7 @@ export default new StoreBuilder()
         return acc;
       }, {} as AccountContextType);
 
-      api.debugLog(`Updating account data`, next)
+      api.debugLog(`Updating account data`, next);
       set({ accounts: next });
     }
     function setAccountName(name: string) {
@@ -80,7 +80,7 @@ export default new StoreBuilder()
         }
         return acc;
       }, {} as AccountContextType);
-      
+
       set({ accounts: nextAccounts });
     }
     function setSelectedAccount(accountName: string) {
@@ -110,7 +110,7 @@ export default new StoreBuilder()
       setAccountData({
         ...currentAccount,
         [property]: value
-      })
+      });
     }
 
     return {
@@ -119,5 +119,5 @@ export default new StoreBuilder()
       setSelectedAccount,
       setWorldRegion: (region: AccountData['worldRegion']) => setAccountDataProperty('worldRegion', region),
       setTraveler: (traveler: AccountData['traveler']) => setAccountDataProperty('traveler', traveler),
-    }
-  })
+    };
+  });

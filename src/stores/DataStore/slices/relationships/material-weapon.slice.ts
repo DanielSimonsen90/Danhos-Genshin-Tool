@@ -1,5 +1,4 @@
 import StoreBuilder from "@/stores/_baseStore/StoreBuilder";
-import materialsSlice from "../models/materials.slice";
 import weaponsSlice from "../models/weapons.slice";
 import artifactMaterialSlice from "./artifact-material.slice";
 import memoSlice from "../memo.slice";

@@ -1,5 +1,4 @@
 import { Model } from "@/common/models";
-import models from "@/stores/DataStore/slices/models";
 import StoreBuilder from "@/stores/_baseStore/StoreBuilder";
 import { FavoriteModels, FavoritesCollection } from "..";
 import { DEFAULT_FAVORITES } from "../AccountStoreConstants";

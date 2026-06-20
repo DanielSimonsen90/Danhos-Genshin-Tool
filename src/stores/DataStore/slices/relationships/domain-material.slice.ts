@@ -1,5 +1,4 @@
 import StoreBuilder from "@/stores/_baseStore/StoreBuilder";
-import domainsSlice from "../models/domains.slice";
 import materialsSlice from "../models/materials.slice";
 import { sortByRarityDesc } from "../../DataStoreFunctions";
 import { ArtifactSet, DomainOfBlessing, DomainOfForgery, DomainOfMastery, TalentAscensionMaterial, WeaponAscensionMaterial } from "@/common/models";
@@ -11,7 +10,7 @@ export default new StoreBuilder()
   .addSlice(artifactDomainSlice)
   .addSlice(materialsSlice)
   .addSlice(memoSlice)
-  .addApi(({ get, api, builder }) => {
+  .addApi(({ get, api }) => {
     function getTalentAscensionMaterialsFromDomain(domainName: string) {
       return api.memoize(
         cacheKeys => cacheKeys.talentAscensionMaterialsFromDomain(domainName),
@@ -51,9 +50,9 @@ export default new StoreBuilder()
         cacheKeys => cacheKeys.domainDroppingMaterial(materialName),
         () => {
           const material = api.findMaterialByName(materialName);
-          if (!material) return [];
+          if (!material) return undefined;
 
-          AscensionMaterial.isAscensionMaterial(material)
+          return AscensionMaterial.isAscensionMaterial(material)
             ? material.domain
             : undefined;
         }
@@ -69,8 +68,8 @@ export default new StoreBuilder()
 
           switch (domain.getDomainType()) {
             case 'Blessing': return api.getArtifactsFromDomain(domain.name);
-            case 'Forgery': return getTalentAscensionMaterialsFromDomain(domain.name);
-            case 'Mastery': return getWeaponAscensionMaterialsFromDomain(domain.name);
+            case 'Forgery': return getWeaponAscensionMaterialsFromDomain(domain.name);
+            case 'Mastery': return getTalentAscensionMaterialsFromDomain(domain.name);
             default: return [];
           }
         }
