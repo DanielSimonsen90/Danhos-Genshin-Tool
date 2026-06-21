@@ -23,7 +23,7 @@ type Props<TFilterKeys extends string> = (
   }
 );
 export default function SearchableCharacterList<TFilterKeys extends string>({
-  items, filterChecks = {} as any, onSearch,
+  filterChecks = {} as any, onSearch,
   noBaseFilterChecks, noBaseSearch, cardProps,
   ...props
 }: Props<TFilterKeys>) {
@@ -35,7 +35,7 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
   
   const [internalCardProps, setInteralCardProps] = useState<Pick<Props<TFilterKeys>, 'cardProps'>['cardProps']>({});
 
-  return <SearchableList items={items ?? []}
+  return <SearchableList items={DataStore.Characters}
     placeholder="Search characters..."
     sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
     renderItem={character => {

@@ -6,6 +6,7 @@ import { useAccountStore } from "@/stores/AccountStore";
 
 import { addTabNavigation } from "@/common/functions/accessibility";
 import { Select } from "@/components/common/FormItems";
+import { useMemo } from "react";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsContainer);
 
@@ -15,7 +16,7 @@ type Props = {
 
 export default function SettingsContainer({ setOpenModal }: Props) {
   const { accounts, selectedAccountName, selectedAccount, setSelectedAccount } = useAccountStore();
-  const { traveler } = selectedAccount;
+  const avatar = useMemo(() => selectedAccount.avatar ?? selectedAccount.traveler, [selectedAccount]);
 
   const handleAccountChange = (accountName: string) => {
     setSelectedAccount(accountName);
@@ -25,7 +26,7 @@ export default function SettingsContainer({ setOpenModal }: Props) {
     selectedAccount.worldRegion
       ? 'SettingsContainer rendered'
       : 'SettingsContainer did not render',
-    { worldRegion: selectedAccount.worldRegion, traveler }
+    selectedAccount,
   );
   
   return selectedAccount ? (
@@ -35,7 +36,7 @@ export default function SettingsContainer({ setOpenModal }: Props) {
         value={selectedAccountName}
         onChange={handleAccountChange}
       />
-      {selectedAccount.traveler ? <CharacterImage character={selectedAccount.traveler} /> : null}
+      {avatar ? <CharacterImage character={avatar} /> : null}
       <SettingsCog role="button" tabIndex={0} {...addTabNavigation(() => setOpenModal(true), true)} />
     </div>
   ) : null;

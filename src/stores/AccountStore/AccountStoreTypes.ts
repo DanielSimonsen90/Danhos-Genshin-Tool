@@ -2,6 +2,7 @@ import { SetStateAction } from "react";
 import { PriorityLists } from "@/pages/Building/PriorityList/PriorityListTypes";
 import { StorageReturn } from "@/services/StorageService";
 import { ArtifactSet, Character, Domain, Mob, Weapon, Material, Model } from "@/common/models";
+import * as Characters from "@/data/characters";
 
 export type WorldRegion = 'North America' | 'Europe' | 'Asia' | 'TW, HK, MO';
 export type Traveler = 'lumine' | 'aether';
@@ -23,6 +24,7 @@ export type AccountData = {
   id: string;
   worldRegion: WorldRegion;
   traveler: Traveler | undefined;
+  avatar?: keyof typeof Characters;
   priorityLists?: PriorityLists;
   favorites?: FavoritesCollection;
   

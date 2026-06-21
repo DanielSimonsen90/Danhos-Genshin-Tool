@@ -2,6 +2,7 @@ import { Select } from "@/components/common/FormItems";
 import SettingsOption from "../SettingsOption";
 import { DEFAULT_ACCOUNT_DATA, Traveler, useAccountStore, WORLD_REGIONS } from "@/stores/AccountStore";
 import { CharacterImage } from "@/components/common/media/Images";
+import AvatarSelector from "@/components/common/AvatarSelector";
 import { useCallback, useMemo } from "react";
 import { useStateReset } from "@/hooks/useStateReset";
 
@@ -23,13 +24,14 @@ export default function AccountSettings() {
   // Subscribe to individual values separately to get stable references
   const { 
     accounts, selectedAccountName,
-    setSelectedAccount, setTraveler, setWorldRegion,
+    setSelectedAccount, setTraveler, setWorldRegion, setAvatar,
     setAccountName: renameAccount,
     addAccount, deleteAccount,
   } = useAccountStore();
   const { 
     traveler, 
-    worldRegion
+    worldRegion,
+    avatar
   } = useAccountStore(state => state.selectedAccount);
 
   const accountNames = useMemo(() => Object.keys(accounts), [accounts]);
@@ -110,6 +112,13 @@ export default function AccountSettings() {
           displayValue={displayWorldRegion}
           value={worldRegion}
           onChange={setWorldRegion}
+        />
+      </div>
+      <div className="input-group setting-avatar">
+        <label>Avatar</label>
+        <AvatarSelector 
+          selectedAvatar={avatar} 
+          onSelect={setAvatar}
         />
       </div>
       <footer>

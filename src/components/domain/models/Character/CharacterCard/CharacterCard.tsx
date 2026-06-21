@@ -27,6 +27,7 @@ type ChildrenProps = {
 
 export interface Props extends BaseModelCardProps {
   character: Character;
+  onClick?: (character: Character) => void;
 
   score?: number;
 

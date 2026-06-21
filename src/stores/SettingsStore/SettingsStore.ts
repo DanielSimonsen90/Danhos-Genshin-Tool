@@ -24,6 +24,7 @@ const SettingsStore = new StoreBuilder()
       return { 
         settings,
         initialSettings: { ...settings },
+        newUser: !persisted,
         hideNotice: true
       };
     },

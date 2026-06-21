@@ -119,5 +119,6 @@ export default new StoreBuilder()
       setSelectedAccount,
       setWorldRegion: (region: AccountData['worldRegion']) => setAccountDataProperty('worldRegion', region),
       setTraveler: (traveler: AccountData['traveler']) => setAccountDataProperty('traveler', traveler),
+      setAvatar: (avatar: AccountData['avatar']) => setAccountDataProperty('avatar', avatar),
     };
   });

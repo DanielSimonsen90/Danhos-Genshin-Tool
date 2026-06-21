@@ -45,7 +45,17 @@
 
     &-worldRegion {
       .select {
-        min-width: 18ch;
+        min-width: 20ch;
+      }
+    }
+
+    &-avatar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+
+      label {
+        font-weight: 600;
       }
     }
 

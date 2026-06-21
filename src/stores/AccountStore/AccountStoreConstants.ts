@@ -20,6 +20,7 @@ export const DEFAULT_ACCOUNT_DATA: AccountData = {
   worldRegion: DEFAULT_WORLD_REGION,
   selected: true,
   traveler: 'aether',
+  avatar: 'TravelerGeo',
   priorityLists: undefined,
   favorites: DEFAULT_FAVORITES,
 } as const;
