@@ -4,8 +4,39 @@
   min-width: var(--width);
 
   &__header {
+    display: flex;
+    align-items: center;
+    gap: .5ch;
+    width: 100%;
     margin: 0;
+    padding: .5rem;
+    background-color: var(--background-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--background-tertiary);
+    border-radius: .25rem;
+    box-shadow: none;
+    font-size: inherit;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     z-index: 3;
+
+    &:hover {
+      color: var(--text-primary);
+    }
+
+    &:active, &:focus-visible {
+      outline-color: var(--brand);
+      background-color: var(--background-tertiary);
+      border-color: var(--brand) !important;
+    }
+
+    .icon {
+      width: 1em;
+      height: 1em;
+      flex-shrink: 0;
+    }
   }
 
   >.select__options {

@@ -13,6 +13,7 @@ import { OptionalProps, UncrontrolledProps } from "@/components/domain/Searchabl
 import SearchableList from "@/components/domain/SearchableList/SearchableList";
 import { useDataStore, useFavorite } from "@/stores";
 import { FavoriteStar } from "@/components/common/media/icons/Star";
+import Elements from "@/data/elements";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<ArtifactSet, TFilterKeys>>
@@ -112,6 +113,27 @@ export default function SearchableArtifactList<TFilterKeys extends string>({
       },
 
       ...filterChecks
+    }}
+    sortChecks={{
+      name: (a, b) => a.name.localeCompare(b.name),
+      rarity: (a, b) => b.rarity - a.rarity,
+      region: (a, b) => {
+        const regionOrder = ["Mondstadt", "Liyue", "Inazuma", "Sumeru", "Fontaine", "Natlan", "Nod-Krai", "Snezhnaya", "Unknown"];
+        const aRegions = getRegionsFromArtifact(a.name) || [];
+        const bRegions = getRegionsFromArtifact(b.name) || [];
+        const aMinIndex = Math.min(...aRegions.map(region => regionOrder.indexOf(region)));
+        const bMinIndex = Math.min(...bRegions.map(region => regionOrder.indexOf(region)));
+        return aMinIndex - bMinIndex;
+      },
+      element: (a, b) => {
+        const aElement = Elements.find(element => a.doesStatIncrease(`${element} DMG Bonus`));
+        const bElement = Elements.find(element => b.doesStatIncrease(`${element} DMG Bonus`));
+        
+        if (!aElement && !bElement) return 0;
+        if (!aElement) return 1;
+        if (!bElement) return -1;
+        return Elements.indexOf(aElement) - Elements.indexOf(bElement);
+      },
     }}
     {...props}
   />;

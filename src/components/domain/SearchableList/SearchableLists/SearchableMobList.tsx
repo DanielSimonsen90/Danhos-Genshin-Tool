@@ -11,6 +11,7 @@ import { OptionalProps, UncrontrolledProps } from "@/components/domain/Searchabl
 import SearchableList from "@/components/domain/SearchableList/SearchableList";
 import { useFavorite } from "@/stores";
 import { FavoriteStar } from "@/components/common/media/icons/Star";
+import { Regions } from "@/data/regions";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<Mob, TFilterKeys>>
@@ -75,6 +76,29 @@ export default function SearchableMobList<TFilterKeys extends string>({
         unknown: mob => Boss.isBoss(mob) && mob.region === "Unknown",
       },
       ...filterChecks
+    }}
+    sortChecks={{
+      name: (a, b) => a.name.localeCompare(b.name),
+      difficulty: (a, b) => {
+        const difficultyOrder = ['Easy', 'Elite', 'Boss', 'World Boss', 'Weekly Boss'];
+        const getDifficulty = (mob: Mob) => {
+          if (EasyMob.isEasyMob(mob)) return 'Easy';
+          if (EliteMob.isEliteMob(mob)) return 'Elite';
+          if (Boss.isBoss(mob)) return 'Boss';
+          if (WorldBoss.isWorldBoss(mob)) return 'World Boss';
+          if (WeeklyBoss.isWeeklyBoss(mob)) return 'Weekly Boss';
+          return 'Unknown';
+        };
+        
+        const difficultyA = getDifficulty(a);
+        const difficultyB = getDifficulty(b);
+        return difficultyOrder.indexOf(difficultyA) - difficultyOrder.indexOf(difficultyB);
+      },
+      region: (a, b) => {
+        const regionAIndex = Regions.findIndex(region => region === (Boss.isBoss(a) ? a.region : 'Unknown'));
+        const regionBIndex = Regions.findIndex(region => region === (Boss.isBoss(b) ? b.region : 'Unknown'));
+        return regionAIndex - regionBIndex;
+      }
     }}
     {...props}
   />;

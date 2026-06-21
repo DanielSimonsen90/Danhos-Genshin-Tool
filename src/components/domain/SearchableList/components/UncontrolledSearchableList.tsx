@@ -3,6 +3,7 @@ import { classNames, pascalCaseFromCamelCase } from "@/common/functions/strings"
 import useKeybind from "@/hooks/useKeybind";
 import { ControlledProps, OptionalProps } from "../Props";
 import { Filter } from "../../../common/FormItems";
+import Sort from "../../../common/FormItems/Sort/Sort";
 import { FilterObject } from "../../../common/FormItems/Filter/Filter";
 
 export default function UncontrolledSearchableList<TItem, FilterKeys extends string>(props: ControlledProps<TItem, FilterKeys> & OptionalProps<TItem, FilterKeys>) {
@@ -10,10 +11,11 @@ export default function UncontrolledSearchableList<TItem, FilterKeys extends str
   const { children, onShowMore } = props;
   const { className, ulClassName, liClassName } = props;
   const { filterChecks, filters, setFilters, filterPlaceholder, onFilterChange } = props;
+  const { sortChecks, activeSorts, setActiveSorts, sortPlaceholder } = props;
   const filterProps = { filterChecks, filters, setFilters, filterPlaceholder, onChange: onFilterChange };
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const sortedChildren = props.sort ? children.sort(([_, a], [__, b]) => props.sort?.(a, b) ?? 0) : children;
+  const sortedChildren = props.sort ? [...children].sort(([_, a], [__, b]) => props.sort?.(a, b) ?? 0) : children;
 
   useKeybind('f', { ctrlKey: true }, () => {
     if (inputRef.current) inputRef.current.focus();
@@ -30,6 +32,7 @@ export default function UncontrolledSearchableList<TItem, FilterKeys extends str
           defaultValue={defaultSearch}
         />
         {filterChecks && <Filter {...filterProps} filterChecks={filterChecks} />}
+        {sortChecks && setActiveSorts && <Sort sortChecks={sortChecks} activeSorts={activeSorts ?? []} setActiveSorts={setActiveSorts} placeholder={sortPlaceholder} />}
       </div>
       {Object.values(filters).some(value =>
         typeof value === 'object' && value !== null
@@ -58,6 +61,18 @@ export default function UncontrolledSearchableList<TItem, FilterKeys extends str
             ))}
           </ul>
         )}
+      {activeSorts && activeSorts.length > 0 && setActiveSorts && (
+        <ul className="filter-tags sort-tags">
+          {activeSorts.map(({ key, direction }, index) => (
+            <li key={key} className="filter-tag sort-tag"
+              onClick={() => setActiveSorts(prev => prev.filter(s => s.key !== key))}
+            >
+              {pascalCaseFromCamelCase(key)}
+              <span className="sort-tag__direction">{direction === 'asc' ? '▲' : '▼'}</span>
+            </li>
+          ))}
+        </ul>
+      )}
       {children.length > 0 && (
         <ul className={classNames("searchable-list__list", "hoverable", ulClassName)}>
           {sortedChildren.map(([child, item], key) => (

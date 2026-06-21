@@ -8,6 +8,7 @@ import SelectMultiple from "../Select/SelectMultiple";
 import FilterOption from "./FilterOption";
 import { getCloseAllMultipleSelects, getDefaultValueForRefs, getOnClickedOutside } from "./FilterFunctions";
 import { addTabNavigation } from "@/common/functions/accessibility";
+import FilterIcon from "@/components/common/media/icons/FilterIcon";
 
 export type FilterObject<FilterKeys extends string, TItem, TValue = FilterCallback<TItem>> = Record<FilterKeys, TValue | Record<string, TValue> | undefined>;
 export type FilterCallback<TItem> = (item: TItem) => boolean;
@@ -40,9 +41,10 @@ export default function Filter<FilterKeys extends string, TItem>(props: Props<Fi
 
   return (
     <div className="filters">
-      <select className="filters__header" {...addTabNavigation(onToggleShowOptionsEvent, true)}>
-        <option>{placeholder ?? 'Filter...'}</option>
-      </select>
+      <button type="button" className="filters__header" {...addTabNavigation(onToggleShowOptionsEvent, true)}>
+        <FilterIcon />
+        {placeholder ?? 'Filter'}
+      </button>
 
       <div ref={ref} className={classNames("select__options", 'floatable', showOptions && 'select__options--open', 'filter-options')}>
         {Object.keys(filterChecks).map((filter, i) => {

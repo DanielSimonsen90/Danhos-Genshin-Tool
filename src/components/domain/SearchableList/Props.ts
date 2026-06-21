@@ -1,15 +1,23 @@
 import { Dispatch, SetStateAction, ReactNode } from "react";
 import { List } from "@/common/models/List";
 import { FilterObject } from "../../common/FormItems/Filter/Filter";
+import { SortObject, ActiveSort } from "../../common/FormItems/Sort/Sort";
 
 export type FilterProps<TItem, FilterKeys extends string> = {
   filterChecks?: FilterObject<FilterKeys, TItem>,
 }
 
-export type OptionalProps<TItem, FilterKeys extends string> = FilterProps<TItem, FilterKeys> & {
+export type SortProps<TItem> = {
+  sortChecks?: SortObject<TItem>,
+  sortPlaceholder?: string,
+}
+
+export type OptionalProps<TItem, FilterKeys extends string> = FilterProps<TItem, FilterKeys> & SortProps<TItem> & {
   defaultSearch?: string,
   placeholder?: string,
   filterPlaceholder?: string,
+
+  sort?: (a: TItem, b: TItem) => number,
 
   onShowMore?: () => void,
 
@@ -20,14 +28,17 @@ export type OptionalProps<TItem, FilterKeys extends string> = FilterProps<TItem,
 
 export type ControlledProps<TItem, FilterKeys extends string> = {
   hasSearchOrFilters: boolean,
-  
+
   search: string,
   setSearch: Dispatch<SetStateAction<string>>,
 
   filters: FilterObject<FilterKeys, TItem, boolean | undefined>,
   setFilters: Dispatch<SetStateAction<FilterObject<FilterKeys, TItem, boolean | undefined>>>,
   onFilterChange: (filters: FilterObject<FilterKeys, TItem, boolean | undefined>) => void,
-  sort?: (a: TItem, b: TItem) => number,
+
+  activeSorts?: ActiveSort[],
+  setActiveSorts?: Dispatch<SetStateAction<ActiveSort[]>>,
+
   children: [ReactNode, TItem][],
 };
 

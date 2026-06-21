@@ -104,6 +104,16 @@ export default function SearchableWeaponList<TFilterKeys extends string>({
       },
       ...filterChecks
     }}
+    sortChecks={{
+      name: (a, b) => a.name.localeCompare(b.name),
+      rarity: (a, b) => a.rarity - b.rarity,
+      weaponType: (a, b) => a.type.localeCompare(b.type),
+      secondaryStat: (a, b) => {
+        if (!a.secondaryStat) return 1;
+        if (!b.secondaryStat) return -1;
+        return a.secondaryStat.localeCompare(b.secondaryStat);
+      }
+    }}
     {...props}
   />;
 }

@@ -18,6 +18,7 @@ import AscensionMaterial, { TalentAscensionMaterial, WeaponAscensionMaterial } f
 import LocalSpecialty from "@/common/models/materials/LocalSpecialty";
 import MobDrop, { ElementalCrystal } from "@/common/models/materials/MobDrop";
 import { EasyMob, EliteMob, WeeklyBoss, WorldBoss } from "@/common/models";
+import { Regions } from "@/data/regions";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<Material, TFilterKeys>>
@@ -104,6 +105,15 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
         snezhnaya: material => material.region === 'Snezhnaya',
       },
       ...filterChecks
+    }}
+    sortChecks={{
+      name: (a, b) => a.name.localeCompare(b.name),
+      rarity: (a, b) => a.rarity - b.rarity,
+      region: (a, b) => {
+        const regionAIndex = Regions.findIndex(region => region === a.region);
+        const regionBIndex = Regions.findIndex(region => region === b.region);
+        return regionAIndex - regionBIndex;
+      }
     }}
     {...props}
   />;

@@ -11,6 +11,7 @@ import { useFavorite } from "@/stores";
 import SearchableList from "@/components/domain/SearchableList/SearchableList";
 import { OptionalProps, UncrontrolledProps } from "@/components/domain/SearchableList/Props";
 import { FavoriteStar } from "@/components/common/media/icons/Star";
+import { Regions } from "@/data/regions";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<Domain, TFilterKeys>>
@@ -71,6 +72,15 @@ export default function SearchableDomainList<TFilterKeys extends string>({
         snezhnaya: domain => domain.region === "Snezhnaya",
       },
       ...filterChecks
+    }}
+    sortChecks={{
+      name: (a, b) => a.name.localeCompare(b.name),
+      region: (a, b) => {
+        const regionAIndex = Regions.findIndex(region => region === a.region);
+        const regionBIndex = Regions.findIndex(region => region === b.region);
+        return regionAIndex - regionBIndex;
+      }
+      // resinCost: (a, b) => a.resinCost - b.resinCost,
     }}
     {...props}
   />;

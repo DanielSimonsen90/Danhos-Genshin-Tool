@@ -1,0 +1,105 @@
+.sort {
+  --width: 18ch;
+  min-width: var(--width);
+  position: relative;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: .5ch;
+    width: 100%;
+    margin: 0;
+    padding: .5rem;
+    background-color: var(--background-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--background-tertiary);
+    border-radius: .25rem;
+    box-shadow: none;
+    font-size: inherit;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 3;
+
+    &:hover {
+      color: var(--text-primary);
+    }
+
+    &:active, &:focus-visible {
+      outline-color: var(--brand);
+      background-color: var(--background-tertiary);
+      border-color: var(--brand) !important;
+    }
+
+    .icon {
+      width: 1em;
+      height: 1em;
+      flex-shrink: 0;
+    }
+  }
+
+  >.select__options {
+    padding: .25rem;
+    background-color: var(--background-secondary--light);
+    border: 1px solid var(--background-tertiary);
+    min-width: var(--width);
+  }
+
+  >.floatable {
+    display: flex;
+    flex-direction: column;
+    padding-top: 2ch;
+    top: calc(100% - 1ch) !important;
+  }
+
+  .sort-options ul {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    margin-bottom: .25rem;
+  }
+
+  .sort-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .5rem;
+    cursor: pointer;
+    border-radius: .25rem;
+    user-select: none;
+    background-color: var(--background-secondary);
+    border: 1px solid var(--background-tertiary);
+    color: var(--text-secondary);
+
+    &:hover {
+      background-color: var(--background-tertiary--muted);
+      color: var(--text-primary);
+    }
+
+    &--active {
+      background-color: var(--background-tertiary);
+      border-color: var(--brand--light);
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    &__direction {
+      font-size: .8em;
+      opacity: .8;
+    }
+  }
+}
+
+.sort-tags {
+  .sort-tag {
+    display: flex;
+    align-items: center;
+    gap: .5ch;
+
+    .sort-tag__direction {
+      font-size: .8em;
+      opacity: .8;
+    }
+  }
+}

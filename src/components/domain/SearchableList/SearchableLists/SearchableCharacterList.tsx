@@ -12,6 +12,7 @@ import { useContextMenu } from "@/providers/ContextMenuProvider";
 import { OptionalProps, UncrontrolledProps } from "@/components/domain/SearchableList/Props";
 import SearchableList from "@/components/domain/SearchableList/SearchableList";
 import { FavoriteStar } from "@/components/common/media/icons/Star";
+import { Regions } from "@/data/regions";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<Character, TFilterKeys>>
@@ -156,6 +157,17 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
         unknown: character => character.region === "Unknown",
       },
       ...filterChecks
+    }}
+    sortChecks={{
+      element: (a, b) => a.element.localeCompare(b.element),
+      name: (a, b) => a.name.localeCompare(b.name),
+      rarity: (a, b) => b.rarity - a.rarity,
+      region: (a, b) => {
+        const regionAIndex = Regions.findIndex(region => region === a.region);
+        const regionBIndex = Regions.findIndex(region => region === b.region);
+        return regionAIndex - regionBIndex;
+      },
+      weapon: (a, b) => a.weapon.localeCompare(b.weapon),
     }}
     {...props}
   />;
