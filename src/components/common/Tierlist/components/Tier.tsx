@@ -1,5 +1,6 @@
 import { ReactNode, useState } from "react";
-import { Droppable } from "react-beautiful-dnd";
+import { useDroppable } from "@dnd-kit/core";
+import { SortableContext, rectSortingStrategy } from "@dnd-kit/sortable";
 
 import { useContextMenu } from "@/providers/ContextMenuProvider";
 import { classNames } from "@/common/functions/strings";
@@ -26,13 +27,15 @@ export type Props<T> = {
   onSendToTier: (entry: Entry<T>, tier: Tier<T>) => void;
 };
 
-export default function Tier<T>({ 
-  tier, updateTier, setTiers, 
+export default function Tier<T>({
+  tier, updateTier, setTiers,
   render, renderCustomEntryContextMenuItems,
-  onMoveToIndex, onSendToTier, 
-  tiers, unsorted 
+  onMoveToIndex, onSendToTier,
+  tiers, unsorted
 }: Props<T>) {
   const [showEditModal, setShowEditModal] = useState(false);
+  const { setNodeRef } = useDroppable({ id: tier.id });
+
   const onContext = useContextMenu(item => [
     item('divider', 'Move'),
     tier.position !== 0 && item('option', 'Move up', () => updateTier(tier.id, { position: tier.position - 1 }), '⬆️'),
@@ -55,8 +58,8 @@ export default function Tier<T>({
     item('divider', 'Modify'),
     item('option', 'Edit', () => setShowEditModal(true), '✏️'),
     item('option', 'Clear', () => setTiers(tiers => tiers
-      .map(t => t.id === tier.id 
-        ? { ...t, entries: [] } 
+      .map(t => t.id === tier.id
+        ? { ...t, entries: [] }
         : t.id === 'unsorted'
           ? { ...t, entries: t.entries.concat(tier.entries) }
           : t
@@ -78,23 +81,20 @@ export default function Tier<T>({
           {tier.title}
         </h2>
       </header>
-      <Droppable key={tier.id} droppableId={tier.id} direction='horizontal'>
-        {provided => (
-          <div {...provided.droppableProps} ref={provided.innerRef} className='tier__items'>
-            {tier.entries.map((entry, index) => (
-              <EntryComponent key={entry.id} {...{ 
-                entry, index, 
-                onMoveToIndex, onSendToTier, 
-                render, tiers, unsorted,
-                renderContextMenuItems: renderCustomEntryContextMenuItems 
-                  ? item => renderCustomEntryContextMenuItems?.(entry, item)
-                  : undefined
-              }} />
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
+      <SortableContext items={tier.entries.map(e => e.id)} strategy={rectSortingStrategy}>
+        <div ref={setNodeRef} className='tier__items'>
+          {tier.entries.map((entry, index) => (
+            <EntryComponent key={entry.id} {...{
+              entry, index,
+              onMoveToIndex, onSendToTier,
+              render, tiers, unsorted,
+              renderContextMenuItems: renderCustomEntryContextMenuItems
+                ? item => renderCustomEntryContextMenuItems?.(entry, item)
+                : undefined
+            }} />
+          ))}
+        </div>
+      </SortableContext>
       <Modal open={showEditModal} onClose={() => setShowEditModal(false)}>
         <TierModifyForm tier={tier} onTierUpdate={(id, tier) => {
           updateTier(id, tier as Tier<T>);

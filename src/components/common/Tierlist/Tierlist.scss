@@ -52,12 +52,14 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap: 1ch;
+    min-height: 2em;
   }
 
   &__item {
     display: flex;
     align-items: center;
     justify-content: center;
+    will-change: transform;
   }
 
   .searchable-list__list {

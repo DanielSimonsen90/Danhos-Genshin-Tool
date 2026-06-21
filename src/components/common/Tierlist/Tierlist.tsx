@@ -1,5 +1,6 @@
-import { useMemo, useRef, useState } from 'react';
-import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { DndContext, DragEndEvent, DragOverEvent, DragOverlay, DragStartEvent, KeyboardSensor, PointerSensor, closestCenter, pointerWithin, useSensor, useSensors } from '@dnd-kit/core';
+import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 // @ts-ignore
 import isEqual from 'lodash/fp/isEqual';
 
@@ -58,22 +59,42 @@ export default function Tierlist<T, TStorageData extends object>({
   }), onStorageLoaded ? [] : tiers);
   const [newTier, setNewTier] = useState<FormTier<T>>(generateBlankTier(tiers));
   const [search, setSearch] = useState('');
+  const [activeDragId, setActiveDragId] = useState<string | null>(null);
+  const [dragEndCount, setDragEndCount] = useState(0);
+  const isDraggingRef = useRef(false);
+  const tiersSnapshotRef = useRef<Tier<T>[] | null>(null);
+  const tiersRef = useRef(tiers);
+  tiersRef.current = tiers;
 
   const searchRef = useRef<HTMLInputElement>(null);
-  
-  const orderedTiers = tiers
-    .map(tier => {
-      const entries = tier.entries.filter(entry => onSearch(search, entry.item));
-      return { ...tier, entries };
-    })
-    .sort((a, b) => a.position - b.position);
+
+  // pointerWithin first: accurate for empty containers (checks if pointer is inside the rect).
+  // closestCenter fallback: handles the case where pointer isn't inside any droppable.
+  const collisionDetection = (args: Parameters<typeof pointerWithin>[0]) => {
+    const within = pointerWithin(args);
+    if (within.length > 0) return within;
+    return closestCenter(args);
+  };
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+  );
+
+  const orderedTiers = useMemo(() => tiers
+    .map(tier => ({
+      ...tier,
+      entries: tier.entries.filter(entry => onSearch(search, entry.item))
+    }))
+    .sort((a, b) => a.position - b.position),
+  [tiers, search, onSearch]);
   const render = useMemo(() => (
     'renderItem' in props ? props.renderItem
       : 'children' in props ? props.children
         : () => 'No render method provided.'
   ), [props]);
 
-  const unsorted = tiers.find(tier => tier.id === 'unsorted')!;  // Compare content ignoring entry IDs to prevent unnecessary resets
+  const unsorted = tiers.find(tier => tier.id === 'unsorted')!;
   const tiersWithoutIds = useMemo(() =>
     tiers.map(tier => ({
       ...tier,
@@ -93,70 +114,130 @@ export default function Tierlist<T, TStorageData extends object>({
   };
   useOnChange(props.defaultTiers, () => resetIfChangedRef.current());
   useOnChange(tiers, tiers => {
+    if (isDraggingRef.current) return;
     const storageData = onStorageSave?.(tiers) ?? tiers;
     storageService.set(storageData);
     onTierChange?.(tiers);
   }, [onStorageSave]);
 
+  // Save after drag ends. Needed because useOnChange is gated during drag,
+  // so if onDragOver already placed the item and onDragEnd is a no-op, no
+  // state change occurs and useOnChange never fires.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (dragEndCount === 0) return;
+    const currentTiers = tiersRef.current;
+    const storageData = onStorageSave?.(currentTiers) ?? currentTiers;
+    storageService.set(storageData);
+    onTierChange?.(currentTiers);
+  }, [dragEndCount]);
+
   useKeybind('f', { ctrlKey: true }, e => {
     e.preventDefault();
     searchRef.current?.focus();
-  })
+  });
 
-  const onDragEnd = (result: DropResult) => {
-    const { source, destination, draggableId } = result;
-    if (!destination) return;
+  const activeEntry = activeDragId
+    ? tiers.flatMap(t => t.entries).find(e => e.id === activeDragId) ?? null
+    : null;
 
-    const sourceTier = tiers.find(tier => tier.id === source.droppableId)!;
-    const destinationTier = tiers.find(tier => tier.id === destination.droppableId)!;
-    
-    // Find the moved item by its ID instead of using filtered indices
-    const movedItem = sourceTier.entries.find(entry => entry.id === draggableId)!;
-    const sourceItems = sourceTier.entries.filter(entry => entry.id !== draggableId);
-    
-    // Get filtered destination items to find the correct insertion point
-    const filteredDestinationEntries = destinationTier.entries.filter(entry => onSearch(search, entry.item));
-    
-    if (sourceTier.id === destinationTier.id) {
-      // Moving within same tier
-      const filteredSourceEntries = sourceItems.filter(entry => onSearch(search, entry.item));
-      const targetEntry = filteredSourceEntries[destination.index];
-      
-      if (!targetEntry) {
-        // Insert at end
-        setTiers(tiers => tiers.map(tier =>
-          tier.id === sourceTier.id ? { ...tier, entries: [...sourceItems, movedItem] } : tier
-        ));
-      } else {
-        // Insert before target entry
-        const actualIndex = sourceItems.findIndex(entry => entry.id === targetEntry.id);
-        const updatedEntries = [...sourceItems];
-        updatedEntries.splice(actualIndex, 0, movedItem);
-        setTiers(tiers => tiers.map(tier =>
-          tier.id === sourceTier.id ? { ...tier, entries: updatedEntries } : tier
-        ));
+  const onDragStart = ({ active }: DragStartEvent) => {
+    setActiveDragId(active.id as string);
+    isDraggingRef.current = true;
+    tiersSnapshotRef.current = tiers;
+  };
+
+  const onDragOver = ({ active, over }: DragOverEvent) => {
+    if (!over) return;
+    const draggableId = active.id as string;
+    const overId = over.id as string;
+
+    // Pre-check with ref to skip setTiers entirely for same-tier movement.
+    // This avoids queuing unnecessary state updates on every item the ghost passes over.
+    // Stale-ref races are safe: the functional updater below re-validates and guards against undefined movedItem.
+    const snapshot = tiersRef.current;
+    const snapSource = snapshot.find(t => t.entries.some(e => e.id === draggableId));
+    const snapDest = snapshot.find(t => t.id === overId) ?? snapshot.find(t => t.entries.some(e => e.id === overId));
+    if (!snapSource || !snapDest || snapSource.id === snapDest.id) return;
+
+    setTiers(currentTiers => {
+      const sourceTier = currentTiers.find(t => t.entries.some(e => e.id === draggableId));
+      const destinationTier = currentTiers.find(t => t.id === overId)
+        ?? currentTiers.find(t => t.entries.some(e => e.id === overId));
+
+      if (!sourceTier || !destinationTier || sourceTier.id === destinationTier.id) return currentTiers;
+
+      const movedItem = sourceTier.entries.find(e => e.id === draggableId);
+      if (!movedItem) return currentTiers;
+
+      const sourceEntries = sourceTier.entries.filter(e => e.id !== draggableId);
+      const destEntries = [...destinationTier.entries];
+      const targetIndex = destEntries.findIndex(e => e.id === overId);
+      if (targetIndex === -1) destEntries.push(movedItem);
+      else destEntries.splice(targetIndex, 0, movedItem);
+
+      return currentTiers.map(t =>
+        t.id === sourceTier.id ? { ...t, entries: sourceEntries }
+          : t.id === destinationTier.id ? { ...t, entries: destEntries }
+            : t
+      );
+    });
+  };
+
+  const onDragEnd = ({ active, over }: DragEndEvent) => {
+    isDraggingRef.current = false;
+    tiersSnapshotRef.current = null;
+    setActiveDragId(null);
+    setDragEndCount(c => c + 1);
+
+    if (!over || active.id === over.id) return;
+
+    const draggableId = active.id as string;
+    const overId = over.id as string;
+
+    setTiers(currentTiers => {
+      const sourceTier = currentTiers.find(t => t.entries.some(e => e.id === draggableId));
+      const destinationTier = currentTiers.find(t => t.id === overId)
+        ?? currentTiers.find(t => t.entries.some(e => e.id === overId));
+
+      if (!sourceTier || !destinationTier) return currentTiers;
+
+      if (sourceTier.id !== destinationTier.id) {
+        // onDragOver didn't handle this cross-tier move (e.g. empty tier)
+        const movedItem = sourceTier.entries.find(e => e.id === draggableId);
+        if (!movedItem) return currentTiers;
+        const sourceEntries = sourceTier.entries.filter(e => e.id !== draggableId);
+        const destEntries = [...destinationTier.entries];
+        const targetIndex = destEntries.findIndex(e => e.id === overId);
+        if (targetIndex === -1) destEntries.push(movedItem);
+        else destEntries.splice(targetIndex, 0, movedItem);
+        return currentTiers.map(t =>
+          t.id === sourceTier.id ? { ...t, entries: sourceEntries }
+            : t.id === destinationTier.id ? { ...t, entries: destEntries }
+              : t
+        );
       }
-    } else {
-      // Moving between different tiers
-      const destinationItems = [...destinationTier.entries];
-      const targetEntry = filteredDestinationEntries[destination.index];
-      
-      if (!targetEntry) {
-        // Insert at end
-        destinationItems.push(movedItem);
-      } else {
-        // Insert before target entry
-        const actualIndex = destinationItems.findIndex(entry => entry.id === targetEntry.id);
-        destinationItems.splice(actualIndex, 0, movedItem);
-      }
-      
-      setTiers(tiers => tiers.map(tier =>
-        tier.id === sourceTier.id ? { ...tier, entries: sourceItems }
-          : tier.id === destinationTier.id ? { ...tier, entries: destinationItems }
-            : tier
-      ));
+
+      // Same tier: reorder
+      const oldIndex = sourceTier.entries.findIndex(e => e.id === draggableId);
+      const newIndex = sourceTier.entries.findIndex(e => e.id === overId);
+      if (newIndex === -1 || oldIndex === newIndex) return currentTiers;
+      return currentTiers.map(t =>
+        t.id === sourceTier.id ? { ...t, entries: arrayMove(t.entries, oldIndex, newIndex) } : t
+      );
+    });
+  };
+
+  const onDragCancel = () => {
+    isDraggingRef.current = false;
+    setActiveDragId(null);
+    setDragEndCount(c => c + 1);
+    if (tiersSnapshotRef.current) {
+      setTiers(tiersSnapshotRef.current);
+      tiersSnapshotRef.current = null;
     }
   };
+
   const updateTier = (id: string, newTier: Partial<Tier<T>>) => setTiers(tiers => {
     const index: number = tiers.findIndex(tier => tier.id === id);
     if (index === -1) return [
@@ -188,7 +269,6 @@ export default function Tierlist<T, TStorageData extends object>({
       return tiers;
     }
 
-    // Sent to same tier
     if (tierContainingItem.id === tier.id) return tiers;
 
     const updatedTierContainedItem: Tier<T> = { ...tierContainingItem!, entries: tierContainingItem!.entries.filter(item => item.id !== entry.id) };
@@ -230,8 +310,15 @@ export default function Tierlist<T, TStorageData extends object>({
 
       <input ref={searchRef} type="search" placeholder={`Search for a ${model.toLowerCase()}...`}
         value={search} onChange={e => setSearch(e.target.value)}
-      />      
-      <DragDropContext onDragEnd={onDragEnd}>
+      />
+      <DndContext
+        sensors={sensors}
+        collisionDetection={collisionDetection}
+        onDragStart={onDragStart}
+        onDragOver={onDragOver}
+        onDragEnd={onDragEnd}
+        onDragCancel={onDragCancel}
+      >
         {orderedTiers.map(tier => (
           <TierComponent<T> key={tier.id}
             {...{
@@ -240,8 +327,8 @@ export default function Tierlist<T, TStorageData extends object>({
               updateTier,
               onMoveToIndex,
               onSendToTier,
-              tiers, 
-              setTiers, 
+              tiers,
+              setTiers,
               unsorted
             }}
             renderCustomEntryContextMenuItems={props.renderCustomEntryContextMenuItems
@@ -249,7 +336,14 @@ export default function Tierlist<T, TStorageData extends object>({
               : undefined}
           />
         ))}
-      </DragDropContext>
+        <DragOverlay>
+          {activeEntry ? (
+            <div className="tier__item">
+              {render(activeEntry.item, -1)}
+            </div>
+          ) : null}
+        </DragOverlay>
+      </DndContext>
 
       <button type="reset" className='danger secondary' onClick={() => setTiers(getDefaultTiers(items))}>Reset</button>
     </div>

@@ -125,10 +125,10 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
                 };
 
                 return (
-                  <>
+                  <div className="model-entry">
                     {favorited && model && <FavoriteStar model={model} />}
                     <ModelImage />
-                  </>
+                  </div>
                 );
               }}
             </Tierlist>

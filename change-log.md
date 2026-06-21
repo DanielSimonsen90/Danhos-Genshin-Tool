@@ -8,6 +8,7 @@
 
 ## Updates
 * Added "Off-field Damage" to Lauma
+* Improved tier list drag-and-drop: items now position correctly when dragging between tiers
 
 ## Fixes
 * Fixed 2-piece artifact group tooltip showing only one set when the second slot's representative was included via its 4-piece bonus rather than its 2-piece bonus
