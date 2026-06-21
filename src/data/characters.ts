@@ -14,7 +14,7 @@ const SetMemoize = new MemoizeService();
 const StatSets = (statName: string, priority: CharacterArtifactSet['effectiveness']) => SetMemoize.memoize(() => (
   Object
     .values(Sets)
-    .filter(set => set.doesStatIncrease(statName))
+    .filter(set => set.doesTwoPieceStatIncrease(statName))
     .map(set => new CharacterArtifactSet(set, 2, priority))
 ), [statName, priority]);
 
