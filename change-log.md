@@ -11,3 +11,4 @@
 
 ## Fixes
 * Fixed 2-piece artifact group tooltip showing only one set when the second slot's representative was included via its 4-piece bonus rather than its 2-piece bonus
+* Fixed Priority List drag-and-drop reverting reordering when new items were not yet in the saved priority list
