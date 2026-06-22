@@ -52,11 +52,16 @@ export default function AccountSettings({
   const handleAccountNameBlur = useCallback((newName: string) => {
     const trimmed = newName.trim();
     if (trimmed && trimmed !== pendingSelectedAccountName) {
+      if (trimmed in pendingAccounts) {
+        resetAccountName(pendingSelectedAccountName);
+        return;
+      }
+      
       onAccountRename?.(pendingSelectedAccountName, trimmed);
     } else {
       resetAccountName(pendingSelectedAccountName);
     }
-  }, [onAccountRename, pendingSelectedAccountName, resetAccountName]);
+  }, [onAccountRename, pendingSelectedAccountName, pendingAccounts, resetAccountName]);
 
   const handleAccountAdd = useCallback(() => {
     const existingNames = Object.keys(pendingAccounts);
@@ -124,7 +129,7 @@ export default function AccountSettings({
       </div>
       <footer>
         <div className="input-group button-panel" onClick={e => e.stopPropagation()}>
-          <button type="reset" className="secondary danger" onClick={handleAccountDelete}>
+          <button type="button" className="secondary danger" onClick={handleAccountDelete} disabled={Object.keys(pendingAccounts).length <= 1}>
             Delete {pendingSelectedAccountName}
           </button>
           <button type="button" className="secondary success" onClick={handleAccountAdd}>

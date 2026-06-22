@@ -368,20 +368,19 @@ export default class StoreBuilder<
     parse?: (raw: string) => TState,
   ): PersistStorage<TState> {
     if (!stringify && !parse) return createJSONStorage(() => localStorage) as PersistStorage<TState>;
+    if (!stringify || !parse) throw new Error('buildStorage requires both stringify and parse, or neither');
+
     return {
       getItem: (name: string): StorageValue<TState> | null => {
         try {
           const raw = localStorage.getItem(name);
           if (raw === null) return null;
-          if (parse) return { state: parse(raw), version: 0 };
-          return JSON.parse(raw) as StorageValue<TState>;
+          return { state: parse(raw), version: 0 };
         } catch {
           return null;
         }
       },
-      setItem: (name: string, value: StorageValue<TState>): void => {
-        localStorage.setItem(name, stringify ? stringify(value.state) : JSON.stringify(value));
-      },
+      setItem: (name: string, value: StorageValue<TState>): void => localStorage.setItem(name, stringify(value.state)),
       removeItem: (name: string): void => localStorage.removeItem(name),
     };
   }

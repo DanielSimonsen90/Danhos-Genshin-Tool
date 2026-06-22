@@ -13,8 +13,8 @@ export default function PendingChangesModal({ open, onSave, onDiscard, onCancel 
       <p>You have unsaved changes. What would you like to do?</p>
       <div className="button-panel">
         <button type="button" className="tertiary" onClick={onCancel}>Keep editing</button>
-        <button type="reset" className="danger secondary" onClick={onDiscard}>Discard</button>
-        <button type="submit" className="brand primary" onClick={onSave}>Save</button>
+        <button type="button" className="danger secondary" onClick={onDiscard}>Discard</button>
+        <button type="button" className="brand primary" onClick={onSave}>Save</button>
       </div>
     </Modal>
   );

@@ -48,11 +48,15 @@ export default new StoreBuilder()
     }
 
     function replaceAccounts(next: AccountContextType, selectedName: string) {
-      const withSelection = Object.entries(next).reduce((acc, [name, data]) => {
-        if (data) acc[name] = { ...data, selected: name === selectedName };
+      const entries = Object.entries(next).filter((entry): entry is [string, AccountData] => entry[1] != null);
+      if (entries.length === 0) throw new Error('Cannot replace accounts with an empty map');
+
+      const effectiveSelected = selectedName in next ? selectedName : entries[0][0];
+      const withSelection = entries.reduce((acc, [name, data]) => {
+        acc[name] = { ...data, selected: name === effectiveSelected };
         return acc;
       }, {} as AccountContextType);
-      
+
       set({ accounts: withSelection });
     }
 

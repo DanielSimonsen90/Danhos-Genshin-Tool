@@ -101,14 +101,17 @@ export default function SettingsModal(props: ModalConsumerProps) {
   }, []);
 
   const handleAccountDelete = useCallback((name: string) => {
-    setPendingAccounts(prev => {
-      const next = { ...prev };
-      delete next[name];
-      return next;
-    });
-    const remaining = Object.keys(pendingAccounts).filter(n => n !== name);
-    setPendingSelectedAccountName(remaining[0] ?? '');
-  }, [pendingAccounts]);
+    if (Object.keys(pendingAccounts).length <= 1) return;
+    
+    const next = { ...pendingAccounts };
+    delete next[name];
+    
+    setPendingAccounts(next);
+    
+    if (pendingSelectedAccountName === name) {
+      setPendingSelectedAccountName(Object.keys(next)[0]);
+    }
+  }, [pendingAccounts, pendingSelectedAccountName]);
 
   const handleAccountRename = useCallback((oldName: string, newName: string) => {
     setPendingAccounts(prev => {
