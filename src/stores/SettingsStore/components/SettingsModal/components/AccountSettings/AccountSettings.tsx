@@ -1,15 +1,17 @@
-import { Select } from "@/components/common/FormItems";
-import SettingsOption from "../SettingsOption";
-import { DEFAULT_ACCOUNT_DATA, Traveler, useAccountStore, WORLD_REGIONS } from "@/stores/AccountStore";
-import { CharacterImage } from "@/components/common/media/Images";
-import AvatarSelector from "@/components/domain/AvatarSelector";
-import { useCallback, useMemo } from "react";
-import { useStateReset } from "@/hooks/useStateReset";
+import { useCallback } from 'react';
+
+import { Select } from '@/components/common/FormItems';
+import { CharacterImage } from '@/components/common/media/Images';
+import AvatarSelector from '@/components/domain/AvatarSelector';
+import AccountSwitcher from '@/components/domain/AccountSwitcher';
+
+import { AccountContextType, AccountData, Traveler, WorldRegion } from '@/stores/AccountStore/AccountStoreTypes';
+import { DEFAULT_ACCOUNT_DATA, WORLD_REGIONS } from '@/stores/AccountStore/AccountStoreConstants';
+import { generateAccountId } from '@/stores/AccountStore/AccountStoreFunctions';
+import { useStateReset } from '@/hooks/useStateReset';
 
 const TRAVELER_OPTIONS: Traveler[] = ['lumine', 'aether'];
-
 const displayTravelerValue = (value: Traveler) => value.charAt(0).toUpperCase() + value.slice(1);
-
 const displayWorldRegion = (region: string) => {
   switch (region) {
     case 'Europe': return `🌍 ${region}`;
@@ -20,113 +22,115 @@ const displayWorldRegion = (region: string) => {
   }
 };
 
-export default function AccountSettings() {
-  // Subscribe to individual values separately to get stable references
-  const { 
-    accounts, selectedAccountName,
-    setSelectedAccount, setTraveler, setWorldRegion, setAvatar,
-    setAccountName: renameAccount,
-    addAccount, deleteAccount,
-  } = useAccountStore();
-  const { 
-    traveler, 
-    worldRegion,
-    avatar
-  } = useAccountStore(state => state.selectedAccount);
+export type AccountSettingsProps = {
+  pendingAccounts?: AccountContextType;
+  pendingSelectedAccountName?: string;
+  onAccountSelect?: (name: string) => void;
+  onAccountAdd?: (name: string, data: AccountData) => void;
+  onAccountDelete?: (name: string) => void;
+  onAccountRename?: (oldName: string, newName: string) => void;
+  onAccountDataChange?: (name: string, update: Partial<AccountData>) => void;
+};
 
-  const accountNames = useMemo(() => Object.keys(accounts), [accounts]);
-  const [accountName, setAccountName, resetAccountName] = useStateReset(selectedAccountName);
+export default function AccountSettings({
+  pendingAccounts = {},
+  pendingSelectedAccountName = '',
+  onAccountSelect,
+  onAccountAdd,
+  onAccountDelete,
+  onAccountRename,
+  onAccountDataChange,
+}: AccountSettingsProps) {
+  const pendingAccount = pendingAccounts[pendingSelectedAccountName] as AccountData | undefined;
+  const [accountName, setAccountName, resetAccountName] = useStateReset(pendingSelectedAccountName);
 
-  const handleAccountChange = useCallback((newAccountName: string) => {
-    setSelectedAccount(newAccountName);
-    resetAccountName(newAccountName);
-  }, [setSelectedAccount, resetAccountName]);
+  const handleAccountSelect = useCallback((name: string) => {
+    onAccountSelect?.(name);
+    resetAccountName(name);
+  }, [onAccountSelect, resetAccountName]);
 
-  const handleAccountNameChange = useCallback((newName: string) => {
-    if (newName?.trim() && newName !== selectedAccountName) {
-      try {
-        renameAccount(newName);
-        resetAccountName(newName);
-      } catch (error) {
-        console.error('Failed to update account name:', error);
-        resetAccountName(selectedAccountName || '');
-      }
+  const handleAccountNameBlur = useCallback((newName: string) => {
+    const trimmed = newName.trim();
+    if (trimmed && trimmed !== pendingSelectedAccountName) {
+      onAccountRename?.(pendingSelectedAccountName, trimmed);
+    } else {
+      resetAccountName(pendingSelectedAccountName);
     }
-  }, [renameAccount, selectedAccountName, resetAccountName]);
+  }, [onAccountRename, pendingSelectedAccountName, resetAccountName]);
 
   const handleAccountAdd = useCallback(() => {
-    const existingAccountNames = Object.keys(accounts);
-    let counter = existingAccountNames.length + 1;
-    let newAccountName = `Account ${counter}`;
-    
-    // Ensure the name is unique
-    while (existingAccountNames.includes(newAccountName)) {
+    const existingNames = Object.keys(pendingAccounts);
+    let counter = existingNames.length + 1;
+    let newName = `Account ${counter}`;
+    while (existingNames.includes(newName)) {
       counter++;
-      newAccountName = `Account ${counter}`;
+      newName = `Account ${counter}`;
     }
-    
-    addAccount(newAccountName);
-    setSelectedAccount(newAccountName);
-    setAccountName(newAccountName);
-  }, [accounts, addAccount, setSelectedAccount, setAccountName]);
+    onAccountAdd?.(newName, { ...DEFAULT_ACCOUNT_DATA, id: generateAccountId() });
+    resetAccountName(newName);
+  }, [pendingAccounts, onAccountAdd, resetAccountName]);
 
   const handleAccountDelete = useCallback(() => {
-    if (!selectedAccountName) return;
-    
-    deleteAccount(selectedAccountName);
-  }, [selectedAccountName, deleteAccount]);
+    onAccountDelete?.(pendingSelectedAccountName);
+  }, [pendingSelectedAccountName, onAccountDelete]);
 
   return (
     <section className="account-settings">
       <header>
-        <SettingsOption setting="selectedAccount"
-          accountNames={accountNames}
-          value={selectedAccountName}
-          setValue={handleAccountChange}
+        <AccountSwitcher
+          accounts={pendingAccounts}
+          selectedAccountName={pendingSelectedAccountName}
+          onChange={handleAccountSelect}
         />
       </header>
       <div className="sub-header">
         <div className="input-group setting-traveler">
-          <CharacterImage character={traveler ?? DEFAULT_ACCOUNT_DATA.traveler!} />
-          <Select name="traveler"
+          <CharacterImage character={pendingAccount?.traveler ?? DEFAULT_ACCOUNT_DATA.traveler!} />
+          <Select
+            name="traveler"
             options={TRAVELER_OPTIONS}
             displayValue={displayTravelerValue}
-            value={traveler}
-            onChange={setTraveler}
+            value={pendingAccount?.traveler}
+            onChange={v => onAccountDataChange?.(pendingSelectedAccountName, { traveler: v as Traveler })}
           />
         </div>
         <div className="input-group setting-selectedAccountName">
           <label>Account Name</label>
-          <input type="text"
+          <input
+            type="text"
             name="selectedAccountName"
             value={accountName}
             onChange={e => setAccountName(e.target.value)}
-            onBlur={e => handleAccountNameChange(e.target.value.trim())}
+            onBlur={e => handleAccountNameBlur(e.target.value)}
           />
         </div>
       </div>
       <div className="input-group setting-worldRegion">
         <label>World Region</label>
-        <Select name="worldRegion"
+        <Select
+          name="worldRegion"
           options={WORLD_REGIONS}
           displayValue={displayWorldRegion}
-          value={worldRegion}
-          onChange={setWorldRegion}
+          value={pendingAccount?.worldRegion}
+          onChange={v => onAccountDataChange?.(pendingSelectedAccountName, { worldRegion: v as WorldRegion })}
         />
       </div>
       <div className="input-group setting-avatar">
         <label>Avatar</label>
-        <AvatarSelector 
-          selectedAvatar={avatar} 
-          onSelect={setAvatar}
+        <AvatarSelector
+          selectedAvatar={pendingAccount?.avatar}
+          onSelect={avatar => onAccountDataChange?.(pendingSelectedAccountName, { avatar })}
         />
       </div>
       <footer>
-        <SettingsOption setting="accountCrud"
-          value={true}
-          onAdd={handleAccountAdd}
-          onDelete={handleAccountDelete}
-        />
+        <div className="input-group button-panel" onClick={e => e.stopPropagation()}>
+          <button type="reset" className="secondary danger" onClick={handleAccountDelete}>
+            Delete {pendingSelectedAccountName}
+          </button>
+          <button type="button" className="secondary success" onClick={handleAccountAdd}>
+            Add new account
+          </button>
+        </div>
       </footer>
     </section>
   );

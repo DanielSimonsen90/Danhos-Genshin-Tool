@@ -4,7 +4,7 @@ import SettingsOption from '../SettingsOption/SettingsOption';
 
 type Props = {
   settings: ChangeableSettings;
-  onSettingChange: <K extends keyof ChangeableSettings>(key: K, value: ChangeableSettings[K]) => void;
+  onSettingChange?: <K extends keyof ChangeableSettings>(key: K, value: ChangeableSettings[K]) => void;
 };
 
 export default function SettingsContent({ settings, onSettingChange }: Props) {
