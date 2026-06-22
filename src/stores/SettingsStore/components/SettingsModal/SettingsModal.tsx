@@ -144,7 +144,7 @@ export default function SettingsModal(props: ModalConsumerProps) {
     <>
       <Modal {...props} className="settings-modal" interceptClose={handleCloseAttempt}>
         <h1>{DOMAIN_NAME} Settings</h1>
-        <TabBar direction='vertical' tabs={[
+        <TabBar direction='vertical' cacheContent={false} tabs={[
           ['General', {
             title: 'General',
             content: <SettingsContent settings={pendingSettings} onSettingChange={handleSettingChange} />

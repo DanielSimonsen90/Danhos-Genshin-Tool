@@ -1,4 +1,3 @@
-@import '../../components/common/AvatarSelector/AvatarSelector.scss';
 @import '../../components/common/Collapsible/Collapsible.scss';
 
 @import '../../components/common/FormItems/Filter/Filter.scss';
@@ -19,4 +18,6 @@
 @import '../../components/common/TabBar/TabBar.scss';
 @import '../../components/common/Tierlist/Tierlist.scss';
 
+@import '../../components/domain/AvatarSelector/AvatarSelector.scss';
+@import '../../components/domain/AccountSwitcher/AccountSwitcher.scss';
 @import '../../components/domain/SearchableList/SearchableList.scss';
