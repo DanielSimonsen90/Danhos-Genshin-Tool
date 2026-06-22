@@ -5,7 +5,7 @@ import CraftableMaterial from "@/common/models/materials/CraftableMaterial";
 
 import { useAccountStore, useSettingsStore } from "@/stores";
 import { Relations, Pagination, ObtainableDays } from "./components";
-import { Region } from "@/components/domain";
+import Region from "@/components/domain/Region";
 import { Billet } from "@/common/models/materials/Billet";
 import ModelCard, { BaseModelCardProps } from "@/components/domain/ModelCard";
 import { MaterialImage } from "@/components/common/media/Images";

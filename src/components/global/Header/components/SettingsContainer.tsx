@@ -3,7 +3,7 @@ import { DebugLog } from "@/common/functions/dev";
 import { SettingsCog } from "@/components/common/media/icons";
 import { useAccountStore } from "@/stores/AccountStore";
 import { addTabNavigation } from "@/common/functions/accessibility";
-import AccountSwitcher from "@/components/common/AccountSwitcher";
+import AccountSwitcher from "@/components/domain/AccountSwitcher";
 
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsContainer);
 

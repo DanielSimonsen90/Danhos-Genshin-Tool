@@ -12,7 +12,7 @@ import RelationsForModel from "../../Material/MaterialCard/components/RelationsF
 import TabBar from "@/components/common/TabBar";
 import { ElementalCrystal } from "@/common/models/materials/MobDrop";
 import { Billet } from "@/common/models/materials/Billet";
-import { Region } from "@/components/domain";
+import Region from "@/components/domain/Region";
 import { MaterialImage } from "@/components/common/media/Images";
 import { useDataStore } from "@/stores";
 
