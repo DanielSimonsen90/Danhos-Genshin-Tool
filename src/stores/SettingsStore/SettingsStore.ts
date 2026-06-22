@@ -14,11 +14,15 @@ const SettingsStore = new StoreBuilder()
     }),
     parse: (raw) => {
       const parsed = JSON.parse(raw);
-      const persisted = parsed?.settings;
+      // Handle nested format { settings: {...} } and flat format { showAll, wrap, ... }
+      const persisted = parsed?.settings && typeof parsed.settings === 'object'
+        ? parsed.settings
+        : (typeof parsed?.showAll === 'boolean' || typeof parsed?.wrap === 'boolean' ? parsed : null);
       
       const settings: AppSettings = {
         ...DEFAULT_SETTINGS,
         ...(persisted && typeof persisted === 'object' ? persisted : {}),
+        newUser: !persisted
       };
 
       return { 

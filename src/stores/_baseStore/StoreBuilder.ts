@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { createStore, StoreApi } from "zustand/vanilla";
 import { useStore as useZustandStore } from "zustand";
-import { devtools, persist, createJSONStorage } from "zustand/middleware";
+import { devtools, persist, createJSONStorage, type PersistStorage, type StorageValue } from "zustand/middleware";
 import { Functionable } from "@/common/types";
 
 type Subscriber = () => void;
@@ -30,16 +30,16 @@ type UntypedApiFactory = (props: {
   builder: BuilderFacade<object, object>;
 }) => object;
 
-type InternalPersistenceConfig = {
+type InternalPersistenceConfig<TState> = {
   key: string;
-  stringify?: (state: object) => string;
-  parse?: (stored: string) => object;
+  stringify?: (state: TState) => string;
+  parse?: (stored: string) => TState;
 };
 
-type BuilderConfig = {
-  initialState: object;
+type BuilderConfig<TState extends object> = {
+  initialState: TState;
   apiFactories: UntypedApiFactory[];
-  persistConfig?: InternalPersistenceConfig;
+  persistConfig?: InternalPersistenceConfig<TState>;
   storeName?: string;
 };
 
@@ -64,13 +64,13 @@ export default class StoreBuilder<
   TAccumState extends object = object,
   TAccumApi extends object = object
 > {
-  private readonly config: BuilderConfig;
+  private readonly config: BuilderConfig<TAccumState>;
   private built = false;
   private builtStore?: Store<TAccumState, TAccumApi>;
 
-  constructor(initialState?: TAccumState, config?: BuilderConfig) {
+  constructor(initialState?: TAccumState, config?: BuilderConfig<TAccumState>) {
     this.config = config ?? {
-      initialState: initialState ?? {},
+      initialState: (initialState ?? {}) as TAccumState,
       apiFactories: [],
       persistConfig: undefined,
       storeName: undefined,
@@ -83,7 +83,7 @@ export default class StoreBuilder<
   public setStoreName(name: string): StoreBuilder<TAccumState, TAccumApi> {
     if (this.built) throw new Error("Cannot modify builder after buildStore() is called");
 
-    const nextConfig: BuilderConfig = {
+    const nextConfig: BuilderConfig<TAccumState> = {
       ...this.config,
       storeName: name,
     };
@@ -92,7 +92,7 @@ export default class StoreBuilder<
   }
 
   private createBuilder<TNextState extends object, TNextApi extends object>(
-    nextConfig: BuilderConfig
+    nextConfig: BuilderConfig<TNextState>
   ): StoreBuilder<TNextState, TNextApi> {
     return new StoreBuilder<TNextState, TNextApi>(undefined, nextConfig);
   }
@@ -104,9 +104,11 @@ export default class StoreBuilder<
   ): StoreBuilder<TAccumState & TState, TAccumApi> {
     if (this.built) throw new Error("Cannot modify builder after buildStore() is called");
 
-    const nextConfig: BuilderConfig = {
-      ...this.config,
+    const nextConfig: BuilderConfig<TAccumState & TState> = {
       initialState: { ...this.config.initialState, ...state },
+      apiFactories: this.config.apiFactories,
+      persistConfig: this.config.persistConfig as InternalPersistenceConfig<TAccumState & TState> | undefined,
+      storeName: this.config.storeName,
     };
 
     return this.createBuilder<TAccumState & TState, TAccumApi>(nextConfig);
@@ -126,7 +128,7 @@ export default class StoreBuilder<
       }) as object;
     };
 
-    const nextConfig: BuilderConfig = {
+    const nextConfig: BuilderConfig<TAccumState> = {
       ...this.config,
       apiFactories: [...this.config.apiFactories, wrappedFactory],
     };
@@ -141,20 +143,21 @@ export default class StoreBuilder<
 
     const sliceConfig = slice.config;
 
-    let persistConfig = this.config.persistConfig;
+    let persistConfig = this.config.persistConfig as InternalPersistenceConfig<TAccumState & TSliceState> | undefined;
     if (sliceConfig.persistConfig) {
+      const slicePersist = sliceConfig.persistConfig as unknown as InternalPersistenceConfig<TAccumState & TSliceState>;
       if (persistConfig) {
         persistConfig = {
-          key: persistConfig.key || sliceConfig.persistConfig.key,
-          stringify: persistConfig.stringify || sliceConfig.persistConfig.stringify,
-          parse: persistConfig.parse || sliceConfig.persistConfig.parse,
+          key: persistConfig.key || slicePersist.key,
+          stringify: persistConfig.stringify || slicePersist.stringify,
+          parse: persistConfig.parse || slicePersist.parse,
         };
       } else {
-        persistConfig = sliceConfig.persistConfig;
+        persistConfig = slicePersist;
       }
     }
 
-    const nextConfig: BuilderConfig = {
+    const nextConfig: BuilderConfig<TAccumState & TSliceState> = {
       initialState: { ...this.config.initialState, ...sliceConfig.initialState },
       apiFactories: [...this.config.apiFactories, ...sliceConfig.apiFactories],
       persistConfig,
@@ -167,9 +170,9 @@ export default class StoreBuilder<
   public addPersistence(config: PersistenceConfig<TAccumState>): StoreBuilder<TAccumState, TAccumApi> {
     if (this.built) throw new Error("Cannot modify builder after buildStore() is called");
 
-    const nextConfig: BuilderConfig = {
+    const nextConfig: BuilderConfig<TAccumState> = {
       ...this.config,
-      persistConfig: { ...this.config.persistConfig, ...config } as InternalPersistenceConfig,
+      persistConfig: { ...this.config.persistConfig, ...config } as InternalPersistenceConfig<TAccumState>,
     };
 
     return this.createBuilder<TAccumState, TAccumApi>(nextConfig);
@@ -218,9 +221,7 @@ export default class StoreBuilder<
           ),
           {
             name: key,
-            storage: createJSONStorage(() => localStorage),
-            ...(stringify && { serialize: (state: { state: TAccumState }) => stringify(state.state) }),
-            ...(parse && { deserialize: (str: string) => ({ state: parse(str) }) }),
+            storage: this.buildStorage<TAccumState>(stringify, parse),
           }
         )
       );
@@ -232,9 +233,7 @@ export default class StoreBuilder<
           () => initialState,
           {
             name: key,
-            storage: createJSONStorage(() => localStorage),
-            ...(stringify && { serialize: (state: { state: TAccumState }) => stringify(state.state) }),
-            ...(parse && { deserialize: (str: string) => ({ state: parse(str) }) }),
+            storage: this.buildStorage<TAccumState>(stringify, parse),
           }
         )
       );
@@ -362,6 +361,29 @@ export default class StoreBuilder<
 
     this.builtStore = builtStore;
     return builtStore;
+  }
+
+  private buildStorage<TState extends object>(
+    stringify?: (state: TState) => string,
+    parse?: (raw: string) => TState,
+  ): PersistStorage<TState> {
+    if (!stringify && !parse) return createJSONStorage(() => localStorage) as PersistStorage<TState>;
+    return {
+      getItem: (name: string): StorageValue<TState> | null => {
+        try {
+          const raw = localStorage.getItem(name);
+          if (raw === null) return null;
+          if (parse) return { state: parse(raw), version: 0 };
+          return JSON.parse(raw) as StorageValue<TState>;
+        } catch {
+          return null;
+        }
+      },
+      setItem: (name: string, value: StorageValue<TState>): void => {
+        localStorage.setItem(name, stringify ? stringify(value.state) : JSON.stringify(value));
+      },
+      removeItem: (name: string): void => localStorage.removeItem(name),
+    };
   }
 
   /**
