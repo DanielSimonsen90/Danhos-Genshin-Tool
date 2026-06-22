@@ -47,8 +47,18 @@ export default new StoreBuilder()
       set({ accounts: next });  
     }
 
+    function replaceAccounts(next: AccountContextType, selectedName: string) {
+      const withSelection = Object.entries(next).reduce((acc, [name, data]) => {
+        if (data) acc[name] = { ...data, selected: name === selectedName };
+        return acc;
+      }, {} as AccountContextType);
+      
+      set({ accounts: withSelection });
+    }
+
     return {
       addAccount,
-      deleteAccount
+      deleteAccount,
+      replaceAccounts,
     }
   })
