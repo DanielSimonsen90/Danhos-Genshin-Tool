@@ -10,7 +10,7 @@ import { classNames } from "@/common/functions/strings";
 import { ArtifactImage, DomainImage, MaterialImage } from "@/components/common/media/Images";
 import { ResinIcon } from "@/components/common/media/icons";
 import ModelCard, { BaseModelCardProps } from "@/components/domain/ModelCard";
-import { Region } from "@/components/domain";
+import Region from "@/components/domain/Region";
 
 import { useAccountStore, useDataStore } from "@/stores";
 

@@ -1,5 +1,8 @@
 .account-settings {
   $border: 1px solid var(--background-secondary);
+
+  overflow-y: auto;
+  height: 100%;
   
   header, footer {
     padding: 1rem 0;

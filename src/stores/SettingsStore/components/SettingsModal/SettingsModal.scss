@@ -9,11 +9,16 @@
 
   .modal-content {
     width: 100%;
+    height: 100%;
     display: grid;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto 1fr auto;
     gap: 1em;
     max-height: 100%;
     overflow: hidden;
+
+    > .tab-bar {
+      min-height: 0;
+    }
   }
 
   .model-content>p {

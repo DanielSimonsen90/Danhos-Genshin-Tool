@@ -118,43 +118,49 @@ function InputType<Setting extends keyof Settings>({ setting, value, onChange, .
       />
     );
 
-    case 'preferredTabs': return (
-      <div className="preferred-tabs-setting">
-        <div className="input-group">
-          <label htmlFor={`${setting}.${'results' as keyof Settings['preferredTabs']}`}>
-            Prefer selected tab, when using the Artifact Helper
-          </label>
-          <Select
-            name={`${setting}.${'results' as keyof Settings['preferredTabs']}`}
-            options={['combined', 'artifacts', 'characters'] as Array<Settings['preferredTabs']['results']>}
-            value={(value as Settings['preferredTabs']).results}
-            onChange={value => onChange(value as any)}
-          />
+    case 'preferredTabs': {
+      const tabs = value as Settings['preferredTabs'];
+      const mergeTab = (patch: Partial<Settings['preferredTabs']>) =>
+        onChange({ ...tabs, ...patch } as Settings[Setting]);
+
+      return (
+        <div className="preferred-tabs-setting">
+          <div className="input-group">
+            <label htmlFor={`${setting}.results`}>
+              Prefer selected tab, when using the Artifact Helper
+            </label>
+            <Select
+              name={`${setting}.results`}
+              options={['combined', 'artifacts', 'characters'] as Array<Settings['preferredTabs']['results']>}
+              value={tabs.results}
+              onChange={v => mergeTab({ results: v as Settings['preferredTabs']['results'] })}
+            />
+          </div>
+          <div className="input-group">
+            <label htmlFor={`${setting}.searchOrHistory`}>
+              Prefer default tab to be search or history, when viewing the Artifact Helper
+            </label>
+            <Select
+              name={`${setting}.searchOrHistory`}
+              options={['search', 'history'] as Array<Settings['preferredTabs']['searchOrHistory']>}
+              value={tabs.searchOrHistory}
+              onChange={v => mergeTab({ searchOrHistory: v as Settings['preferredTabs']['searchOrHistory'] })}
+            />
+          </div>
+          <div className="input-group">
+            <label htmlFor={`${setting}.craftableMaterial`}>
+              Prefer craftable materials to be of variant "common" or "rarest"
+            </label>
+            <Select
+              name={`${setting}.craftableMaterial`}
+              options={['common', 'rarest'] as Array<Settings['preferredTabs']['craftableMaterial']>}
+              value={tabs.craftableMaterial}
+              onChange={v => mergeTab({ craftableMaterial: v as Settings['preferredTabs']['craftableMaterial'] })}
+            />
+          </div>
         </div>
-        <div className="input-group">
-          <label htmlFor={`${setting}.${'searchOrHistory' as keyof Settings['preferredTabs']}`}>
-            Prefer default tab to be search or history, when viewing the Artifact Helper
-          </label>
-          <Select
-            name={`${setting}.${'searchOrHistory' as keyof Settings['preferredTabs']}`}
-            options={['search', 'history'] as Array<Settings['preferredTabs']['searchOrHistory']>}
-            value={(value as Settings['preferredTabs']).searchOrHistory}
-            onChange={value => onChange(value as any)}
-          />
-        </div>
-        <div className="input-group">
-          <label htmlFor={`${setting}.${'craftableMaterial' as keyof Settings['preferredTabs']}`}>
-            Prefer craftable materials to be of variant "common" or "rarest"
-          </label>
-          <Select
-            name={`${setting}.${'craftableMaterial' as keyof Settings['preferredTabs']}`}
-            options={['common', 'rarest'] as Array<Settings['preferredTabs']['craftableMaterial']>}
-            value={(value as Settings['preferredTabs']).craftableMaterial}
-            onChange={value => onChange(value as any)}
-          />
-        </div>
-      </div>
-    );
+      );
+    }
     default: {
       console.error(`Unknown setting: ${setting}`);
       return null;

@@ -5,7 +5,7 @@ import { Character, List, Weapon } from "@/common/models";
 
 import { CharacterImage, ElementImage, WeaponImage } from "@/components/common/media/Images";
 import ModelCard, { BaseModelCardProps, ModelRarityTabGroup } from "@/components/domain/ModelCard";
-import { Region } from "@/components/domain";
+import Region from "@/components/domain/Region";
 
 import { useDataStore, useWeaponData } from "@/stores";
 

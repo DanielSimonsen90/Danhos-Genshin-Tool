@@ -1,27 +1,35 @@
-import { useMemo } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import TabBar from '@/components/common/TabBar';
 import { DOMAIN_NAME } from '@/common/constants/domain';
 import { DebugLog } from "@/common/functions/dev";
-import { Settings } from '@/common/types/app-types';
 
 import Modal, { ModalConsumerProps } from "@/components/common/Modal";
-import { useActionState } from "@/hooks/useActionState";
 import { useUpdateManager } from "@/hooks/useUpdateManager";
 
 import { useSettingsStore } from "@/stores/SettingsStore";
+import { ChangeableSettings } from "@/stores/SettingsStore/SettingsStoreTypes";
+import { DEFAULT_SETTINGS } from "@/stores/SettingsStore/SettingsStoreConstants";
 import { useAccountStore } from '@/stores/AccountStore';
+import { AccountContextType, AccountData } from '@/stores/AccountStore/AccountStoreTypes';
+import { DEFAULT_ACCOUNT_DATA } from '@/stores/AccountStore/AccountStoreConstants';
+import { generateAccountId } from '@/stores/AccountStore/AccountStoreFunctions';
 
-import { AccountSettings, FavoritesOverview, SettingsContent } from './components';
+import { AccountSettings, AccountSettingsProps, FavoritesOverview, PendingChangesModal, SettingsContent } from './components';
 
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsModal);
+
+const toChangeable = (settings: ChangeableSettings): ChangeableSettings => ({
+  showAll: settings.showAll,
+  wrap: settings.wrap,
+  preferredTabs: { ...settings.preferredTabs },
+});
 
 export default function SettingsModal(props: ModalConsumerProps) {
   const SettingsStore = useSettingsStore();
   const accounts = useAccountStore(state => state.accounts);
   const selectedAccountName = useAccountStore(state => state.selectedAccountName);
-  const setAccountData = useAccountStore(state => state.setAccountData);
-  const setAccountName = useAccountStore(state => state.setAccountName);
+  const replaceAccounts = useAccountStore(state => state.replaceAccounts);
   const {
     appVersion,
     isCheckingForUpdates,
@@ -29,44 +37,124 @@ export default function SettingsModal(props: ModalConsumerProps) {
     isElectronApp
   } = useUpdateManager();
 
-  const accountNames = useMemo(() => Object.keys(accounts), [accounts]);
-  const [submitting, onSubmit] = useActionState<Settings>(data => {
-    delete data._form;
-    debugLog('Settings update received', data);
-    SettingsStore.updateAndSaveSettings(data);
-    setAccountData({
-      traveler: data.traveler,
-      worldRegion: data.worldRegion,
-      selected: true,
-    });
+  const [pendingSettings, setPendingSettings] = useState<ChangeableSettings>(() => toChangeable(SettingsStore.changeableSettings));
+  const [pendingAccounts, setPendingAccounts] = useState<AccountContextType>(() => ({ ...accounts }));
+  const [pendingSelectedAccountName, setPendingSelectedAccountName] = useState(selectedAccountName);
+  const [showPendingChangesModal, setShowPendingChangesModal] = useState(false);
 
-    if (data.selectedAccountName && data.selectedAccountName !== selectedAccountName) {
-      setAccountName(data.selectedAccountName);
+  const openSnapshot = JSON.stringify({ pendingSettings, pendingAccounts, pendingSelectedAccountName });
+  const [snapshot, setSnapshot] = useState(openSnapshot);
+  const isDirty = openSnapshot !== snapshot;
+
+  useEffect(() => {
+    if (props.open) {
+      const cs = toChangeable(SettingsStore.changeableSettings);
+      const accs = { ...accounts };
+      const selName = selectedAccountName;
+      setPendingSettings(cs);
+      setPendingAccounts(accs);
+      setPendingSelectedAccountName(selName);
+      setSnapshot(JSON.stringify({ pendingSettings: cs, pendingAccounts: accs, pendingSelectedAccountName: selName }));
+      setShowPendingChangesModal(false);
     }
+  }, [props.open]);
 
-    props.onClose();
-  });
-
-  const onReset = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (confirm('Are you sure you want to reset settings?')) {
-      SettingsStore.resetSettings();
+  const handleCloseAttempt = useCallback(() => {
+    if (isDirty) {
+      setShowPendingChangesModal(true);
+    } else {
       props.onClose();
     }
+  }, [isDirty, props.onClose]);
+
+  const handleSave = useCallback(() => {
+    debugLog('Saving settings', pendingSettings);
+    SettingsStore.updateAndSaveSettings(pendingSettings);
+    replaceAccounts(pendingAccounts, pendingSelectedAccountName);
+    setShowPendingChangesModal(false);
+    props.onClose();
+  }, [pendingSettings, pendingAccounts, pendingSelectedAccountName]);
+
+  const handleDiscard = useCallback(() => {
+    setShowPendingChangesModal(false);
+    props.onClose();
+  }, [props.onClose]);
+
+  const handleReset = useCallback(() => {
+    if (confirm('Are you sure you want to reset settings?')) {
+      const { updated, newUser, ...defaults } = DEFAULT_SETTINGS;
+      setPendingSettings(defaults);
+    }
+  }, []);
+
+  const handleSettingChange = useCallback(<K extends keyof ChangeableSettings>(key: K, value: ChangeableSettings[K]) => {
+    setPendingSettings(prev => ({ ...prev, [key]: value }));
+  }, []);
+
+  const handleAccountSelect = useCallback((name: string) => {
+    setPendingSelectedAccountName(name);
+  }, []);
+
+  const handleAccountAdd = useCallback((name: string, data: AccountData) => {
+    setPendingAccounts(prev => ({ ...prev, [name]: data }));
+    setPendingSelectedAccountName(name);
+  }, []);
+
+  const handleAccountDelete = useCallback((name: string) => {
+    if (Object.keys(pendingAccounts).length <= 1) return;
+    
+    const next = { ...pendingAccounts };
+    delete next[name];
+    
+    setPendingAccounts(next);
+    
+    if (pendingSelectedAccountName === name) {
+      setPendingSelectedAccountName(Object.keys(next)[0]);
+    }
+  }, [pendingAccounts, pendingSelectedAccountName]);
+
+  const handleAccountRename = useCallback((oldName: string, newName: string) => {
+    setPendingAccounts(prev => {
+      const next: AccountContextType = {};
+      for (const [key, val] of Object.entries(prev)) {
+        next[key === oldName ? newName : key] = val;
+      }
+      return next;
+    });
+    if (pendingSelectedAccountName === oldName) {
+      setPendingSelectedAccountName(newName);
+    }
+  }, [pendingSelectedAccountName]);
+
+  const handleAccountDataChange = useCallback((name: string, update: Partial<AccountData>) => {
+    setPendingAccounts(prev => ({
+      ...prev,
+      [name]: { ...(prev[name] ?? { ...DEFAULT_ACCOUNT_DATA, id: generateAccountId() }), ...update } as AccountData,
+    }));
+  }, []);
+
+  const accountSettingsProps: AccountSettingsProps = {
+    pendingAccounts,
+    pendingSelectedAccountName,
+    onAccountSelect: handleAccountSelect,
+    onAccountAdd: handleAccountAdd,
+    onAccountDelete: handleAccountDelete,
+    onAccountRename: handleAccountRename,
+    onAccountDataChange: handleAccountDataChange,
   };
 
   return props.open ? (
-    <Modal {...props} className="settings-modal">
-      <h1>{DOMAIN_NAME} Settings</h1>
-      <form onSubmit={onSubmit}>
-        <TabBar direction='vertical' tabs={[
+    <>
+      <Modal {...props} className="settings-modal" interceptClose={handleCloseAttempt}>
+        <h1>{DOMAIN_NAME} Settings</h1>
+        <TabBar direction='vertical' cacheContent={false} tabs={[
           ['General', {
             title: 'General',
-            content: <SettingsContent settings={SettingsStore.changeableSettings} />
+            content: <SettingsContent settings={pendingSettings} onSettingChange={handleSettingChange} />
           }],
           ['Account', {
             title: 'Account',
-            content: <AccountSettings />
+            content: <AccountSettings {...accountSettingsProps} />
           }],
           ['Favorites', {
             title: 'Favorites',
@@ -83,7 +171,7 @@ export default function SettingsModal(props: ModalConsumerProps) {
                     type="button"
                     className="brand secondary"
                     onClick={checkForUpdates}
-                    disabled={isCheckingForUpdates || submitting}
+                    disabled={isCheckingForUpdates}
                   >
                     {isCheckingForUpdates ? 'Checking...' : 'Check for Updates'}
                   </button>
@@ -96,10 +184,18 @@ export default function SettingsModal(props: ModalConsumerProps) {
         ]} />
 
         <div className="button-panel">
-          {SettingsStore.hasCustomSettings && <button type="reset" className="danger secondary" disabled={submitting} onClick={onReset}>Reset settings</button>}
-          <button type="submit" className="brand primary" disabled={submitting}>Save settings</button>
+          {SettingsStore.hasCustomSettings && (
+            <button type="button" className="danger secondary" onClick={handleReset}>Reset settings</button>
+          )}
+          <button type="button" className="brand primary" onClick={handleSave}>Save settings</button>
         </div>
-      </form>
-    </Modal>
+      </Modal>
+      <PendingChangesModal
+        open={showPendingChangesModal}
+        onSave={handleSave}
+        onDiscard={handleDiscard}
+        onCancel={() => setShowPendingChangesModal(false)}
+      />
+    </>
   ) : null;
 }

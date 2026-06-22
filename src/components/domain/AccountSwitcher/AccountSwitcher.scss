@@ -1,0 +1,9 @@
+.account-switcher {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+
+  .character-image {
+    --size: 2rem;
+  }
+}

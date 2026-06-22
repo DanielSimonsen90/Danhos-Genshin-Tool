@@ -672,6 +672,9 @@ const validateSettings = (data: any): { valid: boolean; filtered: any; error?: s
     return { valid: false, filtered: {}, error: 'Settings must be an object' };
   }
 
+  // Handle both nested format { settings: {...} } and flat format { showAll, wrap, ... }
+  const settingsData = data.settings && typeof data.settings === 'object' ? data.settings : data;
+
   const defaults = {
     showAll: false,
     wrap: true,
@@ -685,11 +688,11 @@ const validateSettings = (data: any): { valid: boolean; filtered: any; error?: s
   const filtered = { ...defaults };
 
   // Validate and fix boolean properties
-  if (typeof data.showAll === 'boolean') filtered.showAll = data.showAll;
-  if (typeof data.wrap === 'boolean') filtered.wrap = data.wrap;
+  if (typeof settingsData.showAll === 'boolean') filtered.showAll = settingsData.showAll;
+  if (typeof settingsData.wrap === 'boolean') filtered.wrap = settingsData.wrap;
 
   // Validate preferredTabs
-  if (data.preferredTabs && typeof data.preferredTabs === 'object') {
+  if (settingsData.preferredTabs && typeof settingsData.preferredTabs === 'object') {
     const validTabValues = {
       searchOrHistory: ['search', 'history'],
       results: ['combined', 'artifacts', 'characters'],
@@ -697,8 +700,8 @@ const validateSettings = (data: any): { valid: boolean; filtered: any; error?: s
     };
 
     for (const [tabKey, validValues] of Object.entries(validTabValues)) {
-      if (validValues.includes(data.preferredTabs[tabKey])) {
-        (filtered.preferredTabs as any)[tabKey] = data.preferredTabs[tabKey];
+      if (validValues.includes(settingsData.preferredTabs[tabKey])) {
+        (filtered.preferredTabs as any)[tabKey] = settingsData.preferredTabs[tabKey];
       }
     }
   }
