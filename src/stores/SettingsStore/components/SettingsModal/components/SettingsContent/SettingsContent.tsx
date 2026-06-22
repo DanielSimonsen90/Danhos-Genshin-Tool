@@ -15,7 +15,7 @@ export default function SettingsContent({ settings, onSettingChange }: Props) {
           key={key}
           setting={key as keyof Settings}
           value={value}
-          setValue={v => onSettingChange(key, v as ChangeableSettings[typeof key])}
+          setValue={v => onSettingChange?.(key, v as ChangeableSettings[typeof key])}
         />
       ))}
     </section>
