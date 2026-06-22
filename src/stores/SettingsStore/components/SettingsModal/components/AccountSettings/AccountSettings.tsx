@@ -2,7 +2,7 @@ import { Select } from "@/components/common/FormItems";
 import SettingsOption from "../SettingsOption";
 import { DEFAULT_ACCOUNT_DATA, Traveler, useAccountStore, WORLD_REGIONS } from "@/stores/AccountStore";
 import { CharacterImage } from "@/components/common/media/Images";
-import AvatarSelector from "@/components/common/AvatarSelector";
+import AvatarSelector from "@/components/domain/AvatarSelector";
 import { useCallback, useMemo } from "react";
 import { useStateReset } from "@/hooks/useStateReset";
 

@@ -1,9 +1,9 @@
 import type * as Characters from '@/data/characters';
 import SearchableList from '@/components/domain/SearchableList';
 import { useDataStore } from '@/stores';
-import CharacterImage from '../media/Images/CharacterImage';
+import CharacterImage from '../../common/media/Images/CharacterImage';
 import { classNames } from '@/common/functions/strings';
-import Collapsible from '../Collapsible';
+import Collapsible from '../../common/Collapsible';
 
 type Props = {
   selectedAvatar?: keyof typeof Characters;
