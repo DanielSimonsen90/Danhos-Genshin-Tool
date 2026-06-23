@@ -63,13 +63,6 @@ export class Character<TElement extends Element = Element> {
       this.playstyle?.name.includes(reaction)
     ));
 
-    if (this.name === 'Kinich') console.log({ 
-      isReactionLimited, 
-      result: triggerableReactions.filter(reaction => (
-        this.playstyle?.name.includes(reaction)
-      ))
-    });
-
     if (isReactionLimited) return triggerableReactions.filter(reaction => (
       this.playstyle?.name.includes(reaction)
     ));
