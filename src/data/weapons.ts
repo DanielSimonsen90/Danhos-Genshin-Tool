@@ -1681,10 +1681,11 @@ export const FlameForgedInsight = new Weapon(
       'Lunar-Crystallize'
     )) {
       score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+      
+      if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.TALENT;
+      if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
+      if (!playstyle.onField) score += MODIFIERS.FIELD;
     }
-    if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.TALENT;
-    if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
-    if (!playstyle.onField) score += MODIFIERS.FIELD;
 
     return score;
   }
