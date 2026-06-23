@@ -21,7 +21,7 @@ export default function Cache() {
   useEffect(() => {
     if (!CacheStore.has('searchHistory')) CacheStore.load('searchHistory', {});
     CacheStore.evictExpired(cacheEvictionDays);
-  }, [cacheEvictionDays]);
+  }, [CacheStore, cacheEvictionDays]);
 
   return (
     <div className="cache">

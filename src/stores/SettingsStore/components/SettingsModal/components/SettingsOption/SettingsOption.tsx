@@ -78,7 +78,8 @@ function InputType<Setting extends keyof Settings>({ setting, value, onChange, .
         ...Object.entries(ROUTES)
           .filter(([key, val]) => (
             typeof val === 'string' 
-            && !(val as string).includes(':') 
+            && !val.includes(':')
+            && key !== ('building_artifact_helper_search' as keyof typeof ROUTES)
             && (IS_DEVELOPMENT_ENVIRONMENT || key !== 'development'))
           )
           .map(([key, val]) => ({
