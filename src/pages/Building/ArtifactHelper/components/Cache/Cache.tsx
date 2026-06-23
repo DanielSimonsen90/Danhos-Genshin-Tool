@@ -12,16 +12,16 @@ export default function Cache() {
   const { query } = useParams();
 
   const CacheStore = useCacheStore();
-  const searchHistory = CacheStore.get('searchHistory', {}) ?? {};
+  const searchHistory = useCacheStore(store => store.get('searchHistory', {})) ?? {};
   const options = Object.values(searchHistory).filter(Boolean);
   const currentSearch = query ? searchHistory?.[query] : undefined;
 
   const cacheEvictionDays = useSettingsStore(s => s.getSetting('cacheEvictionDays') ?? 30);
 
   useEffect(() => {
-    if (!CacheStore.has('searchHistory')) CacheStore.load('searchHistory', '{}');
+    if (!CacheStore.has('searchHistory')) CacheStore.load('searchHistory', {});
     CacheStore.evictExpired(cacheEvictionDays);
-  }, [CacheStore]);
+  }, [cacheEvictionDays]);
 
   return (
     <div className="cache">

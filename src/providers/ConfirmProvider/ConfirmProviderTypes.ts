@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 export type ConfirmOptions = {
   title: ReactNode;
-  message: ReactNode;
+  message: string;
   confirmText?: string;
   cancelText?: string;
   destructive?: boolean;

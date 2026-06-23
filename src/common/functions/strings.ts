@@ -101,7 +101,16 @@ export function numberSeparator(value: number, separator = '.') {
 }
 
 export function hashObject(obj: object): string {
-  const str = JSON.stringify(obj, Object.keys(obj).sort());
+  const str = JSON.stringify(obj, (_key, value) => {
+    if (value && typeof value === 'object' && !Array.isArray(value)) {
+      return Object.keys(value).sort().reduce<Record<string, unknown>>((acc, k) => {
+        acc[k] = (value as Record<string, unknown>)[k];
+        return acc;
+      }, {});
+    }
+    return value;
+  });
+  
   let hash = 5381;
   for (let i = 0; i < str.length; i++) {
     hash = ((hash << 5) + hash) ^ str.charCodeAt(i);

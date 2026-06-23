@@ -10,6 +10,7 @@ type Props = Pick<ModalConsumerProps, 'open'> & {
 export default function PendingChangesModal({ open, onSave, onDiscard, onCancel }: Props) {
   return (
     <ConfirmModal
+      className="pending-changes-modal"
       open={open}
       onClose={onCancel}
       title="Unsaved changes"

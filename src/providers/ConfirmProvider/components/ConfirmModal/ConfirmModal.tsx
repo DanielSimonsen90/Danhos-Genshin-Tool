@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import Modal from '@/components/common/Modal';
+import { classNames } from '@/common/functions/strings';
 
 export type ConfirmAction = {
   label: string;
@@ -8,16 +9,17 @@ export type ConfirmAction = {
 };
 
 type Props = {
+  className?: string;
   open: boolean;
   onClose: () => void;
   title?: ReactNode;
-  message: ReactNode;
+  message: string;
   actions: ConfirmAction[];
 };
 
-export default function ConfirmModal({ open, onClose, title, message, actions }: Props) {
+export default function ConfirmModal({ className, open, onClose, title, message, actions }: Props) {
   return (
-    <Modal open={open} onClose={onClose} className="confirm-modal">
+    <Modal open={open} onClose={onClose} className={classNames('confirm-modal', className)}>
       {title && <h2>{title}</h2>}
       <p>{message}</p>
       <div className="button-panel">

@@ -8,7 +8,10 @@ export default function ConfirmProvider({ children }: PropsWithChildren) {
 
   const confirm = useCallback((options: ConfirmOptions): Promise<boolean> => {
     return new Promise<boolean>(resolve => {
-      setPending({ ...options, resolve });
+      setPending(prev => {
+        prev?.resolve(false); // Cancel any previous pending confirmation
+        return { ...options, resolve };
+      });
     });
   }, []);
 

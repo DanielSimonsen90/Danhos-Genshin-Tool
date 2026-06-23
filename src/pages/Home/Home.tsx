@@ -10,12 +10,14 @@ export default function Home() {
 
   useEffect(() => {
     if (defaultLandingPage) navigate(`/${defaultLandingPage}`, { replace: true });
-  }, []);
+  }, [defaultLandingPage, navigate]);
+
   return (
     <section className="landing">
       <header>
         <h1><span className="domain-name">{DOMAIN_NAME}</span></h1>
-        <p className="muted">Developed by <a href={DEVELOPER_GITHUB_URL}>{DEVELOPER}</a>
+        <p className="muted">
+          Developed by <a href={DEVELOPER_GITHUB_URL}>{DEVELOPER}</a>
         </p>
       </header>
       <main>
