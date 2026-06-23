@@ -26,7 +26,7 @@ export const MAIN_STAT_SCORES = {
   DEF_MISMATCH: 2, // DEF is less valuable when not needed
   
   // Universal and utility stats
-  CRIT_STATS: 25, // Always valuable
+  CRIT_STATS: 50, // Always valuable — Crit Circlets are universally excellent
   EM_MATCH: 15,
   EM_MISMATCH: 8,
   ER_MATCH: 15,
@@ -53,7 +53,7 @@ export const SUBSTAT_SCORES = {
   EM_MATCH: 40,
   EM_MISMATCH: 8,
   ER_MATCH: 40,
-  ER_MISMATCH: 12
+  ER_MISMATCH: 25 // ER benefits burst uptime on most characters even when not specifically needed
 } as const;
 
 // Priority scoring system

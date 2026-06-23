@@ -3,10 +3,10 @@ export const DEBUGS = {
   strings: false,
 
   // pages
-  searchQuery: true,
+  searchQuery: false,
 
   // components
-  priorityList: true,
+  priorityList: false,
   searchComponent: false,
   settingsModal: false,
   settingsContainer: false,

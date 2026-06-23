@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useCallback } from "react";
 import { useNavigate } from "react-router";
+import { useConfirm } from "@/providers/ConfirmProvider";
 
 import { CharacterImage, ArtifactImage, DomainImage, MaterialImage, MobImage, WeaponImage } from "@/components/common/media/Images";
 import { Star, FavoriteStar } from "@/components/common/media/icons";
@@ -18,6 +19,7 @@ type UsePriorityListTabsProps = {
 };
 
 export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdateModal }: UsePriorityListTabsProps) {
+  const confirm = useConfirm();
   const DataStore = useDataStore();
   const FavoriteStore = useFavorites();
   const { id: accountId } = useAccountData();
@@ -36,13 +38,13 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
     const priorityList = priorityLists?.[tierlistKey];
     openUpdateModal(priorityList, tierlistKey);
   }, [priorityLists, openUpdateModal]);
-  const onDelete = useCallback((tab: string) => {
-    if (!confirm(`Are you sure you want to delete the tab "${tab}"?`)) return;
+  const onDelete = useCallback(async (tab: string) => {
+    if (!await confirm({ title: 'Delete list', message: `Are you sure you want to delete the tab "${tab}"?`, destructive: true })) return;
 
     let { [tab]: _, ...newPriorityList } = priorityLists;
     if (!Object.keys(newPriorityList).length) newPriorityList = getDefaultPriorityLists();
     setPriorityLists(newPriorityList);
-  }, [priorityLists, setPriorityLists]);
+  }, [confirm, priorityLists, setPriorityLists]);
   const onClone = useCallback((tab: string) => {
     const priorityList = priorityLists?.[tab];
     if (!priorityList) return;

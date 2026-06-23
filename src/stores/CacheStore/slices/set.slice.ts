@@ -34,8 +34,22 @@ export default new StoreBuilder<CacheState>()
       if (!api.has(key)) setItem(key, defaultValue);
     }
 
+    function evictExpired(daysToKeep: number) {
+      if (daysToKeep === 0) return;
+
+      const cutoff = Date.now() - daysToKeep * 86_400_000; // 86,400,000 ms in a day
+      
+      set(state => ({
+        ...state,
+        searchHistory: Object.fromEntries(
+          Object.entries(state.searchHistory).filter(([, entry]) => (entry.timestamp ?? 0) >= cutoff)
+        ),
+      }));
+    }
+
     return {
       clearCache,
+      evictExpired,
       set: setItem,
       update: updateItem,
       delete: deleteItem,

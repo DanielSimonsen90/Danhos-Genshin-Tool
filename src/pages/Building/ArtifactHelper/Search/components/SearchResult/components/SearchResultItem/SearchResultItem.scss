@@ -9,5 +9,10 @@
 
   .character-card {
     grid-template-areas: "image details";
+
+    &__content {
+      justify-content: start;
+    }
   }
+
 }

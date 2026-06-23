@@ -7,6 +7,7 @@ import { DebugLog } from "@/common/functions/dev";
 import Modal, { ModalConsumerProps } from "@/components/common/Modal";
 import { useUpdateManager } from "@/hooks/useUpdateManager";
 
+import { useConfirm } from "@/providers/ConfirmProvider";
 import { useSettingsStore } from "@/stores/SettingsStore";
 import { ChangeableSettings } from "@/stores/SettingsStore/SettingsStoreTypes";
 import { DEFAULT_SETTINGS } from "@/stores/SettingsStore/SettingsStoreConstants";
@@ -15,7 +16,7 @@ import { AccountContextType, AccountData } from '@/stores/AccountStore/AccountSt
 import { DEFAULT_ACCOUNT_DATA } from '@/stores/AccountStore/AccountStoreConstants';
 import { generateAccountId } from '@/stores/AccountStore/AccountStoreFunctions';
 
-import { AccountSettings, AccountSettingsProps, FavoritesOverview, PendingChangesModal, SettingsContent } from './components';
+import { AccountSettings, AccountSettingsProps, ArtifactHelperSettings, FavoritesOverview, GeneralSettings, PendingChangesModal } from './components';
 
 const debugLog = DebugLog(DebugLog.DEBUGS.settingsModal);
 
@@ -23,9 +24,12 @@ const toChangeable = (settings: ChangeableSettings): ChangeableSettings => ({
   showAll: settings.showAll,
   wrap: settings.wrap,
   preferredTabs: { ...settings.preferredTabs },
+  defaultLandingPage: settings.defaultLandingPage,
+  cacheEvictionDays: settings.cacheEvictionDays,
 });
 
 export default function SettingsModal(props: ModalConsumerProps) {
+  const confirm = useConfirm();
   const SettingsStore = useSettingsStore();
   const accounts = useAccountStore(state => state.accounts);
   const selectedAccountName = useAccountStore(state => state.selectedAccountName);
@@ -80,12 +84,12 @@ export default function SettingsModal(props: ModalConsumerProps) {
     props.onClose();
   }, [props.onClose]);
 
-  const handleReset = useCallback(() => {
-    if (confirm('Are you sure you want to reset settings?')) {
+  const handleReset = useCallback(async () => {
+    if (await confirm({ title: 'Reset settings', message: 'Are you sure you want to reset all settings to their defaults?' })) {
       const { updated, newUser, ...defaults } = DEFAULT_SETTINGS;
       setPendingSettings(defaults);
     }
-  }, []);
+  }, [confirm]);
 
   const handleSettingChange = useCallback(<K extends keyof ChangeableSettings>(key: K, value: ChangeableSettings[K]) => {
     setPendingSettings(prev => ({ ...prev, [key]: value }));
@@ -150,7 +154,11 @@ export default function SettingsModal(props: ModalConsumerProps) {
         <TabBar direction='vertical' cacheContent={false} tabs={[
           ['General', {
             title: 'General',
-            content: <SettingsContent settings={pendingSettings} onSettingChange={handleSettingChange} />
+            content: <GeneralSettings settings={pendingSettings} onSettingChange={handleSettingChange} />
+          }],
+          ['ArtifactHelper', {
+            title: 'Artifact Helper',
+            content: <ArtifactHelperSettings settings={pendingSettings} onSettingChange={handleSettingChange} />
           }],
           ['Account', {
             title: 'Account',
