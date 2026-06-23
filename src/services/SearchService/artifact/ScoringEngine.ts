@@ -117,13 +117,14 @@ export const ScoringEngine = new class ScoringEngine {
       case 'Energy Recharge': return character.playstyle?.needsStat('Energy Recharge') ? MAIN_STAT_SCORES.ER_MATCH : MAIN_STAT_SCORES.ER_MISMATCH;
       case 'Healing Bonus': return character.can('Heal') ? MAIN_STAT_SCORES.HEALING_BONUS_MATCH : MAIN_STAT_SCORES.HEALING_BONUS_MISMATCH;
 
-      case 'HP%': return character.playstyle?.needsStat('HP') ? MAIN_STAT_SCORES.SCALING_STAT_MATCH : MAIN_STAT_SCORES.SCALING_STAT_MISMATCH;
-      case 'ATK%': return character.playstyle?.needsStat('ATK') ? MAIN_STAT_SCORES.SCALING_STAT_MATCH : MAIN_STAT_SCORES.SCALING_STAT_MISMATCH;
+      case 'HP%': case 'HP': return character.playstyle?.needsStat('HP') ? MAIN_STAT_SCORES.SCALING_STAT_MATCH : MAIN_STAT_SCORES.SCALING_STAT_MISMATCH;
+      case 'ATK%': case 'ATK': return character.playstyle?.needsStat('ATK') ? MAIN_STAT_SCORES.SCALING_STAT_MATCH : MAIN_STAT_SCORES.SCALING_STAT_MISMATCH;
       case 'DEF%': return character.playstyle?.needsStat('DEF') ? MAIN_STAT_SCORES.SCALING_STAT_MATCH : MAIN_STAT_SCORES.DEF_MISMATCH;
 
-      default:
+      default: {
         console.error(`Unknown main stat "${mainStat}"`);
         return MAIN_STAT_SCORES.UNKNOWN_STAT;
+      }
     }
   }
   private _calculateSubStatsScore(character: Character, artifact: Artifact<ArtifactPartName>): number {

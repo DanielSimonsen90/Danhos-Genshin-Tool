@@ -27,7 +27,7 @@ export default function CharacterPlaystyleComponent({
     <div className="character-playstyle character-result">
       <PlaystyleDescription playstyle={character.playstyle} />
       <span className="muted">
-        {character.name} has no set that uses <b>{artifactSet?.name ?? 'this artifact'}</b>, but may benefit from its stats temporarily.
+        {character.name} has no set that uses <b>{artifactSet?.name ?? 'this artifact'}</b>, but may benefit from its stats.
       </span>
     </div>
   );

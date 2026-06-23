@@ -5,6 +5,8 @@ export const titles: Record<keyof Settings, string> = {
   showAll: 'Show all search results',
   wrap: 'Wrap search results',
   preferredTabs: 'Preferred tabs',
+  defaultLandingPage: 'Default landing page',
+  cacheEvictionDays: 'Keep search history for',
 
   // Account settings
   accountCrud: 'Account management',
@@ -19,6 +21,8 @@ export const descriptions: Record<keyof Settings, string> = {
   showAll: `Show all characters in Artifact Helper search results, regardless of lower score.`,
   wrap: `Wrap each character result card, so they don't extend more than necessary horizontally.`,
   preferredTabs: `Prefer these tabs when using specified TabBar components.`,
+  defaultLandingPage: `Navigate here automatically when the app opens. Leave empty to stay on the home page.`,
+  cacheEvictionDays: `Automatically remove search history entries older than this. Select Never to keep them indefinitely.`,
 
   // Region settings
   accountCrud: `Create more accounts or delete the current one.`,
