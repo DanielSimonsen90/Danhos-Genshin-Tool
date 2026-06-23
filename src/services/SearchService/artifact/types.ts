@@ -1,8 +1,8 @@
 import { ArtifactSet, Character } from '@/common/models';
 
 export type SearchResult = {
-  byArtifact: SearchResultItem[];
-  byCharacterRecommendation: SearchResultItem[];
+  byStats: SearchResultItem[];
+  bySet: SearchResultItem[];
   combined: SearchResultItem[];
 
   setName: ArtifactSet['name'];
@@ -24,8 +24,8 @@ export class SearchResultItem {
 
 export type LastResult = {
   search: SearchResult;
-  searchArtifactSets: SearchResultItem[];
-  searchCharacterRecommendations: SearchResultItem[];
+  searchByStats: SearchResultItem[];
+  searchBySet: SearchResultItem[];
   piecesScore: number;
   mainStatRarity: number;
 };

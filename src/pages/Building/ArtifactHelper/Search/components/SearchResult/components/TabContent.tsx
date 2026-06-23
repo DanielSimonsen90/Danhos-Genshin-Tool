@@ -16,7 +16,7 @@ export const TabContent = ({ results, setName, showAll }: Props) => (
   !results.length ? (
     <div className="search-result__list-container">
       <ul className="search-result__list--empty">
-        <li className="seach-result-item search-result-item--end muted">No results found.</li>
+        <li className="search-result-item search-result-item--end muted">No results found.</li>
       </ul>
     </div>
   ) : (

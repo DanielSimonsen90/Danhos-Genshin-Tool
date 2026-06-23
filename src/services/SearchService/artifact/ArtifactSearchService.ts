@@ -36,7 +36,7 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
     return value;
   }
 
-  private searchByArtifacts(
+  private searchByStats(
     set: ArtifactSet,
     artifactPartName: ArtifactPartName,
     mainStat: MainStatName,
@@ -44,10 +44,10 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
   ): List<SearchResultItem> {
     const { Characters } = DataStore.getState();
 
-    debugLog('group', 'searchArtifactSets');
+    debugLog('group', 'searchByStats');
     debugLog('params', { set, artifactPartName, mainStat, subStats });
 
-    const result = this.lastResult.searchArtifactSets = Characters.map(character => {
+    const result = this.lastResult.searchByStats = Characters.map(character => {
       debugLog('group', character.name);
       debugLog('group', 'setScoreOnCharacter');
       const setScore = character.playstyle?.recommendedArtifactSets.reduce((acc, cSet) => {
@@ -78,13 +78,13 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
     return result;
   }
 
-  private searchByCharacterRecommendation(
+  private searchBySet(
     set: ArtifactSet,
     artifactPartName: ArtifactPartName,
     mainStat: MainStatName,
     subStats: SubStatName[],
   ): List<SearchResultItem> {
-    debugLog('group', 'searchCharacterRecommendations');
+    debugLog('group', 'searchBySet');
     const { Characters } = DataStore.getState();
 
     // Filter characters that use the artifact set
@@ -100,7 +100,7 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
     if (!charactersWantSet.length && !charactersCouldUseSet.length) {
       debugLog(`No characters found for ${set.name}. Returning empty array.`);
       debugLog('groupEnd');
-      return this.lastResult.searchCharacterRecommendations = new List();
+      return this.lastResult.searchBySet = new List();
     }
 
     const getScores = (characters: List<Character>) => {
@@ -122,7 +122,7 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
     };
     debugLog('groupEnd');
 
-    const result = this.lastResult.searchCharacterRecommendations = new List(charactersWantSet, charactersCouldUseSet)
+    const result = this.lastResult.searchBySet = new List(charactersWantSet, charactersCouldUseSet)
       .map(getScores)
       .flatten()
       .orderBy((a, b) => b.score - a.score);
@@ -146,13 +146,13 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
     this._effectivenessCache.clear();
     debugLog('Starting search', { set, artifactPartName, mainStat, subStats });
     const args = [set, artifactPartName, mainStat, subStats] as const;
-    const byCharacterRecommendation = this.searchByCharacterRecommendation(...args).orderBy((a, b) => b.score - a.score);
-    const byArtifact = this.searchByArtifacts(...args).orderBy(...this._getOrderByFunctions(set, byCharacterRecommendation));
+    const bySet = this.searchBySet(...args).orderBy((a, b) => b.score - a.score);
+    const byStats = this.searchByStats(...args).orderBy(...this._getOrderByFunctions(set, bySet));
     const cloneItem = (item: SearchResultItem) => new SearchResultItem(
       { name: item.characterName } as Character,
       item.score, item.shouldSave, item.setScore, item.statScore
     );
-    const combined = new List(...byArtifact, ...byCharacterRecommendation).reduce((acc, item) => {
+    const combined = new List(...byStats, ...bySet).reduce((acc, item) => {
       const existing = acc.find(e => e.characterName === item.characterName);
       if (existing) {
         existing.setScore += item.setScore;
@@ -162,11 +162,11 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
         return acc;
       }
       return acc.concat(cloneItem(item));
-    }, new List<SearchResultItem>()).orderBy(...this._getOrderByFunctions(set, byCharacterRecommendation));
+    }, new List<SearchResultItem>()).orderBy(...this._getOrderByFunctions(set, bySet));
 
     const result = this.lastResult.search = {
-      combined, byArtifact,
-      byCharacterRecommendation: byCharacterRecommendation.orderBy(...this._getOrderByFunctions(set, byCharacterRecommendation)),
+      combined, byStats,
+      bySet: bySet.orderBy(...this._getOrderByFunctions(set, bySet)),
       setName: set.name,
     };
     debugLog('Result', result);
@@ -175,7 +175,7 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
 
   private _getOrderByFunctions(
     set: ArtifactSet,
-    byCharacterRecommendation: List<SearchResultItem>,
+    bySet: List<SearchResultItem>,
   ): Array<OrderByComparator<SearchResultItem>> {
     const { Characters } = DataStore.getState();
     
@@ -196,8 +196,8 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
         return effectiveB - effectiveA;
       },
       (a, b) => {
-        const recommendedA = byCharacterRecommendation.some(c => c.characterName === a.characterName);
-        const recommendedB = byCharacterRecommendation.some(c => c.characterName === b.characterName);
+        const recommendedA = bySet.some(c => c.characterName === a.characterName);
+        const recommendedB = bySet.some(c => c.characterName === b.characterName);
         return recommendedA && !recommendedB ? -1 : recommendedB && !recommendedA ? 1 : 0;
       },
     ];
