@@ -6,6 +6,7 @@
 ## New Features
 * Profile avatar: You can now change your profile avatar to whichever character you want, instead of being just limited to Lumine and Aether!
 * Sortable lists! You can now sort any SearchableList by various properties including ascending, descending and priority order.
+* Added "All Weapons" tab to character's Recommended Weapons section.
 
 ## Updates
 * Added "Off-field Damage" to Lauma
