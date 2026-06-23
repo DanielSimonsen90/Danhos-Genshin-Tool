@@ -1,12 +1,11 @@
-import { useMemo, useState, useRef } from "react";
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 
 import { ROUTES } from "@/common/constants/routes";
 import { ArtifactSet, Character, CharacterArtifactSet } from "@/common/models";
 
 import { ArtifactImage } from "@/components/common/media/Images";
-
-const HOVER_TIMEOUT = 100;
+import Popover from "@/components/common/Popover";
 
 type Props = {
   artifactSets?: CharacterArtifactSet[];
@@ -19,29 +18,6 @@ type GroupedSet = {
 };
 
 export default function CharacterArtifactsCombinations({ artifactSets = [] }: Props) {
-  const [hoveredGroupId, setHoveredGroupId] = useState<string | null>(null);
-  const [hoveredSetBonus, setHoveredSetBonus] = useState<string | null>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  const handleMouseEnter = (groupId: string, setBonus?: string) => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-
-    setHoveredGroupId(groupId);
-    setHoveredSetBonus(setBonus || null);
-  };
-
-  const handleMouseLeave = () => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-
-    timeoutRef.current = setTimeout(() => {
-      setHoveredGroupId(null);
-      setHoveredSetBonus(null);
-      timeoutRef.current = null;
-    }, HOVER_TIMEOUT);
-  };
   const groupedSets = useMemo(() => {
     const groups = artifactSets.reduce((acc, artifactSet) => {
       if (artifactSet.pieces === 2) {
@@ -67,13 +43,27 @@ export default function CharacterArtifactsCombinations({ artifactSets = [] }: Pr
       }));
   }, [artifactSets]);
 
+  const renderGroupTooltip = (setBonus: string, sets: CharacterArtifactSet[]) => (
+    <div className="artifact-group-popover">
+      <p>{setBonus}</p>
+      <ul>
+        {sets.map(({ set }) => (
+          <li key={set.name}>
+            <Link to={`/${ROUTES.data_artifacts}/${set.name}`}>
+              <ArtifactImage set={set.name} piece='Flower' />
+              <span>{set.name}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+
   if (!artifactSets.length) return null;
 
   return (
     <ul className="character-artifacts-combinations">
       {groupedSets.map(({ representative, allSets, isGroup }, key) => {
-        const groupId = `group-${key}`;
-
         // For 2-piece combinations, find a second unique set
         const secondRepresentative = isGroup && representative.pieces === 2
           ? (
@@ -81,53 +71,70 @@ export default function CharacterArtifactsCombinations({ artifactSets = [] }: Pr
             || allSets.find(cSet => cSet.set.name !== representative.set.name)
           )
           : null;
+
+        const firstSetContent = isGroup && representative.pieces === 2
+          ? renderGroupTooltip(
+              representative.set.twoPieceSetDescription,
+              allSets.filter(s => s.set.twoPieceSetDescription === representative.set.twoPieceSetDescription)
+            )
+          : null;
+
+        const secondSetContent = secondRepresentative && isGroup
+          ? renderGroupTooltip(
+              secondRepresentative.set.twoPieceSetDescription,
+              allSets.filter(s => s.set.twoPieceSetDescription === secondRepresentative.set.twoPieceSetDescription)
+            )
+          : null;
+
         return (
-          <li key={key}
-            onMouseLeave={() => handleMouseLeave()}
-          >
-            <Link to={`/${ROUTES.data_artifacts}/${representative.set.name}`} 
+          <li key={key}>
+            <Link to={`/${ROUTES.data_artifacts}/${representative.set.name}`}
               title={representative.set.name}
             >
-              <div className="combination-container"
-                onMouseEnter={() => isGroup && handleMouseEnter(groupId, representative.set.twoPieceSetDescription)}
-              >
-                <ArtifactImage set={representative.set.name} piece='Flower' />
-                <span className="piece">{representative.pieces}</span>
-              </div>
-              {secondRepresentative && (
-                <div className="combination-container"
-                  onMouseEnter={() => isGroup && handleMouseEnter(groupId, secondRepresentative.set.twoPieceSetDescription)}
+              {firstSetContent ? (
+                <Popover
+                  trigger="hover"
+                  position="bottom"
+                  alignment="start"
+                  content={firstSetContent}
                 >
-                  <ArtifactImage set={secondRepresentative.set.name} piece='Flower' />
-                  <span className="piece">{secondRepresentative.pieces}</span>
+                  <div className="combination-container">
+                    <ArtifactImage set={representative.set.name} piece='Flower' />
+                    <span className="piece">{representative.pieces}</span>
+                  </div>
+                </Popover>
+              ) : (
+                <div className="combination-container">
+                  <ArtifactImage set={representative.set.name} piece='Flower' />
+                  <span className="piece">{representative.pieces}</span>
                 </div>
               )}
+
+              {secondRepresentative && (
+                secondSetContent ? (
+                  <Popover
+                    trigger="hover"
+                    position="bottom"
+                    alignment="start"
+                    content={secondSetContent}
+                  >
+                    <div className="combination-container">
+                      <ArtifactImage set={secondRepresentative.set.name} piece='Flower' />
+                      <span className="piece">{secondRepresentative.pieces}</span>
+                    </div>
+                  </Popover>
+                ) : (
+                  <div className="combination-container">
+                    <ArtifactImage set={secondRepresentative.set.name} piece='Flower' />
+                    <span className="piece">{secondRepresentative.pieces}</span>
+                  </div>
+                )
+              )}
+
               <span className="character-artifacts-combinations__effectiveness">
                 {representative.effectiveness}%
               </span>
             </Link>
-            {/* Hover tooltip for grouped sets - positioned below */}
-            {isGroup && hoveredGroupId === groupId && hoveredSetBonus && (
-              <div
-                className="group-tooltip"
-                onMouseEnter={() => handleMouseEnter(groupId, hoveredSetBonus)}
-                onMouseLeave={() => setHoveredGroupId(null)}
-              >
-                <p>{hoveredSetBonus}</p>
-                <ul>
-                  {allSets
-                    .filter(artifactSet => artifactSet.set.twoPieceSetDescription === hoveredSetBonus)
-                    .map(({ set }) => (
-                      <li key={set.name}>
-                        <Link to={`/${ROUTES.data_artifacts}/${set.name}`}>
-                          <ArtifactImage set={set.name} piece='Flower' />
-                          <span>{set.name}</span>
-                        </Link>
-                      </li>
-                    ))}
-                </ul>
-              </div>
-            )}
           </li>
         );
       })}
