@@ -14,6 +14,10 @@
     border-bottom: $border;
   }
 
+  .account-switcher {
+    justify-content: flex-end;
+  }
+
   .sub-header {
     display: flex;
     align-items: center;
