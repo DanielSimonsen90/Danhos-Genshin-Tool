@@ -21,7 +21,8 @@ export const TabContent = ({ results, setName, showAll, onShowMore }: Props) => 
       </ul>
     </div>
   ) : (
-    <SearchableList items={results} onSearch={(search, item) => item.characterName.toLowerCase().includes(search.toLowerCase())}
+    <SearchableList items={results} 
+      onSearch={(search, item) => item.characterName.toLowerCase().includes(search.toLowerCase())}
       className="search-result__list-container"
       ulClassName={classNames("search-result__list", showAll && 'search-result__list--show-all')}
       liClassName={({ shouldSave }) => classNames("search-result-item", !shouldSave && 'search-result-item--hide')}
