@@ -31,7 +31,7 @@ export default function SearchQuery() {
   const Result = useCallback(() => results ? <SearchResultComponent result={results} /> : <p>No results</p>, [results]);
 
   useEffect(() => {
-    const formData = CacheStore.getFromItem('searchHistory', query, '{}');
+    const formData = CacheStore.getFromItem('searchHistory', query, {});
     debugLog('SearchQuery formData', { query, formData });
     if (!formData) return;
 

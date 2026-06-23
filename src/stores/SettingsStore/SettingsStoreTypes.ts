@@ -5,7 +5,7 @@ export type AppSettings = {
   wrap: boolean;
   preferredTabs: {
     searchOrHistory: 'search' | 'history';
-    results: 'combined' | 'artifacts' | 'characters';
+    results: 'combined' | 'stats' | 'set';
     craftableMaterial: 'common' | 'rarest';
   },
 

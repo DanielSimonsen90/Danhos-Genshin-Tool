@@ -19,7 +19,7 @@ export const SearchResultComponent = ({
     showAll: showAll.get(),
   };
 
-  function handleTabChanged(tab: 'combined' | 'characters' | 'artifacts') {
+  function handleTabChanged(tab: 'combined' | 'set' | 'stats') {
     if (preferredTabs.get().results === tab) return;
     SettingsStore.updateSettings(cur => ({ 
       preferredTabs: { 
@@ -41,19 +41,19 @@ export const SearchResultComponent = ({
           description: 'Scores from "By Stats" and "By Set" are added together. Characters who use this set rank higher because they benefit from both the set and the stats.',
           content: <TabContent results={props.combined} {...tabBarProps} />
         }],
-        ['artifacts', {
+        ['stats', {
           title: 'By Stats',
-          description: 'Characters are ranked by how useful the main stat and substats are to them. The artifact set is not considered.',
-          content: <TabContent results={props.byArtifact} {...tabBarProps} />
+          description: 'Characters ranked by how well the main stat and substats fit their build. Characters who have this set recommended rank higher due to an additional set bonus.',
+          content: <TabContent results={props.byStats} {...tabBarProps} />
         }],
-        ['characters', {
+        ['set', {
           title: 'By Set',
           description: 'Only characters who have this set recommended, ranked by how well these stats match what they want.',
-          content: <TabContent results={props.byCharacterRecommendation} {...tabBarProps} />
+          content: <TabContent results={props.bySet} {...tabBarProps} />
         }],
       ]}
         defaultTab={preferredTabs.get().results}
-        onTabChange={tab => handleTabChanged(tab as 'combined' | 'characters' | 'artifacts')}
+        onTabChange={tab => handleTabChanged(tab as 'combined' | 'set' | 'stats')}
       >
         <div className="search-result-options">
           <ShowAll {...{ ...props }} />

@@ -695,7 +695,7 @@ const validateSettings = (data: any): { valid: boolean; filtered: any; error?: s
   if (settingsData.preferredTabs && typeof settingsData.preferredTabs === 'object') {
     const validTabValues = {
       searchOrHistory: ['search', 'history'],
-      results: ['combined', 'artifacts', 'characters'],
+      results: ['combined', 'stats', 'set'],
       craftableMaterial: ['common', 'rarest']
     };
 

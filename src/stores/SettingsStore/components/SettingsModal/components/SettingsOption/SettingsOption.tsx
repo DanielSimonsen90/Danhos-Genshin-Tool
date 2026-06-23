@@ -131,7 +131,7 @@ function InputType<Setting extends keyof Settings>({ setting, value, onChange, .
             </label>
             <Select
               name={`${setting}.results`}
-              options={['combined', 'artifacts', 'characters'] as Array<Settings['preferredTabs']['results']>}
+              options={['combined', 'stats', 'set'] as Array<Settings['preferredTabs']['results']>}
               value={tabs.results}
               onChange={v => mergeTab({ results: v as Settings['preferredTabs']['results'] })}
             />

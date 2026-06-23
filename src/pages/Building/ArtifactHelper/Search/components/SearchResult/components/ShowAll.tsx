@@ -4,7 +4,7 @@ import { useSetting } from "@/stores";
 import { DEFAULT_SETTINGS } from "@/stores/SettingsStore/SettingsStoreConstants";
 import { useEffect, useState } from "react";
 
-type Props = Pick<SearchResult, 'combined' | 'byCharacterRecommendation' | 'byArtifact'>;
+type Props = Pick<SearchResult, 'combined' | 'bySet' | 'byStats'>;
 
 export function ShowAll(props: Props) {
   const showAll = useSetting('showAll');
@@ -13,15 +13,15 @@ export function ShowAll(props: Props) {
 
   const total = (
     preferredTabs.results === 'combined' ? props.combined
-    : preferredTabs.results === 'characters' ? props.byCharacterRecommendation
-    : props.byArtifact
+    : preferredTabs.results === 'set' ? props.bySet
+    : props.byStats
   ).length;
 
   useEffect(() => {
     const results = (
       preferredTabs.results === 'combined' ? props.combined
-      : preferredTabs.results === 'characters' ? props.byCharacterRecommendation
-      : props.byArtifact
+      : preferredTabs.results === 'set' ? props.bySet
+      : props.byStats
     );
     const showAllResults = results.length;
     const showShouldSave = results.filter(({ shouldSave }) => shouldSave).length;
