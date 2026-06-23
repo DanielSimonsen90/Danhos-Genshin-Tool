@@ -1,4 +1,5 @@
-import Modal, { ModalConsumerProps } from '@/components/common/Modal';
+import ConfirmModal from '@/providers/ConfirmProvider/components/ConfirmModal';
+import type { ModalConsumerProps } from '@/components/common/Modal';
 
 type Props = Pick<ModalConsumerProps, 'open'> & {
   onSave: () => void;
@@ -8,14 +9,17 @@ type Props = Pick<ModalConsumerProps, 'open'> & {
 
 export default function PendingChangesModal({ open, onSave, onDiscard, onCancel }: Props) {
   return (
-    <Modal open={open} onClose={onCancel} className="pending-changes-modal">
-      <h2>Unsaved changes</h2>
-      <p>You have unsaved changes. What would you like to do?</p>
-      <div className="button-panel">
-        <button type="button" className="tertiary" onClick={onCancel}>Keep editing</button>
-        <button type="button" className="danger secondary" onClick={onDiscard}>Discard</button>
-        <button type="button" className="brand primary" onClick={onSave}>Save</button>
-      </div>
-    </Modal>
+    <ConfirmModal
+      className="pending-changes-modal"
+      open={open}
+      onClose={onCancel}
+      title="Unsaved changes"
+      message="You have unsaved changes. What would you like to do?"
+      actions={[
+        { label: 'Keep editing', onClick: onCancel, className: 'tertiary' },
+        { label: 'Discard', onClick: onDiscard, className: 'danger secondary' },
+        { label: 'Save', onClick: onSave, className: 'brand primary' },
+      ]}
+    />
   );
 }

@@ -9,14 +9,15 @@ import {
   Materials, Material,
   Mobs, Mob,
   Weapons, Weapon,
-  
-  BuildingIndex, 
-  PriorityList, 
+
+  BuildingIndex,
+  PriorityList,
   ArtifactHelper, Search,
 
   Development,
 } from '@/pages';
 import { ROUTES } from "@/common/constants/routes";
+import { IS_DEVELOPMENT_ENVIRONMENT } from "@/common/constants/dev";
 
 export const Router = () => (
   <HashRouter>
@@ -42,11 +43,11 @@ export const Router = () => (
           <Route path={ROUTES.endRoute('data_materials')}>
             <Route index element={<Materials />} />
             <Route path={ROUTES.endRoute('data_material')} element={<Material />} />
-          </Route>          
+          </Route>
           <Route path={ROUTES.endRoute('data_mobs')}>
             <Route index element={<Mobs />} />
             <Route path={ROUTES.endRoute('data_mob')} element={<Mob />} />
-          </Route>          
+          </Route>
           <Route path={ROUTES.endRoute('data_weapons')}>
             <Route index element={<Weapons />} />
             <Route path={ROUTES.endRoute('data_weapon')} element={<Weapon />} />
@@ -67,18 +68,18 @@ export const Router = () => (
           */}
         </Route>
 
+        {/* 
         <Route path={ROUTES.generator}>
-          {/* 
           
           /teams
           /team-builder
           /character
           /artifact
 
-          */}
         </Route>
+        */}
 
-        {process.env.NODE_ENV === 'development' && (
+        {IS_DEVELOPMENT_ENVIRONMENT && (
           <Route path={ROUTES.development}>
             <Route index element={<Development />} />
           </Route>

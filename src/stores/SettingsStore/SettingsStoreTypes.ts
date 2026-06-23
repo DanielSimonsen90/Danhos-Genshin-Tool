@@ -8,6 +8,8 @@ export type AppSettings = {
     results: 'combined' | 'stats' | 'set';
     craftableMaterial: 'common' | 'rarest';
   },
+  defaultLandingPage: string;
+  cacheEvictionDays: number;
 
   updated?: number;
   newUser?: boolean;

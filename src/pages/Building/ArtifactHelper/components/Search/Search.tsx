@@ -3,8 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { SearchFormData } from "@/common/types/store-data";
 import { DebugLog } from "@/common/functions/dev";
-import { generateId } from "@/common/functions/random";
-import { formatSearchData, pascalCaseFromSnakeCase } from '@/common/functions/strings';
+import { formatSearchData, hashObject, pascalCaseFromSnakeCase } from '@/common/functions/strings';
 
 import {
   SelectArtifactPartName, SelectArtifactSet,
@@ -45,7 +44,13 @@ export default function Search() {
       return;
     }
 
-    const searchId = generateId();
+    const searchId = hashObject({ 
+      artifactSetName: data.artifactSetName,
+      artifactPartName: data.artifactPartName,
+      mainStat: data.mainStat,
+      subStats: [...data.subStats].sort()
+    });
+    
     CacheStore.update('searchHistory', {
       [searchId]: {
         ...data,
