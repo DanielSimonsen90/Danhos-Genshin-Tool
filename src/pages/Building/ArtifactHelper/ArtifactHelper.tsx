@@ -14,7 +14,7 @@ export default function ArtifactHelper() {
         tabItem('search', 'Search', <Search />),
         hasCachedItems && tabItem('history', 'History', <Cache />),
       ]}
-        defaultTab={preferredTabs.get()?.searchOrHistory}
+        defaultTab={hasCachedItems ? preferredTabs.get()?.searchOrHistory : 'search'}
       />
     </main>
   );

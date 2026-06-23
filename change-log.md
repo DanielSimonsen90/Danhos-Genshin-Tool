@@ -8,6 +8,13 @@
 * Sortable lists! You can now sort any SearchableList by various properties including ascending, descending and priority order.
 * Added "All Weapons" tab to character's Recommended Weapons section.
 
+## Artifact Helper
+* Added descriptions to each result tab explaining what it shows and how scores differ
+* Renamed result tabs: "By Artifacts" → "By Stats", "By Character Recommendation" → "By Set"
+* Increased Crit Rate/DMG Circlet main stat score — previously undervalued relative to its universal usefulness
+* Increased Energy Recharge substat score for characters that don't specifically need it — ER benefits burst uptime broadly
+* Fixed combined tab incorrectly overwriting "By Stats" tab scores due to shared object mutation during score merging
+
 ## Updates
 * Added "Off-field Damage" to Lauma
 * Improved tier list drag-and-drop: items now position correctly when dragging between tiers

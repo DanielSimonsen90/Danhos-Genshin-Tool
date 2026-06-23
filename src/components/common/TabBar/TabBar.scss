@@ -147,6 +147,13 @@
     }
   }
 
+  .tab-bar__tab-description {
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin-bottom: 1em;
+    max-width: unset;
+  }
+
   .select,
   button {
     margin-inline: 0;

@@ -6,15 +6,15 @@ export type SearchResult = {
   combined: SearchResultItem[];
 
   setName: ArtifactSet['name'];
-  form: FormData;
-  id: string;
 };
 
 export class SearchResultItem {
   constructor(
     character: Character,
     public score: number,
-    public shouldSave: boolean
+    public shouldSave: boolean,
+    public setScore: number,
+    public statScore: number,
   ) {
     this.characterName = character.name;
   }

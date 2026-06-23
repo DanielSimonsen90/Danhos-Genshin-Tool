@@ -5,21 +5,20 @@ import { DebugLog } from '@/common/functions/dev';
 
 import { List, OrderByComparator } from '@/common/models/List';
 
-import { 
-  SHOULD_SAVE_THRESHOLD, 
-  SET_PRIORITY_MULTIPLIER, 
+import {
+  SHOULD_SAVE_THRESHOLD,
+  SET_PRIORITY_MULTIPLIER,
   PRIORITY_SCORES,
 } from './constants';
 import { SearchResult, SearchResultItem, LastResult } from './types';
 import { ScoringEngine } from './ScoringEngine';
 import BaseSearchService from '../base/BaseSearchService';
 import DataStore from '@/stores/DataStore/DataStore';
-import { CacheStoreType } from '@/stores';
 
 const debugLog = DebugLog(DebugLog.DEBUGS.searchService);
 
 export const ArtifactSearchService = new class ArtifactSearchService extends BaseSearchService<LastResult> {
-  constructor() { 
+  constructor() {
     super({} as LastResult);
   }
 
@@ -41,7 +40,7 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
     const result = this.lastResult.searchArtifactSets = Characters.map(character => {
       debugLog('group', character.name);
       debugLog('group', 'setScoreOnCharacter');
-      const setScoreOnCharacter = character.playstyle?.recommendedArtifactSets.reduce((acc, cSet, i, arr) => {
+      const setScore = character.playstyle?.recommendedArtifactSets.reduce((acc, cSet) => {
         const compatibility = ScoringEngine.getCharacterEffectiveness(character, cSet.set);
         debugLog('Compatibility', compatibility);
 
@@ -51,14 +50,14 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
         return result;
       }, 0) ?? 0;
 
-      debugLog('Result', setScoreOnCharacter);
+      debugLog('Result', setScore);
       debugLog('groupEnd');
 
-      const pieceScore = ScoringEngine.getPartScore(character, artifactPartName, mainStat, subStats);
-      const score = Math.round(setScoreOnCharacter + pieceScore);
+      const statScore = ScoringEngine.getPartScore(character, artifactPartName, mainStat, subStats);
+      const score = Math.round(setScore + statScore);
       debugLog('Score', score);
 
-      const result = new SearchResultItem(character, score, score > SHOULD_SAVE_THRESHOLD);
+      const result = new SearchResultItem(character, score, score > SHOULD_SAVE_THRESHOLD, setScore, statScore);
       debugLog('Result', result);
       debugLog('groupEnd');
       return result;
@@ -93,18 +92,18 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
       debugLog('groupEnd');
       return this.lastResult.searchCharacterRecommendations = new List();
     }
-    
+
     const getScores = (characters: List<Character>) => {
       debugLog('group', 'getScores');
       const result = characters.map(character => {
-        const setScore = ScoringEngine.getCharacterEffectiveness(character, set) * SET_PRIORITY_MULTIPLIER
-        debugLog(`Set score for ${character.name}`, setScore);        
-        
-        const partScore = ScoringEngine.getPartScore(character, artifactPartName, mainStat, subStats);
-        const score = Math.round(setScore + partScore);
-        debugLog(`Score data for ${character.name}`, { setScore, partScore, score, SHOULD_SAVE_THRESHOLD });
+        const setScore = ScoringEngine.getCharacterEffectiveness(character, set) * SET_PRIORITY_MULTIPLIER;
+        debugLog(`Set score for ${character.name}`, setScore);
 
-        return new SearchResultItem(character, score, score > SHOULD_SAVE_THRESHOLD);
+        const statScore = ScoringEngine.getPartScore(character, artifactPartName, mainStat, subStats);
+        const score = Math.round(setScore + statScore);
+        debugLog(`Score data for ${character.name}`, { setScore, statScore, score, SHOULD_SAVE_THRESHOLD });
+
+        return new SearchResultItem(character, score, score > SHOULD_SAVE_THRESHOLD, setScore, statScore);
       });
 
       debugLog('Result', result);
@@ -116,7 +115,7 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
     const result = this.lastResult.searchCharacterRecommendations = new List(charactersWantSet, charactersCouldUseSet)
       .map(getScores)
       .flatten()
-      .sort((a, b) => b.score - a.score);
+      .orderBy((a, b) => b.score - a.score);
 
     debugLog('Result', result);
     debugLog('groupEnd');
@@ -124,48 +123,41 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
   }
 
   public search(
-    { artifactPartName, artifactSetName, mainStat, subStats, id, _form }: SearchFormData,
-    CacheStore: CacheStoreType,
+    { artifactPartName, artifactSetName, mainStat, subStats }: Pick<SearchFormData, 'artifactPartName' | 'artifactSetName' | 'mainStat' | 'subStats'>,
   ): SearchResult {
-    if (!_form) throw new Error('_form not defined on SearchFormData');
-
-    const cachedResult = CacheStore.findObject('searchResults',
-      data => data.id === id
-        || ([...data.form.entries()].every(([key, value]) => 'get' in _form && _form.get(key) === value)));
-
-    if (cachedResult) {
-      debugLog('Cached result found', cachedResult);
-      return this.lastResult.search = cachedResult;
-    }
-
     const { Artifacts: ArtifactSets, ArtifactNames: ArtifactSetNames } = DataStore.getState();
 
-    // Check artifact set exists in data
     if (!ArtifactSetNames.includes(artifactSetName)) throw new Error(`Artifact set "${artifactSetName}" not found in data.`);
 
     const set = ArtifactSets.find(set => set.name === artifactSetName);
     debugLog('Set found', set);
     if (!set) throw new Error(`Artifact set "${artifactSetName}" not found in data.`);
 
-    debugLog('Starting search', { set, artifactPartName, mainStat, subStats, id, _form });
+    debugLog('Starting search', { set, artifactPartName, mainStat, subStats });
     const args = [set, artifactPartName, mainStat, subStats] as const;
     const byCharacterRecommendation = this.searchByCharacterRecommendation(...args).orderBy((a, b) => b.score - a.score);
     const byArtifact = this.searchByArtifacts(...args).orderBy(...this._getOrderByFunctions(set, byCharacterRecommendation));
+    const cloneItem = (item: SearchResultItem) => new SearchResultItem(
+      { name: item.characterName } as Character,
+      item.score, item.shouldSave, item.setScore, item.statScore
+    );
     const combined = new List(...byArtifact, ...byCharacterRecommendation).reduce((acc, item) => {
       const existing = acc.find(e => e.characterName === item.characterName);
       if (existing) {
+        existing.setScore += item.setScore;
+        existing.statScore += item.statScore;
         existing.score = Math.round(existing.score + item.score);
         existing.shouldSave = existing.score > SHOULD_SAVE_THRESHOLD;
         return acc;
       }
-      return acc.concat(item);
+      return acc.concat(cloneItem(item));
     }, new List<SearchResultItem>()).orderBy(...this._getOrderByFunctions(set, byCharacterRecommendation));
 
     const result = this.lastResult.search = {
-      combined, byArtifact, byCharacterRecommendation: byCharacterRecommendation.orderBy(...this._getOrderByFunctions(set, byCharacterRecommendation)),
-      form: _form, id, setName: set.name,
+      combined, byArtifact,
+      byCharacterRecommendation: byCharacterRecommendation.orderBy(...this._getOrderByFunctions(set, byCharacterRecommendation)),
+      setName: set.name,
     };
-    CacheStore.update('searchResults', { [id]: result });
     debugLog('Result', result);
     return result;
   }

@@ -9,7 +9,7 @@ type Props = {
 };
 
 export const SearchResultComponent = ({
-  result: { id, setName, ...props }
+  result: { setName, ...props }
 }: Props) => {
   const SettingsStore = useSettingsStore();
   const { wrap, preferredTabs, showAll } = useSettings('preferredTabs', 'showAll', 'wrap');
@@ -17,7 +17,6 @@ export const SearchResultComponent = ({
   const tabBarProps: Omit<TabContentProps, 'results'> = {
     setName,
     showAll: showAll.get(),
-    onShowMore: showAll.get() ? undefined : () => showAll.set(true),
   };
 
   function handleTabChanged(tab: 'combined' | 'characters' | 'artifacts') {
@@ -39,14 +38,17 @@ export const SearchResultComponent = ({
       <TabBar tabs={[
         ['combined', {
           title: 'Combined',
+          description: 'Scores from "By Stats" and "By Set" are added together. Characters who use this set rank higher because they benefit from both the set and the stats.',
           content: <TabContent results={props.combined} {...tabBarProps} />
         }],
         ['artifacts', {
-          title: 'By Artifacts',
+          title: 'By Stats',
+          description: 'Characters are ranked by how useful the main stat and substats are to them. The artifact set is not considered.',
           content: <TabContent results={props.byArtifact} {...tabBarProps} />
         }],
         ['characters', {
-          title: 'By Character Recommendation',
+          title: 'By Set',
+          description: 'Only characters who have this set recommended, ranked by how well these stats match what they want.',
           content: <TabContent results={props.byCharacterRecommendation} {...tabBarProps} />
         }],
       ]}

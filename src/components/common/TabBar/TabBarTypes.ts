@@ -6,6 +6,7 @@ export type Direction = 'horizontal' | 'vertical';
 export type CollapseArea = 'tabs' | 'content';
 export type Tab = {
   title: ReactNode | JSX.Element,
+  description?: ReactNode,
   content: Functionable<JSX.Element>,
   className?: string,
 }

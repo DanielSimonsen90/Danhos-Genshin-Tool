@@ -51,8 +51,8 @@ export const SelectMainStat = ({
 }: PublicProps<MainStatName> & { artifactPartName: ArtifactPartName }
 ) => {
   const options = (
-    artifactPartName === 'Flower' ? ['HP%'] as MainStatMap['Flower'][]
-    : artifactPartName === 'Feather' ? ['ATK%'] as MainStatMap['Feather'][]
+    artifactPartName === 'Flower' ? ['HP'] as MainStatMap['Flower'][]
+    : artifactPartName === 'Feather' ? ['ATK'] as MainStatMap['Feather'][]
     : artifactPartName === 'Sands' ?  [
       'HP%', 'ATK%', 'DEF%', 
       'Elemental Mastery', 'Energy Recharge'

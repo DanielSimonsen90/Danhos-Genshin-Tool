@@ -32,20 +32,13 @@ export default function Search() {
 
   const defaultSearch = useMemo(() => {
     if (!query) return undefined;
-    const currentSearch = CacheStore.findObject('searchResults', result => result.id === query);
-    if (!currentSearch) return undefined;
-
-    return Array.from(currentSearch.form.entries()).reduce((acc, [key, value]) => {
-      // @ts-ignore
-      acc[key] = value;
-      return acc;
-    }, {} as SearchFormData);
+    return CacheStore.getFromItem('searchHistory', query, '{}') ?? undefined;
   }, [query]);
 
   const [artifactSetName, setArtifactSetName] = useState<string | undefined>(defaultSearch?.artifactSetName);
   const [artifactSetPiece, setArtifactSetPiece] = useState<ArtifactPartName>(defaultSearch?.artifactPartName ?? 'Flower');
 
-  const [loading, onSubmit] = useActionState<SearchFormData>(data => {
+  const [loading, onSubmit] = useActionState<SearchFormData>(({ _form, ...data }) => {
     debugLog('onSubmit', data);
     if (data.subStats.filter(Boolean).length > 4) {
       error('Substats must be 4 or less');
@@ -83,7 +76,7 @@ export default function Search() {
         onChange={part => {
           setSelectMainStat({
             artifactPartName: part,
-            defaultValue: part === 'Flower' ? 'HP%' : part === 'Feather' ? 'ATK%' : undefined
+            defaultValue: part === 'Flower' ? 'HP' : part === 'Feather' ? 'ATK' : undefined
           });
           setArtifactSetPiece(part);
         }} />
