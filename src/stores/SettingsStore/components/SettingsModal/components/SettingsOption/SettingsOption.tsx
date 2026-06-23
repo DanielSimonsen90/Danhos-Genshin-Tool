@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 
 import { Settings } from "@/common/types/app-types";
+import { ROUTES } from "@/common/constants/routes";
 
 import { CharacterImage } from "@/components/common/media/Images";
 import { Select, Switch } from "@/components/common/FormItems";
 
 import { WorldRegion, Traveler } from "@/stores/AccountStore/AccountStoreTypes";
 import { DEFAULT_ACCOUNT_DATA, WORLD_REGIONS } from "@/stores/AccountStore/AccountStoreConstants";
-import { classNames } from "@/common/functions/strings";
+import { classNames, pascalCaseFromKebabCase } from "@/common/functions/strings";
+import { IS_DEVELOPMENT_ENVIRONMENT } from "@/common/constants/dev";
 import { descriptions, titles } from "./constants";
 import { useAccountStore } from "@/stores/AccountStore";
 
@@ -70,6 +72,40 @@ function InputType<Setting extends keyof Settings>({ setting, value, onChange, .
     case 'showAll': return <Switch name={setting} enabled={value as Settings['showAll']} onChange={value => onChange(value as Settings[Setting])} />;
     case 'wrap': return <Switch name={setting} enabled={value as Settings['wrap']} onChange={value => onChange(value as Settings[Setting])} />;
 
+    case 'defaultLandingPage': {
+      const routeOptions = [
+        { value: '', label: 'Home' },
+        ...Object.entries(ROUTES)
+          .filter(([key, val]) => (
+            typeof val === 'string' 
+            && !(val as string).includes(':') 
+            && (IS_DEVELOPMENT_ENVIRONMENT || key !== 'development'))
+          )
+          .map(([key, val]) => ({
+            value: val as string,
+            label: pascalCaseFromKebabCase(ROUTES.endRoute(key as keyof typeof ROUTES)),
+          })),
+      ];
+      return (
+        <Select
+          name={setting}
+          options={routeOptions.map(o => o.value)}
+          displayValue={v => routeOptions.find(o => o.value === v)?.label ?? v}
+          value={value as string}
+          onChange={v => onChange(v as Settings[Setting])}
+        />
+      );
+    }
+    case 'cacheEvictionDays': return (
+      <Select
+        name={setting}
+        options={['7', '14', '30', '60', '90', '0']}
+        displayValue={v => v === '0' ? 'Never' : `${v} days`}
+        value={String(value as number)}
+        onChange={v => onChange(Number(v) as Settings[Setting])}
+      />
+    );
+
     case 'worldRegion': return <Select name={setting} options={Object.values(WORLD_REGIONS)} value={value as WorldRegion} onChange={value => onChange(value as Settings[Setting])} />;
     case 'traveler': return (() => {
       const [traveler, setTraveler] = useState(value as Traveler);
@@ -131,7 +167,7 @@ function InputType<Setting extends keyof Settings>({ setting, value, onChange, .
             </label>
             <Select
               name={`${setting}.results`}
-              options={['combined', 'artifacts', 'characters'] as Array<Settings['preferredTabs']['results']>}
+              options={['combined', 'stats', 'set'] as Array<Settings['preferredTabs']['results']>}
               value={tabs.results}
               onChange={v => mergeTab({ results: v as Settings['preferredTabs']['results'] })}
             />

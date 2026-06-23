@@ -18,12 +18,22 @@ import DataStore from '@/stores/DataStore/DataStore';
 const debugLog = DebugLog(DebugLog.DEBUGS.searchService);
 
 export const ArtifactSearchService = new class ArtifactSearchService extends BaseSearchService<LastResult> {
+  private _effectivenessCache = new Map<string, number>();
+
   constructor() {
     super({} as LastResult);
   }
 
   public get lastResult(): LastResult {
     return super.lastResult as LastResult;
+  }
+
+  private _getEffectiveness(character: Character, set: ArtifactSet): number {
+    const key = `${character.name}:${set.name}`;
+    if (this._effectivenessCache.has(key)) return this._effectivenessCache.get(key)!;
+    const value = ScoringEngine.getCharacterEffectiveness(character, set);
+    this._effectivenessCache.set(key, value);
+    return value;
   }
 
   private searchByArtifacts(
@@ -41,7 +51,7 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
       debugLog('group', character.name);
       debugLog('group', 'setScoreOnCharacter');
       const setScore = character.playstyle?.recommendedArtifactSets.reduce((acc, cSet) => {
-        const compatibility = ScoringEngine.getCharacterEffectiveness(character, cSet.set);
+        const compatibility = this._getEffectiveness(character, cSet.set);
         debugLog('Compatibility', compatibility);
 
         const priorityScore = cSet.set.name === set.name ? compatibility * SET_PRIORITY_MULTIPLIER : 0;
@@ -79,11 +89,11 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
 
     // Filter characters that use the artifact set
     const charactersUsesSet = Characters.filter(c => c.playstyle?.recommendedArtifactSets.some(cSet => cSet.set.name === set.name));
-    const charactersWantSet = charactersUsesSet.filter(c => ScoringEngine.getCharacterEffectiveness(c, set) === PRIORITY_SCORES.FIRST_PRIORITY);
+    const charactersWantSet = charactersUsesSet.filter(c => this._getEffectiveness(c, set) === PRIORITY_SCORES.FIRST_PRIORITY);
 
     // Filter characters that could use the artifact set (compatibility 3; second/third priority)
     const charactersCouldUseSet = charactersUsesSet
-      .filter(c => ScoringEngine.getCharacterEffectiveness(c, set))
+      .filter(c => this._getEffectiveness(c, set))
       .filter(character => !charactersWantSet.includes(character));
 
     debugLog('Character data', { set, charactersUsesSet, charactersWantSet, charactersCouldUseSet });
@@ -96,7 +106,7 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
     const getScores = (characters: List<Character>) => {
       debugLog('group', 'getScores');
       const result = characters.map(character => {
-        const setScore = ScoringEngine.getCharacterEffectiveness(character, set) * SET_PRIORITY_MULTIPLIER;
+        const setScore = this._getEffectiveness(character, set) * SET_PRIORITY_MULTIPLIER;
         debugLog(`Set score for ${character.name}`, setScore);
 
         const statScore = ScoringEngine.getPartScore(character, artifactPartName, mainStat, subStats);
@@ -133,6 +143,7 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
     debugLog('Set found', set);
     if (!set) throw new Error(`Artifact set "${artifactSetName}" not found in data.`);
 
+    this._effectivenessCache.clear();
     debugLog('Starting search', { set, artifactPartName, mainStat, subStats });
     const args = [set, artifactPartName, mainStat, subStats] as const;
     const byCharacterRecommendation = this.searchByCharacterRecommendation(...args).orderBy((a, b) => b.score - a.score);
@@ -178,8 +189,8 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
           if (!characterB) console.warn(`Character "${b.characterName}" not found in data.`);
           return 0;
         }
-        const effectiveA = ScoringEngine.getCharacterEffectiveness(characterA, set);
-        const effectiveB = ScoringEngine.getCharacterEffectiveness(characterB, set);
+        const effectiveA = this._getEffectiveness(characterA, set);
+        const effectiveB = this._getEffectiveness(characterB, set);
         
         // Higher effectiveness should come first
         return effectiveB - effectiveA;

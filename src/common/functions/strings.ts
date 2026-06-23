@@ -99,3 +99,13 @@ export function romanNumerals(value: number) {
 export function numberSeparator(value: number, separator = '.') {
   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
 }
+
+export function hashObject(obj: object): string {
+  const str = JSON.stringify(obj, Object.keys(obj).sort());
+  let hash = 5381;
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) + hash) ^ str.charCodeAt(i);
+    hash = hash >>> 0;
+  }
+  return hash.toString(36);
+}

@@ -13,14 +13,14 @@ export function ShowAll(props: Props) {
 
   const total = (
     preferredTabs.results === 'combined' ? props.combined
-    : preferredTabs.results === 'characters' ? props.byCharacterRecommendation
+    : preferredTabs.results === 'set' ? props.byCharacterRecommendation
     : props.byArtifact
   ).length;
 
   useEffect(() => {
     const results = (
       preferredTabs.results === 'combined' ? props.combined
-      : preferredTabs.results === 'characters' ? props.byCharacterRecommendation
+      : preferredTabs.results === 'set' ? props.byCharacterRecommendation
       : props.byArtifact
     );
     const showAllResults = results.length;
