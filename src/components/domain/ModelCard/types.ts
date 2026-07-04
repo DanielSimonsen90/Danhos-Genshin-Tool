@@ -6,9 +6,11 @@ import { Tab } from "@/components/common/TabBar";
 export interface BaseModelCardProps {
   wrapInLink?: boolean;
   linkOnName?: boolean;
+  /** @default h1 */
   nameTag?: Extract<React.ElementType, 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'b'>;
   showRarity?: boolean;
   className?: string;
+  noSeparator?: boolean;
 }
 
 export interface ModelCardProps<TModel extends Model = Model> extends BaseModelCardProps {

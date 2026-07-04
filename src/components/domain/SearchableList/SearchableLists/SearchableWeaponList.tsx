@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Weapon } from "@/common/models";
-import { WeaponCard } from "@/components/domain/models/Weapon";
+import { WeaponCard, WeaponPopover } from "@/components/domain/models/Weapon";
 import { Props as WeaponCardProps } from "@/components/domain/models/Weapon/WeaponCard/WeaponCard";
 
 import { useDataStore, useFavorite } from "@/stores";
@@ -43,10 +43,12 @@ export default function SearchableWeaponList<TFilterKeys extends string>({
         item('option', 'Hide', () => setHidden([...hidden, weapon]), '🙈'),
       ]);
       return hidden.includes(weapon) ? null : (
-        <div className="context-menu-item-container" onContextMenu={open}>
-          {FavoriteStore.isFavorite(weapon) && <FavoriteStar model={weapon} />}
-          <WeaponCard weapon={weapon} {...cardProps} />
-        </div>
+        <WeaponPopover weaponName={weapon.name} showDelay={500}>
+          <div className="context-menu-item-container" onContextMenu={open}>
+            {FavoriteStore.isFavorite(weapon) && <FavoriteStar model={weapon} />}
+            <WeaponCard weapon={weapon} {...cardProps} />
+          </div>
+        </WeaponPopover>
       );
     }}
     search={query}
@@ -103,6 +105,16 @@ export default function SearchableWeaponList<TFilterKeys extends string>({
         wish: weapon => weapon.droppedBy === 'Wish',
       },
       ...filterChecks
+    }}
+    sortChecks={{
+      name: (a, b) => a.name.localeCompare(b.name),
+      rarity: (a, b) => a.rarity - b.rarity,
+      weaponType: (a, b) => a.type.localeCompare(b.type),
+      secondaryStat: (a, b) => {
+        if (!a.secondaryStat) return 1;
+        if (!b.secondaryStat) return -1;
+        return a.secondaryStat.localeCompare(b.secondaryStat);
+      }
     }}
     {...props}
   />;

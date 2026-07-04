@@ -44,7 +44,7 @@
     .artifact-card {
       &:hover {
         border-radius: .25em;
-        background-color: var(--background-secondary);
+        background-color: var(--background-secondary--light);
       }
     }
   }

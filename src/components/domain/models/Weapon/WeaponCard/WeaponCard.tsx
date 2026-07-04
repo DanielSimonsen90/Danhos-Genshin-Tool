@@ -1,14 +1,13 @@
 import { useMemo } from "react";
-import { classNames, rarityString } from "@/common/functions/strings";
-import { Character, List, Weapon } from "@/common/models";
+import { rarityString } from "@/common/functions/strings";
+import { List, Weapon } from "@/common/models";
 import { ElementImage, WeaponImage } from "@/components/common/media/Images";
 import ModelCard, { BaseModelCardProps, ModelRarityTabGroup } from "@/components/domain/ModelCard";
-import { CharacterCard } from "../../Character";
 import { MaterialCard } from "../../Material";
 import { useWeaponDescription } from "./WeaponCardHooks";
 import { useDataStore } from "@/stores";
-import { Functionable, Rarity } from "@/common/types";
-import TabBar, { Tab } from "@/components/common/TabBar";
+import { Functionable } from "@/common/types";
+import TabBar from "@/components/common/TabBar";
 import RarityList from "@/components/common/media/icons/Rarity";
 import SearchableCharacterList from "@/components/domain/SearchableList/SearchableLists/SearchableCharacterList";
 import { RecommendedCharacterForWeapon } from "@/services/SearchService/weapon/types";
@@ -40,7 +39,14 @@ export default function WeaponCard({
   children,
   ...props
 }: Props) {
-  const { name, type, rarity, baseAttack, secondaryStat, secondaryStatValue, ascensionMaterials, droppedBy, signatureWeaponFor } = weapon;
+  const { 
+    name, type, rarity,
+    baseAttack, secondaryStat,
+    secondaryStatValue,
+    ascensionMaterials,
+    droppedBy,
+    signatureWeaponFor
+  } = weapon;
   
   const CharactersData = useDataStore(store => store.CharactersData);
   const getRecommendedCharactersForWeapon = useDataStore(store => store.getRecommendedCharactersForWeapon);
@@ -55,7 +61,7 @@ export default function WeaponCard({
       (signatureCharacter && showSignatureCharacter)
       || showRecommendedCharacters
     ) 
-      ? getRecommendedCharactersForWeapon(weapon)
+      ? getRecommendedCharactersForWeapon(name)
       : undefined;
 
     if (signatureCharacter && showSignatureCharacter) {
@@ -80,7 +86,7 @@ export default function WeaponCard({
     }
 
     if (showRecommendedCharacters) {
-      const recommendedCharacters = getRecommendedCharactersForWeapon(weapon);
+      const recommendedCharacters = getRecommendedCharactersForWeapon(name);
 
       for (const [rarity, characters] of recommendedCharacters.entries()) {
         result.set(rarityString(rarity), {
@@ -98,7 +104,10 @@ export default function WeaponCard({
     }
 
     return List.from(result);
-  }, [CharactersData, getRecommendedCharactersForWeapon, signatureWeaponFor, showRecommendedCharacters, showSignatureCharacter, weapon]);
+  }, [
+    CharactersData, getRecommendedCharactersForWeapon, signatureWeaponFor, 
+    showRecommendedCharacters, showSignatureCharacter, weapon
+  ]);
   const resolvedChildren = useMemo(() => typeof children === 'function' ? children({ weapon }) : children, [children, weapon]);
 
   const processedDescription = useWeaponDescription(weapon, showDetails);
@@ -181,7 +190,7 @@ export default function WeaponCard({
                     cardProps={{
                       wrapInLink: true,
                       children: ({ character }) => {
-                        const recommendationCharacter = getRecommendedCharactersForWeapon(weapon).get(character.rarity)
+                        const recommendationCharacter = getRecommendedCharactersForWeapon(name).get(character.rarity)
                         const recommendationScore = recommendationCharacter
                           ? recommendationCharacter.find(c => c.character.name === character.name)?.score
                           : undefined;

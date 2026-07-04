@@ -17,8 +17,8 @@ export type PhysicalDMGBonus = 'Physical DMG Bonus';
 export type BasicStatName = HP | ATK | DEF;
 export type TalentStatName = BasicStatName | ElementalMastery | EnergyRecharge | PhysicalDMGBonus;
 
-export type FlowerStatName = Percentage<HP>;
-export type FeatherStatName = Percentage<ATK>;
+export type FlowerStatName = HP;
+export type FeatherStatName = ATK;
 export type SandsStatName = Percentage<BasicStatName> | EnergyRecharge | ElementalMastery;
 export type GobletStatName = Percentage<BasicStatName> | ElementalDMGBonus | PhysicalDMGBonus | ElementalMastery;
 export type CircletStatName = Percentage<BasicStatName> | Crits | HealingBonus | ElementalMastery;

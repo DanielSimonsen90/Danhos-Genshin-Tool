@@ -66,6 +66,39 @@ export const UltimateOverlordsMegaMagicSword = new Weapon(
 );
 
 // #region A
+export const ATeaspoonOfTranscendence = new Weapon(
+  "A Teaspoon of Transcendence",
+  {
+    value: `ATK is increased by $0.\nAdditionally, each time the equipping character hits an opponent with their Charged Attack, they attain "Transcendence" for a short time: their Stellar-Conduct DMG is increased by $1 for 5s. This effect can stack once every 0.2s, max 3 stacks.`,
+    refinements: [
+      '28/35/42/49/56%',
+      '16/20/24/28/32%',
+    ]
+  },
+  'Claymore',
+  Rarity.Legendary,
+  674,
+  'Crit DMG',
+  44.1,
+  [
+    WeaponAscensionMaterials.XOfTheFarNorthScions,
+    Drops.FracturedLunarIron,
+    Drops.Warrant
+  ],
+  'Wish',
+  ({ playstyle, score, character }) => {
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (playstyle.prioritizesTalents('Charged/Hold') 
+      && character.canTrigger('all', 'Stellar-Conduct')
+    ) {
+      score += MODIFIERS.TALENT + MODIFIERS.CAN_TRIGGER_ELEMENT;
+    }
+    
+    return score;
+  },
+  cs => cs.Sandrone,
+);
+
 export const AngelosHeptades = new Weapon(
   "Angelos' Heptades",
   {
@@ -1295,8 +1328,8 @@ export const DisasterAndRemorse = new Weapon(
   {
     value: `After the equipping character uses an Elemental Skill, they gain "Path of Conflict" for 17s, as well as "Unforgivable" and "Irreparable" for 3s each. This effect can trigger once every 18s.\nUnforgivable: Increases the equipping character's Normal Attack and Charged Attack DMG by $0.\nIrreparable: Increases the equipping character's Elemental Skill and Elemental Burst DMG by $1.\nWhile Path of Conflict is in effect, when the equipping character hits an opponent with a Normal Attack or Charged Attack, Irreparable's duration will be increased by 1s. When the equipping character hits an opponent with their Elemental Skill or Elemental Burst, Unforgivable's duration will be increased by 1s. Each of the above effects can be triggered once every 0.1s. When Path of Conflict ends or the equipping character leaves the field, both Unforgivable and Irreparable will be removed.\nHexerei: Secret Rite: The above DMG boosts are increased by 75%.`,
     refinements: [
-      '40%/50%/60%/70%/80%',
-      '40%/50%/60%/70%/80%',
+      '40/50/60/70/80%',
+      '40/50/60/70/80%',
     ],
   },
   'Polearm',
@@ -1681,10 +1714,11 @@ export const FlameForgedInsight = new Weapon(
       'Lunar-Crystallize'
     )) {
       score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+      
+      if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.TALENT;
+      if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
+      if (!playstyle.onField) score += MODIFIERS.FIELD;
     }
-    if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.TALENT;
-    if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
-    if (!playstyle.onField) score += MODIFIERS.FIELD;
 
     return score;
   }

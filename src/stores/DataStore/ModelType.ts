@@ -19,17 +19,17 @@ export class ModelType<TModel extends Model> {
   }
 
   // #region Domain
-  public isDomain(): this is ModelType<Domain<any>> {
+  public isDomain(): this is ModelType<Domain> {
     return Domain.isDomain(this.model);
   }
   public isBlessingDomain(): this is ModelType<DomainOfBlessing> {
-    return Domain.isDomain(this.model) && this.model.isBlessing();
+    return Domain.isDomain(this.model) && this.model.getDomainType() === 'Blessing';
   }
   public isForgeryDomain(): this is ModelType<DomainOfForgery> {
-    return Domain.isDomain(this.model) && this.model.isForgery();
+    return Domain.isDomain(this.model) && this.model.getDomainType() === 'Forgery';
   }
   public isMasteryDomain(): this is ModelType<DomainOfMastery> {
-    return Domain.isDomain(this.model) && this.model.isMastery();
+    return Domain.isDomain(this.model) && this.model.getDomainType() === 'Mastery';
   }
   // #endregion Domain
 

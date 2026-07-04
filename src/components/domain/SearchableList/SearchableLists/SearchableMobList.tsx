@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Mob, EasyMob, EliteMob, Boss, WorldBoss, WeeklyBoss } from "@/common/models";
-import { MobCard } from "@/components/domain/models/Mob";
+import { MobCard, MobPopover } from "@/components/domain/models/Mob";
 import { Props as MobCardProps } from "@/components/domain/models/Mob/MobCard/MobCard";
 
 import { useContextMenu } from "@/providers/ContextMenuProvider";
@@ -11,6 +11,7 @@ import { OptionalProps, UncrontrolledProps } from "@/components/domain/Searchabl
 import SearchableList from "@/components/domain/SearchableList/SearchableList";
 import { useFavorite } from "@/stores";
 import { FavoriteStar } from "@/components/common/media/icons/Star";
+import { Regions } from "@/data/regions";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<Mob, TFilterKeys>>
@@ -42,10 +43,12 @@ export default function SearchableMobList<TFilterKeys extends string>({
       ]);      
       
       return hidden.includes(mob) ? null : (
-        <div className="context-menu-item-container" onContextMenu={open}>
-          {FavoriteStore.isFavorite(mob) && <FavoriteStar model={mob} />}
-          <MobCard mob={mob} {...cardProps} />
-        </div>
+        <MobPopover mobName={mob.name} showDelay={500}>
+          <div className="context-menu-item-container" onContextMenu={open}>
+            {FavoriteStore.isFavorite(mob) && <FavoriteStar model={mob} />}
+            <MobCard mob={mob} {...cardProps} />
+          </div>
+        </MobPopover>
       );
     }}
     search={query}
@@ -75,6 +78,29 @@ export default function SearchableMobList<TFilterKeys extends string>({
         unknown: mob => Boss.isBoss(mob) && mob.region === "Unknown",
       },
       ...filterChecks
+    }}
+    sortChecks={{
+      name: (a, b) => a.name.localeCompare(b.name),
+      difficulty: (a, b) => {
+        const difficultyOrder = ['Easy', 'Elite', 'Boss', 'World Boss', 'Weekly Boss'];
+        const getDifficulty = (mob: Mob) => {
+          if (EasyMob.isEasyMob(mob)) return 'Easy';
+          if (EliteMob.isEliteMob(mob)) return 'Elite';
+          if (Boss.isBoss(mob)) return 'Boss';
+          if (WorldBoss.isWorldBoss(mob)) return 'World Boss';
+          if (WeeklyBoss.isWeeklyBoss(mob)) return 'Weekly Boss';
+          return 'Unknown';
+        };
+        
+        const difficultyA = getDifficulty(a);
+        const difficultyB = getDifficulty(b);
+        return difficultyOrder.indexOf(difficultyA) - difficultyOrder.indexOf(difficultyB);
+      },
+      region: (a, b) => {
+        const regionAIndex = Regions.findIndex(region => region === (Boss.isBoss(a) ? a.region : 'Unknown'));
+        const regionBIndex = Regions.findIndex(region => region === (Boss.isBoss(b) ? b.region : 'Unknown'));
+        return regionAIndex - regionBIndex;
+      }
     }}
     {...props}
   />;

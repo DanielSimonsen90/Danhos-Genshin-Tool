@@ -2,14 +2,15 @@ import { addSpacesToCamelCase, snakeCaseFromCamelCase } from "@/common/functions
 import type { ArtifactPartName, MainStatMap, MainStatName, SubStatName } from "@/common/types";
 
 import { useArtifactData, useCharacterData } from "@/stores/DataStore";
-import { DataStore } from "@/stores/DataStore/DataStoreTypes";
+import type { DataStoreType } from "@/stores/DataStore";
 
 import type { PublicProps, PublicMultipleProps } from "./types";
 import Select from "./Select";
 import SelectMultiple from "./SelectMultiple";
 
+
 export const SelectArtifactSet = (
-  props: PublicProps<DataStore['ArtifactNames'][0]>
+  props: PublicProps<DataStoreType['ArtifactNames'][0]>
 ) => {
   const { ArtifactNames: ArtifactSetNames } = useArtifactData();
 
@@ -23,7 +24,7 @@ export const SelectArtifactSet = (
 }
 
 export const SelectCharacter = (
-  props: PublicProps<DataStore['CharacterNames'][0]>
+  props: PublicProps<DataStoreType['CharacterNames'][0]>
 ) => {
   const { CharacterNames } = useCharacterData();
 
@@ -50,8 +51,8 @@ export const SelectMainStat = ({
 }: PublicProps<MainStatName> & { artifactPartName: ArtifactPartName }
 ) => {
   const options = (
-    artifactPartName === 'Flower' ? ['HP%'] as MainStatMap['Flower'][]
-    : artifactPartName === 'Feather' ? ['ATK%'] as MainStatMap['Feather'][]
+    artifactPartName === 'Flower' ? ['HP'] as MainStatMap['Flower'][]
+    : artifactPartName === 'Feather' ? ['ATK'] as MainStatMap['Feather'][]
     : artifactPartName === 'Sands' ?  [
       'HP%', 'ATK%', 'DEF%', 
       'Elemental Mastery', 'Energy Recharge'

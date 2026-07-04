@@ -1,3 +1,4 @@
+import { StellarReaction } from ".";
 import type { Reaction, TeyvatRegion, Element, LunarReaction } from "./genshin";
 
 export type TalentType = 'Normal/Press' | 'Charged/Hold' | 'Plunging/Press' | 'Skill/Ability' | 'Burst/Ult';
@@ -5,7 +6,7 @@ export type BonusAbilityBase = (
   | 'Off-field Damage' 
   | 'Shield' | 'Heal' | 'Self-heal' | 'Bond of Life' 
   | 'Nightsouls Blessing' | `Serpent's Subtlety`  
-  | 'Pneuma' | 'Ousia' | `Enables ${LunarReaction} Reaction`
+  | 'Pneuma' | 'Ousia' | `Enables ${LunarReaction | StellarReaction} Reaction`
   | 'Increases Moonsign'
   | 'Grouping'
 );
@@ -95,6 +96,7 @@ export type PassiveTalent = (
   | `Outside of combat, when Linnea takes an aimed shot, different effects occur depending on target. Specific animals: Arrow transforms into "Net". Ores: Dispatches Lumi who will strike and collect ores.`
   | `When in Teyvat and out of combat with the current region's Treasure Compass unlocked, Nicole's Charged Attack summons a Seelie to show the way like a Treasure Compass would`
   | `When Lohen uses skill, he levels it up by 1 for 8 seconds`
+  | `When Sandrone is in the party, you will gain additional snack rewards when turning in Daily Commissions with Katheryne.`
 );
 
 export type TriggerableReactionFilter = 'all' | 'playstyle-based';

@@ -1,16 +1,18 @@
+import { forwardRef, ComponentPropsWithoutRef } from "react";
 import Image from "./Image";
 import { classNames, pascalCaseFromSnakeCase } from "@/common/functions/strings";
 import { ImageService } from "@/services";
 
-type Props = {
+type Props = Omit<ComponentPropsWithoutRef<typeof Image>, 'src' | 'alt'> & {
   mob: string;
-  className?: string;
 };
 
-export default function MobImage({ mob, className }: Props) {
+export default forwardRef<HTMLImageElement, Props>(function MobImage({ mob, className, ...props }, ref) {
   return <Image
+    ref={ref}
+    {...props}
     className={classNames("mob-image", className)}
     src={ImageService.getMobImage(mob)}
     alt={mob}
   />;
-}
+});

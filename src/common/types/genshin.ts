@@ -2,13 +2,14 @@ export type ArtifactPartName = 'Flower' | 'Feather' | 'Sands' | 'Goblet' | 'Circ
 export type Element = 'Anemo' | 'Pyro' | 'Hydro' | 'Electro' | 'Cryo' | 'Geo' | 'Dendro';
 
 export type LunarReaction = 'Lunar' | `Lunar-${'Charged' | 'Bloom' | 'Crystallize'}`;
+export type StellarReaction = 'Stellar' | `Stellar-${'Conduct'}`;
 export type Reaction =
   | `${Element} Reaction`
   | 'Vaporize' | 'Overloaded' | 'Melt' | 'Burning' 
   | 'Frozen' | 'Shatter' | 'Burgeon' | 'Hyperbloom' | 'Bloom'
   | 'Electro-Charged' | 'Superconduct' | 'Quicken' | 'Aggravate' | 'Spread'
   | 'Swirl' | 'Crystallize'
-  | LunarReaction;
+  | LunarReaction | StellarReaction;
 
 export enum Rarity {
   /** White */

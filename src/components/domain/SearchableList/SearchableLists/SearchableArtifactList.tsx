@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { ArtifactSet } from "@/common/models";
-import { ArtifactCard } from "@/components/domain/models/Artifacts";
+import { ArtifactCard, ArtifactPopover } from "@/components/domain/models/Artifacts";
 import { Rarity } from "@/common/types";
 
 import { Props as ArtifactCardProps } from "@/components/domain/models/Artifacts/ArtifactCard/ArtifactCard";
@@ -13,6 +13,7 @@ import { OptionalProps, UncrontrolledProps } from "@/components/domain/Searchabl
 import SearchableList from "@/components/domain/SearchableList/SearchableList";
 import { useDataStore, useFavorite } from "@/stores";
 import { FavoriteStar } from "@/components/common/media/icons/Star";
+import Elements from "@/data/elements";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<ArtifactSet, TFilterKeys>>
@@ -45,10 +46,12 @@ export default function SearchableArtifactList<TFilterKeys extends string>({
       ]);
 
       return hidden.includes(artifact) ? null : (
-        <div className="context-menu-item-container" onContextMenu={open}>
-          {FavoriteStore.isFavorite(artifact) && <FavoriteStar model={artifact} />}
-          <ArtifactCard artifact={artifact} {...cardProps} />
-        </div>
+        <ArtifactPopover artifactName={artifact.name} showDelay={500}>
+          <div className="context-menu-item-container" onContextMenu={open}>
+            {FavoriteStore.isFavorite(artifact) && <FavoriteStar model={artifact} />}
+            <ArtifactCard artifact={artifact} {...cardProps} />
+          </div>
+        </ArtifactPopover>
       );
     }}
     search={query}
@@ -83,10 +86,10 @@ export default function SearchableArtifactList<TFilterKeys extends string>({
         critDMG: artifact => artifact.doesStatIncrease('Crit DMG'),
 
         shieldStrength: artifact => artifact.doesStatIncrease('Shield Strength'),
-        
+
         chargedAttack: artifact => artifact.doesStatIncrease('Charged Attack DMG'),
         normalAndChargedAttack: artifact => artifact.doesStatIncrease('Normal and Charged Attack DMG'),
-        
+
         skill: artifact => artifact.doesStatIncrease('Elemental Skill DMG'),
         burst: artifact => artifact.doesStatIncrease('Burst'),
         elemental: artifact => (
@@ -112,6 +115,27 @@ export default function SearchableArtifactList<TFilterKeys extends string>({
       },
 
       ...filterChecks
+    }}
+    sortChecks={{
+      name: (a, b) => a.name.localeCompare(b.name),
+      rarity: (a, b) => b.rarity - a.rarity,
+      region: (a, b) => {
+        const regionOrder = ["Mondstadt", "Liyue", "Inazuma", "Sumeru", "Fontaine", "Natlan", "Nod-Krai", "Snezhnaya", "Unknown"];
+        const aRegions = getRegionsFromArtifact(a.name) || [];
+        const bRegions = getRegionsFromArtifact(b.name) || [];
+        const aMinIndex = Math.min(...aRegions.map(region => regionOrder.indexOf(region)));
+        const bMinIndex = Math.min(...bRegions.map(region => regionOrder.indexOf(region)));
+        return aMinIndex - bMinIndex;
+      },
+      element: (a, b) => {
+        const aElement = Elements.find(element => a.doesStatIncrease(`${element} DMG Bonus`));
+        const bElement = Elements.find(element => b.doesStatIncrease(`${element} DMG Bonus`));
+
+        if (!aElement && !bElement) return 0;
+        if (!aElement) return 1;
+        if (!bElement) return -1;
+        return Elements.indexOf(aElement) - Elements.indexOf(bElement);
+      },
     }}
     {...props}
   />;

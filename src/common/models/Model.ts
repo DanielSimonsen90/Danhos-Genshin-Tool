@@ -6,7 +6,7 @@ import { Material as Material } from './materials/Material'
 import { TalentAscensionMaterial, WeaponAscensionMaterial } from "./materials/AscensionMaterial";
 import Weapon from "./weapon";
 
-export type Model = Character | ArtifactSet | Domain<any> | Mob | Material | Weapon;
+export type Model = Character | ArtifactSet | Domain | Mob | Material | Weapon;
 export type ModelKeys = 'Character' | 'Artifact' | 'Domain' | 'Mob' | 'Material' | 'Weapon';
 export const ModelKeys: Array<ModelKeys> = ['Character', 'Artifact', 'Domain', 'Mob', 'Material', 'Weapon'];
 export type ModelMap = {
@@ -20,5 +20,5 @@ export type ModelData<TModelKey extends ModelKeys> =
   TModelKey extends 'Character' ? Character[] :
   TModelKey extends 'Weapon' ? Weapon[] :
   TModelKey extends 'Mob' ? Mob[] :
-  TModelKey extends 'Domain' ? Domain<any>[] :
+  TModelKey extends 'Domain' ? Domain[] :
   Array<never>;

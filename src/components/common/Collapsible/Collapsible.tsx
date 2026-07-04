@@ -1,6 +1,5 @@
 import { forwardRef, useState } from 'react';
 import { CollapsibleProps } from './CollapsibleProps';
-import './Collapsible.scss';
 import { classNames } from '@/common/functions/strings';
 
 const Collapsible = forwardRef<HTMLDivElement, CollapsibleProps>(({ 

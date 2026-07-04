@@ -1,3 +1,4 @@
+import { generateAccountId } from "./AccountStoreFunctions";
 import { WorldRegion, AccountData, FavoritesCollection } from "./AccountStoreTypes";
 
 export const LOCAL_STORAGE_KEY__LEGACY = 'regions';
@@ -15,10 +16,11 @@ export const DEFAULT_FAVORITES: FavoritesCollection = {
 };
 
 export const DEFAULT_ACCOUNT_DATA: AccountData = {
-  id: '',
+  id: generateAccountId(),
   worldRegion: DEFAULT_WORLD_REGION,
   selected: true,
   traveler: 'aether',
+  avatar: 'TravelerAnemo',
   priorityLists: undefined,
   favorites: DEFAULT_FAVORITES,
 } as const;

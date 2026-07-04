@@ -9,7 +9,7 @@ type Props = {
 };
 
 export const SearchResultComponent = ({
-  result: { id, setName, ...props }
+  result: { setName, ...props }
 }: Props) => {
   const SettingsStore = useSettingsStore();
   const { wrap, preferredTabs, showAll } = useSettings('preferredTabs', 'showAll', 'wrap');
@@ -17,10 +17,9 @@ export const SearchResultComponent = ({
   const tabBarProps: Omit<TabContentProps, 'results'> = {
     setName,
     showAll: showAll.get(),
-    onShowMore: showAll.get() ? undefined : () => showAll.set(true),
   };
 
-  function handleTabChanged(tab: 'combined' | 'characters' | 'artifacts') {
+  function handleTabChanged(tab: 'combined' | 'set' | 'stats') {
     if (preferredTabs.get().results === tab) return;
     SettingsStore.updateSettings(cur => ({ 
       preferredTabs: { 
@@ -39,19 +38,22 @@ export const SearchResultComponent = ({
       <TabBar tabs={[
         ['combined', {
           title: 'Combined',
+          description: 'Scores from "By Stats" and "By Set" are added together. Characters who use this set rank higher because they benefit from both the set and the stats.',
           content: <TabContent results={props.combined} {...tabBarProps} />
         }],
-        ['artifacts', {
-          title: 'By Artifacts',
-          content: <TabContent results={props.byArtifact} {...tabBarProps} />
+        ['stats', {
+          title: 'By Stats',
+          description: 'Characters ranked by how well the main stat and substats fit their build. Characters who have this set recommended rank higher due to an additional set bonus.',
+          content: <TabContent results={props.byStats} {...tabBarProps} />
         }],
-        ['characters', {
-          title: 'By Character Recommendation',
-          content: <TabContent results={props.byCharacterRecommendation} {...tabBarProps} />
+        ['set', {
+          title: 'By Set',
+          description: 'Only characters who have this set recommended, ranked by how well these stats match what they want.',
+          content: <TabContent results={props.bySet} {...tabBarProps} />
         }],
       ]}
         defaultTab={preferredTabs.get().results}
-        onTabChange={tab => handleTabChanged(tab as 'combined' | 'characters' | 'artifacts')}
+        onTabChange={tab => handleTabChanged(tab as 'combined' | 'set' | 'stats')}
       >
         <div className="search-result-options">
           <ShowAll {...{ ...props }} />

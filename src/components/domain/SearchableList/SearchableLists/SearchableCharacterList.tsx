@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Character } from "@/common/models";
-import { CharacterCard } from "@/components/domain/models/Character";
+import { CharacterCard, CharacterPopover } from "@/components/domain/models/Character";
 import { Props as CharacterCardProps } from "@/components/domain/models/Character/CharacterCard/CharacterCard";
 import { Rarity } from "@/common/types";
 
@@ -12,6 +12,7 @@ import { useContextMenu } from "@/providers/ContextMenuProvider";
 import { OptionalProps, UncrontrolledProps } from "@/components/domain/SearchableList/Props";
 import SearchableList from "@/components/domain/SearchableList/SearchableList";
 import { FavoriteStar } from "@/components/common/media/icons/Star";
+import { Regions } from "@/data/regions";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<Character, TFilterKeys>>
@@ -23,7 +24,7 @@ type Props<TFilterKeys extends string> = (
   }
 );
 export default function SearchableCharacterList<TFilterKeys extends string>({
-  items, filterChecks = {} as any, onSearch,
+  filterChecks = {} as any, onSearch,
   noBaseFilterChecks, noBaseSearch, cardProps,
   ...props
 }: Props<TFilterKeys>) {
@@ -35,7 +36,7 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
   
   const [internalCardProps, setInteralCardProps] = useState<Pick<Props<TFilterKeys>, 'cardProps'>['cardProps']>({});
 
-  return <SearchableList items={items ?? []}
+  return <SearchableList items={DataStore.Characters}
     placeholder="Search characters..."
     sort={(a, b) => FavoriteStore.isFavorite(a) === FavoriteStore.isFavorite(b) ? 0 : FavoriteStore.isFavorite(a) ? -1 : 1}
     renderItem={character => {
@@ -46,10 +47,12 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
       ]);
 
       return hidden.includes(character) ? null : (
-        <div className="context-menu-item-container" onContextMenu={open}>
-          {FavoriteStore.isFavorite(character) && <FavoriteStar model={character} />}
-          <CharacterCard character={character} {...internalCardProps} {...cardProps} />
-        </div>
+        <CharacterPopover characterName={character.name} showDelay={500}>
+          <div className="context-menu-item-container" onContextMenu={open}>
+            {FavoriteStore.isFavorite(character) && <FavoriteStar model={character} />}
+            <CharacterCard character={character} {...internalCardProps} {...cardProps} />
+          </div>
+        </CharacterPopover>
       );
     }}
 
@@ -143,7 +146,7 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
           && !character.passiveTalent?.toLowerCase().includes('time')
         ),
       },
-      hasSignatureWeapon: character => !!DataStore.getSignatureWeaponFor(character),
+      hasSignatureWeapon: character => !!DataStore.getSignatureWeaponFor(character.name),
       region: {
         mondstadt: character => character.region === "Mondstadt",
         liyue: character => character.region === "Liyue",
@@ -156,6 +159,17 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
         unknown: character => character.region === "Unknown",
       },
       ...filterChecks
+    }}
+    sortChecks={{
+      element: (a, b) => a.element.localeCompare(b.element),
+      name: (a, b) => a.name.localeCompare(b.name),
+      rarity: (a, b) => b.rarity - a.rarity,
+      region: (a, b) => {
+        const regionAIndex = Regions.findIndex(region => region === a.region);
+        const regionBIndex = Regions.findIndex(region => region === b.region);
+        return regionAIndex - regionBIndex;
+      },
+      weapon: (a, b) => a.weapon.localeCompare(b.weapon),
     }}
     {...props}
   />;

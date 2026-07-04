@@ -1,11 +1,11 @@
 import { TeyvatRegion, ResinCost } from "@/common/types/genshin";
 import { Domain } from "./Domain";
-import { TalentAscensionMaterial } from "../materials/AscensionMaterial";
+import { DomainType } from "../Model";
 
 /**
  * Domain for character ascension materials.
  */
-export class DomainOfMastery extends Domain<TalentAscensionMaterial> {
+export class DomainOfMastery extends Domain {
   public static isDomainMastery(obj: any): obj is DomainOfMastery {
     return obj instanceof DomainOfMastery;
   }
@@ -18,7 +18,9 @@ export class DomainOfMastery extends Domain<TalentAscensionMaterial> {
     super(name, description, leyLineDisorder, ResinCost.Twenty, region);
   }
 
-  public isMastery(): this is DomainOfMastery { return true; }
+  public getDomainType(): DomainType {
+    return 'Mastery';
+  }
 }
 
 export default DomainOfMastery;

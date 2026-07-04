@@ -5,14 +5,16 @@ export type AppSettings = {
   wrap: boolean;
   preferredTabs: {
     searchOrHistory: 'search' | 'history';
-    results: 'combined' | 'artifacts' | 'characters';
+    results: 'combined' | 'stats' | 'set';
     craftableMaterial: 'common' | 'rarest';
   },
+  defaultLandingPage: string;
+  cacheEvictionDays: number;
 
   updated?: number;
   newUser?: boolean;
 }
-export type ChangeableSettings = Exclude<AppSettings, 'updated' | 'newUser'>;
+export type ChangeableSettings = Omit<AppSettings, 'updated' | 'newUser'>;
 
 export type SettingsStore = {
   settings: AppSettings;
@@ -27,7 +29,9 @@ export type SettingsStore = {
 
   getSetting<Key extends keyof AppSettings>(key: Key): AppSettings[Key] | undefined;
   updateSettings(update: SetStateAction<Partial<AppSettings>>, override?: boolean): void;
+  updateSettings(update: SetStateAction<AppSettings>, override: true): void;
   saveSettings(update?: SetStateAction<Partial<AppSettings>>): void;
   updateAndSaveSettings(update: SetStateAction<Partial<AppSettings>>, override?: boolean): void;
+  updateAndSaveSettings(update: SetStateAction<AppSettings>, override: true): void;
   resetSettings(): void;
 }

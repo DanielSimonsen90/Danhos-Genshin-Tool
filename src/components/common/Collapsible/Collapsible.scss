@@ -48,7 +48,7 @@
     transition: max-height 0.3s ease;
     padding: 0 1rem;
 
-    input, select {
+    input, select, .filters button, .sort button {
       background-color: var(--background-tertiary);
     }
   }

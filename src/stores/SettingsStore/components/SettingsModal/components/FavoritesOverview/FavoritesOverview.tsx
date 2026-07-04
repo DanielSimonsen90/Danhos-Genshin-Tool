@@ -51,7 +51,7 @@ function ModelComponentList({ modelType, models }: ModelComponentListProps) {
     case 'characters': return <SearchableCharacterList items={items as Array<Character>} cardProps={{
       wrapInLink: true
     }} />;
-    case 'domains': return <SearchableDomainList items={items as Array<Domain<any>>} cardProps={{
+    case 'domains': return <SearchableDomainList items={items as Array<Domain>} cardProps={{
       wrapInLink: true
     }} />;
     case 'mobs': return <SearchableMobList items={items as Array<Mob>} cardProps={{

@@ -9,6 +9,8 @@ export const DEFAULT_SETTINGS: AppSettings = {
     results: 'combined',
     craftableMaterial: 'common',
   },
+  defaultLandingPage: '',
+  cacheEvictionDays: 30,
   updated: undefined,
   newUser: true
 };

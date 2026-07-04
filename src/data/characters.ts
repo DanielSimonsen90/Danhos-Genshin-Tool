@@ -14,7 +14,7 @@ const SetMemoize = new MemoizeService();
 const StatSets = (statName: string, priority: CharacterArtifactSet['effectiveness']) => SetMemoize.memoize(() => (
   Object
     .values(Sets)
-    .filter(set => set.doesStatIncrease(statName))
+    .filter(set => set.doesTwoPieceStatIncrease(statName))
     .map(set => new CharacterArtifactSet(set, 2, priority))
 ), [statName, priority]);
 
@@ -173,7 +173,6 @@ export const Arlecchino = new Character("Arlecchino", "Pyro", "Polearm", ["Bond 
 // #endregion
 
 // #region B
-
 export const Baizhu = new Character("Baizhu", "Dendro", "Catalyst", [
   "Heal",
   'Off-field Damage'
@@ -247,7 +246,6 @@ export const Bennett = new Character("Bennett", "Pyro", "Sword", [
 // #endregion
 
 // #region C
-
 export const Candace = new Character("Candace", "Hydro", "Polearm", [
   "Shield",
   "Off-field Damage",
@@ -447,7 +445,6 @@ export const Cyno = new Character("Cyno", "Electro", "Polearm", [], Rarity.Legen
 // #endregion
 
 // #region D
-
 export const Dahlia = new Character("Dahlia", "Hydro", "Sword", [
   "Shield",
   "Buff ATK Speed: Use normal attacks or Frozen reaction"
@@ -555,7 +552,6 @@ export const Durin = new Character("Durin", "Pyro", "Sword", [
 // #endregion
 
 // #region E
-
 export const Emilie = new Character("Emilie", "Dendro", "Polearm", [
   "Off-field Damage",
   'Pneuma'
@@ -575,7 +571,7 @@ export const Emilie = new Character("Emilie", "Dendro", "Polearm", [
 );
 
 export const Escoffier = new Character('Escoffier', 'Cryo', 'Polearm', [
-  'Off-field Damage', 
+  'Off-field Damage',
   'Heal',
   'Ousia',
 ], Rarity.Legendary, 'Fontaine', {
@@ -612,7 +608,6 @@ export const Eula = new Character("Eula", "Cryo", "Claymore", [], Rarity.Legenda
 // #endregion
 
 // #region F
-
 export const Faruzan = new Character("Faruzan", "Anemo", "Bow", [
   "CRIT Increase: For Anemo DMG if C6 and ult is active",
   "Off-field Damage"
@@ -707,7 +702,6 @@ export const Furina = new Character("Furina", "Hydro", "Sword", [
 // #endregion
 
 // #region G
-
 export const Gaming = new Character("Gaming", "Pyro", "Claymore", ["Self-heal"], Rarity.Epic, 'Liyue', {
   material: TalentAscension.Prosperity,
   weeklyBossDrop: MobDrops.LightlessMass,
@@ -778,7 +772,6 @@ export const HuTao = new Character("Hu Tao", "Pyro", "Polearm", [
 // #endregion
 
 // #region I
-
 export const Iansan = new Character("Iansan", "Electro", "Polearm", ["Nightsouls Blessing"], Rarity.Epic, 'Natlan', {
   material: TalentAscension.Contention,
   weeklyBossDrop: MobDrops.DenialAndJudgment,
@@ -855,7 +848,6 @@ export const Ineffa = new Character("Ineffa", "Electro", "Polearm", [
 // #endregion
 
 // #region J
-
 export const Jahoda = new Character("Jahoda", "Anemo", "Bow", [
   "Off-field Damage",
   "Elemental Infusion: After Skill/Ability, Jahoda will gain elemental infusion based on the elements of affected opponents",
@@ -896,7 +888,6 @@ export const Jean = new Character("Jean", "Anemo", "Sword", ["Heal"], Rarity.Leg
 // #endregion
 
 // #region K
-
 export const Kachina = new Character("Kachina", "Geo", "Polearm", [
   "Off-field Damage",
   "Nightsouls Blessing"
@@ -1108,7 +1099,6 @@ export const KukiShinobu = new Character("Kuki Shinobu", "Electro", "Sword", ["H
 // #endregion
 
 // #region L
-
 export const LanYan = new Character("Lan Yan", "Anemo", "Catalyst", ["Shield", "Grouping"], Rarity.Epic, 'Liyue', {
   material: TalentAscension.Diligence,
   weeklyBossDrop: MobDrops.ErodedSunfire,
@@ -1127,6 +1117,7 @@ export const LanYan = new Character("Lan Yan", "Anemo", "Catalyst", ["Shield", "
 
 export const Lauma = new Character("Lauma", "Dendro", "Catalyst", [
   "Enables Lunar-Bloom Reaction",
+  "Off-field Damage",
   'Increases Moonsign',
 ], Rarity.Legendary, 'Nod-Krai', {
   material: TalentAscension.Moonlight,
@@ -1249,7 +1240,6 @@ export const Lyney = new Character("Lyney", "Pyro", "Bow", [
 // #endregion
 
 // #region M
-
 export const Mavuika = new Character("Mavuika", "Pyro", "Claymore", [
   'Nightsouls Blessing',
   'Off-field Damage'
@@ -1321,7 +1311,6 @@ export const Mualani = new Character("Mualani", "Hydro", "Catalyst", ["Nightsoul
 // #endregion
 
 // #region N
-
 export const Nahida = new Character("Nahida", "Dendro", "Catalyst", [
   "Off-field Damage",
   "Elemental Based: While inside ult, different parameters change based on elements within party"
@@ -1468,7 +1457,6 @@ export const Noelle = new Character("Noelle", "Geo", "Claymore", [
 // #endregion
 
 // #region O
-
 export const Ororon = new Character("Ororon", "Electro", "Bow", [
   'Off-field Damage',
   'Nightsouls Blessing'
@@ -1491,7 +1479,6 @@ export const Ororon = new Character("Ororon", "Electro", "Bow", [
 // #endregion
 
 // #region P
-
 export const Prune = new Character("Prune", "Anemo", "Catalyst", [
   "Elemental Infusion: After triggering Swirl using Elemental Skill, Prune adapts to the element involved in the Swirl reaction",
   "Off-field Damage",
@@ -1512,7 +1499,6 @@ export const Prune = new Character("Prune", "Anemo", "Catalyst", [
 // #endregion
 
 // #region Q
-
 export const Qiqi = new Character("Qiqi", "Cryo", "Sword", ["Heal"], Rarity.Legendary, 'Liyue', {
   material: TalentAscension.Prosperity,
   weeklyBossDrop: MobDrops.TailOfBoreas,
@@ -1532,7 +1518,6 @@ export const Qiqi = new Character("Qiqi", "Cryo", "Sword", ["Heal"], Rarity.Lege
 // #endregion
 
 // #region R
-
 export const RaidenShogun = new Character("Raiden Shogun", "Electro", "Polearm", [
   "Off-field Damage",
 ], Rarity.Legendary, 'Inazuma', {
@@ -1585,8 +1570,25 @@ export const Rosaria = new Character("Rosaria", "Cryo", "Polearm", ["Off-field D
 // #endregion
 
 // #region S
+export const Sandrone = new Character("Sandrone", "Cryo", "Claymore", [
+  'Enables Stellar-Conduct Reaction',
+  'Off-field Damage',
+], Rarity.Legendary, 'Fontaine', {
+  material: TalentAscension.Vagrancy,
+  weeklyBossDrop: MobDrops.MadmansRestraint,
+  crystal: ElementalCrystals.Cryo,
+  localSpecialty: LocalSpecialties.SubdetectionUnit,
+  worldBossDrop: MobDrops.PlumeOfTheFallenWatcher,
+  mobDrop: EasyMobDrops.DriveShaft,
+}, 'When Sandrone is in the party, you will gain additional snack rewards when turning in Daily Commissions with Katheryne.',
+  new CharacterPlaystyle("On-field DPS", ["ATK"], ["Charged/Hold", "Burst/Ult", "Skill/Ability"], true, [
+    new CharacterArtifactSet(Sets.DisenchantmentInDeepShadow, 4, 100),
+  ])
+);
 
-export const SangonomiyaKokomi = new Character("Sangonomiya Kokomi", "Hydro", "Catalyst", ["Heal"], Rarity.Legendary, 'Inazuma', {
+export const SangonomiyaKokomi = new Character("Sangonomiya Kokomi", "Hydro", "Catalyst", [
+  "Heal"
+], Rarity.Legendary, 'Inazuma', {
   material: TalentAscension.Transience,
   weeklyBossDrop: MobDrops.HellfireButterfly,
   crystal: ElementalCrystals.Hydro,
@@ -1725,7 +1727,6 @@ export const Sucrose = new Character("Sucrose", "Anemo", "Catalyst", [
 // #endregion
 
 // #region T
-
 export const TartagliaChilde = new Character("Tartaglia (Childe)", "Hydro", "Bow", [
   "Elemental Infusion: After Skill/Ability, Tartaglia (Childe) gains Hydro infusion"
 ], Rarity.Legendary, 'Snezhnaya', {
@@ -1878,7 +1879,6 @@ export const TravelerCryo = new Character("Traveler (Cryo)", "Cryo", "Sword", []
 // #endregion
 
 // #region V
-
 export const Varesa = new Character("Varesa", "Electro", "Catalyst", ["Nightsouls Blessing"], Rarity.Legendary, 'Natlan', {
   material: TalentAscension.Conflict,
   weeklyBossDrop: MobDrops.ErodedScaleFeather,
@@ -1936,7 +1936,6 @@ export const Venti = new Character("Venti", "Anemo", "Bow", [
 // #endregion
 
 // #region W
-
 export const WandererScaramouche = new Character("Wanderer (Scaramouche)", "Anemo", "Catalyst", [], Rarity.Legendary, 'Sumeru', {
   material: TalentAscension.Praxis,
   weeklyBossDrop: MobDrops.DakasBell,
@@ -1974,7 +1973,6 @@ export const Wriothesley = new Character("Wriothesley", "Cryo", "Catalyst", [
 // #endregion
 
 // #region X
-
 export const Xiangling = new Character("Xiangling", "Pyro", "Polearm", ["Off-field Damage"], Rarity.Epic, 'Liyue', {
   material: TalentAscension.Diligence,
   weeklyBossDrop: MobDrops.DvalinsClaw,
@@ -2081,7 +2079,6 @@ export const Xinyan = new Character("Xinyan", "Pyro", "Claymore", [], Rarity.Epi
 // #endregion
 
 // #region Y
-
 export const YaeMiko = new Character("Yae Miko", "Electro", "Catalyst", ["Off-field Damage"], Rarity.Legendary, 'Inazuma', {
   material: TalentAscension.Light,
   weeklyBossDrop: MobDrops.TheMeaningOfAeons,
@@ -2199,7 +2196,6 @@ export const YunJin = new Character("Yun Jin", "Geo", "Polearm", ["Shield"], Rar
 // #endregion
 
 // #region Z
-
 export const Zibai = new Character("Zibai", "Geo", "Sword", [
   'Enables Lunar-Crystallize Reaction',
   'Increases Moonsign',

@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
+import { useConfirm } from "@/providers/ConfirmProvider";
 
 import { getDefaultTiers } from "@/components/common/Tierlist";
 import { useDataStore, useAccountData, AccountData } from "@/stores";
@@ -13,12 +14,13 @@ type UseModifyPriorityListProps = {
   setPriorityLists?: Dispatch<SetStateAction<PriorityLists>>;
 };
 export function useModifyPriorityList({ crud, priorityLists, setPriorityLists }: UseModifyPriorityListProps) {
+  const confirm = useConfirm();
   const DataStore = useDataStore();
   const { setAccountData } = useAccountData();
   const [modifyList, setModifyList] = useState<ModifyPriorityListPayload | undefined>(undefined);
   const [open, setOpen] = useState(false);
 
-  const onSubmit = (payload: ModifyPriorityListPayload) => {
+  const onSubmit = async (payload: ModifyPriorityListPayload) => {
     const { title, model, tiers, id } = payload;
     const priorityList: PriorityList = {
       model,
@@ -29,7 +31,7 @@ export function useModifyPriorityList({ crud, priorityLists, setPriorityLists }:
 
     const shouldDeleteId = id !== title;
     const isReplacingExisting = priorityLists?.[title] !== undefined;
-    const shouldReplaceExisting = isReplacingExisting && confirm(ABOUT_TO_REPLACE_EXISTING);
+    const shouldReplaceExisting = isReplacingExisting && await confirm(ABOUT_TO_REPLACE_EXISTING);
     if (isReplacingExisting && !shouldReplaceExisting) return;
 
     setAccountData(current => {

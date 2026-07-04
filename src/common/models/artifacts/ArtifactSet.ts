@@ -52,6 +52,11 @@ export class ArtifactSet extends Material {
     );
   }
 
+  public doesTwoPieceStatIncrease(stat?: string) {
+    const query = new RegExp(`${stat ?? '\\w+'}(?:\\s+\\((?:ult|ability)\\))?(?:\\s+(?:DMG|Bonus|Effectiveness|Strength))?\\s+\\+\\d+`, 'i');
+    return this.rarity > Rarity.Rare && query.test(this.twoPieceSetDescription);
+  }
+
   public getModelKey(): ModelKeys {
     return 'Artifact';
   }

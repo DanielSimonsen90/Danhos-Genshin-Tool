@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Domain } from "@/common/models";
-import { DomainCard } from "@/components/domain/models/Domain";
+import { DomainCard, DomainPopover } from "@/components/domain/models/Domain";
 import { Props as DomainCardProps } from "@/components/domain/models/Domain/DomainCard/DomainCard";
 
 import { useContextMenu } from "@/providers/ContextMenuProvider";
@@ -11,10 +11,11 @@ import { useFavorite } from "@/stores";
 import SearchableList from "@/components/domain/SearchableList/SearchableList";
 import { OptionalProps, UncrontrolledProps } from "@/components/domain/SearchableList/Props";
 import { FavoriteStar } from "@/components/common/media/icons/Star";
+import { Regions } from "@/data/regions";
 
 type Props<TFilterKeys extends string> = (
-  & Partial<UncrontrolledProps<Domain<any>, TFilterKeys>>
-  & OptionalProps<Domain<any>, TFilterKeys>
+  & Partial<UncrontrolledProps<Domain, TFilterKeys>>
+  & OptionalProps<Domain, TFilterKeys>
   & {
     noBaseSearch?: boolean;
     noBaseFilterChecks?: boolean;
@@ -28,7 +29,7 @@ export default function SearchableDomainList<TFilterKeys extends string>({
 }: Props<TFilterKeys>) {
   const { query, filters } = useParams();
   const navigate = useNavigate();
-  const [hidden, setHidden] = useState(new Array<Domain<any>>());
+  const [hidden, setHidden] = useState(new Array<Domain>());
   const FavoriteStore = useFavorite('domains');
 
   return <SearchableList items={items ?? []}
@@ -42,10 +43,12 @@ export default function SearchableDomainList<TFilterKeys extends string>({
       ]);      
       
       return hidden.includes(domain) ? null : (
-        <div className="context-menu-item-container" onContextMenu={open}>
-          {FavoriteStore.isFavorite(domain) && <FavoriteStar model={domain} />}
-          <DomainCard domain={domain} {...cardProps} />
-        </div>
+        <DomainPopover domainName={domain.name} showDelay={500}>
+          <div className="context-menu-item-container" onContextMenu={open}>
+            {FavoriteStore.isFavorite(domain) && <FavoriteStar model={domain} />}
+            <DomainCard domain={domain} {...cardProps} />
+          </div>
+        </DomainPopover>
       );
     }}
     search={query}
@@ -57,9 +60,9 @@ export default function SearchableDomainList<TFilterKeys extends string>({
     onSearch={noBaseSearch ? onSearch ?? (() => true) : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}
     filterChecks={noBaseFilterChecks ? filterChecks : {
       type: {
-        artifacts: domain => domain.isBlessing(),
-        talents: domain => domain.isMastery(),
-        weapons: domain => domain.isForgery(),
+        artifacts: domain => domain.getDomainType() === 'Blessing',
+        talents: domain => domain.getDomainType() === 'Mastery',
+        weapons: domain => domain.getDomainType() === 'Forgery',
       },
       region: {
         mondstadt: domain => domain.region === "Mondstadt",
@@ -71,6 +74,15 @@ export default function SearchableDomainList<TFilterKeys extends string>({
         snezhnaya: domain => domain.region === "Snezhnaya",
       },
       ...filterChecks
+    }}
+    sortChecks={{
+      name: (a, b) => a.name.localeCompare(b.name),
+      region: (a, b) => {
+        const regionAIndex = Regions.findIndex(region => region === a.region);
+        const regionBIndex = Regions.findIndex(region => region === b.region);
+        return regionAIndex - regionBIndex;
+      }
+      // resinCost: (a, b) => a.resinCost - b.resinCost,
     }}
     {...props}
   />;

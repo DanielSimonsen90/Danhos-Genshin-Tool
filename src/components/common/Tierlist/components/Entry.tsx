@@ -1,5 +1,6 @@
 import { useMemo } from "react";
-import { Draggable } from "react-beautiful-dnd";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 import { useContextMenu } from "@/providers/ContextMenuProvider";
 
@@ -25,6 +26,8 @@ export default function Entry<T>({
   render, renderContextMenuItems
 }: Props<T>) {
   const tier = useMemo(() => tiers.find(tier => tier.entries.some(item => item.id === entry.id))!, [entry.id, tiers]);
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: entry.id });
+
   const onContextMenu = useContextMenu(item => {
     const sendToTiers = [
       item('divider', 'Send To Tiers'),
@@ -61,17 +64,25 @@ export default function Entry<T>({
     ];
   }, 'top-right');
 
+  // During drag, all useSortable components re-render on every pointer move (dnd context subscription).
+  // Memoize so render() is only called when the item or its position actually changes.
+  const content = useMemo(() => render(entry.item, index), [render, entry.item, index]);
 
   return (
-    <Draggable draggableId={entry.id} index={index}>
-      {provided => (
-        <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}
-          className="tier__item"
-          onDoubleClick={() => onSendToTier(entry, unsorted)} onContextMenu={onContextMenu}
-        >
-          {render(entry.item, index)}
-        </div>
-      )}
-    </Draggable>
+    <div
+      ref={setNodeRef}
+      style={{
+        transform: CSS.Transform.toString(transform),
+        transition,
+        opacity: isDragging ? 0.4 : undefined,
+      }}
+      {...attributes}
+      {...listeners}
+      className="tier__item"
+      onDoubleClick={() => onSendToTier(entry, unsorted)}
+      onContextMenu={onContextMenu}
+    >
+      {content}
+    </div>
   );
 }

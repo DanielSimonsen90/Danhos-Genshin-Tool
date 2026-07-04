@@ -39,8 +39,22 @@ export class List<T> extends Array<T> {
    * Filter the list to only unique values
    * @returns New unique list
    */
-  public unique(): List<T> {
-    return List.from([...new Set(this)]);
+  public unique(getIdentifier?: (value: T) => any): List<T> {
+    if (!getIdentifier) {
+      return List.from([...new Set(this)]);
+    }
+
+    const seen = new Set<any>();
+    return this.reduce((result, item) => {
+      const identifier = getIdentifier(item);
+      
+      if (!seen.has(identifier)) {
+        seen.add(identifier);
+        result.push(item);
+      }
+
+      return result;
+    }, new List<T>());
   }
 
   /**
@@ -71,6 +85,9 @@ export class List<T> extends Array<T> {
   }
   public mapToArray<U>(callback: (value: T, index: number, array: T[]) => U): U[] {
     return super.map(callback)
+  }
+  public flatMap<U>(callback: (value: T, index: number, array: T[]) => U | ReadonlyArray<U>): List<U> {
+    return List.from(super.flatMap(callback));
   }
 
   public filter<U extends T>(callback: (value: T, index: number, array: T[]) => value is U): List<U>;

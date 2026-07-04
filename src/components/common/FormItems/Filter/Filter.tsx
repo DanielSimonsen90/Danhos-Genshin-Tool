@@ -1,13 +1,16 @@
-import { useState, Dispatch, SetStateAction, useRef, EventHandler, useCallback, useEffect } from "react";
+import { Dispatch, SetStateAction, useRef } from "react";
+import { createPortal } from "react-dom";
 
 import { classNames, pascalCaseFromCamelCase } from "@/common/functions/strings";
 import useClickOutside from "@/hooks/useClickOutside";
 import useOnChange from "@/hooks/useOnChange";
+import { useFloatingDropdown } from "@/hooks/useFloatingDropdown";
 
 import SelectMultiple from "../Select/SelectMultiple";
 import FilterOption from "./FilterOption";
 import { getCloseAllMultipleSelects, getDefaultValueForRefs, getOnClickedOutside } from "./FilterFunctions";
 import { addTabNavigation } from "@/common/functions/accessibility";
+import FilterIcon from "@/components/common/media/icons/FilterIcon";
 
 export type FilterObject<FilterKeys extends string, TItem, TValue = FilterCallback<TItem>> = Record<FilterKeys, TValue | Record<string, TValue> | undefined>;
 export type FilterCallback<TItem> = (item: TItem) => boolean;
@@ -25,75 +28,72 @@ export default function Filter<FilterKeys extends string, TItem>(props: Props<Fi
   const { filterChecks, placeholder } = props;
   const { filters, setFilters, onChange } = props;
 
-  const [showOptions, setShowOptions] = useState(false);
+  const { showOptions, setShowOptions, headerRef, dropdownStyle, onToggle } = useFloatingDropdown();
 
   const refs = useRef(getDefaultValueForRefs(filterChecks));
   const closeAllMultipleSelects = getCloseAllMultipleSelects(refs);
   const ref = useClickOutside('div', getOnClickedOutside(closeAllMultipleSelects, setShowOptions));
-  const onToggleShowOptionsEvent = useCallback<EventHandler<any>>(e => {
-    e.preventDefault();
-    e.stopPropagation();
-    setShowOptions(v => !v);
-  }, []);
 
   useOnChange(filters, onChange);
 
   return (
     <div className="filters">
-      <select className="filters__header" {...addTabNavigation(onToggleShowOptionsEvent, true)}>
-        <option>{placeholder ?? 'Filter...'}</option>
-      </select>
+      <button ref={headerRef} type="button" className="filters__header" {...addTabNavigation(onToggle, true)}>
+        <FilterIcon />
+        {placeholder ?? 'Filter'}
+      </button>
 
-      <div ref={ref} className={classNames("select__options", 'floatable', showOptions && 'select__options--open', 'filter-options')}>
-        {Object.keys(filterChecks).map((filter, i) => {
-          const typedFilter = filter as keyof typeof filterChecks;
+      {showOptions && createPortal(
+        <div ref={ref} className={classNames("select__options", "select__options--open", "filter-options")} style={dropdownStyle}>
+          {Object.keys(filterChecks).map((filter, i) => {
+            const typedFilter = filter as keyof typeof filterChecks;
 
-          if (typeof filterChecks[typedFilter] === 'object' && filterChecks[typedFilter]) return (
-            <SelectMultiple key={i} name={filter} floatable
-              ref={refs.current[i]}
-              onOpen={() => closeAllMultipleSelects(i)}
+            if (typeof filterChecks[typedFilter] === 'object' && filterChecks[typedFilter]) return (
+              <SelectMultiple key={i} name={filter} floatable
+                ref={refs.current[i]}
+                onOpen={() => closeAllMultipleSelects(i)}
 
-              placeholder={pascalCaseFromCamelCase(filter)}
-              options={Object.keys(filterChecks[typedFilter] ?? {})}
-              displayValue={pascalCaseFromCamelCase}
+                placeholder={pascalCaseFromCamelCase(filter)}
+                options={Object.keys(filterChecks[typedFilter] ?? {})}
+                displayValue={pascalCaseFromCamelCase}
 
-              value={Object.keys(filters[typedFilter] ?? {})}
-              setValue={selectedValues => setFilters(filters => ({
-                ...filters,
-                [filter]: Object.fromEntries((
-                  typeof selectedValues === 'function' ?
-                    selectedValues(Object.keys(filters[typedFilter] ?? {}).filter(Boolean)) :
-                    selectedValues
-                ).map(value => [value, true]))
-              }))}
-            />
-          );
+                value={Object.keys(filters[typedFilter] ?? {})}
+                setValue={selectedValues => setFilters(filters => ({
+                  ...filters,
+                  [filter]: Object.fromEntries((
+                    typeof selectedValues === 'function' ?
+                      selectedValues(Object.keys(filters[typedFilter] ?? {}).filter(Boolean)) :
+                      selectedValues
+                  ).map(value => [value, true]))
+                }))}
+              />
+            );
 
-          return (
-            <FilterOption key={i} i={i}
-              name={filter} option={filter}
-              value={filters[typedFilter] as boolean | undefined}
-              onSelect={(newValue) => {
-                const newFilters = { ...filters };
-                if (newValue === undefined) {
-                  delete newFilters[typedFilter];
-                } else {
-                  newFilters[typedFilter] = newValue;
-                }
-                setFilters(newFilters);
-              }}
-            />
-          );
-        })}
-        <button className="brand--light secondary" onClick={e => {
-          e.preventDefault();
-          e.stopPropagation();
-          setFilters({} as FilterObject<FilterKeys, TItem, boolean | undefined>);
-          closeAllMultipleSelects();
-        }}>
-          Clear Filters
-        </button>
-      </div>
+            return (
+              <FilterOption key={i} i={i}
+                name={filter} option={filter}
+                value={filters[typedFilter] as boolean | undefined}
+                onSelect={(newValue) => {
+                  const newFilters = { ...filters };
+                  if (newValue === undefined) delete newFilters[typedFilter];
+                  else newFilters[typedFilter] = newValue;
+                  
+                  setFilters(newFilters);
+                }}
+              />
+            );
+          })}
+          <button className="brand--light secondary" onClick={e => {
+            e.preventDefault();
+            e.stopPropagation();
+            setFilters({} as FilterObject<FilterKeys, TItem, boolean | undefined>);
+            closeAllMultipleSelects();
+          }}>
+            Clear Filters
+          </button>
+        </div>,
+        document.body
+      )}
     </div>
   );
 }

@@ -1,6 +1,6 @@
-import { CharacterUsingArtifactResult } from "@/stores";
 import SearchableList from "@/components/domain/SearchableList";
 import { CharacterCard } from "@/components/domain/models/Character";
+import { CharacterUsingArtifactResult } from "@/stores/DataStore/DataStoreTypes";
 
 type ArtifactSetsPiecesContentProps = {
   results: CharacterUsingArtifactResult[];
@@ -16,8 +16,10 @@ export default function ArtifactSetsPiecesContent({ results, displayPieces }: Ar
       onSearch={(search, item) => item.character.name.toLowerCase().includes(search.toLowerCase())}
       renderItem={({ character, cSet }) => (
         <CharacterCard character={character} wrapInLink>
-          <p><b>{cSet.effectiveness}%</b> of players use this set.</p>
-          {displayPieces && <p className="set-pieces">{cSet.pieces}-Piece</p>}
+          <div>
+            <p><b>{cSet.effectiveness}%</b> of players use this set.</p>
+            {displayPieces && <p className="set-pieces">{cSet.pieces}-Piece</p>}
+          </div>
         </CharacterCard>
       )}
     />

@@ -11,8 +11,6 @@ import { ArtifactDetails } from "@/components/domain/models/Artifacts";
 import { SearchResult, ArtifactSearchService } from "@/services";
 
 import { useCacheStore, useDataStore } from "@/stores";
-import type { CacheStore } from "@/stores/CacheStore/CacheStoreTypes";
-import type { DataStore } from "@/stores/DataStore/DataStoreTypes";
 
 import { SearchResult as SearchResultComponent } from "./components";
 import ArtifactHelper from "../ArtifactHelper";
@@ -33,12 +31,19 @@ export default function SearchQuery() {
   const Result = useCallback(() => results ? <SearchResultComponent result={results} /> : <p>No results</p>, [results]);
 
   useEffect(() => {
-    const { formData, results } = getSearchResultsFromQuery(query, CacheStore, DataStore);
+    const formData = CacheStore.getFromItem('searchHistory', query, {});
+    debugLog('SearchQuery formData', { query, formData });
+    if (!formData) return;
 
+    const { artifactSetName } = formData;
+    const results = ArtifactSearchService.search({
+      ...formData,
+      artifactSetName: pascalCaseFromSnakeCase(artifactSetName),
+    });
+
+    debugLog('SearchQuery results', { query, results });
     setFormData(formData);
     setResults(results);
-
-    if (!CacheStore.get('searchHistory', {})[query] && formData) CacheStore.update('searchHistory', { [query as string]: formData });
   }, [query, retries]);
 
   if (!formData || !results || !artifactSet) return (
@@ -68,19 +73,4 @@ export default function SearchQuery() {
       <Result />
     </>
   );
-}
-
-function getSearchResultsFromQuery(query: string, CacheStore: CacheStore, DataStore: DataStore) {
-  const formData = CacheStore.getFromItem('searchHistory', query, '{}');
-  debugLog('getSearchResultsFromQuery cached', { query, formData });
-  if (!formData) return { formData, results: null };
-
-  const { artifactSetName } = formData;
-  const results = ArtifactSearchService.search({
-    ...formData,
-    artifactSetName: pascalCaseFromSnakeCase(artifactSetName),
-  }, CacheStore, DataStore);
-
-  debugLog('getSearchResultsFromQuery result', { query, results });
-  return { formData, results };
 }

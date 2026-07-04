@@ -2,11 +2,25 @@ import { ReactNode, useMemo, useState } from "react";
 import { OptionalProps, UncrontrolledProps } from "../Props";
 import UncontrolledSearchableList from "./UncontrolledSearchableList";
 import { FilterObject } from "../../../common/FormItems/Filter/Filter";
+import { ActiveSort } from "../../../common/FormItems/Sort/Sort";
 import useOnChange from "../../../../hooks/useOnChange";
 
 export default function ControlledSearchableList<TItem, FilterKeys extends string>({ items, filterChecks, ...props }: UncrontrolledProps<TItem, FilterKeys> & OptionalProps<TItem, FilterKeys>) {
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState<FilterObject<FilterKeys, TItem, boolean | undefined>>({} as any);
+  const [activeSorts, setActiveSorts] = useState<ActiveSort[]>([]);
+  const sortFn = useMemo(() => {
+    if (!activeSorts.length) return props.sort;
+    return (a: TItem, b: TItem) => {
+      for (const { key, direction } of activeSorts) {
+        const base = props.sortChecks?.[key];
+        if (!base) continue;
+        const result = direction === 'asc' ? base(a, b) : base(b, a);
+        if (result !== 0) return result;
+      }
+      return props.sort?.(a, b) ?? 0;
+    };
+  }, [activeSorts, props.sortChecks, props.sort]);
   const results = useMemo(() => items.filter(item => {
     if (Object.keys(filters).length === 0 && !search) return true;
 
@@ -72,6 +86,9 @@ export default function ControlledSearchableList<TItem, FilterKeys extends strin
 
   return <UncontrolledSearchableList onFilterChange={() => { }}
     {...props}
+    sort={sortFn}
+    activeSorts={activeSorts}
+    setActiveSorts={setActiveSorts}
     search={search} setSearch={setSearch} filters={filters} setFilters={setFilters} filterChecks={filterChecks} hasSearchOrFilters={hasSearchOrFilters}
     children={results.map((result) => [render(result, items.indexOf(result), items), result] as [ReactNode, TItem])}
   />;

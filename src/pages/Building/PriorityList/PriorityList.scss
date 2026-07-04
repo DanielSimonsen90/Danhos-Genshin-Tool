@@ -21,6 +21,10 @@
     }
   }
 
+  .model-entry {
+    cursor: grab;
+  }
+
   .tier__title {
     font-size: 1.25rem;
   }
@@ -29,8 +33,12 @@
     margin-top: auto;
   }
 
-  .character-image {
+  .character-image, .mob-image, .material-image, .weapon-image {
     --size: 4rem;
     border-radius: unset;
+  }
+
+  .domain-image {
+    --size: 7.5rem;
   }
 }

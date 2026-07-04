@@ -1,20 +1,20 @@
 import { ArtifactSet, Character } from '@/common/models';
 
 export type SearchResult = {
-  byArtifact: SearchResultItem[];
-  byCharacterRecommendation: SearchResultItem[];
+  byStats: SearchResultItem[];
+  bySet: SearchResultItem[];
   combined: SearchResultItem[];
 
   setName: ArtifactSet['name'];
-  form: FormData;
-  id: string;
 };
 
 export class SearchResultItem {
   constructor(
     character: Character,
     public score: number,
-    public shouldSave: boolean
+    public shouldSave: boolean,
+    public setScore: number,
+    public statScore: number,
   ) {
     this.characterName = character.name;
   }
@@ -24,8 +24,8 @@ export class SearchResultItem {
 
 export type LastResult = {
   search: SearchResult;
-  searchArtifactSets: SearchResultItem[];
-  searchCharacterRecommendations: SearchResultItem[];
+  searchByStats: SearchResultItem[];
+  searchBySet: SearchResultItem[];
   piecesScore: number;
   mainStatRarity: number;
 };

@@ -1,7 +1,7 @@
 import { Rarity, TeyvatRegion } from "@/common/types";
+import { AccountStoreType } from "@/stores";
 import { DomainOfForgery, DomainOfMastery } from "../domains";
 import CraftableMaterial from "./CraftableMaterial";
-import { AccountStore, WorldRegion } from "@/stores/AccountStore/AccountStoreTypes";
 
 type ObtainableDays = 'Monday/Thursday' | 'Tuesday/Friday' | 'Wednesday/Saturday';
 
@@ -21,11 +21,11 @@ class AscensionMaterial extends CraftableMaterial {
     super(name, description, region, rarity);
   }
 
-  public isObtainableToday(AccountStore: AccountStore): boolean {
+  public isObtainableToday(AccountStore: AccountStoreType): boolean {
     return this.getDataTodayAttr(AccountStore);
   }  
-  public getDataTodayAttr(AccountStore: AccountStore, obtainableDay?: string): boolean {
-    const region = AccountStore.worldRegion;
+  public getDataTodayAttr(AccountStore: AccountStoreType, obtainableDay?: string): boolean {
+    const region = AccountStore.selectedAccount.worldRegion;
     
     // Get the current day based on Genshin Impact server time (4am server time reset)
     const today = AccountStore.getGenshinServerDay(region);

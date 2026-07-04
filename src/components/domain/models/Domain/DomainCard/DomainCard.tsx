@@ -10,9 +10,9 @@ import { classNames } from "@/common/functions/strings";
 import { ArtifactImage, DomainImage, MaterialImage } from "@/components/common/media/Images";
 import { ResinIcon } from "@/components/common/media/icons";
 import ModelCard, { BaseModelCardProps } from "@/components/domain/ModelCard";
-import { Region } from "@/components/domain";
+import Region from "@/components/domain/Region";
 
-import { useDataStore, useAccountStore } from "@/stores";
+import { useAccountStore, useDataStore } from "@/stores";
 
 import { ArtifactCard } from "../../Artifacts";
 import { MaterialCard } from "../../Material";
@@ -20,7 +20,7 @@ import DomainRewardsTabBar from "../DomainRewardsTabBar";
 import LeyLineDisorderPagination from "./LeyLineDisorderPagination";
 
 export interface Props extends BaseModelCardProps {
-  domain: Domain<any> | null;
+  domain: Domain | null;
   showResin?: boolean;
   showDescription?: boolean;
   showLeyLineDisorder?: boolean;
@@ -37,23 +37,23 @@ export default function DomainCard({
   ...props
 }: Props) {
   const DataStore = useDataStore();
-  const AccountStore = useAccountStore();
+  const worldRegion = useAccountStore(store => store.selectedAccount.worldRegion);
 
   if (!domain) return null;
 
-  const { name, description, leyLineDisorder: leylineDisorder, resinCost, region } = domain;
-  const rewards = domain.getRewards(DataStore);
+  const { name, description, leyLineDisorder, resinCost, region } = domain;
+  const rewards = DataStore.getRewardsFromDomain(name);
   const type = domain.getDomainType();
   const minRewards = useMemo(() => {
-    if (domain.isBlessing()) return domain.getRewards(DataStore).filter(artifact => artifact.rarity === Rarity.Legendary);
-    if (domain.isForgery()) return domain.getRewards(DataStore);
-    if (domain.isMastery()) return domain.getRewards(DataStore);
-    return [];
+    if (domain.getDomainType() === 'Blessing') return (rewards as Array<ArtifactSet>).filter(reward => (
+      reward instanceof ArtifactSet && reward.rarity === Rarity.Legendary
+    ));
+    return rewards;
   }, [rewards]);
 
   return (
     <ModelCard
-      key={`${AccountStore.worldRegion}-${name}`}
+      key={`${worldRegion}-${name}`}
       model="Domain"
       item={domain}
       {...props}
@@ -79,10 +79,8 @@ export default function DomainCard({
         {showDescription && <p className="domain-card__description">{description}</p>}
         <Region region={region} className="domain-card__region" />
         {showNavButton && (
-          <Link to={`/${ROUTES.data_domains}/${name}`} className="domain-card__nav-button">
-            <button style={{ width: '100%' }}>
-              View Domain
-            </button>
+          <Link to={`/${ROUTES.data_domains}/${name}`} className="show-nav-button button">
+            View Domain
           </Link>
         )}
       </>)}
@@ -92,18 +90,19 @@ export default function DomainCard({
           <section>
             {showLeyLineDisorder && <LeyLineDisorderPagination
               domainName={name}
-              leyLineDisorder={leylineDisorder}
+              leyLineDisorder={leyLineDisorder}
             />}
             {showDetailedRewards && rewards && (
               <div className="rewards-list-container">
                 <h3 className="rewards-list-container__title">Rewards</h3>
                 <ul className="domain-rewards">
                   {rewards.map(reward => (
-                    type === 'Blessing' ? <ArtifactCard key={reward.name} artifact={reward} nameTag='h4'
-                      showSetDescriptions
-                      showRarity
-                      wrapInLink
-                    />
+                    reward instanceof ArtifactSet 
+                      ? <ArtifactCard key={reward.name} artifact={reward} nameTag='h4'
+                        showSetDescriptions
+                        showRarity
+                        wrapInLink
+                      />
                       : <MaterialCard key={reward.name} material={reward} nameTag='h4'
                         wrapInLink
                       />

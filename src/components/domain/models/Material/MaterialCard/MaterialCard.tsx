@@ -5,7 +5,7 @@ import CraftableMaterial from "@/common/models/materials/CraftableMaterial";
 
 import { useAccountStore, useSettingsStore } from "@/stores";
 import { Relations, Pagination, ObtainableDays } from "./components";
-import { Region } from "@/components/domain";
+import Region from "@/components/domain/Region";
 import { Billet } from "@/common/models/materials/Billet";
 import ModelCard, { BaseModelCardProps } from "@/components/domain/ModelCard";
 import { MaterialImage } from "@/components/common/media/Images";
@@ -24,11 +24,14 @@ export interface Props extends BaseModelCardProps {
 
 export default function MaterialCard({
   material,
-  allowCycle = true,
+  allowCycle,
   showModelsUsing, showModelAcquired, showDetails, showRegion,
   ...props
 }: Props) {
-  const AccountStore = useAccountStore();
+  const { worldRegion, isObtainableToday } = useAccountStore(store => ({
+    worldRegion: store.selectedAccount.worldRegion,
+    isObtainableToday: (mat: Material) => AscensionMaterial.isAscensionMaterial(mat) && mat.isObtainableToday(store)
+  }));
   const view = useSettingsStore(ss => ss.getSetting('preferredTabs')?.craftableMaterial);
   const hasInteractedWithPagination = useRef(false);
 
@@ -70,13 +73,13 @@ export default function MaterialCard({
   );
 
   return <ModelCard
-    key={`${AccountStore.worldRegion}-${currentMaterial.name}`}
+    key={`${worldRegion}-${currentMaterial.name}`}
     model="Material"
     item={currentMaterial}
     {...props}
     data-show-details={showDetails}
     data-allow-pagination={allowCycle && (craftingTree?.length ?? 0) > 1}
-    {...{ 'data-today': AscensionMaterial.isAscensionMaterial(material) && material.isObtainableToday(AccountStore) }}
+    {...{ 'data-today': isObtainableToday(material) }}
 
     renderImage={() => <MaterialImage material={currentMaterial.name} />}
     renderHeaderContent={(() => (

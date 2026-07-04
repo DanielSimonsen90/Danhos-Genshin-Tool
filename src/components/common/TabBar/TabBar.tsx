@@ -70,6 +70,9 @@ const TabBar = forwardRef(<TTabKey extends string>(props: Props<TTabKey>, ref: R
             "tab-bar__content-page",
             isActive && 'tab-bar__content-page--active'
           )}>
+          {tabData.description && (
+            <p className="tab-bar__tab-description">{tabData.description}</p>
+          )}
           {content}
         </div>
       );
