@@ -122,6 +122,8 @@ export function usePopoverTrigger({
   return {
     open,
     triggerProps: {
+      onFocus: trigger === 'hover' ? handleMouseEnter : undefined,
+      onBlur: trigger === 'hover' ? handleMouseLeave : undefined,
       onMouseEnter: handleMouseEnter,
       onMouseLeave: handleMouseLeave,
       onClick: handleClick,

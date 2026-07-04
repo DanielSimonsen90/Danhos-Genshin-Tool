@@ -6,6 +6,7 @@ export default function Material() {
     showDetails
     showRarity 
     showModelsUsing 
-    showModelAcquired 
+    showModelAcquired
+    allowCycle
   />} />
 }

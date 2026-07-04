@@ -32,6 +32,8 @@ export default function Modal({ children, onClose, open, ...props }: ModalProps)
   }, [onClose]);
 
   useKeybind('Escape', {}, e => {
+    if (!open) return;
+    
     e.preventDefault();
     handleClose();
   });
