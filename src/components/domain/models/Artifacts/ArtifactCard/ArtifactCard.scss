@@ -94,14 +94,3 @@ a.artifact-card {
     flex-direction: column;
   }
 }
-
-.popover__content>.artifact-card {
-  >header {
-    grid-template-columns: unset;
-    grid-template-rows: auto 1fr;
-  }
-
-  .show-nav-button {
-    background-color: var(--background-tertiary);
-  }
-}

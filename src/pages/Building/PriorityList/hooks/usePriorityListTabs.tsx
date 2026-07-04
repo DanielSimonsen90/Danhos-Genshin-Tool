@@ -11,13 +11,12 @@ import { FavoriteModels, useDataStore, useFavorites, useAccountData } from "@/st
 import type { PriorityLists, PriorityList } from "../PriorityListTypes";
 import { getDefaultPriorityLists, onUnsortedSearch } from "../PriorityListFunctions";
 import { PriorityListTab } from "../components";
-import Popover from "@/components/common/Popover";
-import { CharacterCard } from "@/components/domain/models/Character";
-import { ArtifactCard } from "@/components/domain/models/Artifacts";
-import { DomainCard } from "@/components/domain/models/Domain";
-import { MaterialCard } from "@/components/domain/models/Material";
-import { MobCard } from "@/components/domain/models/Mob";
-import { WeaponCard } from "@/components/domain/models/Weapon";
+import { CharacterPopover } from "@/components/domain/models/Character";
+import { ArtifactPopover } from "@/components/domain/models/Artifacts";
+import { DomainPopover } from "@/components/domain/models/Domain";
+import { MaterialPopover } from "@/components/domain/models/Material";
+import { MobPopover } from "@/components/domain/models/Mob";
+import { WeaponPopover } from "@/components/domain/models/Weapon";
 
 type UsePriorityListTabsProps = {
   priorityLists: PriorityLists;
@@ -134,102 +133,34 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
                 const ModelImage = () => {
                   switch (modelType) {
                     case 'Character': return (
-                      <Popover trigger="click" content={() => {
-                        const character = DataStore.findCharacterByName(modelName);
-
-                        return !character ? null : <CharacterCard 
-                          character={character}
-                          showAscensionSection
-                          showCharacterPlaystyle
-                          showRecommendedWeapons
-                          showSignatureWeapon
-                        />;
-                      }}>
+                      <CharacterPopover trigger="click" characterName={modelName}>
                         <CharacterImage character={modelName} />
-                      </Popover>
+                      </CharacterPopover>
                     );
                     case 'Artifact': return (
-                      <Popover trigger="click" content={() => {
-                        const artifact = DataStore.findArtifactByName(modelName);
-
-                        return !artifact ? null : <ArtifactCard
-                          artifact={artifact}
-                          showCharacterSets
-                          showCraftable
-                          showDomainList
-                          showDomainRewards
-                          showRegion
-                          showSetDescriptions
-                        />
-                      }}>
+                      <ArtifactPopover trigger="click" artifactName={modelName}>
                         <ArtifactImage set={modelName} />
-                      </Popover>
+                      </ArtifactPopover>
                     );
                     case 'Domain': return (
-                      <Popover trigger="click" content={() => {
-                        const domain = DataStore.findDomainByName(modelName);
-
-                        return !domain ? null : <DomainCard
-                          domain={domain}
-                          showCharactersBenefitFromRewards
-                          showDescription
-                          showDetailedRewards
-                          showMinRewards
-                        />;
-                      }}>
+                      <DomainPopover trigger="click" domainName={modelName}>
                         <DomainImage domain={modelName} />
-                      </Popover>
+                      </DomainPopover>
                     )
                     case 'Material': return (
-                      <Popover trigger="click" content={() => {
-                        const material = DataStore.findMaterialByName(modelName);
-
-                        return !material ? null : <MaterialCard
-                          material={material}
-                          showDetails
-                          showModelAcquired
-                          showModelsUsing
-                          showRegion
-                        />;
-                      }}>
+                      <MaterialPopover trigger="click" materialName={modelName}>
                         <MaterialImage material={modelName} />
-                      </Popover>
+                      </MaterialPopover>
                     );
                     case 'Mob': return (
-                      <Popover trigger="click" content={() => {
-                        const mob = DataStore.findMobByName(modelName);
-
-                        return !mob ? null : <MobCard
-                          mob={mob}
-                          showDetails
-                          showDrops
-                          showRarity
-                          showRegion
-                          showRelations
-                          showResin
-                          noSeparator
-                        />;
-                      }}>
+                      <MobPopover trigger="click" mobName={modelName}>
                         <MobImage mob={modelName} />
-                      </Popover>
+                      </MobPopover>
                     );
                     case 'Weapon': return (
-                      <Popover trigger="click" content={() => {
-                        const weapon = DataStore.findWeaponByName(modelName);
-
-                        return !weapon ? null : <WeaponCard
-                          weapon={weapon}
-                          showDetails
-                          showAscensionSection
-                          showRecommendedCharacters
-                          showSignatureCharacter
-                          showSource
-                          showStats
-                          noSeparator
-                        />;
-                      }}>
+                      <WeaponPopover trigger="click" weaponName={modelName}>
                         <WeaponImage weapon={modelName} />
-                      </Popover>
+                      </WeaponPopover>
                     );
                     default: return <>Unknown model for {modelName}</>;
                   }

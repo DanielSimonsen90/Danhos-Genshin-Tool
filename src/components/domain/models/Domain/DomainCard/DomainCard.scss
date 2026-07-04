@@ -112,15 +112,6 @@ a.domain-card {
   }
 }
 
-.popover__content .domain-card {
-  > header {
-    grid-template-columns: unset;
-    grid-template-rows: auto 1fr;
-  }
-
-
-}
-
 @media (min-width: 1000px) {
   .domain-details__description {
     max-width: 66ch;
