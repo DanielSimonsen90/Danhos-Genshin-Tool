@@ -1,3 +1,4 @@
+import { Functionable } from "@/common/types";
 import { ReactNode } from "react";
 
 export type PopoverPosition = 'top' | 'bottom' | 'left' | 'right' | 'auto';
@@ -9,7 +10,7 @@ export interface PopoverProps {
   children: ReactNode;
   
   /** The content to display in the popover */
-  content: ReactNode;
+  content: Functionable<ReactNode>;
   
   /** 
    * How the popover should be triggered 

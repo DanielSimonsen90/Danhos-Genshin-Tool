@@ -11,6 +11,8 @@ import { FavoriteModels, useDataStore, useFavorites, useAccountData } from "@/st
 import type { PriorityLists, PriorityList } from "../PriorityListTypes";
 import { getDefaultPriorityLists, onUnsortedSearch } from "../PriorityListFunctions";
 import { PriorityListTab } from "../components";
+import Popover from "@/components/common/Popover";
+import { CharacterCard } from "@/components/domain/models/Character";
 
 type UsePriorityListTabsProps = {
   priorityLists: PriorityLists;
@@ -34,17 +36,26 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
       }
     }));
   }, [setPriorityLists]);
+
   const onEdit = useCallback((tierlistKey: string) => {
     const priorityList = priorityLists?.[tierlistKey];
     openUpdateModal(priorityList, tierlistKey);
   }, [priorityLists, openUpdateModal]);
+  
   const onDelete = useCallback(async (tab: string) => {
-    if (!await confirm({ title: 'Delete list', message: `Are you sure you want to delete the tab "${tab}"?`, destructive: true })) return;
+    if (!await confirm({ 
+      title: 'Delete list',
+      message: `Are you sure you want to delete the tab "${tab}"?`,
+      destructive: true
+    })) return;
 
     let { [tab]: _, ...newPriorityList } = priorityLists;
+
     if (!Object.keys(newPriorityList).length) newPriorityList = getDefaultPriorityLists();
+    
     setPriorityLists(newPriorityList);
   }, [confirm, priorityLists, setPriorityLists]);
+
   const onClone = useCallback((tab: string) => {
     const priorityList = priorityLists?.[tab];
     if (!priorityList) return;
@@ -54,6 +65,7 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
       [`${tab} (copy)`]: { ...priorityList, tiers: [...priorityList.tiers] }
     }));
   }, [priorityLists, setPriorityLists]);
+
   const onMove = useCallback((tab: string, direction: 'up' | 'down') => {
     const keys = Object.keys(priorityLists);
     const index = keys.indexOf(tab);
@@ -116,7 +128,21 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
                 const favorited = isFavorite(modelName);
                 const ModelImage = () => {
                   switch (modelType) {
-                    case 'Character': return <CharacterImage character={modelName} />;
+                    case 'Character': return (
+                      <Popover content={() => {
+                        const character = DataStore.findCharacterByName(modelName);
+
+                        return !character ? null : <CharacterCard 
+                          character={character}
+                          showAscensionSection
+                          showCharacterPlaystyle
+                          showRecommendedWeapons
+                          showSignatureWeapon
+                        />;
+                      }}>
+                        <CharacterImage character={modelName} />
+                      </Popover>
+                    );
                     case 'Artifact': return <ArtifactImage set={modelName} />;
                     case 'Domain': return <DomainImage domain={modelName} />;
                     case 'Material': return <MaterialImage material={modelName} />;

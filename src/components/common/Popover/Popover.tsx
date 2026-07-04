@@ -1,5 +1,6 @@
-import { useRef, cloneElement, isValidElement } from 'react';
+import { useRef, cloneElement, isValidElement, useMemo } from 'react';
 import { createPortal } from 'react-dom';
+
 import { classNames } from '@/common/functions/strings';
 import { usePopoverPosition, usePopoverTrigger } from './hooks';
 import type { PopoverProps } from './PopoverTypes';
@@ -23,11 +24,10 @@ export default function Popover({
   const triggerRef = useRef<HTMLElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
   
-  const controlled = controlledOpen !== undefined;
-
+  const resolvedContent = useMemo(() => typeof content === 'function' ? content() : content, [content]);
   const { open, triggerProps, popoverProps } = usePopoverTrigger({
     trigger,
-    controlled,
+    controlled: controlledOpen !== undefined,
     controlledOpen,
     showDelay,
     hideDelay,
@@ -68,7 +68,7 @@ export default function Popover({
       {...popoverProps}
     >
       <div className="popover__content">
-        {content}
+        {resolvedContent}
       </div>
     </div>
   );
