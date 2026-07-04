@@ -24,7 +24,7 @@ export interface Props extends BaseModelCardProps {
 
 export default function MaterialCard({
   material,
-  allowCycle = true,
+  allowCycle,
   showModelsUsing, showModelAcquired, showDetails, showRegion,
   ...props
 }: Props) {

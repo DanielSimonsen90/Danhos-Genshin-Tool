@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Domain } from "@/common/models";
-import { DomainCard } from "@/components/domain/models/Domain";
+import { DomainCard, DomainPopover } from "@/components/domain/models/Domain";
 import { Props as DomainCardProps } from "@/components/domain/models/Domain/DomainCard/DomainCard";
 
 import { useContextMenu } from "@/providers/ContextMenuProvider";
@@ -43,10 +43,12 @@ export default function SearchableDomainList<TFilterKeys extends string>({
       ]);      
       
       return hidden.includes(domain) ? null : (
-        <div className="context-menu-item-container" onContextMenu={open}>
-          {FavoriteStore.isFavorite(domain) && <FavoriteStar model={domain} />}
-          <DomainCard domain={domain} {...cardProps} />
-        </div>
+        <DomainPopover domainName={domain.name} showDelay={500}>
+          <div className="context-menu-item-container" onContextMenu={open}>
+            {FavoriteStore.isFavorite(domain) && <FavoriteStar model={domain} />}
+            <DomainCard domain={domain} {...cardProps} />
+          </div>
+        </DomainPopover>
       );
     }}
     search={query}

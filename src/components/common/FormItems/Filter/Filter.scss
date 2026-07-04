@@ -1,6 +1,5 @@
 .filters {
   --width: 21ch;
-  margin: .25rem;
   min-width: var(--width);
 
   &__header {
@@ -26,7 +25,8 @@
       color: var(--text-primary);
     }
 
-    &:active, &:focus-visible {
+    &:active,
+    &:focus-visible {
       outline-color: var(--brand);
       background-color: var(--background-tertiary);
       border-color: var(--brand) !important;
@@ -38,25 +38,23 @@
       flex-shrink: 0;
     }
   }
+}
 
-  >.select__options {
-    display: grid;
-    padding: .25rem;
-    background-color: var(--background-secondary--light);
-    gap: .25rem;
+.filter-options {
+  display: grid;
+  padding: .5rem;
+  padding-top: 2ch;
+  background-color: var(--background-secondary--light);
+  box-shadow: 0 0 15px 3px #222222aa;
+  gap: .25rem;
 
-    .select--multiple {
-      --margin: 0;
-      min-width: calc(var(--width) - 1ch);
-    }
+  .select--multiple {
+    --margin: 0;
+    min-width: 20ch;
+    width: 100%;
   }
 
-  >.floatable {
-    padding-top: 2ch;
-    top: calc(100% - 1ch) !important;
-  }
-
-  .filter-options .select__options {
+  .select__options {
     top: -1px !important;
     left: calc(-100% - .5ch);
   }

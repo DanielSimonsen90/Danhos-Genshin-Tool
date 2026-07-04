@@ -1,0 +1,6 @@
+.popover__content .domain-card {
+  >header {
+    grid-template-columns: unset;
+    grid-template-rows: auto 1fr;
+  }
+}

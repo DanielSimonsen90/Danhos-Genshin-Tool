@@ -8,7 +8,7 @@ import { GetCardContainer, GetModelNameContainer } from "./functions";
 
 const ModelCard = forwardRef<HTMLDivElement, ModelCardProps>(({
   model, item,
-  wrapInLink, linkOnName, showRarity,
+  wrapInLink, linkOnName, showRarity, noSeparator,
 
   nameTag: NameTag = 'h1',
   renderHeaderContent: HeaderContent,
@@ -41,13 +41,13 @@ const ModelCard = forwardRef<HTMLDivElement, ModelCardProps>(({
               </span>
               {HeadingContent && (
                 <>
-                  <Separator show={!wrapInLink} />
+                  <Separator show={!wrapInLink && !noSeparator} />
                   {HeadingContent()}
                 </>
               )}
               {showRarity && 'rarity' in item && (
                 <>
-                  <Separator show={!wrapInLink} />
+                  <Separator show={!wrapInLink && !noSeparator} />
                   <RarityList rarity={item.rarity} />
                 </>
               )}

@@ -1295,8 +1295,8 @@ export const DisasterAndRemorse = new Weapon(
   {
     value: `After the equipping character uses an Elemental Skill, they gain "Path of Conflict" for 17s, as well as "Unforgivable" and "Irreparable" for 3s each. This effect can trigger once every 18s.\nUnforgivable: Increases the equipping character's Normal Attack and Charged Attack DMG by $0.\nIrreparable: Increases the equipping character's Elemental Skill and Elemental Burst DMG by $1.\nWhile Path of Conflict is in effect, when the equipping character hits an opponent with a Normal Attack or Charged Attack, Irreparable's duration will be increased by 1s. When the equipping character hits an opponent with their Elemental Skill or Elemental Burst, Unforgivable's duration will be increased by 1s. Each of the above effects can be triggered once every 0.1s. When Path of Conflict ends or the equipping character leaves the field, both Unforgivable and Irreparable will be removed.\nHexerei: Secret Rite: The above DMG boosts are increased by 75%.`,
     refinements: [
-      '40%/50%/60%/70%/80%',
-      '40%/50%/60%/70%/80%',
+      '40/50/60/70/80%',
+      '40/50/60/70/80%',
     ],
   },
   'Polearm',

@@ -5,6 +5,7 @@ import { Rarity } from "@/common/types";
 
 import { Props as MaterialCardProps } from "@/components/domain/models/Material/MaterialCard/MaterialCard";
 import MaterialCard from "@/components/domain/models/Material/MaterialCard";
+import { MaterialPopover } from "@/components/domain/models/Material";
 
 import { useContextMenu } from "@/providers/ContextMenuProvider";
 
@@ -58,10 +59,12 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
       ]);      
       
       return hidden.includes(material) ? null : (
-        <div className="context-menu-item-container" onContextMenu={open}>
-          {FavoriteStore.isFavorite(material) && <FavoriteStar model={material} />}
-          <MaterialCard material={material} {...cardProps} />
-        </div>
+        <MaterialPopover materialName={material.name} showDelay={500}>
+          <div className="context-menu-item-container" onContextMenu={open}>
+            {FavoriteStore.isFavorite(material) && <FavoriteStar model={material} />}
+            <MaterialCard material={material} {...cardProps} />
+          </div>
+        </MaterialPopover>
       );
     }}
     search={query}
