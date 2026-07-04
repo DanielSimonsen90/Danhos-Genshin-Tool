@@ -1581,7 +1581,7 @@ export const Sandrone = new Character("Sandrone", "Cryo", "Claymore", [
   worldBossDrop: MobDrops.PlumeOfTheFallenWatcher,
   mobDrop: EasyMobDrops.DriveShaft,
 }, 'When Sandrone is in the party, you will gain additional snack rewards when turning in Daily Commissions with Katheryne.',
-  new CharacterPlaystyle("On-field DPS", ["ATK"], ["Charged/Hold", "Skill/Ability", "Burst/Ult"], true, [
+  new CharacterPlaystyle("On-field DPS", ["ATK"], ["Charged/Hold", "Burst/Ult", "Skill/Ability"], true, [
     new CharacterArtifactSet(Sets.DisenchantmentInDeepShadow, 4, 100),
   ])
 );
