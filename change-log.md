@@ -1,7 +1,12 @@
 # 🎉 Danho's Genshin Tool v . 2.2.3 🎉
 
 
-## Genshin Impact v. 6.6
+## Genshin Impact v. 6.7
+* Added Sandrone, 5* Claymore
+* Added new Stellar-Conduct reaction with Sandrone
+* Added "A Teaspoon of Transcendence" - Sandrone's signature weapon
+* Added "Precursor's Secret Source Matrix of Overseer Network" - new Elite enemy with the longest name in history for no reason
+  - Added Unblemished-, Depleted- and Fractured Lunar Iron drops
 
 ## New Features
 * Profile avatar: You can now change your profile avatar to whichever character you want, instead of being just limited to Lumine and Aether!

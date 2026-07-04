@@ -66,6 +66,39 @@ export const UltimateOverlordsMegaMagicSword = new Weapon(
 );
 
 // #region A
+export const ATeaspoonOfTranscendence = new Weapon(
+  "A Teaspoon of Transcendence",
+  {
+    value: `ATK is increased by $0.\nAdditionally, each time the equipping character hits an opponent with their Charged Attack, they attain "Transcendence" for a short time: their Stellar-Conduct DMG is increased by $1 for 5s. This effect can stack once every 0.2s, max 3 stacks.`,
+    refinements: [
+      '28/35/42/49/56%',
+      '16/20/24/28/32%',
+    ]
+  },
+  'Claymore',
+  Rarity.Legendary,
+  674,
+  'Crit DMG',
+  44.1,
+  [
+    WeaponAscensionMaterials.XOfTheFarNorthScions,
+    Drops.FracturedLunarIron,
+    Drops.Warrant
+  ],
+  'Wish',
+  ({ playstyle, score, character }) => {
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (playstyle.prioritizesTalents('Charged/Hold') 
+      && character.canTrigger('all', 'Stellar-Conduct')
+    ) {
+      score += MODIFIERS.TALENT + MODIFIERS.CAN_TRIGGER_ELEMENT;
+    }
+    
+    return score;
+  },
+  cs => cs.Sandrone,
+);
+
 export const AngelosHeptades = new Weapon(
   "Angelos' Heptades",
   {

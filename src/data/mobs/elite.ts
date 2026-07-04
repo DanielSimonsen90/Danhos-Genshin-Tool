@@ -271,3 +271,11 @@ export const DomainKeeper = new EliteMob(
     EliteMobDrops.FadedFlamingHilt,
   ]
 );
+
+export const PrecursorsSecretSourceMatrixOfOverseerNetwork = new EliteMob(
+  "Precursor's Secret Source Matrix of Overseer Network",
+  `An ancient machine trapped amongst the lunar ruins. Even the sturdiest and most reliable machines will be conquered by the passing of long years, losing the purpose bestowed upon them by their creators.\nNow, this entity only attacks and eliminates anything that dares set foot on the ground it defends.`,
+  [
+    EliteMobDrops.FracturedLunarIron
+  ]
+);

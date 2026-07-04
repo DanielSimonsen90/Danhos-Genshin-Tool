@@ -364,3 +364,13 @@ export const FadedFlamingHilt = MobDrop.create('Flaming Hilt', {
   [Rarity.Rare]: `The hilt remains of a flaming sword once wielded by a Domain Keeper.\nA sword of blazing fire was once the symbol of judgment.\nEmpowered by the authority of "Space," it barred the path against trespass and profanity.`,
   [Rarity.Uncommon]: `The hilt remains of a flaming sword once wielded by a Domain Keeper.\nA sword of blazing fire was once the symbol of protection.\nEmpowered by the authority of "Space," it sealed the boundary between eternity and ephemera.`,
 });
+
+export const FracturedLunarIron = MobDrop.create('Lunar Iron', {
+  [Rarity.Epic]: `Unblemished`,
+  [Rarity.Rare]: `Depleted`,
+  [Rarity.Uncommon]: `Fractured`,
+}, {
+  [Rarity.Epic]: `A core taken from within a defeated ancient machine that had wandered the lunar surface. It seems unlike the metals commonly found in Teyvat.\nIt was untouched by earthly impurity, eternal and free from the seven calamities and eight sufferings, and it once longed to sing out into the endless void. Yet when every calculation reached its end, all that remained in the lunar palace was useless, cold iron.`,
+  [Rarity.Rare]: `A component taken from within a defeated ancient machine that had wandered the lunar surface. It seems unlike the metals commonly found in Teyvat.\nLost folktales from many lands tell of heroes who forged the "divine iron" granted by the Welkin Moon into indestructible weapons, then used them to defeat fearsome foes and monsters. But the metal that fell from the Welkin Moon was no divine blessing - even the gods who once resided upon the moon had long since fallen.`,
+  [Rarity.Uncommon]: `A fragment taken from within a defeated ancient machine that had wandered the lunar surface. It seems unlike the metals commonly found in Teyvat.\nLost folktales from many lands tell of heroes who forged the "divine iron" granted by the Welkin Moon into indestructible weapons, then used them to defeat fearsome foes and monsters.`,
+});
