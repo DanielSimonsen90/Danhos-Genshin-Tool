@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Mob, EasyMob, EliteMob, Boss, WorldBoss, WeeklyBoss } from "@/common/models";
-import { MobCard } from "@/components/domain/models/Mob";
+import { MobCard, MobPopover } from "@/components/domain/models/Mob";
 import { Props as MobCardProps } from "@/components/domain/models/Mob/MobCard/MobCard";
 
 import { useContextMenu } from "@/providers/ContextMenuProvider";
@@ -43,10 +43,12 @@ export default function SearchableMobList<TFilterKeys extends string>({
       ]);      
       
       return hidden.includes(mob) ? null : (
-        <div className="context-menu-item-container" onContextMenu={open}>
-          {FavoriteStore.isFavorite(mob) && <FavoriteStar model={mob} />}
-          <MobCard mob={mob} {...cardProps} />
-        </div>
+        <MobPopover mobName={mob.name} showDelay={500}>
+          <div className="context-menu-item-container" onContextMenu={open}>
+            {FavoriteStore.isFavorite(mob) && <FavoriteStar model={mob} />}
+            <MobCard mob={mob} {...cardProps} />
+          </div>
+        </MobPopover>
       );
     }}
     search={query}

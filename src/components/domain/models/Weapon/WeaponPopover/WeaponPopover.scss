@@ -1,0 +1,14 @@
+.popover__content>.weapon-card {
+  .weapon-card__name {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .character-card__name {
+    font-size: 1.25rem !important;
+  }
+
+  .character-image {
+    --size: 4rem;
+  }
+}

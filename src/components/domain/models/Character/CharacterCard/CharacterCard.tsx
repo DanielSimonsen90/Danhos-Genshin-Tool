@@ -73,7 +73,7 @@ export default function CharacterCard({
           <span className="image-container">
             <ElementImage element={character.element} />
           </span>
-          <Separator show={!props.wrapInLink} />
+          <Separator show={!props.wrapInLink && !props.noSeparator} />
           <span className="image-container">
             <WeaponImage weaponType={character.weapon} />
           </span>

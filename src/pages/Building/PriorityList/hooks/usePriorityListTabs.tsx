@@ -11,6 +11,12 @@ import { FavoriteModels, useDataStore, useFavorites, useAccountData } from "@/st
 import type { PriorityLists, PriorityList } from "../PriorityListTypes";
 import { getDefaultPriorityLists, onUnsortedSearch } from "../PriorityListFunctions";
 import { PriorityListTab } from "../components";
+import { CharacterPopover } from "@/components/domain/models/Character";
+import { ArtifactPopover } from "@/components/domain/models/Artifacts";
+import { DomainPopover } from "@/components/domain/models/Domain";
+import { MaterialPopover } from "@/components/domain/models/Material";
+import { MobPopover } from "@/components/domain/models/Mob";
+import { WeaponPopover } from "@/components/domain/models/Weapon";
 
 type UsePriorityListTabsProps = {
   priorityLists: PriorityLists;
@@ -34,17 +40,26 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
       }
     }));
   }, [setPriorityLists]);
+
   const onEdit = useCallback((tierlistKey: string) => {
     const priorityList = priorityLists?.[tierlistKey];
     openUpdateModal(priorityList, tierlistKey);
   }, [priorityLists, openUpdateModal]);
+  
   const onDelete = useCallback(async (tab: string) => {
-    if (!await confirm({ title: 'Delete list', message: `Are you sure you want to delete the tab "${tab}"?`, destructive: true })) return;
+    if (!await confirm({ 
+      title: 'Delete list',
+      message: `Are you sure you want to delete the tab "${tab}"?`,
+      destructive: true
+    })) return;
 
     let { [tab]: _, ...newPriorityList } = priorityLists;
+
     if (!Object.keys(newPriorityList).length) newPriorityList = getDefaultPriorityLists();
+    
     setPriorityLists(newPriorityList);
   }, [confirm, priorityLists, setPriorityLists]);
+
   const onClone = useCallback((tab: string) => {
     const priorityList = priorityLists?.[tab];
     if (!priorityList) return;
@@ -54,6 +69,7 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
       [`${tab} (copy)`]: { ...priorityList, tiers: [...priorityList.tiers] }
     }));
   }, [priorityLists, setPriorityLists]);
+
   const onMove = useCallback((tab: string, direction: 'up' | 'down') => {
     const keys = Object.keys(priorityLists);
     const index = keys.indexOf(tab);
@@ -116,12 +132,36 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
                 const favorited = isFavorite(modelName);
                 const ModelImage = () => {
                   switch (modelType) {
-                    case 'Character': return <CharacterImage character={modelName} />;
-                    case 'Artifact': return <ArtifactImage set={modelName} />;
-                    case 'Domain': return <DomainImage domain={modelName} />;
-                    case 'Material': return <MaterialImage material={modelName} />;
-                    case 'Mob': return <MobImage mob={modelName} />;
-                    case 'Weapon': return <WeaponImage weapon={modelName} />;
+                    case 'Character': return (
+                      <CharacterPopover trigger="click" characterName={modelName}>
+                        <CharacterImage character={modelName} />
+                      </CharacterPopover>
+                    );
+                    case 'Artifact': return (
+                      <ArtifactPopover trigger="click" artifactName={modelName}>
+                        <ArtifactImage set={modelName} />
+                      </ArtifactPopover>
+                    );
+                    case 'Domain': return (
+                      <DomainPopover trigger="click" domainName={modelName}>
+                        <DomainImage domain={modelName} />
+                      </DomainPopover>
+                    )
+                    case 'Material': return (
+                      <MaterialPopover trigger="click" materialName={modelName}>
+                        <MaterialImage material={modelName} />
+                      </MaterialPopover>
+                    );
+                    case 'Mob': return (
+                      <MobPopover trigger="click" mobName={modelName}>
+                        <MobImage mob={modelName} />
+                      </MobPopover>
+                    );
+                    case 'Weapon': return (
+                      <WeaponPopover trigger="click" weaponName={modelName}>
+                        <WeaponImage weapon={modelName} />
+                      </WeaponPopover>
+                    );
                     default: return <>Unknown model for {modelName}</>;
                   }
                 };

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { classNames } from "@/common/functions/strings";
 import type { ModalProps } from "./ModalProps";
+import useKeybind from "@/hooks/useKeybind";
 
 export default function Modal({ children, onClose, open, ...props }: ModalProps) {
   const { className, interceptClose } = props;
@@ -17,40 +18,41 @@ export default function Modal({ children, onClose, open, ...props }: ModalProps)
     onClose();
   };
 
-  useEffect(function handleBackdrop() {
-    if (open) (ref.current as any)?.showModal();
+  useEffect(function handleOpenClose() {
+    if (open) (ref.current as any)?.show();
     else (ref.current as any)?.close();
   }, [open]);
 
-  useEffect(function handleClose() {
+  useEffect(function handleDialogClose() {
     const dialog = ref.current;
     if (!dialog) return;
 
-    if (interceptClose) {
-      const handleCancel = (e: Event) => {
-        e.preventDefault();
-        interceptClose();
-      };
-      dialog.addEventListener('cancel', handleCancel);
-      return () => dialog.removeEventListener('cancel', handleCancel);
-    }
-
     dialog.addEventListener('close', onClose);
     return () => dialog.removeEventListener('close', onClose);
-  }, [interceptClose, onClose]);
+  }, [onClose]);
+
+  useKeybind('Escape', {}, e => {
+    if (!open) return;
+    
+    e.preventDefault();
+    handleClose();
+  });
 
   return (
-    <dialog ref={ref} className={classNames("modal", className)} onClick={handleClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="close" onClick={handleClose}>&times;</button>
-        {children}
-        {hasButtons && (
-          <div className="button-panel">
-            <button className="tertiary" onClick={onCancel}>{props.cancelText ?? 'Cancel'}</button>
-            <button className="brand primary" onClick={onConfirm}>{props.confirmText ?? 'Confirm'}</button>
-          </div>
-        )}
-      </div>
-    </dialog>
+    <>
+      {open && <div className="modal-backdrop" onClick={handleClose} />}
+      <dialog ref={ref} className={classNames("modal", className)} onClick={handleClose}>
+        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <button className="close" onClick={handleClose}>&times;</button>
+          {children}
+          {hasButtons && (
+            <div className="button-panel">
+              <button className="tertiary" onClick={onCancel}>{props.cancelText ?? 'Cancel'}</button>
+              <button className="brand primary" onClick={onConfirm}>{props.confirmText ?? 'Confirm'}</button>
+            </div>
+          )}
+        </div>
+      </dialog>
+    </>
   );
 }

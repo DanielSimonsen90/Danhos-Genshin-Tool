@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Character } from "@/common/models";
-import { CharacterCard } from "@/components/domain/models/Character";
+import { CharacterCard, CharacterPopover } from "@/components/domain/models/Character";
 import { Props as CharacterCardProps } from "@/components/domain/models/Character/CharacterCard/CharacterCard";
 import { Rarity } from "@/common/types";
 
@@ -47,10 +47,12 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
       ]);
 
       return hidden.includes(character) ? null : (
-        <div className="context-menu-item-container" onContextMenu={open}>
-          {FavoriteStore.isFavorite(character) && <FavoriteStar model={character} />}
-          <CharacterCard character={character} {...internalCardProps} {...cardProps} />
-        </div>
+        <CharacterPopover characterName={character.name} showDelay={500}>
+          <div className="context-menu-item-container" onContextMenu={open}>
+            {FavoriteStore.isFavorite(character) && <FavoriteStar model={character} />}
+            <CharacterCard character={character} {...internalCardProps} {...cardProps} />
+          </div>
+        </CharacterPopover>
       );
     }}
 

@@ -1,4 +1,4 @@
-button {
+button, .button {
   border: none;
   border-radius: .25rem;
   cursor: pointer;
@@ -84,6 +84,12 @@ button {
   &.danger, &.delete {
     --color: var(--text-danger);
   }
+}
+
+a.button {
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
 }
 
 .button-panel {
