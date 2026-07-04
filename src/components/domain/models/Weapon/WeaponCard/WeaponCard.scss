@@ -132,7 +132,8 @@
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 1em;
 
-  .weapon-ascension__item, .material-card {
+  .weapon-ascension__item,
+  .material-card {
     height: 100%;
     justify-content: center;
   }
@@ -141,13 +142,13 @@
 .weapon-recommended-characters {
   flex: 1 1 100%;
 
-  > h3 {
+  >h3 {
     display: flex;
     align-items: center;
     gap: .5ch;
   }
 
-  .tab-bar__tab > div {
+  .tab-bar__tab>div {
     display: flex;
     gap: 1ch;
     align-items: center;
@@ -165,13 +166,32 @@
 }
 
 a.weapon-card {
+  >header {
+    gap: 1rem;
+  }
+
   .model-card__name {
     flex-direction: column;
-    
+
     @extend %text-ellipsis;
 
     align-items: flex-start;
     margin-bottom: .25em;
     font-size: clamp(1rem, 2vw, 1.5rem);
+  }
+}
+
+.popover__content>.weapon-card {
+  .weapon-card__name {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .character-card__name {
+    font-size: 1.25rem !important;
+  }
+
+  .character-image {
+    --size: 4rem;
   }
 }

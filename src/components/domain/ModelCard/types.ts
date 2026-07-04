@@ -10,6 +10,7 @@ export interface BaseModelCardProps {
   nameTag?: Extract<React.ElementType, 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'b'>;
   showRarity?: boolean;
   className?: string;
+  noSeparator?: boolean;
 }
 
 export interface ModelCardProps<TModel extends Model = Model> extends BaseModelCardProps {

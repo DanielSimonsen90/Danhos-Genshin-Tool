@@ -1,12 +1,15 @@
 .badge {
   display: inline-block;
+  
+  margin: auto 0;
   padding: .25em .5em;
+  min-width: fit-content;
+
   font-size: .5em;
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
   border-radius: 2rem;
-  margin: auto 0;
 
   &--beta {
     background-color: var(--brand--muted);

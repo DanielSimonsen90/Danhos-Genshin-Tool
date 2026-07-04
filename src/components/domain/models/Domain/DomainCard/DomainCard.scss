@@ -44,7 +44,7 @@
     .artifact-card {
       &:hover {
         border-radius: .25em;
-        background-color: var(--background-secondary);
+        background-color: var(--background-secondary--light);
       }
     }
   }
@@ -110,6 +110,15 @@ a.domain-card {
   p {
     --margins: .25em;
   }
+}
+
+.popover__content .domain-card {
+  > header {
+    grid-template-columns: unset;
+    grid-template-rows: auto 1fr;
+  }
+
+
 }
 
 @media (min-width: 1000px) {

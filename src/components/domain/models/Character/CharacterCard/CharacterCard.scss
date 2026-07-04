@@ -31,7 +31,7 @@
 
   .character-card__name {
     font-size: 1.25rem;
-    
+
     img {
       --max-size: 1.5rem;
       flex-shrink: 0;
@@ -64,8 +64,10 @@
       flex: 1 1 100%;
 
       &__list {
+        --min-size: 12em;
+
         display: grid;
-        grid-template-columns: repeat(3, minmax(12em, 1fr));
+        grid-template-columns: repeat(3, minmax(var(--min-size), 1fr));
         gap: 1em;
 
         .model-card {
@@ -78,7 +80,7 @@
         }
 
         @media (min-width: 1440px) {
-          grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
+          --min-size: 10em;
         }
       }
     }
@@ -143,10 +145,11 @@ a.character-card {
     background-color: var(--element--muted);
   }
 
-  > header {
+  >header {
     display: grid;
     justify-content: center;
   }
+
   .character-card__content {
     justify-content: center;
   }
@@ -161,5 +164,61 @@ a.character-card {
 
   .element-image {
     --max-size: 1.25rem;
+  }
+}
+
+.popover__content>.character-card {
+  .character-ascension__list {
+    --min-size: 5em;
+
+    .material-card {
+      --fz: .75rem;
+
+      &__name-text {
+        font-size: var(--fz);
+      }
+
+      &__obtainable-days-item {
+        font-size: var(--fz);
+      }
+
+      .material-image {
+        --size: 3rem;
+      }
+    }
+  }
+
+  .character-playstyle .playstyle-recommendations {
+    --min-size: 18em;
+  }
+
+  .character-artifacts-combinations {
+    .artifact-image {
+      --size: 3rem;
+    }
+
+    .piece {
+      --fz: 1.2rem;
+
+      font-size: var(--fz);
+
+      &::before {
+        font-size: calc(var(--fz) * .85);
+      }
+    }
+  }
+
+  .weapon-card {
+    .weapon-card__name-text {
+      max-width: 20ch;
+    }
+
+    .weapon-image {
+      --size: 3rem;
+    }
+
+    .weapon-description {
+      max-width: 30ch;
+    }
   }
 }

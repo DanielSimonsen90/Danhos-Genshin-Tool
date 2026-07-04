@@ -79,10 +79,8 @@ export default function DomainCard({
         {showDescription && <p className="domain-card__description">{description}</p>}
         <Region region={region} className="domain-card__region" />
         {showNavButton && (
-          <Link to={`/${ROUTES.data_domains}/${name}`} className="domain-card__nav-button">
-            <button style={{ width: '100%' }}>
-              View Domain
-            </button>
+          <Link to={`/${ROUTES.data_domains}/${name}`} className="show-nav-button button">
+            View Domain
           </Link>
         )}
       </>)}

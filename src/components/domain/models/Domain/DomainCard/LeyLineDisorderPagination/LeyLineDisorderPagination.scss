@@ -1,5 +1,6 @@
 .leyline-disorder-pagination {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr;
   gap: 1rem;
 
   &__controls {

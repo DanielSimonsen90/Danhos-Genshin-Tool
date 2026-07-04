@@ -1,14 +1,13 @@
 import { useMemo } from "react";
-import { classNames, rarityString } from "@/common/functions/strings";
-import { Character, List, Weapon } from "@/common/models";
+import { rarityString } from "@/common/functions/strings";
+import { List, Weapon } from "@/common/models";
 import { ElementImage, WeaponImage } from "@/components/common/media/Images";
 import ModelCard, { BaseModelCardProps, ModelRarityTabGroup } from "@/components/domain/ModelCard";
-import { CharacterCard } from "../../Character";
 import { MaterialCard } from "../../Material";
 import { useWeaponDescription } from "./WeaponCardHooks";
 import { useDataStore } from "@/stores";
-import { Functionable, Rarity } from "@/common/types";
-import TabBar, { Tab } from "@/components/common/TabBar";
+import { Functionable } from "@/common/types";
+import TabBar from "@/components/common/TabBar";
 import RarityList from "@/components/common/media/icons/Rarity";
 import SearchableCharacterList from "@/components/domain/SearchableList/SearchableLists/SearchableCharacterList";
 import { RecommendedCharacterForWeapon } from "@/services/SearchService/weapon/types";
@@ -40,7 +39,14 @@ export default function WeaponCard({
   children,
   ...props
 }: Props) {
-  const { name, type, rarity, baseAttack, secondaryStat, secondaryStatValue, ascensionMaterials, droppedBy, signatureWeaponFor } = weapon;
+  const { 
+    name, type, rarity,
+    baseAttack, secondaryStat,
+    secondaryStatValue,
+    ascensionMaterials,
+    droppedBy,
+    signatureWeaponFor
+  } = weapon;
   
   const CharactersData = useDataStore(store => store.CharactersData);
   const getRecommendedCharactersForWeapon = useDataStore(store => store.getRecommendedCharactersForWeapon);
@@ -98,7 +104,10 @@ export default function WeaponCard({
     }
 
     return List.from(result);
-  }, [CharactersData, getRecommendedCharactersForWeapon, signatureWeaponFor, showRecommendedCharacters, showSignatureCharacter, weapon]);
+  }, [
+    CharactersData, getRecommendedCharactersForWeapon, signatureWeaponFor, 
+    showRecommendedCharacters, showSignatureCharacter, weapon
+  ]);
   const resolvedChildren = useMemo(() => typeof children === 'function' ? children({ weapon }) : children, [children, weapon]);
 
   const processedDescription = useWeaponDescription(weapon, showDetails);
