@@ -17,6 +17,18 @@ export default function UncontrolledSearchableList<TItem, FilterKeys extends str
   const inputRef = useRef<HTMLInputElement>(null);
   const sortedChildren = props.sort ? [...children].sort(([_, a], [__, b]) => props.sort?.(a, b) ?? 0) : children;
 
+  // Stable per-item identity, so filtering/sorting doesn't shift positional keys and cause
+  // React to reuse a list item's component instance (and its hover/popover state) for a different item.
+  const itemKeysRef = useRef(new WeakMap<object, number>());
+  const nextItemKeyRef = useRef(0);
+  const getItemKey = (item: TItem, fallback: number) => {
+    if (item === null || typeof item !== 'object') return String(item);
+    const objectItem = item as unknown as object;
+    const keys = itemKeysRef.current;
+    if (!keys.has(objectItem)) keys.set(objectItem, nextItemKeyRef.current++);
+    return keys.get(objectItem) ?? fallback;
+  };
+
   useKeybind('f', { ctrlKey: true }, () => {
     if (inputRef.current) inputRef.current.focus();
   });
@@ -75,8 +87,8 @@ export default function UncontrolledSearchableList<TItem, FilterKeys extends str
       )}
       {children.length > 0 && (
         <ul className={classNames("searchable-list__list", "hoverable", ulClassName)}>
-          {sortedChildren.map(([child, item], key) => (
-            !child ? null : <li key={key} className={classNames(
+          {sortedChildren.map(([child, item], index) => (
+            !child ? null : <li key={getItemKey(item, index)} className={classNames(
               "searchable-list__list-item",
               typeof liClassName === 'function' ? liClassName(item) : liClassName
             )}>
