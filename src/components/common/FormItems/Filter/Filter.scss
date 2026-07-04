@@ -25,7 +25,8 @@
       color: var(--text-primary);
     }
 
-    &:active, &:focus-visible {
+    &:active,
+    &:focus-visible {
       outline-color: var(--brand);
       background-color: var(--background-tertiary);
       border-color: var(--brand) !important;
@@ -41,7 +42,7 @@
 
 .filter-options {
   display: grid;
-  padding: .25rem;
+  padding: .5rem;
   padding-top: 2ch;
   background-color: var(--background-secondary--light);
   box-shadow: 0 0 15px 3px #222222aa;
@@ -50,6 +51,7 @@
   .select--multiple {
     --margin: 0;
     min-width: 20ch;
+    width: 100%;
   }
 
   .select__options {

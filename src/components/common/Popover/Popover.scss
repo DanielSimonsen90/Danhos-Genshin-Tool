@@ -47,7 +47,7 @@
     }
   }
 
-  .collapsible__header {
+  .collapsible__header, .collapsible__content {
     background-color: var(--background-secondary--light);
   }
 }

@@ -33,19 +33,18 @@
       border-bottom-left-radius: .5rem;
       border-bottom-right-radius: .5rem;
     }
-        
+
     &:not(&--open) {
       display: none;
     }
 
     li,
     option {
-      display: grid;
-      grid-template-columns: auto 1fr;
+      display: flex;
       align-items: center;
-      gap: 1ch;
+      gap: 0;
       min-width: fit-content;
-      padding: 1ch 0;
+      padding: 1ch .25rem;
       cursor: pointer;
       user-select: none;
 
@@ -55,6 +54,15 @@
 
       input {
         height: 1rem;
+
+        &[type=checkbox] {
+          width: fit-content;
+        }
+      }
+
+      label {
+        font-size: 1rem;
+        line-height: 1rem;
       }
     }
 
