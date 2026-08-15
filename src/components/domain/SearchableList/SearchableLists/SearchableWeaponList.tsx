@@ -95,9 +95,9 @@ export default function SearchableWeaponList<TFilterKeys extends string>({
       obtainableThrough: {
         battlePass: weapon => weapon.droppedBy === 'Battle Pass',
         chest: weapon => weapon.droppedBy === 'Chest',
-        crafting: weapon => weapon.droppedBy === 'Crafting',
         event: weapon => weapon.droppedBy === 'Event',
         fishing: weapon => weapon.droppedBy === 'Fishing',
+        forgable: weapon => weapon.droppedBy.includes('Forging'),
         npc: weapon => weapon.droppedBy.startsWith('NPC: '),
         quest: weapon => weapon.droppedBy === 'Quest',
         signatureWeapon: weapon => !!weapon.signatureWeaponFor,
@@ -109,6 +109,7 @@ export default function SearchableWeaponList<TFilterKeys extends string>({
     sortChecks={{
       name: (a, b) => a.name.localeCompare(b.name),
       rarity: (a, b) => a.rarity - b.rarity,
+      baseAttack: (a, b) => b.baseAttack - a.baseAttack,
       weaponType: (a, b) => a.type.localeCompare(b.type),
       secondaryStat: (a, b) => {
         if (!a.secondaryStat) return 1;

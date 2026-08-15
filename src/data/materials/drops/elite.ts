@@ -63,7 +63,7 @@ export const SacrificialKnife = MobDrop.create('Sacrificial Knife', {
   [Rarity.Uncommon]: `A sharp alloy weapon. Though its owner has been lost, it still reflects a disturbingly cold light.`,
 });
 
-export const BoneShard = MobDrop.create('Bone Shard', {
+export const FragileBoneShard = MobDrop.create('Bone Shard', {
   [Rarity.Epic]: `Fossilized`,
   [Rarity.Rare]: `Sturdy`,
   [Rarity.Uncommon]: `Fragile`,
@@ -73,7 +73,7 @@ export const BoneShard = MobDrop.create('Bone Shard', {
   [Rarity.Uncommon]: `A bone shard once carried by a Geovishap.\nAlthough they are quite fragile, they seem to still harbor some indescribable power.`,
 });
 
-export const Prism = MobDrop.create('Prism', {
+export const DismalPrism = MobDrop.create('Prism', {
   [Rarity.Epic]: `Polarizing`,
   [Rarity.Rare]: `Crystal`,
   [Rarity.Uncommon]: `Dismal`,
@@ -129,7 +129,7 @@ export const RuinDrakeChaos = MobDrop.create('Chaos ', {
   prependName: true
 });
 
-export const PrimalConstructPrism = MobDrop.create('Prism', {
+export const DamagedPrism = MobDrop.create('Prism', {
   [Rarity.Epic]: `Radiant`,
   [Rarity.Rare]: `Turbid`,
   [Rarity.Uncommon]: `Damaged`,
@@ -139,7 +139,7 @@ export const PrimalConstructPrism = MobDrop.create('Prism', {
   [Rarity.Uncommon]: `A damaged component obtained from defeating a Primal Construct.\nThese uniquely-shaped machines are the eternal sentinels of the desert ruins, and they possess the power to pierce the mountains and reshape rocks. The same principles that power many mysterious devices above and beneath the earth also power these machines.`,
 });
 
-export const Shell = MobDrop.create('Shell', {
+export const DesiccatedShell = MobDrop.create('Shell', {
   [Rarity.Epic]: `Marked`,
   [Rarity.Rare]: `Sturdy`,
   [Rarity.Uncommon]: `Desiccated`,
@@ -228,7 +228,7 @@ export const Fin = MobDrop.create('Fin', {
   [Rarity.Uncommon]: `A fin fragment taken from a defeated Xuanwen Beast's back.\nEven though Xuanwen Beasts can't fly over long distances, these feather-like fins enable them to swiftly pursue their prey.`,
 });
 
-export const Hilt = MobDrop.create('Hilt', {
+export const RuinedHilt = MobDrop.create('Hilt', {
   [Rarity.Epic]: `Still-Smoldering`,
   [Rarity.Rare]: `Splintered`,
   [Rarity.Uncommon]: `Ruined`,
@@ -287,7 +287,7 @@ export const AbyssalLeaf = MobDrop.create('<placeholder>', {
   )
 });
 
-export const WeaselShell = MobDrop.create('<placeholder>', {
+export const ColdCrackedShell = MobDrop.create('<placeholder>', {
   [Rarity.Epic]: `Blazing Prismshell`,
   [Rarity.Rare]: `Warm Back-Shell`,
   [Rarity.Uncommon]: `Cold-Cracked Shellshard`,
@@ -373,4 +373,26 @@ export const FracturedLunarIron = MobDrop.create('Lunar Iron', {
   [Rarity.Epic]: `A core taken from within a defeated ancient machine that had wandered the lunar surface. It seems unlike the metals commonly found in Teyvat.\nIt was untouched by earthly impurity, eternal and free from the seven calamities and eight sufferings, and it once longed to sing out into the endless void. Yet when every calculation reached its end, all that remained in the lunar palace was useless, cold iron.`,
   [Rarity.Rare]: `A component taken from within a defeated ancient machine that had wandered the lunar surface. It seems unlike the metals commonly found in Teyvat.\nLost folktales from many lands tell of heroes who forged the "divine iron" granted by the Welkin Moon into indestructible weapons, then used them to defeat fearsome foes and monsters. But the metal that fell from the Welkin Moon was no divine blessing - even the gods who once resided upon the moon had long since fallen.`,
   [Rarity.Uncommon]: `A fragment taken from within a defeated ancient machine that had wandered the lunar surface. It seems unlike the metals commonly found in Teyvat.\nLost folktales from many lands tell of heroes who forged the "divine iron" granted by the Welkin Moon into indestructible weapons, then used them to defeat fearsome foes and monsters.`,
+});
+
+export const AccretedFragment = MobDrop.create('Accreted', {
+  [Rarity.Epic]: `Growth`,
+  [Rarity.Rare]: `Mass`,
+  [Rarity.Uncommon]: `Fragment`,
+}, {
+  [Rarity.Epic]: `An accretion formed by powerful Volkodlak.\nAn accretion that has fully fused with an organ or bone. One could even say it's a newly grown bone or organ at the nodes of the Volkodlak's power circulation.\nOnly long-lived Volkodlaks who have ceaselessly honed their strength can form such growths within their bodies.`,
+  [Rarity.Rare]: `An accretion formed by powerful Volkodlak. \nAn accretion that has clung to an internal organ or bone for a long time. Once removed, such accretions are regarded as symbols of power and carefully preserved by the creature's descendants.`,
+  [Rarity.Uncommon]: `An accretion formed by powerful Volkodlak.\nAn accretion that has only just begun to attach to an internal organ or bone. As the Volkodlak's power grows, it may eventually cover an entire region of the body, or a whole organ`,
+}, {
+  prependName: true,
+});
+
+export const HollowRootOfLife = MobDrop.create('of Life', {
+  [Rarity.Epic]: `Coiled Core`,
+  [Rarity.Rare]: `Sprout Node`,
+  [Rarity.Uncommon]: `Hollow Root`,
+}, {
+  [Rarity.Epic]: `A branch dropped by a Leshy before it returned to silence.\nA branch with a fully formed crystal core. It contains vitality that will not easily fade. If buried in the soil, it would likely grow into a new Leshy before long.`,
+  [Rarity.Rare]: `A branch dropped by a Leshy before it returned to silence.\nA branch bearing a fair number of crystals. It feels heavy in the hand, and traces of vitality can still be felt within it even after it has broken away from the Leshy's body.`,
+  [Rarity.Uncommon]: `A branch dropped by a Leshy before it returned to silence.\nWith only a few crystals grown upon it, this branch holds little power and gives off a faint glow.`,
 });

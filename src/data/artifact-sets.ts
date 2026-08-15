@@ -4,21 +4,13 @@ import * as Domains from './domains/domain-of-blessing';
 
 const threeStar = 5;
 const fourStar = 10;
-const correctElement = 15;
+const multiplier = 15;
 
 const isPhysicalFavored = (character: Character, artifactSet: CharacterArtifactSet) => (
   ['Normal/Press', 'Charged/Hold', 'Plunging/Hold'] as TalentType[]
 ).some(abilityType => character.playstyle?.talentPriorities.includes(abilityType)
   && character.playstyle?.recommendedArtifactSets.includes(artifactSet)
 );
-
-// Bloom, Hyperbloom & Burgeon
-/**
- * @deprecated Use character.canTrigger instead
- */
-const canTriggerReaction = (character: Character, reaction: Reaction) => {
-  return character.canTrigger('playstyle-based', reaction);
-};
 
 // #region A-G
 
@@ -35,9 +27,9 @@ export const ADayCarvedFromRisingWinds = new ArtifactSet(
   false,
   (c, set) => {
     let value = 0;
-    if (c.playstyle?.talentStats.includes('ATK')) value += correctElement;
-    if (set.pieces === 4 && !c.playstyle?.onField) value += correctElement;
-    if (c.bonusAbilities.toString().includes('Hexerei Able')) value += correctElement;
+    if (c.playstyle?.talentStats.includes('ATK')) value += multiplier;
+    if (set.pieces === 4 && !c.playstyle?.onField) value += multiplier;
+    if (c.bonusAbilities.toString().includes('Hexerei Able')) value += multiplier;
     return value;
   }
 );
@@ -67,7 +59,7 @@ export const ArchaicPetra = new ArtifactSet(
   Rarity.Legendary,
   [Domains.DomainOfGuyun.name],
   true,
-  c => c.element === 'Geo' ? correctElement : 0
+  c => c.element === 'Geo' ? multiplier : 0
 );
 
 
@@ -81,8 +73,8 @@ export const AubadeOfMorningstarAndMoon = new ArtifactSet(
   (c, set) => {
     let value = 0;
 
-    if (c.playstyle?.talentStats.includes('Elemental Mastery')) value += correctElement;
-    if (set.pieces === 4 && !c.playstyle?.onField && c.bonusAbilities.includes('Increases Moonsign')) value += correctElement;
+    if (c.playstyle?.talentStats.includes('Elemental Mastery')) value += multiplier;
+    if (set.pieces === 4 && !c.playstyle?.onField && c.bonusAbilities.includes('Increases Moonsign')) value += multiplier;
 
     return value;
   }
@@ -113,7 +105,7 @@ export const BlizzardStrayer = new ArtifactSet(
   Rarity.Legendary,
   [Domains.PeakOfVindagnyr.name],
   true,
-  c => c.element === 'Cryo' ? correctElement : 0
+  c => c.element === 'Cryo' ? multiplier : 0
 );
 
 /**
@@ -128,10 +120,10 @@ export const BloodstainedChivalry = new ArtifactSet(
   [Domains.ClearPoolAndMountaincavern.name],
   true,
   (c, set) => {
-    if (set.pieces === 2) return c.playstyle?.talentPriorities[0] === 'Normal/Press' || c.playstyle?.talentPriorities[0] === 'Plunging/Press' ? correctElement : 0;
+    if (set.pieces === 2) return c.playstyle?.talentPriorities[0] === 'Normal/Press' || c.playstyle?.talentPriorities[0] === 'Plunging/Press' ? multiplier : 0;
     let value = 0;
-    if (c.playstyle?.talentPriorities[0] === 'Charged/Hold') value += correctElement;
-    if (c.playstyle?.onField) value += correctElement;
+    if (c.playstyle?.talentPriorities[0] === 'Charged/Hold') value += multiplier;
+    if (c.playstyle?.onField) value += multiplier;
     return value;
   }
 );
@@ -153,7 +145,7 @@ export const BraveHeart = new ArtifactSet(
     Domains.FadedTheater.name,
   ],
   false,
-  c => c.playstyle?.talentStats.includes('ATK') ? correctElement : 0
+  c => c.playstyle?.talentStats.includes('ATK') ? multiplier : 0
 );
 
 export const CelestialGift = new ArtifactSet(
@@ -167,8 +159,8 @@ export const CelestialGift = new ArtifactSet(
   false,
   (c, set) => {
     let value = 0;
-    if (c.playstyle?.talentStats.includes('Energy Recharge')) value += correctElement;
-    if (set.pieces === 4 && c.can('Hexerei Able')) value += correctElement;
+    if (c.playstyle?.talentStats.includes('Energy Recharge')) value += multiplier;
+    if (set.pieces === 4 && c.can('Hexerei Able')) value += multiplier;
     return value;
   },
 )
@@ -186,8 +178,8 @@ export const CrimsonWitchOfFlames = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.element === 'Pyro') value += correctElement;
-    if (set.pieces === 4 && c.playstyle?.onField) value += correctElement;
+    if (c.element === 'Pyro') value += multiplier;
+    if (set.pieces === 4 && c.playstyle?.onField) value += multiplier;
     return value;
   }
 );
@@ -207,8 +199,8 @@ export const DeepwoodMemories = new ArtifactSet(
     let value = 0;
     if (c.element !== 'Dendro') return 0;
 
-    value += correctElement;
-    if (set.pieces === 4) value += correctElement;
+    value += multiplier;
+    if (set.pieces === 4) value += multiplier;
     return value;
   }
 );
@@ -229,7 +221,7 @@ export const DefendersWill = new ArtifactSet(
     Domains.DenouementOfSin.name,
   ],
   false,
-  c => c.playstyle?.talentStats.includes('DEF') ? correctElement : 0
+  c => c.playstyle?.talentStats.includes('DEF') ? multiplier : 0
 );
 
 /**
@@ -245,24 +237,28 @@ export const DesertPavilionChronicle = new ArtifactSet(
   true,
   c => {
     if (c.element !== 'Anemo') return 0;
-    let value = correctElement;
-    if (c.playstyle?.talentPriorities[0] === 'Charged/Hold') value += correctElement;
+    let value = multiplier;
+    if (c.playstyle?.talentPriorities[0] === 'Charged/Hold') value += multiplier;
     return value;
   }
 );
 
+/**
+ * @two ATK +18%
+ * @four Superconduct reaction DMG +80%. When equipping character attacks opponents affected by Superconduct, attack's CRIT Rate +16%.
+ */
 export const DisenchantmentInDeepShadow = new ArtifactSet(
   "Disenchantment In Deep Shadow",
   "ATK +18%",
-  "Superconduct reaction DMG +80%. When equipping character attacks opponents affected by Suprtconduct, attack's CRIT Rate +16%.",
+  "Superconduct reaction DMG +80%. When equipping character attacks opponents affected by Superconduct, attack's CRIT Rate +16%.",
   Rarity.Legendary,
   [Domains.ThornyCrownOfTheMountainWind.name],
   false,
   (c, set) => {
     let value = 0;
 
-    if (c.playstyle?.talentStats.includes('ATK')) value += correctElement;
-    if (set.pieces === 4 && c.canTrigger('all', 'Superconduct')) value += correctElement;
+    if (c.playstyle?.talentStats.includes('ATK')) value += multiplier;
+    if (set.pieces === 4 && c.canTrigger('all', 'Superconduct')) value += multiplier;
 
     return value;
   },
@@ -281,8 +277,8 @@ export const EchoesOfAnOffering = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.playstyle?.talentStats.includes('ATK')) value += correctElement;
-    if (set.pieces === 4 && c.playstyle?.onField) value += correctElement;
+    if (c.playstyle?.talentStats.includes('ATK')) value += multiplier;
+    if (set.pieces === 4 && c.playstyle?.onField) value += multiplier;
     return value;
   }
 );
@@ -300,8 +296,8 @@ export const EmblemOfSeveredFate = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.playstyle?.talentStats.includes('Energy Recharge')) value += correctElement;
-    if (set.pieces === 4) value += correctElement;
+    if (c.playstyle?.talentStats.includes('Energy Recharge')) value += multiplier;
+    if (set.pieces === 4) value += multiplier;
     return value;
   }
 );
@@ -319,8 +315,8 @@ export const FinaleOfTheDeepGalleries = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.element === 'Cryo') value += correctElement;
-    if (c.playstyle?.talentPriorities[0] === 'Burst/Ult' || (c.playstyle?.talentStats.includes('Energy Recharge') && set.pieces === 4)) value += correctElement;
+    if (c.element === 'Cryo') value += multiplier;
+    if (c.playstyle?.talentPriorities[0] === 'Burst/Ult' || (c.playstyle?.talentStats.includes('Energy Recharge') && set.pieces === 4)) value += multiplier;
     return value;
   }
 );
@@ -338,12 +334,12 @@ export const FlowerOfParadiseLost = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.playstyle?.talentStats.includes('Elemental Mastery')) value += correctElement;
+    if (c.playstyle?.talentStats.includes('Elemental Mastery')) value += multiplier;
     if (set.pieces !== 4) return value;
 
-    if (canTriggerReaction(c, 'Bloom')) value += correctElement;
-    if (canTriggerReaction(c, 'Hyperbloom')) value += correctElement;
-    if (canTriggerReaction(c, 'Burgeon')) value += correctElement;
+    if (c.canTrigger('all', 'Bloom')) value += multiplier;
+    if (c.canTrigger('all', 'Hyperbloom')) value += multiplier;
+    if (c.canTrigger('all', 'Burgeon')) value += multiplier;
     return value;
   }
 );
@@ -361,8 +357,8 @@ export const FragmentOfHarmonicWhimsy = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.playstyle?.talentStats.includes('ATK')) value += correctElement;
-    if (set.pieces === 4 && c.bonusAbilities.includes('Bond of Life')) value += correctElement;
+    if (c.playstyle?.talentStats.includes('ATK')) value += multiplier;
+    if (set.pieces === 4 && c.bonusAbilities.includes('Bond of Life')) value += multiplier;
     return value;
   }
 );
@@ -386,9 +382,9 @@ export const Gambler = new ArtifactSet(
   false,
   (c, set) => {
     let value = 0;
-    if (c.playstyle?.talentPriorities[0] === 'Skill/Ability') value += correctElement;
-    if (set.pieces === 4) value += correctElement;
-    if (c.playstyle?.onField) value += correctElement;
+    if (c.playstyle?.talentPriorities[0] === 'Skill/Ability') value += multiplier;
+    if (set.pieces === 4) value += multiplier;
+    if (c.playstyle?.onField) value += multiplier;
     return value;
   }
 );
@@ -404,7 +400,7 @@ export const GildedDreams = new ArtifactSet(
   Rarity.Legendary,
   [Domains.SpireofSolitaryEnlightenment.name],
   true,
-  c => c.playstyle?.talentStats.includes('Elemental Mastery') ? correctElement : 0
+  c => c.playstyle?.talentStats.includes('Elemental Mastery') ? multiplier : 0
 );
 
 /**
@@ -420,12 +416,12 @@ export const GladiatorsFinale = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.playstyle?.talentStats.includes('ATK')) value += correctElement;
+    if (c.playstyle?.talentStats.includes('ATK')) value += multiplier;
     if (set.pieces === 4 && (
       c.weapon === 'Sword'
       || c.weapon === 'Claymore'
       || c.weapon === 'Polearm')
-      && c.playstyle?.onField) value += correctElement;
+      && c.playstyle?.onField) value += multiplier;
     return value;
   }
 );
@@ -444,8 +440,8 @@ export const GoldenTroupe = new ArtifactSet(
 
   (c, set) => {
     let value = 0;
-    if (c.playstyle?.talentPriorities[0] === 'Skill/Ability') value += correctElement;
-    if (set.pieces === 4 && !c.playstyle?.onField) value += correctElement;
+    if (c.playstyle?.talentPriorities[0] === 'Skill/Ability') value += multiplier;
+    if (set.pieces === 4 && !c.playstyle?.onField) value += multiplier;
     return value;
   }
 );
@@ -467,8 +463,33 @@ export const HeartOfDepth = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.element === 'Hydro') value += correctElement;
-    if (set.pieces === 4 && c.playstyle?.onField) value += correctElement;
+    if (c.element === 'Hydro') value += multiplier;
+    if (set.pieces === 4 && c.playstyle?.onField) value += multiplier;
+    return value;
+  }
+);
+
+/**
+ * @two ATK +18%
+ * @four Increases the equipping character's ATK by 12% for 12s when triggering Stellar reaction or dealing Stellar reaction DMG. Additionally, increases Stellar reaction DMG by 50% to all nearby party members. Can be triggered off-field. Does not stack with itself.
+ */
+export const HeartOfTheFurnace = new ArtifactSet(
+  "Heart Of The Furnace",
+  "ATK +18%",
+  "Increases the equipping character's ATK by 12% for 12s when triggering Stellar reaction or dealing Stellar reaction DMG. Additionally, increases Stellar reaction DMG by 50% to all nearby party members. Can be triggered off-field. Does not stack with itself.",
+  Rarity.Legendary,
+  [Domains.InvertedGlacier.name],
+  false,
+  (c, set) => {
+    let value = 0;
+    if (c.playstyle?.talentStats.includes('ATK')) value += multiplier;
+    if (c.canTrigger('all', 'Stellar')) {
+      value += multiplier;
+
+      if (c.playstyle?.needsStat('ATK')) value += multiplier;
+      if (!c.playstyle?.onField) value += multiplier;
+    }
+
     return value;
   }
 );
@@ -486,10 +507,10 @@ export const HuskOfOpulentDreams = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.playstyle?.talentStats.includes('DEF')) value += correctElement;
+    if (c.playstyle?.talentStats.includes('DEF')) value += multiplier;
     if (set.pieces === 4 && c.element === 'Geo') {
-      value += correctElement;
-      if (c.playstyle?.onField) value += correctElement;
+      value += multiplier;
+      if (c.playstyle?.onField) value += multiplier;
     }
     return value;
   }
@@ -506,7 +527,7 @@ export const Instructor = new ArtifactSet(
   Rarity.Epic,
   ["BOSS_DROP"],
   false,
-  c => c.playstyle?.talentStats.includes('Elemental Mastery') ? correctElement : 0
+  c => c.playstyle?.talentStats.includes('Elemental Mastery') ? multiplier : 0
 );
 
 /**
@@ -522,8 +543,8 @@ export const Lavawalker = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.element === 'Pyro') value += correctElement;
-    if (set.pieces === 4) value += correctElement;
+    if (c.element === 'Pyro') value += multiplier;
+    if (set.pieces === 4) value += multiplier;
     return value;
   }
 );
@@ -543,8 +564,8 @@ export const LongNightsOath = new ArtifactSet(
     let value = 0;
     const isPlungingSet = c.playstyle?.talentPriorities[0] === 'Plunging/Press' && c.playstyle?.recommendedArtifactSets.includes(set);
 
-    if (isPlungingSet) value += correctElement;
-    if (isPlungingSet && c.playstyle?.onField && c.playstyle?.recommendedArtifactSets.includes(set)) value += correctElement;
+    if (isPlungingSet) value += multiplier;
+    if (isPlungingSet && c.playstyle?.onField && c.playstyle?.recommendedArtifactSets.includes(set)) value += multiplier;
     return value;
   }
 );
@@ -574,7 +595,7 @@ export const MaidenBeloved = new ArtifactSet(
   Rarity.Legendary,
   [Domains.ValleyOfRemembrance.name],
   true,
-  c => c.bonusAbilities.includes('Heal') ? correctElement : 0
+  c => c.bonusAbilities.includes('Heal') ? multiplier : 0
 );
 
 /**
@@ -590,9 +611,9 @@ export const MarechausseeHunter = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (isPhysicalFavored(c, set)) value += correctElement;
-    if (set.pieces === 4 && c.bonusAbilities.includes('Self-heal')) value += correctElement;
-    if (set.pieces === 4 && c.bonusAbilities.includes('Bond of Life')) value += correctElement;
+    if (isPhysicalFavored(c, set)) value += multiplier;
+    if (set.pieces === 4 && c.bonusAbilities.includes('Self-heal')) value += multiplier;
+    if (set.pieces === 4 && c.bonusAbilities.includes('Bond of Life')) value += multiplier;
     return value;
   }
 );
@@ -616,8 +637,8 @@ export const MartialArtist = new ArtifactSet(
   false,
   (c, set) => {
     let value = 0;
-    if (c.playstyle?.talentPriorities[0] === 'Normal/Press' || c.playstyle?.talentPriorities[0] === 'Charged/Hold') value += correctElement;
-    if (set.pieces === 4 && c.playstyle?.onField) value += correctElement;
+    if (c.playstyle?.talentPriorities[0] === 'Normal/Press' || c.playstyle?.talentPriorities[0] === 'Charged/Hold') value += multiplier;
+    if (set.pieces === 4 && c.playstyle?.onField) value += multiplier;
     return value;
   }
 );
@@ -632,11 +653,11 @@ export const NightOfTheSkysUnveiling = new ArtifactSet(
   "When party members trigger Lunar reactions, if equipping character on field, gain Gleaming Moon: Intent for 4s: Increase CRIT Rate by 15%/30% when party's Moonsign is Nascent Gleam/Ascendant Gleam. All party members' Lunar Reaction DMG +10%. Effects from Gleaming Moon cannot stack.",
   Rarity.Legendary,
   [Domains.FrostladenMachinery.name],
-  false,
+  true,
   (c, set) => {
     let value = 0;
-    if (c.playstyle?.talentStats.includes('Elemental Mastery')) value += correctElement;
-    if (set.pieces === 4 && c.playstyle?.onField) value += correctElement;
+    if (c.playstyle?.talentStats.includes('Elemental Mastery')) value += multiplier;
+    if (set.pieces === 4 && c.playstyle?.onField) value += multiplier;
     return value;
   }
 );
@@ -654,9 +675,9 @@ export const NighttimeWhispersInTheEchoingWoods = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.playstyle?.talentStats.includes('ATK')) value += correctElement;
-    if (set.pieces === 4 && c.playstyle?.talentPriorities[0] === 'Skill/Ability' && c.element === 'Geo') value += correctElement;
-    if (set.pieces === 4 && c.element === 'Geo' && c.playstyle?.onField) value += correctElement;
+    if (c.playstyle?.talentStats.includes('ATK')) value += multiplier;
+    if (set.pieces === 4 && c.playstyle?.talentPriorities[0] === 'Skill/Ability' && c.element === 'Geo') value += multiplier;
+    if (set.pieces === 4 && c.element === 'Geo' && c.playstyle?.onField) value += multiplier;
     return value;
   }
 );
@@ -674,8 +695,8 @@ export const NoblesseOblige = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.playstyle?.talentPriorities[0] === 'Burst/Ult') value += correctElement;
-    if (set.pieces === 4 || c.bonusAbilities.toString().includes('Buff ATK')) value += correctElement;
+    if (c.playstyle?.talentPriorities[0] === 'Burst/Ult') value += multiplier;
+    if (set.pieces === 4 || c.bonusAbilities.toString().includes('Buff ATK')) value += multiplier;
     return value;
   }
 );
@@ -693,8 +714,8 @@ export const NymphsDream = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.element === 'Hydro') value += correctElement;
-    if (set.pieces === 4 || c.bonusAbilities.toString().includes('Buff ATK')) value += correctElement;
+    if (c.element === 'Hydro') value += multiplier;
+    if (set.pieces === 4 || c.bonusAbilities.toString().includes('Buff ATK')) value += multiplier;
     return value;
   }
 );
@@ -716,7 +737,7 @@ export const ObsidianCodex = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.bonusAbilities.includes('Nightsouls Blessing') && c.playstyle?.onField) value += correctElement;
+    if (c.bonusAbilities.includes('Nightsouls Blessing') && c.playstyle?.onField) value += multiplier;
     return value;
   }
 );
@@ -732,7 +753,7 @@ export const OceanHuedClam = new ArtifactSet(
   Rarity.Legendary,
   [Domains.SlumberingCourt.name],
   true,
-  c => c.bonusAbilities.includes('Heal') ? correctElement : 0
+  c => c.bonusAbilities.includes('Heal') ? multiplier : 0
 );
 
 /**
@@ -748,8 +769,8 @@ export const PaleFlame = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (isPhysicalFavored(c, set)) value += correctElement;
-    if (set.pieces === 4 && c.playstyle?.onField) value += correctElement;
+    if (isPhysicalFavored(c, set)) value += multiplier;
+    if (set.pieces === 4 && c.playstyle?.onField) value += multiplier;
     return value;
   }
 );
@@ -786,8 +807,8 @@ export const ResolutionOfSojourner = new ArtifactSet(
   false,
   (c, set) => {
     let value = 0;
-    if (c.playstyle?.talentStats.includes('ATK')) value += correctElement;
-    if (set.pieces === 4 && c.playstyle?.talentPriorities[0] === 'Charged/Hold') value += correctElement;
+    if (c.playstyle?.talentStats.includes('ATK')) value += multiplier;
+    if (set.pieces === 4 && c.playstyle?.talentPriorities[0] === 'Charged/Hold') value += multiplier;
     return value;
   }
 );
@@ -805,8 +826,25 @@ export const RetracingBolide = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.bonusAbilities.includes('Shield')) value += correctElement;
-    if (set.pieces === 4) value += correctElement;
+    if (c.bonusAbilities.includes('Shield')) value += multiplier;
+    if (set.pieces === 4) value += multiplier;
+    return value;
+  }
+);
+
+export const ScarletProof = new ArtifactSet(
+  "Scarlet Proof",
+  "ATK +18%",
+  "Increases equipping character's CRIT Rate by 16% and Stellar Swirl reaction dealt by 40% for 10s after triggering Stellar Swirl.",
+  Rarity.Legendary,
+  [Domains.InvertedGlacier.name],
+  false,
+  (c, set) => {
+    let value = 0;
+
+    if (c.playstyle?.talentStats.includes('ATK')) value += multiplier;
+    if (set.pieces === 4 && c.canTrigger('all', 'Stellar-Swirl') && c.element === 'Anemo') value += multiplier * 2;
+
     return value;
   }
 );
@@ -829,9 +867,9 @@ export const Scholar = new ArtifactSet(
   false,
   (c, set) => {
     let value = 0;
-    if (c.playstyle?.talentPriorities[0] === 'Burst/Ult') value += correctElement;
-    if (c.playstyle?.talentStats.includes('Energy Recharge')) value += correctElement;
-    if (set.pieces === 4 && (c.weapon === 'Bow' || c.weapon === 'Catalyst')) value += correctElement;
+    if (c.playstyle?.talentPriorities[0] === 'Burst/Ult') value += multiplier;
+    if (c.playstyle?.talentStats.includes('Energy Recharge')) value += multiplier;
+    if (set.pieces === 4 && (c.weapon === 'Bow' || c.weapon === 'Catalyst')) value += multiplier;
     return value;
   }
 );
@@ -849,7 +887,7 @@ export const ScrollOfTheHeroOfCinderCity = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.bonusAbilities.includes('Nightsouls Blessing')) value += correctElement;
+    if (c.bonusAbilities.includes('Nightsouls Blessing')) value += multiplier;
     return value;
   }
 );
@@ -867,12 +905,12 @@ export const ShimenawasReminiscence = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.playstyle?.talentStats.includes('ATK')) value += correctElement;
+    if (c.playstyle?.talentStats.includes('ATK')) value += multiplier;
     if (set.pieces === 4 && (
       c.playstyle?.talentPriorities[0] === 'Normal/Press'
       || c.playstyle?.talentPriorities[0] === 'Charged/Hold'
       || c.playstyle?.talentPriorities[0] === 'Plunging/Press'
-    )) value += correctElement;
+    )) value += multiplier;
     return value;
   }
 );
@@ -887,11 +925,11 @@ export const SilkenMoonsSerenade = new ArtifactSet(
   `When dealing Elemental DMG, gain "Gleaming Moon": Devotion effect for 8s: Increase all party members' EM by 60/120 when the party's Moonsight is Nascent Gleam/Ascendant Gleam. Can trigger off-field. All party members' Lunar Reaction DMG +10% for each Gleaming Moon effect that party members have. Effects from Gleaming Moon cannot stack.`,
   Rarity.Legendary,
   [Domains.FrostladenMachinery.name],
-  false,
+  true,
   (c, set) => {
     let value = 0;
-    if (c.playstyle?.talentStats.includes('Energy Recharge')) value += correctElement;
-    if (set.pieces === 4 && c.bonusAbilities.includes('Increases Moonsign')) value += correctElement;
+    if (c.playstyle?.talentStats.includes('Energy Recharge')) value += multiplier;
+    if (set.pieces === 4 && c.bonusAbilities.includes('Increases Moonsign')) value += multiplier;
     return value;
   }
 );
@@ -907,7 +945,7 @@ export const SongOfDaysPast = new ArtifactSet(
   Rarity.Legendary,
   [Domains.WaterfallWen.name],
   true,
-  c => c.bonusAbilities.includes('Heal') ? correctElement : 0
+  c => c.bonusAbilities.includes('Heal') ? multiplier : 0
 );
 
 /**
@@ -923,11 +961,11 @@ export const TenacityOfTheMillelith = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.playstyle?.talentStats.includes('HP')) value += correctElement;
+    if (c.playstyle?.talentStats.includes('HP')) value += multiplier;
     if (set.pieces !== 4) return value;
 
-    if (c.playstyle?.talentPriorities[0] === 'Skill/Ability' && !c.playstyle?.onField) value += correctElement;
-    if (c.bonusAbilities.includes('Shield')) value += correctElement;
+    if (c.playstyle?.talentPriorities[0] === 'Skill/Ability' && !c.playstyle?.onField) value += multiplier;
+    if (c.bonusAbilities.includes('Shield')) value += multiplier;
     return value;
   }
 );
@@ -943,7 +981,7 @@ export const TheExile = new ArtifactSet(
   Rarity.Epic,
   ["BOSS_DROP"],
   false,
-  c => c.playstyle?.talentStats.includes('Energy Recharge') ? correctElement : 0
+  c => c.playstyle?.talentStats.includes('Energy Recharge') ? multiplier : 0
 );
 
 /**
@@ -959,17 +997,17 @@ export const ThunderingFury = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.element === 'Electro') value += correctElement;
+    if (c.element === 'Electro') value += multiplier;
     if (set.pieces !== 4) return value;
 
-    if (canTriggerReaction(c, 'Overloaded')) value += correctElement;
-    if (canTriggerReaction(c, 'Electro-Charged')) value += correctElement;
-    if (canTriggerReaction(c, 'Superconduct')) value += correctElement;
-    if (canTriggerReaction(c, 'Hyperbloom')) value += correctElement;
-    if (canTriggerReaction(c, 'Aggravate')) value += correctElement;
-    if (canTriggerReaction(c, 'Quicken')) value += correctElement;
-    if (c.playstyle?.onField) value += correctElement;
-    if (c.playstyle?.talentPriorities[0] === 'Skill/Ability') value += correctElement;
+    if (c.canTrigger('all', 'Overloaded')) value += multiplier;
+    if (c.canTrigger('all', 'Electro-Charged')) value += multiplier;
+    if (c.canTrigger('all', 'Superconduct')) value += multiplier;
+    if (c.canTrigger('all', 'Hyperbloom')) value += multiplier;
+    if (c.canTrigger('all', 'Aggravate')) value += multiplier;
+    if (c.canTrigger('all', 'Quicken')) value += multiplier;
+    if (c.playstyle?.onField) value += multiplier;
+    if (c.playstyle?.talentPriorities[0] === 'Skill/Ability') value += multiplier;
     return value;
   }
 );
@@ -987,8 +1025,8 @@ export const Thundersoother = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.element === 'Electro') value += correctElement;
-    if (set.pieces === 4) value += correctElement;
+    if (c.element === 'Electro') value += multiplier;
+    if (set.pieces === 4) value += multiplier;
     return value;
   }
 );
@@ -1024,7 +1062,7 @@ export const TravelingDoctor = new ArtifactSet(
   Rarity.Uncommon,
   [Domains.ValleyOfRemembrance.name],
   false,
-  c => c.bonusAbilities.includes('Heal') ? correctElement : 0
+  c => c.bonusAbilities.includes('Heal') ? multiplier : 0
 );
 
 /**
@@ -1040,9 +1078,9 @@ export const UnfinishedReverie = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.playstyle?.talentStats.includes('ATK')) value += correctElement;
-    if (!c.playstyle?.onField && canTriggerReaction(c, 'Burning')) value += correctElement;
-    if (canTriggerReaction(c, 'Burning')) value += correctElement;
+    if (c.playstyle?.talentStats.includes('ATK')) value += multiplier;
+    if (!c.playstyle?.onField && c.canTrigger('all', 'Burning')) value += multiplier;
+    if (c.canTrigger('all', 'Burning')) value += multiplier;
     return value;
   }
 );
@@ -1060,9 +1098,9 @@ export const VermillionHereafter = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.playstyle?.talentStats.includes('ATK')) value += correctElement;
-    if (set.pieces === 4 && c.playstyle?.talentPriorities[0] === 'Burst/Ult') value += correctElement;
-    if (c.playstyle?.onField) value += correctElement;
+    if (c.playstyle?.talentStats.includes('ATK')) value += multiplier;
+    if (set.pieces === 4 && c.playstyle?.talentPriorities[0] === 'Burst/Ult') value += multiplier;
+    if (c.playstyle?.onField) value += multiplier;
     return value;
   }
 );
@@ -1080,8 +1118,8 @@ export const ViridescentVenerer = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.element === 'Anemo') value += correctElement;
-    if (set.pieces === 4 && c.playstyle?.onField) value += correctElement;
+    if (c.element === 'Anemo') value += multiplier;
+    if (set.pieces === 4 && c.playstyle?.onField) value += multiplier;
     return value;
   }
 );
@@ -1097,7 +1135,7 @@ export const VourukashasGlow = new ArtifactSet(
   Rarity.Legendary,
   [Domains.MoltenIronFortress.name],
   true,
-  c => c.playstyle?.talentStats.includes('HP') ? correctElement : 0
+  c => c.playstyle?.talentStats.includes('HP') ? multiplier : 0
 );
 
 /**
@@ -1113,8 +1151,8 @@ export const WanderersTroupe = new ArtifactSet(
   true,
   (c, set) => {
     let value = 0;
-    if (c.playstyle?.talentStats.includes('Elemental Mastery')) value += correctElement;
-    if (set.pieces === 4 && (c.weapon === 'Catalyst' || c.weapon === 'Bow') && c.playstyle?.onField) value += correctElement;
+    if (c.playstyle?.talentStats.includes('Elemental Mastery')) value += multiplier;
+    if (set.pieces === 4 && (c.weapon === 'Catalyst' || c.weapon === 'Bow') && c.playstyle?.onField) value += multiplier;
     return value;
   }
 );

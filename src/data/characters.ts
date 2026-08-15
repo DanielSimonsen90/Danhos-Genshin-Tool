@@ -92,7 +92,7 @@ export const Alhaitham = new Character("Alhaitham", "Dendro", "Sword", [
   localSpecialty: LocalSpecialties.SandGreasePupa,
   crystal: ElementalCrystals.Dendro,
   material: TalentAscension.Ingenuity,
-  mobDrop: EasyMobDrops.EremiteDrop,
+  mobDrop: EasyMobDrops.FadedRedSatin,
   worldBossDrop: MobDrops.PseudoStamens,
   weeklyBossDrop: MobDrops.MirrorOfMushin,
 }, '10% chance of double product when crafting Weapon Ascension Materials.',
@@ -120,6 +120,22 @@ export const Aloy = new Character("Aloy", "Cryo", "Bow", [], Rarity.Legendary, '
   ])
 );
 
+export const Alyosha = new Character("Alyosha", "Electro", "Polearm", [
+  "Off-field Damage",
+  "Heal",
+  "Buff ATK: When skill applies Hunter's Mark on opponents and opponents take damage afterwards",
+], Rarity.Epic, 'Snezhnaya', {
+  localSpecialty: LocalSpecialties.Flockingweed,
+  crystal: ElementalCrystals.Electro,
+  material: TalentAscension.Fortitude,
+  mobDrop: EasyMobDrops.ChimericCore,
+  worldBossDrop: MobDrops.SeveredTailOfTheSkyRoamer,
+  weeklyBossDrop: MobDrops.ElixirOfTheHeretic,
+}, 'Shows Local Specialties in Snezhnaya on minimap.', 
+  new CharacterPlaystyle("Off-field Stellar-Conduct Support", ['Energy Recharge', 'ATK'], ['Skill/Ability', 'Burst/Ult', 'Normal/Press'], false, [
+    new CharacterArtifactSet(Sets.HeartOfTheFurnace, 4, 100),
+  ])
+);
 
 export const Amber = new Character("Amber", "Pyro", "Bow", ["Off-field Damage"], Rarity.Epic, 'Mondstadt', {
   material: TalentAscension.Freedom,
@@ -161,7 +177,7 @@ export const Arlecchino = new Character("Arlecchino", "Pyro", "Polearm", ["Bond 
   crystal: ElementalCrystals.Pyro,
   localSpecialty: LocalSpecialties.RainbowRose,
   worldBossDrop: MobDrops.FragmentOfAGoldenMelody,
-  mobDrop: EasyMobDrops.FatuiInsignia,
+  mobDrop: EasyMobDrops.RecruitsInsignia,
 }, 'Gains 40% Pyro DMG Bonus and can only be healed using Burst/Ult.',
   new CharacterPlaystyle("On-field DPS", ["ATK"], ["Normal/Press", "Skill/Ability", "Burst/Ult"], true, [
     new CharacterArtifactSet(Sets.FragmentOfHarmonicWhimsy, 4, 75.3),
@@ -213,7 +229,7 @@ export const Beidou = new Character("Beidou", "Electro", "Claymore", ["Shield"],
   crystal: ElementalCrystals.Electro,
   localSpecialty: LocalSpecialties.NoctilucousJade,
   worldBossDrop: MobDrops.LightningPrism,
-  mobDrop: EasyMobDrops.FatuiInsignia,
+  mobDrop: EasyMobDrops.RecruitsInsignia,
 }, '20% Swimming consumption reduction.',
   new CharacterPlaystyle("Off-field DPS", ["Energy Recharge", "ATK"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
     new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 67.7),
@@ -256,7 +272,7 @@ export const Candace = new Character("Candace", "Hydro", "Polearm", [
   crystal: ElementalCrystals.Hydro,
   localSpecialty: LocalSpecialties.HennaBerry, // Referred to as "Redcrest"
   worldBossDrop: MobDrops.LightGuidingTetrahedron,
-  mobDrop: EasyMobDrops.EremiteDrop,
+  mobDrop: EasyMobDrops.FadedRedSatin,
 }, '20% Climbing consumption reduction.',
   new CharacterPlaystyle("Off-field Support", ["HP", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
     ...HPSets(31.9),
@@ -384,7 +400,7 @@ export const Clorinde = new Character("Clorinde", "Electro", "Sword", [
   crystal: ElementalCrystals.Electro,
   localSpecialty: LocalSpecialties.Lumitoile,
   worldBossDrop: MobDrops.FontemerUnihorn,
-  mobDrop: EasyMobDrops.FontemerAberrantPearl,
+  mobDrop: EasyMobDrops.TransoceanicPearl,
 }, 'Shows Local Specialties in Fontaine on minimap.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
     new CharacterArtifactSet(Sets.FragmentOfHarmonicWhimsy, 4, 77.3),
@@ -469,7 +485,7 @@ export const Dehya = new Character("Dehya", "Pyro", "Claymore", ["Self-heal", "O
   crystal: ElementalCrystals.Pyro,
   localSpecialty: LocalSpecialties.SandGreasePupa,
   worldBossDrop: MobDrops.LightGuidingTetrahedron,
-  mobDrop: EasyMobDrops.EremiteDrop,
+  mobDrop: EasyMobDrops.FadedRedSatin,
 }, 'During Day (06:00 - 18:00), party members gain 10% increased movement speed.',
   new CharacterPlaystyle("On-field DPS", ["HP", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
     new CharacterArtifactSet(Sets.VourukashasGlow, 4, 32.2),
@@ -486,7 +502,7 @@ export const Diluc = new Character("Diluc", "Pyro", "Claymore", [
   crystal: ElementalCrystals.Pyro,
   localSpecialty: LocalSpecialties.SmallLampGrass,
   worldBossDrop: MobDrops.EverflameSeed,
-  mobDrop: EasyMobDrops.FatuiInsignia,
+  mobDrop: EasyMobDrops.RecruitsInsignia,
 }, '15% chance of refunding ore when crafting Claymore weapons.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Elemental Mastery"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
     new CharacterArtifactSet(Sets.CrimsonWitchOfFlames, 4, 68.4),
@@ -520,7 +536,7 @@ export const Dori = new Character("Dori", "Electro", "Claymore", [
   crystal: ElementalCrystals.Electro,
   localSpecialty: LocalSpecialties.KalpalataLotus,
   worldBossDrop: MobDrops.ThunderclapFruitcore,
-  mobDrop: EasyMobDrops.EremiteDrop,
+  mobDrop: EasyMobDrops.FadedRedSatin,
 }, '25% chance of refund materials used when crafting Character Talent Materials and Weapon Ascension Materials.',
   new CharacterPlaystyle("Off-field Support", ["Energy Recharge", "HP"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 36.8),
@@ -617,7 +633,7 @@ export const Faruzan = new Character("Faruzan", "Anemo", "Bow", [
   crystal: ElementalCrystals.Anemo,
   localSpecialty: LocalSpecialties.HennaBerry,
   worldBossDrop: MobDrops.LightGuidingTetrahedron,
-  mobDrop: EasyMobDrops.EremiteDrop,
+  mobDrop: EasyMobDrops.FadedRedSatin,
 }, '25% more rewards when on expeditions in Sumeru.',
   new CharacterPlaystyle("Burst Support", ["Energy Recharge", "ATK"], ["Burst/Ult", "Skill/Ability", "Charged/Hold"], false, [
     new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 36.9),
@@ -670,7 +686,7 @@ export const Freminet = new Character("Freminet", "Cryo", "Claymore", ['Pneuma']
   crystal: ElementalCrystals.Cryo,
   localSpecialty: LocalSpecialties.RomaritimeFlower,
   worldBossDrop: MobDrops.ArtificedSpareClockworkComponent__Coppelius,
-  mobDrop: EasyMobDrops.FontemerAberrantPearl,
+  mobDrop: EasyMobDrops.TransoceanicPearl,
 }, '35% Aquatic Stamina consumption reduction.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ["Skill/Ability", "Normal/Press", "Burst/Ult"], true, [
     new CharacterArtifactSet(Sets.PaleFlame, 4, 47.5),
@@ -772,13 +788,16 @@ export const HuTao = new Character("Hu Tao", "Pyro", "Polearm", [
 // #endregion
 
 // #region I
-export const Iansan = new Character("Iansan", "Electro", "Polearm", ["Nightsouls Blessing"], Rarity.Epic, 'Natlan', {
+export const Iansan = new Character("Iansan", "Electro", "Polearm", [
+  "Nightsouls Blessing",
+  "Buff ATK: Iansan's Nightsoul state will increase ATK of active character depending on meter level. Keep uptime by moving around to increase Nightsoul meter"
+], Rarity.Epic, 'Natlan', {
   material: TalentAscension.Contention,
   weeklyBossDrop: MobDrops.DenialAndJudgment,
   crystal: ElementalCrystals.Electro,
   localSpecialty: LocalSpecialties.Dracolite,
   worldBossDrop: MobDrops.EnsnaringGaze,
-  mobDrop: EasyMobDrops.Whistle,
+  mobDrop: EasyMobDrops.SentrysWoodenWhistle,
 }, 'Gain 10 Phlogiston when Phlogison levels drop below 50%. This effect can be triggered once every 10s.',
   new CharacterPlaystyle("Burst Support", ["ATK", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
     new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 87.2),
@@ -835,7 +854,7 @@ export const Ineffa = new Character("Ineffa", "Electro", "Polearm", [
   crystal: ElementalCrystals.Electro,
   localSpecialty: LocalSpecialties.GlowingHornshroom,
   worldBossDrop: MobDrops.SecretSourceAirflowAccumulator,
-  mobDrop: EasyMobDrops.Whistle,
+  mobDrop: EasyMobDrops.SentrysWoodenWhistle,
 }, 'When using food, there is a 30% chance of gaining seasoning ingredient.',
   new CharacterPlaystyle("Off-field Lunar-Charged Support", ['ATK', 'Elemental Mastery'], ['Skill/Ability', "Burst/Ult", "Normal/Press"], false, [
     new CharacterArtifactSet(Sets.GildedDreams, 4, 59.1),
@@ -897,7 +916,7 @@ export const Kachina = new Character("Kachina", "Geo", "Polearm", [
   crystal: ElementalCrystals.Geo,
   localSpecialty: LocalSpecialties.QuenepaBerry,
   worldBossDrop: MobDrops.OverripeFlamegranate,
-  mobDrop: EasyMobDrops.Whistle,
+  mobDrop: EasyMobDrops.SentrysWoodenWhistle,
 }, 'Shows Local Specialties in Natlan on minimap.',
   new CharacterPlaystyle("Off-field DPS", ["DEF"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
     new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 84.7),
@@ -1227,7 +1246,7 @@ export const Lyney = new Character("Lyney", "Pyro", "Bow", [
   crystal: ElementalCrystals.Pyro,
   localSpecialty: LocalSpecialties.RainbowRose,
   worldBossDrop: MobDrops.EmperorsResolution,
-  mobDrop: EasyMobDrops.FatuiInsignia,
+  mobDrop: EasyMobDrops.RecruitsInsignia,
 }, 'Shows Local Specialties in Fontaine on minimap.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ['Charged/Hold', "Skill/Ability", "Burst/Ult"], true, [
     new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 76.9),
@@ -1249,7 +1268,7 @@ export const Mavuika = new Character("Mavuika", "Pyro", "Claymore", [
   crystal: ElementalCrystals.Pyro,
   localSpecialty: LocalSpecialties.WitheringPurpurbloom,
   worldBossDrop: MobDrops.GoldInscribedSecretSourceCore,
-  mobDrop: EasyMobDrops.Whistle,
+  mobDrop: EasyMobDrops.SentrysWoodenWhistle,
 }, '20% Nightsoul Transmission cooldown reduction.',
   new CharacterPlaystyle("On-field DPS", ["ATK", 'Elemental Mastery'], ["Burst/Ult", "Skill/Ability", "Normal/Press"], true, [
     new CharacterArtifactSet(Sets.ObsidianCodex, 4, 93.8),
@@ -1264,7 +1283,7 @@ export const Mika = new Character("Mika", "Cryo", "Polearm", ["Heal"], Rarity.Ep
   crystal: ElementalCrystals.Cryo,
   localSpecialty: LocalSpecialties.Wolfhook,
   worldBossDrop: MobDrops.PseudoStamens,
-  mobDrop: EasyMobDrops.FatuiInsignia,
+  mobDrop: EasyMobDrops.RecruitsInsignia,
 }, 'Shows Local Specialties in Mondstadt on minimap.',
   new CharacterPlaystyle("Burst Support", ["Energy Recharge", "HP"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 56.7),
@@ -1298,7 +1317,7 @@ export const Mualani = new Character("Mualani", "Hydro", "Catalyst", ["Nightsoul
   crystal: ElementalCrystals.Hydro,
   localSpecialty: LocalSpecialties.SprayfeatherGill,
   worldBossDrop: MobDrops.MarkOfTheBindingBlessing,
-  mobDrop: EasyMobDrops.Whistle,
+  mobDrop: EasyMobDrops.SentrysWoodenWhistle,
 }, 'Shows Local Specialties in Natlan on minimap.',
   new CharacterPlaystyle("On-field DPS", ["HP", "Elemental Mastery"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
     new CharacterArtifactSet(Sets.ObsidianCodex, 4, 92.6),
@@ -1340,7 +1359,7 @@ export const Navia = new Character("Navia", "Geo", "Claymore", [
   crystal: ElementalCrystals.Geo,
   localSpecialty: LocalSpecialties.SpringOfTheFirstDewdrop,
   worldBossDrop: MobDrops.ArtificedSpareClockworkComponent__Coppelius,
-  mobDrop: EasyMobDrops.FontemerAberrantPearl,
+  mobDrop: EasyMobDrops.TransoceanicPearl,
 }, '25% more rewards when on expeditions in Fontaine.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
     new CharacterArtifactSet(Sets.NighttimeWhispersInTheEchoingWoods, 4, 76.4),
@@ -1377,7 +1396,7 @@ export const Neuvillette = new Character("Neuvillette", "Hydro", "Catalyst", [
   crystal: ElementalCrystals.Hydro,
   localSpecialty: LocalSpecialties.Lumitoile,
   worldBossDrop: MobDrops.FontemerUnihorn,
-  mobDrop: EasyMobDrops.FontemerAberrantPearl,
+  mobDrop: EasyMobDrops.TransoceanicPearl,
 }, '15% Underwater Sprint Speed consumption reduction.',
   new CharacterPlaystyle("On-field DPS", ["HP", "Energy Recharge"], ["Charged/Hold", "Burst/Ult", "Skill/Ability"], true, [
     new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 95.6),
@@ -1426,7 +1445,7 @@ export const Ningguang = new Character("Ningguang", "Geo", "Catalyst", ["Shield"
   crystal: ElementalCrystals.Geo,
   localSpecialty: LocalSpecialties.GlazeLily,
   worldBossDrop: MobDrops.BasaltPillar,
-  mobDrop: EasyMobDrops.FatuiInsignia,
+  mobDrop: EasyMobDrops.RecruitsInsignia,
 }, 'Shows Ore veins used in forging on minimap.',
   new CharacterPlaystyle("On-field DPS", ["ATK", "Energy Recharge"], ["Normal/Press", "Burst/Ult", "Skill/Ability"], true, [
     ...AttackSets(30.4),
@@ -1457,6 +1476,24 @@ export const Noelle = new Character("Noelle", "Geo", "Claymore", [
 // #endregion
 
 // #region O
+export const Odette = new Character("Odette", "Cryo", "Sword", [
+  "Enables Stellar-Conduct Reaction",
+  "Enables Stellar-Swirl Reaction",
+  "Off-field Damage",
+], Rarity.Legendary, "Snezhnaya", {
+  material: TalentAscension.Charity,
+  weeklyBossDrop: MobDrops.TwistedWitheredBranch,
+  crystal: ElementalCrystals.Cryo,
+  localSpecialty: LocalSpecialties.FrostfiaryFlower,
+  worldBossDrop: MobDrops.UnscorchedBlossomBranch,
+  mobDrop: EasyMobDrops.EtherealGlimmershard,
+}, 'Shows Local Specialties in Snezhnaya on minimap.',
+  new CharacterPlaystyle("Off-field Stellar Support", ["ATK"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
+    new CharacterArtifactSet(Sets.HeartOfTheFurnace, 4, 75),
+    new CharacterArtifactSet(Sets.DisenchantmentInDeepShadow, 4, 25),
+  ])
+);
+
 export const Ororon = new Character("Ororon", "Electro", "Bow", [
   'Off-field Damage',
   'Nightsouls Blessing'
@@ -1558,7 +1595,7 @@ export const Rosaria = new Character("Rosaria", "Cryo", "Polearm", ["Off-field D
   crystal: ElementalCrystals.Cryo,
   localSpecialty: LocalSpecialties.Valberry,
   worldBossDrop: MobDrops.HoarfrostCore,
-  mobDrop: EasyMobDrops.FatuiInsignia,
+  mobDrop: EasyMobDrops.RecruitsInsignia,
 }, 'During Night (18:00 - 06:00), party members gain 10% increased movement speed.',
   new CharacterPlaystyle("Burst Support", ["Energy Recharge", "ATK"], ["Burst/Ult", "Skill/Ability", "Normal/Press"], false, [
     new CharacterArtifactSet(Sets.NoblesseOblige, 4, 35.1),
@@ -1572,6 +1609,7 @@ export const Rosaria = new Character("Rosaria", "Cryo", "Polearm", ["Off-field D
 // #region S
 export const Sandrone = new Character("Sandrone", "Cryo", "Claymore", [
   'Enables Stellar-Conduct Reaction',
+  'Enables Stellar-Swirl Reaction',
   'Off-field Damage',
 ], Rarity.Legendary, 'Fontaine', {
   material: TalentAscension.Vagrancy,
@@ -1625,7 +1663,7 @@ export const Sethos = new Character("Sethos", "Electro", "Bow", [], Rarity.Epic,
   crystal: ElementalCrystals.Electro,
   localSpecialty: LocalSpecialties.Trishiraite,
   worldBossDrop: MobDrops.CloudseamScale,
-  mobDrop: EasyMobDrops.EremiteDrop,
+  mobDrop: EasyMobDrops.FadedRedSatin,
 }, 'Shows Local Specialties in Sumeru on minimap.',
   new CharacterPlaystyle("On-field DPS", ["Elemental Mastery", "Energy Recharge"], ["Charged/Hold", "Burst/Ult", "Skill/Ability"], true, [
     new CharacterArtifactSet(Sets.WanderersTroupe, 4, 79.3),
@@ -1676,7 +1714,7 @@ export const Sigewinne = new Character("Sigewinne", "Hydro", "Bow", [
   crystal: ElementalCrystals.Hydro,
   localSpecialty: LocalSpecialties.RomaritimeFlower,
   worldBossDrop: MobDrops.WaterThatFailedToTranscend,
-  mobDrop: EasyMobDrops.FontemerAberrantPearl,
+  mobDrop: EasyMobDrops.TransoceanicPearl,
 }, 'While under water and your active character\'s HP fall below 50%, the active character will be healed over 2.5s and gain Elemental and Physical resistance decrease by 10% for 10s. This can be triggered once every 20s.',
   new CharacterPlaystyle("On-field Support", ["HP"], ["Skill/Ability", "Burst/Ult", "Charged/Hold"], false, [
     new CharacterArtifactSet(Sets.SongOfDaysPast, 4, 46.3),
@@ -1735,7 +1773,7 @@ export const TartagliaChilde = new Character("Tartaglia (Childe)", "Hydro", "Bow
   crystal: ElementalCrystals.Hydro,
   localSpecialty: LocalSpecialties.Starconch,
   worldBossDrop: MobDrops.CleansingHeart,
-  mobDrop: EasyMobDrops.FatuiInsignia,
+  mobDrop: EasyMobDrops.RecruitsInsignia,
 }, 'Increase your own party members\' Normal Attack level by 1.',
   new CharacterPlaystyle("On-field DPS", ["ATK"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
     new CharacterArtifactSet(Sets.HeartOfDepth, 4, 42.7),
@@ -1776,7 +1814,10 @@ export const Tighnari = new Character("Tighnari", "Dendro", "Bow", ["Off-field D
   ])
 );
 
-export const TravelerAnemo = new Character("Traveler (Anemo)", "Anemo", "Sword", [], Rarity.Legendary, 'Unknown', {
+export const TravelerAnemo = new Character("Traveler (Anemo)", "Anemo", "Sword", [
+  "Grouping",
+  "Off-field Damage",
+], Rarity.Legendary, 'Unknown', {
   material: TalentAscension.Resistance,
   weeklyBossDrop: MobDrops.DvalinsSigh,
   crystal: ElementalCrystals.Anemo,
@@ -1821,7 +1862,9 @@ export const TravelerElectro = new Character("Traveler (Electro)", "Electro", "S
   ])
 );
 
-export const TravelerDendro = new Character("Traveler (Dendro)", "Dendro", "Sword", [], Rarity.Legendary, 'Unknown', {
+export const TravelerDendro = new Character("Traveler (Dendro)", "Dendro", "Sword", [
+  "Off-field Damage",
+], Rarity.Legendary, 'Unknown', {
   material: TalentAscension.Admonition,
   weeklyBossDrop: MobDrops.MudraOfTheMaleficGeneral,
   crystal: ElementalCrystals.Dendro,
@@ -1836,7 +1879,11 @@ export const TravelerDendro = new Character("Traveler (Dendro)", "Dendro", "Swor
   ])
 );
 
-export const TravelerHydro = new Character("Traveler (Hydro)", "Hydro", "Sword", ['Self-heal', 'Pneuma'], Rarity.Legendary, 'Unknown', {
+export const TravelerHydro = new Character("Traveler (Hydro)", "Hydro", "Sword", [
+  'Self-heal',
+  'Pneuma',
+  "Off-field Damage",
+], Rarity.Legendary, 'Unknown', {
   material: TalentAscension.Equity,
   weeklyBossDrop: MobDrops.WorldspanFern,
   crystal: ElementalCrystals.Hydro,
@@ -1850,7 +1897,10 @@ export const TravelerHydro = new Character("Traveler (Hydro)", "Hydro", "Sword",
     new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 6.5),
   ])
 );
-export const TravelerPyro = new Character("Traveler (Pyro)", "Pyro", "Sword", ['Nightsouls Blessing'], Rarity.Legendary, 'Unknown', {
+export const TravelerPyro = new Character("Traveler (Pyro)", "Pyro", "Sword", [
+  'Nightsouls Blessing',
+  'Off-field Damage',
+], Rarity.Legendary, 'Unknown', {
   material: TalentAscension.Contention,
   weeklyBossDrop: null, // This is not a weekly boss drop, but a world quest drop
   crystal: ElementalCrystals.Pyro,
@@ -1864,14 +1914,23 @@ export const TravelerPyro = new Character("Traveler (Pyro)", "Pyro", "Sword", ['
     new CharacterArtifactSet(Sets.GladiatorsFinale, 4, 4.7),
   ])
 );
-export const TravelerCryo = new Character("Traveler (Cryo)", "Cryo", "Sword", [], Rarity.Legendary, 'Unknown', {
-  material: null,
+export const TravelerCryo = new Character("Traveler (Cryo)", "Cryo", "Sword", [
+  "Enables Stellar-Conduct Reaction",
+  "Enables Stellar-Swirl Reaction",
+  "Off-field Damage",
+], Rarity.Legendary, 'Unknown', {
+  material: TalentAscension.Charity,
   weeklyBossDrop: null,
   crystal: ElementalCrystals.Cryo,
   localSpecialty: LocalSpecialties.WindwheelAster,
   worldBossDrop: null,
-  mobDrop: EasyMobDrops.Mask,
-}, undefined, undefined);
+  mobDrop: EasyMobDrops.ChimericCore,
+}, `When party members trigger Superconduct or Cryo Swirl, they become stellar reactions and the base dmg of the reaction is also increased by 0.35% for every 100 of Traveler's ATK. Max 7% increase.`, 
+  new CharacterPlaystyle("On-field Stellar DPS", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
+    new CharacterArtifactSet(Sets.DisenchantmentInDeepShadow, 4, 50),
+    new CharacterArtifactSet(Sets.HeartOfTheFurnace, 4, 50),
+  ])
+);
 
 // #endregion
 
@@ -2033,7 +2092,7 @@ export const Xilonen = new Character("Xilonen", "Geo", "Sword", [
   crystal: ElementalCrystals.Geo,
   localSpecialty: LocalSpecialties.BrilliantChrysanthemum,
   worldBossDrop: MobDrops.GoldInscribedSecretSourceCore,
-  mobDrop: EasyMobDrops.Whistle,
+  mobDrop: EasyMobDrops.SentrysWoodenWhistle,
 }, 'Triggering Nightsoul Transmission restores 15 Phlogiston.',
   new CharacterPlaystyle("Off-field Support", ["DEF", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
     new CharacterArtifactSet(Sets.ScrollOfTheHeroOfCinderCity, 4, 93.3),
@@ -2134,7 +2193,7 @@ export const Yelan = new Character("Yelan", "Hydro", "Bow", ["Off-field Damage"]
   crystal: ElementalCrystals.Hydro,
   localSpecialty: LocalSpecialties.Starconch,
   worldBossDrop: MobDrops.RunicFang,
-  mobDrop: EasyMobDrops.FatuiInsignia,
+  mobDrop: EasyMobDrops.RecruitsInsignia,
 }, '25% more rewards when on expeditions in Liyue.',
   new CharacterPlaystyle("Off-field DPS", ["HP", "Energy Recharge"], ["Burst/Ult", "Skill/Ability", "Charged/Hold"], false, [
     new CharacterArtifactSet(Sets.EmblemOfSeveredFate, 4, 86.5),

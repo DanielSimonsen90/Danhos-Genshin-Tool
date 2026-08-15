@@ -78,6 +78,7 @@ export type PassiveTalent = (
   | `Elemental Master +60. When Dendro/Bountiful Cores or Seeds of Deceit appears on field or party obtains Verdant Dew, Traveler gains 1 stack of Blade of Verdant Virids. These 2 methods each grant +1 stack/4s of 3. After 3, performing CA consumes all stacks to transform into CA: Verdessence. Each CA deals Dendro DMG +80% of Traveler's ATK. Two Vinecores created, which explode after 4/8s respectively, dealing Dendro DMG of 120% of Traveler's ATK - considered CA DMG. 15s CD.`
   | `HP +20%. When party members' HP change by 5%, Traveler receives 1 stack of Blade of Many Waters every 4s of 3 stacks. After 3, performing CA consumes all stacks to transform into CA: Tidebound. Each CA deals Hydro DMG +150% of Traveler's ATK. When Traveler's HP > 50%, 10% of max HP consumed to increase DMG inflicted by CA by 100% of Traveler's ATK. When HP < 50%, one instance of healing = 25% of max HP restored upon hitting an enemy. 15s CD.`
   | `ATK +20%. When party members trigger Nightsoul burst, Traveler receives 1 stack of Blade of Sacred Flame of 2 stacks. After 3, performing CA consumes all stacks to transform into CA: Inferno. Each CA deals Nightsoul-aligned Pyro DMG +200% of Traveler's ATK. 15s CD.`
+  | `When party members trigger Superconduct or Cryo Swirl, they become stellar reactions and the base dmg of the reaction is also increased by 0.35% for every 100 of Traveler's ATK. Max 7% increase.`
 
   // Special
   | `Increase your own party members' Normal Attack level by 1.`
