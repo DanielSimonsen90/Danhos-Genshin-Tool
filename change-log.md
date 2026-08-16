@@ -12,6 +12,10 @@
 ### Fixes
 
 
+## Artifacts
+* Added new artifact set "Heart of the Furnace"
+* Added new artifact set "Scarlet Proof"
+
 ## Characters
 ### Added
 * 4* Electro Polearm "Alyosha" from Snezhnaya
@@ -66,18 +70,14 @@
 * Immortal Construct, drops Unscorched Blossom Branch
 * Chimeric Winged Lion, drops Severed Tail of the Sky-Roamer
 
-
 ## Weapons
 ### Added
 * Snezhnaya forgable weapons: Blade of Atonement (Claymore), Covenant of Frost and Snow (Bow), Echoes of the Heart (Catalyst), Emberwell (Sword) & Song of the Vigil (Polearm)
 * New Battle Pass weapons: Clash of Kings (Catalyst), Forged by the Golden Melody (Claymore), Frostbreath (Polearm), Heretic's Molten Blade (Sword) & Jade Vista (Bow)
 * Quest weapon: Exaiphanes Blade (Sword)
 * Wish weapon: Whitelake Frostfeather (Sword)
+* Added possibility to sort weapons lists by base attack.
 
 ### Updated
 * Updated obtainable through "Crafting" to be rephrased as "Forging" or "Quest" depending on the source of the weapon. These weapons are *still* craftable, but there may be an extra step or a specific location to buy the blueprint from.
-* Added possibility to sort weapons lists by base attack.
-
-## Artifacts
-* Added new artifact set "Heart of the Furnace"
-* Added new artifact set "Scarlet Proof"
+* Changed calculation behind character weapon recommendations to include more if a character *wants* to trigger a reaction weapon might be locked behind vs if they could.

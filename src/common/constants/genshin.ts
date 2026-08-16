@@ -27,7 +27,7 @@ export const TriggerableReactions: Record<Reaction, Array<Element>> = {
   'Quicken': ['Dendro', 'Electro'],
   'Shatter': ['Cryo', 'Geo', 'Hydro'],
   'Spread': ['Dendro', 'Electro'],
-  'Stellar': ['Cryo', 'Electro'],
+  'Stellar': ['Cryo', 'Electro', 'Anemo'],
   'Stellar-Conduct': ['Cryo', 'Electro'],
   'Stellar-Swirl': ['Cryo', 'Anemo'],
   'Superconduct': ['Cryo', 'Electro'],
