@@ -12,6 +12,12 @@ const isPhysicalFavored = (character: Character, artifactSet: CharacterArtifactS
   && character.playstyle?.recommendedArtifactSets.includes(artifactSet)
 );
 
+const getReactionModifier = (character: Character, ...reactions: Array<Reaction>) => {
+  if (character.playstyle?.wantsToTrigger(character, ...reactions)) return multiplier * 2;
+  else if (character.canTrigger(...reactions)) return multiplier;
+  return 0;
+}
+
 // #region A-G
 
 /**
@@ -258,7 +264,7 @@ export const DisenchantmentInDeepShadow = new ArtifactSet(
     let value = 0;
 
     if (c.playstyle?.talentStats.includes('ATK')) value += multiplier;
-    if (set.pieces === 4 && c.canTrigger('all', 'Superconduct')) value += multiplier;
+    if (set.pieces === 4 && c.canTrigger('Superconduct')) value += getReactionModifier(c, 'Superconduct');
 
     return value;
   },
@@ -337,9 +343,9 @@ export const FlowerOfParadiseLost = new ArtifactSet(
     if (c.playstyle?.talentStats.includes('Elemental Mastery')) value += multiplier;
     if (set.pieces !== 4) return value;
 
-    if (c.canTrigger('all', 'Bloom')) value += multiplier;
-    if (c.canTrigger('all', 'Hyperbloom')) value += multiplier;
-    if (c.canTrigger('all', 'Burgeon')) value += multiplier;
+    if (c.canTrigger('Bloom')) value += getReactionModifier(c, 'Bloom');
+    if (c.canTrigger('Hyperbloom')) value += getReactionModifier(c, 'Hyperbloom');
+    if (c.canTrigger('Burgeon')) value += getReactionModifier(c, 'Burgeon');
     return value;
   }
 );
@@ -483,8 +489,8 @@ export const HeartOfTheFurnace = new ArtifactSet(
   (c, set) => {
     let value = 0;
     if (c.playstyle?.talentStats.includes('ATK')) value += multiplier;
-    if (c.canTrigger('all', 'Stellar')) {
-      value += multiplier;
+    if (c.canTrigger('Stellar')) {
+      value += getReactionModifier(c, 'Stellar');
 
       if (c.playstyle?.needsStat('ATK')) value += multiplier;
       if (!c.playstyle?.onField) value += multiplier;
@@ -843,7 +849,7 @@ export const ScarletProof = new ArtifactSet(
     let value = 0;
 
     if (c.playstyle?.talentStats.includes('ATK')) value += multiplier;
-    if (set.pieces === 4 && c.canTrigger('all', 'Stellar-Swirl') && c.element === 'Anemo') value += multiplier * 2;
+    if (set.pieces === 4 && c.canTrigger('Stellar-Swirl') && c.element === 'Anemo') value += getReactionModifier(c, 'Stellar-Swirl');
 
     return value;
   }
@@ -1000,12 +1006,12 @@ export const ThunderingFury = new ArtifactSet(
     if (c.element === 'Electro') value += multiplier;
     if (set.pieces !== 4) return value;
 
-    if (c.canTrigger('all', 'Overloaded')) value += multiplier;
-    if (c.canTrigger('all', 'Electro-Charged')) value += multiplier;
-    if (c.canTrigger('all', 'Superconduct')) value += multiplier;
-    if (c.canTrigger('all', 'Hyperbloom')) value += multiplier;
-    if (c.canTrigger('all', 'Aggravate')) value += multiplier;
-    if (c.canTrigger('all', 'Quicken')) value += multiplier;
+    if (c.canTrigger('Overloaded')) value += getReactionModifier(c, 'Overloaded');
+    if (c.canTrigger('Electro-Charged')) value += getReactionModifier(c, 'Electro-Charged');
+    if (c.canTrigger('Superconduct')) value += getReactionModifier(c, 'Superconduct');
+    if (c.canTrigger('Hyperbloom')) value += getReactionModifier(c, 'Hyperbloom');
+    if (c.canTrigger('Aggravate')) value += getReactionModifier(c, 'Aggravate');
+    if (c.canTrigger('Quicken')) value += getReactionModifier(c, 'Quicken');
     if (c.playstyle?.onField) value += multiplier;
     if (c.playstyle?.talentPriorities[0] === 'Skill/Ability') value += multiplier;
     return value;
@@ -1079,8 +1085,8 @@ export const UnfinishedReverie = new ArtifactSet(
   (c, set) => {
     let value = 0;
     if (c.playstyle?.talentStats.includes('ATK')) value += multiplier;
-    if (!c.playstyle?.onField && c.canTrigger('all', 'Burning')) value += multiplier;
-    if (c.canTrigger('all', 'Burning')) value += multiplier;
+    if (!c.playstyle?.onField && c.canTrigger('Burning')) value += getReactionModifier(c, 'Burning');
+    if (c.canTrigger('Burning')) value += getReactionModifier(c, 'Burning');
     return value;
   }
 );

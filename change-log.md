@@ -13,8 +13,12 @@
 
 
 ## Artifacts
+### Added
 * Added new artifact set "Heart of the Furnace"
 * Added new artifact set "Scarlet Proof"
+
+### Updated
+* Changed calculation behind character artifact recommendations to include more if a character *wants* to trigger a reaction weapon might be locked behind vs if they could.
 
 ## Characters
 ### Added
