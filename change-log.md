@@ -36,7 +36,7 @@
 ## Domains
 * Inverted Glacier: Artifacts domain for new artifacts in §Artifacts section.
 * Scars of Cursed Obsession: Weapon domain for new Snezhnaya weapons
-* Relics of the Fallen Grace: Talent domain for new Snezhnaya characters TODO: IMAGE
+* Relics of the Fallen Grace: Talent domain for new Snezhnaya characters
 
 ## Materials
 ### Drops
