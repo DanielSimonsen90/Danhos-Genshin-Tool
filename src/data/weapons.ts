@@ -6485,7 +6485,7 @@ export const TidalShadow = new Weapon(
       '24/30/36/42/48%',
     ]
   },
-  'Sword',
+  'Claymore',
   Rarity.Epic,
   510,
   'ATK',

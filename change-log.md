@@ -88,3 +88,4 @@
 
 ### Fixed
 * Fixed All Weapons not showing rarity, which seems quite helpful when you're viewing a big combined list of mixed rarities.
+* Fixed Tidal Shadow being marked as Sword instead of Claymore
