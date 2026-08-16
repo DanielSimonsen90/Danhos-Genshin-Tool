@@ -5,8 +5,9 @@ import { DEFAULT_STATE } from "../CacheStoreConstants";
 
 export default new StoreBuilder<CacheState>()
   .addSlice(getSlice)
-  .addApi(({ set, api }) => {
+  .addApi(({ get, set }) => {
     function clearCache() {
+      localStorage.removeItem('CacheStore');
       set(DEFAULT_STATE);
     }
     
@@ -31,20 +32,23 @@ export default new StoreBuilder<CacheState>()
     }
 
     function loadItem<TKey extends keyof CacheState>(key: TKey, defaultValue?: any) {
-      if (!api.has(key)) setItem(key, defaultValue);
+      if (get()[key] === undefined) setItem(key, defaultValue);
     }
 
     function evictExpired(daysToKeep: number) {
       if (daysToKeep === 0) return;
 
       const cutoff = Date.now() - daysToKeep * 86_400_000; // 86,400,000 ms in a day
-      
-      set(state => ({
-        ...state,
-        searchHistory: Object.fromEntries(
-          Object.entries(state.searchHistory).filter(([, entry]) => (entry.timestamp ?? 0) >= cutoff)
-        ),
-      }));
+
+      set(state => {
+        const entries = Object.entries(state.searchHistory ?? {});
+        const kept = entries.filter(([, entry]) => (entry.timestamp ?? 0) >= cutoff);
+
+        // Returning the identical state stops zustand from notifying subscribers, so an eviction pass with nothing to evict can't wake up effects that depend on the store.
+        if (kept.length === entries.length) return state;
+
+        return { ...state, searchHistory: Object.fromEntries(kept) };
+      });
     }
 
     return {

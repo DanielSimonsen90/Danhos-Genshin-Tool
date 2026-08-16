@@ -20,7 +20,7 @@ export const AncientChord = WeaponAscensionMaterial.create(
   'Monday/Thursday'
 );
 
-export const PureSacredDewdrop = WeaponAscensionMaterial.create(
+export const DrossOfPureSacredDewdrop = WeaponAscensionMaterial.create(
   {
     [Rarity.Uncommon]: `Dross of Pure Sacred Dewdrop`,
     [Rarity.Rare]: `Sublimation of Pure Sacred Dewdrop`,

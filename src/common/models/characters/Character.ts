@@ -44,30 +44,18 @@ export class Character<TElement extends Element = Element> {
     ); 
   }
 
-  public canTrigger(filter: TriggerableReactionFilter, ...reactions: Reaction[]) {
-    const triggerableReactions = this.getTriggerableReactions(filter);
+  public canTrigger(...reactions: Reaction[]) {
+    const triggerableReactions = this.getTriggerableReactions();
     return reactions.some(reaction => triggerableReactions.includes(reaction));
   }
 
-  public getTriggerableReactions(filter: TriggerableReactionFilter) {
-    const triggerableReactions = ElementalReactionMemoizeService.memoize(() => (
+  public getTriggerableReactions() {
+    return ElementalReactionMemoizeService.memoize(() => (
       Object
       .entries(TriggerableReactions)
       .filter(([_, elements]) => elements.includes(this.element))
       .map(([reaction]) => reaction as Reaction)
-    ), [this.element, filter]);
-
-    if (filter === 'all' || !this.playstyle) return triggerableReactions;
-
-    const isReactionLimited = ElementalReactions.some(reaction => (
-      this.playstyle?.name.includes(reaction)
-    ));
-
-    if (isReactionLimited) return triggerableReactions.filter(reaction => (
-      this.playstyle?.name.includes(reaction)
-    ));
-
-    return triggerableReactions;
+    ), [this.element]);
   }
 
   public getModelKey(): ModelKeys {

@@ -9,8 +9,8 @@ type Props = Omit<ComponentPropsWithoutRef<typeof Image>, 'src' | 'alt'> & {
 };
 
 export default forwardRef<HTMLImageElement, Props>(function CharacterImage({ character, ...props }, ref) {
-  const region = useAccountData()
-  if (character.toLowerCase().includes('traveler') && region.traveler !== 'lumine') character = character.replace('Traveler', 'traveler_dendro');
+  const account = useAccountData()
+  if (character.toLowerCase().includes('traveler')) character = account.traveler === 'lumine' ? 'traveler' : 'traveler_dendro';
   else if (character.toLowerCase() === 'lumine') character = 'traveler';
   else if (character.toLowerCase() === 'aether') character = 'traveler_dendro';
 

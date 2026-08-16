@@ -235,3 +235,15 @@ export const MoonchildsTreasure = new DomainOfBlessing(
   },
   'Nod-Krai',
 );
+
+export const InvertedGlacier = new DomainOfBlessing(
+  "Inverted Glacier",
+  `In the most ancient legends of the fae, the dead tundra was once blanketed in lush, vibrant greenery, and streams of sweet honey filled the placid frozen sea. Yet, not even the eldest among them had ever witnessed that mythical paradise. \nWherever the eye turned, naught but suffering and blizzards endlessly grind down the solemn, somber earth, and the fragile yet unyielding souls who clung to it.`,
+  {
+    1: `(Cryo/Electro/Anemo)`,
+    2: `(Cryo/Electro/Anemo)`,
+    3: `Triggering a Cryo-related reaction increases the character's EM. (Cryo/Electro/Anemo)`,
+    4: `Triggering a Cryo-related reaction increases the character's EM. (Cryo/Electro/Anemo)`,
+  },
+  'Snezhnaya',
+);

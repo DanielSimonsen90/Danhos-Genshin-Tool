@@ -1,4 +1,5 @@
-import { TalentType, CharacterSetName as CharacterPlaystyleName, TalentStatName } from "@/common/types";
+import { TalentType, CharacterSetName as CharacterPlaystyleName, TalentStatName, Reaction } from "@/common/types";
+import { Character } from "..";
 import { CharacterArtifactSet } from "./CharacterArtifactSet";
 
 export class CharacterPlaystyle {
@@ -18,6 +19,19 @@ export class CharacterPlaystyle {
 
   public needsStat(talentStat: TalentStatName): boolean {
     return this.talentStats.includes(talentStat);
+  }
+
+  public wantsToTrigger(character: Character, ...reactions: Array<Reaction>) {
+    return reactions.some(reaction => {
+      const isSwirl = reaction.includes('Swirl') && character.element === 'Anemo';
+      const isCrystallize = reaction.includes('Crystallize') && character.element === 'Geo';
+
+      return (
+        this.name.includes(reaction)
+        || isSwirl
+        || isCrystallize
+      );
+    });
   }
 }
 

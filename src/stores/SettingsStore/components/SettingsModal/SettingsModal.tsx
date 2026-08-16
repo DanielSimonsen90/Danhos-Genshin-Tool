@@ -130,6 +130,14 @@ export default function SettingsModal(props: ModalConsumerProps) {
     }
   }, [pendingSelectedAccountName]);
 
+  // Account order is the key order of the accounts map, so reordering means rebuilding it.
+  const handleAccountReorder = useCallback((names: string[]) => {
+    setPendingAccounts(prev => names.reduce((next, name) => {
+      if (name in prev) next[name] = prev[name];
+      return next;
+    }, {} as AccountContextType));
+  }, []);
+
   const handleAccountDataChange = useCallback((name: string, update: Partial<AccountData>) => {
     setPendingAccounts(prev => ({
       ...prev,
@@ -144,6 +152,7 @@ export default function SettingsModal(props: ModalConsumerProps) {
     onAccountAdd: handleAccountAdd,
     onAccountDelete: handleAccountDelete,
     onAccountRename: handleAccountRename,
+    onAccountReorder: handleAccountReorder,
     onAccountDataChange: handleAccountDataChange,
   };
 

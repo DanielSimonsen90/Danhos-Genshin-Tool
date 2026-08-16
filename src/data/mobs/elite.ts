@@ -9,7 +9,7 @@ export const FatuiCicinMage = new EliteMob(
   `A Fatui mage who can command Cicins in battle.\nSimilarly to the way that Cicins go crazy for Mist Grass, Cicin Mages take great pleasure in toying with their prey.\nThey seem to wander the land aimlessly, as if compelled by some unknown duty.`,
   [
     EliteMobDrops.MistGrass,
-    EasyMobDrops.FatuiInsignia,
+    EasyMobDrops.RecruitsInsignia,
   ]
 );
 
@@ -43,7 +43,7 @@ export const FatuiAgent = new EliteMob(
   `A Fatui secret agent.\nThe duty of a Fatui agent is to settle debts — but not only those of a monetary or goods-in-kind nature.\nThey also ensure dues are paid when it comes to the principle of "an eye for an eye." If there is one thing the Fatui are not known for, it is leniency, and whoever dares to oppose them will invoke the full force of their wrath upon them.`,
   [
     EliteMobDrops.SacrificialKnife,
-    EasyMobDrops.FatuiInsignia
+    EasyMobDrops.RecruitsInsignia
   ]
 );
 
@@ -76,7 +76,7 @@ export const Geovishap = new EliteMob(
   "Geovishap",
   `A mature Geovishap.\nIt is said that afer many years have passed, Geovishap Hatchlings will shed the armor that originally protected them and become geovishaps. Hoever, these two and the older, greater Primo Geovishaps have spent many years hibernating under the the mountains, and have only emerged and become active in recent times. As such, none can personally attest to having witnessed or recorded such a thing in person.`,
   [
-    EliteMobDrops.BoneShard,
+    EliteMobDrops.FragileBoneShard,
   ]
 );
 
@@ -84,7 +84,7 @@ export const FatuiSnezhnayanMaiden = new EliteMob(
   "Fatui: Snezhnayan Maiden",
   `A member of a special Fatui honor guard from Snezhnaya.\nWilling to do anything to achieve the grand goals of the Fatui, they are the stark opposite of the dignity indicated by the title "Maiden."`,
   [
-    EliteMobDrops.Prism,
+    EliteMobDrops.DismalPrism,
   ]
 );
 
@@ -108,7 +108,7 @@ export const BathysmalVishap = new EliteMob(
   "Bathysmal Vishap",
   `A mighty race of vishaps that dwell within the deep seas.\nThat they hate light is not due to an overly fragile sense of sight. Instead, it is because they have had the selfless sunlight and the surface world taken from them that they refuse to countenance man-made light.`,
   [
-    EliteMobDrops.BoneShard,
+    EliteMobDrops.FragileBoneShard,
   ]
 );
 
@@ -132,7 +132,7 @@ export const PrimalConstruct = new EliteMob(
   "Primal Construct",
   `The guardians of the lost ancient desert ruins have power enough to punish any who would presume to disturb the pure dreams of their lord.\nIt is said that the master of the sands once dreamed of an eternal paradise. Today, that utopia is long gone, and the dreams and oaths, forgotten by the world, are now only found in the mantras inscribed upon these machines.`,
   [
-    EliteMobDrops.PrimalConstructPrism,
+    EliteMobDrops.DamagedPrism,
   ]
 );
 
@@ -140,7 +140,7 @@ export const ConsecratedBeast = new EliteMob(
   "Consecrated Beast",
   "A lifeform that became twisted and warped by eating some great being.",
   [
-    EliteMobDrops.Shell
+    EliteMobDrops.DesiccatedShell
   ]
 );
 
@@ -188,7 +188,7 @@ export const PraetorianGolem = new EliteMob(
   "Praetorian Golem",
   `A moving statue shaped like a warrior who will swing their sword at all who dare trespass upon the area under their guardianship.\nThe being beneath its resilient exterior may have long been lost in the mists of ancient memory.`,
   [
-    EliteMobDrops.Hilt,
+    EliteMobDrops.RuinedHilt,
   ]
 );
 
@@ -228,7 +228,7 @@ export const FurnaceShellMountainWeasel = new EliteMob(
   "Furnace Shell Mountain Weasel",
   `An ancient variant of mountain weasel that has adapted to a unique, Phlogiston-rich environment isolated from the outside world. Some researchers from the Saurian Relics Association believe that despite the appearance that it has developed a symbiotic relationship with the Source Mechanisms, said mechanisms are actually controlling it through the ample Phlogiston that permeates its body.`,
   [
-    EliteMobDrops.WeaselShell,
+    EliteMobDrops.ColdCrackedShell,
   ]
 );
 
@@ -277,5 +277,21 @@ export const PrecursorsSecretSourceMatrixOfOverseerNetwork = new EliteMob(
   `An ancient machine trapped amongst the lunar ruins. Even the sturdiest and most reliable machines will be conquered by the passing of long years, losing the purpose bestowed upon them by their creators.\nNow, this entity only attacks and eliminates anything that dares set foot on the ground it defends.`,
   [
     EliteMobDrops.FracturedLunarIron
+  ]
+);
+
+export const VolkodlakBrute = new EliteMob(
+  'Volkodlak Brute',
+  `Among the fae of Snezhnaya, the most populous race comprises varied creatures collectively known as the "Volkodlak." Perhaps they were brought into existence for the sole purpose of finding the answer to what truly makes a human... human.`,
+  [
+    EliteMobDrops.AccretedFragment,
+  ]
+);
+
+export const WildwoodLeshy = new EliteMob(
+  'Wildwood Leshy',
+  `A reclusive breed among Snezhnaya's fae, rarely seen near towns or high roads. They prefer a life spent deep within the wilderness and mountain forests. If the oldest among them have endured to this day, they likely possess statures as towering as ancient, sky-piercing trees.`,
+  [
+    EliteMobDrops.HollowRootOfLife,
   ]
 );

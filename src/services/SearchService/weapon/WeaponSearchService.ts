@@ -52,11 +52,13 @@ export const WeaponSearchService = new class WeaponSearchService extends BaseSea
   private static getBasicWeaponMatchScore(weapon: Weapon, character: Character): number {
     const talentStats = [...character.playstyle?.talentStats ?? []].reverse();
     const getTalentStatName = (stat: WeaponStatName | undefined) => stat?.replace('%', '') as TalentStatName;
-    const secondaryStatScore = weapon.secondaryStat
+    let secondaryStatScore = weapon.secondaryStat
       ? weapon.secondaryStat === 'Crit DMG' || weapon.secondaryStat === 'Crit Rate'
         ? WEAPON_VARIABLE_SCORES.DESIRED_STAT_CRITS_MULTIPLIER
-        : (talentStats.indexOf(getTalentStatName(weapon.secondaryStat)) ?? 0) + WEAPON_VARIABLE_SCORES.DESIRED_STAT_MATCH_MULTIPLIER
+        : talentStats.indexOf(getTalentStatName(weapon.secondaryStat)) * WEAPON_VARIABLE_SCORES.DESIRED_STAT_MATCH_MULTIPLIER
       : 0;
+
+    if (secondaryStatScore < 0) secondaryStatScore = 0;
 
     const baseAttackScore = weapon.baseAttack / WEAPON_VARIABLE_SCORES.BASE_ATTACK_REDUCER;
 

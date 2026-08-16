@@ -104,3 +104,18 @@ export const LightlessCapital = new DomainOfMastery(
   },
   'Nod-Krai'
 );
+
+/**
+ * Snezhnaya
+ */
+export const RelicsOfTheFallenGrace = new DomainOfMastery(
+  "Relics of the Fallen Grace",
+  `In a bygone era beyond mortal memory, ancient fae bereft of their homeland raised a secluded sanctuary here, yearning to soothe the agony of extinction through cold, solitary asceticism. Yet all things of flesh and blood must eventually fade like a dying ember.\nAcross hundreds of epochs, the remnants who wept for the golden realm - and the countless followers who never knew its past glory - perished one after another like scattering snow. In the end, even the last hermit departed, leaving behind naught but a desolate, freezing silence.`,
+  {
+    1: `(Cryo/Electro)`,
+    2: `(Cryo/Electro)`,
+    3: `Superconduct or Stellar-Conduct, shockwave will be unleashed that deals greater DMG to opponents. (Cryo/Electro)`,
+    4: `Superconduct or Stellar-Conduct, shockwave will be unleashed that deals greater DMG to opponents. (Cryo/Electro)`,
+  },
+  'Snezhnaya',
+);

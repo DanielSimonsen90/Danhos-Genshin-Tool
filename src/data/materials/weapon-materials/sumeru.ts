@@ -2,7 +2,7 @@ import { WeaponAscensionMaterial } from "@/common/models";
 import { Rarity } from "@/common/types";
 import { TowerOfAbjectPride } from "@/data/domains/domain-of-forgery";
 
-export const TalismanOfTheForestDew = WeaponAscensionMaterial.create(
+export const CopperTalismanOfTheForestDew = WeaponAscensionMaterial.create(
   {
     [Rarity.Uncommon]: `Copper Talisman of the Forest Dew`,
     [Rarity.Rare]: `Icon Talisman of the Forest Dew`,

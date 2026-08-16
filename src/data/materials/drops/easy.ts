@@ -43,7 +43,7 @@ export const Slime = MobDrop.create('Slime', {
   prependName: true
 });
 
-export const FatuiInsignia = MobDrop.create('Insignia', {
+export const RecruitsInsignia = MobDrop.create('Insignia', {
   [Rarity.Rare]: `Lieutenant's`,
   [Rarity.Uncommon]: `Sergeant's`,
   [Rarity.Common]: `Recruit's`,
@@ -95,7 +95,7 @@ export const Spectral = MobDrop.create('Spectral', {
   prependName: true
 });
 
-export const EremiteDrop = MobDrop.create("<placeholder>", {
+export const FadedRedSatin = MobDrop.create("<placeholder>", {
   [Rarity.Rare]: 'Rich Red Brocade',
   [Rarity.Uncommon]: 'Trimmed Red Silk',
   [Rarity.Common]: 'Faded Red Satin',
@@ -105,7 +105,7 @@ export const EremiteDrop = MobDrop.create("<placeholder>", {
   [Rarity.Common]: `A piece of red satin used to cover the eyes. The fabric is slightly torn.\nMany Eremites tend to cover their eyes with textiles, but the original intention of this practice has long been lost to the sands of time.,`
 }, {
   onCreate: (name, description, rarity) => new MobDrop(
-    name.replace('<placeholder>', '').trim(),
+    name.replace('<placeholder>', ``).trim(),
     description,
     undefined,
     rarity
@@ -132,7 +132,7 @@ export const FungalSpores = MobDrop.create('<placeholder>', {
   [Rarity.Common]: `A small amount of glittering spore powder left behind by Floating Fungi. Seems that a sneeze is all it takes for this powder to vanish without a trace.`,
 }, {
   onCreate: (name, description, rarity) => new MobDrop(
-    name.replace('<placeholder>', '').trim(),
+    name.replace('<placeholder>', ``).trim(),
     description,
     undefined,
     rarity
@@ -149,7 +149,7 @@ export const Gear = MobDrop.create('Gear', {
   [Rarity.Common]: `Clockwork meka's gear.\nIt is a crucial part of the meka's transmission structure. The whole system will malfunction if this gear is absent.`,
 });
 
-export const FontemerAberrantPearl = MobDrop.create('<placeholder>', {
+export const TransoceanicPearl = MobDrop.create('<placeholder>', {
   [Rarity.Rare]: 'Xenochromatic Crystal',
   [Rarity.Uncommon]: 'Transoceanic Chunk',
   [Rarity.Common]: 'Transoceanic Pearl',
@@ -159,14 +159,14 @@ export const FontemerAberrantPearl = MobDrop.create('<placeholder>', {
   [Rarity.Common]: `A small crystal obtained from a defeated Fontemer Aberrant.\nFontemer Aberrants arise from Fontaine's sea. They are believed to be a unique life form born from the mysterious energy in the water.`,
 }, {
   onCreate: (name, description, rarity) => new MobDrop(
-    name.replace('<placeholder>', '').trim(),
+    name.replace('<placeholder>', ``).trim(),
     description,
     undefined,
     rarity
   )
 });
 
-export const Whistle = MobDrop.create('Whistle', {
+export const SentrysWoodenWhistle = MobDrop.create('Whistle', {
   [Rarity.Rare]: `Saurian-Crowned Warrior's Golden`,
   [Rarity.Uncommon]: `Warrior's Metal`,
   [Rarity.Common]: `Sentry's Wooden`,
@@ -204,4 +204,26 @@ export const DriveShaft = MobDrop.create('Drive Shaft', {
   [Rarity.Rare]: `The drive shaft of a Landcruisen refined by the Design Bureau.\nOn the blueprints drawn by the engineers of the north, this unassuming part was once the flawless embodiment of glory and technological advancement, its small metal body encapsulating the wisdom of countless generations.\nNow it lies in the cold dirt, waiting to be recycled once more.`,
   [Rarity.Uncommon]: `The reinforced drive shaft of a Landcruiser.\nIt took countless reports of destruction to bring about this insignificant improvement. In a sense, the administrative system of the Royal Armory Palace is several times more complex than the machinery it builds. After all, even the most advanced Landcruisers don't take months or even years to build.`,
   [Rarity.Common]: `The drive shaft of a Landcruiser destroyed in battle.\nEven the most precise craftsmanship cannot withstand excessive wear, just as the most lofty ideals cannot bring back those who've died in vain for someone else's cause. Moreover, mass-produced components can hardly be called precise, and mass-produced ideals can hardly be considered true ideals.`,
+});
+
+export const EtherealGlimmershard = MobDrop.create('Ethereal', {
+  [Rarity.Rare]: `Crystalscale Stone`,
+  [Rarity.Uncommon]: `Crystal`,
+  [Rarity.Common]: 'Glimmershard',
+}, {
+  [Rarity.Rare]: `A crystalline scale that once grew upon the fae's body. It is said that fae possessing a greater abundance of these scales command far greater power. Yet, none can say whether this magic truly originates from within their forms — merely channeled outward through the crystal chunks - or if the chunks themselves are the very vessels of their power.`,
+  [Rarity.Uncommon]: `The remains of a Snezhnayan fae left behind after battle.\nA shattered fragment of the crystalline scales that once grew upon the fae's body. Though it is now a mere empty shell, one can still sense the echo of the unique power that once dwelt within.`,
+  [Rarity.Common]: `The remains of a Snezhnayan fae left behind after battle.\nThese shards once coated the creature's body like crystalline scales. Upon falling away, they stripped themselves of all colors, shifting into something akin to the dusty dross of a moth's wings.`,
+}, {
+  prependName: true
+});
+
+export const ChimericCore = MobDrop.create('', {
+  [Rarity.Rare]: `Prime Chimeric Nexus`,
+  [Rarity.Uncommon]: `Symbiotic Chimeric Nucleus`,
+  [Rarity.Common]: 'Chimeric Core',
+}, {
+  [Rarity.Rare]: `The internal core harvested from aberrant man-made monsters.\nThe most complex core a man-made monster can possibly sustain, serving as an artificially engineered yet flawless seed of life. Whoever brought this creation into life has surely unlocked the very secrets of how life itself is shaped.`,
+  [Rarity.Uncommon]: `The internal core harvested from aberrant man-made monsters.\nA relatively complex core harvested from a man-made monster. This symbiotic nucleus is engineered to sustain the biological cycles of two distinct life-forms, seamlessly weaving them into a single organism`,
+  [Rarity.Common]: `The internal core harvested from aberrant man-made monsters.\nThis is the most fundamental core grown within a man-made monster. Yet, simple as it may be, it contains the primordial design for the growth of all man-made creations.`,
 });

@@ -41,7 +41,7 @@ export const FatuiSkirmisher = new EasyMob(
   "Fatui Skirmisher",
   `A soldier encased within a Fatui war machine.\nThese skirmishers do not question if they shall live or die as they advance into nations far from home to complete reconnaissance missions and lay the groundwork for operations to come.\nUnlike the elite Mages and Agents, Fatui Skirmishers are soldiers of lesser individual might.\nTo complete their tasks and reduce losses in men and material, their tactics are thus more reliant on teamwork.`,
   [
-    EasyMobDrops.FatuiInsignia
+    EasyMobDrops.RecruitsInsignia
   ]
 );
 
@@ -81,7 +81,7 @@ export const Eremites = new EasyMob(
   "Eremites",
   `A group of loosely-organized mercenary corps. Will work for anyone as long as the pay is good.\n"The Eremites" is an umbrella term that people from outside the desert have cooined for them. But beneath this name, there are separate entities such as the sellsword group known as the Farrokhzadan and the tribe of Tanit.\nAs a people led not by gods, most of these desert descendants wield their blades to make a living and offer their skills to those who pay.`,
   [
-    EasyMobDrops.EremiteDrop
+    EasyMobDrops.FadedRedSatin
   ]
 );
 
@@ -106,7 +106,7 @@ export const FontemerAberrant = new EasyMob(
   "Fontemer Aberrant",
   `An aquatic creature found throughout Fontaine.\nPerhaps due to enviornmental requirements, it can seemingly only be found in Fontaine.`,
   [
-    EasyMobDrops.FontemerAberrantPearl,
+    EasyMobDrops.TransoceanicPearl,
   ]
 );
 
@@ -114,7 +114,7 @@ export const TribalWarriors = new EasyMob(
   "Sauroform Tribal Warriors",
   `The warriors of Natlan's six great tribes who fight for the honor and glory of their people.\nOver long years of living and fighting alongside their Saurian compantions, these tribal warriors havee gradually acquired their traits and learned how to apply them on the field of battle.`,
   [
-    EasyMobDrops.Whistle,
+    EasyMobDrops.SentrysWoodenWhistle,
   ]
 );
 
@@ -139,5 +139,21 @@ export const Landcruiser = new EasyMob(
   `An autonomous machine that applies the principles of naval combat to land battles.\nLandcruisers were engineered by the Armory Palace's finest engineers to serve as "armed ships that cruise on land." They are now deployed en masse at the bleeding edge of the Fatui's conquests.`,
   [
     EasyMobDrops.DriveShaft
+  ]
+);
+
+export const FaeOFCrystallineFlesh = new EasyMob(
+  "Fae of Crystalline Flesh",
+  `As they were being crafted into living beings, a surge of volatile energy surfaced upon the their bodies, solidifying into crystalline scales.\nPeople of that era could not foresee the significance of the power refined from these shards, nor the weight it would eventually bear upon this world...`,
+  [
+    EasyMobDrops.EtherealGlimmershard
+  ]
+);
+
+export const AberrantChimericMonsters = new EasyMob(
+  "Aberrant Chimeric Monsters",
+  `One of the many creations spawned by the biological alchemy that once flourished across Snezhnaya before it was forbidden.\nWhile the vast majority of these monsters were consumed in the war against the Onslaught of Dark Beasts, the few that have survived to this day are the rarest of exceptions.`,
+  [
+    EasyMobDrops.ChimericCore
   ]
 );
