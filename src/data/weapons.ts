@@ -7,7 +7,7 @@ import { Character, CharacterPlaystyle } from "@/common/models";
 const MODIFIERS = {
   FIELD: 5,
   TALENT: 10,
-  CAN_TRIGGER_ELEMENT: 10,
+  CAN_TRIGGER_ELEMENT: 15,
   STAT: 25,
   BONUS_ABILITY: 40
 } as const;
@@ -3423,7 +3423,7 @@ export const LumidouceElegy = new Weapon(
   'Wish',
   ({ playstyle, score, character }) => {
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
-    if (character.canTrigger('Burning') || character.element === 'Dendro') {
+    if (character.canTrigger('Burning')) {
       score += getReactionModifier(character, playstyle, 'Burning');
 
       if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.STAT;

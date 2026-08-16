@@ -81,3 +81,6 @@
 ### Updated
 * Updated obtainable through "Crafting" to be rephrased as "Forging" or "Quest" depending on the source of the weapon. These weapons are *still* craftable, but there may be an extra step or a specific location to buy the blueprint from.
 * Changed calculation behind character weapon recommendations to include more if a character *wants* to trigger a reaction weapon might be locked behind vs if they could.
+
+### Fixed
+* Fixed All Weapons not showing rarity, which seems quite helpful when you're viewing a big combined list of mixed rarities.
