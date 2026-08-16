@@ -4,7 +4,7 @@
 ## General
 ### Added
 * Stellar-Swirl reaction
-
+* Account reordering in settings modal
 
 ### Updates
 

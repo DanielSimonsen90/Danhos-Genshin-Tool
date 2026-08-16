@@ -14,8 +14,9 @@
     border-bottom: $border;
   }
 
-  .account-switcher {
-    justify-content: flex-end;
+  header .muted {
+    margin-top: .5rem;
+    font-size: .85em;
   }
 
   .sub-header {

@@ -171,7 +171,10 @@ export const AratakiItto = new Character("Arataki Itto", "Geo", "Claymore", [
   ])
 );
 
-export const Arlecchino = new Character("Arlecchino", "Pyro", "Polearm", ["Bond of Life"], Rarity.Legendary, 'Snezhnaya', {
+export const Arlecchino = new Character("Arlecchino", "Pyro", "Polearm", [
+  "Bond of Life",
+  `Elemental Infusion: When Arlecchino uses Skill/Ability, she gains Bond of Life which in turn infuses her attacks with Pyro until there's too little Bond of Life left.`
+], Rarity.Legendary, 'Snezhnaya', {
   material: TalentAscension.Order,
   weeklyBossDrop: MobDrops.FadingCandle,
   crystal: ElementalCrystals.Pyro,
