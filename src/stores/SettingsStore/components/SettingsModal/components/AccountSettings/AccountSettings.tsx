@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { Select } from '@/components/common/FormItems';
 import { CharacterImage } from '@/components/common/media/Images';
 import AvatarSelector from '@/components/domain/AvatarSelector';
-import AccountSwitcher from '@/components/domain/AccountSwitcher';
+import AccountList from '@/components/domain/AccountList';
 
 import { AccountContextType, AccountData, Traveler, WorldRegion } from '@/stores/AccountStore/AccountStoreTypes';
 import { DEFAULT_ACCOUNT_DATA, WORLD_REGIONS } from '@/stores/AccountStore/AccountStoreConstants';
@@ -29,6 +29,7 @@ export type AccountSettingsProps = {
   onAccountAdd?: (name: string, data: AccountData) => void;
   onAccountDelete?: (name: string) => void;
   onAccountRename?: (oldName: string, newName: string) => void;
+  onAccountReorder?: (names: string[]) => void;
   onAccountDataChange?: (name: string, update: Partial<AccountData>) => void;
 };
 
@@ -39,6 +40,7 @@ export default function AccountSettings({
   onAccountAdd,
   onAccountDelete,
   onAccountRename,
+  onAccountReorder,
   onAccountDataChange,
 }: AccountSettingsProps) {
   const pendingAccount = pendingAccounts[pendingSelectedAccountName] as AccountData | undefined;
@@ -82,11 +84,13 @@ export default function AccountSettings({
   return (
     <section className="account-settings">
       <header>
-        <AccountSwitcher
+        <AccountList
           accounts={pendingAccounts}
           selectedAccountName={pendingSelectedAccountName}
           onChange={handleAccountSelect}
+          onReorder={names => onAccountReorder?.(names)}
         />
+        <p className="muted">Click an account to edit it, or drag it to change the order it appears in.</p>
       </header>
       <div className="sub-header">
         <div className="input-group setting-traveler">

@@ -1,15 +1,22 @@
 import Weapon from "@/common/models/weapon";
-import { Rarity } from "@/common/types";
+import { Element, Rarity, Reaction } from "@/common/types";
 import * as WeaponAscensionMaterials from './materials/weapon-materials';
 import * as Drops from './materials/drops';
+import { Character, CharacterPlaystyle } from "@/common/models";
 
 const MODIFIERS = {
   FIELD: 5,
   TALENT: 10,
-  STAT: 20,
-  CAN_TRIGGER_ELEMENT: 30,
+  CAN_TRIGGER_ELEMENT: 15,
+  STAT: 25,
   BONUS_ABILITY: 40
 } as const;
+
+const getReactionModifier = (character: Character, playstyle: CharacterPlaystyle, ...reactions: Array<Reaction>) => {
+  if (playstyle.wantsToTrigger(character, ...reactions)) return MODIFIERS.CAN_TRIGGER_ELEMENT * 2;
+  else if (character.canTrigger(...reactions)) return MODIFIERS.CAN_TRIGGER_ELEMENT;
+  return 0;
+}
 
 export const TheCatch = new Weapon(
   '"The Catch"',
@@ -89,9 +96,9 @@ export const ATeaspoonOfTranscendence = new Weapon(
   ({ playstyle, score, character }) => {
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
     if (playstyle.prioritizesTalents('Charged/Hold') 
-      && character.canTrigger('all', 'Stellar-Conduct')
+      && character.canTrigger('Stellar-Conduct')
     ) {
-      score += MODIFIERS.TALENT + MODIFIERS.CAN_TRIGGER_ELEMENT;
+      score += MODIFIERS.TALENT + getReactionModifier(character, playstyle, 'Stellar-Conduct');
     }
     
     return score;
@@ -213,7 +220,7 @@ export const AThousandFloatingDreams = new Weapon(
   265,
   [
     WeaponAscensionMaterials.OasisGardens,
-    Drops.PrimalConstructPrism,
+    Drops.DamagedPrism,
     Drops.FungalSpores
   ],
   'Wish',
@@ -327,7 +334,7 @@ export const AmenomaKageuchi = new Weapon(
     Drops.RuinSentinelChaos,
     Drops.Handguard
   ],
-  'Crafting',
+  'Quest',
   ({ playstyle, score }) => {
     if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
 
@@ -464,16 +471,16 @@ export const AstralVulturesCrimsonPlumage = new Weapon(
   [
     WeaponAscensionMaterials.NightWindsMysticX,
     Drops.AbyssalLeaf,
-    Drops.Whistle,
+    Drops.SentrysWoodenWhistle,
   ],
   'Wish',
   ({ playstyle, score, character }) => {
-    if (character.canTrigger('playstyle-based', 'Swirl')) {
-      score += MODIFIERS.CAN_TRIGGER_ELEMENT;
-
+    if (character.canTrigger('Swirl')) {
+      score += getReactionModifier(character, playstyle, 'Swirl');
+      
       if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
     }
-
+    
     return score;
   },
   cs => cs.Chasca,
@@ -497,7 +504,7 @@ export const Azurelight = new Weapon(
   [
     WeaponAscensionMaterials.NightWindsMysticX,
     Drops.AbyssalLeaf,
-    Drops.Whistle,
+    Drops.SentrysWoodenWhistle,
   ],
   'Wish',
   ({ playstyle, score }) => {
@@ -527,7 +534,7 @@ export const BalladOfTheBoundlessBlue = new Weapon(
   30.6,
   [
     WeaponAscensionMaterials.BorealWolfsXTooth,
-    Drops.BoneShard,
+    Drops.FragileBoneShard,
     Drops.TreasureHoarderInsignia
   ],
   'Event',
@@ -582,8 +589,8 @@ export const BeaconOfTheReedSea = new Weapon(
   33.1,
   [
     WeaponAscensionMaterials.ScorchingMight,
-    Drops.Shell,
-    Drops.EremiteDrop,
+    Drops.DesiccatedShell,
+    Drops.FadedRedSatin,
   ],
   'Wish',
   ({ playstyle, score }) => {
@@ -615,8 +622,8 @@ export const BlackTassel = new Weapon(
   'HP',
   46.9,
   [
-    WeaponAscensionMaterials.XOfAerosiderite,
-    Drops.BoneShard,
+    WeaponAscensionMaterials.GrainOfAerosiderite,
+    Drops.FragileBoneShard,
     Drops.Arrowhead,
   ],
   'Wish',
@@ -694,7 +701,7 @@ export const BlackcliffPole = new Weapon(
   [
     WeaponAscensionMaterials.MistXElixir,
     Drops.MistGrass,
-    Drops.FatuiInsignia
+    Drops.RecruitsInsignia
   ],
   'Starglitter Exchange',
   ({ playstyle, score }) => {
@@ -720,7 +727,7 @@ export const BlackcliffSlasher = new Weapon(
   [
     WeaponAscensionMaterials.MistXElixir,
     Drops.MistGrass,
-    Drops.FatuiInsignia
+    Drops.RecruitsInsignia
   ],
   'Starglitter Exchange',
   ({ playstyle, score }) => {
@@ -776,16 +783,49 @@ export const BlackmarrowLantern = new Weapon(
     Drops.FrostnightsX,
     Drops.Warrant
   ],
-  'Crafting',
-  ({ score, character }) => {
-    if (character.canTrigger('playstyle-based', 'Bloom')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
-    if (character.canTrigger('playstyle-based', 'Lunar-Bloom')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+  'Forging: Nod-Krai',
+  ({ score, playstyle, character }) => {
+    if (character.canTrigger('Bloom')) score += getReactionModifier(character, playstyle, 'Bloom');
+    if (character.canTrigger('Lunar-Bloom')) score += getReactionModifier(character, playstyle, 'Lunar-Bloom');
     if (character.can('Increases Moonsign')) {
       score += MODIFIERS.BONUS_ABILITY;
 
-      if (character.canTrigger('playstyle-based', 'Lunar-Bloom')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+      if (character.canTrigger('Lunar-Bloom')) score += getReactionModifier(character, playstyle, 'Lunar-Bloom');
     }
 
+    return score;
+  }
+);
+
+export const BladeOfAtonement = new Weapon(
+  "Blade of Atonement",
+  {
+    value: `Triggering an Elemental Reaction increases the equipping character's Elemental Mastery by $0 for 12s, while triggering a Stellar Glimmer reaction increases their ATK by $1 for 12s. The aforementioned effects can trigger even when the character is not on the field.`,
+    refinements: [
+      '64/80/96/112/128',
+      '16/20/24/28/32%',
+    ]
+  },
+  'Claymore',
+  Rarity.Epic,
+  565,
+  'ATK',
+  27.6,
+  [
+    WeaponAscensionMaterials.RiseOfThePaleStarArmy,
+    Drops.HollowRootOfLife,
+    Drops.ChimericCore
+  ],
+  'Forging: Snezhnaya',
+  ({ score, character, playstyle }) => {
+    if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
+    if (character.canTrigger('Stellar')) {
+      score += getReactionModifier(character, playstyle, 'Stellar');
+
+      if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+      if (!playstyle.onField) score += MODIFIERS.FIELD;
+    }
+    
     return score;
   }
 );
@@ -814,9 +854,9 @@ export const BloodsoakedRuins = new Weapon(
   ({ playstyle, score, character }) => {
     if (
       playstyle.prioritizesTalents('Burst/Ult')
-      && character.canTrigger('playstyle-based', 'Lunar-Charged')
+      && character.canTrigger('Lunar-Charged')
     ) {
-      score += MODIFIERS.TALENT + MODIFIERS.CAN_TRIGGER_ELEMENT;
+      score += MODIFIERS.TALENT + getReactionModifier(character, playstyle, 'Lunar-Charged');
     }
 
     return score;
@@ -865,7 +905,7 @@ export const CalamityOfEshu = new Weapon(
   [
     WeaponAscensionMaterials.DeliriousXOfTheSacredLord,
     Drops.AbyssalLeaf,
-    Drops.Whistle,
+    Drops.SentrysWoodenWhistle,
   ],
   'Event',
   ({ playstyle, score }) => {
@@ -924,7 +964,7 @@ export const CashflowSupervision = new Weapon(
   [
     WeaponAscensionMaterials.GobletOfThePristineSea,
     Drops.Operatives,
-    Drops.FontemerAberrantPearl
+    Drops.TransoceanicPearl
   ],
   'Wish',
   ({ playstyle, score }) => {
@@ -955,7 +995,7 @@ export const ChainBreaker = new Weapon(
     Drops.Fin,
     Drops.Fang,
   ],
-  'Crafting',
+  'Forging: Natlan',
   ({ playstyle, score, character }) => {
     if (character.region === 'Natlan') {
       if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
@@ -997,6 +1037,35 @@ export const CinnabarSpindle = new Weapon(
   cs => cs.Albedo
 );
 
+export const ClashOfKings = new Weapon(
+  'Clash of Kings',
+  {
+    value: `Using an Elemental Skill grants the equipping character "Laws of the Board," which increases their ATK by $0 and their Elemental Mastery by $1. This effect lasts 6s and can trigger once every 12s. Does not stack. The duration of this effect will also be extended by 6s if the equipping character hits an opponent with a Charged Attack while it is active. The effect can be extended for max 6s in this way.`,
+    refinements: [
+      '20/25/30/35/40%',
+      '100/125/150/175/200',
+    ],
+  },
+  'Catalyst',
+  Rarity.Epic,
+  510,
+  'Crit Rate',
+  27.6,
+  [
+    WeaponAscensionMaterials.CopperTalismanOfTheForestDew,
+    Drops.DamagedPrism,
+    Drops.FadedRedSatin
+  ],
+  'Battle Pass',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
+    if (playstyle.prioritizesTalents('Charged/Hold')) score += MODIFIERS.TALENT;
+    
+    return score;
+  }
+);
+
 export const Cloudforged = new Weapon(
   'Cloudforged',
   {
@@ -1011,9 +1080,9 @@ export const Cloudforged = new Weapon(
   'Elemental Mastery',
   165,
   [
-    WeaponAscensionMaterials.XOfAerosiderite,
-    Drops.Hilt,
-    Drops.FatuiInsignia
+    WeaponAscensionMaterials.GrainOfAerosiderite,
+    Drops.RuinedHilt,
+    Drops.RecruitsInsignia
   ],
   'Wish',
   ({ playstyle, score }) => {
@@ -1038,11 +1107,11 @@ export const CompoundBow = new Weapon(
   'Physical DMG Bonus',
   69,
   [
-    WeaponAscensionMaterials.XOfAerosiderite,
-    Drops.BoneShard,
-    Drops.FatuiInsignia
+    WeaponAscensionMaterials.GrainOfAerosiderite,
+    Drops.FragileBoneShard,
+    Drops.RecruitsInsignia
   ],
-  'Crafting',
+  'Forging',
   ({ playstyle, score }) => {
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
     if (playstyle.onField) score += MODIFIERS.FIELD;
@@ -1074,6 +1143,40 @@ export const CoolSteel = new Weapon(
   ({ playstyle, score }) => {
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
     if (playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  }
+);
+
+export const CovenantOfFrostAndSnow = new Weapon(
+  'Covenant of Frost and Snow',
+  {
+    value: `For 12s after the equipping character uses an Elemental Skill, their Elemental Mastery is increased by $0.`,
+    refinements: [
+      '120/150/180/210/240%',
+    ],
+  },
+  'Bow',
+  Rarity.Epic,
+  510,
+  'DEF',
+  51.7,
+  [
+    WeaponAscensionMaterials.RiseOfThePaleStarArmy,
+    Drops.HollowRootOfLife,
+    Drops.ChimericCore,
+  ],
+  'Forging: Snezhnaya',
+  ({ playstyle, character, score }) => {
+    if (playstyle.needsStat('Elemental Mastery')) {
+      score += MODIFIERS.STAT;
+
+      if (character.can('Off-field Damage')) {
+        score += MODIFIERS.BONUS_ABILITY;
+
+        if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+      }
+    }
 
     return score;
   }
@@ -1126,7 +1229,7 @@ export const CrescentPike = new Weapon(
     Drops.SacrificialKnife,
     Drops.TreasureHoarderInsignia
   ],
-  'Crafting',
+  'Forging',
   ({ playstyle, score }) => {
     if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')
       && playstyle.needsStat('ATK')
@@ -1154,7 +1257,7 @@ export const CrimsonMoonsSemblance = new Weapon(
   22.1,
   [
     WeaponAscensionMaterials.GobletOfThePristineSea,
-    Drops.Hilt,
+    Drops.RuinedHilt,
     Drops.Gear,
   ],
   'Wish',
@@ -1216,7 +1319,7 @@ export const DarkIronSword = new Weapon(
   ],
   'NPC: Chen the Sharp',
   ({ playstyle, score, character }) => {
-    if (character.canTrigger('playstyle-based', 
+    const reactions: Array<Reaction> = [
       'Overloaded',
       'Superconduct',
       'Electro-Charged',
@@ -1224,8 +1327,10 @@ export const DarkIronSword = new Weapon(
       'Aggravate',
       'Hyperbloom',
       'Swirl'
-    ) && playstyle.needsStat('ATK')) {
-      score += MODIFIERS.CAN_TRIGGER_ELEMENT + MODIFIERS.STAT;
+    ];
+    
+    if (character.canTrigger(...reactions) && playstyle.needsStat('ATK')) {
+      score += getReactionModifier(character, playstyle, ...reactions) + MODIFIERS.STAT;
     }
 
     return score;
@@ -1306,7 +1411,7 @@ export const DialoguesOfTheDesertSages = new Weapon(
   'HP',
   41.3,
   [
-    WeaponAscensionMaterials.TalismanOfTheForestDew,
+    WeaponAscensionMaterials.CopperTalismanOfTheForestDew,
     Drops.Fin,
     Drops.Spectral
   ],
@@ -1404,7 +1509,6 @@ export const DragonsBane = new Weapon(
   ({ score }) => score
 );
 
-// Checkpoint
 export const DragonspineSpear = new Weapon(
   'Dragonspine Spear',
   {
@@ -1423,11 +1527,11 @@ export const DragonspineSpear = new Weapon(
   [
     WeaponAscensionMaterials.BorealWolfsXTooth,
     Drops.MistGrass,
-    Drops.FatuiInsignia
+    Drops.RecruitsInsignia
   ],
-  'Crafting',
+  'Quest',
   ({ playstyle, score, character }) => {
-    if (character.element === 'Cryo') score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    if (character.element === 'Cryo') score += getReactionModifier(character, playstyle, 'Cryo Reaction');
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
     if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) score += MODIFIERS.TALENT;
 
@@ -1453,17 +1557,44 @@ export const EarthShaker = new Weapon(
   [
     WeaponAscensionMaterials.BlazingSacrificialHearts,
     Drops.Ignited,
-    Drops.Whistle,
+    Drops.SentrysWoodenWhistle,
   ],
-  'Crafting',
+  'Forging: Natlan',
   ({ playstyle, score, character }) => {
     if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
-    if (character.canTrigger('playstyle-based', 'Pyro Reaction')) {
-      score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    if (character.canTrigger('Pyro Reaction')) {
+      score += getReactionModifier(character, playstyle, 'Pyro Reaction');
 
       if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
     }
 
+    return score;
+  }
+);
+
+export const EchoesOfTheHeart = new Weapon(
+  'Echoes of the Heart',
+  {
+    value: `Triggering an Elemental Reaction increases the equipping character's Elemental Mastery by $0 for 12s, while triggering a Stellar Glimmer reaction increases their Stellar Glimmer reaction DMG dealt by $1 for 12s. The aforementioned effects can trigger even when the character is not on the field.`,
+    refinements: [
+      '60/75/90/105/120',
+      '16/20/24/28/32%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Epic,
+  565,
+  'ATK',
+  27.6,
+  [
+    WeaponAscensionMaterials.RiseOfThePaleStarArmy,
+    Drops.AccretedFragment,
+    Drops.EtherealGlimmershard
+  ],
+  'Forging: Snezhnaya',
+  ({ playstyle, score, character }) => {
+
+    
     return score;
   }
 );
@@ -1486,7 +1617,7 @@ export const ElegyForTheEnd = new Weapon(
   [
     WeaponAscensionMaterials.BorealWolfsXTooth,
     Drops.Horn,
-    Drops.FatuiInsignia
+    Drops.RecruitsInsignia
   ],
   'Wish',
   ({ playstyle, score }) => {
@@ -1497,6 +1628,35 @@ export const ElegyForTheEnd = new Weapon(
     return score;
   },
   cs => cs.Venti
+);
+
+export const Emberwell = new Weapon(
+  'Emberwell',
+  {
+    value: `Triggering an Elemental Reaction increases the equipping character's ATK by $0 for 12s. Triggering a Stellar Glimmer reaction increases their Stellar Glimmer reaction DMG dealt by $1 for 12s. The aforementioned effects can trigger even when the character is not on the field.`,
+    refinements: [
+      '16/20/24/28/32%',
+      '16/20/24/28/32%',
+    ],
+  },
+  'Sword',
+  Rarity.Epic,
+  510,
+  'Elemental Mastery',
+  165,
+  [
+    WeaponAscensionMaterials.RiseOfThePaleStarArmy,
+    Drops.AccretedFragment,
+    Drops.EtherealGlimmershard
+  ],
+  'Forging: Snezhnaya',
+  ({ playstyle, score, character }) => {
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (character.canTrigger('Stellar')) score += getReactionModifier(character, playstyle, 'Stellar');
+    if (!playstyle.onField) score += MODIFIERS.FIELD;
+    
+    return score;
+  }
 );
 
 export const EmeraldOrb = new Weapon(
@@ -1519,14 +1679,16 @@ export const EmeraldOrb = new Weapon(
   ],
   'Wish',
   ({ playstyle, score, character }) => {
-    if (character.canTrigger('playstyle-based', 
+    const reactions: Array<Reaction> = [
       'Vaporize',
       'Electro-Charged',
       'Frozen',
       'Bloom',
       'Swirl'
-    ) && playstyle.needsStat('ATK')) {
-      score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    ];
+
+    if (character.canTrigger(...reactions) && playstyle.needsStat('ATK')) {
+      score += getReactionModifier(character, playstyle, ...reactions);
     }
 
     return score;
@@ -1637,7 +1799,7 @@ export const EverlastingMoonglow = new Weapon(
   49.6,
   [
     WeaponAscensionMaterials.XBranchOfAXSea,
-    Drops.Prism,
+    Drops.DismalPrism,
     Drops.Spectral
   ],
   'Wish',
@@ -1652,6 +1814,40 @@ export const EverlastingMoonglow = new Weapon(
     return score;
   },
   cs => cs.SangonomiyaKokomi
+);
+
+export const ExaiphanesBlade = new Weapon(
+  'Exaiphanes Blade',
+  {
+    value: `When the Traveler equips this, their CRIT DMG increases by 6% for every Element they have resonated with. Additionally, the Traveler's ATK will also increase by $0 for 8s, and regenerate $1 Elemental Energy, after they attack and hit an opponent. This effect can trigger once every 5s. This can be triggered even when the character is not on the field.`,
+    refinements: [
+      '16/20/24/32/40%',
+      '3/3/5/5/5',
+    ]
+  },
+  'Sword',
+  Rarity.Legendary,
+  608,
+  'Crit Rate',
+  33.1,
+  [
+    WeaponAscensionMaterials.TheFrostEmperorsRevival,  
+    Drops.AccretedFragment,
+    Drops.EtherealGlimmershard
+  ],
+  'Quest',
+  ({ score, character }) => {
+    if (!character.name.includes('Traveler')) return score;
+    
+    const travelersElements: Array<Element> = ['Anemo', 'Geo', 'Electro', 'Dendro', 'Hydro', 'Pyro', 'Cryo'];
+
+    score += MODIFIERS.BONUS_ABILITY * travelersElements.length; // Crit DMG
+    score += MODIFIERS.STAT; // ATK
+    
+    if (character.can('Off-field Damage')) score += MODIFIERS.BONUS_ABILITY;
+    return score;
+  },
+  cs => cs.TravelerCryo
 );
 
 export const EyeOfPerception = new Weapon(
@@ -1700,20 +1896,22 @@ export const FlameForgedInsight = new Weapon(
   165,
   [
     WeaponAscensionMaterials.DeliriousXOfTheSacredLord,
-    Drops.WeaselShell,
-    Drops.FontemerAberrantPearl,
+    Drops.ColdCrackedShell,
+    Drops.TransoceanicPearl,
   ],
   'Event',
   ({ playstyle, score, character }) => {
-    if (character.canTrigger('playstyle-based', 
+    const reactions: Array<Reaction> = [
       'Electro-Charged',
       'Lunar-Charged',
       'Bloom',
       'Lunar-Bloom',
       'Crystallize',
       'Lunar-Crystallize'
-    )) {
-      score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    ];
+
+    if (character.canTrigger(...reactions)) {
+      score += getReactionModifier(character, playstyle, ...reactions);
       
       if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.TALENT;
       if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
@@ -1738,7 +1936,7 @@ export const FadingTwilight = new Weapon(
   'Energy Recharge',
   30.6,
   [
-    WeaponAscensionMaterials.XOfAerosiderite,
+    WeaponAscensionMaterials.GrainOfAerosiderite,
     Drops.SacrificialKnife,
     Drops.Scroll,
   ],
@@ -1766,12 +1964,12 @@ export const FangOfTheMountainKing = new Weapon(
   [
     WeaponAscensionMaterials.DeliriousXOfTheSacredLord,
     Drops.Ignited,
-    Drops.Whistle,
+    Drops.SentrysWoodenWhistle,
   ],
   'Wish',
   ({ playstyle, score, character }) => {
     if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
-    if (character.canTrigger('playstyle-based', 'Burning', 'Burgeon')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    if (character.canTrigger('Burning', 'Burgeon')) score += getReactionModifier(character, playstyle, 'Burning', 'Burgeon');
 
     return score;
   },
@@ -1822,7 +2020,7 @@ export const FavoniusGreatsword = new Weapon(
   [
     WeaponAscensionMaterials.XOfDandelionGladiator,
     Drops.RuinGuardChaos,
-    Drops.FatuiInsignia,
+    Drops.RecruitsInsignia,
   ],
   'Wish',
   ({ playstyle, score }) => {
@@ -1957,7 +2155,7 @@ export const FesteringDesire = new Weapon(
   [
     WeaponAscensionMaterials.XOfDandelionGladiator,
     Drops.Horn,
-    Drops.FatuiInsignia
+    Drops.RecruitsInsignia
   ],
   'Event',
   ({ playstyle, score }) => {
@@ -2010,11 +2208,11 @@ export const FinaleOfTheDeep = new Weapon(
   'ATK',
   27.6,
   [
-    WeaponAscensionMaterials.PureSacredDewdrop,
+    WeaponAscensionMaterials.DrossOfPureSacredDewdrop,
     Drops.TaintedWater,
     Drops.Handguard
   ],
-  'Crafting',
+  'Forging: Fontaine',
   ({ playstyle, score, character }) => {
     if (playstyle.prioritizesTalents('Skill/Ability') && playstyle.needsStat('ATK')) {
       score += MODIFIERS.TALENT + MODIFIERS.STAT;
@@ -2046,7 +2244,7 @@ export const FleuveCendreFerryman = new Weapon(
   [
     WeaponAscensionMaterials.AncientChord,
     Drops.TaintedWater,
-    Drops.FontemerAberrantPearl
+    Drops.TransoceanicPearl
   ],
   'Fishing',
   ({ playstyle, score }) => {
@@ -2073,7 +2271,7 @@ export const FlowerWreathedFeathers = new Weapon(
   [
     WeaponAscensionMaterials.NightWindsMysticX,
     Drops.Ignited,
-    Drops.Whistle
+    Drops.SentrysWoodenWhistle
   ],
   'Wish',
   ({ playstyle, score }) => {
@@ -2099,11 +2297,11 @@ export const FlowingPurity = new Weapon(
   'ATK',
   27.6,
   [
-    WeaponAscensionMaterials.PureSacredDewdrop,
+    WeaponAscensionMaterials.DrossOfPureSacredDewdrop,
     Drops.BreacherCore,
-    Drops.FontemerAberrantPearl
+    Drops.TransoceanicPearl
   ],
-  'Crafting',
+  'Forging: Fontaine',
   ({ playstyle, score, character }) => {
     if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
     if (character.can('Bond of Life')) {
@@ -2131,10 +2329,10 @@ export const FluteOfEzpitzal = new Weapon(
   69,
   [
     WeaponAscensionMaterials.BlazingSacrificialHearts,
-    Drops.Hilt,
+    Drops.RuinedHilt,
     Drops.Fang
   ],
-  'Crafting',
+  'Forging: Natlan',
   ({ playstyle, score }) => {
     if (playstyle.prioritizesTalents('Skill/Ability') && playstyle.needsStat('DEF')) {
       score += MODIFIERS.TALENT + MODIFIERS.STAT;
@@ -2160,9 +2358,9 @@ export const FootprintOfTheRainbow = new Weapon(
   [
     WeaponAscensionMaterials.DeliriousXOfTheSacredLord,
     Drops.SecretSource,
-    Drops.Whistle,
+    Drops.SentrysWoodenWhistle,
   ],
-  'Crafting',
+  'Forging: Natlan',
   ({ playstyle, score }) => {
     if (playstyle.prioritizesTalents('Skill/Ability') && playstyle.needsStat('DEF')) {
       score += MODIFIERS.TALENT + MODIFIERS.STAT;
@@ -2186,13 +2384,13 @@ export const ForestRegalia = new Weapon(
   'Energy Recharge',
   30.6,
   [
-    WeaponAscensionMaterials.TalismanOfTheForestDew,
+    WeaponAscensionMaterials.CopperTalismanOfTheForestDew,
     Drops.RuinDrakeChaos,
-    Drops.EremiteDrop
+    Drops.FadedRedSatin
   ],
-  'Crafting',
+  'NPC: Aranara by the Tree of Dreams',
   ({ playstyle, score, character }) => {
-    if (character.canTrigger('playstyle-based', 
+    const reactions: Array<Reaction> = [
       'Burning',
       'Quicken',
       'Aggravate',
@@ -2200,13 +2398,46 @@ export const ForestRegalia = new Weapon(
       'Bloom',
       'Hyperbloom',
       'Burgeon'
-    )) {
-      score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    ];
+    
+    if (character.canTrigger(...reactions)) {
+      score += getReactionModifier(character, playstyle, ...reactions);
 
       if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
       if (!playstyle.onField) score += MODIFIERS.FIELD;
     }
 
+    return score;
+  }
+);
+
+export const ForgedByTheGoldenMelody = new Weapon(
+  'Forged by the Golden Melody',
+  {
+    value: `Every 10s, the equipping character plays a "Harmonic Movement" of the corresponding type for a boost in the following order: +$0 ATK > +$1 Elemental Mastery > +$2 Stellar Glimmer reaction DMG. Each instance of Harmonic Movement lasts 10s. This effect can trigger even when the equipping character is not on the field.\nTriggering a Stellar Glimmer reaction will also grant an additional 12-second instance of "Harmonic Movement: Contrapuntal" with the same effects as the Harmonic Movement active when Stellar Glimmer is triggered. This effect stacks with the original Harmonic Movement effect, and can trigger once every 12s.`,
+    refinements: [
+      '18/22.5/27/31.5/36%',
+      '120/150/180/210/240',
+      '28/35/42/49/56%',
+    ]
+  },
+  'Claymore',
+  Rarity.Epic,
+  510,
+  'Crit Rate',
+  27.6,
+  [
+    WeaponAscensionMaterials.DrossOfPureSacredDewdrop,
+    Drops.RuinedHilt,
+    Drops.TransoceanicPearl
+  ],
+  'Battle Pass',
+  ({ playstyle, score, character }) => {
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
+    if (character.canTrigger('Stellar')) score += getReactionModifier(character, playstyle, 'Stellar');
+    if (!playstyle.onField) score += MODIFIERS.FIELD;
+    
     return score;
   }
 );
@@ -2227,7 +2458,7 @@ export const FracturedHalo = new Weapon(
   66.2,
   [
     WeaponAscensionMaterials.BlazingSacrificialHearts,
-    Drops.WeaselShell,
+    Drops.ColdCrackedShell,
     Drops.Fang,
   ],
   'Wish',
@@ -2237,7 +2468,7 @@ export const FracturedHalo = new Weapon(
 
       if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
       if (character.can('Shield')) score += MODIFIERS.BONUS_ABILITY;
-      if (character.canTrigger('playstyle-based', 'Lunar-Charged')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+      if (character.canTrigger('Lunar-Charged')) score += getReactionModifier(character, playstyle, 'Lunar-Charged');
     }
 
     return score;
@@ -2295,7 +2526,7 @@ export const Frostbearer = new Weapon(
     Drops.RuinGuardChaos,
     Drops.Nectar
   ],
-  'Crafting',
+  'Quest',
   ({ playstyle, score, character }) => {
     if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')
       && playstyle.needsStat('ATK')
@@ -2307,6 +2538,37 @@ export const Frostbearer = new Weapon(
 
     return score;
   },
+);
+
+export const Frostbreath = new Weapon(
+  'Frostbreath',
+  {
+    value: `Triggering a Cryo or Hydro-related elemental reaction increases the equipping character's ATK by $0 for the next 15s, as well as regenerates $1 Elemental Energy for other members of their party. This effect can trigger once every 16s.`,
+    refinements: [
+      '20/25/30/35/40%',
+      '6/7.5/9/10.5/12%'
+    ]
+  },
+  'Polearm',
+  Rarity.Epic,
+  510,
+  'Energy Recharge',
+  45.9,
+  [
+    WeaponAscensionMaterials.MeasuredPourOftheCellaredSpiritualNectar,
+    Drops.AccretedFragment,
+    Drops.ChimericCore
+  ],
+  'Battle Pass',
+  ({ playstyle, score, character }) => {
+    if (character.canTrigger('Cryo Reaction', 'Hydro Reaction') && playstyle.needsStat('ATK')) {
+      score += MODIFIERS.STAT + getReactionModifier(character, playstyle, 'Cryo Reaction', 'Hydro Reaction');
+
+      if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.STAT;
+    }
+    
+    return score;
+  }
 );
 
 export const FruitOfFulfillment = new Weapon(
@@ -2327,7 +2589,7 @@ export const FruitOfFulfillment = new Weapon(
     Drops.Statuette,
     Drops.FungalSpores
   ],
-  'Crafting',
+  'Forging',
   ({ playstyle, score }) => {
     if (playstyle.needsStat('Elemental Mastery')
       && !playstyle.needsStat('ATK')
@@ -2391,7 +2653,7 @@ export const GestoftheMightyWolf = new Weapon(
   [
     WeaponAscensionMaterials.BorealWolfsXTooth,
     Drops.XOfTheDeepShadow,
-    Drops.FatuiInsignia
+    Drops.RecruitsInsignia
   ],
   'Wish',
   ({ playstyle, score, character }) => {
@@ -2415,11 +2677,11 @@ export const GoldenFrostboundOath = new Weapon(
   {
     value: `Increase DEF by $0. When the equipping character's Elemental Skill or Lunar-Crystallize attacks hit opponents, gain the Frost Fae's Favor effect for 6s: Geo DMG inflicted by the equipping character increases by $1, Lunar-Crystallize Reaction DMG increases by $2. While this effect is active, if there are Moondrifts near the equipping character, all other nearby party members will gain the Frost Fae's Mischief effect: Geo DMG dealt increases by $3 and Lunar-Crystallize Reaction DMG increases by $4. This effect can be triggered even when the equipping character is off-field.`,
     refinements: [
-      '16%/20%/24%/28%/32%',
-      '40%/50%/60%/70%/80%',
-      '40%/50%/60%/70%/80%',
-      '20%/25%/30%/35%/40%',
-      '20%/25%/30%/35%/40%',
+      '16/20/24/28/32%',
+      '40/50/60/70/80%',
+      '40/50/60/70/80%',
+      '20/25/30/35/40%',
+      '20/25/30/35/40%',
     ]
   },
   'Bow',
@@ -2435,9 +2697,9 @@ export const GoldenFrostboundOath = new Weapon(
   'Wish',
   ({ playstyle, score, character }) => {
     if (playstyle.needsStat('DEF')) score += MODIFIERS.STAT;
-    if (playstyle.prioritizesTalents('Skill/Ability') || character.canTrigger('playstyle-based', 'Lunar-Crystallize')) {
+    if (playstyle.prioritizesTalents('Skill/Ability') || character.canTrigger('Lunar-Crystallize')) {
       if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
-      if (character.canTrigger('playstyle-based', 'Lunar-Crystallize')) score += MODIFIERS.CAN_TRIGGER_ELEMENT * 2; // Double effects
+      if (character.canTrigger('Lunar-Crystallize')) score += getReactionModifier(character, playstyle, 'Lunar-Crystallize') * 2; // Double effects
 
       if (character.element === 'Geo') score += MODIFIERS.BONUS_ABILITY * 2; // Double effects
     }
@@ -2464,12 +2726,12 @@ export const HakushinRing = new Weapon(
   30.6,
   [
     WeaponAscensionMaterials.XBranchOfAXSea,
-    Drops.Prism,
+    Drops.DismalPrism,
     Drops.Scroll,
   ],
-  'Crafting',
-  ({ score, character }) => {
-    if (character.canTrigger('playstyle-based', 'Electro Reaction')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+  'Quest',
+  ({ score, playstyle, character }) => {
+    if (character.canTrigger('Electro Reaction')) score += getReactionModifier(character, playstyle, 'Electro Reaction');
 
     return score;
   }
@@ -2521,10 +2783,10 @@ export const Hamayumi = new Weapon(
   55.1,
   [
     WeaponAscensionMaterials.NarukamisX,
-    Drops.Prism,
+    Drops.DismalPrism,
     Drops.Arrowhead,
   ],
-  'Crafting',
+  'Chest',
   ({ playstyle, score }) => {
     if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) {
       score += MODIFIERS.TALENT;
@@ -2597,6 +2859,37 @@ export const HarbingerOfDawn = new Weapon(
   }
 );
 
+export const HereticsMoltenBlade = new Weapon(
+  `Heretic's Molten Blade`,
+  {
+    value: `After the equipping character uses their Elemental Skill, they gain "Gleam of First Light." While active, Gleam of First Light tracks their distance traveled. Each second, the equipping character gains an ATK Bonus ranging from $0 to $1 based on the distance traveled during the previous second. Gleam of First Light lasts 14s, can be triggered once every 14s, and is removed when the equipping character leaves the field.`,
+    refinements: [
+      '18/22.5/27/31.5/36%',
+      '36/45/54/63/72%',
+    ],
+  },
+  'Sword',
+  Rarity.Epic,
+  510,
+  'Crit Rate',
+  27.6,
+  [
+    WeaponAscensionMaterials.BlazingSacrificialHearts,
+    Drops.ColdCrackedShell,
+    Drops.SentrysWoodenWhistle
+  ],
+  'Battle Pass',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('ATK')) {
+      score += MODIFIERS.STAT;
+
+      if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+    }
+
+    return score;
+  }
+);
+
 export const HuntersPath = new Weapon(
   `Hunter's Path`,
   {
@@ -2614,7 +2907,7 @@ export const HuntersPath = new Weapon(
   [
     WeaponAscensionMaterials.ScorchingMight,
     Drops.FungalNucleus,
-    Drops.EremiteDrop
+    Drops.FadedRedSatin
   ],
   'Wish',
   ({ playstyle, score }) => {
@@ -2645,9 +2938,9 @@ export const IbisPiercer = new Weapon(
   'ATK',
   27.6,
   [
-    WeaponAscensionMaterials.TalismanOfTheForestDew,
+    WeaponAscensionMaterials.CopperTalismanOfTheForestDew,
     Drops.HilichurlFlower,
-    Drops.EremiteDrop
+    Drops.FadedRedSatin
   ],
   'Event',
   ({ playstyle, score }) => {
@@ -2675,16 +2968,44 @@ export const IronSting = new Weapon(
   'Elemental Mastery',
   165,
   [
-    WeaponAscensionMaterials.XOfAerosiderite,
-    Drops.BoneShard,
+    WeaponAscensionMaterials.GrainOfAerosiderite,
+    Drops.FragileBoneShard,
     Drops.Nectar,
   ],
-  'Crafting',
+  'Forging',
   ({ score }) => score
 );
 // #endregion
 
 // #region J
+export const JadeVista = new Weapon(
+  `Jade Vista`,
+  {
+    value: `For every party member other than the equipping character, who is of the same Elemental Type as the equipper, the equipping character's Elemental Mastery is increased by $0. For every party member who is not of the same Elemental Type as the equipper, the equipping character's ATK increases by $1. The two effects described above can stack up to 3 times in total, with Elemental Mastery buffs applied first.`,
+    refinements: [
+      '64/80/96/112/128',
+      '12/15/18/21/24%',
+    ]
+  },
+  'Bow',
+  Rarity.Epic,
+  510,
+  'Crit Rate',
+  27.6,
+  [
+    WeaponAscensionMaterials.GrainOfAerosiderite,
+    Drops.FragileBoneShard,
+    Drops.RecruitsInsignia
+  ],
+  'Battle Pass',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    
+    return score;
+  }
+);
+
 export const JadefallsSplendor = new Weapon(
   `Jadefall's Splendor`,
   {
@@ -2803,7 +3124,7 @@ export const KatsuragikiriNagamasa = new Weapon(
     Drops.RuinSentinelChaos,
     Drops.Handguard
   ],
-  'Crafting',
+  'Quest',
   ({ playstyle, score }) => {
     if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
     if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.STAT;
@@ -2829,9 +3150,9 @@ export const KeyOfKhajNisut = new Weapon(
   'HP',
   66.2,
   [
-    WeaponAscensionMaterials.TalismanOfTheForestDew,
-    Drops.PrimalConstructPrism,
-    Drops.EremiteDrop
+    WeaponAscensionMaterials.CopperTalismanOfTheForestDew,
+    Drops.DamagedPrism,
+    Drops.FadedRedSatin
   ],
   'Wish',
   ({ playstyle, score }) => {
@@ -2866,7 +3187,7 @@ export const KingsSquire = new Weapon(
     Drops.FungalNucleus,
     Drops.Arrowhead,
   ],
-  'Crafting',
+  'NPC: Aranara by the Tree of Dreams',
   ({ playstyle, score }) => {
     if (playstyle.prioritizesTalents('Skill/Ability', 'Burst/Ult')) {
       score += MODIFIERS.TALENT;
@@ -2898,7 +3219,7 @@ export const KitainCrossSpear = new Weapon(
     Drops.RuinSentinelChaos,
     Drops.Handguard,
   ],
-  'Crafting',
+  'Quest',
   ({ playstyle, score }) => {
     if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
     if (!playstyle.onField) score += MODIFIERS.FIELD;
@@ -2924,14 +3245,14 @@ export const LightbearingMoonshard = new Weapon(
   'Crit DMG',
   88.2,
   [
-    WeaponAscensionMaterials.XOfAerosiderite,
+    WeaponAscensionMaterials.GrainOfAerosiderite,
     Drops.Mistshroud,
     Drops.DriveShaft
   ],
   "Wish",
   ({ playstyle, score, character }) => {
     if (playstyle.needsStat('DEF')) score += MODIFIERS.STAT;
-    if (character.canTrigger('playstyle-based', 'Lunar-Crystallize')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    if (character.canTrigger('Lunar-Crystallize')) score += getReactionModifier(character, playstyle, 'Lunar-Crystallize');
 
     return score;
   },
@@ -2952,9 +3273,9 @@ export const LightOfFoliarIncision = new Weapon(
   'Crit DMG',
   88.2,
   [
-    WeaponAscensionMaterials.TalismanOfTheForestDew,
-    Drops.Shell,
-    Drops.EremiteDrop,
+    WeaponAscensionMaterials.CopperTalismanOfTheForestDew,
+    Drops.DesiccatedShell,
+    Drops.FadedRedSatin,
   ],
   'Wish',
   ({ playstyle, score }) => {
@@ -2988,8 +3309,10 @@ export const LionsRoar = new Weapon(
     Drops.TreasureHoarderInsignia
   ],
   'Wish',
-  ({ score, character }) => {
-    if (character.canTrigger('playstyle-based', 'Pyro Reaction', 'Electro Reaction')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+  ({ score, playstyle, character }) => {
+    if (character.canTrigger('Pyro Reaction', 'Electro Reaction')) {
+      score += getReactionModifier(character, playstyle, 'Pyro Reaction', 'Electro Reaction');
+    }
 
     return score;
   }
@@ -3038,8 +3361,8 @@ export const LithicSpear = new Weapon(
   'ATK',
   27.6,
   [
-    WeaponAscensionMaterials.XOfAerosiderite,
-    Drops.BoneShard,
+    WeaponAscensionMaterials.GrainOfAerosiderite,
+    Drops.FragileBoneShard,
     Drops.Arrowhead,
   ],
   'Wish',
@@ -3094,14 +3417,14 @@ export const LumidouceElegy = new Weapon(
   33.1,
   [
     WeaponAscensionMaterials.GobletOfThePristineSea,
-    Drops.Hilt,
+    Drops.RuinedHilt,
     Drops.Nectar,
   ],
   'Wish',
   ({ playstyle, score, character }) => {
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
-    if (character.canTrigger('playstyle-based', 'Burning') || character.element === 'Dendro') {
-      score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    if (character.canTrigger('Burning')) {
+      score += getReactionModifier(character, playstyle, 'Burning');
 
       if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.STAT;
       if (!playstyle.onField) score += MODIFIERS.FIELD;
@@ -3127,8 +3450,8 @@ export const LuxuriousSeaLord = new Weapon(
   'ATK',
   55.1,
   [
-    WeaponAscensionMaterials.XOfAerosiderite,
-    Drops.BoneShard,
+    WeaponAscensionMaterials.GrainOfAerosiderite,
+    Drops.FragileBoneShard,
     Drops.Slime,
   ],
   'Event',
@@ -3164,8 +3487,10 @@ export const MagicGuide = new Weapon(
     Drops.Slime
   ],
   'Wish',
-  ({ score, character }) => {
-    if (character.canTrigger('playstyle-based', 'Hydro Reaction', 'Electro Reaction')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+  ({ score, playstyle, character }) => {
+    if (character.canTrigger('Hydro Reaction', 'Electro Reaction')) {
+      score += getReactionModifier(character, playstyle, 'Hydro Reaction', 'Electro Reaction');
+    }
 
     return score;
   },
@@ -3187,7 +3512,7 @@ export const MailedFlower = new Weapon(
   110,
   [
     WeaponAscensionMaterials.XOfDandelionGladiator,
-    Drops.Shell,
+    Drops.DesiccatedShell,
     Drops.Spectral
   ],
   'Wish',
@@ -3245,11 +3570,11 @@ export const MappaMare = new Weapon(
   'Elemental Mastery',
   110,
   [
-    WeaponAscensionMaterials.XOfAerosiderite,
-    Drops.BoneShard,
+    WeaponAscensionMaterials.GrainOfAerosiderite,
+    Drops.FragileBoneShard,
     Drops.Slime,
   ],
-  'Crafting',
+  'Forging',
   ({ playstyle, score }) => {
     if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
     if (!playstyle.onField) score += MODIFIERS.FIELD;
@@ -3277,7 +3602,7 @@ export const MasterKey = new Weapon(
     Drops.LightlessBone,
     Drops.DriveShaft
   ],
-  'Crafting',
+  'Forging: Nod-Krai',
   ({ playstyle, score, character }) => {
     if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
     if (character.can('Increases Moonsign')) {
@@ -3305,8 +3630,8 @@ export const MemoryOfDust = new Weapon(
   'ATK',
   49.6,
   [
-    WeaponAscensionMaterials.XOfAerosiderite,
-    Drops.BoneShard,
+    WeaponAscensionMaterials.GrainOfAerosiderite,
+    Drops.FragileBoneShard,
     Drops.Mask
   ],
   'Wish',
@@ -3446,11 +3771,11 @@ export const Moonpiercer = new Weapon(
   [
     WeaponAscensionMaterials.OasisGardens,
     Drops.RuinDrakeChaos,
-    Drops.FatuiInsignia,
+    Drops.RecruitsInsignia,
   ],
-  'Crafting',
+  'NPC: Aranara by the Tree of Dreams',
   ({ playstyle, score, character }) => {
-    if (character.canTrigger('playstyle-based', 
+    const reactions: Array<Reaction> = [
       'Burning',
       'Quicken',
       'Aggravate',
@@ -3458,8 +3783,10 @@ export const Moonpiercer = new Weapon(
       'Bloom',
       'Hyperbloom',
       'Burgeon'
-    )) {
-      score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    ];
+
+    if (character.canTrigger(...reactions)) {
+      score += getReactionModifier(character, playstyle, ...reactions);
 
       if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
       if (!playstyle.onField) score += MODIFIERS.FIELD;
@@ -3539,7 +3866,7 @@ export const MouunsMoon = new Weapon(
   27.6,
   [
     WeaponAscensionMaterials.NarukamisX,
-    Drops.Prism,
+    Drops.DismalPrism,
     Drops.Spectral
   ],
   'Wish',
@@ -3576,8 +3903,8 @@ export const NocturnesCurtainCall = new Weapon(
   'Wish',
   ({ playstyle, score, character }) => {
     if (playstyle.needsStat('HP')) score += MODIFIERS.STAT;
-    if (character.canTrigger('playstyle-based', 'Lunar')) {
-      score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    if (character.canTrigger('Lunar')) {
+      score += getReactionModifier(character, playstyle, 'Lunar');
 
       if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.STAT;
       if (playstyle.needsStat('HP')) score += MODIFIERS.STAT;
@@ -3613,12 +3940,12 @@ export const NightweaversLookingGlass = new Weapon(
   ],
   'Wish',
   ({ playstyle, score, character }) => {
-    if (character.canTrigger('playstyle-based', 'Hydro Reaction', 'Dendro Reaction')) {
-      score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    if (character.canTrigger('Hydro Reaction', 'Dendro Reaction')) {
+      score += getReactionModifier(character, playstyle, 'Hydro Reaction', 'Dendro Reaction');
 
       if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
-      if (character.canTrigger('playstyle-based', 'Lunar-Bloom')) {
-        score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+      if (character.canTrigger('Lunar-Bloom')) {
+        score += getReactionModifier(character, playstyle, 'Lunar-Bloom');
 
         if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
       }
@@ -3749,9 +4076,22 @@ export const PolarStar = new Weapon(
     Drops.Spectral
   ],
   'Wish',
-  ({ playstyle, score }) => {
-    if (playstyle.prioritizesTalents('Skill/Ability', 'Burst/Ult')) score += MODIFIERS.TALENT;
-    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+  ({ playstyle, character, score }) => {
+    if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+    if (playstyle.prioritizesTalents('Burst/Ult')) score += MODIFIERS.TALENT;
+
+    
+    if (playstyle.needsStat('ATK')) {
+      score += MODIFIERS.STAT;
+
+
+      if (playstyle.prioritizesTalents('Normal/Press')) score += MODIFIERS.TALENT;
+      if (playstyle.prioritizesTalents('Charged/Hold')) score += MODIFIERS.TALENT;
+      if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+      if (playstyle.prioritizesTalents('Burst/Ult')) score += MODIFIERS.TALENT;
+      if (playstyle.onField) score += MODIFIERS.FIELD;
+      if (character.can('Off-field Damage')) score += MODIFIERS.BONUS_ABILITY;
+    }
 
     return score;
   },
@@ -3805,13 +4145,13 @@ export const Predator = new Weapon(
   41.3,
   [
     WeaponAscensionMaterials.NarukamisX,
-    Drops.Prism,
+    Drops.DismalPrism,
     Drops.Arrowhead
   ],
   'Event',
   ({ playstyle, score, character }) => {
-    if (character.canTrigger('playstyle-based', 'Cryo Reaction')) {
-      score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    if (character.canTrigger('Cryo Reaction')) {
+      score += getReactionModifier(character, playstyle, 'Cryo Reaction');
 
       if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) score += MODIFIERS.TALENT;
     }
@@ -3871,7 +4211,7 @@ export const PrimordialJadeWingedSpear = new Weapon(
   [
     WeaponAscensionMaterials.XFromGuyun,
     Drops.SacrificialKnife,
-    Drops.FatuiInsignia
+    Drops.RecruitsInsignia
   ],
   'Wish',
   ({ playstyle, score }) => {
@@ -3935,9 +4275,11 @@ export const ProspectorsShovel = new Weapon(
     Drops.Mistshroud,
     Drops.DriveShaft
   ],
-  'Crafting',
-  ({ score, character }) => {
-    if (character.canTrigger('playstyle-based', 'Electro-Charged', 'Lunar-Charged')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+  'Forging: Nod-Krai',
+  ({ score, playstyle, character }) => {
+    if (character.canTrigger('Electro-Charged', 'Lunar-Charged')) {
+      score += getReactionModifier(character, playstyle, 'Electro-Charged', 'Lunar-Charged');
+    }
     if (character.can('Increases Moonsign')) score += MODIFIERS.BONUS_ABILITY;
 
     return score;
@@ -3963,7 +4305,7 @@ export const PrototypeAmber = new Weapon(
     Drops.MistGrass,
     Drops.Arrowhead
   ],
-  'Crafting',
+  'Forging',
   ({ playstyle, score }) => {
     if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.STAT;
     if (playstyle.needsStat('HP')) score += MODIFIERS.STAT;
@@ -3986,11 +4328,11 @@ export const PrototypeArchaic = new Weapon(
   'ATK',
   27.6,
   [
-    WeaponAscensionMaterials.XOfAerosiderite,
-    Drops.BoneShard,
+    WeaponAscensionMaterials.GrainOfAerosiderite,
+    Drops.FragileBoneShard,
     Drops.Mask,
   ],
-  'Crafting',
+  'Forging',
   ({ playstyle, score }) => {
     if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) score += MODIFIERS.TALENT;
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
@@ -4017,7 +4359,7 @@ export const PrototypeCrescent = new Weapon(
     Drops.MistGrass,
     Drops.TreasureHoarderInsignia
   ],
-  'Crafting',
+  'Forging',
   ({ playstyle, score }) => {
     if (playstyle.prioritizesTalents('Charged/Hold')) {
       score += MODIFIERS.TALENT;
@@ -4046,9 +4388,9 @@ export const PrototypeRancour = new Weapon(
   [
     WeaponAscensionMaterials.MistXElixir,
     Drops.MistGrass,
-    Drops.FatuiInsignia
+    Drops.RecruitsInsignia
   ],
-  'Crafting',
+  'Forging',
   ({ playstyle, score }) => {
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
     if (playstyle.needsStat('DEF')) score += MODIFIERS.STAT;
@@ -4072,11 +4414,11 @@ export const PrototypeStarglitter = new Weapon(
   'Energy Recharge',
   45.9,
   [
-    WeaponAscensionMaterials.XOfAerosiderite,
-    Drops.BoneShard,
+    WeaponAscensionMaterials.GrainOfAerosiderite,
+    Drops.FragileBoneShard,
     Drops.Mask
   ],
-  'Crafting',
+  'Forging',
   ({ playstyle, score }) => {
     if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) score += MODIFIERS.TALENT;
 
@@ -4112,6 +4454,7 @@ export const RainbowSerpentsRainBow = new Weapon(
     if (character.can('Off-field Damage') && playstyle.needsStat('ATK')) {
       score += MODIFIERS.BONUS_ABILITY + MODIFIERS.STAT;
     }
+    if (!playstyle.onField) score += MODIFIERS.FIELD;
 
     return score;
   },
@@ -4136,8 +4479,10 @@ export const Rainslasher = new Weapon(
     Drops.Scroll
   ],
   'Wish',
-  ({ score, character }) => {
-    if (character.canTrigger('playstyle-based', 'Hydro Reaction', 'Electro Reaction')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+  ({ score, playstyle, character }) => {
+    if (character.canTrigger('Hydro Reaction', 'Electro Reaction')) {
+      score += getReactionModifier(character, playstyle, 'Hydro Reaction', 'Electro Reaction');
+    }
 
     return score;
   }
@@ -4160,7 +4505,7 @@ export const RangeGauge = new Weapon(
   [
     WeaponAscensionMaterials.AncientChord,
     Drops.TaintedWater,
-    Drops.FontemerAberrantPearl
+    Drops.TransoceanicPearl
   ],
   'Wish',
   ({ playstyle, score, character }) => {
@@ -4195,8 +4540,10 @@ export const RavenBow = new Weapon(
     Drops.Arrowhead
   ],
   'Wish',
-  ({ score, character }) => {
-    if (character.canTrigger('playstyle-based', 'Hydro Reaction', 'Pyro Reaction')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+  ({ score, playstyle, character }) => {
+    if (character.canTrigger('Hydro Reaction', 'Pyro Reaction')) {
+      score += getReactionModifier(character, playstyle, 'Hydro Reaction', 'Pyro Reaction');
+    }
 
     return score;
   },
@@ -4283,7 +4630,7 @@ export const ReliquaryOfTruth = new Weapon(
       score += MODIFIERS.TALENT;
 
       if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
-      if (character.canTrigger('playstyle-based', 'Lunar-Bloom')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+      if (character.canTrigger('Lunar-Bloom')) score += getReactionModifier(character, playstyle, 'Lunar-Bloom');
     }
 
     return score;
@@ -4309,7 +4656,7 @@ export const RightfulReward = new Weapon(
     Drops.BreacherCore,
     Drops.Gear
   ],
-  'Crafting',
+  'Forging: Fontaine',
   ({ playstyle, score, character }) => {
     if (character.can('Heal', 'Self-heal')) {
       score += MODIFIERS.BONUS_ABILITY;
@@ -4341,7 +4688,7 @@ export const RingOfYaxche = new Weapon(
     Drops.WayobWill,
     Drops.Mask,
   ],
-  'Crafting',
+  'Forging: Natlan',
   ({ playstyle, score }) => {
     if (playstyle.prioritizesTalents('Skill/Ability')) {
       score += MODIFIERS.TALENT;
@@ -4422,7 +4769,7 @@ export const RoyalGrimoire = new Weapon(
   [
     WeaponAscensionMaterials.XOfDecarabiansX,
     Drops.Horn,
-    Drops.FatuiInsignia
+    Drops.RecruitsInsignia
   ],
   'Starglitter Exchange',
   ({ playstyle, score }) => {
@@ -4474,7 +4821,7 @@ export const RoyalSpear = new Weapon(
   [
     WeaponAscensionMaterials.MistXElixir,
     Drops.MistGrass,
-    Drops.FatuiInsignia
+    Drops.RecruitsInsignia
   ],
   'Starglitter Exchange',
   ({ playstyle, score }) => {
@@ -4702,13 +5049,13 @@ export const SapwoodBlade = new Weapon(
   'Energy Recharge',
   30.6,
   [
-    WeaponAscensionMaterials.TalismanOfTheForestDew,
+    WeaponAscensionMaterials.CopperTalismanOfTheForestDew,
     Drops.RuinDrakeChaos,
-    Drops.EremiteDrop,
+    Drops.FadedRedSatin,
   ],
-  'Crafting',
+  'NPC: Aranara by the Tree of Dreams',
   ({ playstyle, score, character }) => {
-    if (character.canTrigger('playstyle-based', 
+    const reactions: Array<Reaction> = [
       'Burning',
       'Quicken',
       'Aggravate',
@@ -4716,8 +5063,10 @@ export const SapwoodBlade = new Weapon(
       'Bloom',
       'Hyperbloom',
       'Burgeon',
-    )) {
-      score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    ];
+
+    if (character.canTrigger(...reactions)) {
+      score += getReactionModifier(character, playstyle, ...reactions);
 
       if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
       if (!playstyle.onField) score += MODIFIERS.FIELD;
@@ -4774,7 +5123,7 @@ export const SequenceOfSolitude = new Weapon(
   41.3,
   [
     WeaponAscensionMaterials.AncientChord,
-    Drops.WeaselShell,
+    Drops.ColdCrackedShell,
     Drops.Gear
   ],
   'Event',
@@ -4805,7 +5154,7 @@ export const SerenitysCall = new Weapon(
     Drops.FrostnightsX,
     Drops.Warrant
   ],
-  'Crafting',
+  'Forging: Nod-Krai',
   ({ playstyle, score, character }) => {
     if (playstyle.needsStat('HP')) score += MODIFIERS.STAT;
     if (character.can('Increases Moonsign')) {
@@ -4835,8 +5184,8 @@ export const SerpentSpine = new Weapon(
   'Crit Rate',
   27.6,
   [
-    WeaponAscensionMaterials.XOfAerosiderite,
-    Drops.BoneShard,
+    WeaponAscensionMaterials.GrainOfAerosiderite,
+    Drops.FragileBoneShard,
     Drops.Nectar
   ],
   'Battle Pass',
@@ -4884,9 +5233,9 @@ export const SilvershowerHeartstrings = new Weapon(
   'HP',
   66.2,
   [
-    WeaponAscensionMaterials.PureSacredDewdrop,
+    WeaponAscensionMaterials.DrossOfPureSacredDewdrop,
     Drops.Fin,
-    Drops.FontemerAberrantPearl
+    Drops.TransoceanicPearl
   ],
   'Wish',
   ({ playstyle, score, character }) => {
@@ -4919,8 +5268,8 @@ export const SkyriderGreatsword = new Weapon(
   'Physical DMG Bonus',
   43.9,
   [
-    WeaponAscensionMaterials.XOfAerosiderite,
-    Drops.BoneShard,
+    WeaponAscensionMaterials.GrainOfAerosiderite,
+    Drops.FragileBoneShard,
     Drops.TreasureHoarderInsignia
   ],
   'Chest',
@@ -4946,9 +5295,9 @@ export const SkyriderSword = new Weapon(
   'Energy Recharge',
   52.1,
   [
-    WeaponAscensionMaterials.XOfAerosiderite,
-    Drops.BoneShard,
-    Drops.FatuiInsignia
+    WeaponAscensionMaterials.GrainOfAerosiderite,
+    Drops.FragileBoneShard,
+    Drops.RecruitsInsignia
   ],
   'Wish',
   ({ playstyle, score }) => {
@@ -5153,7 +5502,7 @@ export const SnareHook = new Weapon(
     Drops.Mistshroud,
     Drops.Arrowhead
   ],
-  'Crafting',
+  'Forging: Nod-Krai',
   ({ playstyle, score, character }) => {
     if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
     if (character.can('Increases Moonsign')) {
@@ -5187,11 +5536,11 @@ export const SnowTombedStarsilver = new Weapon(
     Drops.Horn,
     Drops.Slime
   ],
-  'Crafting',
+  'Quest',
   ({ playstyle, score, character }) => {
     if (playstyle.prioritizesTalents('Normal/Press', 'Charged/Hold')) score += MODIFIERS.TALENT;
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
-    if (character.canTrigger('playstyle-based', 'Cryo Reaction')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+    if (character.canTrigger('Cryo Reaction')) score += getReactionModifier(character, playstyle, 'Cryo Reaction');
     if (playstyle.onField) score += MODIFIERS.FIELD;
 
     return score;
@@ -5280,12 +5629,44 @@ export const SongOfStillness = new Weapon(
     Drops.TaintedWater,
     Drops.Arrowhead,
   ],
-  'Crafting',
+  'Forging: Fontaine',
   ({ playstyle, score }) => {
     if (!playstyle.onField) score += MODIFIERS.FIELD;
 
     return score;
   },
+);
+
+export const SongOfTheVigil = new Weapon(
+  'Song of the Vigil',
+  {
+    value: `Triggering an Elemental Reaction regenerates $0 Elemental Energy for the equipping character. This effect can trigger once every 9s. On the other hand, triggering a Stellar Glimmer reaction increases their ATK by $1 for 12s. The aforementioned effects can trigger even when the character is not on the field.`,
+    refinements: [
+      '4/5/6/7/8',
+      '20/25/30/35/40%',
+    ]
+  },
+  'Polearm',
+  Rarity.Epic,
+  565,
+  'Elemental Mastery',
+  110,
+  [
+    WeaponAscensionMaterials.TheFrostEmperorsRevival,
+    Drops.HollowRootOfLife,
+    Drops.EtherealGlimmershard,
+  ],
+  'Forging: Snezhnaya',
+  ({ playstyle, character, score }) => {
+    if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.STAT;
+    if (character.canTrigger('Stellar') && playstyle.needsStat('ATK')) {
+      score += getReactionModifier(character, playstyle, 'Stellar') + MODIFIERS.BONUS_ABILITY;
+    }
+
+    if (!playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  }
 );
 
 export const SplendorOfTranquilWaters = new Weapon(
@@ -5303,9 +5684,9 @@ export const SplendorOfTranquilWaters = new Weapon(
   'Crit DMG',
   88.2,
   [
-    WeaponAscensionMaterials.PureSacredDewdrop,
+    WeaponAscensionMaterials.DrossOfPureSacredDewdrop,
     Drops.TaintedWater,
-    Drops.FontemerAberrantPearl
+    Drops.TransoceanicPearl
   ],
   'Wish',
   ({ playstyle, score, character }) => {
@@ -5340,7 +5721,7 @@ export const StaffOfHoma = new Weapon(
   'Crit DMG',
   66.2,
   [
-    WeaponAscensionMaterials.XOfAerosiderite,
+    WeaponAscensionMaterials.GrainOfAerosiderite,
     Drops.LeyLineBranch,
     Drops.Slime
   ],
@@ -5403,7 +5784,7 @@ export const StarcallersWatch = new Weapon(
   [
     WeaponAscensionMaterials.DeliriousXOfTheSacredLord,
     Drops.WayobWill,
-    Drops.Whistle
+    Drops.SentrysWoodenWhistle
   ],
   'Wish',
   ({ playstyle, score, character }) => {
@@ -5438,7 +5819,7 @@ export const SturdyBone = new Weapon(
   [
     WeaponAscensionMaterials.BlazingSacrificialHearts,
     Drops.WayobWill,
-    Drops.Whistle
+    Drops.SentrysWoodenWhistle
   ],
   'Wish',
   ({ playstyle, score }) => {
@@ -5510,7 +5891,7 @@ export const SunnyMorningSleepIn = new Weapon(
     if (playstyle.needsStat('Elemental Mastery')) {
       score += MODIFIERS.STAT;
 
-      if (character.canTrigger('playstyle-based', 'Swirl')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+      if (character.canTrigger('Swirl')) score += getReactionModifier(character, playstyle, 'Swirl');
       if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
       if (playstyle.prioritizesTalents('Burst/Ult')) score += MODIFIERS.TALENT;
     }
@@ -5546,7 +5927,7 @@ export const SurfsUp = new Weapon(
     if (playstyle.prioritizesTalents('Normal/Press')) {
       score += MODIFIERS.TALENT;
 
-      if (character.canTrigger('playstyle-based', 'Vaporize')) score += MODIFIERS.CAN_TRIGGER_ELEMENT;
+      if (character.canTrigger('Vaporize')) score += getReactionModifier(character, playstyle, 'Vaporize');
     }
 
     return score;
@@ -5596,9 +5977,9 @@ export const SymphonistOfScents = new Weapon(
   'Crit DMG',
   66.2,
   [
-    WeaponAscensionMaterials.PureSacredDewdrop,
+    WeaponAscensionMaterials.DrossOfPureSacredDewdrop,
     Drops.TaintedWater,
-    Drops.FontemerAberrantPearl
+    Drops.TransoceanicPearl
   ],
   'Wish',
   ({ playstyle, score, character }) => {
@@ -5636,7 +6017,7 @@ export const SwordOfNarzissenkreuz = new Weapon(
   [
     WeaponAscensionMaterials.AncientChord,
     Drops.Operatives,
-    Drops.FontemerAberrantPearl
+    Drops.TransoceanicPearl
   ],
   'Quest',
   ({ playstyle, score }) => {
@@ -5665,7 +6046,7 @@ export const TalkingStick = new Weapon(
   18.4,
   [
     WeaponAscensionMaterials.OasisGardens,
-    Drops.Shell,
+    Drops.DesiccatedShell,
     Drops.Slime,
   ],
   'Battle Pass',
@@ -5837,9 +6218,9 @@ export const TheDockhandsAssistant = new Weapon(
   'HP',
   41.3,
   [
-    WeaponAscensionMaterials.PureSacredDewdrop,
+    WeaponAscensionMaterials.DrossOfPureSacredDewdrop,
     Drops.Operatives,
-    Drops.FontemerAberrantPearl
+    Drops.TransoceanicPearl
   ],
   'Wish',
   ({ playstyle, score, character }) => {
@@ -5871,14 +6252,14 @@ export const TheFirstGreatMagic = new Weapon(
   [
     WeaponAscensionMaterials.AncientChord,
     Drops.TaintedWater,
-    Drops.FontemerAberrantPearl
+    Drops.TransoceanicPearl
   ],
   'Wish',
   ({ playstyle, score }) => {
     if (playstyle.prioritizesTalents('Charged/Hold')) score += MODIFIERS.TALENT;
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
     if (playstyle.onField) score += MODIFIERS.FIELD;
-
+    
     return score;
   },
   cs => cs.Lyney
@@ -6082,7 +6463,7 @@ export const ThunderingPulse = new Weapon(
   66.2,
   [
     WeaponAscensionMaterials.NarukamisX,
-    Drops.Prism,
+    Drops.DismalPrism,
     Drops.Arrowhead
   ],
   'Wish',
@@ -6104,7 +6485,7 @@ export const TidalShadow = new Weapon(
       '24/30/36/42/48%',
     ]
   },
-  'Sword',
+  'Claymore',
   Rarity.Epic,
   510,
   'ATK',
@@ -6114,7 +6495,7 @@ export const TidalShadow = new Weapon(
     Drops.BreacherCore,
     Drops.Gear
   ],
-  'Crafting',
+  'Forging: Fontaine',
   ({ playstyle, score, character }) => {
     if (character.can('Self-heal')) score += MODIFIERS.BONUS_ABILITY;
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
@@ -6139,7 +6520,7 @@ export const TomeOfTheEternalFlow = new Weapon(
   'Crit DMG',
   88.2,
   [
-    WeaponAscensionMaterials.PureSacredDewdrop,
+    WeaponAscensionMaterials.DrossOfPureSacredDewdrop,
     Drops.TaintedWater,
     Drops.Gear
   ],
@@ -6169,7 +6550,7 @@ export const ToukabouShigure = new Weapon(
   165,
   [
     WeaponAscensionMaterials.NarukamisX,
-    Drops.PrimalConstructPrism,
+    Drops.DamagedPrism,
     Drops.Handguard
   ],
   'Event',
@@ -6254,7 +6635,7 @@ export const TwinNephrite = new Weapon(
   [
     WeaponAscensionMaterials.MistXElixir,
     Drops.MistGrass,
-    Drops.FatuiInsignia
+    Drops.RecruitsInsignia
   ],
   'Chest',
   ({ playstyle, score }) => {
@@ -6322,8 +6703,8 @@ export const Verdict = new Weapon(
   'Wish',
   ({ playstyle, score, character }) => {
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
-    if (character.canTrigger('playstyle-based', 'Crystallize')) {
-      score += MODIFIERS.BONUS_ABILITY;
+    if (character.canTrigger('Crystallize')) {
+      score += getReactionModifier(character, playstyle, 'Crystallize');
 
       if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
     }
@@ -6350,7 +6731,7 @@ export const VividNotions = new Weapon(
   44.1,
   [
     WeaponAscensionMaterials.DeliriousXOfTheSacredLord,
-    Drops.WeaselShell,
+    Drops.ColdCrackedShell,
     Drops.Fang
   ],
   'Wish',
@@ -6378,8 +6759,8 @@ export const VortexVanquisher = new Weapon(
   'ATK',
   49.6,
   [
-    WeaponAscensionMaterials.XOfAerosiderite,
-    Drops.BoneShard,
+    WeaponAscensionMaterials.GrainOfAerosiderite,
+    Drops.FragileBoneShard,
     Drops.TreasureHoarderInsignia
   ],
   'Wish',
@@ -6523,7 +6904,7 @@ export const WhiteTassel = new Weapon(
   [
     WeaponAscensionMaterials.XFromGuyun,
     Drops.SacrificialKnife,
-    Drops.FatuiInsignia
+    Drops.RecruitsInsignia
   ],
   'Chest',
   ({ playstyle, score }) => {
@@ -6551,7 +6932,7 @@ export const Whiteblind = new Weapon(
     Drops.SacrificialKnife,
     Drops.TreasureHoarderInsignia
   ],
-  'Crafting',
+  'Forging',
   ({ playstyle, score }) => {
     if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
     if (playstyle.needsStat('DEF')) score += MODIFIERS.STAT;
@@ -6559,6 +6940,44 @@ export const Whiteblind = new Weapon(
 
     return score;
   },
+);
+
+export const WhitelakeFrostfeather = new Weapon(
+  'Whitelake Frostfeather',
+  {
+    value: `When the equipping character hits an opponent with their Elemental Skill, they gain "Lake-Hued Lament": ATK increases by $0 for 8s. This effect can trigger once every 0.1s. Max 3 stacks, and each stack's duration is independent. At 3 stacks, the CRIT DMG of any Stellar Glimmer reaction DMG caused by the equipping character is increased by $1, and triggering Stellar Glimmer reactions or Stellar Glimmer reaction DMG will also restore $2 Elemental Energy to the character. This Energy recovery effect can trigger once every 3.5s. Can be triggered even when the equipping character is off-field.`,
+    refinements: [
+      '8/10/12/14/16%',
+      '50/65/80/95/110%',
+      '4/4.5/5/5.5/6',
+    ]
+  },
+  'Sword',
+  Rarity.Legendary,
+  674,
+  'Crit Rate',
+  22.1,
+  [
+    WeaponAscensionMaterials.MeasuredPourOftheCellaredSpiritualNectar,
+    Drops.HollowRootOfLife,
+    Drops.ChimericCore
+  ],
+  'Wish',
+  ({ playstyle, character, score }) => {
+    if (playstyle.needsStat('ATK')) {
+      score += MODIFIERS.STAT;
+
+      if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+    }
+    if (character.canTrigger('Stellar')) {
+      score += getReactionModifier(character, playstyle, 'Stellar');
+
+      if (!playstyle.onField) score += MODIFIERS.FIELD;
+    }
+    
+    return score;
+  },
+  cs => cs.Odette,
 );
 
 export const WindblumeOde = new Weapon(
@@ -6690,9 +7109,9 @@ export const XiphosMoonlight = new Weapon(
   'Elemental Mastery',
   165,
   [
-    WeaponAscensionMaterials.TalismanOfTheForestDew,
-    Drops.PrimalConstructPrism,
-    Drops.EremiteDrop
+    WeaponAscensionMaterials.CopperTalismanOfTheForestDew,
+    Drops.DamagedPrism,
+    Drops.FadedRedSatin
   ],
   'Wish',
   ({ playstyle, score }) => {

@@ -38,7 +38,7 @@ export const MistXElixir = WeaponAscensionMaterial.create(
   'Tuesday/Friday'
 );
 
-export const XOfAerosiderite = WeaponAscensionMaterial.create(
+export const GrainOfAerosiderite = WeaponAscensionMaterial.create(
   {
     [Rarity.Uncommon]: `Grain of Aerosiderite`,
     [Rarity.Rare]: `Piece of Aerosiderite`,

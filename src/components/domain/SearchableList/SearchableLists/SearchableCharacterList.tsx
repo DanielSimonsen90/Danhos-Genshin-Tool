@@ -118,6 +118,7 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
         grouping: character => character.bonusAbilities.includes('Grouping'),
         heal: character => character.bonusAbilities.includes('Heal'),
         hexerei: character => character.bonusAbilities.some(ability => ability.startsWith('Hexerei Able: ')),
+        lunarReaction: character => character.bonusAbilities.some(ability => ability.match(/Enables Lunar(-\w+)? Reaction/)),
         nightsoulsBlessing: character => character.bonusAbilities.includes('Nightsouls Blessing'),
         offFieldDamage: character => character.bonusAbilities.includes('Off-field Damage'),
         ousia: character => character.bonusAbilities.includes('Ousia'),
@@ -125,6 +126,7 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
         selfHeal: character => character.bonusAbilities.includes('Self-heal'),
         serpentSubtlety: character => character.bonusAbilities.includes(`Serpent's Subtlety`),
         shield: character => character.bonusAbilities.includes('Shield'),
+        stellarReaction: character => character.bonusAbilities.some(ability => ability.match(/Enables Stellar(-\w+)? Reaction/)),
       },
       passiveTalents: {
         doubleProduct: character => character.passiveTalent?.toLowerCase().includes('double product'),

@@ -1,37 +1,91 @@
-# 🎉 Danho's Genshin Tool v . 2.2.4 🎉
+# 🎉 Danho's Genshin Tool v . 2.2.5 🎉
 
 
-## Genshin Impact v. 6.7
-* Added Sandrone, 5* Claymore
-* Added new Stellar-Conduct reaction with Sandrone
-* Added "A Teaspoon of Transcendence" - Sandrone's signature weapon
-* Added "Precursor's Secret Source Matrix of Overseer Network" - new Elite enemy with the longest name in history for no reason
-  - Added Unblemished-, Depleted- and Fractured Lunar Iron drops
+## General
+### Added
+* Stellar-Swirl reaction
+* Account reordering in settings modal
 
-## New Features
-* Profile avatar: You can now change your profile avatar to whichever character you want, instead of being just limited to Lumine and Aether!
-* Sortable lists! You can now sort any SearchableList by various properties including ascending, descending and priority order.
-* Added "All Weapons" tab to character's Recommended Weapons section.
-* Added custom model popovers to prioritylists and searchable lists - you can now hover over any item and view its information in a popover without having to open the item page
+### Updates
 
-## Artifact Helper
-* Added descriptions to each result tab explaining what it shows and how scores differ
-* Renamed result tabs: "By Artifacts" → "By Stats", "By Character Recommendation" → "By Set"
-* Added automatic cache eviction — history entries older than the configured number of days are pruned on load (default: 30 days)
-* Increased Crit Rate/DMG Circlet main stat score — previously undervalued relative to its universal usefulness
-* Increased Energy Recharge substat score for characters that don't specifically need it — ER benefits burst uptime broadly
 
-## Settings
-* Settings restructured into module-based tabs: **General** and **Artifact Helper**
-* Added **Default landing page** setting — open the app directly to any section
-* Added **Keep search history for** setting — choose how long history is retained (7 / 14 / 30 / 60 / 90 days, or Never)
-* Clear cache moved from the Artifact Helper sidebar into Artifact Helper settings
+### Fixes
 
-## Updates
-* Added "Off-field Damage" to Lauma
-* Improved tier list drag-and-drop: items now position correctly when dragging between tiers
 
-## Fixes
-* Fixed 2-piece artifact group tooltip showing only one set when the second slot's representative was included via its 4-piece bonus rather than its 2-piece bonus
-* Fixed Priority List drag-and-drop reverting reordering when new items were not yet in the saved priority list¨
-* Fixed Flame-Forged Insight being counted as a "good weapon" for non-lunar reaction characters
+## Artifacts
+### Added
+* Added new artifact set "Heart of the Furnace"
+* Added new artifact set "Scarlet Proof"
+
+### Updated
+* Changed calculation behind character artifact recommendations to include more if a character *wants* to trigger a reaction weapon might be locked behind vs if they could.
+
+## Characters
+### Added
+* 4* Electro Polearm "Alyosha" from Snezhnaya
+* 5* Cryo Sword "Odette" from Snezhnaya
+
+### Updated
+* Iansan: Buffs attack
+* Traveler (Anemo): Grouping and off-field damage
+* Traveler (Dendro): Off-field damage
+* Traveler (Pyro): Off-field damage
+* Traveler (Cryo): Stellar reactions and off-field damage
+* Searchable character lists can now support filtering by Lunar/Stellar reactions
+
+## Domains
+* Inverted Glacier: Artifacts domain for new artifacts in §Artifacts section.
+* Scars of Cursed Obsession: Weapon domain for new Snezhnaya weapons
+* Relics of the Fallen Grace: Talent domain for new Snezhnaya characters
+
+## Materials
+### Drops
+* Ethereal- Glimmershard, Crystal & Crystalscale stone; dropped by Fae of Crystalline Flesh
+* Chimeric Core, Symbiotic Chimeric Nucleus & Prime Chimeric Nexus; dropped by Aberrant Chimeric Monsters
+* Accreted- Fragment, Mass & Growth; dropped by Volkodlak Brute
+* Hollow Root-, Sprout Node- & Coiled Core of Life; dropped by Wildwood Leshy
+* Unscorched Blossom Branch; dropped by Immortal Construct
+* Severed Tail of the Sky-Roamer; dropped by Chimeric Winged Lion
+
+### Local Specialties
+* Flockingweed
+* Frostfairy Flower
+
+### Talent Ascension Items
+* Charity
+* Fortitude
+* Glory
+
+### Weapon Ascension Items
+* Rise-, Muster-, Clarion- & Triumph of the Pale Star Army
+* Measured-, Intoxication-, Exhilaration- & Revelry of the Cellared Spiritual Nectar
+* The Frost Emperor's- Revival, ceremony, Lampent & Farewell
+
+## Mobs
+### Easy
+* Fae of Crystalline Flesh, drops Ethereal- Glimmershard, Crystal & Crystalscale stone
+* Aberrant Chimeric Monsters, drops Chimeric Core, Symbiotic Chimeric Nucleus & Prime Chimeric Nexus
+
+### Elite
+* Volkodlak Brute, drops Accreted- Fragment, Mass & Growth
+* Wildwood Leshy, drops Hollow Root-, Sprout Node- & Coiled Core of Life
+
+### Bosses
+* Immortal Construct, drops Unscorched Blossom Branch
+* Chimeric Winged Lion, drops Severed Tail of the Sky-Roamer
+
+## Weapons
+### Added
+* Snezhnaya forgeable weapons: Blade of Atonement (Claymore), Covenant of Frost and Snow (Bow), Echoes of the Heart (Catalyst), Emberwell (Sword) & Song of the Vigil (Polearm)
+* New Battle Pass weapons: Clash of Kings (Catalyst), Forged by the Golden Melody (Claymore), Frostbreath (Polearm), Heretic's Molten Blade (Sword) & Jade Vista (Bow)
+* Quest weapon: Exaiphanes Blade (Sword)
+* Wish weapon: Whitelake Frostfeather (Sword)
+* Added possibility to sort weapons lists by base attack.
+
+### Updated
+* Updated obtainable through "Crafting" to be rephrased as "Forging" or "Quest" depending on the source of the weapon. These weapons are *still* craftable, but there may be an extra step or a specific location to buy the blueprint from.
+* Changed calculation behind character weapon recommendations to include more if a character *wants* to trigger a reaction weapon might be locked behind vs if they could.
+
+### Fixed
+* Fixed All Weapons not showing rarity, which seems quite helpful when you're viewing a big combined list of mixed rarities.
+* Fixed Tidal Shadow being marked as Sword instead of Claymore

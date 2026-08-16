@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Select } from "@/components/common/FormItems";
-import { useCacheStore } from "@/stores";
+import { CacheStore, useCacheStore } from "@/stores";
 import { useConfirm } from "@/providers/ConfirmProvider";
 import { useSettingsStore } from "@/stores/SettingsStore";
 import { ROUTES } from "@/common/constants/routes";
@@ -11,7 +11,6 @@ export default function Cache() {
   const navigate = useNavigate();
   const { query } = useParams();
 
-  const CacheStore = useCacheStore();
   const searchHistory = useCacheStore(store => store.get('searchHistory', {})) ?? {};
   const options = Object.values(searchHistory).filter(Boolean);
   const currentSearch = query ? searchHistory?.[query] : undefined;
@@ -19,9 +18,9 @@ export default function Cache() {
   const cacheEvictionDays = useSettingsStore(s => s.getSetting('cacheEvictionDays') ?? 30);
 
   useEffect(() => {
-    if (!CacheStore.has('searchHistory')) CacheStore.load('searchHistory', {});
+    CacheStore.load('searchHistory', {});
     CacheStore.evictExpired(cacheEvictionDays);
-  }, [CacheStore, cacheEvictionDays]);
+  }, [cacheEvictionDays]);
 
   return (
     <div className="cache">

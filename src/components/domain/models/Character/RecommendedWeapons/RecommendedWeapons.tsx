@@ -111,6 +111,7 @@ export default function RecommendedWeapons({
           showStats: true,
           showSource: true,
           hideWeaponType: true,
+          showRarity: key === 'All Weapons',
           children: (props) => {
             const weaponResult = items.find(r => r.weapon.name === props.weapon.name);
             if (!weaponResult) return null;

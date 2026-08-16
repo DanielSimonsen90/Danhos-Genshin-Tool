@@ -83,3 +83,15 @@ export const LostMooncourt = new DomainOfForgery(
   },
   'Nod-Krai'
 );
+
+export const ScarsOfCursedObsession = new DomainOfForgery(
+  "Scars of Cursed Obsession",
+  `It was an era of peace, when the conquests of the Belyi Tsar had faded into legend, and the turmoil of succession was reduced to mere tales in history books. Yet, the fae who had never lived through those bygone days still yearned to resurrect that ancient glory. A Leaden dream was stained by the blood of countless souls, yet the dreamer remained unshaken, believing this was the only path to pave their honor. But at that road's end, there was no glory to be found, nor the old world of her dreams.\nThere was only the blood that drowned her, blood grown cold, foul, and faded.`,
+  {
+    1: `(Anemo/Cryo)`,
+    2: `(Anemo/Cryo)`,
+    3: `Swirl and Stellar Swirl DMG increased (Anemo/Cryo)`,
+    4: `Swirl and Stellar Swirl DMG increased (Anemo/Cryo)`,
+  },
+  'Snezhnaya'
+);

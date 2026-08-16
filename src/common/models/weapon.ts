@@ -1,11 +1,21 @@
-import { Percentage, Rarity, WeaponStatName, WeaponType } from "../types";
+import { Percentage, Rarity, TeyvatRegion, WeaponStatName, WeaponType } from "../types";
 import Character from "./characters/Character";
 import CharacterPlaystyle from "./characters/CharacterPlaystyle";
 import { WeaponAscensionMaterial } from "./materials/AscensionMaterial";
 import CraftableMaterial from "./materials/CraftableMaterial";
 import { ModelKeys } from "./Model";
 
-type WeaponDroppedBy = 'Battle Pass' | 'Chest' | 'Crafting' | 'Event' | 'Quest' | 'Starglitter Exchange' | 'Fishing' | 'Wish' | `NPC: ${string}`;
+type WeaponDroppedBy = (
+  | 'Battle Pass'
+  | 'Chest'
+  | `Forging: ${TeyvatRegion}` | 'Forging'
+  | 'Event'
+  | 'Quest'
+  | 'Starglitter Exchange'
+  | 'Fishing'
+  | 'Wish'
+  | `NPC: ${string}`
+);
 type SecondaryStatValue<TWeaponStatName extends WeaponStatName> =
   TWeaponStatName extends 'Elemental Mastery'
   ? number
