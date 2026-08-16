@@ -97,7 +97,7 @@ export default function SearchableWeaponList<TFilterKeys extends string>({
         chest: weapon => weapon.droppedBy === 'Chest',
         event: weapon => weapon.droppedBy === 'Event',
         fishing: weapon => weapon.droppedBy === 'Fishing',
-        forgable: weapon => weapon.droppedBy.includes('Forging'),
+        forgeable: weapon => weapon.droppedBy.includes('Forging'),
         npc: weapon => weapon.droppedBy.startsWith('NPC: '),
         quest: weapon => weapon.droppedBy === 'Quest',
         signatureWeapon: weapon => !!weapon.signatureWeaponFor,

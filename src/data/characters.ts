@@ -1487,7 +1487,7 @@ export const Odette = new Character("Odette", "Cryo", "Sword", [
   material: TalentAscension.Charity,
   weeklyBossDrop: MobDrops.TwistedWitheredBranch,
   crystal: ElementalCrystals.Cryo,
-  localSpecialty: LocalSpecialties.FrostfiaryFlower,
+  localSpecialty: LocalSpecialties.FrostfairyFlower,
   worldBossDrop: MobDrops.UnscorchedBlossomBranch,
   mobDrop: EasyMobDrops.EtherealGlimmershard,
 }, 'Shows Local Specialties in Snezhnaya on minimap.',

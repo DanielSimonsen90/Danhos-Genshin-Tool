@@ -1,4 +1,3 @@
-import { TriggerableReactions } from "@/common/constants/genshin";
 import { TalentType, CharacterSetName as CharacterPlaystyleName, TalentStatName, Reaction } from "@/common/types";
 import { Character } from "..";
 import { CharacterArtifactSet } from "./CharacterArtifactSet";

@@ -6,7 +6,7 @@ export const Flockingweed = new LocalSpecialty(
   'Snezhnaya',
 );
 
-export const FrostfiaryFlower = new LocalSpecialty(
+export const FrostfairyFlower = new LocalSpecialty(
   'Frostfairy Flower',
   `A sacred flower that blooms no matter how harsh the wind and snow. It always radiates a faint, mesmerizing glow that draws the hearts of all who see it.`,
   'Snezhnaya',

@@ -52,7 +52,7 @@
 * Frostfairy Flower
 
 ### Talent Ascension Items
-* Chariy
+* Charity
 * Fortitude
 * Glory
 
@@ -76,7 +76,7 @@
 
 ## Weapons
 ### Added
-* Snezhnaya forgable weapons: Blade of Atonement (Claymore), Covenant of Frost and Snow (Bow), Echoes of the Heart (Catalyst), Emberwell (Sword) & Song of the Vigil (Polearm)
+* Snezhnaya forgeable weapons: Blade of Atonement (Claymore), Covenant of Frost and Snow (Bow), Echoes of the Heart (Catalyst), Emberwell (Sword) & Song of the Vigil (Polearm)
 * New Battle Pass weapons: Clash of Kings (Catalyst), Forged by the Golden Melody (Claymore), Frostbreath (Polearm), Heretic's Molten Blade (Sword) & Jade Vista (Bow)
 * Quest weapon: Exaiphanes Blade (Sword)
 * Wish weapon: Whitelake Frostfeather (Sword)

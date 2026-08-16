@@ -2859,7 +2859,7 @@ export const HarbingerOfDawn = new Weapon(
   }
 );
 
-export const HerecticsMoltenBlade = new Weapon(
+export const HereticsMoltenBlade = new Weapon(
   `Heretic's Molten Blade`,
   {
     value: `After the equipping character uses their Elemental Skill, they gain "Gleam of First Light." While active, Gleam of First Light tracks their distance traveled. Each second, the equipping character gains an ATK Bonus ranging from $0 to $1 based on the distance traveled during the previous second. Gleam of First Light lasts 14s, can be triggered once every 14s, and is removed when the equipping character leaves the field.`,
