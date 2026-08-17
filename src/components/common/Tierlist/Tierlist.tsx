@@ -1,5 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { DndContext, DragEndEvent, DragOverEvent, DragOverlay, DragStartEvent, KeyboardSensor, PointerSensor, closestCenter, pointerWithin, useSensor, useSensors } from '@dnd-kit/core';
+import { 
+  DndContext, DragEndEvent, DragOverEvent, DragOverlay,
+  DragStartEvent, KeyboardSensor, PointerSensor,
+  closestCenter, pointerWithin, useSensor, useSensors
+} from '@dnd-kit/core';
 import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 // @ts-ignore
 import isEqual from 'lodash/fp/isEqual';
@@ -7,21 +11,28 @@ import isEqual from 'lodash/fp/isEqual';
 import { generateId } from '@/common/functions/random';
 import useOnChange from '@/hooks/useOnChange';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { matchesFilters } from '@/components/domain/SearchableList/SearchableListFunctions';
+import Filter, { FilterObject } from '@/components/common/FormItems/Filter/Filter';
+import FilterTags from '@/components/common/FormItems/Filter/FilterTags';
 
 import { FormTier, Tier as TierComponent, TierModifyForm } from './components';
 import { Entry, Tier, TierlistProps } from './TierlistTypes';
-import { getDefaultTiers, generateBlankTier, generateEntry, getDefaultUnsortedTier } from './TierlistFunctions';
+import {
+  getDefaultTiers, generateBlankTier, generateEntry, 
+  getDefaultUnsortedTier, moveSelectedEntries
+} from './TierlistFunctions';
 import { useStateReset } from '@/hooks/useStateReset';
 import useKeybind from '@/hooks/useKeybind';
 
-export default function Tierlist<T, TStorageData extends object>({
+export default function Tierlist<T, TStorageData extends object, FilterKeys extends string = string>({
   model, items,
-  onSearch, onTierChange, onEntryChange,
+  onSearch, filterChecks, filterPlaceholder, onTierChange, onEntryChange,
   ...props
-}: TierlistProps<T, TStorageData>) {
+}: TierlistProps<T, TStorageData, FilterKeys>) {
   const storageKey = 'storageKey' in props ? props.storageKey ?? '' : 'storage' in props ? props.storage?.key ?? '' : '';
   const onStorageLoaded = 'onStorageLoaded' in props ? props.onStorageLoaded : undefined;
   const onStorageSave = 'onStorageSave' in props ? props.onStorageSave : undefined;
+
   const [tiers, setTiers, resetTiers] = useStateReset(() => {
     if (!props.defaultTiers) return getDefaultTiers(items);
     const itemsNotIncluded = items.filter(item => !props.defaultTiers?.some(tier => tier.entries.some(entry => {
@@ -57,13 +68,18 @@ export default function Tierlist<T, TStorageData extends object>({
         : tier
     ) : undefined).filter(Boolean) as Array<Tier<T>>;
   }), onStorageLoaded ? [] : tiers);
+
   const [newTier, setNewTier] = useState<FormTier<T>>(generateBlankTier(tiers));
   const [search, setSearch] = useState('');
+  const [filters, setFilters] = useState<FilterObject<FilterKeys, T, boolean | undefined>>({} as any);
   const [activeDragId, setActiveDragId] = useState<string | null>(null);
   const [dragEndCount, setDragEndCount] = useState(0);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  
   const isDraggingRef = useRef(false);
   const tiersSnapshotRef = useRef<Tier<T>[] | null>(null);
   const tiersRef = useRef(tiers);
+  const lastSelectedRef = useRef<{ tierId: string; index: number } | null>(null);
   tiersRef.current = tiers;
 
   const searchRef = useRef<HTMLInputElement>(null);
@@ -84,10 +100,10 @@ export default function Tierlist<T, TStorageData extends object>({
   const orderedTiers = useMemo(() => tiers
     .map(tier => ({
       ...tier,
-      entries: tier.entries.filter(entry => onSearch(search, entry.item))
+      entries: tier.entries.filter(entry => onSearch(search, entry.item) && matchesFilters(entry.item, filters, filterChecks))
     }))
     .sort((a, b) => a.position - b.position),
-  [tiers, search, onSearch]);
+  [tiers, search, filters, filterChecks, onSearch]);
   const render = useMemo(() => (
     'renderItem' in props ? props.renderItem
       : 'children' in props ? props.children
@@ -123,7 +139,6 @@ export default function Tierlist<T, TStorageData extends object>({
   // Save after drag ends. Needed because useOnChange is gated during drag,
   // so if onDragOver already placed the item and onDragEnd is a no-op, no
   // state change occurs and useOnChange never fires.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (dragEndCount === 0) return;
     const currentTiers = tiersRef.current;
@@ -136,21 +151,52 @@ export default function Tierlist<T, TStorageData extends object>({
     e.preventDefault();
     searchRef.current?.focus();
   });
+  useKeybind('Escape', {}, () => setSelectedIds(new Set()));
 
   const activeEntry = activeDragId
     ? tiers.flatMap(t => t.entries).find(e => e.id === activeDragId) ?? null
     : null;
+  const isGroupDrag = activeDragId !== null && selectedIds.size > 1 && selectedIds.has(activeDragId);
+  const draggedGroupEntries = isGroupDrag
+    ? [activeEntry!, ...tiers.flatMap(t => t.entries).filter(e => selectedIds.has(e.id) && e.id !== activeDragId)]
+    : null;
+
+  const onEntrySelect = (tier: Tier<T>, entry: Entry<T>, index: number, event: React.MouseEvent) => {
+    event.stopPropagation();
+
+    if (event.shiftKey && lastSelectedRef.current?.tierId === tier.id) {
+      const [start, end] = [lastSelectedRef.current.index, index].sort((a, b) => a - b);
+      setSelectedIds(new Set(tier.entries.slice(start, end + 1).map(e => e.id)));
+    } else if (event.ctrlKey || event.metaKey) {
+      setSelectedIds(current => {
+        const next = new Set(current);
+        if (next.has(entry.id)) next.delete(entry.id);
+        else next.add(entry.id);
+        return next;
+      });
+      lastSelectedRef.current = { tierId: tier.id, index };
+    } else {
+      setSelectedIds(new Set([entry.id]));
+      lastSelectedRef.current = { tierId: tier.id, index };
+    }
+  };
 
   const onDragStart = ({ active }: DragStartEvent) => {
-    setActiveDragId(active.id as string);
+    const id = active.id as string;
+    setActiveDragId(id);
     isDraggingRef.current = true;
     tiersSnapshotRef.current = tiers;
+    if (!selectedIds.has(id)) setSelectedIds(new Set());
   };
 
   const onDragOver = ({ active, over }: DragOverEvent) => {
     if (!over) return;
     const draggableId = active.id as string;
     const overId = over.id as string;
+
+    // Group moves are only ever applied on drop (onDragEnd), so the live
+    // cross-tier preview below is skipped entirely while dragging a multi-selection.
+    if (selectedIds.size > 1 && selectedIds.has(draggableId)) return;
 
     // Pre-check with ref to skip setTiers entirely for same-tier movement.
     // This avoids queuing unnecessary state updates on every item the ghost passes over.
@@ -194,6 +240,11 @@ export default function Tierlist<T, TStorageData extends object>({
 
     const draggableId = active.id as string;
     const overId = over.id as string;
+
+    if (selectedIds.size > 1 && selectedIds.has(draggableId)) {
+      setTiers(currentTiers => moveSelectedEntries(currentTiers, selectedIds, overId));
+      return;
+    }
 
     setTiers(currentTiers => {
       const sourceTier = currentTiers.find(t => t.entries.some(e => e.id === draggableId));
@@ -302,15 +353,27 @@ export default function Tierlist<T, TStorageData extends object>({
   });
 
   return (
-    <div className="tier-list-creator">
+    <div className="tier-list-creator" onClick={() => setSelectedIds(new Set())}>
       <TierModifyForm add tier={newTier} onTierUpdate={(id, tier) => {
         updateTier(id, tier);
         setNewTier(generateBlankTier(tiers)());
       }} submitText='Add tier' />
 
-      <input ref={searchRef} type="search" placeholder={`Search for a ${model.toLowerCase()}...`}
-        value={search} onChange={e => setSearch(e.target.value)}
-      />
+      <div className="input-group">
+        <input ref={searchRef} type="search" placeholder={`Search for a ${model.toLowerCase()}...`}
+          value={search} onChange={e => setSearch(e.target.value)}
+        />
+        {filterChecks && (
+          <Filter
+            filterChecks={filterChecks}
+            placeholder={filterPlaceholder}
+            filters={filters}
+            setFilters={setFilters}
+            onChange={() => {}}
+          />
+        )}
+      </div>
+      <FilterTags filters={filters} setFilters={setFilters} />
       <DndContext
         sensors={sensors}
         collisionDetection={collisionDetection}
@@ -329,7 +392,9 @@ export default function Tierlist<T, TStorageData extends object>({
               onSendToTier,
               tiers,
               setTiers,
-              unsorted
+              unsorted,
+              selectedIds,
+              onEntrySelect: (entry: Entry<T>, index: number, event: React.MouseEvent) => onEntrySelect(tier, entry, index, event)
             }}
             renderCustomEntryContextMenuItems={props.renderCustomEntryContextMenuItems
               ? (entry, item) => props.renderCustomEntryContextMenuItems!(entry as Entry<T>, tier, item)
@@ -337,7 +402,16 @@ export default function Tierlist<T, TStorageData extends object>({
           />
         ))}
         <DragOverlay>
-          {activeEntry ? (
+          {activeEntry && draggedGroupEntries ? (
+            <div className="tier__item-stack">
+              {draggedGroupEntries.slice(0, 3).map((entry, index) => (
+                <div key={entry.id} className="tier__item tier__item-stack__card" style={{ '--stack-index': index } as React.CSSProperties}>
+                  {render(entry.item, -1)}
+                </div>
+              ))}
+              <span className="tier__item-stack__badge">{draggedGroupEntries.length}</span>
+            </div>
+          ) : activeEntry ? (
             <div className="tier__item">
               {render(activeEntry.item, -1)}
             </div>

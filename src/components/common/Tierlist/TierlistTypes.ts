@@ -3,6 +3,7 @@ import { LocalStorageReturn } from "@/hooks/useLocalStorage";
 import { CreateMenuItem } from "@/providers/ContextMenuProvider/ContextMenuConstants";
 import { MenuItem } from "@/providers/ContextMenuProvider/ContextMenuTypes";
 import { Autocomplete } from "@/common/types";
+import { FilterObject } from "@/components/common/FormItems/Filter/Filter";
 
 export interface Entry<TItem> {
   id: string;
@@ -18,11 +19,14 @@ export interface Tier<TItem> {
   entries: Entry<TItem>[];
 }
 
-type BaseTierlistProps<TItem, TStorageData> = {
+type BaseTierlistProps<TItem, TStorageData, FilterKeys extends string> = {
   model: string;
   items: Array<TItem>;
   onSearch: (search: string, item: TItem) => boolean;
-  
+
+  filterChecks?: FilterObject<FilterKeys, TItem>;
+  filterPlaceholder?: string;
+
   defaultTiers?: Array<Tier<TItem>>;
   onTierChange?: (tiers: Array<Tier<TItem>>) => void;
   onEntryChange?: (tier: Tier<TItem>, entries: Array<Entry<TItem>>) => void;
@@ -43,4 +47,4 @@ type TierlistRenderProps<T> = {
   children: RenderItem<T>;
 };
 
-export type TierlistProps<TItem, TStorageData> = BaseTierlistProps<TItem, TStorageData> & TierlistRenderProps<TItem>;
+export type TierlistProps<TItem, TStorageData, FilterKeys extends string = string> = BaseTierlistProps<TItem, TStorageData, FilterKeys> & TierlistRenderProps<TItem>;

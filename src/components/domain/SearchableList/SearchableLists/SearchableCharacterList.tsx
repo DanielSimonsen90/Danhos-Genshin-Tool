@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Character } from "@/common/models";
 import { CharacterCard, CharacterPopover } from "@/components/domain/models/Character";
 import { Props as CharacterCardProps } from "@/components/domain/models/Character/CharacterCard/CharacterCard";
-import { Rarity } from "@/common/types";
 
 import { useDataStore, useFavorite } from "@/stores";
 import { useContextMenu } from "@/providers/ContextMenuProvider";
@@ -12,7 +11,7 @@ import { useContextMenu } from "@/providers/ContextMenuProvider";
 import { OptionalProps, UncrontrolledProps } from "@/components/domain/SearchableList/Props";
 import SearchableList from "@/components/domain/SearchableList/SearchableList";
 import { FavoriteStar } from "@/components/common/media/icons/Star";
-import { Regions } from "@/data/regions";
+import { getCharacterFilterChecks, getCharacterSortChecks } from "./filters/character.filter";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<Character, TFilterKeys>>
@@ -33,7 +32,7 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
   const [hidden, setHidden] = useState(new Array<Character>());
   const FavoriteStore = useFavorite('characters');
   const DataStore = useDataStore();
-  
+
   const [internalCardProps, setInteralCardProps] = useState<Pick<Props<TFilterKeys>, 'cardProps'>['cardProps']>({});
 
   return <SearchableList items={DataStore.Characters}
@@ -75,104 +74,10 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
       setInteralCardProps(props => ({ ...props, ...updatedInternalFilter }));
     }}
     filterChecks={noBaseFilterChecks ? filterChecks : {
-      element: {
-        anemo: character => character.element === "Anemo",
-        cryo: character => character.element === "Cryo",
-        dendro: character => character.element === "Dendro",
-        electro: character => character.element === "Electro",
-        geo: character => character.element === "Geo",
-        hydro: character => character.element === "Hydro",
-        pyro: character => character.element === "Pyro",
-      },
-      weapon: {
-        sword: character => character.weapon === "Sword",
-        claymore: character => character.weapon === "Claymore",
-        polearm: character => character.weapon === "Polearm",
-        bow: character => character.weapon === "Bow",
-        catalyst: character => character.weapon === "Catalyst",
-      },
-      rarity: {
-        '5 star': character => character.rarity === Rarity.Legendary,
-        '4 star': character => character.rarity === Rarity.Epic,
-        // '3 star': character => character.rarity === Rarity.Rare,
-        // '2 star': character => character.rarity === Rarity.Uncommon,
-        // '1 star': character => character.rarity === Rarity.Common,
-      },
-      needs: {
-        hp: character => character.playstyle?.needsStat('HP'),
-        atk: character => character.playstyle?.needsStat('ATK'),
-        def: character => character.playstyle?.needsStat('DEF'),
-        energyRecharge: character => character.playstyle?.needsStat('Energy Recharge'),
-        elementalMastery: character => character.playstyle?.needsStat('Elemental Mastery'),
-      },
-      onField: character => character.playstyle?.onField,
-      bonusAbility: {
-        none: character => character.bonusAbilities.length === 0,
-
-        bondOfLife: character => character.bonusAbilities.includes('Bond of Life'),
-        buffAttack: character => character.bonusAbilities.some(ability => ability.startsWith('Buff ATK: ')),
-        buffAttackSpeed: character => character.bonusAbilities.some(ability => ability.startsWith('Buff ATK Speed: ')),
-        critIncrease: character => character.bonusAbilities.some(ability => ability.startsWith('CRIT Increase: ')),
-        elementalBased: character => character.bonusAbilities.some(ability => ability.startsWith('Elemental Based: ')),
-        elementalInfusion: character => character.bonusAbilities.some(ability => ability.startsWith('Elemental Infusion: ')),
-        grouping: character => character.bonusAbilities.includes('Grouping'),
-        heal: character => character.bonusAbilities.includes('Heal'),
-        hexerei: character => character.bonusAbilities.some(ability => ability.startsWith('Hexerei Able: ')),
-        lunarReaction: character => character.bonusAbilities.some(ability => ability.match(/Enables Lunar(-\w+)? Reaction/)),
-        nightsoulsBlessing: character => character.bonusAbilities.includes('Nightsouls Blessing'),
-        offFieldDamage: character => character.bonusAbilities.includes('Off-field Damage'),
-        ousia: character => character.bonusAbilities.includes('Ousia'),
-        pneuma: character => character.bonusAbilities.includes('Pneuma'),
-        selfHeal: character => character.bonusAbilities.includes('Self-heal'),
-        serpentSubtlety: character => character.bonusAbilities.includes(`Serpent's Subtlety`),
-        shield: character => character.bonusAbilities.includes('Shield'),
-        stellarReaction: character => character.bonusAbilities.some(ability => ability.match(/Enables Stellar(-\w+)? Reaction/)),
-      },
-      passiveTalents: {
-        doubleProduct: character => character.passiveTalent?.toLowerCase().includes('double product'),
-        expeditionMoreRewards: character => character.passiveTalent?.toLowerCase().includes('more rewards'),
-        expeditionTimeReduction: character => character.passiveTalent?.toLowerCase().includes('time consumption reduction'),
-        increaseSpeed: character => (
-          character.passiveTalent?.toLowerCase().includes('increase')
-          && character.passiveTalent?.toLowerCase().includes('speed')
-        ),
-        localSpecialty: character => character.passiveTalent?.toLowerCase().includes('local specialties'),
-        moraCostReductionOnWeapon: character => (
-          character.passiveTalent?.toLowerCase().includes('mora cost reduction')
-          && character.passiveTalent?.toLowerCase().includes('weapon')
-        ),
-        refundMaterials: character => character.passiveTalent?.toLowerCase().includes('refund materials'),
-        refundOre: character => character.passiveTalent?.toLowerCase().includes('refunding ore'),
-        transportationConsumptionReduction: character => (
-          character.passiveTalent?.toLowerCase().includes('consumption reduction')
-          && !character.passiveTalent?.toLowerCase().includes('time')
-        ),
-      },
-      hasSignatureWeapon: character => !!DataStore.getSignatureWeaponFor(character.name),
-      region: {
-        mondstadt: character => character.region === "Mondstadt",
-        liyue: character => character.region === "Liyue",
-        inazuma: character => character.region === "Inazuma",
-        sumeru: character => character.region === "Sumeru",
-        fontaine: character => character.region === "Fontaine",
-        natlan: character => character.region === "Natlan",
-        nodKrai: character => character.region === "Nod-Krai",
-        snezhnaya: character => character.region === "Snezhnaya",
-        unknown: character => character.region === "Unknown",
-      },
+      ...getCharacterFilterChecks(DataStore),
       ...filterChecks
     }}
-    sortChecks={{
-      element: (a, b) => a.element.localeCompare(b.element),
-      name: (a, b) => a.name.localeCompare(b.name),
-      rarity: (a, b) => b.rarity - a.rarity,
-      region: (a, b) => {
-        const regionAIndex = Regions.findIndex(region => region === a.region);
-        const regionBIndex = Regions.findIndex(region => region === b.region);
-        return regionAIndex - regionBIndex;
-      },
-      weapon: (a, b) => a.weapon.localeCompare(b.weapon),
-    }}
+    sortChecks={getCharacterSortChecks()}
     {...props}
   />;
 }

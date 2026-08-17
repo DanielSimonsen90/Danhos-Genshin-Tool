@@ -3,6 +3,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
 import { useContextMenu } from "@/providers/ContextMenuProvider";
+import { classNames } from "@/common/functions/strings";
 
 import { Entry, RenderItem, Tier } from "../TierlistTypes";
 import { CreateMenuItem } from "@/providers/ContextMenuProvider/ContextMenuConstants";
@@ -18,11 +19,14 @@ type Props<T> = {
   onSendToTier: (entry: Entry<T>, tier: Tier<T>) => void;
   render: RenderItem<T>;
   renderContextMenuItems?: (item: typeof CreateMenuItem) => Array<MenuItem>;
+  selected: boolean;
+  onSelect: (event: React.MouseEvent) => void;
 };
 
 export default function Entry<T>({
   entry, index, unsorted, tiers,
   onMoveToIndex, onSendToTier,
+  selected, onSelect,
   render, renderContextMenuItems
 }: Props<T>) {
   const tier = useMemo(() => tiers.find(tier => tier.entries.some(item => item.id === entry.id))!, [entry.id, tiers]);
@@ -78,7 +82,8 @@ export default function Entry<T>({
       }}
       {...attributes}
       {...listeners}
-      className="tier__item"
+      className={classNames('tier__item', selected && 'tier__item--selected')}
+      onClick={onSelect}
       onDoubleClick={() => onSendToTier(entry, unsorted)}
       onContextMenu={onContextMenu}
     >
