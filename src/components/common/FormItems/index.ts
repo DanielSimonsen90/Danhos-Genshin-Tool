@@ -1,4 +1,4 @@
-export { default as Filter } from './Filter';
+export { default as Filter, FilterTags } from './Filter';
 export { default as FilterSwitch } from './FilterSwitch';
 export { default as Select } from './Select';
 export { default as Sort } from './Sort';

@@ -13,6 +13,7 @@ import useOnChange from '@/hooks/useOnChange';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { matchesFilters } from '@/components/domain/SearchableList/SearchableListFunctions';
 import Filter, { FilterObject } from '@/components/common/FormItems/Filter/Filter';
+import FilterTags from '@/components/common/FormItems/Filter/FilterTags';
 
 import { FormTier, Tier as TierComponent, TierModifyForm } from './components';
 import { Entry, Tier, TierlistProps } from './TierlistTypes';
@@ -372,6 +373,7 @@ export default function Tierlist<T, TStorageData extends object, FilterKeys exte
           />
         )}
       </div>
+      <FilterTags filters={filters} setFilters={setFilters} />
       <DndContext
         sensors={sensors}
         collisionDetection={collisionDetection}
