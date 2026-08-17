@@ -25,12 +25,15 @@ export type Props<T> = {
   unsorted: Tier<T>;
   onMoveToIndex: (entry: Entry<T>, index: number) => void;
   onSendToTier: (entry: Entry<T>, tier: Tier<T>) => void;
+  selectedIds: Set<string>;
+  onEntrySelect: (entry: Entry<T>, index: number, event: React.MouseEvent) => void;
 };
 
 export default function Tier<T>({
   tier, updateTier, setTiers,
   render, renderCustomEntryContextMenuItems,
   onMoveToIndex, onSendToTier,
+  selectedIds, onEntrySelect,
   tiers, unsorted
 }: Props<T>) {
   const [showEditModal, setShowEditModal] = useState(false);
@@ -88,6 +91,8 @@ export default function Tier<T>({
               entry, index,
               onMoveToIndex, onSendToTier,
               render, tiers, unsorted,
+              selected: selectedIds.has(entry.id),
+              onSelect: (event: React.MouseEvent) => onEntrySelect(entry, index, event),
               renderContextMenuItems: renderCustomEntryContextMenuItems
                 ? item => renderCustomEntryContextMenuItems?.(entry, item)
                 : undefined
