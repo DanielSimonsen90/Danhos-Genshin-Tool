@@ -1,7 +1,30 @@
 import { generateId } from "@/common/functions/random";
+import { FilterCallback, FilterObject } from "@/components/common/FormItems/Filter/Filter";
 import { Entry, Tier } from "./TierlistTypes";
 
 export const getHslColor = (index: number) => `hsl(${index * 15}, 50%, 50%)`;
+
+// Tierlist items are often plain identifiers (e.g. model names) rather than the full model
+// a filterChecks object was written against, so filter predicates need retargeting to run
+// against a resolved model instead of the identifier itself.
+export function resolveFilterChecks<TSource, TTarget, FilterKeys extends string>(
+  filterChecks: FilterObject<FilterKeys, TSource>,
+  resolve: (target: TTarget) => TSource | undefined
+): FilterObject<FilterKeys, TTarget> {
+  return Object.fromEntries(
+    Object.entries(filterChecks).map(([key, value]) => [
+      key,
+      typeof value === 'function'
+        ? ((target: TTarget) => {
+          const source = resolve(target);
+          return source !== undefined && (value as FilterCallback<TSource>)(source);
+        }) as FilterCallback<TTarget>
+        : value
+          ? resolveFilterChecks(value as FilterObject<string, TSource>, resolve)
+          : value
+    ])
+  ) as FilterObject<FilterKeys, TTarget>;
+}
 
 export function generateBlankTier<T>(items: Array<any>) {
   return (title?: string) => ({

@@ -7,6 +7,8 @@ import isEqual from 'lodash/fp/isEqual';
 import { generateId } from '@/common/functions/random';
 import useOnChange from '@/hooks/useOnChange';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { matchesFilters } from '@/components/domain/SearchableList/SearchableListFunctions';
+import Filter, { FilterObject } from '@/components/common/FormItems/Filter/Filter';
 
 import { FormTier, Tier as TierComponent, TierModifyForm } from './components';
 import { Entry, Tier, TierlistProps } from './TierlistTypes';
@@ -14,11 +16,11 @@ import { getDefaultTiers, generateBlankTier, generateEntry, getDefaultUnsortedTi
 import { useStateReset } from '@/hooks/useStateReset';
 import useKeybind from '@/hooks/useKeybind';
 
-export default function Tierlist<T, TStorageData extends object>({
+export default function Tierlist<T, TStorageData extends object, FilterKeys extends string = string>({
   model, items,
-  onSearch, onTierChange, onEntryChange,
+  onSearch, filterChecks, filterPlaceholder, onTierChange, onEntryChange,
   ...props
-}: TierlistProps<T, TStorageData>) {
+}: TierlistProps<T, TStorageData, FilterKeys>) {
   const storageKey = 'storageKey' in props ? props.storageKey ?? '' : 'storage' in props ? props.storage?.key ?? '' : '';
   const onStorageLoaded = 'onStorageLoaded' in props ? props.onStorageLoaded : undefined;
   const onStorageSave = 'onStorageSave' in props ? props.onStorageSave : undefined;
@@ -59,6 +61,7 @@ export default function Tierlist<T, TStorageData extends object>({
   }), onStorageLoaded ? [] : tiers);
   const [newTier, setNewTier] = useState<FormTier<T>>(generateBlankTier(tiers));
   const [search, setSearch] = useState('');
+  const [filters, setFilters] = useState<FilterObject<FilterKeys, T, boolean | undefined>>({} as any);
   const [activeDragId, setActiveDragId] = useState<string | null>(null);
   const [dragEndCount, setDragEndCount] = useState(0);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
@@ -86,10 +89,10 @@ export default function Tierlist<T, TStorageData extends object>({
   const orderedTiers = useMemo(() => tiers
     .map(tier => ({
       ...tier,
-      entries: tier.entries.filter(entry => onSearch(search, entry.item))
+      entries: tier.entries.filter(entry => onSearch(search, entry.item) && matchesFilters(entry.item, filters, filterChecks))
     }))
     .sort((a, b) => a.position - b.position),
-  [tiers, search, onSearch]);
+  [tiers, search, filters, filterChecks, onSearch]);
   const render = useMemo(() => (
     'renderItem' in props ? props.renderItem
       : 'children' in props ? props.children
@@ -346,9 +349,16 @@ export default function Tierlist<T, TStorageData extends object>({
         setNewTier(generateBlankTier(tiers)());
       }} submitText='Add tier' />
 
-      <input ref={searchRef} type="search" placeholder={`Search for a ${model.toLowerCase()}...`}
-        value={search} onChange={e => setSearch(e.target.value)}
-      />
+      <div className="input-group">
+        <input ref={searchRef} type="search" placeholder={`Search for a ${model.toLowerCase()}...`}
+          value={search} onChange={e => setSearch(e.target.value)}
+        />
+        {filterChecks && (
+          <Filter filterChecks={filterChecks} placeholder={filterPlaceholder}
+            filters={filters} setFilters={setFilters} onChange={() => {}}
+          />
+        )}
+      </div>
       <DndContext
         sensors={sensors}
         collisionDetection={collisionDetection}

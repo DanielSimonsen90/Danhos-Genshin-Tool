@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Rarity } from "@/common/types";
-
 import { Props as MaterialCardProps } from "@/components/domain/models/Material/MaterialCard/MaterialCard";
 import MaterialCard from "@/components/domain/models/Material/MaterialCard";
 import { MaterialPopover } from "@/components/domain/models/Material";
@@ -14,12 +12,7 @@ import SearchableList from "@/components/domain/SearchableList/SearchableList";
 import { useFavorite, useDataStore, useAccountStore } from "@/stores";
 import { FavoriteStar } from "@/components/common/media/icons/Star";
 import Material from "@/common/models/materials/Material";
-import CraftableMaterial from "@/common/models/materials/CraftableMaterial";
-import AscensionMaterial, { TalentAscensionMaterial, WeaponAscensionMaterial } from "@/common/models/materials/AscensionMaterial";
-import LocalSpecialty from "@/common/models/materials/LocalSpecialty";
-import MobDrop, { ElementalCrystal } from "@/common/models/materials/MobDrop";
-import { EasyMob, EliteMob, WeeklyBoss, WorldBoss } from "@/common/models";
-import { Regions } from "@/data/regions";
+import { getMaterialFilterChecks, materialSortChecks } from "./filters/material.filter";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<Material, TFilterKeys>>
@@ -35,16 +28,14 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
   noBaseFilterChecks, noBaseSearch, cardProps,
   ...props
 }: Props<TFilterKeys>) {
-  const { worldRegion, isObtainableToday } = useAccountStore(store => ({
-    worldRegion: store.selectedAccount.worldRegion,
-    isObtainableToday: (material: Material) => AscensionMaterial.isAscensionMaterial(material) ? material.isObtainableToday(store) : undefined
-  }));
+  const worldRegion = useAccountStore(store => store.selectedAccount.worldRegion);
+  const AccountStore = useAccountStore(store => store);
   const DataStore = useDataStore();
   const FavoriteStore = useFavorite('materials');
 
   const { query, filters } = useParams();
   const navigate = useNavigate();
-  
+
   const [hidden, setHidden] = useState(new Array<Material>());
 
   return <SearchableList items={items ?? []}
@@ -56,8 +47,8 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
         item('option', 'View', () => navigate(`/materials/${material.name}`), '👁️'),
         item('option', FavoriteStore.isFavorite(material) ? 'Unfavorite' : 'Favorite', () => FavoriteStore.isFavorite(material) ? FavoriteStore.remove(material) : FavoriteStore.add(material), '⭐'),
         item('option', 'Hide', () => setHidden([...hidden, material]), '🙈'),
-      ]);      
-      
+      ]);
+
       return hidden.includes(material) ? null : (
         <MaterialPopover materialName={material.name} showDelay={500}>
           <div className="context-menu-item-container" onContextMenu={open}>
@@ -75,49 +66,10 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
     }}
     onSearch={noBaseSearch ? onSearch ?? (() => true) : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}
     filterChecks={noBaseFilterChecks ? filterChecks : {
-      type: {
-        crystal: ElementalCrystal.isElementalCrystal,
-        localSpecialty: LocalSpecialty.isLocalSpecialty,
-        mobDrop: MobDrop.isMobDrop,
-        talentAscension: TalentAscensionMaterial.isTalentAscensionMaterial,
-        weaponAscension: WeaponAscensionMaterial.isWeaponAscensionMaterial,
-      },
-      obtainableThrough: {
-        domains: material => DataStore.getDomainsFromMaterial(material.name).length > 0,
-        easyMobs: material => material instanceof MobDrop && DataStore.getMobsDroppingMaterial(material.name).filter(EasyMob.isEasyMob).length > 0,
-        eliteMobs: material => material instanceof MobDrop && DataStore.getMobsDroppingMaterial(material.name).filter(EliteMob.isEliteMob).length > 0,
-        worldBosses: material => material instanceof MobDrop && DataStore.getBossesFromMaterial(material.name).filter(WorldBoss.isWorldBoss).length > 0,
-        weeklyBosses: material => material instanceof MobDrop && DataStore.getBossesFromMaterial(material.name).filter(WeeklyBoss.isWeeklyBoss).length > 0,
-        crafting: CraftableMaterial.isCraftableMaterial,
-      },
-      obtainableToday: isObtainableToday,
-      rarity: {
-        legendary: material => material.rarity === Rarity.Legendary,
-        epic: material => material.rarity === Rarity.Epic,
-        rare: material => material.rarity === Rarity.Rare,
-        uncommon: material => material.rarity === Rarity.Uncommon,
-        common: material => material.rarity === Rarity.Common,
-      },
-      region: {
-        mondstadt: material => material.region === 'Mondstadt',
-        liyue: material => material.region === 'Liyue',
-        inazuma: material => material.region === 'Inazuma',
-        sumeru: material => material.region === 'Sumeru',
-        fontaine: material => material.region === 'Fontaine',
-        natlan: material => material.region === 'Natlan',
-        snezhnaya: material => material.region === 'Snezhnaya',
-      },
+      ...getMaterialFilterChecks(DataStore, AccountStore),
       ...filterChecks
     }}
-    sortChecks={{
-      name: (a, b) => a.name.localeCompare(b.name),
-      rarity: (a, b) => a.rarity - b.rarity,
-      region: (a, b) => {
-        const regionAIndex = Regions.findIndex(region => region === a.region);
-        const regionBIndex = Regions.findIndex(region => region === b.region);
-        return regionAIndex - regionBIndex;
-      }
-    }}
+    sortChecks={materialSortChecks}
     {...props}
   />;
 }

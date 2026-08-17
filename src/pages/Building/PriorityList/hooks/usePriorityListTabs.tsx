@@ -4,9 +4,15 @@ import { useConfirm } from "@/providers/ConfirmProvider";
 
 import { CharacterImage, ArtifactImage, DomainImage, MaterialImage, MobImage, WeaponImage } from "@/components/common/media/Images";
 import { Star, FavoriteStar } from "@/components/common/media/icons";
-import Tierlist, { Entry, Tier } from "@/components/common/Tierlist";
+import Tierlist, { Entry, Tier, resolveFilterChecks } from "@/components/common/Tierlist";
+import { getCharacterFilterChecks } from "@/components/domain/SearchableList/SearchableLists/filters/character.filter";
+import { getArtifactFilterChecks } from "@/components/domain/SearchableList/SearchableLists/filters/artifact.filter";
+import { domainFilterChecks } from "@/components/domain/SearchableList/SearchableLists/filters/domain.filter";
+import { getMaterialFilterChecks } from "@/components/domain/SearchableList/SearchableLists/filters/material.filter";
+import { mobFilterChecks } from "@/components/domain/SearchableList/SearchableLists/filters/mob.filter";
+import { weaponFilterChecks } from "@/components/domain/SearchableList/SearchableLists/filters/weapon.filter";
 
-import { FavoriteModels, useDataStore, useFavorites, useAccountData } from "@/stores";
+import { FavoriteModels, useDataStore, useAccountStore, useFavorites, useAccountData } from "@/stores";
 
 import type { PriorityLists, PriorityList } from "../PriorityListTypes";
 import { getDefaultPriorityLists, onUnsortedSearch } from "../PriorityListFunctions";
@@ -27,6 +33,7 @@ type UsePriorityListTabsProps = {
 export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdateModal }: UsePriorityListTabsProps) {
   const confirm = useConfirm();
   const DataStore = useDataStore();
+  const AccountStore = useAccountStore(store => store);
   const FavoriteStore = useFavorites();
   const { id: accountId } = useAccountData();
   const navigate = useNavigate();
@@ -97,6 +104,16 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
 
       const isFavorite = (modelName: string) => FavoriteStore.getFavorite(favoriteModelKey).isFavorite(modelName);
       const findModel = (modelName: string) => DataStore[`find${modelType}ByName`](modelName);
+      const filterChecks = (() => {
+        switch (modelType) {
+          case 'Character': return resolveFilterChecks(getCharacterFilterChecks(DataStore), DataStore.findCharacterByName);
+          case 'Artifact': return resolveFilterChecks(getArtifactFilterChecks(DataStore), DataStore.findArtifactByName);
+          case 'Domain': return resolveFilterChecks(domainFilterChecks, DataStore.findDomainByName);
+          case 'Material': return resolveFilterChecks(getMaterialFilterChecks(DataStore, AccountStore), DataStore.findMaterialByName);
+          case 'Mob': return resolveFilterChecks(mobFilterChecks, DataStore.findMobByName);
+          case 'Weapon': return resolveFilterChecks(weaponFilterChecks, DataStore.findWeaponByName);
+        }
+      })();
 
       return [
         tierlistTitle,
@@ -112,6 +129,7 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
               model: modelType,
               items: items,
               onSearch: onUnsortedSearch,
+              filterChecks,
               defaultTiers: priorityList.tiers,
               onTierChange: onTierChange(tierlistTitle),
               renderCustomEntryContextMenuItems: (entry: Entry<string>, tier, item) => [

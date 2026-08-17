@@ -11,7 +11,7 @@ import { useFavorite } from "@/stores";
 import SearchableList from "@/components/domain/SearchableList/SearchableList";
 import { OptionalProps, UncrontrolledProps } from "@/components/domain/SearchableList/Props";
 import { FavoriteStar } from "@/components/common/media/icons/Star";
-import { Regions } from "@/data/regions";
+import { domainFilterChecks, domainSortChecks } from "./filters/domain.filter";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<Domain, TFilterKeys>>
@@ -40,8 +40,8 @@ export default function SearchableDomainList<TFilterKeys extends string>({
         item('option', 'View', () => navigate(`/domains/${domain.name}`), '👁️'),
         item('option', FavoriteStore.isFavorite(domain) ? 'Unfavorite' : 'Favorite', () => FavoriteStore.isFavorite(domain) ? FavoriteStore.remove(domain) : FavoriteStore.add(domain), '⭐'),
         item('option', 'Hide', () => setHidden([...hidden, domain]), '🙈'),
-      ]);      
-      
+      ]);
+
       return hidden.includes(domain) ? null : (
         <DomainPopover domainName={domain.name} showDelay={500}>
           <div className="context-menu-item-container" onContextMenu={open}>
@@ -59,31 +59,10 @@ export default function SearchableDomainList<TFilterKeys extends string>({
     }}
     onSearch={noBaseSearch ? onSearch ?? (() => true) : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}
     filterChecks={noBaseFilterChecks ? filterChecks : {
-      type: {
-        artifacts: domain => domain.getDomainType() === 'Blessing',
-        talents: domain => domain.getDomainType() === 'Mastery',
-        weapons: domain => domain.getDomainType() === 'Forgery',
-      },
-      region: {
-        mondstadt: domain => domain.region === "Mondstadt",
-        liyue: domain => domain.region === "Liyue",
-        inazuma: domain => domain.region === "Inazuma",
-        sumeru: domain => domain.region === "Sumeru",
-        fontaine: domain => domain.region === "Fontaine",
-        natlan: domain => domain.region === "Natlan",
-        snezhnaya: domain => domain.region === "Snezhnaya",
-      },
+      ...domainFilterChecks,
       ...filterChecks
     }}
-    sortChecks={{
-      name: (a, b) => a.name.localeCompare(b.name),
-      region: (a, b) => {
-        const regionAIndex = Regions.findIndex(region => region === a.region);
-        const regionBIndex = Regions.findIndex(region => region === b.region);
-        return regionAIndex - regionBIndex;
-      }
-      // resinCost: (a, b) => a.resinCost - b.resinCost,
-    }}
+    sortChecks={domainSortChecks}
     {...props}
   />;
 }
