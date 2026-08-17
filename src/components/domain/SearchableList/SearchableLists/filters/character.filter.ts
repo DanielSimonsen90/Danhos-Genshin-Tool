@@ -100,14 +100,16 @@ export function getCharacterFilterChecks(DataStore: DataStoreType): FilterObject
   };
 }
 
-export const characterSortChecks: SortObject<Character> = {
-  element: (a, b) => a.element.localeCompare(b.element),
-  name: (a, b) => a.name.localeCompare(b.name),
-  rarity: (a, b) => b.rarity - a.rarity,
-  region: (a, b) => {
-    const regionAIndex = Regions.findIndex(region => region === a.region);
-    const regionBIndex = Regions.findIndex(region => region === b.region);
-    return regionAIndex - regionBIndex;
-  },
-  weapon: (a, b) => a.weapon.localeCompare(b.weapon),
+export function getCharacterSortChecks(): SortObject<Character> {
+  return {
+    element: (a, b) => a.element.localeCompare(b.element),
+    name: (a, b) => a.name.localeCompare(b.name),
+    rarity: (a, b) => b.rarity - a.rarity,
+    region: (a, b) => {
+      const regionAIndex = Regions.findIndex(region => region === a.region);
+      const regionBIndex = Regions.findIndex(region => region === b.region);
+      return regionAIndex - regionBIndex;
+    },
+    weapon: (a, b) => a.weapon.localeCompare(b.weapon),
+  };
 };

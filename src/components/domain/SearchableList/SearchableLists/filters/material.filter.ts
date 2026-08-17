@@ -49,12 +49,14 @@ export function getMaterialFilterChecks(DataStore: DataStoreType, AccountStore: 
   };
 }
 
-export const materialSortChecks: SortObject<Material> = {
-  name: (a, b) => a.name.localeCompare(b.name),
-  rarity: (a, b) => a.rarity - b.rarity,
-  region: (a, b) => {
-    const regionAIndex = Regions.findIndex(region => region === a.region);
-    const regionBIndex = Regions.findIndex(region => region === b.region);
-    return regionAIndex - regionBIndex;
-  },
-};
+export function getMaterialSortChecks(): SortObject<Material> {
+  return {
+    name: (a, b) => a.name.localeCompare(b.name),
+    rarity: (a, b) => a.rarity - b.rarity,
+    region: (a, b) => {
+      const regionAIndex = Regions.findIndex(region => region === a.region);
+      const regionBIndex = Regions.findIndex(region => region === b.region);
+      return regionAIndex - regionBIndex;
+    },
+  };
+}

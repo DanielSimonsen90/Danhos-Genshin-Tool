@@ -1,5 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { DndContext, DragEndEvent, DragOverEvent, DragOverlay, DragStartEvent, KeyboardSensor, PointerSensor, closestCenter, pointerWithin, useSensor, useSensors } from '@dnd-kit/core';
+import { 
+  DndContext, DragEndEvent, DragOverEvent, DragOverlay,
+  DragStartEvent, KeyboardSensor, PointerSensor,
+  closestCenter, pointerWithin, useSensor, useSensors
+} from '@dnd-kit/core';
 import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 // @ts-ignore
 import isEqual from 'lodash/fp/isEqual';
@@ -12,7 +16,10 @@ import Filter, { FilterObject } from '@/components/common/FormItems/Filter/Filte
 
 import { FormTier, Tier as TierComponent, TierModifyForm } from './components';
 import { Entry, Tier, TierlistProps } from './TierlistTypes';
-import { getDefaultTiers, generateBlankTier, generateEntry, getDefaultUnsortedTier, moveSelectedEntries } from './TierlistFunctions';
+import {
+  getDefaultTiers, generateBlankTier, generateEntry, 
+  getDefaultUnsortedTier, moveSelectedEntries
+} from './TierlistFunctions';
 import { useStateReset } from '@/hooks/useStateReset';
 import useKeybind from '@/hooks/useKeybind';
 
@@ -24,6 +31,7 @@ export default function Tierlist<T, TStorageData extends object, FilterKeys exte
   const storageKey = 'storageKey' in props ? props.storageKey ?? '' : 'storage' in props ? props.storage?.key ?? '' : '';
   const onStorageLoaded = 'onStorageLoaded' in props ? props.onStorageLoaded : undefined;
   const onStorageSave = 'onStorageSave' in props ? props.onStorageSave : undefined;
+
   const [tiers, setTiers, resetTiers] = useStateReset(() => {
     if (!props.defaultTiers) return getDefaultTiers(items);
     const itemsNotIncluded = items.filter(item => !props.defaultTiers?.some(tier => tier.entries.some(entry => {
@@ -59,12 +67,14 @@ export default function Tierlist<T, TStorageData extends object, FilterKeys exte
         : tier
     ) : undefined).filter(Boolean) as Array<Tier<T>>;
   }), onStorageLoaded ? [] : tiers);
+
   const [newTier, setNewTier] = useState<FormTier<T>>(generateBlankTier(tiers));
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState<FilterObject<FilterKeys, T, boolean | undefined>>({} as any);
   const [activeDragId, setActiveDragId] = useState<string | null>(null);
   const [dragEndCount, setDragEndCount] = useState(0);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  
   const isDraggingRef = useRef(false);
   const tiersSnapshotRef = useRef<Tier<T>[] | null>(null);
   const tiersRef = useRef(tiers);
@@ -128,7 +138,6 @@ export default function Tierlist<T, TStorageData extends object, FilterKeys exte
   // Save after drag ends. Needed because useOnChange is gated during drag,
   // so if onDragOver already placed the item and onDragEnd is a no-op, no
   // state change occurs and useOnChange never fires.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (dragEndCount === 0) return;
     const currentTiers = tiersRef.current;
@@ -354,8 +363,12 @@ export default function Tierlist<T, TStorageData extends object, FilterKeys exte
           value={search} onChange={e => setSearch(e.target.value)}
         />
         {filterChecks && (
-          <Filter filterChecks={filterChecks} placeholder={filterPlaceholder}
-            filters={filters} setFilters={setFilters} onChange={() => {}}
+          <Filter
+            filterChecks={filterChecks}
+            placeholder={filterPlaceholder}
+            filters={filters}
+            setFilters={setFilters}
+            onChange={() => {}}
           />
         )}
       </div>

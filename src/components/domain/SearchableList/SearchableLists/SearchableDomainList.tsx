@@ -11,7 +11,7 @@ import { useFavorite } from "@/stores";
 import SearchableList from "@/components/domain/SearchableList/SearchableList";
 import { OptionalProps, UncrontrolledProps } from "@/components/domain/SearchableList/Props";
 import { FavoriteStar } from "@/components/common/media/icons/Star";
-import { domainFilterChecks, domainSortChecks } from "./filters/domain.filter";
+import { getDomainFilterChecks, getDomainSortChecks } from "./filters/domain.filter";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<Domain, TFilterKeys>>
@@ -59,10 +59,10 @@ export default function SearchableDomainList<TFilterKeys extends string>({
     }}
     onSearch={noBaseSearch ? onSearch ?? (() => true) : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}
     filterChecks={noBaseFilterChecks ? filterChecks : {
-      ...domainFilterChecks,
+      ...getDomainFilterChecks(),
       ...filterChecks
     }}
-    sortChecks={domainSortChecks}
+    sortChecks={getDomainSortChecks()}
     {...props}
   />;
 }

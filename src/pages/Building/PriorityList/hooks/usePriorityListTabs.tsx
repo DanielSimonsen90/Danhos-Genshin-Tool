@@ -5,12 +5,14 @@ import { useConfirm } from "@/providers/ConfirmProvider";
 import { CharacterImage, ArtifactImage, DomainImage, MaterialImage, MobImage, WeaponImage } from "@/components/common/media/Images";
 import { Star, FavoriteStar } from "@/components/common/media/icons";
 import Tierlist, { Entry, Tier, resolveFilterChecks } from "@/components/common/Tierlist";
-import { getCharacterFilterChecks } from "@/components/domain/SearchableList/SearchableLists/filters/character.filter";
-import { getArtifactFilterChecks } from "@/components/domain/SearchableList/SearchableLists/filters/artifact.filter";
-import { domainFilterChecks } from "@/components/domain/SearchableList/SearchableLists/filters/domain.filter";
-import { getMaterialFilterChecks } from "@/components/domain/SearchableList/SearchableLists/filters/material.filter";
-import { mobFilterChecks } from "@/components/domain/SearchableList/SearchableLists/filters/mob.filter";
-import { weaponFilterChecks } from "@/components/domain/SearchableList/SearchableLists/filters/weapon.filter";
+import { 
+  getArtifactFilterChecks,
+  getCharacterFilterChecks,
+  getDomainFilterChecks,
+  getMaterialFilterChecks,
+  getMobFilterChecks,
+  getWeaponFilterChecks,
+} from "@/components/domain/SearchableList/SearchableLists/filters";
 
 import { FavoriteModels, useDataStore, useAccountStore, useFavorites, useAccountData } from "@/stores";
 
@@ -23,6 +25,7 @@ import { DomainPopover } from "@/components/domain/models/Domain";
 import { MaterialPopover } from "@/components/domain/models/Material";
 import { MobPopover } from "@/components/domain/models/Mob";
 import { WeaponPopover } from "@/components/domain/models/Weapon";
+import { FilterObject } from "@/components/common/FormItems/Filter/Filter";
 
 type UsePriorityListTabsProps = {
   priorityLists: PriorityLists;
@@ -104,14 +107,14 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
 
       const isFavorite = (modelName: string) => FavoriteStore.getFavorite(favoriteModelKey).isFavorite(modelName);
       const findModel = (modelName: string) => DataStore[`find${modelType}ByName`](modelName);
-      const filterChecks = (() => {
+      const filterChecks: FilterObject<any, any> = (() => {
         switch (modelType) {
           case 'Character': return resolveFilterChecks(getCharacterFilterChecks(DataStore), DataStore.findCharacterByName);
           case 'Artifact': return resolveFilterChecks(getArtifactFilterChecks(DataStore), DataStore.findArtifactByName);
-          case 'Domain': return resolveFilterChecks(domainFilterChecks, DataStore.findDomainByName);
+          case 'Domain': return resolveFilterChecks(getDomainFilterChecks(), DataStore.findDomainByName);
           case 'Material': return resolveFilterChecks(getMaterialFilterChecks(DataStore, AccountStore), DataStore.findMaterialByName);
-          case 'Mob': return resolveFilterChecks(mobFilterChecks, DataStore.findMobByName);
-          case 'Weapon': return resolveFilterChecks(weaponFilterChecks, DataStore.findWeaponByName);
+          case 'Mob': return resolveFilterChecks(getMobFilterChecks(), DataStore.findMobByName);
+          case 'Weapon': return resolveFilterChecks(getWeaponFilterChecks(), DataStore.findWeaponByName);
         }
       })();
 

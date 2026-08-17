@@ -12,7 +12,7 @@ import SearchableList from "@/components/domain/SearchableList/SearchableList";
 import { useFavorite, useDataStore, useAccountStore } from "@/stores";
 import { FavoriteStar } from "@/components/common/media/icons/Star";
 import Material from "@/common/models/materials/Material";
-import { getMaterialFilterChecks, materialSortChecks } from "./filters/material.filter";
+import { getMaterialFilterChecks, getMaterialSortChecks } from "./filters/material.filter";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<Material, TFilterKeys>>
@@ -69,7 +69,7 @@ export default function SearchableMaterialList<TFilterKeys extends string>({
       ...getMaterialFilterChecks(DataStore, AccountStore),
       ...filterChecks
     }}
-    sortChecks={materialSortChecks}
+    sortChecks={getMaterialSortChecks()}
     {...props}
   />;
 }

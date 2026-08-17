@@ -11,7 +11,7 @@ import { useContextMenu } from "@/providers/ContextMenuProvider";
 import { OptionalProps, UncrontrolledProps } from "@/components/domain/SearchableList/Props";
 import SearchableList from "@/components/domain/SearchableList/SearchableList";
 import { FavoriteStar } from "@/components/common/media/icons/Star";
-import { weaponFilterChecks, weaponSortChecks } from "./filters/weapon.filter";
+import { getWeaponFilterChecks, getWeaponSortChecks } from "./filters/weapon.filter";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<Weapon, TFilterKeys>>
@@ -68,10 +68,10 @@ export default function SearchableWeaponList<TFilterKeys extends string>({
       return strings.some(str => str.toLowerCase().includes(query.toLowerCase()));
     })() && (onSearch?.(query, item) ?? true)}
     filterChecks={noBaseFilterChecks ? filterChecks : {
-      ...weaponFilterChecks,
+      ...getWeaponFilterChecks(),
       ...filterChecks
     }}
-    sortChecks={weaponSortChecks}
+    sortChecks={getWeaponSortChecks()}
     {...props}
   />;
 }

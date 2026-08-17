@@ -11,7 +11,7 @@ import { useContextMenu } from "@/providers/ContextMenuProvider";
 import { OptionalProps, UncrontrolledProps } from "@/components/domain/SearchableList/Props";
 import SearchableList from "@/components/domain/SearchableList/SearchableList";
 import { FavoriteStar } from "@/components/common/media/icons/Star";
-import { getCharacterFilterChecks, characterSortChecks } from "./filters/character.filter";
+import { getCharacterFilterChecks, getCharacterSortChecks } from "./filters/character.filter";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<Character, TFilterKeys>>
@@ -77,7 +77,7 @@ export default function SearchableCharacterList<TFilterKeys extends string>({
       ...getCharacterFilterChecks(DataStore),
       ...filterChecks
     }}
-    sortChecks={characterSortChecks}
+    sortChecks={getCharacterSortChecks()}
     {...props}
   />;
 }

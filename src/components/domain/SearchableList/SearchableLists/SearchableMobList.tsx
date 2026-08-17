@@ -11,7 +11,7 @@ import { OptionalProps, UncrontrolledProps } from "@/components/domain/Searchabl
 import SearchableList from "@/components/domain/SearchableList/SearchableList";
 import { useFavorite } from "@/stores";
 import { FavoriteStar } from "@/components/common/media/icons/Star";
-import { mobFilterChecks, mobSortChecks } from "./filters/mob.filter";
+import { getMobFilterChecks, getMobSortChecks } from "./filters/mob.filter";
 
 type Props<TFilterKeys extends string> = (
   & Partial<UncrontrolledProps<Mob, TFilterKeys>>
@@ -59,10 +59,10 @@ export default function SearchableMobList<TFilterKeys extends string>({
     }}
     onSearch={noBaseSearch ? onSearch ?? (() => true) : (query, item) => item.name.toLowerCase().includes(query.toLowerCase()) && (onSearch?.(query, item) ?? true)}
     filterChecks={noBaseFilterChecks ? filterChecks : {
-      ...mobFilterChecks,
+      ...getMobFilterChecks(),
       ...filterChecks
     }}
-    sortChecks={mobSortChecks}
+    sortChecks={getMobSortChecks()}
     {...props}
   />;
 }
