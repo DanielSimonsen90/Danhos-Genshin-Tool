@@ -1738,7 +1738,7 @@ export const Skirk = new Character("Skirk", "Cryo", "Sword", [
   mobDrop: EasyMobDrops.Gear,
 }, 'Elemental Skill is increased by 1 level for all party members, if the team consists of Hydro/Cryo characters and at least 1 of each element.',
   new CharacterPlaystyle("On-field Frozen DPS", ["ATK"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
-    new CharacterArtifactSet(Sets.FinaleOfTheDeepGalleries, 4, 87.1),
+    new CharacterArtifactSet(Sets.FinaleOfDeepGalleries, 4, 87.1),
     new CharacterArtifactSet(Sets.MarechausseeHunter, 4, 7.5),
     new CharacterArtifactSet(Sets.BlizzardStrayer, 4, 1.3),
   ])

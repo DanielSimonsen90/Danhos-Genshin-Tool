@@ -13,14 +13,14 @@ type Props = Omit<ComponentPropsWithoutRef<typeof Image>, 'src' | 'alt' | 'fallb
 export default forwardRef<HTMLImageElement, Props>(function ArtifactImage({ set, piece, className, ...props }, ref) {
   const isPrayersPiece = set.includes('Prayers');
   const name = isPrayersPiece ? 'Circlet' : piece ?? 'Flower';
-  const [src, fallbackSrc] = ImageService.getArtifactImage(set, name);
+  const [src, ...fallbacks] = ImageService.getArtifactImage(set, name);
 
   return <Image
     ref={ref}
     {...props}
     className={classNames("artifact-image", className)}
     src={src}
-    fallbackSrc={fallbackSrc}
+    fallbackSrcs={fallbacks}
     alt={`${pascalCaseFromSnakeCase(set)} ${name}`}
   />;
 });

@@ -1,4 +1,4 @@
-import { snakeCaseFromCamelCase, snakeCaseFromPascalCase } from '@/common/functions/strings';
+import { kebabCaseFromPascalCase, snakeCaseFromCamelCase, snakeCaseFromPascalCase } from '@/common/functions/strings';
 import { ArtifactPartName, Element, TalentType, WeaponType } from '@/common/types';
 import type * as ArtifactSetData from '@/data/artifact-sets';
 import type * as CharacterData from '@/data/characters';
@@ -14,16 +14,28 @@ const PAIMON_MOE_URL = 'https://paimon.moe/images';
 const GITHUB_CONTENT_URL = `https://raw.githubusercontent.com/${DEVELOPER_GITHUB_URL.split('/').at(-1)}/${PROJECT_GITHUB_URL.split('/').at(-1)}/refs/heads/main/src`;
 const SUNDERARMOR_CDN_URL = 'https://sunderarmor.com/GENSHIN';
 const LOCAL_PATH = IS_DEVELOPMENT_ENVIRONMENT ? '../assets/images' : `${GITHUB_CONTENT_URL}/assets/images`;
+const GENSHIN_TRACK_CDN_URL = 'https://cdn.genshintrack.com';
+
 
 export const ImageService = new class ImageService extends BaseService<string> {
-  public getArtifactImage(set: keyof typeof ArtifactSetData | string, part: ArtifactPartName): [string, string] {
+  public getArtifactImage(set: keyof typeof ArtifactSetData | string, part: ArtifactPartName): Array<string> {
     const paimonmoe = `${PAIMON_MOE_URL}/artifacts/${snakeCaseFromCamelCase(set).replace("'", '').toLowerCase()}_${part === 'Feather' ? 'plume' : snakeCaseFromCamelCase(part).toLowerCase()}.png`;
     const genshingg = `${SUNDERARMOR_CDN_URL}/Gear/${snakeCaseFromCamelCase(set).toLowerCase()}.png`;
-    
-    const preferPaimon = set.includes('Prayers') || part !== 'Flower';
-    const src = preferPaimon ? paimonmoe : genshingg;
-    const fallbackSrc = preferPaimon ? genshingg : paimonmoe;
-    return [src, fallbackSrc];
+    const genshintrack = `${GENSHIN_TRACK_CDN_URL}/artifacts/${kebabCaseFromPascalCase(set).replace("'", '').toLowerCase()}`;
+    const png = `${genshintrack}.png`;
+    const webp = `${genshintrack}.webp`;
+
+    //  GenshinTrack has this image, but misspells "disenchantment" as "disnechantment"
+    if (set === 'Disenchantment In Deep Shadow') return [
+      `${GENSHIN_TRACK_CDN_URL}/artifacts/disnechantment-in-deep-shadow.webp`
+    ];
+
+    return [
+      webp,
+      png,
+      genshingg,
+      paimonmoe,
+    ]
   }
 
   public getCharacterImage(name: keyof typeof CharacterData | string): string {

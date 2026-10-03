@@ -23,6 +23,12 @@ export function snakeCaseFromPascalCase<T extends string>(value: T): T {
   return snakeCaseFromCamelCase(words.replace(/-/g, ' ')) as T;
 }
 
+export function kebabCaseFromPascalCase<T extends string>(value: T): T {
+  const result = value.replace(/ /g, '-').replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase() as T;
+  debugLog(`[kebabCaseFromPascalCase] ${value} -> ${result}`);
+  return result;
+}
+
 export function pascalCaseFromSnakeCase<T extends string>(value: T): T {
   const result = value.split('_').map(word => word[0].toUpperCase() + word.slice(1)).join(' ') as T;
   const returned = result.replace(/- /g, '-') as T;
