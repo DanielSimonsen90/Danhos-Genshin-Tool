@@ -87,7 +87,7 @@ export const ImageService = new class ImageService extends BaseService<string> {
       .toLowerCase()
     }.png`;
   }
-  public getWeaponImage(name: string): [string, string] {
+  public getWeaponImage(name: string): Array<string> {
     const paimonmoe = `${PAIMON_MOE_URL}/weapons/${snakeCaseFromCamelCase(name)
       .replace(/[':"]/g, '')
       .toLowerCase()
