@@ -18,6 +18,6 @@
     "@typescript-eslint/no-explicit-any": "off",
     "react/no-unescaped-entities": "off",
     "react/no-children-prop": "off",
-    "eslint/no-explicit-any": "off",
+    "eslint/no-explicit-any": "off"
   }
 }
