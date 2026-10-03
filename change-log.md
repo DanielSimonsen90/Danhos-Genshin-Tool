@@ -1,8 +1,8 @@
 # 🎉 Danho's Genshin Tool v . 2.2.6 🎉
 
 ## General
-### Fixed
-* Fixed some artifact images not rendering. Artifact images now load from an additional image source and fall back to the others if one is missing.
+### Images
+All images are now stored **locally**, which means you will no longer receive them from external sources as well as ensuring all images are always available and load faster.
 
 ## Tierlist update
 * You can now move multiple items by holding ctrl while clicking on each item to select them.
