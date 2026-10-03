@@ -4,6 +4,7 @@ import { CSS } from "@dnd-kit/utilities";
 
 import { useContextMenu } from "@/providers/ContextMenuProvider";
 import { classNames } from "@/common/functions/strings";
+import { required } from "@/common/functions/object";
 
 import { Entry, RenderItem, Tier } from "../TierlistTypes";
 import { CreateMenuItem } from "@/providers/ContextMenuProvider/ContextMenuConstants";
@@ -29,7 +30,7 @@ export default function Entry<T>({
   selected, onSelect,
   render, renderContextMenuItems
 }: Props<T>) {
-  const tier = useMemo(() => tiers.find(tier => tier.entries.some(item => item.id === entry.id))!, [entry.id, tiers]);
+  const tier = useMemo(() => required(tiers.find(tier => tier.entries.some(item => item.id === entry.id)), 'Entry is not in any tier'), [entry.id, tiers]);
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: entry.id });
 
   const onContextMenu = useContextMenu(item => {

@@ -31,7 +31,7 @@ const launchBrowser = async (): Promise<Browser> => {
 
 const toMobImage = (dataSrc: string): MobImage => {
   const url = dataSrc.replace(/\/revision\/latest\/scale-to-width-down\/\d+/, '');
-  const originalName = decodeURIComponent(new URL(url).pathname.split('/').pop()!);
+  const originalName = decodeURIComponent(new URL(url).pathname.split('/').pop() ?? '');
   const name = originalName
     .replace(/_Icon\.png$/i, '')
     .replace(/[,:"]/g, '')

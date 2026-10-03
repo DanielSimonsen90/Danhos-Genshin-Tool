@@ -1,7 +1,7 @@
 import React, { useState, useCallback, PropsWithChildren } from 'react';
 import { generateId } from '@/common/functions/random';
 import { ToastContext, createToast } from './ToastConstants';
-import { Toast, ToastOptions, ToastContextType } from './ToastTypes';
+import { Toast, ToastOptions } from './ToastTypes';
 import { ToastContainer } from './components';
 
 export default function ToastProvider({ children }: PropsWithChildren) {

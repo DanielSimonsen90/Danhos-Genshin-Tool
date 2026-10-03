@@ -486,7 +486,7 @@ export const HeartOfTheFurnace = new ArtifactSet(
   Rarity.Legendary,
   [Domains.InvertedGlacier.name],
   false,
-  (c, set) => {
+  (c) => {
     let value = 0;
     if (c.playstyle?.talentStats.includes('ATK')) value += multiplier;
     if (c.canTrigger('Stellar')) {
@@ -741,7 +741,7 @@ export const ObsidianCodex = new ArtifactSet(
   Rarity.Legendary,
   [Domains.SanctumOfRainbowSpirits.name],
   true,
-  (c, set) => {
+  (c) => {
     let value = 0;
     if (c.bonusAbilities.includes('Nightsouls Blessing') && c.playstyle?.onField) value += multiplier;
     return value;
@@ -891,7 +891,7 @@ export const ScrollOfTheHeroOfCinderCity = new ArtifactSet(
   Rarity.Legendary,
   [Domains.SanctumOfRainbowSpirits.name],
   true,
-  (c, set) => {
+  (c) => {
     let value = 0;
     if (c.bonusAbilities.includes('Nightsouls Blessing')) value += multiplier;
     return value;
@@ -1082,7 +1082,7 @@ export const UnfinishedReverie = new ArtifactSet(
   Rarity.Legendary,
   [Domains.FadedTheater.name],
   true,
-  (c, set) => {
+  (c) => {
     let value = 0;
     if (c.playstyle?.talentStats.includes('ATK')) value += multiplier;
     if (!c.playstyle?.onField && c.canTrigger('Burning')) value += getReactionModifier(c, 'Burning');

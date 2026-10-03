@@ -23,7 +23,7 @@ export const ToastItem: React.FC<ToastItemProps> = ({ toast, onClose }) => {
     if (!toast.persistent && toast.duration > 0) {
       // Update progress bar
       const interval = setInterval(() => {
-        setProgress(prev => {
+        setProgress(() => {
           const elapsed = Date.now() - toast.createdAt;
           const remaining = Math.max(0, toast.duration - elapsed);
           return (remaining / toast.duration) * 100;

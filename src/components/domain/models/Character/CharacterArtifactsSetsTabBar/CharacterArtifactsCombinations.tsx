@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { Link } from "react-router-dom";
 
 import { ROUTES } from "@/common/constants/routes";
-import { ArtifactSet, Character, CharacterArtifactSet } from "@/common/models";
+import { CharacterArtifactSet } from "@/common/models";
 
 import { ArtifactImage } from "@/components/common/media/Images";
 import Popover from "@/components/common/Popover";

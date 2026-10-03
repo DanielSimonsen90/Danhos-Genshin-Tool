@@ -1,4 +1,5 @@
 import { generateId } from "@/common/functions/random";
+import { required } from "@/common/functions/object";
 import { FilterCallback, FilterObject } from "@/components/common/FormItems/Filter/Filter";
 import { Entry, Tier } from "./TierlistTypes";
 
@@ -78,7 +79,7 @@ export function moveSelectedEntries<T>(tiers: Array<Tier<T>>, selectedIds: Set<s
   if (!destinationTier) return tiers;
 
   const strippedTiers = tiers.map(tier => ({ ...tier, entries: tier.entries.filter(entry => !selectedIds.has(entry.id)) }));
-  const strippedDestination = strippedTiers.find(tier => tier.id === destinationTier.id)!;
+  const strippedDestination = required(strippedTiers.find(tier => tier.id === destinationTier.id), 'Destination tier not found');
   const targetIndex = strippedDestination.entries.findIndex(entry => entry.id === overId);
 
   const destinationEntries = [...strippedDestination.entries];

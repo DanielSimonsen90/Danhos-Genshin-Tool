@@ -1652,7 +1652,7 @@ export const EchoesOfTheHeart = new Weapon(
     Drops.EtherealGlimmershard
   ],
   'Forging: Snezhnaya',
-  ({ playstyle, score, character }) => {
+  ({ score }) => {
 
     
     return score;

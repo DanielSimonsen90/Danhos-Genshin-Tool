@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { required } from '@/common/functions/object';
 
 import { Select } from '@/components/common/FormItems';
 import { CharacterImage } from '@/components/common/media/Images';
@@ -94,7 +95,7 @@ export default function AccountSettings({
       </header>
       <div className="sub-header">
         <div className="input-group setting-traveler">
-          <CharacterImage character={pendingAccount?.traveler ?? DEFAULT_ACCOUNT_DATA.traveler!} />
+          <CharacterImage character={pendingAccount?.traveler ?? required(DEFAULT_ACCOUNT_DATA.traveler, 'Default account is missing a traveler')} />
           <Select
             name="traveler"
             options={TRAVELER_OPTIONS}

@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import { ArtifactSet, Character, CharacterPlaystyle } from "@/common/models";
 import { fromList } from "@/common/functions/strings";
 import CharacterArtifactsPlaystylesTabBar from "../CharacterArtifactsSetsTabBar";

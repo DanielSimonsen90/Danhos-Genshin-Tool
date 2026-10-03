@@ -8,6 +8,7 @@ import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import isEqual from 'lodash/fp/isEqual';
 
 import { generateId } from '@/common/functions/random';
+import { required } from '@/common/functions/object';
 import useOnChange from '@/hooks/useOnChange';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { matchesFilters } from '@/components/domain/SearchableList/SearchableListFunctions';
@@ -109,7 +110,8 @@ export default function Tierlist<T, TStorageData extends object, FilterKeys exte
         : () => 'No render method provided.'
   ), [props]);
 
-  const unsorted = tiers.find(tier => tier.id === 'unsorted')!;
+  const unsorted = required(tiers.find(tier => tier.id === 'unsorted'), 'Tierlist is missing the unsorted tier');
+  const renderCustomEntryContextMenuItems = props.renderCustomEntryContextMenuItems;
   const tiersWithoutIds = useMemo(() =>
     tiers.map(tier => ({
       ...tier,
@@ -156,8 +158,8 @@ export default function Tierlist<T, TStorageData extends object, FilterKeys exte
     ? tiers.flatMap(t => t.entries).find(e => e.id === activeDragId) ?? null
     : null;
   const isGroupDrag = activeDragId !== null && selectedIds.size > 1 && selectedIds.has(activeDragId);
-  const draggedGroupEntries = isGroupDrag
-    ? [activeEntry!, ...tiers.flatMap(t => t.entries).filter(e => selectedIds.has(e.id) && e.id !== activeDragId)]
+  const draggedGroupEntries = isGroupDrag && activeEntry
+    ? [activeEntry, ...tiers.flatMap(t => t.entries).filter(e => selectedIds.has(e.id) && e.id !== activeDragId)]
     : null;
 
   const onEntrySelect = (tier: Tier<T>, entry: Entry<T>, index: number, event: React.MouseEvent) => {
@@ -296,8 +298,10 @@ export default function Tierlist<T, TStorageData extends object, FilterKeys exte
       unsorted
     ];
 
-    if (newTier.position !== undefined && tiers.some(tier => tier.position === newTier.position)) {
-      const currentPositionedTier = tiers.find(tier => tier.position === newTier.position)!;
+    const currentPositionedTier = newTier.position !== undefined
+      ? tiers.find(tier => tier.position === newTier.position)
+      : undefined;
+    if (currentPositionedTier) {
       const updatedCurrentPositionedTier = { ...currentPositionedTier, position: tiers[index].position };
       const updatedTier = { ...tiers[index], ...newTier };
 
@@ -306,8 +310,8 @@ export default function Tierlist<T, TStorageData extends object, FilterKeys exte
           : tier.id === updatedTier.id ? updatedTier
             : tier
       ));
-      const unsorted = result.find(tier => tier.id === 'unsorted')!;
-      return result.filter(tier => tier.id !== 'unsorted').concat(unsorted);
+      const unsortedTier = required(result.find(tier => tier.id === 'unsorted'), 'Tierlist is missing the unsorted tier');
+      return result.filter(tier => tier.id !== 'unsorted').concat(unsortedTier);
     }
     const updatedTier: Tier<T> = { ...tiers[index], ...newTier };
     return [...tiers.slice(0, index), updatedTier, ...tiers.slice(index + 1)];
@@ -321,7 +325,7 @@ export default function Tierlist<T, TStorageData extends object, FilterKeys exte
 
     if (tierContainingItem.id === tier.id) return tiers;
 
-    const updatedTierContainedItem: Tier<T> = { ...tierContainingItem!, entries: tierContainingItem!.entries.filter(item => item.id !== entry.id) };
+    const updatedTierContainedItem: Tier<T> = { ...tierContainingItem, entries: tierContainingItem.entries.filter(item => item.id !== entry.id) };
     const updatedTargetTier: Tier<T> = { ...tier, entries: [...tier.entries, entry] };
 
     onEntryChange?.(updatedTierContainedItem, updatedTierContainedItem.entries);
@@ -338,7 +342,7 @@ export default function Tierlist<T, TStorageData extends object, FilterKeys exte
       return tiers;
     }
 
-    const updatedTierContainedItem: Tier<T> = { ...tierContainingItem!, entries: tierContainingItem!.entries.filter(item => item.id !== entry.id) };
+    const updatedTierContainedItem: Tier<T> = { ...tierContainingItem, entries: tierContainingItem.entries.filter(item => item.id !== entry.id) };
     const updatedTierContainedItemEntries = [...updatedTierContainedItem.entries];
     updatedTierContainedItemEntries.splice(index, 0, entry);
 
@@ -395,8 +399,8 @@ export default function Tierlist<T, TStorageData extends object, FilterKeys exte
               selectedIds,
               onEntrySelect: (entry: Entry<T>, index: number, event: React.MouseEvent) => onEntrySelect(tier, entry, index, event)
             }}
-            renderCustomEntryContextMenuItems={props.renderCustomEntryContextMenuItems
-              ? (entry, item) => props.renderCustomEntryContextMenuItems!(entry as Entry<T>, tier, item)
+            renderCustomEntryContextMenuItems={renderCustomEntryContextMenuItems
+              ? (entry, item) => renderCustomEntryContextMenuItems(entry as Entry<T>, tier, item)
               : undefined}
           />
         ))}

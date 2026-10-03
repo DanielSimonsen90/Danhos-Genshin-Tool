@@ -1,8 +1,8 @@
-import { Element, WeaponType, BonusAbility, Rarity, TeyvatRegion, PassiveTalent, BonusAbilitySimple, Reaction, TriggerableReactionFilter } from '@/common/types';
+import { Element, WeaponType, BonusAbility, Rarity, TeyvatRegion, PassiveTalent, BonusAbilitySimple, Reaction } from '@/common/types';
 import CharacterPlaystyle from './CharacterPlaystyle';
 import CharacterAscension from './CharacterAscension';
 import { ModelKeys } from '../Model';
-import { ElementalReactionMemoizeService, ElementalReactions, TriggerableReactions } from '@/common/constants/genshin';
+import { ElementalReactionMemoizeService, TriggerableReactions } from '@/common/constants/genshin';
 
 export class Character<TElement extends Element = Element> {
   public static isCharacter(obj: any): obj is Character {

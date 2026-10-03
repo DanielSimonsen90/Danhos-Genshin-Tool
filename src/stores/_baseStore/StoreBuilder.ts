@@ -202,11 +202,11 @@ export default class StoreBuilder<
 
     // Build middleware stack based on configuration
     const isDev = process.env.NODE_ENV === 'development';
-    const hasPersist = !!this.config.persistConfig;
+    const { persistConfig } = this.config;
 
-    if (hasPersist && isDev) {
+    if (persistConfig && isDev) {
       // Both persist and devtools
-      const { key, stringify, parse } = this.config.persistConfig!;
+      const { key, stringify, parse } = persistConfig;
       vanillaStore = createStore<TAccumState>()(
         persist(
           devtools(
@@ -225,9 +225,9 @@ export default class StoreBuilder<
           }
         )
       );
-    } else if (hasPersist) {
+    } else if (persistConfig) {
       // Only persist (production)
-      const { key, stringify, parse } = this.config.persistConfig!;
+      const { key, stringify, parse } = persistConfig;
       vanillaStore = createStore<TAccumState>()(
         persist(
           () => initialState,

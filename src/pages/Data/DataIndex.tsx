@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { ROUTES } from '@/common/constants/routes';
 import {
   ArtifactSet, Character, Model,
-  List, Domain, DomainOfBlessing,
+  List, Domain,
   Mob,
   Weapon,
 } from '@/common/models';

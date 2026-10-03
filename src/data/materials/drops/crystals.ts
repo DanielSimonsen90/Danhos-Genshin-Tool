@@ -1,5 +1,5 @@
 import { Element, Rarity } from "@/common/types";
-import MobDrop, { ElementalCrystal } from "@/common/models/materials/MobDrop";
+import { ElementalCrystal } from "@/common/models/materials/MobDrop";
 
 export const ElementalCrystalMap: Record<Element, string> = {
   Anemo: 'Vayuda Turquoise',

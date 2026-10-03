@@ -1,15 +1,6 @@
-import { useState, useEffect } from 'react';
 import { DEVELOPER, DEVELOPER_GITHUB_URL, PROJECT_GITHUB_URL } from '@/common/constants/domain';
 
 export default function Footer() {
-  const [appVersion, setAppVersion] = useState<string>('');
-
-  useEffect(() => {
-    if (window.electronAPI) {
-      window.electronAPI.getAppVersion().then(setAppVersion);
-    }
-  }, []);
-
   const sources = [
     { name: 'Hoyoverse', url: 'https://genshin.hoyoverse.com/en/' },
     { name: 'Paimon.moe', url: 'https://paimon.moe/' },

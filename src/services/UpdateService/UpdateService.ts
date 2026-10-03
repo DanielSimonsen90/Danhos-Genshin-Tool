@@ -1,4 +1,4 @@
-import { BrowserWindow, dialog, shell, app, autoUpdater } from 'electron';
+import { BrowserWindow, dialog, shell, app, autoUpdater, net } from 'electron';
 import { PROJECT_GITHUB_URL } from '@/common/constants/domain';
 import { IS_DEVELOPMENT_ENVIRONMENT } from '@/common/constants/dev';
 import { IgnoredVersionService } from './IgnoredVersionService';
@@ -38,6 +38,21 @@ export const UpdateService = new class UpdateService {
   private _getUpdateFeedUrl(): string {
     const { owner, repo } = this._getRepoInfo();
     return `https://update.electronjs.org/${owner}/${repo}/${process.platform}-${process.arch}/${app.getVersion()}`;
+  }
+
+  /**
+   * Asks the update feed whether a newer release exists than the running app's version.
+   * The feed answers 200 when one exists and 204 when the app is up to date.
+   *
+   * Squirrel compares against its own `packages/RELEASES` instead, which stays stale when a previous update failed to apply,
+   * making it re-download and re-install the current version on every launch.
+   */
+  private async _isUpdateOffered(): Promise<boolean> {
+    const response = await net.fetch(this._getUpdateFeedUrl());
+
+    if (response.status === 200) return true;
+    else if (response.status === 204) return false;
+    throw new Error(`Update feed responded with ${response.status}`);
   }
 
   private _emitUpdateDownloadProgress(progress: UpdateDownloadProgress): void {
@@ -135,6 +150,11 @@ export const UpdateService = new class UpdateService {
     }
 
     try {
+      if (!await this._isUpdateOffered()) {
+        if (showNoUpdateDialog) await this._showNoUpdateDialog();
+        return { updateAvailable: false, currentVersion };
+      }
+
       this._configureAutoUpdater();
       this._registerAutoUpdaterEvents();
 

@@ -35,11 +35,10 @@ export default new StoreBuilder()
             cacheKeys => cacheKeys.signatureWeapons(),
             () => get()
               .Weapons
-              .filter(weapon => weapon.signatureWeaponFor)
-              .map(weapon => ({
-                weapon,
-                character: weapon.signatureWeaponFor!(get().CharactersData)
-              }))
+              .flatMap(weapon => weapon.signatureWeaponFor
+                ? [{ weapon, character: weapon.signatureWeaponFor(get().CharactersData) }]
+                : []
+              )
           )
           if (!signatureWeapons.length) return undefined;
 

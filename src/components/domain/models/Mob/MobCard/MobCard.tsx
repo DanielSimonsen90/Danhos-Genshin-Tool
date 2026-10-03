@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { classNames } from "@/common/functions/strings";
 
 import { Mob, Boss, EasyMob, EliteMob, WorldBoss, WeeklyBoss, ArtifactSet } from "@/common/models";
 import { ResinIcon } from "@/components/common/media/icons";

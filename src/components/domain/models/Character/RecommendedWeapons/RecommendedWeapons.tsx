@@ -85,7 +85,7 @@ export default function RecommendedWeapons({
         </>
       ),
       items: list
-        .flatMap(([key, { items }]) => items)
+        .flatMap(([, { items }]) => items)
         .unique(result => result.weapon.name)
         .flat()
         .sort((a, b) => b.score - a.score),

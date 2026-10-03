@@ -19,17 +19,12 @@ export default new StoreBuilder()
 
           return get()
             .Characters
-            .filter(character => (
-              character.playstyle?.recommendedArtifactSets.some(cSet => (
+            .flatMap((character): CharacterUsingArtifactResult[] => {
+              const cSet = character.playstyle?.recommendedArtifactSets.find(cSet => (
                 cSet.set.name === artifact.name
-              ))
-            ))
-            .map((character): CharacterUsingArtifactResult => ({
-              character,
-              cSet: character.playstyle!.recommendedArtifactSets.find(cSet => (
-                cSet.set.name === artifact.name
-              ))!
-            }));
+              ));
+              return cSet ? [{ character, cSet }] : [];
+            });
         }
       );
     }

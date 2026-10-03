@@ -1,7 +1,5 @@
-import { SetStateAction } from "react";
 import { PriorityLists } from "@/pages/Building/PriorityList/PriorityListTypes";
-import { StorageReturn } from "@/services/StorageService";
-import { ArtifactSet, Character, Domain, Mob, Weapon, Material, Model } from "@/common/models";
+import { ArtifactSet, Character, Domain, Mob, Weapon, Material } from "@/common/models";
 import * as Characters from "@/data/characters";
 
 export type WorldRegion = 'North America' | 'Europe' | 'Asia' | 'TW, HK, MO';
