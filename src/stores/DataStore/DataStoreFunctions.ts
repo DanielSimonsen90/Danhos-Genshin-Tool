@@ -4,7 +4,7 @@ export const findByName = <T extends { name: string; }>(arr: T[], name: string, 
   const normalizedName = name.toLowerCase();
 
   // Direct name match first (most common case)
-  let result = arr.find(item => item.name.toLowerCase() === normalizedName)
+  const result = arr.find(item => item.name.toLowerCase() === normalizedName)
     // Check materials that can be crafted (less common)
     ?? arr.find(item =>
       CraftableMaterial.isCraftableMaterial(item) &&

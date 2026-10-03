@@ -2,7 +2,7 @@ import { Functionable } from "../types";
 
 export function pick<T extends object, K extends keyof T>(obj: T, ...keys: K[]): Pick<T, K> {
   return keys.reduce((acc, key) => {
-    if (obj.hasOwnProperty(key)) acc[key] = obj[key];
+    if (Object.prototype.hasOwnProperty.call(obj, key)) acc[key] = obj[key];
     return acc;
   }, {} as Pick<T, K>);
 }
@@ -29,7 +29,7 @@ export function resolveFunctionable<TReturned, TArgs extends any[]>(
   input: Functionable<TReturned, TArgs>,
   args: TArgs
 ): TReturned {
-  return typeof input === 'function' ? (input as Function)(...args) as TReturned : input;
+  return typeof input === 'function' ? (input as (...args: TArgs) => TReturned)(...args) : input;
 }
 
 export default {

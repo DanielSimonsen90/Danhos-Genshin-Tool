@@ -63,10 +63,11 @@ export function usePriorityListTabs({ priorityLists, setPriorityLists, openUpdat
       destructive: true
     })) return;
 
-    let { [tab]: _, ...newPriorityList } = priorityLists;
+    const remaining = Object.fromEntries(
+      Object.entries(priorityLists).filter(([key]) => key !== tab)
+    ) as typeof priorityLists;
+    const newPriorityList = Object.keys(remaining).length ? remaining : getDefaultPriorityLists();
 
-    if (!Object.keys(newPriorityList).length) newPriorityList = getDefaultPriorityLists();
-    
     setPriorityLists(newPriorityList);
   }, [confirm, priorityLists, setPriorityLists]);
 

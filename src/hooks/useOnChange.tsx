@@ -1,5 +1,4 @@
 import { useEffect, DependencyList, useRef, useCallback } from "react";
-// @ts-ignore
 import isEqual from 'lodash/fp/isEqual';
 
 export default function useOnChange<TValue>(

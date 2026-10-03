@@ -44,7 +44,7 @@ export const ElementalCrystals = (function defineElementalCrystals() {
         [Rarity.Legendary]: `${element} elemental crystal`,
       },
       { prependName: true }
-    );;
+    );
     return acc;
   }, {} as ElementalCrystals);
 

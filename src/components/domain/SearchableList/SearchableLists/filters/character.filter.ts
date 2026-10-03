@@ -112,4 +112,4 @@ export function getCharacterSortChecks(): SortObject<Character> {
     },
     weapon: (a, b) => a.weapon.localeCompare(b.weapon),
   };
-};
+}

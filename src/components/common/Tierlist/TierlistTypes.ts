@@ -38,7 +38,10 @@ type BaseTierlistProps<TItem, TStorageData, FilterKeys extends string> = {
 }) & ({
   onStorageLoaded: (data: TStorageData) => Array<Tier<TItem>>;
   onStorageSave: (data: Array<Tier<TItem>>) => TStorageData;
-} | {})
+} | {
+  onStorageLoaded?: never;
+  onStorageSave?: never;
+})
 
 export type RenderItem<TItem> = (item: TItem, index: number) => ReactNode;
 type TierlistRenderProps<T> = {

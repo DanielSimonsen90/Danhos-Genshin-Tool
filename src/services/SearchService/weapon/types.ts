@@ -13,7 +13,7 @@ interface BaseEntry {
 
 export interface RecommendedWeaponForCharacter extends BaseEntry {
   weapon: Weapon;
-};
+}
 
 export interface RecommendedCharacterForWeapon extends BaseEntry {
   character: Character;

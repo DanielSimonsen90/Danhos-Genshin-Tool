@@ -52,4 +52,4 @@ export function getMobSortChecks(): SortObject<Mob> {
       return regionAIndex - regionBIndex;
     },
   };
-};
+}

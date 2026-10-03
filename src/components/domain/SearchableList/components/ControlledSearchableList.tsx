@@ -26,7 +26,7 @@ export default function ControlledSearchableList<TItem, FilterKeys extends strin
 
   useOnChange({ search, filters }, ({ search, filters }) => props.onSearchOrFilterChange?.(search, filters));
 
-  return <UncontrolledSearchableList onFilterChange={() => { }}
+  return <UncontrolledSearchableList onFilterChange={() => undefined}
     {...props}
     sort={sortFn}
     activeSorts={activeSorts}

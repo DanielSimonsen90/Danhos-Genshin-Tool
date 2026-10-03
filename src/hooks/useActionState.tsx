@@ -9,7 +9,7 @@ export type SubmitData<TData> = TData & {
 
 export function useActionState<TResult extends Record<string, any>>(
   onSubmit: (data: SubmitData<TResult>) => void,
-  expectedPropertyLength: number = -1,
+  expectedPropertyLength = -1,
 ) {
   const [loading, setLoading] = useState(false);
 

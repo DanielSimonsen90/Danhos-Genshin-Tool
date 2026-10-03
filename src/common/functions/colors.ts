@@ -7,14 +7,8 @@ type ColorType = 'hex' | 'rgb' | 'hsl';
 export function colorConvert(value: string, from: ColorType, to: ColorType): string {
   if (from === to) return value;
 
-  switch (from) {
-    case 'hsl': {
-      switch (to) {
-        case 'hex': return hslToHex(value);
-      }
-    }
-    default: return value;
-  }
+  if (from === 'hsl' && to === 'hex') return hslToHex(value);
+  return value;
 }
 
 function hslToHex(value?: string) {
@@ -23,8 +17,8 @@ function hslToHex(value?: string) {
   const match = value.match(/hsl\((\d+), (\d+)%, (\d+)%\)/);
   if (!match) return value;
   
-  let [_, h, s, l] = match.map(Number);
-  l /= 100;
+  const [, h, s, lightness] = match.map(Number);
+  const l = lightness / 100;
   const a = s * Math.min(l, 1 - l) / 100;
   const format = (value: number) => {
     const k = (value + h / 30) % 12;

@@ -1,4 +1,5 @@
-import { app, BrowserWindow, session, ipcMain, Menu, shell } from 'electron';
+import { app, BrowserWindow, dialog, session, ipcMain, Menu, shell } from 'electron';
+import { promises as fs } from 'fs';
 import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer';
 import path from 'path';
 import UpdateService from './services/UpdateService';
@@ -215,7 +216,6 @@ const setupApplicationMenu = (): void => {
           label: 'Clear Cache',
           click: async (item, focusedWindow) => {
             if (focusedWindow) {
-              const { dialog } = require('electron');
               const result = await dialog.showMessageBox(focusedWindow, {
                 type: 'question',
                 title: 'Clear Cache',
@@ -237,7 +237,6 @@ const setupApplicationMenu = (): void => {
           label: 'Clear Storage Data',
           click: async (item, focusedWindow) => {
             if (focusedWindow) {
-              const { dialog } = require('electron');
               const result = await dialog.showMessageBox(focusedWindow, {
                 type: 'warning',
                 title: 'Clear Storage Data',
@@ -258,10 +257,7 @@ const setupApplicationMenu = (): void => {
           label: 'Export Data',
           click: async (item, focusedWindow) => {
             if (!focusedWindow) return;
-            
-            const { dialog } = require('electron');
-            const fs = require('fs').promises;
-            
+
             const result = await dialog.showSaveDialog(focusedWindow, {
               title: 'Export All Data',
               defaultPath: 'genshin-tool-data.json',
@@ -354,10 +350,7 @@ const setupApplicationMenu = (): void => {
           label: 'Import Data',
           click: async (item, focusedWindow) => {
             if (!focusedWindow) return;
-            
-            const { dialog } = require('electron');
-            const fs = require('fs').promises;
-            
+
             const result = await dialog.showOpenDialog(focusedWindow, {
               title: 'Import Data',
               filters: [

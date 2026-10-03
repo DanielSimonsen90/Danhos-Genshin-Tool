@@ -24,4 +24,4 @@ export default function ArtifactSetsPiecesContent({ results, displayPieces }: Ar
       )}
     />
   );
-};
+}

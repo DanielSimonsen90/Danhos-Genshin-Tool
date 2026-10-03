@@ -6,7 +6,7 @@ import Image from './Image';
 import { classNames, pascalCaseFromSnakeCase } from '@/common/functions/strings';
 
 type Props = Omit<ComponentPropsWithoutRef<typeof Image>, 'src' | 'alt'> & {
-  set: keyof typeof ArtifactSets | string & {};
+  set: keyof typeof ArtifactSets | (string & NonNullable<unknown>);
   piece?: ArtifactPartName;
 }
 

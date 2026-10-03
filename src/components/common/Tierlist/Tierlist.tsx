@@ -5,7 +5,6 @@ import {
   closestCenter, pointerWithin, useSensor, useSensors
 } from '@dnd-kit/core';
 import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
-// @ts-ignore
 import isEqual from 'lodash/fp/isEqual';
 
 import { generateId } from '@/common/functions/random';
@@ -123,7 +122,7 @@ export default function Tierlist<T, TStorageData extends object, FilterKeys exte
       entries: tier.entries.map(entry => ({ ...entry, id: undefined as any }))
     })), [props.defaultTiers]);
 
-  const resetIfChangedRef = useRef<() => void>(() => {});
+  const resetIfChangedRef = useRef<() => void>(() => undefined);
   resetIfChangedRef.current = () => {
     const contentEqual = isEqual(tiersWithoutIds, defaultTiersWithoutIds);
     if (!contentEqual) resetTiers();
@@ -369,7 +368,7 @@ export default function Tierlist<T, TStorageData extends object, FilterKeys exte
             placeholder={filterPlaceholder}
             filters={filters}
             setFilters={setFilters}
-            onChange={() => {}}
+            onChange={() => undefined}
           />
         )}
       </div>
@@ -422,4 +421,4 @@ export default function Tierlist<T, TStorageData extends object, FilterKeys exte
       <button type="reset" className='danger secondary' onClick={() => setTiers(getDefaultTiers(items))}>Reset</button>
     </div>
   );
-};
+}
