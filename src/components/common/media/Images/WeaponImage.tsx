@@ -7,7 +7,7 @@ type Props = ({
   weaponType: WeaponType;
 } | {
   weapon: string;
-}) & Omit<ComponentPropsWithoutRef<typeof Image>, 'src' | 'alt' | 'className' | 'fallbackSrc'>;
+}) & Omit<ComponentPropsWithoutRef<typeof Image>, 'src' | 'alt' | 'className'>;
 
 export default forwardRef<HTMLImageElement, Props>(function WeaponImage(props, ref) {
   const src = 'weaponType' in props
@@ -19,8 +19,5 @@ export default forwardRef<HTMLImageElement, Props>(function WeaponImage(props, r
 
   const { weaponType, weapon, ...rest } = props as Props & { weaponType?: WeaponType; weapon?: string };
 
-  if (typeof src === 'string') return <Image ref={ref} {...rest} className={className} src={src} alt={alt} />;
-
-  const primarySrc = src.shift() ?? '';
-  return <Image ref={ref} {...rest} className={className} src={primarySrc} fallbackSrcs={...src} alt={alt} />
+  return <Image ref={ref} {...rest} className={className} src={src} alt={alt} />;
 });

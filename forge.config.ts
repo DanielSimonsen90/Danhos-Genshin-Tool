@@ -44,7 +44,7 @@ const config: ForgeConfig = {
       mainConfig,
       devContentSecurityPolicy: [
         "default-src 'self'",
-        "img-src 'self' https://sunderarmor.com https://lustonpull.com https://rerollcdn.com https://paimon.moe https://static.wikia.nocookie.net https://raw.githubusercontent.com https://cdn.genshintrack.com",
+        "img-src 'self' blob: https://sunderarmor.com https://lustonpull.com https://rerollcdn.com https://paimon.moe https://static.wikia.nocookie.net https://raw.githubusercontent.com https://cdn.genshintrack.com",
         "script-src 'self' 'unsafe-eval'",
         "style-src 'self' 'unsafe-inline'",
         "connect-src 'self' https://sunderarmor.com https://paimon.moe https://cdn.genshintrack.com",

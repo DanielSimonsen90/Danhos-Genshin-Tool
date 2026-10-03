@@ -12,6 +12,7 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx .",
+    "images:mobs": "ts-node scripts/fetch-mob-images.ts",
     "postinstall": "patch-package"
   },
   "devDependencies": {
@@ -38,6 +39,7 @@
     "fork-ts-checker-webpack-plugin": "^7.3.0",
     "node-loader": "^2.0.0",
     "patch-package": "^8.0.1",
+    "playwright": "^1.63.0",
     "style-loader": "^3.3.4",
     "ts-loader": "^9.5.1",
     "ts-node": "^10.9.2",
