@@ -19,7 +19,7 @@ export default new StoreBuilder<CacheState>()
       set(state => ({ 
         ...state, 
         [key]: typeof state[key] === 'object' && typeof value === 'object' 
-          ? { ...state[key] as Object, ...value as Object } 
+          ? { ...state[key] as object, ...value as object } 
           : value 
       }));
     }

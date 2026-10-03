@@ -98,6 +98,8 @@ export type PassiveTalent = (
   | `When in Teyvat and out of combat with the current region's Treasure Compass unlocked, Nicole's Charged Attack summons a Seelie to show the way like a Treasure Compass would`
   | `When Lohen uses skill, he levels it up by 1 for 8 seconds`
   | `When Sandrone is in the party, you will gain additional snack rewards when turning in Daily Commissions with Katheryne.`
+  | `When using Sprint or Jump outside of combat, enter Coursing state; consumes stamina to hover mid-air`
+  | `Sings instead of playing instruments when playing instruments.`
 );
 
 export type TriggerableReactionFilter = 'all' | 'playstyle-based';

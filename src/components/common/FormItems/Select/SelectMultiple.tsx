@@ -78,7 +78,7 @@ const SelectMultipleComponent = forwardRef(function SelectMultiple<TValue extend
               type="checkbox"
               value={internalValue?.(option) ?? option}
               checked={selectedValues.includes(option)}
-              onChange={() => { }}
+              onChange={() => undefined}
               onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === 'NumpadEnter' || e.key === ' ') {
                   toggleOption(option);  

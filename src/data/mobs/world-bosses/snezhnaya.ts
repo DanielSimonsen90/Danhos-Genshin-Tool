@@ -1,7 +1,7 @@
 import { WorldBoss } from "@/common/models/mobs/Boss";
 import { Adventurer, Berserker, GladiatorsFinale, Instructor, LuckyDog, PrayersOfIllumination, PrayersOfSpringtime, PrayersOfWisdom, TheExile, TravelingDoctor, WanderersTroupe } from "@/data/artifact-sets";
 import { ElementalCrystals } from "@/data/materials/drops/crystals";
-import { UnscorchedBlossomBranch, SeveredTailOfTheSkyRoamer } from '@/data/materials/drops/snezhnaya';
+import { UnscorchedBlossomBranch, SeveredTailOfTheSkyRoamer, VagabondsCrackedArmor } from '@/data/materials/drops/snezhnaya';
 
 export const ImmortalConstruct = new WorldBoss(
   `Immortal Construct`,
@@ -27,5 +27,18 @@ export const ChimericWingedLion = new WorldBoss(
     GladiatorsFinale,
     WanderersTroupe,
     Berserker, Instructor, LuckyDog
+  ]
+);
+
+export const GuardianBladeOfDriftingSnow = new WorldBoss(
+  `Guardian Blade of Drifting Snow`,
+  `An ancient Snegovik held in high esteem among her kin.\nAfter the current Snegurochka princess ascended to power, she left the clan's manor in the mountains - perhaps because their ideals no longer aligned.`,
+  'Snezhnaya',
+  [
+    VagabondsCrackedArmor,
+    ...ElementalCrystals.Cryo.getCraftingTreeAsMaterials(),
+    GladiatorsFinale,
+    WanderersTroupe,
+    Berserker, TheExile, PrayersOfSpringtime, LuckyDog,
   ]
 );

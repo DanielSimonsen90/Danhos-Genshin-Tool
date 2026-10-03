@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import ImageService from '@/services/ImageService';
 
 type Props = {
   src: string;
   alt: string;
 
   className?: string;
-  fallbackSrc?: string;
 };
 
-export default React.forwardRef<HTMLImageElement, Props>(({ src, alt, fallbackSrc, ...props }, ref) => {
-  const [preferredSrc, setPreferredSrc] = useState(src);
+export default React.forwardRef<HTMLImageElement, Props>(({ src, alt, ...props }, ref) => {
+  const [resolvedSrc, setResolvedSrc] = useState(src);
 
-  return <img src={preferredSrc} alt={alt} title={alt} ref={ref} {...props} onError={() => fallbackSrc ? setPreferredSrc(fallbackSrc) : undefined} />;
+  useEffect(() => setResolvedSrc(src), [src]);
+
+  const recover = async () => {
+    const recovered = await ImageService.recover(src);
+    if (recovered) setResolvedSrc(recovered);
+  };
+
+  return <img src={resolvedSrc} alt={alt} title={alt} ref={ref} {...props} onError={recover} />;
 });

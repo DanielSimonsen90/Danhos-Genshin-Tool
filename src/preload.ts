@@ -2,12 +2,14 @@
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 
 import { contextBridge, ipcRenderer } from 'electron';
+import type { FetchImageRequest } from './common/types/images';
 
 // Expose update functionality to the renderer process
 contextBridge.exposeInMainWorld('electronAPI', {
   checkForUpdates: () => ipcRenderer.invoke('check-for-updates'),
   getAppVersion: () => ipcRenderer.invoke('get-app-version'),
-  
+  fetchImage: (request: FetchImageRequest) => ipcRenderer.invoke('fetch-image', request),
+
   // LocalStorage import/export functionality (full data backup/restore)
   getAllLocalStorageData: () => ipcRenderer.invoke('get-all-localstorage-data'),
   setAllLocalStorageData: (data: any) => ipcRenderer.invoke('set-all-localstorage-data', data),

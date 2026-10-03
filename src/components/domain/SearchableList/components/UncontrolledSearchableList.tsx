@@ -2,9 +2,8 @@ import { useRef } from "react";
 import { classNames, pascalCaseFromCamelCase } from "@/common/functions/strings";
 import useKeybind from "@/hooks/useKeybind";
 import { ControlledProps, OptionalProps } from "../Props";
-import { Filter } from "../../../common/FormItems";
+import { Filter, FilterTags } from "../../../common/FormItems";
 import Sort from "../../../common/FormItems/Sort/Sort";
-import { FilterObject } from "../../../common/FormItems/Filter/Filter";
 
 export default function UncontrolledSearchableList<TItem, FilterKeys extends string>(props: ControlledProps<TItem, FilterKeys> & OptionalProps<TItem, FilterKeys>) {
   const { search, setSearch, defaultSearch, placeholder } = props;
@@ -46,33 +45,7 @@ export default function UncontrolledSearchableList<TItem, FilterKeys extends str
         {filterChecks && <Filter {...filterProps} filterChecks={filterChecks} />}
         {sortChecks && setActiveSorts && <Sort sortChecks={sortChecks} activeSorts={activeSorts ?? []} setActiveSorts={setActiveSorts} placeholder={sortPlaceholder} />}
       </div>
-      {Object.values(filters).some(value =>
-        typeof value === 'object' && value !== null
-          ? Object.values(value).some(v => v !== undefined)
-          : value !== undefined
-      ) && (
-          <ul className="filter-tags">
-            {Object.entries(filters).map(([filterOrGroup, value], index) => (
-              typeof value === 'object' && value !== null
-                ? Object.entries(value).filter(([key, value]) => value !== undefined).map(([filter, filterValue]) => (
-                  <li key={filter} className={`filter-tag ${filterValue === false ? 'filter-tag--false' : ''}`} onClick={() => {
-                    const {
-                      [filter as keyof FilterObject<FilterKeys, TItem>[FilterKeys]]: _,
-                      ...newValue
-                    } = filters[filterOrGroup as FilterKeys] as Record<FilterKeys, boolean>;
-                    return setFilters(filters => ({ ...filters, [filterOrGroup]: newValue }));
-                  }}>
-                    {filterValue === false ? '×' : ''} {pascalCaseFromCamelCase(filter)}
-                  </li>
-                ))
-                : value !== undefined && (
-                  <li key={`${filterOrGroup}-${index}`} className={`filter-tag ${value === false ? 'filter-tag--false' : ''}`} onClick={() => setFilters({ ...filters, [filterOrGroup]: undefined })}>
-                    {value === false ? '×' : value === true ? '✓' : '/'} {pascalCaseFromCamelCase(filterOrGroup)}
-                  </li>
-                )
-            ))}
-          </ul>
-        )}
+      <FilterTags filters={filters} setFilters={setFilters} />
       {activeSorts && activeSorts.length > 0 && setActiveSorts && (
         <ul className="filter-tags sort-tags">
           {activeSorts.map(({ key, direction }, index) => (
