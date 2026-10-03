@@ -15,6 +15,9 @@ export const mainConfig: Configuration = {
     rules,
   },
   plugins,
+  externals: {
+    sharp: 'commonjs sharp',
+  },
   resolve: {
     extensions: [
       '.js', '.ts', '.jsx', '.tsx', 

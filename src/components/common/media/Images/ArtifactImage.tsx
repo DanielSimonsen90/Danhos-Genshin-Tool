@@ -5,7 +5,7 @@ import ImageService from '@/services/ImageService';
 import Image from './Image';
 import { classNames, pascalCaseFromSnakeCase } from '@/common/functions/strings';
 
-type Props = Omit<ComponentPropsWithoutRef<typeof Image>, 'src' | 'alt' | 'fallbackSrc'> & {
+type Props = Omit<ComponentPropsWithoutRef<typeof Image>, 'src' | 'alt'> & {
   set: keyof typeof ArtifactSets | string & {};
   piece?: ArtifactPartName;
 }
@@ -13,14 +13,12 @@ type Props = Omit<ComponentPropsWithoutRef<typeof Image>, 'src' | 'alt' | 'fallb
 export default forwardRef<HTMLImageElement, Props>(function ArtifactImage({ set, piece, className, ...props }, ref) {
   const isPrayersPiece = set.includes('Prayers');
   const name = isPrayersPiece ? 'Circlet' : piece ?? 'Flower';
-  const [src, ...fallbacks] = ImageService.getArtifactImage(set, name);
 
   return <Image
     ref={ref}
     {...props}
     className={classNames("artifact-image", className)}
-    src={src}
-    fallbackSrcs={fallbacks}
+    src={ImageService.getArtifactImage(set, name)}
     alt={`${pascalCaseFromSnakeCase(set)} ${name}`}
   />;
 });

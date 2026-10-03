@@ -1,4 +1,4 @@
-# 🎉 Danho's Genshin Tool v . 2.2.5 🎉
+# 🎉 Danho's Genshin Tool v . 2.2.6 🎉
 
 ## General
 ### Fixed
