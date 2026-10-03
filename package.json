@@ -13,6 +13,7 @@
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx .",
     "images:mobs": "ts-node scripts/fetch-mob-images.ts",
+    "images:talents": "ts-node -r tsconfig-paths/register scripts/check-talent-images.ts",
     "postinstall": "patch-package"
   },
   "devDependencies": {
@@ -40,6 +41,7 @@
     "node-loader": "^2.0.0",
     "patch-package": "^8.0.1",
     "playwright": "^1.63.0",
+    "sharp": "^0.33.5",
     "style-loader": "^3.3.4",
     "ts-loader": "^9.5.1",
     "ts-node": "^10.9.2",

@@ -10,6 +10,7 @@ const MIME_TYPES: Record<ImageExtension, string> = {
   png: 'image/png',
   webp: 'image/webp',
 };
+const ACCEPTED_MIME_TYPES = Object.values(MIME_TYPES);
 
 export const ImageStorageService = new class ImageStorageService {
   private readonly imagesRoot = path.join(app.getAppPath(), 'src', 'assets', 'images');
@@ -25,8 +26,12 @@ export const ImageStorageService = new class ImageStorageService {
     if (stored) return stored;
 
     for (const source of sources) {
-      const data = await this.download(source, target.mimeType);
-      if (!data) continue;
+      const downloaded = await this.download(source);
+      if (!downloaded) continue;
+
+      const data = downloaded.mimeType === target.mimeType
+        ? downloaded.data
+        : await this.convert(downloaded.data, target.extension);
 
       await fs.mkdir(path.dirname(target.filePath), { recursive: true });
       await fs.writeFile(target.filePath, data);
@@ -45,7 +50,56 @@ export const ImageStorageService = new class ImageStorageService {
     if (!filePath.startsWith(this.imagesRoot + path.sep)) return null;
     else if (!(extension in MIME_TYPES)) return null;
 
-    return { filePath, mimeType: MIME_TYPES[extension as ImageExtension] };
+    return { filePath, extension: extension as ImageExtension, mimeType: MIME_TYPES[extension as ImageExtension] };
+  }
+
+  /**
+   * Converts every `.png` below the images root to `.webp`, so the repository only stores the preferred format.
+   * Each source `.png` is removed once its `.webp` exists. Development only.
+   *
+   * @returns The number of images converted
+   */
+  public async convertPngsToWebp(): Promise<number> {
+    const files = await this.listFiles(this.imagesRoot);
+    const pngs = files.filter(file => path.extname(file).toLowerCase() === '.png');
+    let converted = 0;
+
+    for (const png of pngs) {
+      const webp = png.replace(/\.png$/i, '.webp');
+      try {
+        if (!await this.exists(webp)) {
+          await fs.writeFile(webp, await this.convert(await fs.readFile(png), 'webp'));
+          converted++;
+        }
+        await fs.unlink(png);
+      } catch (error) {
+        console.warn(`[ImageStorageService] Could not convert ${png}`, error);
+      }
+    }
+
+    if (converted) console.info(`[ImageStorageService] Converted ${converted} png image(s) to webp`);
+    return converted;
+  }
+
+  private async listFiles(directory: string): Promise<Array<string>> {
+    const entries = await fs.readdir(directory, { withFileTypes: true }).catch(() => []);
+    const nested = await Promise.all(entries.map(entry => {
+      const entryPath = path.join(directory, entry.name);
+      return entry.isDirectory() ? this.listFiles(entryPath) : [entryPath];
+    }));
+    return nested.flat();
+  }
+
+  private exists(filePath: string): Promise<boolean> {
+    return fs.access(filePath).then(() => true, () => false);
+  }
+
+  private async convert(data: Buffer, extension: ImageExtension): Promise<Buffer> {
+    const { default: sharp } = await import('sharp');
+    const image = sharp(data);
+    return extension === 'webp'
+      ? image.webp({ quality: 90, alphaQuality: 100 }).toBuffer()
+      : image.png().toBuffer();
   }
 
   private async readStored(filePath: string, mimeType: string): Promise<FetchImageResult> {
@@ -56,7 +110,7 @@ export const ImageStorageService = new class ImageStorageService {
     }
   }
 
-  private async download(source: string, expectedMimeType: string): Promise<Buffer | null> {
+  private async download(source: string): Promise<{ data: Buffer; mimeType: string } | null> {
     const url = new URL(source);
     if (url.protocol !== 'https:' || !TRUSTED_IMAGE_HOSTS.includes(url.host)) {
       console.warn(`[ImageStorageService] Skipped untrusted source ${source}`);
@@ -65,9 +119,10 @@ export const ImageStorageService = new class ImageStorageService {
 
     try {
       const response = await net.fetch(source, {
+        cache: 'no-store',
         headers: {
           'User-Agent': BROWSER_USER_AGENT,
-          'Accept': 'image/png,image/webp,image/*;q=0.8',
+          'Accept': ACCEPTED_MIME_TYPES.join(','),
           'Referer': `${url.origin}/`,
         },
       });
@@ -77,13 +132,13 @@ export const ImageStorageService = new class ImageStorageService {
       }
 
       const data = Buffer.from(await response.arrayBuffer());
-      const actualMimeType = this.sniffMimeType(data);
-      if (actualMimeType !== expectedMimeType) {
-        console.warn(`[ImageStorageService] ${source} returned ${actualMimeType ?? 'a non-image'}, expected ${expectedMimeType}`);
+      const mimeType = this.sniffMimeType(data);
+      if (!mimeType) {
+        console.warn(`[ImageStorageService] ${source} returned a non-image, expected ${ACCEPTED_MIME_TYPES.join(' or ')}`);
         return null;
       }
 
-      return data;
+      return { data, mimeType };
     } catch (error) {
       console.warn(`[ImageStorageService] ${source} failed`, error);
       return null;

@@ -19,6 +19,8 @@ if (require('electron-squirrel-startup')) {
 }
 
 app.whenReady().then(() => {
+  if (IS_DEVELOPMENT_ENVIRONMENT) ImageStorageService.convertPngsToWebp().catch(error => console.warn('png to webp conversion failed', error));
+
   // Install DevTools extensions in development mode only
   if (process.env.NODE_ENV !== 'production') {
     installExtension([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS], {

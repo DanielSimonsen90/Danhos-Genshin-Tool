@@ -8,18 +8,10 @@ import BaseService from './BaseService';
 import { IS_DEVELOPMENT_ENVIRONMENT } from '@/common/constants/dev';
 import { IMAGE_PROVIDERS } from '@/common/constants/image-providers';
 import { Character } from '@/common/models';
+import { getTalentImageRequest } from '@/common/functions/talent-images';
 
 const { paimonMoe, sunderarmor, genshinTrack } = IMAGE_PROVIDERS;
 const LOCAL_PATH = '../assets/images';
-
-type ArtifactQuirk = {
-  genshinTrackSlug?: string;
-  extension?: ImageExtension;
-};
-
-const ARTIFACT_QUIRKS: Record<string, ArtifactQuirk> = {
-  'Disenchantment In Deep Shadow': { genshinTrackSlug: 'disnechantment-in-deep-shadow', extension: 'webp' },
-};
 
 type ImageEntry = {
   relativePath: string;
@@ -37,88 +29,51 @@ export const ImageService = new class ImageService extends BaseService<string> {
    * Missing files are fetched from the trusted providers in development - see {@link recover}.
    */
   public getArtifactImage(set: keyof typeof ArtifactSetData | string, part: ArtifactPartName): string {
-    const { extension = 'png', genshinTrackSlug = kebabCaseFromPascalCase(set).replace(/'/g, '').toLowerCase() } = ARTIFACT_QUIRKS[set] ?? {};
+    const genshinTrackSlug = kebabCaseFromPascalCase(set).replace(/'/g, '').toLowerCase();
     const setName = snakeCaseFromCamelCase(set).replace(/'/g, '').toLowerCase();
     const pieceName = snakeCaseFromCamelCase(part).toLowerCase();
 
-    const sources = [`${genshinTrack}/artifacts/${genshinTrackSlug}.${extension}`];
-    if (extension === 'png') sources.push(
+    return this.locate(`artifacts/${setName}_${pieceName}.webp`, [
+      `${genshinTrack}/artifacts/${genshinTrackSlug}.png`,
       `${sunderarmor}/Gear/${snakeCaseFromCamelCase(set).toLowerCase()}.png`,
       `${paimonMoe}/artifacts/${setName}_${part === 'Feather' ? 'plume' : pieceName}.png`,
-    );
-
-    return this.locate(`artifacts/${setName}_${pieceName}.${extension}`, sources);
+    ]);
   }
 
   public getCharacterImage(name: keyof typeof CharacterData | string): string {
     const fileName = withoutQuotes(snakeCaseFromCamelCase(name)).toLowerCase();
-    return this.locate(`characters/${fileName}.png`, [`${paimonMoe}/characters/${fileName}.png`]);
+    return this.locate(`characters/${fileName}.webp`, [`${paimonMoe}/characters/${fileName}.png`]);
   }
 
   public getTalentImage(character: Character, talentType: TalentType): string {
-    const characterName = (() => {
-      if (character.name.includes('Traveler')) return `Traveler ${character.element}`;
-
-      switch (character.name) {
-        case 'Arataki Itto': return 'Itto';
-        case 'Kaedehara Kazuha': return 'Kazuha';
-        case 'Kamisato Ayaka': return 'Ayaka';
-        case 'Kamisato Ayato': return 'Ayato';
-        case 'Kujou Sara': return 'Sara';
-        case 'Raiden Shogun': return 'Raiden';
-        case 'Sangonomiya Kokomi': return 'Kokomi';
-        case 'Shikanoin Heizou': return 'Heizou';
-        default: return character.name.split('(')[0].trim();
-      }
-    })();
-    const fileName = snakeCaseFromCamelCase(characterName).toLowerCase();
-
-    const { relativePath, remotePath } = (() => {
-      switch (talentType) {
-        case 'Normal/Press':
-        case 'Charged/Hold':
-        case 'Plunging/Press': return {
-          relativePath: `talents/attack_${character.weapon.toLowerCase()}.png`,
-          remotePath: `UI_GachaTypeIcon_${character.weapon}`,
-        };
-        case 'Skill/Ability': return {
-          relativePath: `talents/${fileName}_skill.png`,
-          remotePath: `1/${characterName}/talent_2`,
-        };
-        case 'Burst/Ult': return {
-          relativePath: `talents/${fileName}_burst.png`,
-          remotePath: `1/${characterName}/talent_3`,
-        };
-      }
-    })();
-
-    return this.locate(relativePath, [`${sunderarmor}/Skill/${remotePath}.png`]);
+    const { relativePath, sources } = getTalentImageRequest(character, talentType);
+    return this.locate(relativePath, sources);
   }
 
   public getElementImage(name: Element): string {
-    return this.locate(`elements/${name.toLowerCase()}.png`, [
+    return this.locate(`elements/${name.toLowerCase()}.webp`, [
       `${sunderarmor}/Elements/Element_${this.formatRerollCdnName(name)}.png`,
     ]);
   }
 
   public getWeaponTypeImage(name: WeaponType): string {
     const fileName = withoutQuotes(snakeCaseFromCamelCase(name)).toLowerCase();
-    return this.locate(`weapon-types/${fileName}.png`, [`${paimonMoe}/weapons/${fileName}.png`]);
+    return this.locate(`weapon-types/${fileName}.webp`, [`${paimonMoe}/weapons/${fileName}.png`]);
   }
   public getWeaponImage(name: string): string {
     const fileName = withoutQuotes(snakeCaseFromCamelCase(name)).toLowerCase();
 
-    return this.locate(`weapons/${fileName}.png`, [
+    return this.locate(`weapons/${fileName}.webp`, [
       `${paimonMoe}/weapons/${fileName}.png`,
       `${sunderarmor}/Weapons/${this.formatRerollCdnName(name).replace(/[:"]/g, '')}.png`,
     ]);
   }
 
   public getDomainImage(name: keyof typeof DomainsData | string): string {
-    return this.locate(`domains/${snakeCaseFromCamelCase(name).toLowerCase()}.png`);
+    return this.locate(`domains/${snakeCaseFromCamelCase(name).toLowerCase()}.webp`);
   }
   public getResinImage(name: 'original'): string {
-    return this.locate(`resins/${name}_resin.png`);
+    return this.locate(`resins/${name}_resin.webp`);
   }
 
   public getMaterialImage(name: string): string {
@@ -129,7 +84,7 @@ export const ImageService = new class ImageService extends BaseService<string> {
     else if (name === 'Dream Solvent') return this.locate('materials/drops/dream_solvent.webp');
 
     const itemName = withoutQuotes(fileName).toLowerCase().replace(/-/g, '_');
-    return this.locate(`materials/${itemName}.png`, [`${paimonMoe}/items/${itemName}.png`]);
+    return this.locate(`materials/${itemName}.webp`, [`${paimonMoe}/items/${itemName}.png`]);
   }
   public getMobImage(name: string): string {
     return this.locate(`mobs/${snakeCaseFromCamelCase(name).replace(/[,:"]/g, '').toLowerCase()}.webp`);
@@ -150,6 +105,8 @@ export const ImageService = new class ImageService extends BaseService<string> {
 
     const pending = this.recoveries.get(localUrl);
     if (pending) return pending;
+
+    if (!window.electronAPI) return Promise.resolve(null);
 
     const recovery = window.electronAPI.fetchImage(entry)
       .then(result => result ? URL.createObjectURL(new Blob([result.data], { type: result.mimeType })) : null)
