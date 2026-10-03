@@ -19,7 +19,8 @@ export default forwardRef<HTMLImageElement, Props>(function WeaponImage(props, r
 
   const { weaponType, weapon, ...rest } = props as Props & { weaponType?: WeaponType; weapon?: string };
 
-  return typeof src === 'string'
-    ? <Image ref={ref} {...rest} className={className} src={src} alt={alt} />
-    : <Image ref={ref} {...rest} className={className} src={src[0]} fallbackSrc={src[1]} alt={alt} />
+  if (typeof src === 'string') return <Image ref={ref} {...rest} className={className} src={src} alt={alt} />;
+
+  const primarySrc = src.shift() ?? '';
+  return <Image ref={ref} {...rest} className={className} src={primarySrc} fallbackSrcs={...src} alt={alt} />
 });

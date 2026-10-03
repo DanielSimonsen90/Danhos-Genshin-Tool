@@ -608,6 +608,37 @@ export const BeaconOfTheReedSea = new Weapon(
   cs => cs.Dehya,
 );
 
+export const BeyondTheChrysalis = new Weapon(
+  'Beyond the Chrysalis',
+  {
+    value: `Each time the equipping character uses their Elemental Skill or Elemental Burst, they gain one of the following three effects in sequence:\nWinds of Devotion: Increases the equipping character's CRIT DMG by $0 for 10s;\nWinds of Defiance: Increases Stellar Swirl reaction DMG dealt by the equipping character by $1 for 10s; and\nWinds of Plenty: Regenerates $2 Elemental Energy for the equipping character. Up to $2 Elemental Energy can be regenerated in this way every 4s.\nThe aforementioned effects are removed and the sequence is reset when the equipping character leaves the field.`,
+    refinements: [
+      '56/72/88/104/120%',
+      '36/45/54/63/72%',
+      '5/5.5/6/6.5/7',
+    ]
+  },
+  'Sword',
+  Rarity.Legendary,
+  674,
+  'Crit DMG',
+  44.1,
+  [
+    WeaponAscensionMaterials.RiseOfThePaleStarArmy,
+    Drops.HollowRootOfLife,
+    Drops.ChimericCore
+  ],
+  'Wish',
+  ({ playstyle, score, character }) => {
+    if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.STAT;
+    if (character.canTrigger('Stellar-Swirl')) score += getReactionModifier(character, playstyle, 'Stellar-Swirl');
+    if (playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  },
+  cs => cs.Vesna
+);
+
 export const BlackTassel = new Weapon(
   'Black Tassel',
   {
@@ -888,6 +919,35 @@ export const BloodtaintedGreatsword = new Weapon(
 // #endregion
 
 // #region C
+export const BreezebornRefrain = new Weapon(
+  'Breezeborne Refrain',
+  {
+    value: `Increases Energy Recharge by $0. When the equipping character hits the opponent with their Elemental Skill or Elemental Burst, they gain a stack of "Hymn of the Pure." This effect can trigger once every 0.03s, max 3 stacks, and at 3 stacks, all instances of "Hymn of the Pure" are cleared to give the equipping character "Thus Lied the Viper" instead. This grants nearby party members a $1 Stellar Glimmer reaction DMG boost for 12s, during which no stacks of "Hymn of the Pure" can be obtained. The aforementioned effects can still trigger even when the equipping character is not on the field.`,
+    refinements: [
+      '20/25/30/35/40%',
+      '24/30/36/42/48%',
+    ]
+  },
+  'Bow',
+  Rarity.Epic,
+  510,
+  'Crit Rate',
+  27.6,
+  [
+    WeaponAscensionMaterials.TheFrostEmperorsRevival,
+    Drops.AccretedFragment,
+    Drops.ChimericCore
+  ],
+  'Wish',
+  ({ playstyle, score, character }) => {
+    if (playstyle.needsStat('Energy Recharge')) score += MODIFIERS.STAT;
+    if (character.canTrigger('Stellar')) score += getReactionModifier(character, playstyle, 'Stellar');
+    if (!playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  }
+);
+
 export const CalamityOfEshu = new Weapon(
   'Calamity of Eshu',
   {
@@ -2924,6 +2984,38 @@ export const HuntersPath = new Weapon(
 // #endregion
 
 // #region I
+export const HymnOfTheMaelstrom = new Weapon(
+  'Hymn of the Maelstrom',
+  {
+    value: `Increases Healing Bonus by $0.\nWhen performing healing, the equipping character gains the "Vatsamonga's Vatic Vintage" effect, which increases Max HP by $1 as well as increases the currently active party member's ATK by $2 for every 1,000 Max HP the equipping character has over 40,000. A maximum of $3 ATK can be gained in this way. This effect lasts 10s, max 3 stacks.\nWhen a nearby party member triggers a Frozen or Stellar Swirl reaction, the aforementioned Max HP and ATK boosts will be further increased by 75% for the next 5s.\nThe aforementioned effects can still trigger even when the equipping character is not on the field.`,
+    refinements: [
+      '4/5/6/7/8%',
+      '4/5/6/7/8%',
+      '0.4/0.5/0.6/0.7/0.8%',
+      '8/10/12/14/16%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Legendary,
+  542,
+  'HP',
+  66.2,
+  [
+    WeaponAscensionMaterials.MeasuredPourOftheCellaredSpiritualNectar,
+    Drops.AccretedFragment,
+    Drops.EtherealGlimmershard
+  ],
+  'Wish',
+  ({ playstyle, score, character }) => {
+    if (playstyle.needsStat('HP')) score += MODIFIERS.STAT;
+    if (character.can('Heal', 'Self-heal')) score += MODIFIERS.BONUS_ABILITY;
+    if (!playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  },
+  cs => cs.Vodyanitsa
+);
+
 export const IbisPiercer = new Weapon(
   'Ibis Piercer',
   {
@@ -3879,6 +3971,38 @@ export const MouunsMoon = new Weapon(
 // #endregion
 
 // #region N
+export const NewBough = new Weapon(
+  'New Bough',
+  {
+    value: `When the equipping character hits the opponent with an attack within 12s after using the Elemental Skill, they gain the "Verdant" effect, which increases their ATK by $0 and their Elemental Mastery by $1. This effect lasts 6s and can trigger once every second. Max 3 stacks. The aforementioned effects can still trigger even when the equipping character is not on the field.\nRadiance: Stellar Glimmer: The effect of "Verdant" is changed to: Increases ATK by $2 as well as Stellar Glimmer reaction DMG dealt by the equipping character by $3.`,
+    refinements: [
+      '4/5/6/7/8%',
+      '20/25/30/35/40',
+      '6/7.5/9/10.5/12%',
+      '8/10/12/14/16%',
+    ]
+  },
+  'Sword',
+  Rarity.Epic,
+  510,
+  'Crit DMG',
+  55.1,
+  [
+    WeaponAscensionMaterials.MeasuredPourOftheCellaredSpiritualNectar,
+    Drops.HollowRootOfLife,
+    Drops.ChimericCore
+  ],
+  'Wish',
+  ({ playstyle, score, character }) => {
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
+    if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+    if (character.canTrigger('Stellar')) score += getReactionModifier(character, playstyle, 'Stellar');
+
+    return score;
+  }
+);
+
 export const NocturnesCurtainCall = new Weapon(
   `Nocturne's Curtain Call`,
   {
@@ -5216,6 +5340,34 @@ export const SharpshootersOath = new Weapon(
   ],
   'Wish',
   ({ score }) => score,
+);
+
+export const SilverLight = new Weapon(
+  'Silver Light',
+  {
+    value: `Increases Elemental Mastery by $0 for 12s after Elemental Skill use. Max 2 stacks, and each stack's duration is independent of the others.`,
+    refinements: [
+      '52/65/78/91/104',
+    ]
+  },
+  'Sword',
+  Rarity.Epic,
+  510,
+  'ATK',
+  41.3,
+  [
+    WeaponAscensionMaterials.GrainOfAerosiderite,
+    Drops.FragileBoneShard,
+    Drops.RecruitsInsignia
+  ],
+  'Event',
+  ({ playstyle, score }) => {
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
+    if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+
+    return score;
+  }
 );
 
 export const SilvershowerHeartstrings = new Weapon(
@@ -7034,6 +7186,37 @@ export const WineAndSong = new Weapon(
 
     return score;
   },
+);
+
+export const WintersHeavyHeart = new Weapon(
+  `Winter's Heavy Heart`,
+  {
+    value: `The equipping character gains "Silver-Tinged Blood Pact": The equipping character's Elemental Mastery is increased by $0 for every Cryo character present in the party. For every Electro character present in the party, the equipping character's ATK is increased by $1. Up to 4 Cryo or Electro characters can provide the above buffs.\nRadiance: Stellar Glimmer: The effect of Silver-Tinged Blood Pact is changed to: For every Cryo or Electro character present in the party, the equipping character gains a $2-point Elemental Mastery boost and deals $3 increased Stellar Glimmer reaction DMG.`,
+    refinements: [
+      '24/30/36/42/48',
+      '4.8/6/7.2/8.4/9.6%',
+      '20/25/30/35/40',
+      '6/7.5/9/10.5/12%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Epic,
+  510,
+  'Crit DMG',
+  55.1,
+  [
+    WeaponAscensionMaterials.TheFrostEmperorsRevival,
+    Drops.HollowRootOfLife,
+    Drops.EtherealGlimmershard
+  ],
+  'Wish',
+  ({ playstyle, score, character }) => {
+    if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT;
+    if (playstyle.needsStat('ATK')) score += MODIFIERS.STAT;
+    if (character.canTrigger('Stellar')) score += getReactionModifier(character, playstyle, 'Stellar');
+
+    return score;
+  }
 );
 
 export const WolfFang = new Weapon(

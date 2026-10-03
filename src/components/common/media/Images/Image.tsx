@@ -5,11 +5,11 @@ type Props = {
   alt: string;
 
   className?: string;
-  fallbackSrc?: string;
+  fallbackSrcs?: Array<string>;
 };
 
-export default React.forwardRef<HTMLImageElement, Props>(({ src, alt, fallbackSrc, ...props }, ref) => {
+export default React.forwardRef<HTMLImageElement, Props>(({ src, alt, fallbackSrcs, ...props }, ref) => {
   const [preferredSrc, setPreferredSrc] = useState(src);
 
-  return <img src={preferredSrc} alt={alt} title={alt} ref={ref} {...props} onError={() => fallbackSrc ? setPreferredSrc(fallbackSrc) : undefined} />;
+  return <img src={preferredSrc} alt={alt} title={alt} ref={ref} {...props} onError={() => fallbackSrcs?.length ? setPreferredSrc(fallbackSrcs.shift()!) : undefined} />;
 });

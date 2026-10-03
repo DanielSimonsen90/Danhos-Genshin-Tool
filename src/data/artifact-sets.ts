@@ -312,8 +312,8 @@ export const EmblemOfSeveredFate = new ArtifactSet(
  * @two Cryo DMG Bonus +15%
  * @four When equipping character has 0 elemental energy, Normal Attack DMG is increased by 60% and Burst DMG increased by 60%. After equipping character deals Normal Attack DMG, aforementioned burst effect will stop applying for 6s. Likewise for Burst DMG to Normal Attack DMG. Can trigger off-field.
  */
-export const FinaleOfTheDeepGalleries = new ArtifactSet(
-  "Finale of the Deep Galleries",
+export const FinaleOfDeepGalleries = new ArtifactSet(
+  "Finale of Deep Galleries",
   "Cryo DMG Bonus +15%",
   "When equipping character has 0 elemental energy, Normal Attack DMG is increased by 60% and Burst DMG increased by 60%. After equipping character deals Normal Attack DMG, aforementioned burst effect will stop applying for 6s. Likewise for Burst DMG to Normal Attack DMG. Can trigger off-field.",
   Rarity.Legendary,
