@@ -1995,6 +1995,42 @@ export const Venti = new Character("Venti", "Anemo", "Bow", [
   ])
 );
 
+export const Vesna = new Character("Vesna", "Anemo", "Sword", [
+  "Enables Stellar-Swirl Reaction",
+  "Elemental Infusion: While in Armed for Action mode (after Elemental Skill), Normal, Charged & Plunging attacks deal Anemo DMG that cannot be overridden by other infusions",
+], Rarity.Legendary, 'Snezhnaya', {
+  material: TalentAscension.Glory,
+  weeklyBossDrop: MobDrops.ProfanedSprout,
+  crystal: ElementalCrystals.Anemo,
+  localSpecialty: LocalSpecialties.GoldenFern,
+  worldBossDrop: MobDrops.VagabondsCrackedArmor,
+  mobDrop: EasyMobDrops.EtherealGlimmershard,
+}, 'When using Sprint or Jump outside of combat, enter Coursing state; consumes stamina to hover mid-air', 
+  new CharacterPlaystyle("On-field Stellar-Swirl DPS", ["ATK", "Elemental Mastery"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
+    new CharacterArtifactSet(Sets.ScarletProof, 4, 93),
+    ...AttackSets(0.5),
+    new CharacterArtifactSet(Sets.ViridescentVenerer, 4, 0.5)
+  ])
+);
+
+export const Vodyanitsa = new Character("Vodyanitsa", "Hydro", "Catalyst", [
+  "Heal",
+  "Elemental Based: Enhances Hydro, Cryo and Stellar Swirl DMG by characters in the party"
+], Rarity.Legendary, 'Snezhnaya', {
+  material: TalentAscension.Fortitude,
+  weeklyBossDrop: MobDrops.MadmansRestraint,
+  crystal: ElementalCrystals.Hydro,
+  localSpecialty: LocalSpecialties.FrostfairyFlower,
+  worldBossDrop: MobDrops.UnscorchedBlossomBranch,
+  mobDrop: EasyMobDrops.ChimericCore,
+}, 'Sings instead of playing instruments when playing instruments.',
+  new CharacterPlaystyle("Off-field Stellar-Swirl Support", ["HP"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
+    new CharacterArtifactSet(Sets.TenacityOfTheMillelith, 4, 91.4),
+    ...HPSets(4.6),
+    new CharacterArtifactSet(Sets.SongOfDaysPast, 4, 0.4)
+  ]),
+);
+
 // #endregion
 
 // #region W

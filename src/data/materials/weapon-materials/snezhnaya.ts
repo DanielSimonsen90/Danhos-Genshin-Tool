@@ -41,7 +41,7 @@ export const MeasuredPourOftheCellaredSpiritualNectar = WeaponAscensionMaterial.
 export const TheFrostEmperorsRevival = WeaponAscensionMaterial.create(
   {
     [Rarity.Legendary]: `The Frost Emperor's Farewell`,
-    [Rarity.Epic]: `The Frost Emperor's Lampent`,
+    [Rarity.Epic]: `The Frost Emperor's Lament`,
     [Rarity.Rare]: `The Frost Emperor's Ceremony`,
     [Rarity.Uncommon]: `The Frost Emperor's Revival`,
   },

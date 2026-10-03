@@ -11,3 +11,9 @@ export const FrostfairyFlower = new LocalSpecialty(
   `A sacred flower that blooms no matter how harsh the wind and snow. It always radiates a faint, mesmerizing glow that draws the hearts of all who see it.`,
   'Snezhnaya',
 );
+
+export const GoldenFern = new LocalSpecialty(
+  'Golden Fern',
+  `A fern whose edges radiate a faint golden shimmer. It is said to take on a remarkably unique flavor when stewed.`,
+  'Snezhnaya',
+);

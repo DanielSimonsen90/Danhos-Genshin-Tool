@@ -14,3 +14,10 @@ export const SeveredTailOfTheSkyRoamer = new MobDrop(
   'Snezhnaya',
   Rarity.Rare
 );
+
+export const VagabondsCrackedArmor = new MobDrop(
+  "Vagabond's Cracked Armor",
+  `An ancient piece of Snegovik armor with cracks all over it.\nArmor forged in the old days was never built to last this long. The cracks that have appeared over time merely been masked by the Snegovik's steadily advancing mastery of Prime Ice technology.\nLike the cracks across this armor's surface, the oath to safeguard and protect reveals its fragility the instant its keeper is gone.`,
+  'Snezhnaya',
+  Rarity.Rare
+);
