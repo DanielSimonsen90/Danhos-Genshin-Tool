@@ -30,7 +30,8 @@ export const ArtifactSearchService = new class ArtifactSearchService extends Bas
 
   private _getEffectiveness(character: Character, set: ArtifactSet): number {
     const key = `${character.name}:${set.name}`;
-    if (this._effectivenessCache.has(key)) return this._effectivenessCache.get(key)!;
+    const cached = this._effectivenessCache.get(key);
+    if (cached !== undefined) return cached;
     const value = ScoringEngine.getCharacterEffectiveness(character, set);
     this._effectivenessCache.set(key, value);
     return value;

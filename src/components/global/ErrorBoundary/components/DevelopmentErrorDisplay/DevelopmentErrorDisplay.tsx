@@ -1,6 +1,5 @@
 import React from 'react';
 import './DevelopmentErrorDisplay.scss';
-import { Link } from 'react-router-dom/dist';
 
 interface DevelopmentErrorDisplayProps {
   error?: Error;

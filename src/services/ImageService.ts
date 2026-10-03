@@ -1,6 +1,5 @@
 import { kebabCaseFromPascalCase, snakeCaseFromCamelCase } from '@/common/functions/strings';
 import { ArtifactPartName, Element, TalentType, WeaponType } from '@/common/types';
-import type { ImageExtension } from '@/common/types/images';
 import type * as ArtifactSetData from '@/data/artifact-sets';
 import type * as CharacterData from '@/data/characters';
 import type * as DomainsData from '@/data/domains/domain-of-blessing';

@@ -1,5 +1,5 @@
 import { WorldBoss } from "@/common/models/mobs/Boss";
-import { Adventurer, Berserker, GladiatorsFinale, Instructor, LuckyDog, PrayersOfIllumination, PrayersOfSpringtime, PrayersOfWisdom, TheExile, TravelingDoctor, WanderersTroupe } from "@/data/artifact-sets";
+import { Adventurer, Berserker, GladiatorsFinale, Instructor, LuckyDog, PrayersOfIllumination, PrayersOfSpringtime, TheExile, WanderersTroupe } from "@/data/artifact-sets";
 import { ElementalCrystals } from "@/data/materials/drops/crystals";
 import { UnscorchedBlossomBranch, SeveredTailOfTheSkyRoamer, VagabondsCrackedArmor } from '@/data/materials/drops/snezhnaya';
 

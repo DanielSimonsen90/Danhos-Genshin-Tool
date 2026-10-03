@@ -48,7 +48,7 @@ export default function UncontrolledSearchableList<TItem, FilterKeys extends str
       <FilterTags filters={filters} setFilters={setFilters} />
       {activeSorts && activeSorts.length > 0 && setActiveSorts && (
         <ul className="filter-tags sort-tags">
-          {activeSorts.map(({ key, direction }, index) => (
+          {activeSorts.map(({ key, direction }) => (
             <li key={key} className="filter-tag sort-tag"
               onClick={() => setActiveSorts(prev => prev.filter(s => s.key !== key))}
             >

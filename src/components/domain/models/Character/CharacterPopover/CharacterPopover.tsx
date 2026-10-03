@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 
 import Popover, { PopoverProps } from "@/components/common/Popover";
 import { useDataStore } from "@/stores";

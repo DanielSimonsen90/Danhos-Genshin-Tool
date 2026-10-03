@@ -1,7 +1,6 @@
 import { useCallback } from "react";
 
 import { ArtifactSet, Character, DomainReward, DomainType, Weapon } from "@/common/models";
-import { effectivenessString } from "@/common/functions/strings";
 
 import TabBar from "@/components/common/TabBar";
 import SearchableList from "@/components/domain/SearchableList";
@@ -76,7 +75,7 @@ function ArtifactTabBar({ rewards: artifacts }: Props<'Blessing'>) {
         items={DataStore.getCharactersUsingArtifact(artifact.name)}
         sort={(a, b) => b.cSet.effectiveness - a.cSet.effectiveness}
         onSearch={(query, item) => item.character.name.toLowerCase().includes(query.toLowerCase())}
-        renderItem={({ character, cSet: { effectiveness, pieces, set } }) => (
+        renderItem={({ character, cSet: { effectiveness, pieces } }) => (
           <CharacterCard key={character.name} className="character-result" character={character} wrapInLink>
             <p>
               <span className="character-info__effectiveness">{effectiveness}</span>% of active players use a

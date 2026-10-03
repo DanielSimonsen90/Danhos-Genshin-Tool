@@ -2,7 +2,7 @@ import StoreBuilder from "@/stores/_baseStore/StoreBuilder";
 import { CacheState, CacheKeys } from "../CacheStoreTypes";
 
 export default new StoreBuilder<CacheState>()
-  .addApi(({ get, set }) => {
+  .addApi(({ get }) => {
     function getItem<TKey extends CacheKeys>(key: TKey, defaultValue: any): CacheState[TKey] {
       return get()[key] ?? defaultValue;
     }

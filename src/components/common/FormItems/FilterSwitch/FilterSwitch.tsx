@@ -54,7 +54,7 @@ export default forwardRef<HTMLDivElement, Props>(function FilterSwitch({
     setIsOpen(!isOpen);
   };
 
-  const getStateIcon = (value: boolean | undefined): string => options.find(option => option.value === value)!.icon;
+  const getStateIcon = (value: boolean | undefined): string => options.find(option => option.value === value)?.icon ?? '';
 
   // Close dropdown when clicking outside
   const dropdownRef = useClickOutside('div', () => setIsOpen(false));

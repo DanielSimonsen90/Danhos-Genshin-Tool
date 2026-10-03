@@ -35,8 +35,6 @@ const ElementalSkillDMGSets = (priority: CharacterArtifactSet['effectiveness']) 
 const BurstDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Burst', priority);
 
 // CRIT and other stats
-const CRITRateSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('CRIT Rate', priority);
-const ShieldStrengthSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Shield Strength', priority);
 
 // Element DMG Bonus sets
 const AnemoDMGSets = (priority: CharacterArtifactSet['effectiveness']) => StatSets('Anemo DMG Bonus', priority);

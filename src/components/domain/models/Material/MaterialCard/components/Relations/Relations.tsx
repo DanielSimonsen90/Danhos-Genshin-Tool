@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import TabBar from "@/components/common/TabBar";
 import { Material } from "@/common/models";
 import { useDataStore } from "@/stores";
 import LocalSpecialty from "@/common/models/materials/LocalSpecialty";

@@ -1,6 +1,6 @@
 import { forwardRef, ComponentPropsWithoutRef } from "react";
 import Image from "./Image";
-import { classNames, pascalCaseFromSnakeCase } from "@/common/functions/strings";
+import { classNames } from "@/common/functions/strings";
 import { ImageService } from "@/services";
 
 type Props = Omit<ComponentPropsWithoutRef<typeof Image>, 'src' | 'alt'> & {

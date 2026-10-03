@@ -111,7 +111,7 @@ export function usePopoverPosition({
     // Recalculate when popover size changes (e.g. images load after mount)
     const el = popoverRef.current;
     const resizeObserver = el ? new ResizeObserver(updatePosition) : null;
-    resizeObserver?.observe(el!);
+    if (el) resizeObserver?.observe(el);
 
     return () => {
       window.removeEventListener('scroll', updatePosition, true);

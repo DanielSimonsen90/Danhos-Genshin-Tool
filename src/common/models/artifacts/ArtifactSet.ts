@@ -1,4 +1,4 @@
-import { Nullable, Rarity, StatName } from '@/common/types';
+import { Nullable, Rarity } from '@/common/types';
 import Character from '../characters/Character';
 import { CharacterArtifactSet } from '../characters/CharacterArtifactSet';
 import Material from '../materials/Material';

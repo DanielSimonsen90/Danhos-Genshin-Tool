@@ -1,4 +1,4 @@
-import { Rarity, TeyvatRegion } from "@/common/types";
+import { Rarity } from "@/common/types";
 import Material from "./Material";
 
 export abstract class CraftableMaterial extends Material {

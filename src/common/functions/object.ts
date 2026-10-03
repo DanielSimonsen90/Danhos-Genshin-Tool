@@ -21,6 +21,11 @@ export function isDifferent<A, B>(a: A, b: B) {
   return !is(a, b);
 }
 
+export function required<T>(value: T | null | undefined, message: string): T {
+  if (value === null || value === undefined) throw new Error(message);
+  return value;
+}
+
 export function keysOf<T extends object>(obj: T): Array<keyof T> {
   return Object.keys(obj) as Array<keyof T>;
 }

@@ -1,11 +1,12 @@
 import StoreBuilder from "@/stores/_baseStore/StoreBuilder";
+import { required } from "@/common/functions/object";
 import { AccountContextType, AccountData, DEFAULT_ACCOUNT_DATA, DEFAULT_ACCOUNT_NAME } from "..";
 import accountsSlice from "./accounts.slice";
 import { generateAccountId } from "../AccountStoreFunctions";
 
 export default new StoreBuilder()
   .addSlice(accountsSlice)
-  .addApi(({ get, api, set }) => {
+  .addApi(({ get, set }) => {
     function addAccount(name: string, data?: Partial<AccountData>) {
       const { accounts } = get();
       if (accounts[name] && name !== DEFAULT_ACCOUNT_NAME) throw new Error(`Account ${name} already exists`);
@@ -36,7 +37,7 @@ export default new StoreBuilder()
       delete next[name];
 
       if (currentWasDeleted) {
-        const [fallbackAccountName, fallbackAccountData] = Object.entries(next).find(Boolean)!;
+        const [fallbackAccountName, fallbackAccountData] = required(Object.entries(next).find(Boolean), 'No fallback account available');
         next[fallbackAccountName as keyof AccountContextType] = {
           ...DEFAULT_ACCOUNT_DATA,
           ...fallbackAccountData,
