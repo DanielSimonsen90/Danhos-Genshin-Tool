@@ -513,7 +513,10 @@ export const Diluc = new Character("Diluc", "Pyro", "Claymore", [
   ]),
 );
 
-export const Diona = new Character("Diona", "Cryo", "Bow", ["Shield"], Rarity.Epic, 'Mondstadt', {
+export const Diona = new Character("Diona", "Cryo", "Bow", [
+  "Shield",
+  "Heal",
+], Rarity.Epic, 'Mondstadt', {
   material: TalentAscension.Freedom,
   weeklyBossDrop: MobDrops.ShardOfAFoulLegacy,
   crystal: ElementalCrystals.Cryo,
