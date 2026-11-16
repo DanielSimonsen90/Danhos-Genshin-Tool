@@ -129,7 +129,7 @@ export const Alyosha = new Character("Alyosha", "Electro", "Polearm", [
   mobDrop: EasyMobDrops.ChimericCore,
   worldBossDrop: MobDrops.SeveredTailOfTheSkyRoamer,
   weeklyBossDrop: MobDrops.ElixirOfTheHeretic,
-}, 'Shows Local Specialties in Snezhnaya on minimap.', 
+}, 'Shows Local Specialties in Snezhnaya on minimap.',
   new CharacterPlaystyle("Off-field Stellar-Conduct Support", ['Energy Recharge', 'ATK'], ['Skill/Ability', 'Burst/Ult', 'Normal/Press'], false, [
     new CharacterArtifactSet(Sets.HeartOfTheFurnace, 4, 100),
   ])
@@ -1297,6 +1297,24 @@ export const Mika = new Character("Mika", "Cryo", "Polearm", ["Heal"], Rarity.Ep
   ]),
 );
 
+export const Mitya = new Character("Mitya", "Electro", "Catalyst", [
+  "Enables Stellar-Conduct Reaction",
+  "Off-field Damage",
+  "Changes Reaction Behavior: Stellar-Conduct's base DMG dealt by all nearby members will be increased based on Mitya's Elemental Mastery."
+], Rarity.Legendary, 'Snezhnaya', {
+  material: TalentAscension.Charity,
+  weeklyBossDrop: MobDrops.MaskOfTheVirtuousDoctor,
+  crystal: ElementalCrystals.Electro,
+  localSpecialty: LocalSpecialties.Kristallfold,
+  worldBossDrop: MobDrops.ShatteredStabilityAnchor,
+  mobDrop: EasyMobDrops.ChimericCore,
+}, 'Can quickly clear destructible rocks and when creating Prime Ice Construction: Basic Heartsource, it does not consume Kresnik Energy',
+  new CharacterPlaystyle("Off-field Stellar-Conduct DPS", ["Elemental Mastery"], ["Skill/Ability", "Charged/Hold", "Burst/Ult"], false, [
+    new CharacterArtifactSet(Sets.DisenchantmentInDeepShadow, 4, 50),
+    new CharacterArtifactSet(Sets.GildedDreams, 4, 50),
+  ])
+);  
+
 export const Mona = new Character("Mona", "Hydro", "Catalyst", [
   "Off-field Damage",
   `Hexerei Able: When Mona's NA/CA hits an opponent, gain 1 Astral Glow of Mercury for 8s. Max 3 stacks. When team members deal Vape DMG, stacks are consumed. Each consumed stacks does 5% increased DMG to the Vape reaction.`
@@ -1428,7 +1446,9 @@ export const Nicole = new Character("Nicole", "Pyro", "Catalyst", [
   ])
 );
 
-export const Nilou = new Character("Nilou", "Hydro", "Sword", [], Rarity.Legendary, "Sumeru", {
+export const Nilou = new Character("Nilou", "Hydro", "Sword", [
+  "Changes Reaction Behavior: Changes Bloom or Lunar-Bloom to produce Bountiful Cores instead of Dendro Cores, which prevent Hyperbloom or Burgeon, but causes DMG by the cores to be produced by the bloom"
+], Rarity.Legendary, "Sumeru", {
   material: TalentAscension.Praxis,
   weeklyBossDrop: MobDrops.TearsOfTheCalamitousGod,
   crystal: ElementalCrystals.Hydro,
@@ -1929,7 +1949,7 @@ export const TravelerCryo = new Character("Traveler (Cryo)", "Cryo", "Sword", [
   localSpecialty: LocalSpecialties.WindwheelAster,
   worldBossDrop: null,
   mobDrop: EasyMobDrops.ChimericCore,
-}, `When party members trigger Superconduct or Cryo Swirl, they become stellar reactions and the base dmg of the reaction is also increased by 0.35% for every 100 of Traveler's ATK. Max 7% increase.`, 
+}, `When party members trigger Superconduct or Cryo Swirl, they become stellar reactions and the base dmg of the reaction is also increased by 0.35% for every 100 of Traveler's ATK. Max 7% increase.`,
   new CharacterPlaystyle("On-field Stellar DPS", ["ATK", "Energy Recharge"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
     new CharacterArtifactSet(Sets.DisenchantmentInDeepShadow, 4, 50),
     new CharacterArtifactSet(Sets.HeartOfTheFurnace, 4, 50),
@@ -1942,6 +1962,21 @@ export const TravelerCryo = new Character("Traveler (Cryo)", "Cryo", "Sword", [
 // #endregion
 
 // #region V
+export const Valeriy = new Character("Valeriy", "Electro", "Sword", [
+  "Shield",
+], Rarity.Epic, 'Snezhnaya', {
+  material: TalentAscension.Glory,
+  weeklyBossDrop: MobDrops.CounterfeitResin,
+  crystal: ElementalCrystals.Electro,
+  localSpecialty: LocalSpecialties.FairyWormwood,
+  worldBossDrop: MobDrops.SeveredTailOfTheSkyRoamer,
+  mobDrop: EasyMobDrops.EtherealGlimmershard,
+}, '25% more rewards when on expeditions in Snezhnaya.',
+  new CharacterPlaystyle("Off-field Electro Support", ["ATK"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], false, [
+    new CharacterArtifactSet(Sets.HeartOfTheFurnace, 4, 100),
+  ])
+);
+
 export const Varesa = new Character("Varesa", "Electro", "Catalyst", ["Nightsouls Blessing"], Rarity.Legendary, 'Natlan', {
   material: TalentAscension.Conflict,
   weeklyBossDrop: MobDrops.ErodedScaleFeather,
@@ -2006,7 +2041,7 @@ export const Vesna = new Character("Vesna", "Anemo", "Sword", [
   localSpecialty: LocalSpecialties.GoldenFern,
   worldBossDrop: MobDrops.VagabondsCrackedArmor,
   mobDrop: EasyMobDrops.EtherealGlimmershard,
-}, 'When using Sprint or Jump outside of combat, enter Coursing state; consumes stamina to hover mid-air', 
+}, 'When using Sprint or Jump outside of combat, enter Coursing state; consumes stamina to hover mid-air',
   new CharacterPlaystyle("On-field Stellar-Swirl DPS", ["ATK", "Elemental Mastery"], ["Skill/Ability", "Burst/Ult", "Normal/Press"], true, [
     new CharacterArtifactSet(Sets.ScarletProof, 4, 93),
     ...AttackSets(0.5),

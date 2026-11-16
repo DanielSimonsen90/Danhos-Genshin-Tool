@@ -1,7 +1,7 @@
 import { WorldBoss } from "@/common/models/mobs/Boss";
 import { Adventurer, Berserker, GladiatorsFinale, Instructor, LuckyDog, PrayersOfIllumination, PrayersOfSpringtime, TheExile, WanderersTroupe } from "@/data/artifact-sets";
 import { ElementalCrystals } from "@/data/materials/drops/crystals";
-import { UnscorchedBlossomBranch, SeveredTailOfTheSkyRoamer, VagabondsCrackedArmor } from '@/data/materials/drops/snezhnaya';
+import { UnscorchedBlossomBranch, SeveredTailOfTheSkyRoamer, VagabondsCrackedArmor, ShatteredStabilityAnchor } from '@/data/materials/drops/snezhnaya';
 
 export const ImmortalConstruct = new WorldBoss(
   `Immortal Construct`,
@@ -37,6 +37,19 @@ export const GuardianBladeOfDriftingSnow = new WorldBoss(
   [
     VagabondsCrackedArmor,
     ...ElementalCrystals.Cryo.getCraftingTreeAsMaterials(),
+    GladiatorsFinale,
+    WanderersTroupe,
+    Berserker, TheExile, PrayersOfSpringtime, LuckyDog,
+  ]
+);
+
+export const Wavebinder = new WorldBoss(
+  `Wavebinder`,
+  `A Volkodlak of peerless strength, brought into being to fulfill an ancient cibilization's grand ambition of exploring the waters unhinderedd.\nNow that their bloodline has been diluted, such creatures are finally able to move about on land - though they have, in turn, lost the ability to remain submerged for long periods of time.`,
+  'Snezhnaya',
+  [
+    ShatteredStabilityAnchor,
+    ...ElementalCrystals.Hydro.getCraftingTreeAsMaterials(),
     GladiatorsFinale,
     WanderersTroupe,
     Berserker, TheExile, PrayersOfSpringtime, LuckyDog,

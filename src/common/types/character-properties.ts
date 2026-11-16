@@ -14,6 +14,7 @@ export type BonusAbilitySimple = (
   | BonusAbilityBase
   | 'Buff ATK' | 'Elemental Based' | 'CRIT Increase'
   | 'Buff ATK Speed' | 'Elemental Infusion' | 'Hexerei Able'
+  | 'Changes Reaction Behavior'
 );
 export type BonusAbility = (
   | BonusAbilityBase
@@ -70,6 +71,7 @@ export type PassiveTalent = (
   | `${'25'}% ${'time consumption reduction' | 'more rewards'} when on expeditions in ${TeyvatRegion}.`
   | 'Party members will not startle Crystalflies and certain other animals.'
   | `Party members will not startle animals who produce: Fowl, Raw or Chilled meat.`
+  | `Can quickly clear destructible rocks and when creating Prime Ice Construction: Basic Heartsource, it does not consume Kresnik Energy`
 
   // Traveler
   | `CRIT Rate +10%. When Pyro/Hydro/CryoElectro attacks from nearby party member hit opponents, gain 1 stack of Blade of the Dawn Breeze. Each Elemental type grants 1 stack. After obtaining 2+, performing CA consumes all stacks to transform into CA: Whirlwind: Each CA deals Anemo DMG. +60% of Traveler's ATK. Every consumption, Blade Wind summoned dealing 50% of Traveler's ATK - considered CA damage. 15s CD.`
