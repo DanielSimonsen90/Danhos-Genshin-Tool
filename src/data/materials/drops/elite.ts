@@ -396,3 +396,15 @@ export const HollowRootOfLife = MobDrop.create('of Life', {
   [Rarity.Rare]: `A branch dropped by a Leshy before it returned to silence.\nA branch bearing a fair number of crystals. It feels heavy in the hand, and traces of vitality can still be felt within it even after it has broken away from the Leshy's body.`,
   [Rarity.Uncommon]: `A branch dropped by a Leshy before it returned to silence.\nWith only a few crystals grown upon it, this branch holds little power and gives off a faint glow.`,
 });
+
+export const SnowbornHeartshard = MobDrop.create('Snowborn', {
+  [Rarity.Epic]: `Heart of Ignorance`,
+  [Rarity.Rare]: `Mirrorheart`,
+  [Rarity.Uncommon]: 'Heartshard',
+}, {
+  [Rarity.Epic]: `A remnant left behind when a monster formed from ice and snow fades away.\nUnder the influence of some unknown, overwhelming power, these monsters, at once humanoid and beastlike, take form in a way unlike ordinary elemental beings.\nThe proof lies int he power core they leave behind, its jagged growths jutting outward like the unruly scales of some primeval creature.`,
+  [Rarity.Rare]: `A remnant left behind when a monster formed from ice and snow fades away.\nFor reasons unknown, the creature possesses no intelligence with which to communicate, yet bears a fierce hostility toward certain targets. It is as though that hatred was etched into its very being the moment it took form.`,
+  [Rarity.Uncommon]: `A remnant left behind when a monster formed from ice and snow fades away.\nSome believe these wintry monsters to be a kind of Snezhnayan fae, yet what they leave behind bears almost no resemblance to the crystals that grow upon a fae's body...`,
+}, {
+  prependName: true
+});

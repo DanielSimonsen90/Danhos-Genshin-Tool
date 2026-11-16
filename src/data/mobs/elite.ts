@@ -74,7 +74,7 @@ export const HilichurlChieftain = new EliteMob(
 
 export const Geovishap = new EliteMob(
   "Geovishap",
-  `A mature Geovishap.\nIt is said that afer many years have passed, Geovishap Hatchlings will shed the armor that originally protected them and become geovishaps. Hoever, these two and the older, greater Primo Geovishaps have spent many years hibernating under the the mountains, and have only emerged and become active in recent times. As such, none can personally attest to having witnessed or recorded such a thing in person.`,
+  `A mature Geovishap.\nIt is said that after many years have passed, Geovishap Hatchlings will shed the armor that originally protected them and become geovishaps. Hoever, these two and the older, greater Primo Geovishaps have spent many years hibernating under the the mountains, and have only emerged and become active in recent times. As such, none can personally attest to having witnessed or recorded such a thing in person.`,
   [
     EliteMobDrops.FragileBoneShard,
   ]
@@ -290,8 +290,16 @@ export const VolkodlakBrute = new EliteMob(
 
 export const WildwoodLeshy = new EliteMob(
   'Wildwood Leshy',
-  `A reclusive breed among Snezhnaya's fae, rarely seen near towns or high roads. They prefer a life spent deep within the wilderness and mountain forests. If the oldest among them have endured to this day, they likely possess statures as towering as ancient, sky-piercing trees.`,
+  `A strange monster born from a perculiar kind of ice and snow.\nIts frozen form holds immense power, yet no clear will has awakened within it to command that strength`,
   [
     EliteMobDrops.HollowRootOfLife,
+  ]
+);
+
+export const MindlessIceborn = new EliteMob(
+  'Mindless Iceborn',
+  `A creature born from the harsh, frozen landscapes of Snezhnaya, devoid of intelligence yet driven by an innate hostility. Its form is a twisted amalgamation of ice and snow, animated by an unknown, overwhelming power.`,
+  [
+    EliteMobDrops.SnowbornHeartshard,
   ]
 );

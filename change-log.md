@@ -1,37 +1,37 @@
 # 🎉 Danho's Genshin Tool v . 2.2.6 🎉
 
-## General
-### Images
-All images are now stored **locally**, which means you will no longer receive them from external sources as well as ensuring all images are always available and load faster.
-
-## Tierlist update
-* You can now move multiple items by holding ctrl while clicking on each item to select them.
-* You can now use the model filters as you're used to in Searchable lists.
-
-## Artifacts
-### Fixed
-* Renamed "Finale of the Deep Galleries" to its correct name "Finale of Deep Galleries"
-
 ## Characters
 ### Added
-* 5* Anemo Sword "Vesna" from Snezhnaya
-* 5* Hydro Catalyst "Vodyanitsa" from Snezhnaya
+* 5* Electro Catalyst "Mitya" from Snezhnaya
+* 4* Electro Sword "Valeriy" from Snezhnaya
+
+### Filters
+* New "Changes Reaction Behavior" bonus ability filter for characters
 
 ## Materials
 ### Drops
-* Vagabond's Cracked Armor; dropped by Guardian Blade of Drifting Snow
+* Snowborn Heartshard; dropped by Mindless Iceborn
+* Shattered Stability Anchor; dropped by Wavebinder
 
 ### Local Specialties
-* Golden Fern
-
-### Weapon Ascension Items
-* Fixed "The Frost Emperor's Lampent" being misspelled; it is now "The Frost Emperor's Lament"
+* Fairy Wormwood
+* Kristallfold
 
 ## Mobs
 ### Bosses
-* Guardian Blade of Drifting Snow, drops Vagabond's Cracked Armor
+* Wavebinder, drops Shattered Stability Anchor
+
+### Elites
+* Mindless Iceborn, drops Snowborn Heartshard
 
 ## Weapons
 ### Added
-* Wish weapons: Beyond the Chrysalis (Sword), Breezeborne Refrain (Bow), Hymn of the Maelstrom (Catalyst), New Bough (Sword) & Winter's Heavy Heart (Catalyst)
-* Event weapon: Silver Light (Sword)
+* Wish weapon: Starsealed Edict (Catalyst)
+
+## Fixed
+* Images not resolving (oopsies)
+* Diona not having the heal attribute (I've never built her)
+* Traveler icons not showing their elemental tooltips
+* Added "Changes Reaction Behavior" attribute to Mitya and Nilou
+* Snezhnaya world boss drops accidentally marked as Rare (3 star) instead of Epic (4 star)
+* Wildwood Leshy's description now matches the in-game one

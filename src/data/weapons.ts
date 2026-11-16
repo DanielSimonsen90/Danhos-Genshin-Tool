@@ -5955,6 +5955,39 @@ export const StarcallersWatch = new Weapon(
   cs => cs.Citlali
 );
 
+export const StarsealedEdict = new Weapon(
+  'Starsealed Edict',
+  {
+    value: `Increases CRIT DMG by $0. The equipping character gains the Crystal Compounding effect when they use their Elemental Skill, increasing Elemental Mastery by $1 for 20s. During this time, the equipping character gains a Law of Combustion stack when a nearby party member triggers an Elemental Reaction. Each stack increases Elemental Mastery by an additional $2. Max 3 stacks. These stacks last until Crystal Compounding ends or the equipping character uses their Elemental Skill again.\nRadiance: Stellar-Conduct: Each Law of Combustion stack also increases the equipping character's Stellar-Conduct CRIT DMG by $3.\nThese effects can be triggered even when the equipping character is off-field.`,
+    refinements: [
+      '24/30/36/42/48%',
+      '48/60/72/84/96',
+      '24/30/36/42/48',
+      '12/15/18/21/24%',
+    ]
+  },
+  'Catalyst',
+  Rarity.Legendary,
+  542,
+  'Crit DMG',
+  88.2,
+  [
+    WeaponAscensionMaterials.TheFrostEmperorsRevival,
+    Drops.SnowbornHeartshard,
+    Drops.EtherealGlimmershard
+  ],
+  'Wish',
+  ({ playstyle, score, character }) => {
+    if (playstyle.needsStat('Elemental Mastery')) score += MODIFIERS.STAT * 2; // Base + stacking EM
+    if (playstyle.prioritizesTalents('Skill/Ability')) score += MODIFIERS.TALENT;
+    if (character.canTrigger('Stellar-Conduct')) score += MODIFIERS.BONUS_ABILITY;
+    if (!playstyle.onField) score += MODIFIERS.FIELD;
+
+    return score;
+  },
+  cs => cs.Mitya,
+);
+
 export const SturdyBone = new Weapon(
   'Sturdy Bone',
   {

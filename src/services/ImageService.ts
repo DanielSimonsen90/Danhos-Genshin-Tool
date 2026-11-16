@@ -34,6 +34,7 @@ export const ImageService = new class ImageService extends BaseService<string> {
 
     return this.locate(`artifacts/${setName}_${pieceName}.webp`, [
       `${genshinTrack}/artifacts/${genshinTrackSlug}.png`,
+      `${genshinTrack}/artifacts/${genshinTrackSlug}.webp`,
       `${sunderarmor}/Gear/${snakeCaseFromCamelCase(set).toLowerCase()}.png`,
       `${paimonMoe}/artifacts/${setName}_${part === 'Feather' ? 'plume' : pieceName}.png`,
     ]);

@@ -49,6 +49,7 @@ export function getCharacterFilterChecks(DataStore: DataStoreType): FilterObject
       bondOfLife: character => character.bonusAbilities.includes('Bond of Life'),
       buffAttack: character => character.bonusAbilities.some(ability => ability.startsWith('Buff ATK: ')),
       buffAttackSpeed: character => character.bonusAbilities.some(ability => ability.startsWith('Buff ATK Speed: ')),
+      changesReactionBehavior: character => character.bonusAbilities.some(ability => ability.startsWith('Changes Reaction Behavior: ')),
       critIncrease: character => character.bonusAbilities.some(ability => ability.startsWith('CRIT Increase: ')),
       elementalBased: character => character.bonusAbilities.some(ability => ability.startsWith('Elemental Based: ')),
       elementalInfusion: character => character.bonusAbilities.some(ability => ability.startsWith('Elemental Infusion: ')),
