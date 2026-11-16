@@ -11,6 +11,7 @@ import RelationsForModel from "../../Material/MaterialCard/components/RelationsF
 import TabBar from "@/components/common/TabBar";
 import { ElementalCrystal } from "@/common/models/materials/MobDrop";
 import { Billet } from "@/common/models/materials/Billet";
+import CraftableMaterial from "@/common/models/materials/CraftableMaterial";
 import Region from "@/components/domain/Region";
 import { MaterialImage } from "@/components/common/media/Images";
 import { useDataStore } from "@/stores";
@@ -34,9 +35,19 @@ export default function MobCard({
   showRelations,
   ...props
 }: Props) {
-  const { name, description, drops } = mob;
+  const { name, description } = mob;
 
   const DataStore = useDataStore();
+
+  const drops = useMemo(() => {
+    const expanded = mob.drops.flatMap(drop => (
+      CraftableMaterial.isCraftableMaterial(drop)
+        ? drop.getCraftingTreeAsMaterials()
+        : [drop]
+    ));
+
+    return expanded.filter((drop, index) => expanded.findIndex(other => other.name === drop.name) === index);
+  }, [mob]);
 
   const mobType = useMemo(() => {
     if (WeeklyBoss.isWeeklyBoss(mob)) return "weekly-boss";
